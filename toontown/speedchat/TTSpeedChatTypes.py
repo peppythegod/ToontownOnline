@@ -1,0 +1,27 @@
+from TTSCIdesOfMarchMenu import TTSCIdesOfMarchMenu
+from TTSCSellbotFieldOfficeMenu import TTSCSellbotFieldOfficeMenu
+from TTSCSellbotInvasionMenu import TTSCSellbotInvasionMenu
+from TTSCWinterMenu import TTSCWinterMenu
+from TTSCHalloweenMenu import TTSCHalloweenMenu
+from TTSCJellybeanJamMenu import TTSCJellybeanJamMenu
+from TTSCSellbotNerfMenu import TTSCSellbotNerfMenu
+from TTSCVictoryPartiesMenu import TTSCVictoryPartiesMenu
+from TTSCSillyPhaseFiveMenu import TTSCSillyPhaseFiveMenu
+from TTSCSillyPhaseFourMenu import TTSCSillyPhaseFourMenu
+from TTSCSillyPhaseThreeMenu import TTSCSillyPhaseThreeMenu
+from TTSCSillyPhaseTwoMenu import TTSCSillyPhaseTwoMenu
+from TTSCSillyPhaseOneMenu import TTSCSillyPhaseOneMenu
+from TTSCAprilToonsMenu import TTSCAprilToonsMenu
+from TTSCSingingMenu import TTSCSingingMenu
+from TTSCBoardingMenu import TTSCBoardingMenu
+from TTSCGolfMenu import TTSCGolfMenu
+from TTSCKartRacingMenu import TTSCKartRacingMenu
+from TTSCResistanceTerminal import TTSCResistanceTerminal
+from TTSCResistanceMenu import TTSCResistanceMenu
+from TTSCToontaskTerminal import TTSCToontaskTerminal
+from TTSCPromotionalMenu import TTSCPromotionalMenu
+from TTSCToontaskMenu import TTSCToontaskMenu
+from TTSCFactoryMenu import TTSCFactoryMenu
+from TTSCCogMenu import TTSCCogMenu
+if hasattr(base, 'wantPets') and base.wantPets:
+    from TTSCPetTrickMenu import TTSCPetTrickMenu
