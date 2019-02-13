@@ -128,12 +128,12 @@ class MintInterior(BattlePlace.BattlePlace):
             'MintReady', DistributedMint.DistributedMint.ReadyPost, commence)
         self.mintDefeated = 0
         self.acceptOnce(
-    DistributedMint.DistributedMint.WinEvent,
-     self.handleMintWinEvent)
+            DistributedMint.DistributedMint.WinEvent,
+            self.handleMintWinEvent)
         if __debug__ and 0:
             self.accept(
-    'f10', lambda: messenger.send(
-        DistributedMint.DistributedMint.WinEvent))
+                'f10', lambda: messenger.send(
+                    DistributedMint.DistributedMint.WinEvent))
 
         self.confrontedBoss = 0
 
@@ -185,10 +185,10 @@ class MintInterior(BattlePlace.BattlePlace):
         mult = ToontownBattleGlobals.getMintCreditMultiplier(self.zoneId)
         base.localAvatar.inventory.setBattleCreditMultiplier(mult)
         self.loader.townBattle.enter(
-    event,
-    self.fsm.getStateNamed('battle'),
-    bldg=1,
-     creditMultiplier=mult)
+            event,
+            self.fsm.getStateNamed('battle'),
+            bldg=1,
+            creditMultiplier=mult)
 
     def exitBattle(self):
         MintInterior.notify.debug('exitBattle')
@@ -211,4 +211,77 @@ class MintInterior(BattlePlace.BattlePlace):
 
     def enterTeleportOut(self, requestStatus):
         MintInterior.notify.debug('enterTeleportOut()')
-        BattlePlace.BattlePlace.enterTeleportOut(self, requestStatus, self._MintInterio
+        BattlePlace.BattlePlace.enterTeleportOut(
+            self, requestStatus, self.__teleportOutDone)
+
+    def __processLeaveRequest(self, requestStatus):
+        hoodId = requestStatus['hoodId']
+        if hoodId == ToontownGlobals.MyEstate:
+            self.getEstateZoneAndGoHome(requestStatus)
+        else:
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+
+    def __teleportOutDone(self, requestStatus):
+        MintInterior.notify.debug('__teleportOutDone()')
+        messenger.send('leavingMint')
+        messenger.send('localToonLeft')
+        if self.mintDefeated and not self.confrontedBoss:
+            self.fsm.request('FLA', [requestStatus])
+        else:
+            self.__processLeaveRequest(requestStatus)
+
+    def exitTeleportOut(self):
+        MintInterior.notify.debug('exitTeleportOut()')
+        BattlePlace.BattlePlace.exitTeleportOut(self)
+
+    def handleMintWinEvent(self):
+        MintInterior.notify.debug('handleMintWinEvent')
+        if base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'died':
+            return
+        self.mintDefeated = 1
+        if 1:
+            zoneId = ZoneUtil.getHoodId(self.zoneId)
+        else:
+            zoneId = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
+        self.fsm.request('teleportOut',
+                         [{'loader': ZoneUtil.getLoaderName(zoneId),
+                           'where': ZoneUtil.getToonWhereName(zoneId),
+                           'how': 'teleportIn',
+                           'hoodId': zoneId,
+                           'zoneId': zoneId,
+                           'shardId': None,
+                           'avId': -1}])
+
+    def enterDied(self, requestStatus, callback=None):
+        MintInterior.notify.debug('enterDied')
+
+        def diedDone(requestStatus, self=self, callback=callback):
+            if callback is not None:
+                callback()
+            messenger.send('leavingMint')
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+            return
+
+        BattlePlace.BattlePlace.enterDied(self, requestStatus, diedDone)
+
+    def enterFLA(self, requestStatus):
+        MintInterior.notify.debug('enterFLA')
+        self.flaDialog = TTDialog.TTGlobalDialog(
+            message=TTLocalizer.ForcedLeaveMintAckMsg,
+            doneEvent='FLADone',
+            style=TTDialog.Acknowledge,
+            fadeScreen=1)
+
+        def continueExit(self=self, requestStatus=requestStatus):
+            self.__processLeaveRequest(requestStatus)
+
+        self.accept('FLADone', continueExit)
+        self.flaDialog.show()
+
+    def exitFLA(self):
+        MintInterior.notify.debug('exitFLA')
+        if hasattr(self, 'flaDialog'):
+            self.flaDialog.cleanup()
+            del self.flaDialog

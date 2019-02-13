@@ -212,4 +212,145 @@ class CountryClubInterior(BattlePlace.BattlePlace):
             creditMultiplier=mult)
 
     def exitBattle(self):
-        Country
+        CountryClubInterior.notify.debug('exitBattle')
+        BattlePlace.BattlePlace.exitBattle(self)
+        self.loader.music.stop()
+        base.playMusic(self.music, looping=1, volume=0.8)
+
+    def enterStickerBook(self, page=None):
+        BattlePlace.BattlePlace.enterStickerBook(self, page)
+        self.ignore('teleportQuery')
+        base.localAvatar.setTeleportAvailable(0)
+
+    def enterSit(self):
+        BattlePlace.BattlePlace.enterSit(self)
+        self.ignore('teleportQuery')
+        base.localAvatar.setTeleportAvailable(0)
+
+    def enterZone(self, zoneId):
+        pass
+
+    def enterTeleportOut(self, requestStatus):
+        CountryClubInterior.notify.debug('enterTeleportOut()')
+        BattlePlace.BattlePlace.enterTeleportOut(
+            self, requestStatus, self.__teleportOutDone)
+
+    def __processLeaveRequest(self, requestStatus):
+        hoodId = requestStatus['hoodId']
+        if hoodId == ToontownGlobals.MyEstate:
+            self.getEstateZoneAndGoHome(requestStatus)
+        else:
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+
+    def __teleportOutDone(self, requestStatus):
+        CountryClubInterior.notify.debug('__teleportOutDone()')
+        messenger.send('leavingCountryClub')
+        messenger.send('localToonLeft')
+        if self.CountryClubDefeated and not self.confrontedBoss:
+            self.fsm.request('FLA', [requestStatus])
+        else:
+            self.__processLeaveRequest(requestStatus)
+
+    def exitTeleportOut(self):
+        CountryClubInterior.notify.debug('exitTeleportOut()')
+        BattlePlace.BattlePlace.exitTeleportOut(self)
+
+    def handleCountryClubWinEvent(self):
+        CountryClubInterior.notify.debug('handleCountryClubWinEvent')
+
+        if base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'died':
+            return
+
+        self.CountryClubDefeated = 1
+
+        if 1:
+            zoneId = ZoneUtil.getHoodId(self.zoneId)
+        else:
+            zoneId = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
+
+        self.fsm.request('teleportOut', [{
+            'loader': ZoneUtil.getLoaderName(zoneId),
+            'where': ZoneUtil.getToonWhereName(zoneId),
+            'how': 'teleportIn',
+            'hoodId': zoneId,
+            'zoneId': zoneId,
+            'shardId': None,
+            'avId': -1,
+        }])
+
+    def enterDied(self, requestStatus, callback=None):
+        CountryClubInterior.notify.debug('enterDied')
+
+        def diedDone(requestStatus, self=self, callback=callback):
+            if callback is not None:
+                callback()
+            messenger.send('leavingCountryClub')
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+            return
+
+        BattlePlace.BattlePlace.enterDied(self, requestStatus, diedDone)
+
+    def enterFLA(self, requestStatus):
+        CountryClubInterior.notify.debug('enterFLA')
+        self.flaDialog = TTDialog.TTGlobalDialog(
+            message=TTLocalizer.ForcedLeaveCountryClubAckMsg,
+            doneEvent='FLADone',
+            style=TTDialog.Acknowledge,
+            fadeScreen=1)
+
+        def continueExit(self=self, requestStatus=requestStatus):
+            self.__processLeaveRequest(requestStatus)
+
+        self.accept('FLADone', continueExit)
+        self.flaDialog.show()
+
+    def exitFLA(self):
+        CountryClubInterior.notify.debug('exitFLA')
+        if hasattr(self, 'flaDialog'):
+            self.flaDialog.cleanup()
+            del self.flaDialog
+
+    def detectedElevatorCollision(self, distElevator):
+        self.fsm.request('elevator', [distElevator])
+
+    def enterElevator(self, distElevator, skipDFABoard=0):
+        self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
+        self.elevator = Elevator.Elevator(
+            self.fsm.getStateNamed('elevator'),
+            self.elevatorDoneEvent,
+            distElevator)
+        if skipDFABoard:
+            self.elevator.skipDFABoard = 1
+        self.elevator.setReverseBoardingCamera(True)
+        distElevator.elevatorFSM = self.elevator
+        self.elevator.load()
+        self.elevator.enter()
+
+    def exitElevator(self):
+        self.ignore(self.elevatorDoneEvent)
+        self.elevator.unload()
+        self.elevator.exit()
+
+    def handleElevatorDone(self, doneStatus):
+        self.notify.debug('handling elevator done event')
+        where = doneStatus['where']
+        if where == 'reject':
+            if hasattr(
+                    base.localAvatar,
+                    'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                pass
+            else:
+                self.fsm.request('walk')
+        elif where == 'exit':
+            self.fsm.request('walk')
+        elif where == 'factoryInterior' or where == 'suitInterior':
+            self.doneStatus = doneStatus
+            self.doneEvent = 'lawOfficeFloorDone'
+            messenger.send(self.doneEvent)
+        else:
+            self.notify.error(
+                'Unknown mode: ' +
+                where +
+                ' in handleElevatorDone')

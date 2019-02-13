@@ -279,4 +279,439 @@ class DistributedDoorEntity(
         lock1 = (stateBits & 240) >> 4
         lock2 = (stateBits & 3840) >> 8
         if self.isGenerated():
-            s
+            self.locks[0].setLockState(lock0)
+            self.locks[1].setLockState(lock1)
+            self.locks[2].setLockState(lock2)
+        else:
+            self.initialLock0StateIndex = lock0
+            self.initialLock1StateIndex = lock1
+            self.initialLock2StateIndex = lock2
+
+    def setDoorState(self, stateIndex, timeStamp):
+        self.stateTime = globalClockDelta.localElapsedTime(timeStamp)
+        if self.isGenerated():
+            if self.stateIndex != stateIndex:
+                state = self.states.get(stateIndex)
+                if state is not None:
+                    self.fsm.request(state)
+        else:
+            self.initialState = stateIndex
+            self.initialStateTimestamp = timeStamp
+        return
+
+    def getName(self):
+        return 'switch-%s' % str(self.entId)
+
+    def getNodePath(self):
+        if hasattr(self, 'doorNode'):
+            return self.doorNode
+        return None
+
+    def setupDoor(self):
+        model = loader.loadModel('phase_9/models/cogHQ/CogDoorHandShake')
+        if model:
+            doorway = model.find('**/Doorway1')
+            rootNode = self.doorNode.attachNewNode(self.getName() + '-root')
+            rootNode.setPos(self.pos)
+            rootNode.setHpr(self.hpr)
+            rootNode.setScale(self.scale)
+            rootNode.setColor(self.color)
+            change = rootNode.attachNewNode('changePos')
+            doorway.reparentTo(change)
+            self.node = rootNode
+            self.node.show()
+            self.locks.append(
+                DistributedDoorEntityLock(
+                    self,
+                    0,
+                    doorway.find('**/Slide_One_Closed'),
+                    doorway.find('**/Slide_One_Left_Open'),
+                    doorway.find('**/Slide_One_Right_Open'),
+                    self.initialLock0StateIndex))
+            self.locks.append(
+                DistributedDoorEntityLock(
+                    self,
+                    1,
+                    doorway.find('**/Slide_Two_Closed'),
+                    doorway.find('**/Slide_Two_Left_Open'),
+                    doorway.find('**/Slide_Two_Right_Open'),
+                    self.initialLock1StateIndex))
+            self.locks.append(
+                DistributedDoorEntityLock(
+                    self,
+                    2,
+                    doorway.find('**/Slide_Three_Closed'),
+                    doorway.find('**/Slide_Three_Left_Open'),
+                    doorway.find('**/Slide_Three_Right_Open'),
+                    self.initialLock2StateIndex))
+
+            del self.initialLock0StateIndex
+            del self.initialLock1StateIndex
+            del self.initialLock2StateIndex
+
+            door = doorway.find('doortop')
+            if door.isEmpty():
+                print 'doortop hack'
+                door = doorway.attachNewNode('doortop')
+                doorway.find('doortop1').reparentTo(door)
+                doorway.find('doortop2').reparentTo(door)
+
+            rootNode = self.doorNode.attachNewNode(self.getName() + '-topDoor')
+            rootNode.setPos(self.pos)
+            rootNode.setHpr(self.hpr)
+            rootNode.setScale(self.scale)
+            rootNode.setColor(self.color)
+            change = rootNode.attachNewNode('changePos')
+            door.reparentTo(change)
+            self.doorTop = rootNode
+            self.doorTop.show()
+
+            rootNode = self.doorTop.getParent().attachNewNode(self.getName() + '-leftDoor')
+            change = rootNode.attachNewNode('change')
+            door = doorway.find('**/doorLeft')
+            door = door.reparentTo(change)
+            self.doorLeft = rootNode
+            self.doorLeft.show()
+            change.setPos(self.pos)
+            change.setHpr(self.hpr)
+            change.setScale(self.scale)
+            change.setColor(self.color)
+
+            door = doorway.find('doorbottom')
+            if door.isEmpty():
+                print 'doorbottom hack'
+                door = doorway.attachNewNode('doorbottom')
+                doorway.find('doorbottom1').reparentTo(door)
+                doorway.find('doorbottom2').reparentTo(door)
+
+            change = render.attachNewNode('changePos')
+            door.reparentTo(change)
+            rootNode = self.doorNode.attachNewNode(
+                self.getName() + '-bottomDoor')
+            rootNode.setPos(self.pos)
+            rootNode.setHpr(self.hpr)
+            rootNode.setScale(self.scale)
+            rootNode.setColor(self.color)
+            change.reparentTo(rootNode)
+            self.doorBottom = rootNode
+            self.doorBottom.show()
+
+            rootNode = self.doorTop.getParent().attachNewNode(self.getName() + '-rightDoor')
+            change = rootNode.attachNewNode('change')
+            door = doorway.find('**/doorRight')
+            door = door.reparentTo(change)
+            self.doorRight = rootNode
+            self.doorRight.show()
+            change.setPos(self.pos)
+            change.setHpr(self.hpr)
+            change.setScale(self.scale)
+            change.setColor(self.color)
+
+            collision = self.doorLeft.find('**/doorLeft_collision1')
+            collision.setName(self.getName())
+            collision = self.doorLeft.find('**/doorLeft_collision2')
+            collision.setName(self.getName())
+            collision = self.doorRight.find('**/doorRight_collision1')
+            collision.setName(self.getName())
+            collision = self.doorRight.find('**/doorRight_collision2')
+            collision.setName(self.getName())
+            collision = self.doorLeft.find('**/doorLeft_innerCollision')
+            collision.setName(self.getName())
+            self.leftInnerCollision = collision
+            collision = self.doorRight.find('**/doorRight_innerCollision')
+            collision.setName(self.getName())
+            self.rightInnerCollision = collision
+
+            if 1:
+                pass
+            else:
+                radius = 8.0
+                cSphere = CollisionSphere(0.0, 0.0, 0.0, radius)
+                cSphere.setTangible(0)
+                cSphereNode = CollisionNode(self.getName())
+                cSphereNode.addSolid(cSphere)
+                cSphereNode.setFromCollideMask(BitMask32.allOff())
+                cSphereNode.setIntoCollideMask(ToontownGlobals.WallBitmask)
+                self.cSphereNodePath = self.node.attachNewNode(cSphereNode)
+
+            if 1:
+                self.node.flattenMedium()
+                self.doorTop.flattenMedium()
+                self.doorBottom.flattenMedium()
+                self.doorLeft.flattenMedium()
+                self.doorRight.flattenMedium()
+
+        self.setDoorState(self.initialState, self.initialStateTimestamp)
+        del self.initialState
+        del self.initialStateTimestamp
+
+    def setInnerDoorsTrack(self, track):
+        if self.innerDoorsTrack is not None:
+            self.innerDoorsTrack.pause()
+            self.innerDoorsTrack = None
+        if track is not None:
+            track.start(0.0)
+            self.innerDoorsTrack = track
+        return
+
+    def openInnerDoors(self):
+        print 'openInnerDoors'
+        if not self.level.complexVis() or self.isOuterDoorOpen and (
+                not self.isVisBlocker or self.isVisReady):
+            print 'openInnerDoors stage Two'
+            duration = self.duration
+            slideSfx = base.loader.loadSfx(
+                'phase_9/audio/sfx/CHQ_FACT_door_open_sliding.ogg')
+            finalSfx = base.loader.loadSfx(
+                'phase_9/audio/sfx/CHQ_FACT_door_open_final.ogg')
+            moveDistance = 8.0
+            self.setInnerDoorsTrack(
+                Sequence(
+                    Func(
+                        self.leftInnerCollision.unstash),
+                    Func(
+                        self.rightInnerCollision.unstash),
+                    Parallel(
+                        SoundInterval(
+                            slideSfx,
+                            node=self.node,
+                            duration=duration * 0.4,
+                            volume=0.8),
+                        LerpPosInterval(
+                            nodePath=self.doorLeft,
+                            duration=duration * 0.4,
+                            pos=Vec3(
+                                -moveDistance,
+                                0.0,
+                                0.0),
+                            blendType='easeOut'),
+                        LerpPosInterval(
+                            nodePath=self.doorRight,
+                            duration=duration * 0.4,
+                            pos=Vec3(
+                                moveDistance,
+                                0.0,
+                                0.0),
+                            blendType='easeOut'),
+                        Sequence(
+                            Wait(
+                                duration * 0.375),
+                            SoundInterval(
+                                finalSfx,
+                                node=self.node,
+                                duration=1.0,
+                                volume=0.8))),
+                    Func(
+                        self.doorLeft.stash),
+                    Func(
+                        self.doorRight.stash)))
+
+    def closeInnerDoors(self):
+        duration = self.duration
+        slideSfx = base.loader.loadSfx(
+            'phase_9/audio/sfx/CHQ_FACT_door_open_sliding.ogg')
+        finalSfx = base.loader.loadSfx(
+            'phase_9/audio/sfx/CHQ_FACT_door_open_final.ogg')
+        moveDistance = 8.0
+        self.setInnerDoorsTrack(
+            Sequence(
+                Func(
+                    self.doorLeft.unstash),
+                Func(
+                    self.doorRight.unstash),
+                Parallel(
+                    SoundInterval(
+                        slideSfx,
+                        node=self.node,
+                        duration=duration * 0.4,
+                        volume=0.8),
+                    LerpPosInterval(
+                        nodePath=self.doorLeft,
+                        duration=duration * 0.4,
+                        pos=Vec3(0.0),
+                        blendType='easeIn'),
+                    LerpPosInterval(
+                        nodePath=self.doorRight,
+                        duration=duration * 0.4,
+                        pos=Vec3(0.0),
+                        blendType='easeIn'),
+                    Sequence(
+                        Wait(
+                            duration * 0.375),
+                        SoundInterval(
+                            finalSfx,
+                            node=self.node,
+                            duration=1.0,
+                            volume=0.8))),
+                Func(
+                    self.leftInnerCollision.stash),
+                Func(
+                    self.rightInnerCollision.stash)))
+
+    def setisOuterDoorOpen(self, isOpen):
+        self.isOuterDoorOpen = isOpen
+
+    def enterState1(self):
+        print 'doors enter state 1'
+        FourState.FourState.enterState1(self)
+        self.isOuterDoorOpen = 0
+        if self.isVisBlocker:
+            if not self.isVisReady:
+                self.requestUnblockVis()
+        else:
+            self.okToUnblockVis()
+        duration = self.duration
+        slideSfx = base.loader.loadSfx(
+            'phase_9/audio/sfx/CHQ_FACT_door_open_sliding.ogg')
+        finalSfx = base.loader.loadSfx(
+            'phase_9/audio/sfx/CHQ_FACT_door_open_final.ogg')
+        moveDistance = 8.0
+        self.setTrack(
+            Sequence(
+                Wait(
+                    duration * 0.1),
+                Parallel(
+                    SoundInterval(
+                        slideSfx,
+                        node=self.node,
+                        duration=duration * 0.4,
+                        volume=0.8),
+                    LerpPosInterval(
+                        nodePath=self.doorTop,
+                        duration=duration * 0.4,
+                        pos=Vec3(
+                            0.0,
+                            0.0,
+                            moveDistance),
+                        blendType='easeOut'),
+                    LerpPosInterval(
+                        nodePath=self.doorBottom,
+                        duration=duration * 0.4,
+                        pos=Vec3(
+                            0.0,
+                            0.0,
+                            -moveDistance),
+                        blendType='easeOut'),
+                    Sequence(
+                        Wait(
+                            duration * 0.375),
+                        SoundInterval(
+                            finalSfx,
+                            node=self.node,
+                            duration=1.0,
+                            volume=0.8))),
+                Func(
+                    self.doorTop.stash),
+                Func(
+                    self.doorBottom.stash),
+                Func(
+                    self.setisOuterDoorOpen,
+                    1),
+                Func(
+                    self.openInnerDoors)))
+
+    def enterState2(self):
+        FourState.FourState.enterState2(self)
+        self.isOuterDoorOpen = 1
+        self.setTrack(None)
+        moveDistance = 7.5
+        (self.doorTop.setPos(Vec3(0.0, 0.0, moveDistance)),)
+        (self.doorBottom.setPos(Vec3(0.0, 0.0, -moveDistance)),)
+        self.doorTop.stash()
+        self.doorBottom.stash()
+        if not self.isVisBlocker or not self.isWaitingForUnblockVis():
+            self.setInnerDoorsTrack(None)
+            self.doorLeft.setPos(Vec3(-moveDistance, 0.0, 0.0))
+            self.doorRight.setPos(Vec3(moveDistance, 0.0, 0.0))
+            self.doorLeft.stash()
+            self.doorRight.stash()
+        return
+
+    def exitState2(self):
+        FourState.FourState.exitState2(self)
+        self.cancelUnblockVis()
+
+    def enterState3(self):
+        FourState.FourState.enterState3(self)
+        duration = self.duration
+        slideSfx = base.loader.loadSfx(
+            'phase_9/audio/sfx/CHQ_FACT_door_open_sliding.ogg')
+        finalSfx = base.loader.loadSfx(
+            'phase_9/audio/sfx/CHQ_FACT_door_open_final.ogg')
+        self.setTrack(
+            Sequence(
+                Wait(
+                    duration * 0.1),
+                Func(
+                    self.closeInnerDoors),
+                Wait(
+                    duration * 0.4),
+                Func(
+                    self.doorTop.unstash),
+                Func(
+                    self.doorBottom.unstash),
+                Parallel(
+                    SoundInterval(
+                        slideSfx,
+                        node=self.node,
+                        duration=duration * 0.4,
+                        volume=0.8),
+                    LerpPosInterval(
+                        nodePath=self.doorTop,
+                        duration=duration * 0.4,
+                        pos=Vec3(0.0),
+                        blendType='easeIn'),
+                    LerpPosInterval(
+                        nodePath=self.doorBottom,
+                        duration=duration * 0.4,
+                        pos=Vec3(0.0),
+                        blendType='easeIn'),
+                    Sequence(
+                        Wait(
+                            duration * 0.375),
+                        SoundInterval(
+                            finalSfx,
+                            node=self.node,
+                            duration=duration * 0.4,
+                            volume=0.8))),
+                Func(
+                    self.setisOuterDoorOpen,
+                    0)))
+
+    def enterState4(self):
+        FourState.FourState.enterState4(self)
+        self.setisOuterDoorOpen(0)
+        self.isVisReady = 0
+        self.setTrack(None)
+        self.doorTop.unstash()
+        self.doorBottom.unstash()
+        self.doorTop.setPos(Vec3(0.0))
+        self.doorBottom.setPos(Vec3(0.0))
+        self.setInnerDoorsTrack(None)
+        self.leftInnerCollision.stash()
+        self.rightInnerCollision.stash()
+        self.doorLeft.unstash()
+        self.doorRight.unstash()
+        self.doorLeft.setPos(Vec3(0.0))
+        self.doorRight.setPos(Vec3(0.0))
+
+    if __dev__:
+        def initWantDoors(self):
+            self.accept('wantDoorsChanged', self.onWantDoorsChanged)
+            self.onWantDoorsChanged()
+
+        def shutdownWantDoors(self):
+            self.ignore('wantDoorsChanged')
+
+        def onWantDoorsChanged(self):
+            if self.level.levelMgrEntity.wantDoors:
+                self.getNodePath().unstash()
+            else:
+                self.getNodePath().stash()
+
+        def attribChanged(self, attrib, value):
+            self.takedown()
+            self.setup()
+
+    def debugPrint(self, *a):
+        return True

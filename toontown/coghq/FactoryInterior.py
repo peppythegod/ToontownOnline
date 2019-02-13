@@ -212,3 +212,114 @@ class FactoryInterior(BattlePlace.BattlePlace):
     def _FactoryInterior__processLeaveRequest(self, requestStatus):
         hoodId = requestStatus['hoodId']
         if hoodId == ToontownGlobals.MyEstate:
+            self.getEstateZoneAndGoHome(requestStatus)
+        else:
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+
+        def __teleportOutDone(self, requestStatus):
+            FactoryInterior.notify.info('__teleportOutDone()')
+            messenger.send('leavingFactory')
+            messenger.send('localToonLeft')
+            if self.factoryDefeated and not self.confrontedForeman:
+                self.fsm.request('FLA', [requestStatus])
+            else:
+                self.__processLeaveRequest(requestStatus)
+
+        def exitTeleportOut(self):
+            FactoryInterior.notify.info('exitTeleportOut()')
+            BattlePlace.BattlePlace.exitTeleportOut(self)
+
+        def detectedElevatorCollision(self, distElevator):
+            self.fsm.request('elevator', [distElevator])
+
+        def enterElevator(self, distElevator):
+            self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
+            self.elevator = Elevator.Elevator(self.fsm.getStateNamed(
+                'elevator'), self.elevatorDoneEvent, distElevator)
+            distElevator.elevatorFSM = self.elevator
+            self.elevator.load()
+            self.elevator.enter()
+
+        def exitElevator(self):
+            self.ignore(self.elevatorDoneEvent)
+            self.elevator.unload()
+            self.elevator.exit()
+
+        def handleElevatorDone(self, doneStatus):
+            self.notify.debug('handling elevator done event')
+            where = doneStatus['where']
+            if where == 'reject':
+                if hasattr(
+                        base.localAvatar,
+                        'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                    pass
+                else:
+                    self.fsm.request('walk')
+            elif where == 'exit':
+                self.fsm.request('walk')
+            elif where == 'factoryInterior' or where == 'suitInterior':
+                self.doneStatus = doneStatus
+                self.doneEvent = 'lawOfficeFloorDone'
+                messenger.send(self.doneEvent)
+            else:
+                self.notify.error(
+                    'Unknown mode: ' +
+                    where +
+                    ' in handleElevatorDone')
+
+        def handleFactoryWinEvent(self):
+            FactoryInterior.notify.info('handleFactoryWinEvent')
+
+            if base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'died':
+                return
+
+            self.factoryDefeated = 1
+
+            if 1:
+                zoneId = ZoneUtil.getHoodId(self.zoneId)
+            else:
+                zoneId = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
+
+            self.fsm.request('teleportOut', [{
+                'loader': ZoneUtil.getLoaderName(zoneId),
+                'where': ZoneUtil.getToonWhereName(zoneId),
+                'how': 'teleportIn',
+                'hoodId': zoneId,
+                'zoneId': zoneId,
+                'shardId': None,
+                'avId': -1,
+            }])
+
+        def enterDied(self, requestStatus, callback=None):
+            FactoryInterior.notify.info('enterDied')
+
+            def diedDone(requestStatus, self=self, callback=callback):
+                if callback is not None:
+                    callback()
+                messenger.send('leavingFactory')
+                self.doneStatus = requestStatus
+                messenger.send(self.doneEvent)
+                return
+
+            BattlePlace.BattlePlace.enterDied(self, requestStatus, diedDone)
+
+        def enterFLA(self, requestStatus):
+            FactoryInterior.notify.info('enterFLA')
+            self.flaDialog = TTDialog.TTGlobalDialog(
+                message=TTLocalizer.ForcedLeaveFactoryAckMsg,
+                doneEvent='FLADone',
+                style=TTDialog.Acknowledge,
+                fadeScreen=1)
+
+            def continueExit(self=self, requestStatus=requestStatus):
+                self.__processLeaveRequest(requestStatus)
+
+            self.accept('FLADone', continueExit)
+            self.flaDialog.show()
+
+        def exitFLA(self):
+            FactoryInterior.notify.info('exitFLA')
+            if hasattr(self, 'flaDialog'):
+                self.flaDialog.cleanup()
+                del self.flaDialog

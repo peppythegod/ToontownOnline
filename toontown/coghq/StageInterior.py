@@ -125,15 +125,15 @@ class StageInterior(BattlePlace.BattlePlace):
             self.loader.hood.spawnTitleText(stage.stageId)
 
         self.stageReadyWatcher = BulletinBoardWatcher.BulletinBoardWatcher(
-    'StageReady', DistributedStage.DistributedStage.ReadyPost, commence)
+            'StageReady', DistributedStage.DistributedStage.ReadyPost, commence)
         self.stageDefeated = 0
         self.acceptOnce(
-    DistributedStage.DistributedStage.WinEvent,
-     self.handleStageWinEvent)
+            DistributedStage.DistributedStage.WinEvent,
+            self.handleStageWinEvent)
         if __debug__ and 0:
             self.accept(
-    'f10', lambda: messenger.send(
-        DistributedStage.DistributedStage.WinEvent))
+                'f10', lambda: messenger.send(
+                    DistributedStage.DistributedStage.WinEvent))
 
         self.confrontedBoss = 0
 
@@ -186,10 +186,10 @@ class StageInterior(BattlePlace.BattlePlace):
             bboard.get(DistributedStage.DistributedStage.FloorNum))
         base.localAvatar.inventory.setBattleCreditMultiplier(mult)
         self.loader.townBattle.enter(
-    event,
-    self.fsm.getStateNamed('battle'),
-    bldg=1,
-     creditMultiplier=mult)
+            event,
+            self.fsm.getStateNamed('battle'),
+            bldg=1,
+            creditMultiplier=mult)
 
     def exitBattle(self):
         StageInterior.notify.debug('exitBattle')
@@ -211,4 +211,123 @@ class StageInterior(BattlePlace.BattlePlace):
         pass
 
     def enterTeleportOut(self, requestStatus):
-        StageInterior.notify.debug('enterTeleportOut()'
+        StageInterior.notify.debug('enterTeleportOut()')
+        BattlePlace.BattlePlace.enterTeleportOut(
+            self, requestStatus, self.__teleportOutDone)
+
+    def __processLeaveRequest(self, requestStatus):
+        hoodId = requestStatus['hoodId']
+        if hoodId == ToontownGlobals.MyEstate:
+            self.getEstateZoneAndGoHome(requestStatus)
+        else:
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+
+    def __teleportOutDone(self, requestStatus):
+        StageInterior.notify.debug('__teleportOutDone()')
+        messenger.send('leavingStage')
+        messenger.send('localToonLeft')
+        if self.stageDefeated and not self.confrontedBoss:
+            self.fsm.request('FLA', [requestStatus])
+        else:
+            self.__processLeaveRequest(requestStatus)
+
+    def exitTeleportOut(self):
+        StageInterior.notify.debug('exitTeleportOut()')
+        BattlePlace.BattlePlace.exitTeleportOut(self)
+
+    def handleStageWinEvent(self):
+        StageInterior.notify.debug('handleStageWinEvent')
+
+        if base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'died':
+            return
+
+        self.stageDefeated = 1
+
+        if 1:
+            zoneId = ZoneUtil.getHoodId(self.zoneId)
+        else:
+            zoneId = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
+
+        self.fsm.request('teleportOut', [{
+            'loader': ZoneUtil.getLoaderName(zoneId),
+            'where': ZoneUtil.getToonWhereName(zoneId),
+            'how': 'teleportIn',
+            'hoodId': zoneId,
+            'zoneId': zoneId,
+            'shardId': None,
+            'avId': -1,
+        }])
+
+    def enterDied(self, requestStatus, callback=None):
+        StageInterior.notify.debug('enterDied')
+
+        def diedDone(requestStatus, self=self, callback=callback):
+            if callback is not None:
+                callback()
+            messenger.send('leavingStage')
+            self.doneStatus = requestStatus
+            messenger.send(self.doneEvent)
+            return
+
+        BattlePlace.BattlePlace.enterDied(self, requestStatus, diedDone)
+
+    def enterFLA(self, requestStatus):
+        StageInterior.notify.debug('enterFLA')
+        self.flaDialog = TTDialog.TTGlobalDialog(
+            message=TTLocalizer.ForcedLeaveStageAckMsg,
+            doneEvent='FLADone',
+            style=TTDialog.Acknowledge,
+            fadeScreen=1)
+
+        def continueExit(self=self, requestStatus=requestStatus):
+            self.__processLeaveRequest(requestStatus)
+
+        self.accept('FLADone', continueExit)
+        self.flaDialog.show()
+
+    def exitFLA(self):
+        StageInterior.notify.debug('exitFLA')
+        if hasattr(self, 'flaDialog'):
+            self.flaDialog.cleanup()
+            del self.flaDialog
+
+    def detectedElevatorCollision(self, distElevator):
+        self.fsm.request('elevator', [distElevator])
+
+    def enterElevator(self, distElevator):
+        self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
+        self.elevator = Elevator.Elevator(
+            self.fsm.getStateNamed('elevator'),
+            self.elevatorDoneEvent,
+            distElevator)
+        distElevator.elevatorFSM = self.elevator
+        self.elevator.load()
+        self.elevator.enter()
+
+    def exitElevator(self):
+        self.ignore(self.elevatorDoneEvent)
+        self.elevator.unload()
+        self.elevator.exit()
+
+    def handleElevatorDone(self, doneStatus):
+        self.notify.debug('handling elevator done event')
+        where = doneStatus['where']
+        if where == 'reject':
+            if hasattr(
+                    base.localAvatar,
+                    'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                pass
+            else:
+                self.fsm.request('walk')
+        elif where == 'exit':
+            self.fsm.request('walk')
+        elif where == 'factoryInterior' or where == 'suitInterior':
+            self.doneStatus = doneStatus
+            self.doneEvent = 'lawOfficeFloorDone'
+            messenger.send(self.doneEvent)
+        else:
+            self.notify.error(
+                'Unknown mode: ' +
+                where +
+                ' in handleElevatorDone')
