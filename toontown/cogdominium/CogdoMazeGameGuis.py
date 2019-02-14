@@ -13,7 +13,6 @@ import CogdoUtil
 
 
 class CogdoMazeMapGui(MazeMapGui):
-
     def __init__(self, mazeCollTable):
         MazeMapGui.__init__(
             self,
@@ -46,8 +45,8 @@ class CogdoMazeMapGui(MazeMapGui):
         baseName = '**/tt_t_gui_cmg_miniMap_'
         cardModel = CogdoUtil.loadMazeModel('miniMap_cards', group='gui')
         cm = CardMaker('bg')
-        cm.setFrame(-1.1000000000000001, 1.1000000000000001, -
-                    1.1000000000000001, 1.1000000000000001)
+        cm.setFrame(-1.1000000000000001, 1.1000000000000001,
+                    -1.1000000000000001, 1.1000000000000001)
         bg = self.attachNewNode(cm.generate())
         bg.setColor(*self._bgColor)
         bg.setBin('fixed', 0)
@@ -116,7 +115,6 @@ class CogdoMazeMapGui(MazeMapGui):
 
 
 class CogdoMazeBossCodeFrame(DirectFrame):
-
     def __init__(self, id, code, modelToCopy):
         DirectFrame.__init__(
             self,
@@ -139,17 +137,10 @@ class CogdoMazeBossCodeFrame(DirectFrame):
             relief=None,
             scale=Globals.BossCodeFrameLabelScale,
             text=code,
-            pos=(
-                0,
-                0,
-                -0.029999999999999999),
+            pos=(0, 0, -0.029999999999999999),
             text_align=TextNode.ACenter,
             text_fg=Globals.BossCodeFrameLabelNormalColor,
-            text_shadow=(
-                0,
-                0,
-                0,
-                0),
+            text_shadow=(0, 0, 0, 0),
             text_font=ToontownGlobals.getSuitFont())
 
     def destroy(self):
@@ -164,10 +155,12 @@ class CogdoMazeBossCodeFrame(DirectFrame):
             Sequence(
                 Parallel(
                     ToontownIntervals.getPresentGuiIval(
-                        self._bossIcon, '', startPos=(
-                            0, 0, -0.14999999999999999))), Wait(1.0), ToontownIntervals.getPulseLargerIval(
-                    self._bg, ''), name='boss_code%i' %
-                self._id))
+                        self._bossIcon,
+                        '',
+                        startPos=(0, 0, -0.14999999999999999))),
+                Wait(1.0),
+                ToontownIntervals.getPulseLargerIval(self._bg, ''),
+                name='boss_code%i' % self._id))
 
     def setHit(self, hit):
         if hit:
@@ -180,7 +173,6 @@ class CogdoMazeBossCodeFrame(DirectFrame):
 
 
 class CogdoMazeBossGui(DirectFrame):
-
     def __init__(self, code):
         DirectFrame.__init__(
             self,
@@ -222,16 +214,8 @@ class CogdoMazeBossGui(DirectFrame):
             text=TTLocalizer.CogdoMazeGameBossGuiTitle.upper(),
             pos=titleLabelPos,
             text_align=TextNode.ACenter,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                0),
+            text_fg=(0, 0, 0, 1),
+            text_shadow=(0, 0, 0, 0),
             text_font=ToontownGlobals.getSuitFont())
         self._titleLabel.setBin('fixed', 1)
         bossCard = self._model.find('**/bossCard')
@@ -259,12 +243,11 @@ class CogdoMazeBossGui(DirectFrame):
             self._openDoor.unstash()
             self._closedDoor.stash()
             ToontownIntervals.start(
-                ToontownIntervals.getPulseLargerIval(
-                    self._openDoor, 'bosscodedoor'))
+                ToontownIntervals.getPulseLargerIval(self._openDoor,
+                                                     'bosscodedoor'))
 
 
 class CogdoMazeHud:
-
     def __init__(self):
         self._update = None
         self._initQuestArrow()
@@ -311,9 +294,8 @@ class CogdoMazeHud:
 
     def _updateTask(self, task):
         if self._questArrowVisible:
-            self._questArrow.setPos(
-                self._questArrowParent,
-                self._questArrowOffset)
+            self._questArrow.setPos(self._questArrowParent,
+                                    self._questArrowOffset)
             self._questArrow.lookAt(self._questArrowNodeToPoint)
 
         return Task.cont

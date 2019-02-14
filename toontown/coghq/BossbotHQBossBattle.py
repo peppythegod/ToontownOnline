@@ -9,11 +9,10 @@ class BossbotHQBossBattle(CogHQBossBattle.CogHQBossBattle):
     notify = DirectNotifyGlobal.directNotify.newCategory('BossbotHQBossBattle')
 
     def __init__(self, loader, parentFSM, doneEvent):
-        CogHQBossBattle.CogHQBossBattle.__init__(
-            self, loader, parentFSM, doneEvent)
+        CogHQBossBattle.CogHQBossBattle.__init__(self, loader, parentFSM,
+                                                 doneEvent)
         self.teleportInPosHpr = (88, -214, 0, 210, 0, 0)
-        for stateName in [
-                'movie']:
+        for stateName in ['movie']:
             state = self.fsm.getStateNamed(stateName)
             state.addTransition('crane')
 

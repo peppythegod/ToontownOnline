@@ -47,8 +47,8 @@ class DistributedBuildingMgrAI:
         return Task.done
 
     def isSuitBlock(self, blockNumber):
-        return self._DistributedBuildingMgrAI__buildings[blockNumber].isSuitBlock(
-        )
+        return self._DistributedBuildingMgrAI__buildings[
+            blockNumber].isSuitBlock()
 
     def getSuitBlocks(self):
         blocks = []
@@ -84,8 +84,8 @@ class DistributedBuildingMgrAI:
         return self._DistributedBuildingMgrAI__buildings.values()
 
     def getFrontDoorPoint(self, blockNumber):
-        return self._DistributedBuildingMgrAI__buildings[blockNumber].getFrontDoorPoint(
-        )
+        return self._DistributedBuildingMgrAI__buildings[
+            blockNumber].getFrontDoorPoint()
 
     def getBuildingTrack(self, blockNumber):
         return self._DistributedBuildingMgrAI__buildings[blockNumber].track
@@ -94,8 +94,8 @@ class DistributedBuildingMgrAI:
         return self._DistributedBuildingMgrAI__buildings[blockNumber]
 
     def setFrontDoorPoint(self, blockNumber, point):
-        return self._DistributedBuildingMgrAI__buildings[blockNumber].setFrontDoorPoint(
-            point)
+        return self._DistributedBuildingMgrAI__buildings[
+            blockNumber].setFrontDoorPoint(point)
 
     def getDNABlockLists(self):
         blocks = []
@@ -124,18 +124,13 @@ class DistributedBuildingMgrAI:
                 continue
             blocks.append(blockNumber)
 
-        return (
-            blocks,
-            hqBlocks,
-            gagshopBlocks,
-            petshopBlocks,
-            kartshopBlocks,
-            animBldgBlocks)
+        return (blocks, hqBlocks, gagshopBlocks, petshopBlocks, kartshopBlocks,
+                animBldgBlocks)
 
     def findAllLandmarkBuildings(self):
         buildings = self.load()
-        (blocks, hqBlocks, gagshopBlocks, petshopBlocks,
-         kartshopBlocks, animBldgBlocks) = self.getDNABlockLists()
+        (blocks, hqBlocks, gagshopBlocks, petshopBlocks, kartshopBlocks,
+         animBldgBlocks) = self.getDNABlockLists()
         for block in blocks:
             self.newBuilding(block, buildings.get(block, None))
 
@@ -171,8 +166,8 @@ class DistributedBuildingMgrAI:
                 self.notify.warning(
                     'we had a cog building in welcome valley %d' %
                     building.zoneId)
-            building.becameSuitTime = blockData.get(
-                'becameSuitTime', time.time())
+            building.becameSuitTime = blockData.get('becameSuitTime',
+                                                    time.time())
             if blockData['state'] == 'suit':
                 building.setState('suit')
             elif blockData['state'] == 'cogdo':
@@ -200,8 +195,8 @@ class DistributedBuildingMgrAI:
                 self.notify.warning(
                     'we had a cog building in welcome valley %d' %
                     building.zoneId)
-            building.becameSuitTime = blockData.get(
-                'becameSuitTime', time.time())
+            building.becameSuitTime = blockData.get('becameSuitTime',
+                                                    time.time())
             if blockData['state'] == 'suit':
                 building.setState('suit')
             else:
@@ -216,10 +211,9 @@ class DistributedBuildingMgrAI:
         exteriorZoneId = dnaStore.getZoneFromBlockNumber(blockNumber)
         exteriorZoneId = ZoneUtil.getTrueZoneId(exteriorZoneId, self.branchID)
         interiorZoneId = (
-            self.branchID - self.branchID %
-            100) + 500 + blockNumber
-        building = HQBuildingAI.HQBuildingAI(
-            self.air, exteriorZoneId, interiorZoneId, blockNumber)
+            self.branchID - self.branchID % 100) + 500 + blockNumber
+        building = HQBuildingAI.HQBuildingAI(self.air, exteriorZoneId,
+                                             interiorZoneId, blockNumber)
         self._DistributedBuildingMgrAI__buildings[blockNumber] = building
         return building
 
@@ -228,8 +222,7 @@ class DistributedBuildingMgrAI:
         exteriorZoneId = dnaStore.getZoneFromBlockNumber(blockNumber)
         exteriorZoneId = ZoneUtil.getTrueZoneId(exteriorZoneId, self.branchID)
         interiorZoneId = (
-            self.branchID - self.branchID %
-            100) + 500 + blockNumber
+            self.branchID - self.branchID % 100) + 500 + blockNumber
         building = GagshopBuildingAI.GagshopBuildingAI(
             self.air, exteriorZoneId, interiorZoneId, blockNumber)
         self._DistributedBuildingMgrAI__buildings[blockNumber] = building
@@ -240,8 +233,7 @@ class DistributedBuildingMgrAI:
         exteriorZoneId = dnaStore.getZoneFromBlockNumber(blockNumber)
         exteriorZoneId = ZoneUtil.getTrueZoneId(exteriorZoneId, self.branchID)
         interiorZoneId = (
-            self.branchID - self.branchID %
-            100) + 500 + blockNumber
+            self.branchID - self.branchID % 100) + 500 + blockNumber
         building = PetshopBuildingAI.PetshopBuildingAI(
             self.air, exteriorZoneId, interiorZoneId, blockNumber)
         self._DistributedBuildingMgrAI__buildings[blockNumber] = building
@@ -252,16 +244,15 @@ class DistributedBuildingMgrAI:
         exteriorZoneId = dnaStore.getZoneFromBlockNumber(blockNumber)
         exteriorZoneId = ZoneUtil.getTrueZoneId(exteriorZoneId, self.branchID)
         interiorZoneId = (
-            self.branchID - self.branchID %
-            100) + 500 + blockNumber
-        building = KartShopBuildingAI(
-            self.air, exteriorZoneId, interiorZoneId, blockNumber)
+            self.branchID - self.branchID % 100) + 500 + blockNumber
+        building = KartShopBuildingAI(self.air, exteriorZoneId, interiorZoneId,
+                                      blockNumber)
         self._DistributedBuildingMgrAI__buildings[blockNumber] = building
         return building
 
     def getFileName(self):
-        f = '%s%s_%d.buildings' % (
-            self.serverDatafolder, self.shard, self.branchID)
+        f = '%s%s_%d.buildings' % (self.serverDatafolder, self.shard,
+                                   self.branchID)
         return f
 
     def saveTo(self, file, block=None):

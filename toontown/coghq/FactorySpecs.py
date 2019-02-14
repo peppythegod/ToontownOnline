@@ -15,10 +15,12 @@ def getCogSpecModule(factoryId):
 
 FactorySpecModules = {
     ToontownGlobals.SellbotFactoryInt: SellbotLegFactorySpec,
-    ToontownGlobals.LawbotOfficeInt: LawbotLegFactorySpec}
+    ToontownGlobals.LawbotOfficeInt: LawbotLegFactorySpec
+}
 CogSpecModules = {
     ToontownGlobals.SellbotFactoryInt: SellbotLegFactoryCogs,
-    ToontownGlobals.LawbotOfficeInt: LawbotLegFactoryCogs}
+    ToontownGlobals.LawbotOfficeInt: LawbotLegFactoryCogs
+}
 if __dev__:
     import FactoryMockupSpec
     FactorySpecModules[ToontownGlobals.MockupFactoryId] = FactoryMockupSpec

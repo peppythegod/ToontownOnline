@@ -17,10 +17,9 @@ class DDPlayground(Playground.Playground):
         self.cameraSubmerged = -1
         self.toonSubmerged = -1
         self.activityFsm = ClassicFSM.ClassicFSM('Activity', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'OnBoat']),
-            State.State('OnBoat', self.enterOnBoat, self.exitOnBoat, [
-                'off'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['OnBoat']),
+            State.State('OnBoat', self.enterOnBoat, self.exitOnBoat, ['off'])
+        ], 'off', 'off')
         self.activityFsm.enterInitialState()
 
     def load(self):
@@ -46,12 +45,10 @@ class DDPlayground(Playground.Playground):
     def enterStart(self):
         self.cameraSubmerged = 0
         self.toonSubmerged = 0
-        taskMgr.add(
-            self._DDPlayground__checkToonUnderwater,
-            'dd-check-toon-underwater')
-        taskMgr.add(
-            self._DDPlayground__checkCameraUnderwater,
-            'dd-check-cam-underwater')
+        taskMgr.add(self._DDPlayground__checkToonUnderwater,
+                    'dd-check-toon-underwater')
+        taskMgr.add(self._DDPlayground__checkCameraUnderwater,
+                    'dd-check-cam-underwater')
 
     def enterDoorOut(self):
         taskMgr.remove('dd-check-toon-underwater')
@@ -61,9 +58,8 @@ class DDPlayground(Playground.Playground):
 
     def enterDoorIn(self, requestStatus):
         Playground.Playground.enterDoorIn(self, requestStatus)
-        taskMgr.add(
-            self._DDPlayground__checkToonUnderwater,
-            'dd-check-toon-underwater')
+        taskMgr.add(self._DDPlayground__checkToonUnderwater,
+                    'dd-check-toon-underwater')
 
     def _DDPlayground__checkCameraUnderwater(self, task):
         if camera.getZ(render) < 1.0:
@@ -85,9 +81,7 @@ class DDPlayground(Playground.Playground):
 
         self.loader.hood.setUnderwaterFog()
         base.playSfx(
-            self.loader.underwaterSound,
-            looping=1,
-            volume=0.80000000000000004)
+            self.loader.underwaterSound, looping=1, volume=0.80000000000000004)
         self.loader.seagullSound.stop()
         taskMgr.remove('dd-seagulls')
         self.cameraSubmerged = 1
@@ -112,8 +106,7 @@ class DDPlayground(Playground.Playground):
         if base.config.GetBool('disable-flying-glitch') == 0:
             self.fsm.request('walk')
 
-        self.walkStateData.fsm.request('swimming', [
-            self.loader.swimSound])
+        self.walkStateData.fsm.request('swimming', [self.loader.swimSound])
         pos = base.localAvatar.getPos(render)
         base.localAvatar.d_playSplashEffect(pos[0], pos[1], 1.675)
         self.toonSubmerged = 1
@@ -140,9 +133,8 @@ class DDPlayground(Playground.Playground):
 
     def teleportInDone(self):
         self.toonSubmerged = -1
-        taskMgr.add(
-            self._DDPlayground__checkToonUnderwater,
-            'dd-check-toon-underwater')
+        taskMgr.add(self._DDPlayground__checkToonUnderwater,
+                    'dd-check-toon-underwater')
         Playground.Playground.teleportInDone(self)
 
     def enterOff(self):

@@ -1,5 +1,3 @@
-
-
 import math
 from pandac.PandaModules import CollisionSphere, CollisionNode, Point3, CollisionTube, Vec3, rad2Deg
 from direct.showbase.DirectObject import DirectObject
@@ -80,8 +78,7 @@ class CogThief(DirectObject):
     def handleEnterSphere(self, collEntry):
         intoNp = collEntry.getIntoNodePath()
         self.notify.debug(
-            'handleEnterSphere suit %d hit %s' %
-            (self.cogIndex, intoNp))
+            'handleEnterSphere suit %d hit %s' % (self.cogIndex, intoNp))
         if self.game:
             self.game.handleEnterSphere(collEntry)
 
@@ -102,13 +99,13 @@ class CogThief(DirectObject):
         name = 'CogThiefSphere-%d' % self.cogIndex
         self.collSphereName = self.uniqueName(name)
         self.collNode = CollisionNode(self.collSphereName)
-        self.collNode.setIntoCollideMask(
-            CTGG.BarrelBitmask | ToontownGlobals.WallBitmask)
+        self.collNode.setIntoCollideMask(CTGG.BarrelBitmask
+                                         | ToontownGlobals.WallBitmask)
         self.collNode.addSolid(self.collSphere)
         self.collNodePath = self.suit.attachNewNode(self.collNode)
         self.accept('enter' + self.collSphereName, self.handleEnterSphere)
-        self.pieCollSphere = CollisionTube(
-            0, 0, 0, 0, 0, 4, self.CollisionRadius)
+        self.pieCollSphere = CollisionTube(0, 0, 0, 0, 0, 4,
+                                           self.CollisionRadius)
         self.pieCollSphere.setTangible(1)
         name = 'CogThiefPieSphere-%d' % self.cogIndex
         self.pieCollSphereName = self.uniqueName(name)
@@ -124,16 +121,10 @@ class CogThief(DirectObject):
         del self.collNodePath
         del self.collNode
 
-    def updateGoal(
-            self,
-            timestamp,
-            inResponseClientStamp,
-            goalType,
-            goalId,
-            pos):
+    def updateGoal(self, timestamp, inResponseClientStamp, goalType, goalId,
+                   pos):
         self.notify.debug(
-            'self.netTimeSentToStartByHit =%s' %
-            self.netTimeSentToStartByHit)
+            'self.netTimeSentToStartByHit =%s' % self.netTimeSentToStartByHit)
         if not self.game:
             self.notify.debug('updateGoal self.game is None, just returning')
             return None
@@ -158,11 +149,9 @@ class CogThief(DirectObject):
         1
         if inResponseClientStamp < self.netTimeSentToStartByHit and self.goal == CTGG.NoGoal and goalType == CTGG.RunAwayGoal:
             self.notify.warning(
-                'ignoring newGoal %s as cog %d was recently hit responsetime=%s hitTime=%s' %
-                (CTGG.GoalStr[goalType],
-                 self.cogIndex,
-                 inResponseClientStamp,
-                 self.netTimeSentToStartByHit))
+                'ignoring newGoal %s as cog %d was recently hit responsetime=%s hitTime=%s'
+                % (CTGG.GoalStr[goalType], self.cogIndex,
+                   inResponseClientStamp, self.netTimeSentToStartByHit))
         else:
             self.lastLocalTimeStampFromAI = globalClockDelta.networkToLocalTime(
                 timestamp, bits=32)
@@ -238,11 +227,10 @@ class CogThief(DirectObject):
 
         else:
             self.notify.debug(
-                'localStamp = %s, lastLocalTimeStampFromAI=%s, ignoring respondToToonHit' %
-                (localStamp, self.lastLocalTimeStampFromAI))
-        self.notify.debug(
-            'respondToToonHit self.netTimeSentToStartByHit = %s' %
-            self.netTimeSentToStartByHit)
+                'localStamp = %s, lastLocalTimeStampFromAI=%s, ignoring respondToToonHit'
+                % (localStamp, self.lastLocalTimeStampFromAI))
+        self.notify.debug('respondToToonHit self.netTimeSentToStartByHit = %s'
+                          % self.netTimeSentToStartByHit)
 
     def clearGoal(self):
         self.goal = CTGG.NoGoal
@@ -268,8 +256,8 @@ class CogThief(DirectObject):
         if not self.doneAdjust:
             myPos = self.lastPosFromAI
             self.notify.debug(
-                'thinkAboutGettingBarrel not doneAdjust setting position to %s' %
-                myPos)
+                'thinkAboutGettingBarrel not doneAdjust setting position to %s'
+                % myPos)
             self.suit.setPos(myPos)
             self.doneAdjust = True
 
@@ -334,13 +322,8 @@ class CogThief(DirectObject):
 
         self.lastThinkTime = globalClock.getFrameTime()
 
-    def makeCogCarryBarrel(
-            self,
-            timestamp,
-            inResponseClientStamp,
-            barrelModel,
-            barrelIndex,
-            cogPos):
+    def makeCogCarryBarrel(self, timestamp, inResponseClientStamp, barrelModel,
+                           barrelIndex, cogPos):
         if not self.game:
             return None
 
@@ -349,9 +332,8 @@ class CogThief(DirectObject):
         self.lastLocalTimeStampFromAI = localTimeStamp
         inResponseGameTime = self.convertNetworkStampToGameTime(
             inResponseClientStamp)
-        self.notify.debug(
-            'inResponseGameTime =%s timeSentToStart=%s' %
-            (inResponseGameTime, self.netTimeSentToStartByHit))
+        self.notify.debug('inResponseGameTime =%s timeSentToStart=%s' %
+                          (inResponseGameTime, self.netTimeSentToStartByHit))
         if inResponseClientStamp < self.netTimeSentToStartByHit and self.goal == CTGG.NoGoal:
             self.notify.warning('ignoring makeCogCarrybarrel')
         else:
@@ -360,13 +342,8 @@ class CogThief(DirectObject):
             self.suit.setPos(cogPos)
             self.barrel = barrelIndex
 
-    def makeCogDropBarrel(
-            self,
-            timestamp,
-            inResponseClientStamp,
-            barrelModel,
-            barrelIndex,
-            barrelPos):
+    def makeCogDropBarrel(self, timestamp, inResponseClientStamp, barrelModel,
+                          barrelIndex, barrelPos):
         localTimeStamp = globalClockDelta.networkToLocalTime(
             timestamp, bits=32)
         self.lastLocalTimeStampFromAI = localTimeStamp
@@ -387,8 +364,8 @@ class CogThief(DirectObject):
 
         else:
             self.notify.debug(
-                'localStamp = %s, lastLocalTimeStampFromAI=%s, ignoring respondToPieHit' %
-                (localStamp, self.lastLocalTimeStampFromAI))
+                'localStamp = %s, lastLocalTimeStampFromAI=%s, ignoring respondToPieHit'
+                % (localStamp, self.lastLocalTimeStampFromAI))
             self.notify.debug(
                 'respondToPieHit self.netTimeSentToStartByHit = %s' %
                 self.netTimeSentToStartByHit)
@@ -550,14 +527,15 @@ class CogThief(DirectObject):
         self.kaboom.setPos(self.suit.getPos())
         self.kaboom.setZ(3)
         self.kaboomTrack = Parallel(
-            SoundInterval(
-                self.kaboomSound, volume=0.5), Sequence(
-                Func(
-                    self.kaboom.showThrough), LerpScaleInterval(
-                    self.kaboom, duration=0.5, scale=Point3(
-                        10, 10, 10), startScale=Point3(
-                            1, 1, 1), blendType='easeOut'), Func(
-                                self.kaboom.hide)))
+            SoundInterval(self.kaboomSound, volume=0.5),
+            Sequence(
+                Func(self.kaboom.showThrough),
+                LerpScaleInterval(
+                    self.kaboom,
+                    duration=0.5,
+                    scale=Point3(10, 10, 10),
+                    startScale=Point3(1, 1, 1),
+                    blendType='easeOut'), Func(self.kaboom.hide)))
         self.kaboomTrack.start()
 
     def showSplat(self):
@@ -568,21 +546,14 @@ class CogThief(DirectObject):
         self.splat.setPos(self.suit.getPos())
         self.splat.setZ(3)
         self.kaboomTrack = Parallel(
-            SoundInterval(
-                self.pieHitSound,
-                volume=1.0),
+            SoundInterval(self.pieHitSound, volume=1.0),
             Sequence(
-                Func(
-                    self.splat.showThrough),
+                Func(self.splat.showThrough),
                 LerpScaleInterval(
                     self.splat,
                     duration=0.5,
                     scale=1.75,
-                    startScale=Point3(
-                        0.10000000000000001,
-                        0.10000000000000001,
-                        0.10000000000000001),
-                    blendType='easeOut'),
-                Func(
-                    self.splat.hide)))
+                    startScale=Point3(0.10000000000000001, 0.10000000000000001,
+                                      0.10000000000000001),
+                    blendType='easeOut'), Func(self.splat.hide)))
         self.kaboomTrack.start()

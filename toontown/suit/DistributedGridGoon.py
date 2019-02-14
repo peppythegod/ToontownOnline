@@ -45,16 +45,9 @@ class DistributedGridGoon(DistributedGoon.DistributedGoon):
         distance = Vec3(curPos - nextPos).length()
         duration = distance / self.velocity
         self.mazeWalkTrack = Sequence(
-            Func(
-                self.headsUp,
-                nextPos[0],
-                nextPos[1],
-                nextPos[2]),
+            Func(self.headsUp, nextPos[0], nextPos[1], nextPos[2]),
             LerpPosInterval(
-                self,
-                duration=duration,
-                pos=nextPos,
-                startPos=curPos),
+                self, duration=duration, pos=nextPos, startPos=curPos),
             name=self.uniqueName('mazeWalkTrack'))
         self.mazeWalkTrack.start()
 

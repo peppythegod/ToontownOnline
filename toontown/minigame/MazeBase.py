@@ -1,11 +1,8 @@
-
-
 from pandac.PandaModules import VBase3
 from direct.showbase.RandomNumGen import RandomNumGen
 
 
 class MazeBase:
-
     def __init__(self, model, mazeData, cellWidth, parent=None):
         if parent is None:
             parent = render
@@ -40,28 +37,27 @@ class MazeBase:
         if tX <= 0 and tY <= 0 and tX >= self.width or tY >= self.height:
             return 0
 
-        if not self.collisionTable[tY][tX] and not self.collisionTable[tY -
-                                                                       1][tX] and not self.collisionTable[tY][tX -
-                                                                                                              1] and not self.collisionTable[tY -
-                                                                                                                                             1][tX -
-                                                                                                                                                1]:
+        if not self.collisionTable[tY][tX] and not self.collisionTable[
+                tY - 1][tX] and not self.collisionTable[tY][
+                    tX - 1] and not self.collisionTable[tY - 1][tX - 1]:
             pass
         return (tX, tY) not in rejectList
 
     def tile2world(self, TX, TY):
-        return [
-            (TX - self.originTX) * self.cellWidth,
-            (TY - self.originTY) * self.cellWidth]
+        return [(TX - self.originTX) * self.cellWidth,
+                (TY - self.originTY) * self.cellWidth]
 
     def world2tile(self, x, y):
         return [
             int(x / self.cellWidth + self.originTX),
-            int(y / self.cellWidth + self.originTY)]
+            int(y / self.cellWidth + self.originTY)
+        ]
 
     def world2tileClipped(self, x, y):
         coords = [
             int(x / self.cellWidth + self.originTX),
-            int(y / self.cellWidth + self.originTY)]
+            int(y / self.cellWidth + self.originTY)
+        ]
         coords[0] = min(max(coords[0], 0), self.width - 1)
         coords[1] = min(max(coords[1], 0), self.height - 1)
         return coords
@@ -126,11 +122,10 @@ class MazeBase:
         height = self.height
         halfWidth = int(width / 2)
         halfHeight = int(height / 2)
-        quadrants = [
-            (0, 0, halfWidth - 1, halfHeight - 1),
-            (halfWidth, 0, width - 1, halfHeight - 1),
-            (0, halfHeight, halfWidth - 1, height - 1),
-            (halfWidth, halfHeight, width - 1, height - 1)]
+        quadrants = [(0, 0, halfWidth - 1, halfHeight - 1),
+                     (halfWidth, 0, width - 1, halfHeight - 1),
+                     (0, halfHeight, halfWidth - 1, height - 1),
+                     (halfWidth, halfHeight, width - 1, height - 1)]
         spotsTaken = []
 
         def getEmptySpotInQuadrant(quadrant):
@@ -155,7 +150,8 @@ class MazeBase:
 
             for u in range(remaining):
                 quadrant = quadrants[randomNumGen.randint(
-                    0, len(quadrants) - 1)]
+                    0,
+                    len(quadrants) - 1)]
                 l.append(getEmptySpotInQuadrant(quadrant))
 
             return l

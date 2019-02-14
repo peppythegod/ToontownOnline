@@ -56,8 +56,7 @@ class CatalogToonStatueItem(CatalogGardenItem.CatalogGardenItem):
         self.statueList = []
         for index in range(self.startPoseIndex, self.endPoseIndex + 1):
             self.statueList.append(
-                CatalogToonStatueItem(
-                    index, 1, endPoseIndex=index))
+                CatalogToonStatueItem(index, 1, endPoseIndex=index))
 
         return self.statueList
 

@@ -3,9 +3,7 @@ from toontown.uberdog.DataStore import *
 
 
 class ScavengerHuntDataStore(DataStore):
-    QueryTypes = DataStore.addQueryTypes([
-        'GetGoals',
-        'AddGoal'])
+    QueryTypes = DataStore.addQueryTypes(['GetGoals', 'AddGoal'])
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'ScavengerHuntDataStore')
 
@@ -21,7 +19,7 @@ class ScavengerHuntDataStore(DataStore):
         elif qId == self.QueryTypes['AddGoal']:
             (avId, goal) = qData
             self._ScavengerHuntDataStore__addGoalToAvatarId(avId, goal)
-            return (qId, (avId,))
+            return (qId, (avId, ))
 
     def _ScavengerHuntDataStore__addGoalToAvatarId(self, avId, goal):
         if self.wantAnyDbm:

@@ -1,4 +1,4 @@
- from otp.ai.AIBase import *
+from otp.ai.AIBase import *
 from direct.interval.IntervalGlobal import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed import ClockDelta
@@ -12,11 +12,8 @@ from toontown.coghq import LaserGameRoll
 import random
 
 
-class DistributedSecurityCameraAI(
-        DistributedEntityAI.DistributedEntityAI,
-        NodePath,
-        BasicEntities.NodePathAttribs):
-
+class DistributedSecurityCameraAI(DistributedEntityAI.DistributedEntityAI,
+                                  NodePath, BasicEntities.NodePathAttribs):
     def __init__(self, level, entId):
         DistributedEntityAI.DistributedEntityAI.__init__(self, level, entId)
         node = hidden.attachNewNode('DistributedSecurityCameraAI')
@@ -34,15 +31,11 @@ class DistributedSecurityCameraAI(
         DistributedEntityAI.DistributedEntityAI.generate(self)
         if self.switchId != 0:
             self.accept(
-                self.getOutputEventName(
-                    self.switchId),
-                self.reactToSwitch)
+                self.getOutputEventName(self.switchId), self.reactToSwitch)
 
         self.detectName = 'laserField %s' % self.doId
-        taskMgr.doMethodLater(
-            3.0,
-            self._DistributedSecurityCameraAI__detect,
-            self.detectName)
+        taskMgr.doMethodLater(3.0, self._DistributedSecurityCameraAI__detect,
+                              self.detectName)
         self.setPos(self.pos)
         self.setHpr(self.hpr)
 
@@ -71,12 +64,10 @@ class DistributedSecurityCameraAI(
             if isThereAnyToons:
                 randTime = float(random.randint(1, 6)) * 0.5
                 taskMgr.doMethodLater(
-                    randTime,
-                    self._DistributedSecurityCameraAI__detect,
+                    randTime, self._DistributedSecurityCameraAI__detect,
                     self.detectName)
                 randTarget = random.randint(0, 100)
-                self.sendUpdate('setTarget', [
-                    randTarget])
+                self.sendUpdate('setTarget', [randTarget])
 
         return Task.done
 

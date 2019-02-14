@@ -7,9 +7,7 @@ class DistributedPartyJukebox40Activity(DistributedPartyJukeboxActivityBase):
 
     def __init__(self, cr):
         DistributedPartyJukeboxActivityBase.__init__(
-            self,
-            cr,
-            PartyGlobals.ActivityIds.PartyJukebox40,
+            self, cr, PartyGlobals.ActivityIds.PartyJukebox40,
             PartyGlobals.PhaseToMusicData40)
 
     def load(self):

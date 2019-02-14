@@ -20,29 +20,16 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
         DirectFrame.__init__(
             self,
             parent=aspect2dp,
-            pos=(
-                0,
-                0,
-                0.29999999999999999),
+            pos=(0, 0, 0.29999999999999999),
             relief=None,
             image=DGG.getDefaultDialogGeom(),
-            image_scale=(
-                1.6000000000000001,
-                1,
-                0.69999999999999996),
-            image_pos=(
-                0,
-                0,
-                0.17999999999999999),
+            image_scale=(1.6000000000000001, 1, 0.69999999999999996),
+            image_pos=(0, 0, 0.17999999999999999),
             image_color=ToontownGlobals.GlobalDialogColor,
             text=TTL.SummonDlgTitle,
             text_scale=0.12,
-            text_pos=(
-                0,
-                0.40000000000000002),
-            borderWidth=(
-                0.01,
-                0.01),
+            text_pos=(0, 0.40000000000000002),
+            borderWidth=(0.01, 0.01),
             sortOrder=NO_FADE_SORT_INDEX)
         StateData.StateData.__init__(self, 'summon-cog-done')
         self.initialiseoptions(SummonCogDialog)
@@ -50,7 +37,8 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
         base.summonDialog = self
         self.popup = None
         self.suitName = SuitDNA.suitHeadTypes[self.suitIndex]
-        self.suitFullName = SuitBattleGlobals.SuitAttributes[self.suitName]['name']
+        self.suitFullName = SuitBattleGlobals.SuitAttributes[
+            self.suitName]['name']
 
     def unload(self):
         if self.isLoaded == 0:
@@ -69,43 +57,32 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         self.head = Suit.attachSuitHead(self, self.suitName)
         z = self.head.getZ()
-        self.head.setPos(-0.40000000000000002, -
-                         0.10000000000000001, z + 0.20000000000000001)
-        self.suitLabel = DirectLabel(parent=self,
-                                     relief=None,
-                                     text=self.suitFullName,
-                                     text_font=ToontownGlobals.getSuitFont(),
-                                     pos=(-0.40000000000000002,
-                                          0,
-                                          0),
-                                     scale=0.070000000000000007)
-        closeButtonImage = (
-            gui.find('**/CloseBtn_UP'),
-            gui.find('**/CloseBtn_DN'),
-            gui.find('**/CloseBtn_Rllvr'))
-        buttonImage = (
-            guiButton.find('**/QuitBtn_UP'),
-            guiButton.find('**/QuitBtn_DN'),
-            guiButton.find('**/QuitBtn_RLVR'))
+        self.head.setPos(-0.40000000000000002, -0.10000000000000001,
+                         z + 0.20000000000000001)
+        self.suitLabel = DirectLabel(
+            parent=self,
+            relief=None,
+            text=self.suitFullName,
+            text_font=ToontownGlobals.getSuitFont(),
+            pos=(-0.40000000000000002, 0, 0),
+            scale=0.070000000000000007)
+        closeButtonImage = (gui.find('**/CloseBtn_UP'),
+                            gui.find('**/CloseBtn_DN'),
+                            gui.find('**/CloseBtn_Rllvr'))
+        buttonImage = (guiButton.find('**/QuitBtn_UP'),
+                       guiButton.find('**/QuitBtn_DN'),
+                       guiButton.find('**/QuitBtn_RLVR'))
         disabledColor = Vec4(0.5, 0.5, 0.5, 1)
         self.summonSingleButton = DirectButton(
             parent=self,
             relief=None,
             text=TTL.SummonDlgButton1,
             image=buttonImage,
-            image_scale=(
-                1.7,
-                1,
-                1),
+            image_scale=(1.7, 1, 1),
             image3_color=disabledColor,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.01),
-            pos=(
-                0.29999999999999999,
-                0,
-                0.25),
+            text_pos=(0, -0.01),
+            pos=(0.29999999999999999, 0, 0.25),
             command=self.issueSummons,
             extraArgs=['single'])
         self.summonBuildingButton = DirectButton(
@@ -113,19 +90,11 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
             relief=None,
             text=TTL.SummonDlgButton2,
             image=buttonImage,
-            image_scale=(
-                1.7,
-                1,
-                1),
+            image_scale=(1.7, 1, 1),
             image3_color=disabledColor,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.01),
-            pos=(
-                0.29999999999999999,
-                0,
-                0.125),
+            text_pos=(0, -0.01),
+            pos=(0.29999999999999999, 0, 0.125),
             command=self.issueSummons,
             extraArgs=['building'])
         self.summonInvasionButton = DirectButton(
@@ -133,26 +102,26 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
             relief=None,
             text=TTL.SummonDlgButton3,
             image=buttonImage,
-            image_scale=(
-                1.7,
-                1,
-                1),
+            image_scale=(1.7, 1, 1),
             image3_color=disabledColor,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.01),
-            pos=(
-                0.29999999999999999,
-                0,
-                0.0),
+            text_pos=(0, -0.01),
+            pos=(0.29999999999999999, 0, 0.0),
             command=self.issueSummons,
             extraArgs=['invasion'])
         self.statusLabel = DirectLabel(
-            parent=self, relief=None, text='', text_wordwrap=12, pos=(
-                0.29999999999999999, 0, 0.25), scale=0.070000000000000007)
-        self.cancel = DirectButton(parent=self, relief=None, image=closeButtonImage, pos=(
-            0.69999999999999996, 0, -0.10000000000000001), command=self._SummonCogDialog__cancel)
+            parent=self,
+            relief=None,
+            text='',
+            text_wordwrap=12,
+            pos=(0.29999999999999999, 0, 0.25),
+            scale=0.070000000000000007)
+        self.cancel = DirectButton(
+            parent=self,
+            relief=None,
+            image=closeButtonImage,
+            pos=(0.69999999999999996, 0, -0.10000000000000001),
+            command=self._SummonCogDialog__cancel)
         gui.removeNode()
         guiButton.removeNode()
         self.hide()
@@ -224,7 +193,8 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
             if returnCode == 'success':
                 self.statusLabel['text'] = TTL.SummonDlgInvasionSuccess
             elif returnCode == 'busy':
-                self.statusLabel['text'] = TTL.SummonDlgInvasionBusy % self.suitFullName
+                self.statusLabel[
+                    'text'] = TTL.SummonDlgInvasionBusy % self.suitFullName
             elif returnCode == 'fail':
                 self.statusLabel['text'] = TTL.SummonDlgInvasionFail
 
@@ -249,14 +219,13 @@ class SummonCogDialog(DirectFrame, StateData.StateData):
             self.reparentTo(self.getParent(), NO_FADE_SORT_INDEX)
             base.transitions.fadeScreen(0.5)
             if resp == DGG.DIALOG_OK:
-                self.notify.info(
-                    'issuing %s summons for %s' %
-                    (summonsType, self.suitIndex))
+                self.notify.info('issuing %s summons for %s' %
+                                 (summonsType, self.suitIndex))
                 self.accept('cog-summons-response', self.cogSummonsDone)
                 self.summonsType = summonsType
                 self.doIssueSummonsText()
-                base.localAvatar.d_reqCogSummons(
-                    self.summonsType, self.suitIndex)
+                base.localAvatar.d_reqCogSummons(self.summonsType,
+                                                 self.suitIndex)
                 self.hideSummonButtons()
                 self.cancel['state'] = DGG.DISABLED
 

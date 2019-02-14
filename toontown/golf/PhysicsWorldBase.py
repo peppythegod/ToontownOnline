@@ -23,7 +23,7 @@ def scalp(vec, scal):
 
 
 def length(vec):
-    return sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+    return sqrt(vec[0]**2 + vec[1]**2 + vec[2]**2)
 
 
 class PhysicsWorldBase:
@@ -119,114 +119,40 @@ class PhysicsWorldBase:
         self.world.setErp(0.80000000000000004)
         self.world.setCfm(1.0000000000000001e-005)
         self.world.initSurfaceTable(5)
+        self.world.setSurfaceEntry(0, 0, 150, 0.050000000000000003,
+                                   0.10000000000000001, 0.90000000000000002,
+                                   1.0000000000000001e-005, 0.0,
+                                   0.40000000000000002 / self.refCon)
+        self.world.setSurfaceEntry(1, 1, 1500, 0.050000000000000003,
+                                   0.10000000000000001, 0.90000000000000002,
+                                   1.0000000000000001e-005, 0.0,
+                                   0.001 / self.refCon)
+        self.world.setSurfaceEntry(2, 2, 150, 0.050000000000000003,
+                                   0.10000000000000001, 0.90000000000000002,
+                                   1.0000000000000001e-005, 0.0,
+                                   0.40000000000000002 / self.refCon)
+        self.world.setSurfaceEntry(0, 2, 150, 0.050000000000000003,
+                                   0.10000000000000001, 0.90000000000000002,
+                                   1.0000000000000001e-005, 0.0,
+                                   0.40000000000000002 / self.refCon)
         self.world.setSurfaceEntry(
-            0,
-            0,
-            150,
-            0.050000000000000003,
-            0.10000000000000001,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
+            0, 3, 150, 0.0, 0.10000000000000001, 0.90000000000000002,
+            1.0000000000000001e-005, 0.0, 0.40000000000000002 / self.refCon)
         self.world.setSurfaceEntry(
-            1,
-            1,
-            1500,
-            0.050000000000000003,
-            0.10000000000000001,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.001 / self.refCon)
+            1, 3, 150, 0.0, 99.099999999999994, 0.90000000000000002,
+            1.0000000000000001e-005, 0.0, 1.0 / self.refCon)
         self.world.setSurfaceEntry(
-            2,
-            2,
-            150,
-            0.050000000000000003,
-            0.10000000000000001,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
+            2, 3, 150, 0.0, 9.0999999999999996, 0.90000000000000002,
+            1.0000000000000001e-005, 0.0, 0.40000000000000002 / self.refCon)
         self.world.setSurfaceEntry(
-            0,
-            2,
-            150,
-            0.050000000000000003,
-            0.10000000000000001,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
+            3, 3, 150, 0.0, 9.0999999999999996, 0.90000000000000002,
+            1.0000000000000001e-005, 0.0, 0.40000000000000002 / self.refCon)
         self.world.setSurfaceEntry(
-            0,
-            3,
-            150,
-            0.0,
-            0.10000000000000001,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
+            4, 4, 150, 0.0, 9.0999999999999996, 0.90000000000000002,
+            1.0000000000000001e-005, 0.0, 0.40000000000000002 / self.refCon)
         self.world.setSurfaceEntry(
-            1,
-            3,
-            150,
-            0.0,
-            99.099999999999994,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            1.0 / self.refCon)
-        self.world.setSurfaceEntry(
-            2,
-            3,
-            150,
-            0.0,
-            9.0999999999999996,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
-        self.world.setSurfaceEntry(
-            3,
-            3,
-            150,
-            0.0,
-            9.0999999999999996,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
-        self.world.setSurfaceEntry(
-            4,
-            4,
-            150,
-            0.0,
-            9.0999999999999996,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.40000000000000002 /
-            self.refCon)
-        self.world.setSurfaceEntry(
-            1,
-            4,
-            150,
-            0.0,
-            99.099999999999994,
-            0.90000000000000002,
-            1.0000000000000001e-005,
-            0.0,
-            0.001 /
-            self.refCon)
+            1, 4, 150, 0.0, 99.099999999999994, 0.90000000000000002,
+            1.0000000000000001e-005, 0.0, 0.001 / self.refCon)
         self.world.setSurfaceEntry(
             pos1=0,
             pos2=1,
@@ -236,8 +162,7 @@ class PhysicsWorldBase:
             soft_erp=0.90000000000000002,
             soft_cfm=1.0000000000000001e-005,
             slip=0.0,
-            dampen=0.34999999999999998 /
-            self.refCon)
+            dampen=0.34999999999999998 / self.refCon)
         self.world.setSurfaceEntry(
             pos1=2,
             pos2=1,
@@ -247,8 +172,7 @@ class PhysicsWorldBase:
             soft_erp=0.90000000000000002,
             soft_cfm=1.0000000000000001e-005,
             slip=0.0,
-            dampen=0.001 /
-            self.refCon)
+            dampen=0.001 / self.refCon)
         self.floor = OdePlaneGeom(self.space, Vec4(0.0, 0.0, 1.0, -20.0))
         self.floor.setCollideBits(BitMask32(0))
         self.floor.setCategoryBits(BitMask32(3840))
@@ -287,8 +211,7 @@ class PhysicsWorldBase:
             self.notify.debug('Set Cycle Time %s' % self.timingCycleOffset)
             self.notify.debug(
                 'SET cycle time %s' %
-                (globalClock.getRealTime() +
-                 self.timingCycleOffset) %
+                (globalClock.getRealTime() + self.timingCycleOffset) %
                 self.timingCycleLength)
 
     def getSimCycleTime(self):
@@ -344,11 +267,10 @@ class PhysicsWorldBase:
                 pandaNodePathGeom.setPos(odeBody.getPosition())
                 rotation = odeBody.getRotation() * (180.0 / math.pi)
                 pandaNodePathGeom.setQuat(
-                    Quat(
-                        odeBody.getQuaternion()[0],
-                        odeBody.getQuaternion()[1],
-                        odeBody.getQuaternion()[2],
-                        odeBody.getQuaternion()[3]))
+                    Quat(odeBody.getQuaternion()[0],
+                         odeBody.getQuaternion()[1],
+                         odeBody.getQuaternion()[2],
+                         odeBody.getQuaternion()[3]))
                 continue
 
     def preStep(self):
@@ -360,12 +282,9 @@ class PhysicsWorldBase:
                 pandaNodePathGeom = self.jointMarkers[count]
                 if count < self.colCount:
                     pandaNodePathGeom.setPos(
-                        self.space.getContactData(
-                            count * 3 + 0),
-                        self.space.getContactData(
-                            count * 3 + 1),
-                        self.space.getContactData(
-                            count * 3 + 2))
+                        self.space.getContactData(count * 3 + 0),
+                        self.space.getContactData(count * 3 + 1),
+                        self.space.getContactData(count * 3 + 2))
                     continue
                 pandaNodePathGeom.setPos(0.0, 0.0, -100.0)
 
@@ -376,9 +295,7 @@ class PhysicsWorldBase:
                 self.commonObjectInfoDict[key] = None
 
             entry = self.commonObjectDict[key]
-            if entry[1] in [
-                    2,
-                    4]:
+            if entry[1] in [2, 4]:
                 type = entry[1]
                 body = entry[2]
                 motor = entry[3]
@@ -388,14 +305,14 @@ class PhysicsWorldBase:
                 model = entry[7]
                 force = 0.0
                 for index in range(len(timeData)):
-                    if (index == len(timeData) -
-                        1 or timeData[index] < time or timeData[index] < time) and timeData[index +
-                                                                                            1] > time:
+                    if (index == len(timeData) - 1 or timeData[index] < time
+                            or timeData[index] < time
+                        ) and timeData[index + 1] > time:
                         force = forceData[index]
                         event = eventData[index]
                         if event != self.commonObjectInfoDict[key]:
-                            self.commonObjectEvent(
-                                key, model, type, force, event)
+                            self.commonObjectEvent(key, model, type, force,
+                                                   event)
                             self.commonObjectInfoDict[key] = event
 
                     event != self.commonObjectInfoDict[key]
@@ -404,13 +321,12 @@ class PhysicsWorldBase:
                 continue
 
     def commonObjectEvent(self, key, model, type, force, event):
-        self.notify.debug(
-            'commonObjectForceEvent %s %s %s %s %s' %
-            (key, model, type, force, event))
+        self.notify.debug('commonObjectForceEvent %s %s %s %s %s' %
+                          (key, model, type, force, event))
 
     def getCommonObjectData(self):
-        objectStream = [
-            (0, 0, self.getCycleTime(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        objectStream = [(0, 0, self.getCycleTime(), 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                         0, 0, 0)]
         for key in self.commonObjectDict:
             objectPair = self.commonObjectDict[key]
             object = objectPair[2]
@@ -418,22 +334,9 @@ class PhysicsWorldBase:
             quat4 = object.getQuaternion()
             anV3 = object.getAngularVel()
             lnV3 = object.getLinearVel()
-            data = (
-                objectPair[0],
-                objectPair[1],
-                pos3[0],
-                pos3[1],
-                pos3[2],
-                quat4[0],
-                quat4[1],
-                quat4[2],
-                quat4[3],
-                anV3[0],
-                anV3[1],
-                anV3[2],
-                lnV3[0],
-                lnV3[1],
-                lnV3[2])
+            data = (objectPair[0], objectPair[1], pos3[0], pos3[1], pos3[2],
+                    quat4[0], quat4[1], quat4[2], quat4[3], anV3[0], anV3[1],
+                    anV3[2], lnV3[0], lnV3[1], lnV3[2])
             objectStream.append(data)
 
         if len(objectStream) <= 1:
@@ -467,15 +370,14 @@ class PhysicsWorldBase:
                 continue
             commonObject[2].disable()
 
-    def createCommonObject(
-            self,
-            type,
-            commonId,
-            pos,
-            hpr,
-            sizeX=0,
-            sizeY=0,
-            moveDistance=0):
+    def createCommonObject(self,
+                           type,
+                           commonId,
+                           pos,
+                           hpr,
+                           sizeX=0,
+                           sizeY=0,
+                           moveDistance=0):
         if commonId is None:
             commonId = self.commonId
             self.commonId += 1
@@ -486,15 +388,15 @@ class PhysicsWorldBase:
         self.placerNode.setHpr(vHpr)
         self.placerNode.setPos(vPos)
         if type == 0:
-            (model, box) = self.createBox(
-                self.world, self.space, 10.0, 5.0, 5.0, 5.0)
+            (model, box) = self.createBox(self.world, self.space, 10.0, 5.0,
+                                          5.0, 5.0)
             box.setPosition(vPos)
             self.placerNode.setHpr(vHpr)
             box.setQuaternion(self.placerNode.getQuat())
             self.commonObjectDict[commonId] = (commonId, type, box)
         elif type == 1:
-            (model, cross) = self.createCross(
-                self.world, self.space, 1.0, 3.0, 12.0, 2.0, 2)
+            (model, cross) = self.createCross(self.world, self.space, 1.0, 3.0,
+                                              12.0, 2.0, 2)
             motor = OdeHingeJoint(self.world)
             cross.setPosition(vPos)
             cross.setQuaternion(self.placerNode.getQuat())
@@ -510,8 +412,8 @@ class PhysicsWorldBase:
             self.commonObjectDict[commonId] = (commonId, type, cross)
         elif type == 2:
             ourAxis = render.getRelativeVector(self.placerNode, Vec3(0, 0, 1))
-            (model, box) = self.createBox(
-                self.world, self.space, 10.0, 5.0, 5.0, 5.0, 2)
+            (model, box) = self.createBox(self.world, self.space, 10.0, 5.0,
+                                          5.0, 5.0, 2)
             box.setPosition(vPos)
             box.setQuaternion(self.placerNode.getQuat())
             motor = OdeSliderJoint(self.world)
@@ -524,8 +426,9 @@ class PhysicsWorldBase:
             timeData = (0.0, 5.0)
             forceData = (3.0, -3.0)
             eventData = (1, 2)
-            self.commonObjectDict[commonId] = (
-                commonId, type, box, motor, timeData, forceData, eventData, model)
+            self.commonObjectDict[commonId] = (commonId, type, box, motor,
+                                               timeData, forceData, eventData,
+                                               model)
         elif type == 3:
             vPos = Point3(float(pos[0]), float(pos[1]), float(pos[2]))
             vHpr = Vec3(float(hpr[0]), float(hpr[1]), float(hpr[2]))
@@ -560,16 +463,18 @@ class PhysicsWorldBase:
             self.placerNode.setHpr(vHpr)
             self.placerNode.setPos(vPos)
             self.subPlacerNode.setPos(-1, 0, 0.0)
-            (model, cross) = self.createPinWheel(self.world, self.space, 10.0, 1.6000000000000001, 4.0, 0.59999999999999998,
-                                                 5, 3.7000000000000002, 1.2, 1, millFan, (0, 0, 90), (-4.5999999999999996, -0.5, -0.25), 20)
+            (model, cross) = self.createPinWheel(
+                self.world, self.space, 10.0, 1.6000000000000001, 4.0,
+                0.59999999999999998, 5, 3.7000000000000002, 1.2, 1, millFan,
+                (0, 0, 90), (-4.5999999999999996, -0.5, -0.25), 20)
             self.placerNode.setHpr(vHpr)
             self.placerNode.setPos(vPos)
             self.subPlacerNode.setPos(-1, 0, 0.0)
             motor = OdeHingeJoint(self.world)
             cross.setPosition(self.subPlacerNode.getPos(self.root))
             cross.setQuaternion(self.placerNode.getQuat())
-            ourAxis = self.root.getRelativeVector(
-                self.subPlacerNode, Vec3(0, 0, 1))
+            ourAxis = self.root.getRelativeVector(self.subPlacerNode,
+                                                  Vec3(0, 0, 1))
             motor.setParamVel(1.0)
             motor.setParamFMax(50000.0)
             boxsize = Vec3(1.0, 1.0, 1.0)
@@ -580,10 +485,10 @@ class PhysicsWorldBase:
             cross.enable()
             self.commonObjectDict[commonId] = (commonId, type, cross)
         elif type == 4:
-            ourAxis = self.root.getRelativeVector(
-                self.placerNode, Vec3(0, 1, 0))
-            (model, box) = self.createBox(self.world,
-                                          self.space, 50.0, sizeX, sizeY, 1.0, 2)
+            ourAxis = self.root.getRelativeVector(self.placerNode, Vec3(
+                0, 1, 0))
+            (model, box) = self.createBox(self.world, self.space, 50.0, sizeX,
+                                          sizeY, 1.0, 2)
             box.setPosition(vPos)
             box.setQuaternion(self.placerNode.getQuat())
             motor = OdeSliderJoint(self.world)
@@ -598,25 +503,14 @@ class PhysicsWorldBase:
                          moveDistance / 4.0, -moveDistance / 4.0)
             eventData = (-1, 1, -2, 2)
             radius = moveDistance + sizeY * 0.5
-            self.commonObjectDict[commonId] = (
-                commonId,
-                type,
-                box,
-                motor,
-                timeData,
-                forceData,
-                eventData,
-                model,
-                radius)
+            self.commonObjectDict[commonId] = (commonId, type, box, motor,
+                                               timeData, forceData, eventData,
+                                               model, radius)
 
         return [
-            type,
-            commonId,
-            (pos[0], pos[1], pos[2]),
-            (hpr[0], hpr[1], hpr[2]),
-            sizeX,
-            sizeY,
-            moveDistance]
+            type, commonId, (pos[0], pos[1], pos[2]), (hpr[0], hpr[1], hpr[2]),
+            sizeX, sizeY, moveDistance
+        ]
 
     def createSphere(self, world, space, density, radius, ballIndex=None):
         self.notify.debug('create sphere index %s' % ballIndex)
@@ -628,10 +522,7 @@ class PhysicsWorldBase:
         geom = OdeSphereGeom(space, radius)
         self.space.setSurfaceType(geom, 1)
         self.notify.debug(
-            'collide ID is %s' %
-            self.space.setCollideId(
-                geom,
-                42))
+            'collide ID is %s' % self.space.setCollideId(geom, 42))
         self.massList.append(M)
         self.geomList.append(geom)
         if ballIndex == 1:
@@ -695,7 +586,8 @@ class PhysicsWorldBase:
             color = random.choice([
                 Vec4(1.0, 0.0, 0.5, 1.0),
                 Vec4(0.5, 0.5, 1.0, 1.0),
-                Vec4(0.5, 1.0, 0.5, 1.0)])
+                Vec4(0.5, 1.0, 0.5, 1.0)
+            ])
             boxsize = Vec3(lx, ly, lz)
             (boxNodePathGeom, t1, t2) = BuildGeometry.addBoxGeom(
                 self.worldAttach, lx, ly, lz, color, 1)
@@ -706,18 +598,17 @@ class PhysicsWorldBase:
             self.bodyList.append((None, body))
         return (boxNodePathGeom, body)
 
-    def createCross(
-            self,
-            world,
-            space,
-            density,
-            lx,
-            ly,
-            lz,
-            colOnlyBall=0,
-            attachedGeo=None,
-            aHPR=None,
-            aPos=None):
+    def createCross(self,
+                    world,
+                    space,
+                    density,
+                    lx,
+                    ly,
+                    lz,
+                    colOnlyBall=0,
+                    attachedGeo=None,
+                    aHPR=None,
+                    aPos=None):
         body = OdeBody(self.world)
         M = OdeMass()
         M.setBox(density, lx, ly, lz)
@@ -766,19 +657,18 @@ class PhysicsWorldBase:
             self.bodyList.append((None, body))
         return (boxNodePathGeom, body)
 
-    def createCross2(
-            self,
-            world,
-            space,
-            density,
-            lx,
-            ly,
-            lz,
-            latSlide,
-            colOnlyBall=0,
-            attachedGeo=None,
-            aHPR=None,
-            aPos=None):
+    def createCross2(self,
+                     world,
+                     space,
+                     density,
+                     lx,
+                     ly,
+                     lz,
+                     latSlide,
+                     colOnlyBall=0,
+                     attachedGeo=None,
+                     aHPR=None,
+                     aPos=None):
         body = OdeBody(self.world)
         M = OdeMass()
         M.setBox(density, lx, ly, lz)
@@ -837,17 +727,21 @@ class PhysicsWorldBase:
                 attachedGeo.setHpr(aHPR[0], aHPR[1], aHPR[2])
                 attachedGeo.setPos(aPos[0], aPos[1], aPos[2])
 
-            (boxNodePathGeom, t1, t2) = BuildGeometry.addBoxGeom(
-                someNodePathGeom, lx, ly * 0.5, lz, Vec4(1.0, 1.0, 1.0, 1.0), 1)
+            (boxNodePathGeom, t1,
+             t2) = BuildGeometry.addBoxGeom(someNodePathGeom, lx, ly * 0.5, lz,
+                                            Vec4(1.0, 1.0, 1.0, 1.0), 1)
             boxNodePathGeom.setPos(-latSlide, ly * 0.25, 0)
-            (boxNodePathGeom2, t1, t2) = BuildGeometry.addBoxGeom(
-                someNodePathGeom, ly * 0.5, lx, lz, Vec4(1.0, 1.0, 1.0, 1.0), 1)
+            (boxNodePathGeom2, t1,
+             t2) = BuildGeometry.addBoxGeom(someNodePathGeom, ly * 0.5, lx, lz,
+                                            Vec4(1.0, 1.0, 1.0, 1.0), 1)
             boxNodePathGeom2.setPos(ly * 0.25, latSlide, 0)
-            (boxNodePathGeom3, t1, t2) = BuildGeometry.addBoxGeom(
-                someNodePathGeom, lx, ly * 0.5, lz, Vec4(1.0, 1.0, 1.0, 1.0), 1)
+            (boxNodePathGeom3, t1,
+             t2) = BuildGeometry.addBoxGeom(someNodePathGeom, lx, ly * 0.5, lz,
+                                            Vec4(1.0, 1.0, 1.0, 1.0), 1)
             boxNodePathGeom3.setPos(latSlide, -ly * 0.25, 0)
-            (boxNodePathGeom4, t1, t2) = BuildGeometry.addBoxGeom(
-                someNodePathGeom, ly * 0.5, lx, lz, Vec4(1.0, 1.0, 1.0, 1.0), 1)
+            (boxNodePathGeom4, t1,
+             t2) = BuildGeometry.addBoxGeom(someNodePathGeom, ly * 0.5, lx, lz,
+                                            Vec4(1.0, 1.0, 1.0, 1.0), 1)
             boxNodePathGeom4.setPos(-ly * 0.25, -latSlide, 0)
             self.odePandaRelationList.append((someNodePathGeom, body))
         else:
@@ -855,22 +749,21 @@ class PhysicsWorldBase:
             self.bodyList.append((None, body))
         return (someNodePathGeom, body)
 
-    def createPinWheel(
-            self,
-            world,
-            space,
-            density,
-            lx,
-            ly,
-            lz,
-            numBoxes,
-            disV,
-            disH,
-            colOnlyBall=0,
-            attachedGeo=None,
-            aHPR=None,
-            aPos=None,
-            offRot=0):
+    def createPinWheel(self,
+                       world,
+                       space,
+                       density,
+                       lx,
+                       ly,
+                       lz,
+                       numBoxes,
+                       disV,
+                       disH,
+                       colOnlyBall=0,
+                       attachedGeo=None,
+                       aHPR=None,
+                       aPos=None,
+                       offRot=0):
         body = OdeBody(self.world)
         M = OdeMass()
         M.setBox(density, lx, ly, lz)
@@ -906,7 +799,8 @@ class PhysicsWorldBase:
 
             if not attachedGeo:
                 (boxNodePathGeom, t1, t2) = BuildGeometry.addBoxGeom(
-                    someNodePathGeom, lx, ly * 0.5, lz, Vec4(1.0, 1.0, 1.0, 1.0), 1)
+                    someNodePathGeom, lx, ly * 0.5, lz, Vec4(
+                        1.0, 1.0, 1.0, 1.0), 1)
                 boxNodePathGeom.setPos(self.subPlacerNode.getPos(self.root))
                 boxNodePathGeom.setHpr(self.subPlacerNode.getHpr(self.root))
                 continue

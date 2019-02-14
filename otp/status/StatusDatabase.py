@@ -18,8 +18,7 @@ class StatusDatabase(DistributedObjectGlobal):
 
     def requestOfflineAvatarStatus(self, avIds):
         self.notify.debugCall()
-        self.sendUpdate('requestOfflineAvatarStatus', [
-            avIds])
+        self.sendUpdate('requestOfflineAvatarStatus', [avIds])
 
     def queueOfflineAvatarStatus(self, avIds):
         for avId in avIds:
@@ -29,12 +28,11 @@ class StatusDatabase(DistributedObjectGlobal):
 
         while taskMgr.hasTaskNamed(self.avatarRequestTaskName):
             taskMgr.remove(self.avatarRequestTaskName)
-        task = taskMgr.doMethodLater(
-            1.0, self.requestAvatarQueue, self.avatarRequestTaskName)
+        task = taskMgr.doMethodLater(1.0, self.requestAvatarQueue,
+                                     self.avatarRequestTaskName)
 
     def requestAvatarQueue(self, task):
-        self.sendUpdate('requestOfflineAvatarStatus', [
-            self.avatarQueue])
+        self.sendUpdate('requestOfflineAvatarStatus', [self.avatarQueue])
         self.avatarQueue = []
 
     def recvOfflineAvatarStatus(self, avId, lastOnline):
@@ -45,10 +43,8 @@ class StatusDatabase(DistributedObjectGlobal):
         self.avatarData[avId] = lastOnline
         while taskMgr.hasTaskNamed(self.avatarRetreiveTaskName):
             taskMgr.remove(self.avatarRetreiveTaskName)
-        task = taskMgr.doMethodLater(
-            1.0,
-            self.announceNewAvatarData,
-            self.avatarRetreiveTaskName)
+        task = taskMgr.doMethodLater(1.0, self.announceNewAvatarData,
+                                     self.avatarRetreiveTaskName)
 
     def announceNewAvatarData(self, task):
         messenger.send(self.avatarDoneTaskName)

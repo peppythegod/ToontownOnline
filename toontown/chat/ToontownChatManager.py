@@ -15,7 +15,6 @@ from TTChatInputWhiteList import TTChatInputWhiteList
 
 
 class HackedDirectRadioButton(DirectCheckButton):
-
     def __init__(self, parent=None, **kw):
         optiondefs = ()
         self.defineoptions(kw, optiondefs)
@@ -35,40 +34,20 @@ class ToontownChatManager(ChatManager.ChatManager):
     def __init__(self, cr, localAvatar):
         gui = loader.loadModel('phase_3.5/models/gui/chat_input_gui')
         self.normalButton = DirectButton(
-            image=(
-                gui.find('**/ChtBx_ChtBtn_UP'),
-                gui.find('**/ChtBx_ChtBtn_DN'),
-                gui.find('**/ChtBx_ChtBtn_RLVR')),
-            pos=(
-                -1.2646999999999999,
-                0,
-                0.92800000000000005),
+            image=(gui.find('**/ChtBx_ChtBtn_UP'),
+                   gui.find('**/ChtBx_ChtBtn_DN'),
+                   gui.find('**/ChtBx_ChtBtn_RLVR')),
+            pos=(-1.2646999999999999, 0, 0.92800000000000005),
             scale=1.179,
             relief=None,
-            image_color=Vec4(
-                1,
-                1,
-                1,
-                1),
-            text=(
-                '',
-                OTPLocalizer.ChatManagerChat,
-                OTPLocalizer.ChatManagerChat),
+            image_color=Vec4(1, 1, 1, 1),
+            text=('', OTPLocalizer.ChatManagerChat,
+                  OTPLocalizer.ChatManagerChat),
             text_align=TextNode.ALeft,
             text_scale=TTLocalizer.TCMnormalButton,
-            text_fg=Vec4(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=Vec4(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                -0.052499999999999998,
-                -0.089999999999999997),
+            text_fg=Vec4(1, 1, 1, 1),
+            text_shadow=Vec4(0, 0, 0, 1),
+            text_pos=(-0.052499999999999998, -0.089999999999999997),
             textMayChange=0,
             sortOrder=DGG.FOREGROUND_SORT_INDEX,
             command=self._ToontownChatManager__normalButtonPressed)
@@ -77,36 +56,19 @@ class ToontownChatManager(ChatManager.ChatManager):
             'phase_3.5/audio/sfx/GUI_quicktalker.mp3')
         self.openScSfx.setVolume(0.59999999999999998)
         self.scButton = DirectButton(
-            image=(
-                gui.find('**/ChtBx_ChtBtn_UP'),
-                gui.find('**/ChtBx_ChtBtn_DN'),
-                gui.find('**/ChtBx_ChtBtn_RLVR')),
+            image=(gui.find('**/ChtBx_ChtBtn_UP'),
+                   gui.find('**/ChtBx_ChtBtn_DN'),
+                   gui.find('**/ChtBx_ChtBtn_RLVR')),
             pos=TTLocalizer.TCMscButtonPos,
             scale=1.179,
             relief=None,
-            image_color=Vec4(
-                0.75,
-                1,
-                0.59999999999999998,
-                1),
-            text=(
-                '',
-                OTPLocalizer.GlobalSpeedChatName,
-                OTPLocalizer.GlobalSpeedChatName),
+            image_color=Vec4(0.75, 1, 0.59999999999999998, 1),
+            text=('', OTPLocalizer.GlobalSpeedChatName,
+                  OTPLocalizer.GlobalSpeedChatName),
             text_scale=TTLocalizer.TCMscButton,
-            text_fg=Vec4(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=Vec4(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                -0.089999999999999997),
+            text_fg=Vec4(1, 1, 1, 1),
+            text_shadow=Vec4(0, 0, 0, 1),
+            text_pos=(0, -0.089999999999999997),
             textMayChange=0,
             sortOrder=DGG.FOREGROUND_SORT_INDEX,
             command=self._ToontownChatManager__scButtonPressed,
@@ -116,141 +78,77 @@ class ToontownChatManager(ChatManager.ChatManager):
             parent=aspect2dp,
             relief=None,
             image=DGG.getDefaultDialogGeom(),
-            image_scale=(
-                0.45000000000000001,
-                0.45000000000000001,
-                0.45000000000000001),
+            image_scale=(0.45000000000000001, 0.45000000000000001,
+                         0.45000000000000001),
             image_color=OTPGlobals.GlobalDialogColor,
-            pos=(
-                -0.40000000000000002,
-                0,
-                0.754),
+            pos=(-0.40000000000000002, 0, 0.754),
             text=OTPLocalizer.ChatManagerWhisperTo,
             text_wordwrap=7.0,
             text_scale=TTLocalizer.TCMwhisperFrame,
-            text_fg=Vec4(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                0.14000000000000001),
+            text_fg=Vec4(0, 0, 0, 1),
+            text_pos=(0, 0.14000000000000001),
             textMayChange=1,
             sortOrder=DGG.FOREGROUND_SORT_INDEX)
         self.whisperFrame.hide()
         self.whisperButton = DirectButton(
             parent=self.whisperFrame,
-            image=(
-                gui.find('**/ChtBx_ChtBtn_UP'),
-                gui.find('**/ChtBx_ChtBtn_DN'),
-                gui.find('**/ChtBx_ChtBtn_RLVR')),
-            pos=(
-                -0.125,
-                0,
-                -0.10000000000000001),
+            image=(gui.find('**/ChtBx_ChtBtn_UP'),
+                   gui.find('**/ChtBx_ChtBtn_DN'),
+                   gui.find('**/ChtBx_ChtBtn_RLVR')),
+            pos=(-0.125, 0, -0.10000000000000001),
             scale=1.179,
             relief=None,
-            image_color=Vec4(
-                1,
-                1,
-                1,
-                1),
-            text=(
-                '',
-                OTPLocalizer.ChatManagerChat,
-                OTPLocalizer.ChatManagerChat,
-                ''),
-            image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998),
+            image_color=Vec4(1, 1, 1, 1),
+            text=('', OTPLocalizer.ChatManagerChat,
+                  OTPLocalizer.ChatManagerChat, ''),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 0.59999999999999998),
             text_scale=TTLocalizer.TCMwhisperButton,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                -0.089999999999999997),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, -0.089999999999999997),
             textMayChange=0,
             command=self._ToontownChatManager__whisperButtonPressed)
         self.whisperScButton = DirectButton(
             parent=self.whisperFrame,
-            image=(
-                gui.find('**/ChtBx_ChtBtn_UP'),
-                gui.find('**/ChtBx_ChtBtn_DN'),
-                gui.find('**/ChtBx_ChtBtn_RLVR')),
-            pos=(
-                0.0,
-                0,
-                -0.10000000000000001),
+            image=(gui.find('**/ChtBx_ChtBtn_UP'),
+                   gui.find('**/ChtBx_ChtBtn_DN'),
+                   gui.find('**/ChtBx_ChtBtn_RLVR')),
+            pos=(0.0, 0, -0.10000000000000001),
             scale=1.179,
             relief=None,
-            image_color=Vec4(
-                0.75,
-                1,
-                0.59999999999999998,
-                1),
-            text=(
-                '',
-                OTPLocalizer.GlobalSpeedChatName,
-                OTPLocalizer.GlobalSpeedChatName,
-                ''),
-            image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998),
+            image_color=Vec4(0.75, 1, 0.59999999999999998, 1),
+            text=('', OTPLocalizer.GlobalSpeedChatName,
+                  OTPLocalizer.GlobalSpeedChatName, ''),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 0.59999999999999998),
             text_scale=TTLocalizer.TCMwhisperScButton,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                -0.089999999999999997),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, -0.089999999999999997),
             textMayChange=0,
             command=self._ToontownChatManager__whisperScButtonPressed)
         self.whisperCancelButton = DirectButton(
             parent=self.whisperFrame,
-            image=(
-                gui.find('**/CloseBtn_UP'),
-                gui.find('**/CloseBtn_DN'),
-                gui.find('**/CloseBtn_Rllvr')),
-            pos=(
-                0.125,
-                0,
-                -0.10000000000000001),
+            image=(gui.find('**/CloseBtn_UP'), gui.find('**/CloseBtn_DN'),
+                   gui.find('**/CloseBtn_Rllvr')),
+            pos=(0.125, 0, -0.10000000000000001),
             scale=1.179,
             relief=None,
-            text=(
-                '',
-                OTPLocalizer.ChatManagerCancel,
-                OTPLocalizer.ChatManagerCancel),
+            text=('', OTPLocalizer.ChatManagerCancel,
+                  OTPLocalizer.ChatManagerCancel),
             text_scale=0.050000000000000003,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                -0.089999999999999997),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, -0.089999999999999997),
             textMayChange=0,
             command=self._ToontownChatManager__whisperCancelPressed)
         gui.removeNode()
         ChatManager.ChatManager.__init__(self, cr, localAvatar)
-        self.defaultToWhiteList = base.config.GetBool(
-            'white-list-is-default', 1)
+        self.defaultToWhiteList = base.config.GetBool('white-list-is-default',
+                                                      1)
         self.chatInputSpeedChat = TTChatInputSpeedChat(self)
         self.normalPos = Vec3(-1.083, 0, 0.80400000000000005)
         self.whisperPos = Vec3(0.0, 0, 0.70999999999999996)
-        self.speedChatPlusPos = Vec3(-0.34999999999999998,
-                                     0, 0.70999999999999996)
+        self.speedChatPlusPos = Vec3(-0.34999999999999998, 0,
+                                     0.70999999999999996)
         self.chatInputWhiteList = TTChatInputWhiteList()
         if self.defaultToWhiteList:
             self.chatInputNormal = self.chatInputWhiteList
@@ -281,77 +179,50 @@ class ToontownChatManager(ChatManager.ChatManager):
         del self.chatInputWhiteList
 
     def sendSCResistanceChatMessage(self, textId):
-        messenger.send('chatUpdateSCResistance', [
-            textId])
+        messenger.send('chatUpdateSCResistance', [textId])
         self.announceSCChat()
 
     def sendSCSingingChatMessage(self, textId):
-        messenger.send('chatUpdateSCSinging', [
-            textId])
+        messenger.send('chatUpdateSCSinging', [textId])
         self.announceSCChat()
 
     def sendSCSingingWhisperMessage(self, textId):
         pass
 
-    def sendSCToontaskChatMessage(
-            self,
-            taskId,
-            toNpcId,
-            toonProgress,
-            msgIndex):
-        messenger.send('chatUpdateSCToontask', [
-            taskId,
-            toNpcId,
-            toonProgress,
-            msgIndex])
+    def sendSCToontaskChatMessage(self, taskId, toNpcId, toonProgress,
+                                  msgIndex):
+        messenger.send('chatUpdateSCToontask',
+                       [taskId, toNpcId, toonProgress, msgIndex])
         self.announceSCChat()
 
-    def sendSCToontaskWhisperMessage(
-            self,
-            taskId,
-            toNpcId,
-            toonProgress,
-            msgIndex,
-            whisperAvatarId,
-            toPlayer):
+    def sendSCToontaskWhisperMessage(self, taskId, toNpcId, toonProgress,
+                                     msgIndex, whisperAvatarId, toPlayer):
         if toPlayer:
             base.talkAssistant.sendPlayerWhisperToonTaskSpeedChat(
                 taskId, toNpcId, toonProgress, msgIndex, whisperAvatarId)
         else:
-            messenger.send('whisperUpdateSCToontask', [
-                taskId,
-                toNpcId,
-                toonProgress,
-                msgIndex,
-                whisperAvatarId])
+            messenger.send(
+                'whisperUpdateSCToontask',
+                [taskId, toNpcId, toonProgress, msgIndex, whisperAvatarId])
 
     def enterOpenChatWarning(self):
         if self.openChatWarning is None:
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            buttonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            buttonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
             self.openChatWarning = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.20000000000000001),
+                pos=(0.0, 0.10000000000000001, 0.20000000000000001),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.2,
-                    1.0,
-                    1.3999999999999999),
+                image_scale=(1.2, 1.0, 1.3999999999999999),
                 text=OTPLocalizer.OpenChatWarning,
                 text_wordwrap=19,
                 text_scale=TTLocalizer.TCMopenChatWarning,
-                text_pos=(
-                    0.0,
-                    0.57499999999999996),
+                text_pos=(0.0, 0.57499999999999996),
                 textMayChange=0)
             DirectButton(
                 self.openChatWarning,
@@ -359,14 +230,9 @@ class ToontownChatManager(ChatManager.ChatManager):
                 relief=None,
                 text=OTPLocalizer.OpenChatWarningOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.0,
-                    0.0,
-                    -0.55000000000000004),
+                pos=(0.0, 0.0, -0.55000000000000004),
                 command=self._ToontownChatManager__handleOpenChatWarningOK)
             buttons.removeNode()
 
@@ -392,12 +258,7 @@ class ToontownChatManager(ChatManager.ChatManager):
 
     def enterUnpaidChatWarning(self):
         self.forceHidePayButton = False
-        if base.cr.productName in [
-            'DisneyOnline-UK',
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+        if base.cr.productName in ['DisneyOnline-UK', 'JP', 'DE', 'BR', 'FR']:
             directFrameText = OTPLocalizer.PaidParentPasswordUKWarning
             payButtonText = OTPLocalizer.PaidParentPasswordUKWarningSet
             directButtonText = OTPLocalizer.PaidParentPasswordUKWarningContinue
@@ -412,23 +273,16 @@ class ToontownChatManager(ChatManager.ChatManager):
 
         if self.unpaidChatWarning is None:
             guiButton = loader.loadModel('phase_3/models/gui/quit_button')
-            buttonImage = (
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR'))
+            buttonImage = (guiButton.find('**/QuitBtn_UP'),
+                           guiButton.find('**/QuitBtn_DN'),
+                           guiButton.find('**/QuitBtn_RLVR'))
             self.unpaidChatWarning = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.40000000000000002),
+                pos=(0.0, 0.10000000000000001, 0.40000000000000002),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.2,
-                    1.0,
-                    0.80000000000000004),
+                image_scale=(1.2, 1.0, 0.80000000000000004),
                 text=directFrameText,
                 text_wordwrap=TTLocalizer.TCMunpaidChatWarningWordwrap,
                 text_scale=TTLocalizer.TCMunpaidChatWarning,
@@ -439,14 +293,9 @@ class ToontownChatManager(ChatManager.ChatManager):
                 image=buttonImage,
                 relief=None,
                 text=payButtonText,
-                image_scale=(
-                    1.75,
-                    1,
-                    1.1499999999999999),
+                image_scale=(1.75, 1, 1.1499999999999999),
                 text_scale=TTLocalizer.TCMpayButton,
-                text_pos=(
-                    0,
-                    -0.02),
+                text_pos=(0, -0.02),
                 textMayChange=0,
                 pos=TTLocalizer.TCMpayButtonPos,
                 command=self._ToontownChatManager__handleUnpaidChatWarningPay)
@@ -456,28 +305,19 @@ class ToontownChatManager(ChatManager.ChatManager):
                 relief=None,
                 text=directButtonText,
                 textMayChange=0,
-                image_scale=(
-                    1.75,
-                    1,
-                    1.1499999999999999),
+                image_scale=(1.75, 1, 1.1499999999999999),
                 text_scale=0.059999999999999998,
-                text_pos=(
-                    0,
-                    -0.02),
+                text_pos=(0, -0.02),
                 pos=TTLocalizer.TCMdirectButtonTextPos,
-                command=self._ToontownChatManager__handleUnpaidChatWarningContinue)
+                command=self.
+                _ToontownChatManager__handleUnpaidChatWarningContinue)
             guiButton.removeNode()
 
         if base.localAvatar.cantLeaveGame or self.forceHidePayButton:
             self.payButton.hide()
         else:
             self.payButton.show()
-        if base.cr.productName not in [
-            'ES',
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+        if base.cr.productName not in ['ES', 'JP', 'DE', 'BR', 'FR']:
             self.unpaidChatWarning.show()
         else:
             place = base.cr.playGame.getPlace()
@@ -485,7 +325,8 @@ class ToontownChatManager(ChatManager.ChatManager):
                 place.fsm.request('stopped')
 
             self.teaser = TeaserPanel.TeaserPanel(
-                'secretChat', self._ToontownChatManager__handleUnpaidChatWarningDone)
+                'secretChat',
+                self._ToontownChatManager__handleUnpaidChatWarningDone)
             if base.localAvatar.inTutorial:
                 self.teaser.hidePay()
 
@@ -506,37 +347,25 @@ class ToontownChatManager(ChatManager.ChatManager):
         if self.noSecretChatAtAll is None:
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
             self.noSecretChatAtAll = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.20000000000000001),
+                pos=(0.0, 0.10000000000000001, 0.20000000000000001),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.3999999999999999,
-                    1.0,
-                    1.1000000000000001),
+                image_scale=(1.3999999999999999, 1.0, 1.1000000000000001),
                 text=OTPLocalizer.NoSecretChatAtAll,
                 text_wordwrap=20,
                 textMayChange=0,
                 text_scale=0.059999999999999998,
-                text_pos=(
-                    0,
-                    0.29999999999999999))
+                text_pos=(0, 0.29999999999999999))
             DirectLabel(
                 parent=self.noSecretChatAtAll,
                 relief=None,
-                pos=(
-                    0,
-                    0,
-                    0.40000000000000002),
+                pos=(0, 0, 0.40000000000000002),
                 text=OTPLocalizer.NoSecretChatAtAllTitle,
                 textMayChange=0,
                 text_scale=0.080000000000000002)
@@ -546,14 +375,9 @@ class ToontownChatManager(ChatManager.ChatManager):
                 relief=None,
                 text=OTPLocalizer.NoSecretChatAtAllOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.0,
-                    0.0,
-                    -0.40000000000000002),
+                pos=(0.0, 0.0, -0.40000000000000002),
                 command=self._ToontownChatManager__handleNoSecretChatAtAllOK)
             buttons.removeNode()
 
@@ -572,14 +396,12 @@ class ToontownChatManager(ChatManager.ChatManager):
                 'phase_3/models/gui/dialog_box_buttons_gui')
             nameBalloon = loader.loadModel(
                 'phase_3/models/props/chatbox_input')
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelButtonImage = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                                 buttons.find('**/CloseBtn_DN'),
+                                 buttons.find('**/CloseBtn_Rllvr'))
             if base.cr.productName != 'Terra-DMC':
                 okPos = (-0.22, 0.0, -0.34999999999999998)
                 textPos = (0, 0.25)
@@ -591,17 +413,11 @@ class ToontownChatManager(ChatManager.ChatManager):
                 okCommand = self._ToontownChatManager__handleNoSecretChatWarningCancel
             self.noSecretChatWarning = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.20000000000000001),
+                pos=(0.0, 0.10000000000000001, 0.20000000000000001),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.3999999999999999,
-                    1.0,
-                    1.0),
+                image_scale=(1.3999999999999999, 1.0, 1.0),
                 text=warningText,
                 text_wordwrap=20,
                 text_scale=0.055,
@@ -613,19 +429,14 @@ class ToontownChatManager(ChatManager.ChatManager):
                 relief=None,
                 text=OTPLocalizer.NoSecretChatWarningOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
                 pos=okPos,
                 command=okCommand)
             DirectLabel(
                 parent=self.noSecretChatWarning,
                 relief=None,
-                pos=(
-                    0,
-                    0,
-                    0.34999999999999998),
+                pos=(0, 0, 0.34999999999999998),
                 text=OTPLocalizer.NoSecretChatWarningTitle,
                 textMayChange=0,
                 text_scale=0.080000000000000002)
@@ -633,10 +444,7 @@ class ToontownChatManager(ChatManager.ChatManager):
                 self.passwordLabel = DirectLabel(
                     parent=self.noSecretChatWarning,
                     relief=None,
-                    pos=(
-                        -0.070000000000000007,
-                        0.0,
-                        -0.20000000000000001),
+                    pos=(-0.070000000000000007, 0.0, -0.20000000000000001),
                     text=OTPLocalizer.ParentPassword,
                     text_scale=0.059999999999999998,
                     text_align=TextNode.ARight,
@@ -645,37 +453,28 @@ class ToontownChatManager(ChatManager.ChatManager):
                     parent=self.noSecretChatWarning,
                     relief=None,
                     image=nameBalloon,
-                    image1_color=(
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        1.0),
+                    image1_color=(0.80000000000000004, 0.80000000000000004,
+                                  0.80000000000000004, 1.0),
                     scale=0.064000000000000001,
-                    pos=(
-                        0.0,
-                        0.0,
-                        -0.20000000000000001),
+                    pos=(0.0, 0.0, -0.20000000000000001),
                     width=OTPGlobals.maxLoginWidth,
                     numLines=1,
                     focus=1,
                     cursorKeys=1,
                     obscured=1,
-                    command=self._ToontownChatManager__handleNoSecretChatWarningOK)
+                    command=self.
+                    _ToontownChatManager__handleNoSecretChatWarningOK)
                 DirectButton(
                     self.noSecretChatWarning,
                     image=cancelButtonImage,
                     relief=None,
                     text=OTPLocalizer.NoSecretChatWarningCancel,
                     text_scale=0.050000000000000003,
-                    text_pos=(
-                        0.0,
-                        -0.10000000000000001),
+                    text_pos=(0.0, -0.10000000000000001),
                     textMayChange=1,
-                    pos=(
-                        0.20000000000000001,
-                        0.0,
-                        -0.34999999999999998),
-                    command=self._ToontownChatManager__handleNoSecretChatWarningCancel)
+                    pos=(0.20000000000000001, 0.0, -0.34999999999999998),
+                    command=self.
+                    _ToontownChatManager__handleNoSecretChatWarningCancel)
 
             buttons.removeNode()
             nameBalloon.removeNode()
@@ -695,40 +494,29 @@ class ToontownChatManager(ChatManager.ChatManager):
             guiButton = loader.loadModel('phase_3/models/gui/quit_button')
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelButtonImage = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
-            moreButtonImage = (
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR'))
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                                 buttons.find('**/CloseBtn_DN'),
+                                 buttons.find('**/CloseBtn_Rllvr'))
+            moreButtonImage = (guiButton.find('**/QuitBtn_UP'),
+                               guiButton.find('**/QuitBtn_DN'),
+                               guiButton.find('**/QuitBtn_RLVR'))
             nameShopGui = loader.loadModel('phase_3/models/gui/nameshop_gui')
             circle = nameShopGui.find('**/namePanelCircle')
             self.activateChatGui = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.20000000000000001),
+                pos=(0.0, 0.10000000000000001, 0.20000000000000001),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.8,
-                    1.0,
-                    1.6000000000000001),
+                image_scale=(1.8, 1.0, 1.6000000000000001),
                 text=OTPLocalizer.ActivateChat,
                 text_align=TextNode.ALeft,
                 text_wordwrap=33,
                 text_scale=TTLocalizer.TCMactivateChatGui,
-                text_pos=(
-                    -0.81999999999999995,
-                    0.57999999999999996),
+                text_pos=(-0.81999999999999995, 0.57999999999999996),
                 textMayChange=0)
             innerCircle = circle.copyTo(hidden)
             innerCircle.setPos(0, 0, 0.20000000000000001)
@@ -759,30 +547,21 @@ class ToontownChatManager(ChatManager.ChatManager):
                 text=OTPLocalizer.ActivateChatTitle,
                 text_align=TextNode.ACenter,
                 text_scale=0.070000000000000007,
-                text_pos=(
-                    0,
-                    0.69999999999999996),
+                text_pos=(0, 0.69999999999999996),
                 textMayChange=0)
             if base.cr.productName != 'JP':
                 DirectButton(
                     self.activateChatGui,
                     image=moreButtonImage,
-                    image_scale=(
-                        1.25,
-                        1.0,
-                        1.0),
+                    image_scale=(1.25, 1.0, 1.0),
                     relief=None,
                     text=OTPLocalizer.ActivateChatMoreInfo,
                     text_scale=0.059999999999999998,
-                    text_pos=(
-                        0,
-                        -0.02),
+                    text_pos=(0, -0.02),
                     textMayChange=0,
-                    pos=(
-                        0.0,
-                        0.0,
-                        -0.69999999999999996),
-                    command=self._ToontownChatManager__handleActivateChatMoreInfo)
+                    pos=(0.0, 0.0, -0.69999999999999996),
+                    command=self.
+                    _ToontownChatManager__handleActivateChatMoreInfo)
 
             self.dcb1 = HackedDirectRadioButton(
                 parent=self.activateChatGui,
@@ -790,16 +569,9 @@ class ToontownChatManager(ChatManager.ChatManager):
                 scale=0.10000000000000001,
                 boxImage=innerCircle,
                 boxImageScale=2.5,
-                boxImageColor=VBase4(
-                    0,
-                    0.25,
-                    0.5,
-                    1),
+                boxImageColor=VBase4(0, 0.25, 0.5, 1),
                 boxRelief=None,
-                pos=(
-                    -0.745,
-                    0,
-                    0.29699999999999999),
+                pos=(-0.745, 0, 0.29699999999999999),
                 command=self._ToontownChatManager__updateCheckBoxen,
                 extraArgs=[1])
             self.dcb2 = HackedDirectRadioButton(
@@ -808,16 +580,9 @@ class ToontownChatManager(ChatManager.ChatManager):
                 scale=0.10000000000000001,
                 boxImage=innerCircle,
                 boxImageScale=2.5,
-                boxImageColor=VBase4(
-                    0,
-                    0.25,
-                    0.5,
-                    1),
+                boxImageColor=VBase4(0, 0.25, 0.5, 1),
                 boxRelief=None,
-                pos=(
-                    -0.745,
-                    0,
-                    0.14699999999999999),
+                pos=(-0.745, 0, 0.14699999999999999),
                 command=self._ToontownChatManager__updateCheckBoxen,
                 extraArgs=[2])
             self.dcb3 = HackedDirectRadioButton(
@@ -826,44 +591,30 @@ class ToontownChatManager(ChatManager.ChatManager):
                 scale=0.10000000000000001,
                 boxImage=innerCircle,
                 boxImageScale=2.5,
-                boxImageColor=VBase4(
-                    0,
-                    0.25,
-                    0.5,
-                    1),
+                boxImageColor=VBase4(0, 0.25, 0.5, 1),
                 boxRelief=None,
-                pos=(
-                    -0.745,
-                    0,
-                    -0.0030000000000000001),
+                pos=(-0.745, 0, -0.0030000000000000001),
                 command=self._ToontownChatManager__updateCheckBoxen,
                 extraArgs=[3])
-            DirectButton(self.activateChatGui,
-                         image=okButtonImage,
-                         relief=None,
-                         text=OTPLocalizer.ActivateChatYes,
-                         text_scale=0.050000000000000003,
-                         text_pos=(0.0,
-                                   -0.10000000000000001),
-                         textMayChange=0,
-                         pos=(-0.34999999999999998,
-                              0.0,
-                              -0.27000000000000002),
-                         command=self._ToontownChatManager__handleActivateChatYes)
+            DirectButton(
+                self.activateChatGui,
+                image=okButtonImage,
+                relief=None,
+                text=OTPLocalizer.ActivateChatYes,
+                text_scale=0.050000000000000003,
+                text_pos=(0.0, -0.10000000000000001),
+                textMayChange=0,
+                pos=(-0.34999999999999998, 0.0, -0.27000000000000002),
+                command=self._ToontownChatManager__handleActivateChatYes)
             DirectButton(
                 self.activateChatGui,
                 image=cancelButtonImage,
                 relief=None,
                 text=OTPLocalizer.ActivateChatNo,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.34999999999999998,
-                    0.0,
-                    -0.27000000000000002),
+                pos=(0.34999999999999998, 0.0, -0.27000000000000002),
                 command=self._ToontownChatManager__handleActivateChatNo)
             guiButton.removeNode()
             buttons.removeNode()
@@ -914,50 +665,35 @@ class ToontownChatManager(ChatManager.ChatManager):
             modeText = OTPLocalizer.SecretChatActivated
         if self.secretChatActivated is None:
             guiButton = loader.loadModel('phase_3/models/gui/quit_button')
-            optionsButtonImage = (
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR'))
+            optionsButtonImage = (guiButton.find('**/QuitBtn_UP'),
+                                  guiButton.find('**/QuitBtn_DN'),
+                                  guiButton.find('**/QuitBtn_RLVR'))
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            buttonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            buttonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
             self.secretChatActivated = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.40000000000000002),
+                pos=(0.0, 0.10000000000000001, 0.40000000000000002),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.0,
-                    1.0,
-                    0.80000000000000004),
+                image_scale=(1.0, 1.0, 0.80000000000000004),
                 text=modeText,
                 text_align=TextNode.ACenter,
                 text_wordwrap=14,
                 text_scale=TTLocalizer.TCMsecretChatActivated,
-                text_pos=(
-                    0,
-                    0.25))
+                text_pos=(0, 0.25))
             DirectButton(
                 self.secretChatActivated,
                 image=buttonImage,
                 relief=None,
                 text=OTPLocalizer.SecretChatActivatedOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.0,
-                    0.0,
-                    -0.10000000000000001),
+                pos=(0.0, 0.0, -0.10000000000000001),
                 command=self._ToontownChatManager__handleSecretChatActivatedOK)
             buttons.removeNode()
             guiButton.removeNode()
@@ -972,30 +708,21 @@ class ToontownChatManager(ChatManager.ChatManager):
         if self.problemActivatingChat is None:
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            buttonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            buttonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
             self.problemActivatingChat = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.40000000000000002),
+                pos=(0.0, 0.10000000000000001, 0.40000000000000002),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.2,
-                    1.0,
-                    0.90000000000000002),
+                image_scale=(1.2, 1.0, 0.90000000000000002),
                 text='',
                 text_align=TextNode.ALeft,
                 text_wordwrap=18,
                 text_scale=0.059999999999999998,
-                text_pos=(
-                    -0.5,
-                    0.28000000000000003),
+                text_pos=(-0.5, 0.28000000000000003),
                 textMayChange=1)
             DirectButton(
                 self.problemActivatingChat,
@@ -1003,15 +730,11 @@ class ToontownChatManager(ChatManager.ChatManager):
                 relief=None,
                 text=OTPLocalizer.ProblemActivatingChatOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.0,
-                    0.0,
-                    -0.28000000000000003),
-                command=self._ToontownChatManager__handleProblemActivatingChatOK)
+                pos=(0.0, 0.0, -0.28000000000000003),
+                command=self.
+                _ToontownChatManager__handleProblemActivatingChatOK)
             buttons.removeNode()
 
         self.problemActivatingChat.show()
@@ -1024,9 +747,7 @@ class ToontownChatManager(ChatManager.ChatManager):
             self.notify.info('QA-REGRESSION: CHAT: Speedchat Plus')
 
         messenger.send('wakeup')
-        if base.cr.productName in [
-            'DisneyOnline-US',
-                'ES']:
+        if base.cr.productName in ['DisneyOnline-US', 'ES']:
             if base.cr.whiteListChatEnabled:
                 self.fsm.request('normalChat')
             elif not base.cr.isParentPasswordSet():
@@ -1046,11 +767,8 @@ class ToontownChatManager(ChatManager.ChatManager):
             else:
                 self.fsm.request('normalChat')
         elif base.cr.productName in [
-            'DisneyOnline-UK',
-            'DisneyOnline-AP',
-            'JP',
-            'BR',
-                'FR']:
+                'DisneyOnline-UK', 'DisneyOnline-AP', 'JP', 'BR', 'FR'
+        ]:
             if base.cr.whiteListChatEnabled:
                 self.fsm.request('normalChat')
             elif not base.cr.isParentPasswordSet():
@@ -1076,8 +794,8 @@ class ToontownChatManager(ChatManager.ChatManager):
         else:
             self.fsm.request('speedChat')
 
-    def _ToontownChatManager__whisperButtonPressed(
-            self, avatarName, avatarId, playerId):
+    def _ToontownChatManager__whisperButtonPressed(self, avatarName, avatarId,
+                                                   playerId):
         messenger.send('wakeup')
         playerInfo = None
         if playerId:
@@ -1085,21 +803,18 @@ class ToontownChatManager(ChatManager.ChatManager):
 
         if playerInfo:
             if playerInfo.understandableYesNo:
-                self.fsm.request('whisperChatPlayer', [
-                    avatarName,
-                    playerId])
+                self.fsm.request('whisperChatPlayer', [avatarName, playerId])
                 return None
 
         if avatarId:
-            self.fsm.request('whisperChat', [
-                avatarName,
-                avatarId])
+            self.fsm.request('whisperChat', [avatarName, avatarId])
 
     def enterNormalChat(self):
         result = ChatManager.ChatManager.enterNormalChat(self)
         if result is None:
             self.notify.warning(
-                'something went wrong in enterNormalChat, falling back to main menu')
+                'something went wrong in enterNormalChat, falling back to main menu'
+            )
             self.fsm.request('mainMenu')
 
     def enterWhisperChatPlayer(self, avatarName, playerId):
@@ -1108,7 +823,8 @@ class ToontownChatManager(ChatManager.ChatManager):
         self.chatInputNormal.setPos(self.whisperPos)
         if result is None:
             self.notify.warning(
-                'something went wrong in enterWhisperChatPlayer, falling back to main menu')
+                'something went wrong in enterWhisperChatPlayer, falling back to main menu'
+            )
             self.fsm.request('mainMenu')
 
     def enterWhisperChat(self, avatarName, avatarId):
@@ -1117,44 +833,33 @@ class ToontownChatManager(ChatManager.ChatManager):
         self.chatInputNormal.setPos(self.whisperPos)
         if result is None:
             self.notify.warning(
-                'something went wrong in enterWhisperChat, falling back to main menu')
+                'something went wrong in enterWhisperChat, falling back to main menu'
+            )
             self.fsm.request('mainMenu')
 
     def enterNoSecretChatAtAllAndNoWhitelist(self):
         if self.noSecretChatAtAllAndNoWhitelist is None:
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
             self.noSecretChatAtAllAndNoWhitelist = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.050000000000000003),
+                pos=(0.0, 0.10000000000000001, 0.050000000000000003),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.3999999999999999,
-                    1.0,
-                    1.5800000000000001),
+                image_scale=(1.3999999999999999, 1.0, 1.5800000000000001),
                 text=OTPLocalizer.NoSecretChatAtAllAndNoWhitelist,
                 text_wordwrap=20,
                 textMayChange=0,
                 text_scale=0.059999999999999998,
-                text_pos=(
-                    0,
-                    0.55000000000000004))
+                text_pos=(0, 0.55000000000000004))
             DirectLabel(
                 parent=self.noSecretChatAtAllAndNoWhitelist,
                 relief=None,
-                pos=(
-                    0,
-                    0,
-                    0.67000000000000004),
+                pos=(0, 0, 0.67000000000000004),
                 text=OTPLocalizer.NoSecretChatAtAllAndNoWhitelistTitle,
                 textMayChange=0,
                 text_scale=0.080000000000000002)
@@ -1164,14 +869,9 @@ class ToontownChatManager(ChatManager.ChatManager):
                 relief=None,
                 text=OTPLocalizer.NoSecretChatAtAllOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.0,
-                    0.0,
-                    -0.64000000000000001),
+                pos=(0.0, 0.0, -0.64000000000000001),
                 command=self._ToontownChatManager__handleNoSecretChatAtAllOK)
             buttons.removeNode()
 
@@ -1185,12 +885,12 @@ class ToontownChatManager(ChatManager.ChatManager):
         place = base.cr.playGame.getPlace()
         if place:
             if place.fsm.hasStateNamed('stopped'):
-                self.previousStateBeforeTeaser = place.fsm.getCurrentState().getName()
+                self.previousStateBeforeTeaser = place.fsm.getCurrentState(
+                ).getName()
                 place.fsm.request('stopped')
             else:
                 self.notify.warning(
-                    "Enter: %s has no 'stopped' state." %
-                    place)
+                    "Enter: %s has no 'stopped' state." % place)
 
         self.teaser = TeaserPanel.TeaserPanel(
             pageName='secretChat', doneFunc=self.handleOkTeaser)
@@ -1210,8 +910,8 @@ class ToontownChatManager(ChatManager.ChatManager):
     def handleOkTeaser(self):
         self.fsm.request('mainMenu')
 
-    def _ToontownChatManager__whisperScButtonPressed(
-            self, avatarName, avatarId, playerId):
+    def _ToontownChatManager__whisperScButtonPressed(self, avatarName,
+                                                     avatarId, playerId):
         if base.config.GetBool('want-qa-regression', 0):
             self.notify.info('QA-REGRESSION: CHAT: Whisper')
 
@@ -1227,22 +927,15 @@ class ToontownChatManager(ChatManager.ChatManager):
 
         if avatarId and not transientFriend:
             if self.fsm.getCurrentState().getName() == 'whisperSpeedChat':
-                self.fsm.request('whisper', [
-                    avatarName,
-                    avatarId,
-                    playerId])
+                self.fsm.request('whisper', [avatarName, avatarId, playerId])
             else:
-                self.fsm.request('whisperSpeedChat', [
-                    avatarId])
+                self.fsm.request('whisperSpeedChat', [avatarId])
         elif playerId:
-            if self.fsm.getCurrentState().getName() == 'whisperSpeedChatPlayer':
-                self.fsm.request('whisper', [
-                    avatarName,
-                    avatarId,
-                    playerId])
+            if self.fsm.getCurrentState().getName(
+            ) == 'whisperSpeedChatPlayer':
+                self.fsm.request('whisper', [avatarName, avatarId, playerId])
             else:
-                self.fsm.request('whisperSpeedChatPlayer', [
-                    playerId])
+                self.fsm.request('whisperSpeedChatPlayer', [playerId])
 
     def _ToontownChatManager__whisperCancelPressed(self):
         self.fsm.request('mainMenu')
@@ -1278,9 +971,11 @@ class ToontownChatManager(ChatManager.ChatManager):
             self.fsm.request('activateChat')
         elif message:
             self.fsm.request('problemActivatingChat')
-            self.problemActivatingChat['text'] = OTPLocalizer.ProblemActivatingChat % message
+            self.problemActivatingChat[
+                'text'] = OTPLocalizer.ProblemActivatingChat % message
         else:
-            self.noSecretChatWarning['text'] = OTPLocalizer.NoSecretChatWarningWrongPassword
+            self.noSecretChatWarning[
+                'text'] = OTPLocalizer.NoSecretChatWarningWrongPassword
             self.passwordEntry['focus'] = 1
             self.passwordEntry.enterText('')
 
@@ -1301,17 +996,17 @@ class ToontownChatManager(ChatManager.ChatManager):
             base.cr.secretChatAllowed = 1
             base.cr.secretChatNeedsParentPassword = 0
             mode = 2
-        (okflag, message) = tt.enableSecretFriends(
-            base.cr.userName, base.cr.password, password)
+        (okflag, message) = tt.enableSecretFriends(base.cr.userName,
+                                                   base.cr.password, password)
         if okflag:
             tt.resendPlayToken()
-            self.fsm.request('secretChatActivated', [
-                mode])
+            self.fsm.request('secretChatActivated', [mode])
         elif message is None:
             message = 'Parent Password was invalid.'
 
         self.fsm.request('problemActivatingChat')
-        self.problemActivatingChat['text'] = OTPLocalizer.ProblemActivatingChat % message
+        self.problemActivatingChat[
+            'text'] = OTPLocalizer.ProblemActivatingChat % message
 
     def _ToontownChatManager__handleActivateChatMoreInfo(self):
         self.fsm.request('chatMoreInfo')

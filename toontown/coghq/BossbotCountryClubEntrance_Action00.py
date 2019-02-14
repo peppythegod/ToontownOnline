@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_12/models/bossbotHQ/BossbotEntranceRoom',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10000: {
         'type': 'entrancePoint',
         'name': '<unnamed>',
@@ -35,7 +38,8 @@ GlobalEntities = {
         'scale': 1,
         'entranceId': 0,
         'radius': 15,
-        'theta': 20},
+        'theta': 20
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -43,9 +47,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1}}
+        'scale': 1
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

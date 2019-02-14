@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
@@ -63,15 +61,19 @@ class TwoDBlock(DistributedObject.DistributedObject):
             self.platform.reparentTo(self.model)
             self.clearMoveIval()
             forwardIval = LerpPosInterval(
-                self.model, posIvalDuration, pos=Point3(
-                    finalX, finalY, finalZ), startPos=Point3(
-                    initX, initY, initZ), name='%s-moveFront' %
-                self.platform.name, fluid=1)
+                self.model,
+                posIvalDuration,
+                pos=Point3(finalX, finalY, finalZ),
+                startPos=Point3(initX, initY, initZ),
+                name='%s-moveFront' % self.platform.name,
+                fluid=1)
             backwardIval = LerpPosInterval(
-                self.model, posIvalDuration, pos=Point3(
-                    initX, initY, initZ), startPos=Point3(
-                    finalX, finalY, finalZ), name='%s-moveBack' %
-                self.platform.name, fluid=1)
+                self.model,
+                posIvalDuration,
+                pos=Point3(initX, initY, initZ),
+                startPos=Point3(finalX, finalY, finalZ),
+                name='%s-moveBack' % self.platform.name,
+                fluid=1)
             self.moveIval = Sequence(forwardIval, backwardIval)
         else:
             self.platform = model.copyTo(self.model)

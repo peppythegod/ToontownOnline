@@ -59,10 +59,7 @@ class FishPage(ShtikerPage.ShtikerPage):
             relief=None,
             text='',
             text_scale=0.10000000000000001,
-            pos=(
-                0,
-                0,
-                0.65000000000000002))
+            pos=(0, 0, 0.65000000000000002))
         normalColor = (1, 1, 1, 1)
         clickColor = (0.80000000000000004, 0.80000000000000004, 0, 1)
         rolloverColor = (0.14999999999999999, 0.81999999999999995, 1.0, 1)
@@ -74,33 +71,18 @@ class FishPage(ShtikerPage.ShtikerPage):
             text_scale=TTLocalizer.FPtankTab,
             text_align=TextNode.ALeft,
             image=gui.find('**/tabs/polySurface1'),
-            image_pos=(
-                0.55000000000000004,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.55000000000000004, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[FishPage_Tank],
-            pos=(
-                0.92000000000000004,
-                0,
-                0.55000000000000004))
+            pos=(0.92000000000000004, 0, 0.55000000000000004))
         self.collectionTab = DirectButton(
             parent=self,
             relief=None,
@@ -108,33 +90,18 @@ class FishPage(ShtikerPage.ShtikerPage):
             text_scale=TTLocalizer.FPcollectionTab,
             text_align=TextNode.ALeft,
             image=gui.find('**/tabs/polySurface2'),
-            image_pos=(
-                0.12,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.12, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[FishPage_Collection],
-            pos=(
-                0.92000000000000004,
-                0,
-                0.10000000000000001))
+            pos=(0.92000000000000004, 0, 0.10000000000000001))
         self.trophyTab = DirectButton(
             parent=self,
             relief=None,
@@ -142,33 +109,18 @@ class FishPage(ShtikerPage.ShtikerPage):
             text_scale=TTLocalizer.FPtrophyTab,
             text_align=TextNode.ALeft,
             image=gui.find('**/tabs/polySurface3'),
-            image_pos=(
-                -0.28000000000000003,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(-0.28000000000000003, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[FishPage_Trophy],
-            pos=(
-                0.92000000000000004,
-                0,
-                -0.29999999999999999))
+            pos=(0.92000000000000004, 0, -0.29999999999999999))
         self.tankTab.setPos(-0.55000000000000004, 0, 0.77500000000000002)
         self.collectionTab.setPos(-0.13, 0, 0.77500000000000002)
         self.trophyTab.setPos(0.28000000000000003, 0, 0.77500000000000002)
@@ -184,24 +136,27 @@ class FishPage(ShtikerPage.ShtikerPage):
                 text='',
                 text_align=TextNode.ALeft,
                 text_scale=0.059999999999999998,
-                pos=(
-                    0.90000000000000002,
-                    0,
-                    -0.65000000000000002))
+                pos=(0.90000000000000002, 0, -0.65000000000000002))
 
     def createFishBrowser(self):
         if not hasattr(self, 'browser'):
             self.browser = FishBrowser.FishBrowser(self)
             self.browser.setScale(1.1000000000000001)
             self.collectedTotal = DirectLabel(
-                parent=self.browser, relief=None, text='', text_scale=0.059999999999999998, pos=(
-                    0, 0, -0.60999999999999999))
+                parent=self.browser,
+                relief=None,
+                text='',
+                text_scale=0.059999999999999998,
+                pos=(0, 0, -0.60999999999999999))
 
     def createFishTrophyFrame(self):
         if not hasattr(self, 'trophyFrame'):
             self.trophyFrame = DirectFrame(
-                parent=self, relief=None, image=self.trophyCase, image_pos=(
-                    0, 1, 0), image_scale=0.034000000000000002)
+                parent=self,
+                relief=None,
+                image=self.trophyCase,
+                image_pos=(0, 1, 0),
+                image_scale=0.034000000000000002)
             self.trophyFrame.hide()
             self.trophies = []
             hOffset = -0.5
@@ -291,8 +246,10 @@ class FishPage(ShtikerPage.ShtikerPage):
 
     def updatePage(self):
         if hasattr(self, 'collectedTotal'):
-            self.collectedTotal['text'] = TTLocalizer.FishPageCollectedTotal % (
-                len(base.localAvatar.fishCollection), FishGlobals.getTotalNumFish())
+            self.collectedTotal[
+                'text'] = TTLocalizer.FishPageCollectedTotal % (
+                    len(base.localAvatar.fishCollection),
+                    FishGlobals.getTotalNumFish())
 
         if hasattr(self, 'rod'):
             rod = base.localAvatar.fishingRod
@@ -350,30 +307,17 @@ class FishingTrophy(DirectFrame):
         self.nameLabel = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                -0.14999999999999999),
+            pos=(0, 0, -0.14999999999999999),
             text='Trophy Text',
             text_scale=0.125,
-            text_fg=Vec4(
-                0.90000000000000002,
-                0.90000000000000002,
-                0.40000000000000002,
-                1))
+            text_fg=Vec4(0.90000000000000002, 0.90000000000000002,
+                         0.40000000000000002, 1))
         self.shadow = loader.loadModel('phase_3/models/props/drop_shadow')
         self.shadow.reparentTo(self)
         self.shadow.setColor(1, 1, 1, 0.20000000000000001)
-        self.shadow.setPosHprScale(
-            0,
-            1,
-            0.34999999999999998,
-            0,
-            90,
-            0,
-            0.10000000000000001,
-            0.14000000000000001,
-            0.10000000000000001)
+        self.shadow.setPosHprScale(0, 1, 0.34999999999999998, 0, 90, 0,
+                                   0.10000000000000001, 0.14000000000000001,
+                                   0.10000000000000001)
         self.setLevel(level)
 
     def setLevel(self, level):
@@ -437,26 +381,20 @@ class FishingTrophy(DirectFrame):
             self._FishingTrophy__gold()
 
     def _FishingTrophy__bronze(self):
-        self.top.setColorScale(
-            0.90000000000000002,
-            0.59999999999999998,
-            0.33000000000000002,
-            1)
-        self.bowlTop.setColorScale(
-            0.90000000000000002,
-            0.59999999999999998,
-            0.33000000000000002,
-            1)
+        self.top.setColorScale(0.90000000000000002, 0.59999999999999998,
+                               0.33000000000000002, 1)
+        self.bowlTop.setColorScale(0.90000000000000002, 0.59999999999999998,
+                                   0.33000000000000002, 1)
 
     def _FishingTrophy__silver(self):
         self.top.setColorScale(0.90000000000000002, 0.90000000000000002, 1, 1)
-        self.bowlTop.setColorScale(
-            0.90000000000000002, 0.90000000000000002, 1, 1)
+        self.bowlTop.setColorScale(0.90000000000000002, 0.90000000000000002, 1,
+                                   1)
 
     def _FishingTrophy__gold(self):
         self.top.setColorScale(1, 0.94999999999999996, 0.10000000000000001, 1)
-        self.bowlTop.setColorScale(
-            1, 0.94999999999999996, 0.10000000000000001, 1)
+        self.bowlTop.setColorScale(1, 0.94999999999999996, 0.10000000000000001,
+                                   1)
 
     def destroy(self):
         self.trophy.removeNode()

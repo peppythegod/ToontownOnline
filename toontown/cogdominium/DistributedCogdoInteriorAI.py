@@ -16,11 +16,11 @@ from toontown.cogdominium.DistCogdoCraneGameAI import DistCogdoCraneGameAI
 
 
 class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
-
     def __init__(self, air, elevator):
         self.air = air
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
-        (self.extZoneId, self.zoneId) = elevator.bldg.getExteriorAndInteriorZoneId()
+        (self.extZoneId,
+         self.zoneId) = elevator.bldg.getExteriorAndInteriorZoneId()
         self._numFloors = elevator.bldg.planner.numFloors
         self.layout = elevator.bldg._cogdoLayout
         self.avatarExitEvents = []
@@ -56,27 +56,30 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
                 continue
 
         self.savedByMap = {}
-        self.fsm = ClassicFSM.ClassicFSM('DistributedCogdoInteriorAI', [
-            State.State('WaitForAllToonsInside', self.enterWaitForAllToonsInside, self.exitWaitForAllToonsInside, [
-                'Elevator']),
-            State.State('Elevator', self.enterElevator, self.exitElevator, [
-                'Game']),
-            State.State('Game', self.enterGame, self.exitGame, [
-                'Battle']),
-            State.State('Battle', self.enterBattle, self.exitBattle, [
-                'ReservesJoining',
-                'BattleDone']),
-            State.State('ReservesJoining', self.enterReservesJoining, self.exitReservesJoining, [
-                'Battle']),
-            State.State('BattleDone', self.enterBattleDone, self.exitBattleDone, [
-                'Resting',
-                'Reward']),
-            State.State('Resting', self.enterResting, self.exitResting, [
-                'Elevator']),
-            State.State('Reward', self.enterReward, self.exitReward, [
-                'Off']),
-            State.State('Off', self.enterOff, self.exitOff, [
-                'WaitForAllToonsInside'])], 'Off', 'Off', onUndefTransition=ClassicFSM.ClassicFSM.ALLOW)
+        self.fsm = ClassicFSM.ClassicFSM(
+            'DistributedCogdoInteriorAI', [
+                State.State('WaitForAllToonsInside',
+                            self.enterWaitForAllToonsInside,
+                            self.exitWaitForAllToonsInside, ['Elevator']),
+                State.State('Elevator', self.enterElevator, self.exitElevator,
+                            ['Game']),
+                State.State('Game', self.enterGame, self.exitGame, ['Battle']),
+                State.State('Battle', self.enterBattle, self.exitBattle,
+                            ['ReservesJoining', 'BattleDone']),
+                State.State('ReservesJoining', self.enterReservesJoining,
+                            self.exitReservesJoining, ['Battle']),
+                State.State('BattleDone', self.enterBattleDone,
+                            self.exitBattleDone, ['Resting', 'Reward']),
+                State.State('Resting', self.enterResting, self.exitResting,
+                            ['Elevator']),
+                State.State('Reward', self.enterReward, self.exitReward,
+                            ['Off']),
+                State.State('Off', self.enterOff, self.exitOff,
+                            ['WaitForAllToonsInside'])
+            ],
+            'Off',
+            'Off',
+            onUndefTransition=ClassicFSM.ClassicFSM.ALLOW)
         self.fsm.enterInitialState()
 
     def delete(self):
@@ -136,7 +139,8 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
                 pass
             elif self.battle is None:
                 self._sadCleanupTask = taskMgr.doMethodLater(
-                    20, self._cleanupAfterLastToonWentSad, self.uniqueName('sadcleanup'))
+                    20, self._cleanupAfterLastToonWentSad,
+                    self.uniqueName('sadcleanup'))
 
     def _cleanupAfterLastToonWentSad(self, task):
         self._sadCleanupTask = None
@@ -212,9 +216,7 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
                 continue
             sendIds.append(toonId)
 
-        return [
-            sendIds,
-            0]
+        return [sendIds, 0]
 
     def d_setSuits(self):
         self.sendUpdate('setSuits', self.getSuits())
@@ -230,10 +232,7 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
             reserveIds.append(info[0].doId)
             values.append(info[1])
 
-        return [
-            suitIds,
-            reserveIds,
-            values]
+        return [suitIds, reserveIds, values]
 
     def b_setState(self, state):
         self.d_setState(state)
@@ -241,9 +240,9 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
 
     def d_setState(self, state):
         stime = globalClock.getRealTime() + BattleBase.SERVER_BUFFER_TIME
-        self.sendUpdate('setState', [
-            state,
-            globalClockDelta.localToNetworkTime(stime)])
+        self.sendUpdate(
+            'setState',
+            [state, globalClockDelta.localToNetworkTime(stime)])
 
     def setState(self, state):
         self.fsm.request(state)
@@ -251,19 +250,18 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
     def getState(self):
         return [
             self.fsm.getCurrentState().getName(),
-            globalClockDelta.getRealNetworkTime()]
+            globalClockDelta.getRealNetworkTime()
+        ]
 
     def setAvatarJoined(self):
         avId = self.air.getAvatarIdFromSender()
         if self.toons.count(avId) == 0:
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
-                'DistributedCogdoInteriorAI.setAvatarJoined from toon not in %s.' %
-                self.toons)
+                'suspicious', avId,
+                'DistributedCogdoInteriorAI.setAvatarJoined from toon not in %s.'
+                % self.toons)
             self.notify.warning(
-                'setAvatarJoined() - av: %d not in list' %
-                avId)
+                'setAvatarJoined() - av: %d not in list' % avId)
             return None
 
         avatar = self.air.doId2do.get(avId)
@@ -279,14 +277,12 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
         if self.ignoreResponses == 1:
             return None
         elif self.fsm.getCurrentState().getName() != 'Elevator':
-            self.notify.warning(
-                'elevatorDone() - in state: %s' %
-                self.fsm.getCurrentState().getName())
+            self.notify.warning('elevatorDone() - in state: %s' %
+                                self.fsm.getCurrentState().getName())
             return None
         elif self.toons.count(toonId) == 0:
             self.notify.warning(
-                'elevatorDone() - toon not in toon list: %d' %
-                toonId)
+                'elevatorDone() - toon not in toon list: %d' % toonId)
             return None
 
         self.responses[toonId] += 1
@@ -299,14 +295,12 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
         if self.ignoreResponses == 1:
             return None
         elif self.fsm.getCurrentState().getName() != 'ReservesJoining':
-            self.notify.warning(
-                'reserveJoinDone() - in state: %s' %
-                self.fsm.getCurrentState().getName())
+            self.notify.warning('reserveJoinDone() - in state: %s' %
+                                self.fsm.getCurrentState().getName())
             return None
         elif self.toons.count(toonId) == 0:
             self.notify.warning(
-                'reserveJoinDone() - toon not in list: %d' %
-                toonId)
+                'reserveJoinDone() - toon not in list: %d' % toonId)
             return None
 
         self.responses[toonId] += 1
@@ -345,8 +339,7 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
         self._game = self._createGame()
         self.d_setState('Elevator')
         self.timer.startCallback(
-            BattleBase.ELEVATOR_T +
-            ElevatorData[ELEVATOR_NORMAL]['openTime'] +
+            BattleBase.ELEVATOR_T + ElevatorData[ELEVATOR_NORMAL]['openTime'] +
             BattleBase.SERVER_BUFFER_TIME,
             self._DistributedCogdoInteriorAI__serverElevatorDone)
 
@@ -357,9 +350,8 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
                 if toonId:
                     toon = self.air.getDo(toonId)
                     if toon:
-                        self.accept(
-                            toon.getGoneSadMessage(), Functor(
-                                self._handleToonWentSad, toonId))
+                        self.accept(toon.getGoneSadMessage(),
+                                    Functor(self._handleToonWentSad, toonId))
 
             game = DistCogdoCraneGameAI(self.air, self)
             game.generateWithRequired(self.zoneId)
@@ -458,8 +450,8 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
 
         self.battle = None
 
-    def _DistributedCogdoInteriorAI__handleRoundDone(
-            self, toonIds, totalHp, deadSuits):
+    def _DistributedCogdoInteriorAI__handleRoundDone(self, toonIds, totalHp,
+                                                     deadSuits):
         totalMaxHp = 0
         for suit in self.suits:
             totalMaxHp += suit.maxHP
@@ -486,8 +478,7 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
                 return None
 
         if len(self.activeSuits) == 0:
-            self.fsm.request('BattleDone', [
-                toonIds])
+            self.fsm.request('BattleDone', [toonIds])
         else:
             self.battle.resume()
 
@@ -495,7 +486,8 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
         if len(toonIds) == 0:
             taskName = self.taskName('deleteInterior')
             taskMgr.doMethodLater(
-                10, self._DistributedCogdoInteriorAI__doDeleteInterior, taskName)
+                10, self._DistributedCogdoInteriorAI__doDeleteInterior,
+                taskName)
         elif self.isTopFloor(self.currentFloor):
             self.setState('Reward')
         else:
@@ -514,9 +506,8 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
     def enterReservesJoining(self):
         self._DistributedCogdoInteriorAI__resetResponses()
         self.timer.startCallback(
-            ElevatorData[ELEVATOR_NORMAL]['openTime'] +
-            SUIT_HOLD_ELEVATOR_TIME +
-            BattleBase.SERVER_BUFFER_TIME,
+            ElevatorData[ELEVATOR_NORMAL]['openTime'] + SUIT_HOLD_ELEVATOR_TIME
+            + BattleBase.SERVER_BUFFER_TIME,
             self._DistributedCogdoInteriorAI__serverReserveJoinDone)
 
     def _DistributedCogdoInteriorAI__serverReserveJoinDone(self):
@@ -601,15 +592,10 @@ class DistributedCogdoInteriorAI(DistributedObjectAI.DistributedObjectAI):
         for v in victors:
             tuple = self.savedByMap.get(v)
             if tuple:
-                savedBy.append([
-                    v,
-                    tuple[0],
-                    tuple[1]])
+                savedBy.append([v, tuple[0], tuple[1]])
                 continue
 
-        self.bldg.fsm.request('waitForVictorsFromCogdo', [
-            victors,
-            savedBy])
+        self.bldg.fsm.request('waitForVictorsFromCogdo', [victors, savedBy])
         self.d_setState('Reward')
 
     def exitReward(self):

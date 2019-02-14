@@ -14,15 +14,14 @@ class DistributedCogHQDoorAI(DistributedDoorAI.DistributedDoorAI):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedCogHQDoorAI')
 
-    def __init__(
-            self,
-            air,
-            blockNumber,
-            doorType,
-            destinationZone,
-            doorIndex=0,
-            lockValue=FADoorCodes.SB_DISGUISE_INCOMPLETE,
-            swing=3):
+    def __init__(self,
+                 air,
+                 blockNumber,
+                 doorType,
+                 destinationZone,
+                 doorIndex=0,
+                 lockValue=FADoorCodes.SB_DISGUISE_INCOMPLETE,
+                 swing=3):
         DistributedDoorAI.DistributedDoorAI.__init__(
             self, air, blockNumber, doorType, doorIndex, lockValue, swing)
         self.destinationZone = destinationZone
@@ -44,9 +43,10 @@ class DistributedCogHQDoorAI(DistributedDoorAI.DistributedDoorAI):
                 self.sendReject(avatarID, self.isLockedDoor())
             else:
                 self.enqueueAvatarIdEnter(avatarID)
-                self.sendUpdateToAvatarId(avatarID, 'setOtherZoneIdAndDoId', [
-                    self.destinationZone,
-                    self.otherDoor.getDoId()])
+                self.sendUpdateToAvatarId(
+                    avatarID, 'setOtherZoneIdAndDoId',
+                    [self.destinationZone,
+                     self.otherDoor.getDoId()])
 
     def requestExit(self):
         avatarID = self.air.getAvatarIdFromSender()
@@ -56,8 +56,7 @@ class DistributedCogHQDoorAI(DistributedDoorAI.DistributedDoorAI):
         if avatarID not in self.avatarsWhoAreExiting:
             dept = ToontownGlobals.cogHQZoneId2deptIndex(self.destinationZone)
             self.avatarsWhoAreExiting[avatarID] = 1
-            self.sendUpdate('avatarExit', [
-                avatarID])
+            self.sendUpdate('avatarExit', [avatarID])
             self.openDoor(self.exitDoorFSM)
             if self.lockedDoor:
                 av = self.air.doId2do[avatarID]

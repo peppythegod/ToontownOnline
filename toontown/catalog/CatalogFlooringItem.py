@@ -3,8 +3,10 @@ FTTextureName = 0
 FTColor = 1
 FTBasePrice = 2
 FlooringTypes = {
-    1000: ('phase_5.5/maps/floor_wood_neutral.jpg', CTBasicWoodColorOnWhite, 150),
-    1010: ('phase_5.5/maps/flooring_carpetA_neutral.jpg', CTFlatColorDark, 150),
+    1000: ('phase_5.5/maps/floor_wood_neutral.jpg', CTBasicWoodColorOnWhite,
+           150),
+    1010: ('phase_5.5/maps/flooring_carpetA_neutral.jpg', CTFlatColorDark,
+           150),
     1020: ('phase_4/maps/flooring_tile_neutral.jpg', CTFlatColorDark, 150),
     1030: ('phase_5.5/maps/flooring_tileB2.jpg', None, 150),
     1040: ('phase_4/maps/grass.jpg', None, 150),
@@ -14,9 +16,12 @@ FlooringTypes = {
     1080: ('phase_4/maps/sidewalk.jpg', CTFlatColorDark, 150),
     1090: ('phase_3.5/maps/boardwalk_floor.jpg', None, 150),
     1100: ('phase_3.5/maps/dustroad.jpg', None, 150),
-    1110: ('phase_5.5/maps/floor_woodtile_neutral.jpg', CTBasicWoodColorOnWhite, 150),
-    1120: ('phase_5.5/maps/floor_tile_neutral.jpg', CTBasicWoodColorOnWhite + CTFlatColorDark, 150),
-    1130: ('phase_5.5/maps/floor_tile_honeycomb_neutral.jpg', CTBasicWoodColorOnWhite, 150),
+    1110: ('phase_5.5/maps/floor_woodtile_neutral.jpg',
+           CTBasicWoodColorOnWhite, 150),
+    1120: ('phase_5.5/maps/floor_tile_neutral.jpg',
+           CTBasicWoodColorOnWhite + CTFlatColorDark, 150),
+    1130: ('phase_5.5/maps/floor_tile_honeycomb_neutral.jpg',
+           CTBasicWoodColorOnWhite, 150),
     1140: ('phase_5.5/maps/UWwaterFloor1.jpg', None, 150),
     1150: ('phase_5.5/maps/UWtileFloor4.jpg', None, 150),
     1160: ('phase_5.5/maps/UWtileFloor3.jpg', None, 150),
@@ -26,11 +31,11 @@ FlooringTypes = {
     10000: ('phase_5.5/maps/floor_icecube.jpg', CTWhite, 225),
     10010: ('phase_5.5/maps/floor_snow.jpg', CTWhite, 225),
     11000: ('phase_5.5/maps/StPatsFloor1.jpg', CTWhite, 225),
-    11010: ('phase_5.5/maps/StPatsFloor2.jpg', CTWhite, 225)}
+    11010: ('phase_5.5/maps/StPatsFloor2.jpg', CTWhite, 225)
+}
 
 
 class CatalogFlooringItem(CatalogSurfaceItem):
-
     def makeNewItem(self, patternIndex, colorIndex=None):
         self.patternIndex = patternIndex
         self.colorIndex = colorIndex
@@ -154,10 +159,8 @@ def getAllFloorings(*indexList):
 
 def getFlooringRange(fromIndex, toIndex, *otherRanges):
     list = []
-    froms = [
-        fromIndex]
-    tos = [
-        toIndex]
+    froms = [fromIndex]
+    tos = [toIndex]
     i = 0
     while i < len(otherRanges):
         froms.append(otherRanges[i])

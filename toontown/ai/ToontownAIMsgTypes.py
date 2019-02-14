@@ -4,7 +4,8 @@ TTAIMsgName2Id = {
     'DBSERVER_GET_ESTATE_RESP': 1041,
     'PARTY_MANAGER_UD_TO_ALL_AI': 1042,
     'IN_GAME_NEWS_MANAGER_UD_TO_ALL_AI': 1043,
-    'WHITELIST_MANAGER_UD_TO_ALL_AI': 1044}
+    'WHITELIST_MANAGER_UD_TO_ALL_AI': 1044
+}
 TTAIMsgId2Names = invertDictLossless(TTAIMsgName2Id)
 if not isClient():
     print 'EXECWARNING ToontownAIMsgTypes: %s' % TTAIMsgName2Id

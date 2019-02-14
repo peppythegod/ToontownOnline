@@ -11,13 +11,9 @@ from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.toon import NPCToons
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieNPCSOS')
-soundFiles = (
-    'AA_heal_tickle.mp3',
-    'AA_heal_telljoke.mp3',
-    'AA_heal_smooch.mp3',
-    'AA_heal_happydance.mp3',
-    'AA_heal_pixiedust.mp3',
-    'AA_heal_juggle.mp3')
+soundFiles = ('AA_heal_tickle.mp3', 'AA_heal_telljoke.mp3',
+              'AA_heal_smooch.mp3', 'AA_heal_happydance.mp3',
+              'AA_heal_pixiedust.mp3', 'AA_heal_juggle.mp3')
 offset = Point3(0, 4.0, 0)
 
 
@@ -36,7 +32,8 @@ def __restockGags(attack, level, hp):
 NPCSOSfn_dict = {
     ToontownBattleGlobals.NPC_COGS_MISS: __cogsMiss,
     ToontownBattleGlobals.NPC_TOONS_HIT: __toonsHit,
-    ToontownBattleGlobals.NPC_RESTOCK_GAGS: __restockGags}
+    ToontownBattleGlobals.NPC_RESTOCK_GAGS: __restockGags
+}
 
 
 def doNPCSOSs(NPCSOSs):
@@ -70,9 +67,8 @@ def __doNPCSOS(sos):
 
 
 def __healToon(toon, hp, ineffective=0):
-    notify.debug(
-        'healToon() - toon: %d hp: %d ineffective: %d' %
-        (toon.doId, hp, ineffective))
+    notify.debug('healToon() - toon: %d hp: %d ineffective: %d' %
+                 (toon.doId, hp, ineffective))
     if ineffective == 1:
         laughter = random.choice(TTLocalizer.MovieHealLaughterMisses)
     else:
@@ -106,11 +102,9 @@ def teleportIn(attack, npc, pos=Point3(0, 0, 0), hpr=Vec3(180.0, 0.0, 0.0)):
     d = Func(npc.pose, 'teleport', npc.getNumFrames('teleport') - 1)
     e = npc.getTeleportInTrack()
     ee = Func(npc.addActive)
-    f = Func(
-        npc.setChatAbsolute,
-        TTLocalizer.MovieNPCSOSGreeting %
-        attack['toon'].getName(),
-        CFSpeech | CFTimeout)
+    f = Func(npc.setChatAbsolute,
+             TTLocalizer.MovieNPCSOSGreeting % attack['toon'].getName(),
+             CFSpeech | CFTimeout)
     g = ActorInterval(npc, 'wave')
     h = Func(npc.loop, 'neutral')
     i = Func(npc.clearChat)
@@ -122,10 +116,8 @@ def teleportOut(attack, npc):
         a = ActorInterval(npc, 'bow')
     else:
         a = ActorInterval(npc, 'curtsy')
-    b = Func(
-        npc.setChatAbsolute,
-        TTLocalizer.MovieNPCSOSGoodbye,
-        CFSpeech | CFTimeout)
+    b = Func(npc.setChatAbsolute, TTLocalizer.MovieNPCSOSGoodbye,
+             CFSpeech | CFTimeout)
     c = npc.getTeleportOutTrack()
     d = Func(npc.removeActive)
     e = Func(npc.detachNode)
@@ -179,23 +171,20 @@ def __doSprinkle(attack, recipients, hp=0):
         poofEffect = BattleParticles.createParticleEffect(file='pixiePoof')
         wallEffect = BattleParticles.createParticleEffect(file='pixieWall')
         mtrack = Parallel(
-            __getPartTrack(
-                sprayEffect, 1.5, 0.5, [
-                    sprayEffect, toon, 0]), __getPartTrack(
-                dropEffect, 1.8999999999999999, 2.0, [
-                    dropEffect, target, 0]), __getPartTrack(
-                        explodeEffect, 2.7000000000000002, 1.0, [
-                            explodeEffect, toon, 0]), __getPartTrack(
-                                poofEffect, 3.3999999999999999, 1.0, [
-                                    poofEffect, target, 0]), __getPartTrack(
-                                        wallEffect, 4.0499999999999998, 1.2, [
-                                            wallEffect, toon, 0]), __getSoundTrack(
-                                                level, 2, duration=3.1000000000000001, node=toon), Sequence(
-                                                    Func(
-                                                        face90, target, toon, battle), ActorInterval(
-                                                            toon, 'sprinkle-dust')), Sequence(
-                                                                Wait(delay), Func(
-                                                                    __healToon, target, hp)))
+            __getPartTrack(sprayEffect, 1.5, 0.5, [sprayEffect, toon, 0]),
+            __getPartTrack(dropEffect, 1.8999999999999999, 2.0,
+                           [dropEffect, target, 0]),
+            __getPartTrack(explodeEffect, 2.7000000000000002, 1.0,
+                           [explodeEffect, toon, 0]),
+            __getPartTrack(poofEffect, 3.3999999999999999, 1.0,
+                           [poofEffect, target, 0]),
+            __getPartTrack(wallEffect, 4.0499999999999998, 1.2,
+                           [wallEffect, toon, 0]),
+            __getSoundTrack(level, 2, duration=3.1000000000000001, node=toon),
+            Sequence(
+                Func(face90, target, toon, battle),
+                ActorInterval(toon, 'sprinkle-dust')),
+            Sequence(Wait(delay), Func(__healToon, target, hp)))
         effectTrack.append(mtrack)
 
     track.append(effectTrack)
@@ -215,19 +204,20 @@ def __doSmooch(attack, hp=0):
     track = Sequence(teleportIn(attack, toon))
     lipstick = globalPropPool.getProp('lipstick')
     lipstick2 = MovieUtil.copyProp(lipstick)
-    lipsticks = [
-        lipstick,
-        lipstick2]
+    lipsticks = [lipstick, lipstick2]
     rightHands = toon.getRightHands()
     dScale = 0.5
     lipstickTrack = Sequence(
         Func(
-            MovieUtil.showProps, lipsticks, rightHands, Point3(
-                -0.27000000000000002, -0.23999999999999999, -0.94999999999999996), Point3(
-                -118, -10.6, -25.899999999999999)), MovieUtil.getScaleIntervals(
-                    lipsticks, dScale, MovieUtil.PNT3_NEARZERO, MovieUtil.PNT3_ONE), Wait(
-                        toon.getDuration('smooch') - 2.0 * dScale), MovieUtil.getScaleIntervals(
-                            lipsticks, dScale, MovieUtil.PNT3_ONE, MovieUtil.PNT3_NEARZERO))
+            MovieUtil.showProps, lipsticks, rightHands,
+            Point3(-0.27000000000000002, -0.23999999999999999,
+                   -0.94999999999999996),
+            Point3(-118, -10.6, -25.899999999999999)),
+        MovieUtil.getScaleIntervals(lipsticks, dScale, MovieUtil.PNT3_NEARZERO,
+                                    MovieUtil.PNT3_ONE),
+        Wait(toon.getDuration('smooch') - 2.0 * dScale),
+        MovieUtil.getScaleIntervals(lipsticks, dScale, MovieUtil.PNT3_ONE,
+                                    MovieUtil.PNT3_NEARZERO))
     lips = globalPropPool.getProp('lips')
     dScale = 0.5
     tLips = 2.5
@@ -244,48 +234,24 @@ def __doSmooch(attack, hp=0):
     for target in targets:
         lipcopy = MovieUtil.copyProp(lips)
         lipsTrack = Sequence(
-            Wait(tLips),
-            Func(
-                MovieUtil.showProp,
-                lipcopy,
-                render,
-                getLipPos),
-            Func(
-                lipcopy.setBillboardPointWorld),
+            Wait(tLips), Func(MovieUtil.showProp, lipcopy, render, getLipPos),
+            Func(lipcopy.setBillboardPointWorld),
             LerpScaleInterval(
                 lipcopy,
                 dScale,
-                Point3(
-                    3,
-                    3,
-                    3),
+                Point3(3, 3, 3),
                 startScale=MovieUtil.PNT3_NEARZERO),
-            Wait(
-                tThrow -
-                tLips -
-                dScale),
+            Wait(tThrow - tLips - dScale),
             LerpPosInterval(
-                lipcopy,
-                dThrow,
-                Point3(
-                    target.getPos() +
-                    Point3(
-                        0,
-                        0,
-                        target.getHeight()))),
-            Func(
-                MovieUtil.removeProp,
-                lipcopy))
+                lipcopy, dThrow,
+                Point3(target.getPos() + Point3(0, 0, target.getHeight()))),
+            Func(MovieUtil.removeProp, lipcopy))
         delay = tThrow + dThrow
         mtrack = Parallel(
-            lipstickTrack, lipsTrack, __getSoundTrack(
-                level, 2, node=toon), Sequence(
-                ActorInterval(
-                    toon, 'smooch')), Sequence(
-                    Wait(delay), ActorInterval(
-                        target, 'conked')), Sequence(
-                            Wait(delay), Func(
-                                __healToon, target, hp)))
+            lipstickTrack, lipsTrack, __getSoundTrack(level, 2, node=toon),
+            Sequence(ActorInterval(toon, 'smooch')),
+            Sequence(Wait(delay), ActorInterval(target, 'conked')),
+            Sequence(Wait(delay), Func(__healToon, target, hp)))
         effectTrack.append(mtrack)
 
     effectTrack.append(Func(MovieUtil.removeProps, lipsticks))
@@ -298,18 +264,16 @@ def __doSmooch(attack, hp=0):
 def __doToonsHit(attack, level, hp):
     track = __doSprinkle(attack, 'toons', hp)
     pbpText = attack['playByPlayText']
-    pbpTrack = pbpText.getShowInterval(
-        TTLocalizer.MovieNPCSOSToonsHit,
-        track.getDuration())
+    pbpTrack = pbpText.getShowInterval(TTLocalizer.MovieNPCSOSToonsHit,
+                                       track.getDuration())
     return (track, pbpTrack)
 
 
 def __doCogsMiss(attack, level, hp):
     track = __doSprinkle(attack, 'suits', hp)
     pbpText = attack['playByPlayText']
-    pbpTrack = pbpText.getShowInterval(
-        TTLocalizer.MovieNPCSOSCogsMiss,
-        track.getDuration())
+    pbpTrack = pbpText.getShowInterval(TTLocalizer.MovieNPCSOSCogsMiss,
+                                       track.getDuration())
     return (track, pbpTrack)
 
 
@@ -334,8 +298,7 @@ def __doRestockGags(attack, level, hp):
         text = TTLocalizer.MovieNPCSOSAll
 
     pbpTrack = pbpText.getShowInterval(
-        TTLocalizer.MovieNPCSOSRestockGags %
-        text, track.getDuration())
+        TTLocalizer.MovieNPCSOSRestockGags % text, track.getDuration())
     return (track, pbpTrack)
 
 

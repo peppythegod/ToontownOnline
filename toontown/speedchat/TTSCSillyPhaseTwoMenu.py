@@ -3,23 +3,14 @@ from otp.speedchat.SCMenu import SCMenu
 from otp.speedchat.SCMenuHolder import SCMenuHolder
 from otp.speedchat.SCStaticTextTerminal import SCStaticTextTerminal
 from otp.otpbase import OTPLocalizer
-SillyPhaseTwoMenu = [
-    (OTPLocalizer.SillyHolidayMenuSections[1], [
-        30310,
-        30311,
-        30312,
-        30313,
-        30314,
-        30315]),
-    (OTPLocalizer.SillyHolidayMenuSections[2], [
-        30316,
-        30317]),
-    (OTPLocalizer.SillyHolidayMenuSections[0], [
-        30309])]
+SillyPhaseTwoMenu = [(OTPLocalizer.SillyHolidayMenuSections[1],
+                      [30310, 30311, 30312, 30313, 30314, 30315]),
+                     (OTPLocalizer.SillyHolidayMenuSections[2], [30316,
+                                                                 30317]),
+                     (OTPLocalizer.SillyHolidayMenuSections[0], [30309])]
 
 
 class TTSCSillyPhaseTwoMenu(SCMenu):
-
     def __init__(self):
         SCMenu.__init__(self)
         self._TTSCSillyPhaseTwoMenu__SillyPhaseTwoMessagesChanged()

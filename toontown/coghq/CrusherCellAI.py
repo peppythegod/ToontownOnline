@@ -29,8 +29,8 @@ class CrusherCellAI(ActiveCellAI.ActiveCellAI):
             self.crushers.remove(entId)
             if not hasattr(self, 'level'):
                 self.notify.error(
-                    "unregisterCrusher(%s): CrusherCellAI %s has no attrib 'level'" %
-                    (entId, self.entId))
+                    "unregisterCrusher(%s): CrusherCellAI %s has no attrib 'level'"
+                    % (entId, self.entId))
 
             ent = self.level.entities.get(entId, None)
             if ent:
@@ -53,8 +53,7 @@ class CrusherCellAI(ActiveCellAI.ActiveCellAI):
                     crushObj.doCrush(crusherId, axis)
                 else:
                     self.notify.warning(
-                        "couldn't find crushable object %d" %
-                        self.occupantId)
+                        "couldn't find crushable object %d" % self.occupantId)
 
     def updateCrushables(self):
         for id in self.crushables:

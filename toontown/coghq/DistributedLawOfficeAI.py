@@ -55,9 +55,8 @@ class DistributedLawOfficeAI(DistributedObjectAI, LawOfficeBase.LawOfficeBase):
         self.exitEvents = {}
         for avId in self.avIds:
             self.exitEvents[avId] = simbase.air.getAvatarExitEvent(avId)
-            self.accept(
-                self.exitEvents[avId], Functor(
-                    self.handleAvatarExit, avId))
+            self.accept(self.exitEvents[avId],
+                        Functor(self.handleAvatarExit, avId))
 
         self.startOffice()
 
@@ -74,7 +73,8 @@ class DistributedLawOfficeAI(DistributedObjectAI, LawOfficeBase.LawOfficeBase):
         self.notify.info('loading spec')
         specModule = self.layout.getFloorSpec(self.currentFloor)
         self.level = DistributedLawOfficeFloorAI.DistributedLawOfficeFloorAI(
-            self.air, self.lawOfficeId, self.zoneId, self.entranceId, self.avIds, specModule)
+            self.air, self.lawOfficeId, self.zoneId, self.entranceId,
+            self.avIds, specModule)
         self.level.setLevelSpec(LevelSpec.LevelSpec(specModule))
         self.notify.info('creating entities')
         self.level.generateWithRequired(self.zoneId)
@@ -116,7 +116,8 @@ class DistributedLawOfficeAI(DistributedObjectAI, LawOfficeBase.LawOfficeBase):
             specModule = self.layout.getFloorSpec(self.currentFloor)
             self.level.requestDelete()
             self.level = DistributedLawOfficeFloorAI.DistributedLawOfficeFloorAI(
-                self.air, self.lawOfficeId, self.zoneId, self.entranceId, self.avIds, specModule)
+                self.air, self.lawOfficeId, self.zoneId, self.entranceId,
+                self.avIds, specModule)
             self.level.setLevelSpec(LevelSpec.LevelSpec(specModule))
             self.level.generateWithRequired(self.zoneId)
             print 'exchanging elevators'
@@ -139,9 +140,7 @@ class DistributedLawOfficeAI(DistributedObjectAI, LawOfficeBase.LawOfficeBase):
         return self.level.cogLevel
 
     def d_setSuits(self):
-        self.sendUpdate('setSuits', [
-            self.getSuits(),
-            self.getReserveSuits()])
+        self.sendUpdate('setSuits', [self.getSuits(), self.getReserveSuits()])
 
     def getSuits(self):
         suitIds = []

@@ -10,13 +10,14 @@ class CogHood(Hood.Hood):
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
         Hood.Hood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
         self.fsm = ClassicFSM.ClassicFSM('Hood', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'cogHQLoader']),
-            State.State('cogHQLoader', self.enterCogHQLoader, self.exitCogHQLoader, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'cogHQLoader']),
-            State.State('final', self.enterFinal, self.exitFinal, [])], 'start', 'final')
+            State.State('start', self.enterStart, self.exitStart,
+                        ['cogHQLoader']),
+            State.State('cogHQLoader', self.enterCogHQLoader,
+                        self.exitCogHQLoader, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['cogHQLoader']),
+            State.State('final', self.enterFinal, self.exitFinal, [])
+        ], 'start', 'final')
         self.fsm.enterInitialState()
 
     def load(self):
@@ -39,7 +40,8 @@ class CogHood(Hood.Hood):
         loaderName = requestStatus['loader']
         if loaderName == 'cogHQLoader':
             self.loader = self.cogHQLoaderClass(
-                self, self.fsm.getStateNamed('cogHQLoader'), self.loaderDoneEvent)
+                self, self.fsm.getStateNamed('cogHQLoader'),
+                self.loaderDoneEvent)
             self.loader.load(requestStatus['zoneId'])
 
     def enterCogHQLoader(self, requestStatus):
@@ -55,8 +57,7 @@ class CogHood(Hood.Hood):
     def handleCogHQLoaderDone(self):
         doneStatus = self.loader.getDoneStatus()
         if self.isSameHood(doneStatus):
-            self.fsm.request('quietZone', [
-                doneStatus])
+            self.fsm.request('quietZone', [doneStatus])
         else:
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)

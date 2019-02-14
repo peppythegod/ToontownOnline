@@ -46,15 +46,9 @@ class DirectRegion(NodePath):
             newBounds = card.getTightBounds()
             ll = render2d.getRelativePoint(card, newBounds[0])
             ur = render2d.getRelativePoint(card, newBounds[1])
-            newBounds = [
-                ll.getX(),
-                ur.getX(),
-                ll.getZ(),
-                ur.getZ()]
-            newBounds = map(
-                lambda x: max(
-                    0.0, min(
-                        1.0, (x + 1.0) / 2.0)), newBounds)
+            newBounds = [ll.getX(), ur.getX(), ll.getZ(), ur.getZ()]
+            newBounds = map(lambda x: max(0.0, min(1.0, (x + 1.0) / 2.0)),
+                            newBounds)
             self.cDr = base.win.makeDisplayRegion(*newBounds)
             self.cDr.setSort(10)
             self.cDr.setClearColor(card.getColor())
@@ -126,8 +120,8 @@ class FishPhoto(NodePath):
         center = (bMin + bMax) / 2.0
         actor.setPos(-center[0], -center[1], -center[2])
         genus = self.fish.getGenus()
-        fishInfo = FishGlobals.FishFileDict.get(
-            genus, FishGlobals.FishFileDict[-1])
+        fishInfo = FishGlobals.FishFileDict.get(genus,
+                                                FishGlobals.FishFileDict[-1])
         fishPos = fishInfo[5]
         if fishPos:
             actor.setPos(fishPos[0], fishPos[1], fishPos[2])
@@ -169,13 +163,8 @@ class FishPhoto(NodePath):
         introDuration = self.actor.getDuration('intro')
         track = Parallel(
             Sequence(
-                Func(
-                    self.actor.play,
-                    'intro'),
-                Wait(introDuration),
-                Func(
-                    self.actor.loop,
-                    'swim')))
+                Func(self.actor.play, 'intro'), Wait(introDuration),
+                Func(self.actor.loop, 'swim')))
         if self.sound:
             soundTrack = Sequence(Wait(delay), Func(self.sound.play))
             if loop:

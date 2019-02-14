@@ -32,10 +32,7 @@ class WelcomeValleyManager(DistributedObject.DistributedObject):
 
     def requestZoneId(self, origZoneId, callback):
         context = self.getCallbackContext(callback)
-        self.sendUpdate('requestZoneIdMessage', [
-            origZoneId,
-            context])
+        self.sendUpdate('requestZoneIdMessage', [origZoneId, context])
 
     def requestZoneIdResponse(self, zoneId, context):
-        self.doCallbackContext(context, [
-            zoneId])
+        self.doCallbackContext(context, [zoneId])

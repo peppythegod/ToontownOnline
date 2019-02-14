@@ -1,5 +1,3 @@
-
-
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
@@ -8,7 +6,6 @@ import DivingGameGlobals
 
 
 class DivingTreasure(DirectObject):
-
     def __init__(self, i):
         self.treasureNode = render.attachNewNode('treasure')
         loadBase = 'phase_4/models/minigames/'

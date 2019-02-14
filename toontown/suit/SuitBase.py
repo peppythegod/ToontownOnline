@@ -48,7 +48,8 @@ class SuitBase:
         nameWLevel = TTLocalizer.SuitBaseNameWithLevel % {
             'name': self.name,
             'dept': self.getStyleDept(),
-            'level': self.getActualLevel()}
+            'level': self.getActualLevel()
+        }
         self.setDisplayName(nameWLevel)
         attributes = SuitBattleGlobals.SuitAttributes[self.dna.name]
         self.maxHP = attributes['hp'][self.level]
@@ -84,11 +85,7 @@ class SuitBase:
 
     def makeLegList(self):
         self.legList = SuitLegList(
-            self.path,
-            self.sp.dnaStore,
-            self.sp.suitWalkSpeed,
-            SuitTimings.fromSky,
-            SuitTimings.toSky,
-            SuitTimings.fromSuitBuilding,
-            SuitTimings.toSuitBuilding,
+            self.path, self.sp.dnaStore, self.sp.suitWalkSpeed,
+            SuitTimings.fromSky, SuitTimings.toSky,
+            SuitTimings.fromSuitBuilding, SuitTimings.toSuitBuilding,
             SuitTimings.toToonBuilding)

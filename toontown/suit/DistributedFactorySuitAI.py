@@ -49,8 +49,9 @@ class DistributedFactorySuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
     def requestBattle(self, x, y, z, h, p, r):
         toonId = self.air.getAvatarIdFromSender()
         if self.notify.getDebug():
-            self.notify.debug(str(self.getDoId()) + str(self.zoneId) +
-                              ': request battle with toon: %d' % toonId)
+            self.notify.debug(
+                str(self.getDoId()) + str(self.zoneId) +
+                ': request battle with toon: %d' % toonId)
 
         self.confrontPos = Point3(x, y, z)
         self.confrontHpr = Vec3(h, p, r)
@@ -62,8 +63,8 @@ class DistributedFactorySuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
 
         elif self.notify.getDebug():
             self.notify.debug(
-                'requestBattle from suit %d, toon %d- denied by battle manager' %
-                (toonId, self.getDoId()))
+                'requestBattle from suit %d, toon %d- denied by battle manager'
+                % (toonId, self.getDoId()))
 
         self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
         self.d_denyBattle(toonId)
@@ -73,14 +74,11 @@ class DistributedFactorySuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
 
     def setBattleCellIndex(self, battleCellIndex):
         self.sp.suitBattleCellChange(
-            self,
-            oldCell=self.battleCellIndex,
-            newCell=battleCellIndex)
+            self, oldCell=self.battleCellIndex, newCell=battleCellIndex)
         self.battleCellIndex = battleCellIndex
         self.attachBattleBlocker()
         self.accept(
-            self.sp.getBattleBlockerEvent(
-                self.battleCellIndex),
+            self.sp.getBattleBlockerEvent(self.battleCellIndex),
             self.attachBattleBlocker)
 
     def getBattleCellIndex(self):
@@ -98,8 +96,7 @@ class DistributedFactorySuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
                 if self.sp.battleMgr.cellHasBattle(self.battleCellIndex):
                     pass
                 else:
-                    self.sendUpdate('setConfrontToon', [
-                        avId])
+                    self.sendUpdate('setConfrontToon', [avId])
 
     def setStrayed(self):
         if self.chasing > 0:

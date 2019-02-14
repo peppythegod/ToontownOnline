@@ -20,30 +20,14 @@ ModelDict = {
     's': 'phase_9/models/char/sellbotBoss',
     'm': 'phase_10/models/char/cashbotBoss',
     'l': 'phase_11/models/char/lawbotBoss',
-    'c': 'phase_12/models/char/bossbotBoss'}
-AnimList = (
-    'Ff_speech',
-    'ltTurn2Wave',
-    'wave',
-    'Ff_lookRt',
-    'turn2Fb',
-    'Ff_neutral',
-    'Bb_neutral',
-    'Ff2Bb_spin',
-    'Bb2Ff_spin',
-    'Fb_neutral',
-    'Bf_neutral',
-    'Fb_firstHit',
-    'Fb_downNeutral',
-    'Fb_downHit',
-    'Fb_fall',
-    'Fb_down2Up',
-    'Fb_downLtSwing',
-    'Fb_downRtSwing',
-    'Fb_DownThrow',
-    'Fb_UpThrow',
-    'Fb_jump',
-    'golf_swing')
+    'c': 'phase_12/models/char/bossbotBoss'
+}
+AnimList = ('Ff_speech', 'ltTurn2Wave', 'wave', 'Ff_lookRt', 'turn2Fb',
+            'Ff_neutral', 'Bb_neutral', 'Ff2Bb_spin', 'Bb2Ff_spin',
+            'Fb_neutral', 'Bf_neutral', 'Fb_firstHit', 'Fb_downNeutral',
+            'Fb_downHit', 'Fb_fall', 'Fb_down2Up', 'Fb_downLtSwing',
+            'Fb_downRtSwing', 'Fb_DownThrow', 'Fb_UpThrow', 'Fb_jump',
+            'golf_swing')
 
 
 class BossCog(Avatar.Avatar):
@@ -130,12 +114,9 @@ class BossCog(Avatar.Avatar):
         self.question = loader.loadSfx(
             'phase_9/audio/sfx/Boss_COG_VO_question.mp3')
         self.dialogArray = [
-            self.grunt,
-            self.murmur,
-            self.statement,
-            self.question,
-            self.statement,
-            self.statement]
+            self.grunt, self.murmur, self.statement, self.question,
+            self.statement, self.statement
+        ]
         dna = self.style
         filePrefix = ModelDict[dna.dept]
         self.loadModel(GenericModel + '-legs-zero', 'legs')
@@ -170,16 +151,17 @@ class BossCog(Avatar.Avatar):
         self.neckReversedHpr = VBase3(0, -540, 0)
         self.axle = self.find('**/joint_axle')
         self.doorA = self._BossCog__setupDoor(
-            '**/joint_doorFront', 'doorA', self.doorACallback, VBase3(
-                0, 0, 0), VBase3(
-                0, 0, -80), CollisionPolygon(
-                Point3(
-                    5, -4, 0.32000000000000001), Point3(
-                        0, -4, 0), Point3(
-                            0, 4, 0), Point3(
-                                5, 4, 0.32000000000000001)))
-        self.doorB = self._BossCog__setupDoor('**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0), VBase3(
-            0, 0, 80), CollisionPolygon(Point3(-5, 4, 0.83999999999999997), Point3(0, 4, 0), Point3(0, -4, 0), Point3(-5, -4, 0.83999999999999997)))
+            '**/joint_doorFront', 'doorA', self.doorACallback, VBase3(0, 0, 0),
+            VBase3(0, 0, -80),
+            CollisionPolygon(
+                Point3(5, -4, 0.32000000000000001), Point3(0, -4, 0),
+                Point3(0, 4, 0), Point3(5, 4, 0.32000000000000001)))
+        self.doorB = self._BossCog__setupDoor(
+            '**/joint_doorRear', 'doorB', self.doorBCallback, VBase3(0, 0, 0),
+            VBase3(0, 0, 80),
+            CollisionPolygon(
+                Point3(-5, 4, 0.83999999999999997), Point3(0, 4, 0),
+                Point3(0, -4, 0), Point3(-5, -4, 0.83999999999999997)))
         treadsModel = loader.loadModel('%s-treads' % GenericModel)
         treadsModel.reparentTo(self.axle)
         self.treadsLeft = treadsModel.find('**/right_tread')
@@ -190,8 +172,8 @@ class BossCog(Avatar.Avatar):
     def initializeBodyCollisions(self, collIdStr):
         Avatar.Avatar.initializeBodyCollisions(self, collIdStr)
         if not self.ghostMode:
-            self.collNode.setCollideMask(
-                self.collNode.getIntoCollideMask() | ToontownGlobals.PieBitmask)
+            self.collNode.setCollideMask(self.collNode.getIntoCollideMask()
+                                         | ToontownGlobals.PieBitmask)
 
     def generateHealthBar(self):
         self.removeHealthBar()
@@ -235,23 +217,23 @@ class BossCog(Avatar.Avatar):
         if self.healthCondition != condition:
             if condition == 4:
                 blinkTask = Task.loop(
-                    Task(
-                        self._BossCog__blinkRed), Task.pause(0.75), Task(
-                        self._BossCog__blinkGray), Task.pause(0.10000000000000001))
+                    Task(self._BossCog__blinkRed), Task.pause(0.75),
+                    Task(self._BossCog__blinkGray),
+                    Task.pause(0.10000000000000001))
                 taskMgr.add(blinkTask, self.uniqueName('blink-task'))
             elif condition == 5:
                 if self.healthCondition == 4:
                     taskMgr.remove(self.uniqueName('blink-task'))
 
                 blinkTask = Task.loop(
-                    Task(
-                        self._BossCog__blinkRed), Task.pause(0.25), Task(
-                        self._BossCog__blinkGray), Task.pause(0.10000000000000001))
+                    Task(self._BossCog__blinkRed), Task.pause(0.25),
+                    Task(self._BossCog__blinkGray),
+                    Task.pause(0.10000000000000001))
                 taskMgr.add(blinkTask, self.uniqueName('blink-task'))
             else:
                 self.healthBar.setColor(self.healthColors[condition], 1)
-                self.healthBarGlow.setColor(
-                    self.healthGlowColors[condition], 1)
+                self.healthBarGlow.setColor(self.healthGlowColors[condition],
+                                            1)
             self.healthCondition = condition
 
     def _BossCog__blinkRed(self, task):
@@ -307,9 +289,8 @@ class BossCog(Avatar.Avatar):
     def doorBCallback(self, isOpen):
         pass
 
-    def _BossCog__rollTreadsInterval(
-            self, object, start=0, duration=0, rate=1):
-
+    def _BossCog__rollTreadsInterval(self, object, start=0, duration=0,
+                                     rate=1):
         def rollTexMatrix(t, object=object):
             object.setTexOffset(TextureStage.getDefault(), t, 0)
 
@@ -332,15 +313,8 @@ class BossCog(Avatar.Avatar):
             self.treadsRight, start=start, duration=duration, rate=rate)
 
     class DoorFSM(FSM.FSM):
-
-        def __init__(
-                self,
-                name,
-                animate,
-                callback,
-                openedHpr,
-                closedHpr,
-                uniqueName):
+        def __init__(self, name, animate, callback, openedHpr, closedHpr,
+                     uniqueName):
             FSM.FSM.__init__(self, name)
             self.animate = animate
             self.callback = callback
@@ -369,14 +343,8 @@ class BossCog(Avatar.Avatar):
                     node=self.animate,
                     volume=0.20000000000000001),
                 self.animate.hprInterval(
-                    1,
-                    self.openedHpr,
-                    blendType='easeInOut'),
-                Sequence(
-                    Wait(0.20000000000000001),
-                    Func(
-                        self.callback,
-                        1)),
+                    1, self.openedHpr, blendType='easeInOut'),
+                Sequence(Wait(0.20000000000000001), Func(self.callback, 1)),
                 name=intervalName)
             ival.start()
             self.ival = ival
@@ -410,14 +378,8 @@ class BossCog(Avatar.Avatar):
                     node=self.animate,
                     volume=0.20000000000000001),
                 self.animate.hprInterval(
-                    1,
-                    self.closedHpr,
-                    blendType='easeInOut'),
-                Sequence(
-                    Wait(0.80000000000000004),
-                    Func(
-                        self.callback,
-                        0)),
+                    1, self.closedHpr, blendType='easeInOut'),
+                Sequence(Wait(0.80000000000000004), Func(self.callback, 0)),
                 name=intervalName)
             ival.start()
             self.ival = ival
@@ -436,40 +398,29 @@ class BossCog(Avatar.Avatar):
             self.animate.setHpr(self.closedHpr)
             self.callback(0)
 
-    def _BossCog__setupDoor(
-            self,
-            jointName,
-            name,
-            callback,
-            openedHpr,
-            closedHpr,
-            cPoly):
+    def _BossCog__setupDoor(self, jointName, name, callback, openedHpr,
+                            closedHpr, cPoly):
         joint = self.find(jointName)
         children = joint.getChildren()
         animate = joint.attachNewNode(name)
         children.reparentTo(animate)
         cnode = CollisionNode('BossZap')
-        cnode.setCollideMask(ToontownGlobals.PieBitmask |
-                             ToontownGlobals.WallBitmask | ToontownGlobals.CameraBitmask)
+        cnode.setCollideMask(ToontownGlobals.PieBitmask
+                             | ToontownGlobals.WallBitmask
+                             | ToontownGlobals.CameraBitmask)
         cnode.addSolid(cPoly)
         animate.attachNewNode(cnode)
-        fsm = self.DoorFSM(
-            name,
-            animate,
-            callback,
-            openedHpr,
-            closedHpr,
-            self.uniqueName)
+        fsm = self.DoorFSM(name, animate, callback, openedHpr, closedHpr,
+                           self.uniqueName)
         return fsm
 
-    def doAnimate(
-            self,
-            anim=None,
-            now=0,
-            queueNeutral=1,
-            raised=None,
-            forward=None,
-            happy=None):
+    def doAnimate(self,
+                  anim=None,
+                  now=0,
+                  queueNeutral=1,
+                  raised=None,
+                  forward=None,
+                  happy=None):
         if now:
             self.stopAnimate()
 
@@ -494,11 +445,11 @@ class BossCog(Avatar.Avatar):
             self.accept(self.animDoneEvent, self._BossCog__getNextAnim)
         else:
             queueNeutral = 0
-        (ival, changed) = self._BossCog__getAnimIval(
-            anim, raised, forward, happy)
+        (ival, changed) = self._BossCog__getAnimIval(anim, raised, forward,
+                                                     happy)
         if changed or queueNeutral:
-            self.queuedAnimIvals.append(
-                (ival, self.raised, self.forward, self.happy))
+            self.queuedAnimIvals.append((ival, self.raised, self.forward,
+                                         self.happy))
             if self.currentAnimIval is None:
                 self._BossCog__getNextAnim()
 
@@ -535,8 +486,8 @@ class BossCog(Avatar.Avatar):
         self.nowHappy = happy
 
     def _BossCog__getAnimIval(self, anim, raised, forward, happy):
-        (ival, changed) = self._BossCog__doGetAnimIval(
-            anim, raised, forward, happy)
+        (ival, changed) = self._BossCog__doGetAnimIval(anim, raised, forward,
+                                                       happy)
         seq = Sequence(ival, name=self.animIvalName)
         seq.setDoneEvent(self.animDoneEvent)
         return (seq, changed)
@@ -554,9 +505,7 @@ class BossCog(Avatar.Avatar):
                 ival = upIval
             else:
                 ival = Sequence(
-                    Func(
-                        self.reverseBody), upIval, Func(
-                        self.forwardBody))
+                    Func(self.reverseBody), upIval, Func(self.forwardBody))
             ival = Parallel(SoundInterval(self.upSfx, node=self), ival)
 
         if forward != self.forward:
@@ -578,27 +527,28 @@ class BossCog(Avatar.Avatar):
 
         if startNeckHpr != endNeckHpr:
             ival = Sequence(
-                Func(
-                    self.neck.setHpr, startNeckHpr), ParallelEndTogether(
-                    ival, Sequence(
+                Func(self.neck.setHpr, startNeckHpr),
+                ParallelEndTogether(
+                    ival,
+                    Sequence(
                         self.neck.hprInterval(
-                            0.5, endNeckHpr, startHpr=startNeckHpr, blendType='easeInOut'), Func(
-                            self.neck.setHpr, self.neckForwardHpr))))
+                            0.5,
+                            endNeckHpr,
+                            startHpr=startNeckHpr,
+                            blendType='easeInOut'),
+                        Func(self.neck.setHpr, self.neckForwardHpr))))
         elif endNeckHpr != self.neckForwardHpr:
             ival = Sequence(
-                Func(
-                    self.neck.setHpr, startNeckHpr), ival, Func(
-                    self.neck.setHpr, self.neckForwardHpr))
+                Func(self.neck.setHpr, startNeckHpr), ival,
+                Func(self.neck.setHpr, self.neckForwardHpr))
 
         if not raised and self.raised:
             downIval = self.getAngryActorInterval('Fb_down2Up', playRate=-1)
             if forward:
                 ival = Sequence(ival, downIval)
             else:
-                ival = Sequence(
-                    ival, Func(
-                        self.reverseBody), downIval, Func(
-                        self.forwardBody))
+                ival = Sequence(ival, Func(self.reverseBody), downIval,
+                                Func(self.forwardBody))
             ival = Parallel(SoundInterval(self.downSfx, node=self), ival)
 
         self.raised = raised
@@ -624,14 +574,8 @@ class BossCog(Avatar.Avatar):
     def getAngryActorInterval(self, animName, **kw):
         if self.happy:
             ival = Sequence(
-                Func(
-                    self.reverseHead),
-                ActorInterval(
-                    self,
-                    animName,
-                    **None),
-                Func(
-                    self.forwardHead))
+                Func(self.reverseHead), ActorInterval(self, animName, **None),
+                Func(self.forwardHead))
         else:
             ival = ActorInterval(self, animName, **None)
         return ival
@@ -648,37 +592,26 @@ class BossCog(Avatar.Avatar):
                 ival = ActorInterval(self, animName)
             else:
                 ival = Parallel(
-                    ActorInterval(
-                        self, animName, partName=[
-                            'torso', 'head']), ActorInterval(
-                        self, 'Fb_downNeutral', partName='legs'))
+                    ActorInterval(self, animName, partName=['torso', 'head']),
+                    ActorInterval(self, 'Fb_downNeutral', partName='legs'))
             if not self.forward:
                 ival = Sequence(
-                    Func(
-                        self.reverseBody), ival, Func(
-                        self.forwardBody))
+                    Func(self.reverseBody), ival, Func(self.forwardBody))
 
         elif anim == 'down2Up':
             ival = Parallel(
-                SoundInterval(
-                    self.upSfx,
-                    node=self),
+                SoundInterval(self.upSfx, node=self),
                 self.getAngryActorInterval('Fb_down2Up'))
             self.raised = 1
         elif anim == 'up2Down':
             ival = Parallel(
-                SoundInterval(
-                    self.downSfx, node=self), self.getAngryActorInterval(
-                    'Fb_down2Up', playRate=-1))
+                SoundInterval(self.downSfx, node=self),
+                self.getAngryActorInterval('Fb_down2Up', playRate=-1))
             self.raised = 0
         elif anim == 'throw':
             self.doAnimate(None, raised=1, happy=0, queueNeutral=0)
             ival = Parallel(
-                Sequence(
-                    SoundInterval(
-                        self.throwSfx,
-                        node=self),
-                    duration=0),
+                Sequence(SoundInterval(self.throwSfx, node=self), duration=0),
                 self.getAngryActorInterval('Fb_UpThrow'))
         elif anim == 'hit':
             if self.raised:
@@ -691,58 +624,47 @@ class BossCog(Avatar.Avatar):
             self.doAnimate(None, raised=0, happy=0, queueNeutral=0)
             if anim == 'ltSwing':
                 ival = Sequence(
-                    Track(
-                        (0, self.getAngryActorInterval('Fb_downLtSwing')), (0.90000000000000002, SoundInterval(
-                            self.swingSfx, node=self)), (1, Func(
-                                self.bubbleL.unstash))), Func(
-                        self.bubbleL.stash))
+                    Track((0, self.getAngryActorInterval('Fb_downLtSwing')),
+                          (0.90000000000000002,
+                           SoundInterval(self.swingSfx, node=self)),
+                          (1, Func(self.bubbleL.unstash))),
+                    Func(self.bubbleL.stash))
             else:
                 ival = Sequence(
-                    Track(
-                        (0, self.getAngryActorInterval('Fb_downRtSwing')), (0.90000000000000002, SoundInterval(
-                            self.swingSfx, node=self)), (1, Func(
-                                self.bubbleR.unstash))), Func(
-                        self.bubbleR.stash))
+                    Track((0, self.getAngryActorInterval('Fb_downRtSwing')),
+                          (0.90000000000000002,
+                           SoundInterval(self.swingSfx, node=self)),
+                          (1, Func(self.bubbleR.unstash))),
+                    Func(self.bubbleR.stash))
         elif anim == 'frontAttack':
             self.doAnimate(None, raised=1, happy=0, queueNeutral=0)
             pe = BattleParticles.loadParticleFile('bossCogFrontAttack.ptf')
             ival = Sequence(
-                Func(
-                    self.reverseHead), ActorInterval(
-                    self, 'Bb2Ff_spin'), Func(
-                    self.forwardHead))
+                Func(self.reverseHead), ActorInterval(self, 'Bb2Ff_spin'),
+                Func(self.forwardHead))
             if self.forward:
                 ival = Sequence(
-                    Func(
-                        self.reverseBody), ParallelEndTogether(
-                        ival, self.pelvis.hprInterval(
-                            0.5, self.pelvisForwardHpr, blendType='easeInOut')))
+                    Func(self.reverseBody),
+                    ParallelEndTogether(
+                        ival,
+                        self.pelvis.hprInterval(
+                            0.5, self.pelvisForwardHpr,
+                            blendType='easeInOut')))
 
             ival = Sequence(
-                Track(
-                    (0,
-                     ival),
-                    (0,
-                     SoundInterval(
-                         self.spinSfx,
-                         node=self)),
-                    (0.90000000000000002,
-                     Parallel(
-                         SoundInterval(
-                             self.rainGearsSfx,
-                             node=self),
-                         ParticleInterval(
-                             pe,
-                             self.frontAttack,
-                             worldRelative=0,
-                             duration=1.5,
-                             cleanup=True),
-                         duration=0)),
-                    (1.8999999999999999,
-                     Func(
-                         self.bubbleF.unstash))),
-                Func(
-                    self.bubbleF.stash))
+                Track((0, ival), (0, SoundInterval(self.spinSfx, node=self)),
+                      (0.90000000000000002,
+                       Parallel(
+                           SoundInterval(self.rainGearsSfx, node=self),
+                           ParticleInterval(
+                               pe,
+                               self.frontAttack,
+                               worldRelative=0,
+                               duration=1.5,
+                               cleanup=True),
+                           duration=0)),
+                      (1.8999999999999999, Func(self.bubbleF.unstash))),
+                Func(self.bubbleF.stash))
             self.forward = 1
             self.happy = 0
             self.raised = 1
@@ -752,13 +674,12 @@ class BossCog(Avatar.Avatar):
             else:
                 self.doAnimate(None, raised=1, happy=1, queueNeutral=1)
             ival = Parallel(
-                ActorInterval(
-                    self, 'Fb_jump'), Sequence(
+                ActorInterval(self, 'Fb_jump'),
+                Sequence(
                     SoundInterval(
-                        self.swishSfx, duration=1.1000000000000001, node=self), SoundInterval(
-                        self.boomSfx, duration=1.8999999999999999)), Sequence(
-                        Wait(1.21), Func(
-                            self.announceAreaAttack)))
+                        self.swishSfx, duration=1.1000000000000001, node=self),
+                    SoundInterval(self.boomSfx, duration=1.8999999999999999)),
+                Sequence(Wait(1.21), Func(self.announceAreaAttack)))
             if self.twoFaced:
                 self.happy = 0
             else:
@@ -766,11 +687,10 @@ class BossCog(Avatar.Avatar):
             self.raised = 1
         elif anim == 'Fb_fall':
             ival = Parallel(
-                ActorInterval(
-                    self, 'Fb_fall'), Sequence(
-                    SoundInterval(
-                        self.reelSfx, node=self), SoundInterval(
-                        self.deathSfx)))
+                ActorInterval(self, 'Fb_fall'),
+                Sequence(
+                    SoundInterval(self.reelSfx, node=self),
+                    SoundInterval(self.deathSfx)))
         elif isinstance(anim, types.StringType):
             ival = ActorInterval(self, anim)
         else:

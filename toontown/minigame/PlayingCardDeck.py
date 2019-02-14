@@ -1,29 +1,22 @@
-
-
 import random
 import PlayingCardGlobals
 from toontown.minigame.PlayingCard import PlayingCardBase
 
 
 class PlayingCardDeck:
-
     def __init__(self):
         self.shuffle()
 
     def shuffle(self):
         self.cards = range(
-            0,
-            PlayingCardGlobals.MaxSuit *
-            PlayingCardGlobals.MaxRank)
+            0, PlayingCardGlobals.MaxSuit * PlayingCardGlobals.MaxRank)
         random.shuffle(self.cards)
 
     def shuffleWithSeed(self, seed):
         generator = random.Random()
         generator.seed(seed)
         self.cards = range(
-            0,
-            PlayingCardGlobals.MaxSuit *
-            PlayingCardGlobals.MaxRank)
+            0, PlayingCardGlobals.MaxSuit * PlayingCardGlobals.MaxRank)
         generator.shuffle(self.cards)
 
     def dealCard(self):

@@ -6,20 +6,10 @@ from pandac.PandaModules import *
 
 class ToontownWebLauncher(WebLauncherBase):
     GameName = 'Toontown'
-    LauncherPhases = [
-        (3, 'tt_3'),
-        (3.5, 'tt_3_5'),
-        (4, 'tt_4'),
-        (5, 'tt_5'),
-        (5.5, 'tt_5_5'),
-        (6, 'tt_6'),
-        (7, 'tt_7'),
-        (8, 'tt_8'),
-        (9, 'tt_9'),
-        (10, 'tt_10'),
-        (11, 'tt_11'),
-        (12, 'tt_12'),
-        (13, 'tt_13')]
+    LauncherPhases = [(3, 'tt_3'), (3.5, 'tt_3_5'), (4, 'tt_4'), (5, 'tt_5'),
+                      (5.5, 'tt_5_5'), (6, 'tt_6'), (7, 'tt_7'), (8, 'tt_8'),
+                      (9, 'tt_9'), (10, 'tt_10'), (11, 'tt_11'), (12, 'tt_12'),
+                      (13, 'tt_13')]
     Localizer = TTLocalizer
 
     def __init__(self, appRunner):
@@ -76,13 +66,13 @@ class ToontownWebLauncher(WebLauncherBase):
 
         self.secretNeedsParentPasswordKey = 1
         if 'secretsNeedsParentPassword' in dict:
-            self.secretNeedsParentPasswordKey = dict['secretsNeedsParentPassword']
+            self.secretNeedsParentPasswordKey = dict[
+                'secretsNeedsParentPassword']
         else:
             self.notify.warning(
                 'no secretNeedsParentPassword token in webAcctParams')
-        self.notify.info(
-            'secretNeedsParentPassword = %d' %
-            self.secretNeedsParentPasswordKey)
+        self.notify.info('secretNeedsParentPassword = %d' %
+                         self.secretNeedsParentPasswordKey)
         self.chatEligibleKey = 0
         if 'chatEligible' in dict:
             self.chatEligibleKey = dict['chatEligible']

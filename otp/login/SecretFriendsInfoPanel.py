@@ -7,7 +7,6 @@ from otp.otpgui import OTPDialog
 
 
 class SecretFriendsInfoPanel(getGlobalDialogClass()):
-
     def __init__(self, doneEvent, hidePageNum=0, pageChangeCallback=None):
         dialogClass = getGlobalDialogClass()
         dialogClass.__init__(
@@ -20,10 +19,7 @@ class SecretFriendsInfoPanel(getGlobalDialogClass()):
             text='',
             topPad=1.5,
             sidePad=1.2,
-            pos=(
-                0,
-                0,
-                0.10000000000000001),
+            pos=(0, 0, 0.10000000000000001),
             scale=0.90000000000000002)
         self.textPanel = MultiPageTextFrame(
             parent=self,

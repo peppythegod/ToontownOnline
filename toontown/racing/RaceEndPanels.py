@@ -14,10 +14,14 @@ class RaceResultsPanel(DirectFrame):
 
     def __init__(self, numRacers, race, raceEndPanel, *args, **kwargs):
         opts = {
-            'relief': None,
-            'geom': DGG.getDefaultDialogGeom(),
-            'geom_color': ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004,),
-            'geom_scale': (1.75, 1, 0.75)}
+            'relief':
+            None,
+            'geom':
+            DGG.getDefaultDialogGeom(),
+            'geom_color':
+            ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004, ),
+            'geom_scale': (1.75, 1, 0.75)
+        }
         opts.update(kwargs)
         DirectFrame.__init__(self, *args, **args)
         self.initialiseoptions(RaceResultsPanel)
@@ -33,146 +37,84 @@ class RaceResultsPanel(DirectFrame):
         self.pointsLabel = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0.69999999999999996,
-                0,
-                0.29999999999999999),
+            pos=(0.69999999999999996, 0, 0.29999999999999999),
             text=TTLocalizer.KartRace_CircuitPoints,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPsmallLabel)
         self.pointsLabel.hide()
         self.rowFrame = []
         for x in range(self.numRacers):
             frame = DirectFrame(
-                parent=self,
-                relief=None,
-                pos=self.getRowPos(x))
+                parent=self, relief=None, pos=self.getRowPos(x))
             self.rowFrame.append(frame)
             pLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.0,
-                    0.0,
-                    -0.01),
-                text=repr(
-                    x + 1) + ' -',
-                text_fg=(
-                    0.5,
-                    0.5,
-                    0.5,
-                    1.0),
+                pos=(0.0, 0.0, -0.01),
+                text=repr(x + 1) + ' -',
+                text_fg=(0.5, 0.5, 0.5, 1.0),
                 text_scale=TTLocalizer.REPlargeLabel,
                 text_align=TextNode.ARight,
                 text_font=DGG.getDefaultFont())
             fFrame = DirectFrame(
-                parent=frame, relief=None, pos=(
-                    0.10000000000000001, -0.01, 0.01))
+                parent=frame,
+                relief=None,
+                pos=(0.10000000000000001, -0.01, 0.01))
             nLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.46000000000000002,
-                    0.0,
-                    0.0),
+                pos=(0.46000000000000002, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0),
+                text_fg=(0.0, 0.0, 0.0, 1.0),
                 text_scale=TTLocalizer.REPsmallLabel,
                 text_align=TextNode.ACenter,
                 text_font=DGG.getDefaultFont())
             tLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.90000000000000002,
-                    0.0,
-                    0.0),
+                pos=(0.90000000000000002, 0.0, 0.0),
                 text="--'--''--",
-                text_fg=(
-                    0.5,
-                    0.5,
-                    0.5,
-                    1.0),
+                text_fg=(0.5, 0.5, 0.5, 1.0),
                 text_scale=TTLocalizer.REPsmallLabel,
                 text_font=DGG.getDefaultFont())
             wLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.1399999999999999,
-                    0.0,
-                    0.0),
+                pos=(1.1399999999999999, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    0,
-                    0,
-                    0,
-                    1),
+                text_fg=(0, 0, 0, 1),
                 text_scale=TTLocalizer.REPsmallLabel,
                 text_align=TextNode.ALeft,
                 text_font=DGG.getDefaultFont())
             cpLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.3999999999999999,
-                    0.0,
-                    0.0),
+                pos=(1.3999999999999999, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    0,
-                    0,
-                    0,
-                    1),
+                text_fg=(0, 0, 0, 1),
                 text_scale=TTLocalizer.REPsmallLabel,
                 text_align=TextNode.ALeft,
                 text_font=DGG.getDefaultFont())
             ncpLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.4399999999999999,
-                    0.0,
-                    0.0),
+                pos=(1.4399999999999999, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    1,
-                    0,
-                    0,
-                    1),
+                text_fg=(1, 0, 0, 1),
                 text_scale=TTLocalizer.REPsmallLabel,
                 text_align=TextNode.ALeft,
                 text_font=DGG.getDefaultFont())
-            self.entryList.append(
-                (pLabel, fFrame, nLabel, tLabel, wLabel, cpLabel, ncpLabel))
+            self.entryList.append((pLabel, fFrame, nLabel, tLabel, wLabel,
+                                   cpLabel, ncpLabel))
 
     def getRowPos(self, place):
         return Point3(-0.71999999999999997, -0.01,
                       0.25 - place * 0.17999999999999999)
 
-    def displayRacer(
-            self,
-            place,
-            headFrame,
-            name,
-            time,
-            qualify,
-            tickets,
-            bonus,
-            trophies,
-            circuitPoints,
-            circuitTime):
-        self.notify.debug(
-            'displayRacer: place=%d name=%s tickets=%d bonus=%d' %
-            (place, name, tickets, bonus))
+    def displayRacer(self, place, headFrame, name, time, qualify, tickets,
+                     bonus, trophies, circuitPoints, circuitTime):
+        self.notify.debug('displayRacer: place=%d name=%s tickets=%d bonus=%d'
+                          % (place, name, tickets, bonus))
         self.tickets[place] = tickets
         self.entryList[place - 1][0].configure(text_fg=(0.0, 0.0, 0.0, 1.0))
         if headFrame:
@@ -189,11 +131,9 @@ class RaceResultsPanel(DirectFrame):
         minutes = int(time / 60)
         time -= minutes * 60
         seconds = int(time)
-        if not seconds < 10 or [
-                '0']:
+        if not seconds < 10 or ['0']:
             pass
-        padding = [
-            ''][0]
+        padding = [''][0]
         time -= seconds
         fraction = str(time)[2:4]
         fraction = fraction + '0' * (2 - len(fraction))
@@ -205,17 +145,17 @@ class RaceResultsPanel(DirectFrame):
                      label=self.entryList[place - 1][3],
                      timeStr=timeStr,
                      recStr=TTLocalizer.KartRace_Record):
-            self.entryList[place -
-                           1][3].configure(text_scale=0.059999999999999998)
-            self.entryList[place -
-                           1][3].configure(text_fg=(0.94999999999999996, 0.0, 0.0, 1.0))
+            self.entryList[place - 1][3].configure(
+                text_scale=0.059999999999999998)
+            self.entryList[place - 1][3].configure(
+                text_fg=(0.94999999999999996, 0.0, 0.0, 1.0))
             if flip:
-                self.entryList[place -
-                               1][3].configure(text_font=DGG.getDefaultFont())
+                self.entryList[place - 1][3].configure(
+                    text_font=DGG.getDefaultFont())
                 self.entryList[place - 1][3]['text'] = timeStr
             else:
-                self.entryList[place -
-                               1][3].configure(text_font=ToontownGlobals.getSignFont())
+                self.entryList[place - 1][3].configure(
+                    text_font=ToontownGlobals.getSignFont())
                 self.entryList[place - 1][3]['text'] = recStr
 
         bonusSeq = Sequence()
@@ -243,8 +183,12 @@ class RaceResultsPanel(DirectFrame):
                 bonusSeq.append(Wait(0.5))
 
         if trophies:
-            DirectFrame(parent=headFrame, relief=None, image=loader.loadModel(
-                'phase_6/models/karting/trophy'), image_pos=(0.25, -1.01, -0.25), image_scale=0.25)
+            DirectFrame(
+                parent=headFrame,
+                relief=None,
+                image=loader.loadModel('phase_6/models/karting/trophy'),
+                image_pos=(0.25, -1.01, -0.25),
+                image_scale=0.25)
 
         def ticketTicker(t,
                          label=self.entryList[place - 1][4],
@@ -278,10 +222,10 @@ class RaceResultsPanel(DirectFrame):
                 newLabel.hide()
 
             seq = Sequence(
-                Wait(1), Parallel(
-                    LerpFunc(
-                        totalPointTicker, duration=1), LerpFunc(
-                        newPointTicker, duration=1)), Func(endTicker))
+                Wait(1),
+                Parallel(
+                    LerpFunc(totalPointTicker, duration=1),
+                    LerpFunc(newPointTicker, duration=1)), Func(endTicker))
             self.pointSeqs.append(seq)
 
     def updateWinnings(self, place, newTotalTickets):
@@ -320,16 +264,14 @@ class RaceResultsPanel(DirectFrame):
                 shiftRacersSeq.append(
                     Parallel(
                         Func(fixPlaceValue),
-                        LerpPosInterval(
-                            self.rowFrame[oldPlace],
-                            1,
-                            newPos)))
+                        LerpPosInterval(self.rowFrame[oldPlace], 1, newPos)))
                 continue
 
         self.circuitFinishSeq = Sequence(calcPointsSeq, shiftRacersSeq)
         if not len(self.race.circuitLoop) == 0:
             self.notify.debug(
-                'Not the last race in a circuit, pressing next race in 30 secs')
+                'Not the last race in a circuit, pressing next race in 30 secs'
+            )
             self.circuitFinishSeq.append(Wait(30))
             self.circuitFinishSeq.append(
                 Func(self.raceEndPanel.closeButtonPressed))
@@ -352,13 +294,16 @@ class RaceResultsPanel(DirectFrame):
 
 
 class RaceWinningsPanel(DirectFrame):
-
     def __init__(self, race, *args, **kwargs):
         opts = {
-            'relief': None,
-            'geom': DGG.getDefaultDialogGeom(),
-            'geom_color': ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004,),
-            'geom_scale': (1.75, 1, 0.75)}
+            'relief':
+            None,
+            'geom':
+            DGG.getDefaultDialogGeom(),
+            'geom_color':
+            ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004, ),
+            'geom_scale': (1.75, 1, 0.75)
+        }
         opts.update(kwargs)
         DirectFrame.__init__(self, *args, **args)
         self.initialiseoptions(RaceWinningsPanel)
@@ -368,241 +313,151 @@ class RaceWinningsPanel(DirectFrame):
         tLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                0.25),
+            pos=(0.0, 0.0, 0.25),
             text=TTLocalizer.KartRace_Tickets,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=0.10000000000000001,
             text_font=DGG.getDefaultFont())
         DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                TTLocalizer.REPtextPosX,
-                0.0,
-                0.10000000000000001),
-            text=TTLocalizer.KartRace_Deposit +
-            TTLocalizer.KartRace_Colon,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            pos=(TTLocalizer.REPtextPosX, 0.0, 0.10000000000000001),
+            text=TTLocalizer.KartRace_Deposit + TTLocalizer.KartRace_Colon,
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ALeft,
             text_font=DGG.getDefaultFont())
         dLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.050000000000000003,
-                0.0,
-                0.10000000000000001),
+            pos=(0.050000000000000003, 0.0, 0.10000000000000001),
             text=TTLocalizer.KartRace_Zero,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ARight,
             text_font=DGG.getDefaultFont())
         DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                TTLocalizer.REPtextPosX,
-                0.0,
-                0.0),
-            text=TTLocalizer.KartRace_Winnings +
-            TTLocalizer.KartRace_Colon,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            pos=(TTLocalizer.REPtextPosX, 0.0, 0.0),
+            text=TTLocalizer.KartRace_Winnings + TTLocalizer.KartRace_Colon,
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ALeft,
             text_font=DGG.getDefaultFont())
         wLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.050000000000000003,
-                0.0,
-                0.0),
+            pos=(0.050000000000000003, 0.0, 0.0),
             text=TTLocalizer.KartRace_Zero,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ARight,
             text_font=DGG.getDefaultFont())
         DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                TTLocalizer.REPtextPosX,
-                0.0,
-                -0.10000000000000001),
+            pos=(TTLocalizer.REPtextPosX, 0.0, -0.10000000000000001),
             text=TTLocalizer.KartRace_Bonus + TTLocalizer.KartRace_Colon,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ALeft,
             text_font=DGG.getDefaultFont())
         bLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.050000000000000003,
-                0.0,
-                -0.10000000000000001),
+            pos=(0.050000000000000003, 0.0, -0.10000000000000001),
             text=TTLocalizer.KartRace_Zero,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ARight,
             text_font=DGG.getDefaultFont())
         self.raceTotalLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                TTLocalizer.REPtextPosX,
-                0.0,
-                -0.20000000000000001),
+            pos=(TTLocalizer.REPtextPosX, 0.0, -0.20000000000000001),
             text=TTLocalizer.KartRace_RaceTotal + TTLocalizer.KartRace_Colon,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ALeft,
             text_font=DGG.getDefaultFont())
         self.circuitTotalLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                TTLocalizer.REPtextPosX,
-                0.0,
-                -0.20000000000000001),
-            text=TTLocalizer.KartRace_CircuitTotal + TTLocalizer.KartRace_Colon,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            pos=(TTLocalizer.REPtextPosX, 0.0, -0.20000000000000001),
+            text=TTLocalizer.KartRace_CircuitTotal +
+            TTLocalizer.KartRace_Colon,
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ALeft,
             text_font=DGG.getDefaultFont())
         self.doubleTicketsLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.5,
-                0.0,
-                -0.26000000000000001),
+            pos=(0.5, 0.0, -0.26000000000000001),
             text=TTLocalizer.KartRace_DoubleTickets,
-            text_fg=(
-                1.0,
-                0.125,
-                0.125,
-                1.0),
+            text_fg=(1.0, 0.125, 0.125, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ACenter,
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            text_shadow=(0, 0, 0, 1),
             text_font=DGG.getDefaultFont())
         fLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.050000000000000003,
-                0.0,
-                -0.20000000000000001),
+            pos=(0.050000000000000003, 0.0, -0.20000000000000001),
             text=TTLocalizer.KartRace_Zero,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.REPlargeLabel,
             text_align=TextNode.ARight,
             text_font=DGG.getDefaultFont())
-        ticketPic = DirectFrame(parent=tFrame, relief=None, image=loader.loadModel(
-            'phase_6/models/karting/tickets'), image_pos=(0.5, 0, -0.02), image_scale=0.40000000000000002)
+        ticketPic = DirectFrame(
+            parent=tFrame,
+            relief=None,
+            image=loader.loadModel('phase_6/models/karting/tickets'),
+            image_pos=(0.5, 0, -0.02),
+            image_scale=0.40000000000000002)
         self.ticketFrame = tFrame
         self.ticketComponents = (dLabel, wLabel, bLabel, fLabel)
         tFrame = DirectFrame(parent=frame, relief=None, pos=(0, 0, 0))
         tLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                0.25),
+            pos=(0.0, 0.0, 0.25),
             text=TTLocalizer.KartRace_Bonus,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=0.10000000000000001,
             text_font=DGG.getDefaultFont())
-        textFrame = DirectFrame(parent=tFrame,
-                                relief=None,
-                                text='',
-                                text_scale=TTLocalizer.REPlargeLabel,
-                                text_font=DGG.getDefaultFont(),
-                                text_pos=(-0.29999999999999999,
-                                          0.10000000000000001,
-                                          0))
-        bonusPic = DirectFrame(parent=tFrame, relief=None, image=loader.loadModel(
-            'phase_6/models/karting/tickets'), image_pos=(0.5, 0, -0.02), image_scale=0.40000000000000002)
+        textFrame = DirectFrame(
+            parent=tFrame,
+            relief=None,
+            text='',
+            text_scale=TTLocalizer.REPlargeLabel,
+            text_font=DGG.getDefaultFont(),
+            text_pos=(-0.29999999999999999, 0.10000000000000001, 0))
+        bonusPic = DirectFrame(
+            parent=tFrame,
+            relief=None,
+            image=loader.loadModel('phase_6/models/karting/tickets'),
+            image_pos=(0.5, 0, -0.02),
+            image_scale=0.40000000000000002)
         self.bonusFrame = tFrame
         self.bonusComponents = (textFrame, bonusPic)
         tFrame = DirectFrame(parent=frame, relief=None, pos=(0, 0, 0))
         tLabel = DirectLabel(
             parent=tFrame,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                0.25),
+            pos=(0.0, 0.0, 0.25),
             text=TTLocalizer.KartRace_Trophies,
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=0.10000000000000001,
             text_font=DGG.getDefaultFont())
-        textFrame = DirectFrame(parent=tFrame,
-                                relief=None,
-                                text='',
-                                text_scale=TTLocalizer.REPlargeLabel,
-                                text_font=DGG.getDefaultFont(),
-                                text_pos=(-0.29999999999999999,
-                                          0.10000000000000001,
-                                          0))
+        textFrame = DirectFrame(
+            parent=tFrame,
+            relief=None,
+            text='',
+            text_scale=TTLocalizer.REPlargeLabel,
+            text_font=DGG.getDefaultFont(),
+            text_pos=(-0.29999999999999999, 0.10000000000000001, 0))
         trophyPic = DirectFrame(parent=tFrame, relief=None)
         self.trophyFrame = tFrame
         self.trophyComponents = (textFrame, trophyPic)
@@ -610,15 +465,13 @@ class RaceWinningsPanel(DirectFrame):
         self.bonusFrame.hide()
         self.trophyFrame.hide()
 
-    def generateDisplaySequences(
-            self,
-            track,
-            ticDeposit,
-            ticWon,
-            ticBonus,
-            trophies,
-            endOfCircuitRace=False):
-
+    def generateDisplaySequences(self,
+                                 track,
+                                 ticDeposit,
+                                 ticWon,
+                                 ticBonus,
+                                 trophies,
+                                 endOfCircuitRace=False):
         def ticketTicker(t, label, startTickets, endTickets):
             label['text'] = str(int(t * endTickets + (1 - t) * startTickets))
 
@@ -631,18 +484,14 @@ class RaceWinningsPanel(DirectFrame):
             tempStr = ''
             while tokens:
                 if lineStr:
-                    tempStr = ' '.join([
-                        lineStr,
-                        tokens[0]])
+                    tempStr = ' '.join([lineStr, tokens[0]])
                 else:
                     tempStr = tokens[0]
                 if textNode.calcWidth(tempStr) > maxWidth:
                     if not outStr:
                         outStr = lineStr
                     else:
-                        outStr = '\n'.join([
-                            outStr,
-                            lineStr])
+                        outStr = '\n'.join([outStr, lineStr])
                     lineStr = tokens.pop(0)
                     continue
                 lineStr = tempStr
@@ -651,9 +500,7 @@ class RaceWinningsPanel(DirectFrame):
                 if not outStr:
                     outStr = lineStr
                 else:
-                    outStr = '\n'.join([
-                        outStr,
-                        lineStr])
+                    outStr = '\n'.join([outStr, lineStr])
 
             return outStr
 
@@ -679,96 +526,105 @@ class RaceWinningsPanel(DirectFrame):
         if ticBonus:
             ticketSeq.append(
                 Sequence(
-                    Func(
-                        self.ticketFrame.hide),
-                    Func(
-                        self.bonusFrame.show),
-                    Func(
-                        self.trophyFrame.hide),
+                    Func(self.ticketFrame.hide), Func(self.bonusFrame.show),
+                    Func(self.trophyFrame.hide),
                     Func(
                         self.bonusComponents[0].configure,
-                        text=wrapStr(
-                            TTLocalizer.KartRace_RecordString %
-                            (TTLocalizer.KartRecordStrings[bonusType],
-                             TTLocalizer.KartRace_TrackNames[track],
-                             str(ticBonus)))),
-                    Wait(3)))
+                        text=wrapStr(TTLocalizer.KartRace_RecordString %
+                                     (TTLocalizer.KartRecordStrings[bonusType],
+                                      TTLocalizer.KartRace_TrackNames[track],
+                                      str(ticBonus)))), Wait(3)))
 
-        if not ticDeposit or [
-                1]:
+        if not ticDeposit or [1]:
             pass
-        if not ticDeposit or [
-                1]:
+        if not ticDeposit or [1]:
             pass
-        if not ticWon or [
-                1]:
+        if not ticWon or [1]:
             pass
-        if not ticWon or [
-                1]:
+        if not ticWon or [1]:
             pass
-        if not origTicBonus or [
-                1]:
+        if not origTicBonus or [1]:
             pass
-        if not origTicBonus or [
-                1]:
+        if not origTicBonus or [1]:
             pass
         ticketSeq.append(
             Sequence(
+                Func(self.bonusFrame.hide), Func(self.trophyFrame.hide),
+                Func(self.ticketFrame.show),
                 Func(
-                    self.bonusFrame.hide), Func(
-                    self.trophyFrame.hide), Func(
-                    self.ticketFrame.show), Func(
-                        self.ticketComponents[3].configure, text_color=Vec4(
-                            0, 0, 0, 1)), Func(
-                                self.ticketComponents[0].configure, text_color=Vec4(
-                                    1, 0, 0, 1)), Parallel(
-                                        LerpFunc(
-                                            ticketTicker, duration=[0][0], extraArgs=[
-                                                self.ticketComponents[0], 0, ticDeposit]), LerpFunc(
-                                                    ticketTicker, duration=[0][0], extraArgs=[
-                                                        self.ticketComponents[3], 0, ticDeposit])), Func(
-                                                            self.ticketComponents[0].configure, text_color=Vec4(
-                                                                0, 0, 0, 1)), Func(
-                                                                    self.ticketComponents[1].configure, text_color=Vec4(
-                                                                        1, 0, 0, 1)), Parallel(
-                                                                            LerpFunc(
-                                                                                ticketTicker, duration=[0][0], extraArgs=[
-                                                                                    self.ticketComponents[1], 0, ticWon]), LerpFunc(
-                                                                                        ticketTicker, duration=[0][0], extraArgs=[
-                                                                                            self.ticketComponents[3], ticDeposit, ticDeposit + ticWon])), Func(
-                                                                                                self.ticketComponents[1].configure, text_color=Vec4(
-                                                                                                    0, 0, 0, 1)), Func(
-                                                                                                        self.ticketComponents[2].configure, text_color=Vec4(
-                                                                                                            1, 0, 0, 1)), Parallel(
-                                                                                                                LerpFunc(
-                                                                                                                    ticketTicker, duration=[0][0], extraArgs=[
-                                                                                                                        self.ticketComponents[2], 0, origTicBonus]), LerpFunc(
-                                                                                                                            ticketTicker, duration=[0][0], extraArgs=[
-                                                                                                                                self.ticketComponents[3], ticDeposit + ticWon, ticDeposit + ticWon + origTicBonus])), Func(
-                                                                                                                                    self.ticketComponents[2].configure, text_color=Vec4(
-                                                                                                                                        0, 0, 0, 1)), Func(
-                                                                                                                                            self.ticketComponents[3].configure, text_color=Vec4(
-                                                                                                                                                1, 0, 0, 1))))
+                    self.ticketComponents[3].configure,
+                    text_color=Vec4(0, 0, 0, 1)),
+                Func(
+                    self.ticketComponents[0].configure,
+                    text_color=Vec4(1, 0, 0, 1)),
+                Parallel(
+                    LerpFunc(
+                        ticketTicker,
+                        duration=[0][0],
+                        extraArgs=[self.ticketComponents[0], 0, ticDeposit]),
+                    LerpFunc(
+                        ticketTicker,
+                        duration=[0][0],
+                        extraArgs=[self.ticketComponents[3], 0, ticDeposit])),
+                Func(
+                    self.ticketComponents[0].configure,
+                    text_color=Vec4(0, 0, 0, 1)),
+                Func(
+                    self.ticketComponents[1].configure,
+                    text_color=Vec4(1, 0, 0, 1)),
+                Parallel(
+                    LerpFunc(
+                        ticketTicker,
+                        duration=[0][0],
+                        extraArgs=[self.ticketComponents[1], 0, ticWon]),
+                    LerpFunc(
+                        ticketTicker,
+                        duration=[0][0],
+                        extraArgs=[
+                            self.ticketComponents[3], ticDeposit,
+                            ticDeposit + ticWon
+                        ])),
+                Func(
+                    self.ticketComponents[1].configure,
+                    text_color=Vec4(0, 0, 0, 1)),
+                Func(
+                    self.ticketComponents[2].configure,
+                    text_color=Vec4(1, 0, 0, 1)),
+                Parallel(
+                    LerpFunc(
+                        ticketTicker,
+                        duration=[0][0],
+                        extraArgs=[self.ticketComponents[2], 0, origTicBonus]),
+                    LerpFunc(
+                        ticketTicker,
+                        duration=[0][0],
+                        extraArgs=[
+                            self.ticketComponents[3], ticDeposit + ticWon,
+                            ticDeposit + ticWon + origTicBonus
+                        ])),
+                Func(
+                    self.ticketComponents[2].configure,
+                    text_color=Vec4(0, 0, 0, 1)),
+                Func(
+                    self.ticketComponents[3].configure,
+                    text_color=Vec4(1, 0, 0, 1))))
         winningsSeq = Sequence(
-            Func(
-                self.ticketFrame.show), Func(
-                self.bonusFrame.hide), Func(
-                self.trophyFrame.hide), Wait(5))
+            Func(self.ticketFrame.show), Func(self.bonusFrame.hide),
+            Func(self.trophyFrame.hide), Wait(5))
         if ticBonus:
             winningsSeq.append(
                 Sequence(
-                    Func(
-                        self.ticketFrame.hide), Func(
-                        self.bonusFrame.show), Func(
-                        self.trophyFrame.hide), Wait(5)))
+                    Func(self.ticketFrame.hide), Func(self.bonusFrame.show),
+                    Func(self.trophyFrame.hide), Wait(5)))
 
         def showCorrectTrophy(trophyId):
             if hasattr(self, 'trophyImage'):
                 self.trophyImage.destroy()
 
             self.trophyImage = RacingTrophy(
-                level=trophyId, parent=self.trophyComponents[1], pos=(
-                    0.5, 0, -0.25))
+                level=trophyId,
+                parent=self.trophyComponents[1],
+                pos=(0.5, 0, -0.25))
             if trophyId == RaceGlobals.GrandTouring and trophyId == RaceGlobals.TotalQuals or trophyId == RaceGlobals.TotalWins:
                 scale = self.trophyImage.getScale()
                 scale = scale * 0.5
@@ -778,37 +634,36 @@ class RaceWinningsPanel(DirectFrame):
         if trophies:
             winningsSeq.append(
                 Sequence(
-                    Func(
-                        self.ticketFrame.hide), Func(
-                        self.bonusFrame.hide), Func(
-                        self.trophyFrame.show)))
+                    Func(self.ticketFrame.hide), Func(self.bonusFrame.hide),
+                    Func(self.trophyFrame.show)))
             for x in trophies:
                 winningsSeq.append(
                     Sequence(
                         Func(
-                            self.trophyComponents[0].configure, text=wrapStr(
-                                TTLocalizer.KartTrophyDescriptions[x])), Func(
-                            showCorrectTrophy, x), Wait(5)))
+                            self.trophyComponents[0].configure,
+                            text=wrapStr(
+                                TTLocalizer.KartTrophyDescriptions[x])),
+                        Func(showCorrectTrophy, x), Wait(5)))
 
         return (ticketSeq, winningsSeq)
 
 
 class RaceEndPanel(DirectFrame):
-
     def __init__(self, numRacers, race, *args, **kwargs):
-        opts = {
-            'relief': None}
+        opts = {'relief': None}
         opts.update(kwargs)
         DirectFrame.__init__(self, *args, **args)
         self.initialiseoptions(RaceEndPanel)
         self.enabled = False
         self.race = race
         self.results = RaceResultsPanel(
-            numRacers, race, self, parent=self, pos=(
-                0, 0, 0.52500000000000002))
+            numRacers,
+            race,
+            self,
+            parent=self,
+            pos=(0, 0, 0.52500000000000002))
         self.winnings = RaceWinningsPanel(
-            race, parent=self, pos=(
-                0, 0, -0.52500000000000002))
+            race, parent=self, pos=(0, 0, -0.52500000000000002))
         if len(self.race.circuitLoop) == 0:
             exitText = TTLocalizer.KartRace_Exit
         else:
@@ -816,27 +671,15 @@ class RaceEndPanel(DirectFrame):
         gui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
         self.closeButton = DirectButton(
             parent=self,
-            image=(
-                gui.find('**/CloseBtn_UP'),
-                gui.find('**/CloseBtn_DN'),
-                gui.find('**/CloseBtn_Rllvr'),
-                gui.find('**/CloseBtn_UP')),
+            image=(gui.find('**/CloseBtn_UP'), gui.find('**/CloseBtn_DN'),
+                   gui.find('**/CloseBtn_Rllvr'), gui.find('**/CloseBtn_UP')),
             relief=None,
             scale=2.0,
             text=exitText,
             text_scale=TTLocalizer.REPsmallLabel,
-            text_pos=(
-                0,
-                -0.10000000000000001),
-            text_fg=VBase4(
-                1,
-                1,
-                1,
-                1),
-            pos=(
-                1.1000000000000001,
-                0,
-                -0.5),
+            text_pos=(0, -0.10000000000000001),
+            text_fg=VBase4(1, 1, 1, 1),
+            pos=(1.1000000000000001, 0, -0.5),
             command=self.closeButtonPressed)
         self.closeButton.hide()
         self.disable()
@@ -865,58 +708,35 @@ class RaceEndPanel(DirectFrame):
     def closeButtonPressed(self):
         messenger.send('leaveRace')
 
-    def displayRacer(
-            self,
-            place,
-            entryFee,
-            qualify,
-            winnings,
-            track,
-            bonus,
-            trophies,
-            headFrame,
-            name,
-            time,
-            circuitPoints,
-            circuitTime):
-        self.results.displayRacer(
-            place,
-            headFrame,
-            name,
-            time,
-            qualify,
-            entryFee +
-            winnings +
-            bonus,
-            bonus,
-            trophies,
-            circuitPoints,
-            circuitTime)
+    def displayRacer(self, place, entryFee, qualify, winnings, track, bonus,
+                     trophies, headFrame, name, time, circuitPoints,
+                     circuitTime):
+        self.results.displayRacer(place, headFrame, name, time, qualify,
+                                  entryFee + winnings + bonus, bonus, trophies,
+                                  circuitPoints, circuitTime)
 
     def updateWinnings(self, place, winnings):
         self.results.updateWinnings(place, winnings)
 
-    def updateWinningsFromCircuit(
-            self,
-            place,
-            entryFee,
-            winnings,
-            bonus,
-            trophies=()):
+    def updateWinningsFromCircuit(self,
+                                  place,
+                                  entryFee,
+                                  winnings,
+                                  bonus,
+                                  trophies=()):
         print 'updateWinningsFromCircuit'
         self.seq.finish()
         totalTickets = winnings + entryFee + bonus
         self.results.updateWinnings(place, totalTickets)
         self.startWinningsPanel(entryFee, winnings, 0, bonus, trophies, True)
 
-    def startWinningsPanel(
-            self,
-            entryFee,
-            winnings,
-            track,
-            bonus=None,
-            trophies=(),
-            endOfCircuitRace=False):
+    def startWinningsPanel(self,
+                           entryFee,
+                           winnings,
+                           track,
+                           bonus=None,
+                           trophies=(),
+                           endOfCircuitRace=False):
         if not self.enabled:
             return None
 

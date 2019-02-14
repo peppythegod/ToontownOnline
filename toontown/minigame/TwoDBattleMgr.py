@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToonBaseGlobal import *
@@ -25,8 +23,7 @@ class TwoDBattleMgr(DirectObject):
         self.WATER_BULLET_START_POINT = Point3(0, 1, 3)
         self.WATER_BULLET_END_POINT = Point3(
             0,
-            self.WATER_BULLET_START_POINT.getY() +
-            self.SHOOT_DISTANCE,
+            self.WATER_BULLET_START_POINT.getY() + self.SHOOT_DISTANCE,
             self.WATER_BULLET_START_POINT.getZ())
         self.WATER_BULLET_HIDE_POINT = Point3(0, 0, 1.5)
         self.sprayProp = self.game.assetMgr.sprayProp.copyTo(
@@ -67,22 +64,17 @@ class TwoDBattleMgr(DirectObject):
         self.pistol = globalPropPool.getProp('water-gun')
         hands = self.toon.getRightHands()
         self.hand_jointpath0 = hands[0].attachNewNode('handJoint0-path')
-        pistolPos = Point3(
-            0.28000000000000003,
-            0.10000000000000001,
-            0.080000000000000002)
-        pistolHpr = VBase3(85.599999999999994, -
-                           4.4400000000000004, 94.430000000000007)
-        MovieUtil.showProp(
-            self.pistol,
-            self.hand_jointpath0,
-            pistolPos,
-            pistolHpr)
+        pistolPos = Point3(0.28000000000000003, 0.10000000000000001,
+                           0.080000000000000002)
+        pistolHpr = VBase3(85.599999999999994, -4.4400000000000004,
+                           94.430000000000007)
+        MovieUtil.showProp(self.pistol, self.hand_jointpath0, pistolPos,
+                           pistolHpr)
 
     def shoot(self):
         if not self.shootTrack:
-            self.shootTrack = Parallel(
-                self.getToonShootTrack(), self.getSprayTrack())
+            self.shootTrack = Parallel(self.getToonShootTrack(),
+                                       self.getSprayTrack())
             if self.toon == base.localAvatar:
                 self.shootTrack.append(
                     Func(self.game.assetMgr.playWatergunSound))
@@ -91,8 +83,8 @@ class TwoDBattleMgr(DirectObject):
             self.shootTrack.start()
             return None
         elif self.shootTrack.isStopped():
-            self.shootTrack = Parallel(
-                self.getToonShootTrack(), self.getSprayTrack())
+            self.shootTrack = Parallel(self.getToonShootTrack(),
+                                       self.getSprayTrack())
             if self.toon == base.localAvatar:
                 self.shootTrack.append(
                     Func(self.game.assetMgr.playWatergunSound))
@@ -124,16 +116,15 @@ class TwoDBattleMgr(DirectObject):
         self.waterBulletIval = Sequence(Wait(0.14999999999999999))
         self.waterBulletIval.append(
             LerpPosInterval(
-                self.waterBullet, 0.25, pos=Point3(
-                    self.WATER_BULLET_END_POINT), startPos=Point3(
-                    self.WATER_BULLET_START_POINT), name='waterBulletMoveFront'))
+                self.waterBullet,
+                0.25,
+                pos=Point3(self.WATER_BULLET_END_POINT),
+                startPos=Point3(self.WATER_BULLET_START_POINT),
+                name='waterBulletMoveFront'))
         self.waterBulletIval.append(
-            Func(
-                self.waterBullet.setPos,
-                self.WATER_BULLET_HIDE_POINT))
+            Func(self.waterBullet.setPos, self.WATER_BULLET_HIDE_POINT))
 
     def getToonShootTrack(self):
-
         def returnToLastAnim(toon):
             if hasattr(toon, 'playingAnim') and toon.playingAnim:
                 toon.loop(toon.playingAnim)
@@ -154,10 +145,7 @@ class TwoDBattleMgr(DirectObject):
                 startFrame=107,
                 endFrame=126,
                 playRate=2,
-                partName='torso'),
-            Func(
-                returnToLastAnim,
-                self.toon))
+                partName='torso'), Func(returnToLastAnim, self.toon))
         return toonTrack
 
     def calcSprayStartPos(self):
@@ -173,12 +161,8 @@ class TwoDBattleMgr(DirectObject):
             xDirection = -math.sin(self.toon.getH())
         else:
             xDirection = -math.sin(-90)
-        endPos = Point3(
-            self.origin.getX() +
-            self.SHOOT_DISTANCE *
-            xDirection,
-            self.origin.getY(),
-            self.origin.getZ())
+        endPos = Point3(self.origin.getX() + self.SHOOT_DISTANCE * xDirection,
+                        self.origin.getY(), self.origin.getZ())
         self.target = endPos
 
     def getSprayTrack(self):
@@ -202,10 +186,8 @@ class TwoDBattleMgr(DirectObject):
         def calcTargetScale(horizScale=horizScale, vertScale=vertScale):
             distance = Vec3(self.target - self.origin).length()
             yScale = distance / MovieUtil.SPRAY_LEN
-            targetScale = Point3(
-                yScale * horizScale,
-                yScale,
-                yScale * vertScale)
+            targetScale = Point3(yScale * horizScale, yScale,
+                                 yScale * vertScale)
             return targetScale
 
         def prepareToShrinkSpray(spray, sprayProp):
@@ -226,23 +208,26 @@ class TwoDBattleMgr(DirectObject):
             spray.setTransparency(1)
 
         track = Sequence(
-            Wait(0.10000000000000001), Func(
-                self.calcSprayStartPos), Func(
-                self.calcSprayEndPos), Func(
-                showSpray, sprayScale, sprayRot, sprayProp, parent), LerpScaleInterval(
-                    sprayScale, dSprayScale, calcTargetScale, startScale=MovieUtil.PNT3_NEARZERO), Wait(dSprayHold), Func(
-                        prepareToShrinkSpray, spray, sprayProp), LerpScaleInterval(
-                            sprayScale, dSprayScale, MovieUtil.PNT3_NEARZERO), Func(
-                                hideSpray, spray, sprayScale, sprayRot, sprayProp, globalPropPool))
+            Wait(0.10000000000000001), Func(self.calcSprayStartPos),
+            Func(self.calcSprayEndPos),
+            Func(showSpray, sprayScale, sprayRot, sprayProp, parent),
+            LerpScaleInterval(
+                sprayScale,
+                dSprayScale,
+                calcTargetScale,
+                startScale=MovieUtil.PNT3_NEARZERO), Wait(dSprayHold),
+            Func(prepareToShrinkSpray, spray, sprayProp),
+            LerpScaleInterval(sprayScale, dSprayScale,
+                              MovieUtil.PNT3_NEARZERO),
+            Func(hideSpray, spray, sprayScale, sprayRot, sprayProp,
+                 globalPropPool))
         return track
 
     def handleBulletCollision(self, cevent):
         if cevent.getIntoNodePath().getName()[:5] == 'Enemy':
             sectionIndex = int(cevent.getIntoNodePath().getName()[6:8])
             enemyIndex = int(cevent.getIntoNodePath().getName()[9:11])
-            messenger.send('enemyShot', [
-                sectionIndex,
-                enemyIndex])
+            messenger.send('enemyShot', [sectionIndex, enemyIndex])
 
     def clearWaterBulletIval(self):
         if self.waterBulletIval:

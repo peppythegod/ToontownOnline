@@ -6,7 +6,6 @@ from toontown.toonbase import TTLocalizer
 
 
 class DistributedCJElevator(DistributedBossElevator.DistributedBossElevator):
-
     def __init__(self, cr):
         DistributedBossElevator.DistributedBossElevator.__init__(self, cr)
         self.type = ELEVATOR_CJ

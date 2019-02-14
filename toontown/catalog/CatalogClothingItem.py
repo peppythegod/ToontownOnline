@@ -282,12 +282,12 @@ ClothingTypes = {
     1817: (AGirlsSkirt, 'sa_gs19', 5000),
     1818: (AGirlsSkirt, 'sa_gs20', 5000),
     1819: (AGirlsSkirt, 'sa_gs21', 5000),
-    1820: (AShirt, 'sa_ss55', 5000)}
+    1820: (AShirt, 'sa_ss55', 5000)
+}
 LoyaltyClothingItems = (1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608)
 
 
 class CatalogClothingItem(CatalogItem.CatalogItem):
-
     def makeNewItem(self, clothingType, colorIndex, loyaltyDays=0):
         self.clothingType = clothingType
         self.colorIndex = colorIndex
@@ -344,22 +344,24 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
         dna = avatar.getStyle()
         if self.isShirt():
             defn = ToonDNA.ShirtStyles[str]
-            if dna.topTex == defn[0] and dna.topTexColor == defn[2][self.colorIndex][
-                    0] and dna.sleeveTex == defn[1] and dna.sleeveTexColor == defn[2][self.colorIndex][1]:
+            if dna.topTex == defn[0] and dna.topTexColor == defn[2][
+                    self.colorIndex][0] and dna.sleeveTex == defn[
+                        1] and dna.sleeveTexColor == defn[2][
+                            self.colorIndex][1]:
                 return 1
 
             l = avatar.clothesTopsList
             for i in range(0, len(l), 4):
-                if l[i] == defn[0] and l[i +
-                                         1] == defn[2][self.colorIndex][0] and l[i +
-                                                                                 2] == defn[1] and l[i +
-                                                                                                     3] == defn[2][self.colorIndex][1]:
+                if l[i] == defn[0] and l[i + 1] == defn[2][
+                        self.colorIndex][0] and l[i + 2] == defn[1] and l[
+                            i + 3] == defn[2][self.colorIndex][1]:
                     return 1
                     continue
 
         else:
             defn = ToonDNA.BottomStyles[str]
-            if dna.botTex == defn[0] and dna.botTexColor == defn[1][self.colorIndex]:
+            if dna.botTex == defn[0] and dna.botTexColor == defn[1][
+                    self.colorIndex]:
                 return 1
 
             l = avatar.clothesBottomsList
@@ -392,9 +394,9 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
                 dna.topTex, dna.topTexColor, dna.sleeveTex, dna.sleeveTexColor)
             if added:
                 avatar.b_setClothesTopsList(avatar.getClothesTopsList())
-                self.notify.info(
-                    'Avatar %s put shirt %d,%d,%d,%d in closet.' %
-                    (avatar.doId, dna.topTex, dna.topTexColor, dna.sleeveTex, dna.sleeveTexColor))
+                self.notify.info('Avatar %s put shirt %d,%d,%d,%d in closet.' %
+                                 (avatar.doId, dna.topTex, dna.topTexColor,
+                                  dna.sleeveTex, dna.sleeveTexColor))
             else:
                 self.notify.warning(
                     'Avatar %s %s lost current shirt; closet full.' %
@@ -408,9 +410,8 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             added = avatar.addToClothesBottomsList(dna.botTex, dna.botTexColor)
             if added:
                 avatar.b_setClothesBottomsList(avatar.getClothesBottomsList())
-                self.notify.info(
-                    'Avatar %s put bottoms %d,%d in closet.' %
-                    (avatar.doId, dna.botTex, dna.botTexColor))
+                self.notify.info('Avatar %s put bottoms %d,%d in closet.' %
+                                 (avatar.doId, dna.botTex, dna.botTexColor))
             else:
                 self.notify.warning(
                     'Avatar %s %s lost current bottoms; closet full.' %
@@ -454,7 +455,7 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             defn = ToonDNA.BottomStyles[str]
             dna.botTex = defn[0]
             dna.botTexColor = defn[1][self.colorIndex]
-            pieceNames = ('**/1000/**/torso-bot',)
+            pieceNames = ('**/1000/**/torso-bot', )
         toon = Toon.Toon()
         toon.setDNA(dna)
         model = NodePath('clothing')
@@ -479,7 +480,8 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
         if avatar.isClosetFull(clothesOnOrder):
             self.requestPurchaseCleanup()
             buttonCallback = PythonUtil.Functor(
-                self._CatalogClothingItem__handleFullPurchaseDialog, phone, callback)
+                self._CatalogClothingItem__handleFullPurchaseDialog, phone,
+                callback)
             self.dialog = TTDialog.TTDialog(
                 style=TTDialog.YesNo,
                 text=TTLocalizer.CatalogPurchaseClosetFull,
@@ -494,8 +496,8 @@ class CatalogClothingItem(CatalogItem.CatalogItem):
             self.dialog.cleanup()
             del self.dialog
 
-    def _CatalogClothingItem__handleFullPurchaseDialog(
-            self, phone, callback, buttonValue):
+    def _CatalogClothingItem__handleFullPurchaseDialog(self, phone, callback,
+                                                       buttonValue):
         TTDialog = TTDialog
         import toontown.toontowngui
         self.requestPurchaseCleanup()

@@ -13,31 +13,36 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.interval.IntervalGlobal import *
 import random
 MAX_AVATARS = 6
-POSITIONS = (Vec3(-0.840167, 0, 0.35933300000000001), Vec3(0.0093334899999999998, 0, 0.306533), Vec3(0.86199999999999999, 0, 0.32929999999999998),
-             Vec3(-0.86355400000000004, 0, -0.44565900000000003), Vec3(0.0099999900000000003, 0, -0.5181), Vec3(0.86490699999999998, 0, -0.44565900000000003))
-COLORS = (
-    Vec4(
-        0.91700000000000004, 0.16400000000000001, 0.16400000000000001, 1), Vec4(
-            0.152, 0.75, 0.25800000000000001, 1), Vec4(
-                0.59799999999999998, 0.40200000000000002, 0.875, 1), Vec4(
-                    0.13300000000000001, 0.58999999999999997, 0.97699999999999998, 1), Vec4(
-                        0.89500000000000002, 0.34799999999999998, 0.60199999999999998, 1), Vec4(
-                            0.97699999999999998, 0.81599999999999995, 0.13300000000000001, 1))
+POSITIONS = (Vec3(-0.840167, 0, 0.35933300000000001),
+             Vec3(0.0093334899999999998, 0, 0.306533),
+             Vec3(0.86199999999999999, 0, 0.32929999999999998),
+             Vec3(-0.86355400000000004, 0, -0.44565900000000003),
+             Vec3(0.0099999900000000003, 0, -0.5181),
+             Vec3(0.86490699999999998, 0, -0.44565900000000003))
+COLORS = (Vec4(0.91700000000000004, 0.16400000000000001, 0.16400000000000001,
+               1), Vec4(0.152, 0.75, 0.25800000000000001, 1),
+          Vec4(0.59799999999999998, 0.40200000000000002, 0.875, 1),
+          Vec4(0.13300000000000001, 0.58999999999999997, 0.97699999999999998,
+               1),
+          Vec4(0.89500000000000002, 0.34799999999999998, 0.60199999999999998,
+               1),
+          Vec4(0.97699999999999998, 0.81599999999999995, 0.13300000000000001,
+               1))
 chooser_notify = DirectNotifyGlobal.directNotify.newCategory('AvatarChooser')
 
 
 class AvatarChooser(StateData.StateData):
-
     def __init__(self, avatarList, parentFSM, doneEvent):
         StateData.StateData.__init__(self, doneEvent)
         self.choice = None
         self.avatarList = avatarList
         self.displayOptions = None
         self.fsm = ClassicFSM.ClassicFSM('AvatarChooser', [
-            State.State('Choose', self.enterChoose, self.exitChoose, [
-                'CheckDownload']),
-            State.State('CheckDownload', self.enterCheckDownload, self.exitCheckDownload, [
-                'Choose'])], 'Choose', 'Choose')
+            State.State('Choose', self.enterChoose, self.exitChoose,
+                        ['CheckDownload']),
+            State.State('CheckDownload', self.enterCheckDownload,
+                        self.exitCheckDownload, ['Choose'])
+        ], 'Choose', 'Choose')
         self.fsm.enterInitialState()
         self.parentFSM = parentFSM
         self.parentFSM.getCurrentState().addChild(self.fsm)
@@ -102,60 +107,34 @@ class AvatarChooser(StateData.StateData):
             scale=TTLocalizer.ACtitle,
             parent=hidden,
             font=ToontownGlobals.getSignFont(),
-            fg=(
-                1,
-                0.90000000000000002,
-                0.10000000000000001,
-                1),
-            pos=(
-                0.0,
-                0.81999999999999995))
+            fg=(1, 0.90000000000000002, 0.10000000000000001, 1),
+            pos=(0.0, 0.81999999999999995))
         quitHover = gui.find('**/QuitBtn_RLVR')
         self.quitButton = DirectButton(
-            image=(
-                quitHover,
-                quitHover,
-                quitHover),
+            image=(quitHover, quitHover, quitHover),
             relief=None,
             text=TTLocalizer.AvatarChooserQuit,
             text_font=ToontownGlobals.getSignFont(),
-            text_fg=(
-                0.97699999999999998,
-                0.81599999999999995,
-                0.13300000000000001,
-                1),
+            text_fg=(0.97699999999999998, 0.81599999999999995,
+                     0.13300000000000001, 1),
             text_pos=TTLocalizer.ACquitButtonPos,
             text_scale=TTLocalizer.ACquitButton,
             image_scale=1,
             image1_scale=1.05,
             image2_scale=1.05,
             scale=1.05,
-            pos=(
-                1.0800000000000001,
-                0,
-                -0.90700000000000003),
+            pos=(1.0800000000000001, 0, -0.90700000000000003),
             command=self._AvatarChooser__handleQuit)
         self.logoutButton = DirectButton(
             relief=None,
-            image=(
-                quitHover,
-                quitHover,
-                quitHover),
+            image=(quitHover, quitHover, quitHover),
             text=TTLocalizer.OptionsPageLogout,
             text_font=ToontownGlobals.getSignFont(),
-            text_fg=(
-                0.97699999999999998,
-                0.81599999999999995,
-                0.13300000000000001,
-                1),
+            text_fg=(0.97699999999999998, 0.81599999999999995,
+                     0.13300000000000001, 1),
             text_scale=TTLocalizer.AClogoutButton,
-            text_pos=(
-                0,
-                -0.035000000000000003),
-            pos=(
-                -1.1699999999999999,
-                0,
-                -0.91400000000000003),
+            text_pos=(0, -0.035000000000000003),
+            pos=(-1.1699999999999999, 0, -0.91400000000000003),
             image_scale=1.1499999999999999,
             image1_scale=1.1499999999999999,
             image2_scale=1.1799999999999999,
@@ -209,7 +188,8 @@ class AvatarChooser(StateData.StateData):
         if lookAtChoice < lookFwdPercent:
             self.IsLookingAt[toonidx] = 'f'
             return Vec3(0, 1.5, 0)
-        elif lookAtChoice < lookRandomPercent + lookFwdPercent or len(self.used_panel_indexs) == 1:
+        elif lookAtChoice < lookRandomPercent + lookFwdPercent or len(
+                self.used_panel_indexs) == 1:
             self.IsLookingAt[toonidx] = 'r'
             return toonHead.getRandomForwardLookAtPoint()
         else:
@@ -225,8 +205,8 @@ class AvatarChooser(StateData.StateData):
                 IgnoreStarersPercent = 0.20000000000000001
             NoticeStarersPercent = 0.5
             bStareTargetTurnsToMe = 0
-            if len(other_toon_idxs) == 0 or random.random(
-            ) < IgnoreStarersPercent:
+            if len(other_toon_idxs
+                   ) == 0 or random.random() < IgnoreStarersPercent:
                 other_toon_idxs = []
                 for i in self.used_panel_indexs:
                     if i != toonidx:
@@ -327,19 +307,16 @@ class AvatarChooser(StateData.StateData):
         self.fsm.request('CheckDownload')
 
     def _AvatarChooser__handleCreate(self):
-        base.transitions.fadeOut(finishIval=EventInterval(self.doneEvent, [
-            self.doneStatus]))
+        base.transitions.fadeOut(
+            finishIval=EventInterval(self.doneEvent, [self.doneStatus]))
 
     def _AvatarChooser__handleDelete(self):
-        messenger.send(self.doneEvent, [
-            self.doneStatus])
+        messenger.send(self.doneEvent, [self.doneStatus])
 
     def _AvatarChooser__handleQuit(self):
         cleanupDialog('globalDialog')
-        self.doneStatus = {
-            'mode': 'exit'}
-        messenger.send(self.doneEvent, [
-            self.doneStatus])
+        self.doneStatus = {'mode': 'exit'}
+        messenger.send(self.doneEvent, [self.doneStatus])
 
     def enterChoose(self):
         pass
@@ -361,8 +338,8 @@ class AvatarChooser(StateData.StateData):
 
     def _AvatarChooser__handleDownloadAck(self, doneStatus):
         if doneStatus['mode'] == 'complete':
-            base.transitions.fadeOut(finishIval=EventInterval(self.doneEvent, [
-                self.doneStatus]))
+            base.transitions.fadeOut(
+                finishIval=EventInterval(self.doneEvent, [self.doneStatus]))
         else:
             self.fsm.request('Choose')
 

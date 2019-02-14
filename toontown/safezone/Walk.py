@@ -12,19 +12,15 @@ class Walk(StateData.StateData):
     def __init__(self, doneEvent):
         StateData.StateData.__init__(self, doneEvent)
         self.fsm = ClassicFSM.ClassicFSM('Walk', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'walking',
-                'swimming',
-                'slowWalking']),
-            State.State('walking', self.enterWalking, self.exitWalking, [
-                'swimming',
-                'slowWalking']),
-            State.State('swimming', self.enterSwimming, self.exitSwimming, [
-                'walking',
-                'slowWalking']),
-            State.State('slowWalking', self.enterSlowWalking, self.exitSlowWalking, [
-                'walking',
-                'swimming'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['walking', 'swimming', 'slowWalking']),
+            State.State('walking', self.enterWalking, self.exitWalking,
+                        ['swimming', 'slowWalking']),
+            State.State('swimming', self.enterSwimming, self.exitSwimming,
+                        ['walking', 'slowWalking']),
+            State.State('slowWalking', self.enterSlowWalking,
+                        self.exitSlowWalking, ['walking', 'swimming'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
         self.IsSwimSoundAudible = 0
         self.swimSoundPlaying = 0
@@ -41,7 +37,8 @@ class Walk(StateData.StateData):
         base.localAvatar.attachCamera()
         shouldPush = 1
         if len(base.localAvatar.cameraPositions) > 0:
-            shouldPush = not base.localAvatar.cameraPositions[base.localAvatar.cameraIndex][4]
+            shouldPush = not base.localAvatar.cameraPositions[
+                base.localAvatar.cameraIndex][4]
 
         base.localAvatar.startUpdateSmartCamera(shouldPush)
         base.localAvatar.showName()
@@ -87,8 +84,8 @@ class Walk(StateData.StateData):
         base.localAvatar.setWalkSpeedNormal()
         self.swimSound = swimSound
         self.swimSoundPlaying = 0
-        base.localAvatar.b_setAnimState(
-            'swim', base.localAvatar.animMultiplier)
+        base.localAvatar.b_setAnimState('swim',
+                                        base.localAvatar.animMultiplier)
         base.localAvatar.startSleepSwimTest()
         taskMgr.add(self._Walk__swim, 'localToonSwimming')
 

@@ -8,34 +8,31 @@ from direct.interval.IntervalGlobal import *
 
 
 class ChineseTutorial(DirectFrame, FSM.FSM):
-
     def __init__(self, doneFunction, doneEvent=None, callback=None):
         FSM.FSM.__init__(self, 'ChineseTutorial')
         self.doneFunction = doneFunction
         base.localAvatar.startSleepWatch(self.handleQuit)
         self.doneEvent = doneEvent
         self.callback = callback
-        self.setStateArray([
-            'Page1',
-            'Page2',
-            'Quit'])
+        self.setStateArray(['Page1', 'Page2', 'Quit'])
         base.localAvatar.startSleepWatch(self.handleQuit)
-        DirectFrame.__init__(self,
-                             pos=(-0.69999999999999996,
-                                  0.0,
-                                  0.0),
-                             image_color=ToontownGlobals.GlobalDialogColor,
-                             image_scale=(1.0,
-                                          1.5,
-                                          1.0),
-                             text='',
-                             text_scale=0.059999999999999998)
+        DirectFrame.__init__(
+            self,
+            pos=(-0.69999999999999996, 0.0, 0.0),
+            image_color=ToontownGlobals.GlobalDialogColor,
+            image_scale=(1.0, 1.5, 1.0),
+            text='',
+            text_scale=0.059999999999999998)
         self.accept('stoppedAsleep', self.handleQuit)
         self['image'] = DGG.getDefaultDialogGeom()
         self.title = DirectLabel(
-            self, relief=None, text='', text_pos=(
-                0.0, 0.40000000000000002), text_fg=(
-                1, 0, 0, 1), text_scale=0.13, text_font=ToontownGlobals.getSignFont())
+            self,
+            relief=None,
+            text='',
+            text_pos=(0.0, 0.40000000000000002),
+            text_fg=(1, 0, 0, 1),
+            text_scale=0.13,
+            text_font=ToontownGlobals.getSignFont())
         images = loader.loadModel('phase_6/models/golf/checker_tutorial.bam')
         images.setTransparency(1)
         self.iPage1 = images.find('**/tutorialPage1*')
@@ -61,73 +58,45 @@ class ChineseTutorial(DirectFrame, FSM.FSM):
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
         self.bNext = DirectButton(
             self,
-            image=(
-                gui.find('**/Horiz_Arrow_UP'),
-                gui.find('**/Horiz_Arrow_DN'),
-                gui.find('**/Horiz_Arrow_Rllvr'),
-                gui.find('**/Horiz_Arrow_UP')),
-            image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.5),
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(1, 1, 1, 0.5),
             relief=None,
             text=TTLocalizer.ChineseTutorialNext,
-            text3_fg=Vec4(
-                0,
-                0,
-                0,
-                0.5),
+            text3_fg=Vec4(0, 0, 0, 0.5),
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.34999999999999998,
-                -0.29999999999999999,
-                -0.33000000000000002),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.34999999999999998, -0.29999999999999999,
+                 -0.33000000000000002),
             command=self.requestNext)
-        self.bPrev = DirectButton(self,
-                                  image=(gui.find('**/Horiz_Arrow_UP'),
-                                         gui.find('**/Horiz_Arrow_DN'),
-                                         gui.find('**/Horiz_Arrow_Rllvr'),
-                                         gui.find('**/Horiz_Arrow_UP')),
-                                  image3_color=Vec4(1,
-                                                    1,
-                                                    1,
-                                                    0.5),
-                                  image_scale=(-1.0,
-                                               1.0,
-                                               1.0),
-                                  relief=None,
-                                  text=TTLocalizer.ChineseTutorialPrev,
-                                  text3_fg=Vec4(0,
-                                                0,
-                                                0,
-                                                0.5),
-                                  text_scale=0.050000000000000003,
-                                  text_pos=(0.0,
-                                            -0.10000000000000001),
-                                  pos=(-0.34999999999999998,
-                                       -0.29999999999999999,
-                                       -0.33000000000000002),
-                                  command=self.requestPrev)
+        self.bPrev = DirectButton(
+            self,
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(1, 1, 1, 0.5),
+            image_scale=(-1.0, 1.0, 1.0),
+            relief=None,
+            text=TTLocalizer.ChineseTutorialPrev,
+            text3_fg=Vec4(0, 0, 0, 0.5),
+            text_scale=0.050000000000000003,
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(-0.34999999999999998, -0.29999999999999999,
+                 -0.33000000000000002),
+            command=self.requestPrev)
         self.bQuit = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=TTLocalizer.ChineseTutorialDone,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.0,
-                -0.29999999999999999,
-                -0.33000000000000002),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.0, -0.29999999999999999, -0.33000000000000002),
             command=self.handleQuit)
         self.bQuit.hide()
         buttons.removeNode()
@@ -139,7 +108,7 @@ class ChineseTutorial(DirectFrame, FSM.FSM):
 
     def enterPage1(self, *args):
         self.bNext.show()
-        self.title['text'] = (TTLocalizer.ChineseTutorialTitle1,)
+        self.title['text'] = (TTLocalizer.ChineseTutorialTitle1, )
         self['text'] = TTLocalizer.ChinesePage1
         self['text_pos'] = (0.0, 0.23000000000000001)
         self['text_wordwrap'] = 13.5
@@ -152,23 +121,14 @@ class ChineseTutorial(DirectFrame, FSM.FSM):
         self.iPage1.getChildren()[1].show()
         self.blinker.append(
             LerpColorInterval(
-                obj, 0.5, Vec4(
-                    0.5, 0.5, 0, 0.0), Vec4(
-                    0.20000000000000001, 0.20000000000000001, 0.20000000000000001, 1)))
+                obj, 0.5, Vec4(0.5, 0.5, 0, 0.0),
+                Vec4(0.20000000000000001, 0.20000000000000001,
+                     0.20000000000000001, 1)))
         self.blinker.append(
             LerpColorInterval(
-                obj,
-                0.5,
-                Vec4(
-                    0.20000000000000001,
-                    0.20000000000000001,
-                    0.20000000000000001,
-                    1),
-                Vec4(
-                    0.5,
-                    0.5,
-                    0,
-                    0.0)))
+                obj, 0.5,
+                Vec4(0.20000000000000001, 0.20000000000000001,
+                     0.20000000000000001, 1), Vec4(0.5, 0.5, 0, 0.0)))
         self.blinker.loop()
 
     def exitPage1(self, *args):
@@ -179,7 +139,7 @@ class ChineseTutorial(DirectFrame, FSM.FSM):
 
     def enterPage2(self, *args):
         self.bPrev.show()
-        self.title['text'] = (TTLocalizer.ChineseTutorialTitle2,)
+        self.title['text'] = (TTLocalizer.ChineseTutorialTitle2, )
         self['text'] = TTLocalizer.ChinesePage2
         self['text_pos'] = (0.0, 0.28000000000000003)
         self['text_wordwrap'] = 12.5
@@ -216,34 +176,30 @@ class ChineseTutorial(DirectFrame, FSM.FSM):
 
 
 class CheckersTutorial(DirectFrame, FSM.FSM):
-
     def __init__(self, doneFunction, doneEvent=None, callback=None):
         FSM.FSM.__init__(self, 'CheckersTutorial')
         self.doneFunction = doneFunction
         base.localAvatar.startSleepWatch(self.handleQuit)
         self.doneEvent = doneEvent
         self.callback = callback
-        self.setStateArray([
-            'Page1',
-            'Page2',
-            'Page3',
-            'Quit'])
-        DirectFrame.__init__(self,
-                             pos=(-0.69999999999999996,
-                                  0.0,
-                                  0.0),
-                             image_color=ToontownGlobals.GlobalDialogColor,
-                             image_scale=(1.0,
-                                          1.5,
-                                          1.0),
-                             text='',
-                             text_scale=0.059999999999999998)
+        self.setStateArray(['Page1', 'Page2', 'Page3', 'Quit'])
+        DirectFrame.__init__(
+            self,
+            pos=(-0.69999999999999996, 0.0, 0.0),
+            image_color=ToontownGlobals.GlobalDialogColor,
+            image_scale=(1.0, 1.5, 1.0),
+            text='',
+            text_scale=0.059999999999999998)
         self.accept('stoppedAsleep', self.handleQuit)
         self['image'] = DGG.getDefaultDialogGeom()
         self.title = DirectLabel(
-            self, relief=None, text='', text_pos=(
-                0.0, 0.40000000000000002), text_fg=(
-                1, 0, 0, 1), text_scale=0.13, text_font=ToontownGlobals.getSignFont())
+            self,
+            relief=None,
+            text='',
+            text_pos=(0.0, 0.40000000000000002),
+            text_fg=(1, 0, 0, 1),
+            text_scale=0.13,
+            text_font=ToontownGlobals.getSignFont())
         images = loader.loadModel(
             'phase_6/models/golf/regularchecker_tutorial.bam')
         images.setTransparency(1)
@@ -276,73 +232,45 @@ class CheckersTutorial(DirectFrame, FSM.FSM):
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
         self.bNext = DirectButton(
             self,
-            image=(
-                gui.find('**/Horiz_Arrow_UP'),
-                gui.find('**/Horiz_Arrow_DN'),
-                gui.find('**/Horiz_Arrow_Rllvr'),
-                gui.find('**/Horiz_Arrow_UP')),
-            image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.5),
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(1, 1, 1, 0.5),
             relief=None,
             text=TTLocalizer.ChineseTutorialNext,
-            text3_fg=Vec4(
-                0,
-                0,
-                0,
-                0.5),
+            text3_fg=Vec4(0, 0, 0, 0.5),
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.34999999999999998,
-                -0.29999999999999999,
-                -0.33000000000000002),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.34999999999999998, -0.29999999999999999,
+                 -0.33000000000000002),
             command=self.requestNext)
-        self.bPrev = DirectButton(self,
-                                  image=(gui.find('**/Horiz_Arrow_UP'),
-                                         gui.find('**/Horiz_Arrow_DN'),
-                                         gui.find('**/Horiz_Arrow_Rllvr'),
-                                         gui.find('**/Horiz_Arrow_UP')),
-                                  image3_color=Vec4(1,
-                                                    1,
-                                                    1,
-                                                    0.5),
-                                  image_scale=(-1.0,
-                                               1.0,
-                                               1.0),
-                                  relief=None,
-                                  text=TTLocalizer.ChineseTutorialPrev,
-                                  text3_fg=Vec4(0,
-                                                0,
-                                                0,
-                                                0.5),
-                                  text_scale=0.050000000000000003,
-                                  text_pos=(0.0,
-                                            -0.10000000000000001),
-                                  pos=(-0.34999999999999998,
-                                       -0.29999999999999999,
-                                       -0.33000000000000002),
-                                  command=self.requestPrev)
+        self.bPrev = DirectButton(
+            self,
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(1, 1, 1, 0.5),
+            image_scale=(-1.0, 1.0, 1.0),
+            relief=None,
+            text=TTLocalizer.ChineseTutorialPrev,
+            text3_fg=Vec4(0, 0, 0, 0.5),
+            text_scale=0.050000000000000003,
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(-0.34999999999999998, -0.29999999999999999,
+                 -0.33000000000000002),
+            command=self.requestPrev)
         self.bQuit = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=TTLocalizer.ChineseTutorialDone,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.0,
-                -0.29999999999999999,
-                -0.33000000000000002),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.0, -0.29999999999999999, -0.33000000000000002),
             command=self.handleQuit)
         self.bQuit.hide()
         buttons.removeNode()
@@ -354,7 +282,7 @@ class CheckersTutorial(DirectFrame, FSM.FSM):
 
     def enterPage1(self, *args):
         self.bNext.show()
-        self.title['text'] = (TTLocalizer.ChineseTutorialTitle1,)
+        self.title['text'] = (TTLocalizer.ChineseTutorialTitle1, )
         self['text'] = TTLocalizer.CheckersPage1
         self['text_pos'] = (0.0, 0.23000000000000001)
         self['text_wordwrap'] = 13.5
@@ -371,7 +299,7 @@ class CheckersTutorial(DirectFrame, FSM.FSM):
     def enterPage2(self, *args):
         self.bPrev.show()
         self.bNext.show()
-        self.title['text'] = (TTLocalizer.ChineseTutorialTitle2,)
+        self.title['text'] = (TTLocalizer.ChineseTutorialTitle2, )
         self['text'] = TTLocalizer.CheckersPage2
         self['text_pos'] = (0.0, 0.28000000000000003)
         self['text_wordwrap'] = 12.5
@@ -384,7 +312,7 @@ class CheckersTutorial(DirectFrame, FSM.FSM):
 
     def enterPage3(self, *args):
         self.bPrev.show()
-        self.title['text'] = (TTLocalizer.ChineseTutorialTitle2,)
+        self.title['text'] = (TTLocalizer.ChineseTutorialTitle2, )
         self['text'] = TTLocalizer.CheckersPage3 + \
             '\n\n' + TTLocalizer.CheckersPage4
         self['text_pos'] = (0.0, 0.32000000000000001)
@@ -394,14 +322,13 @@ class CheckersTutorial(DirectFrame, FSM.FSM):
         self.blinker = Sequence()
         self.blinker.append(
             LerpColorInterval(
-                self.obj, 0.5, Vec4(
-                    0.5, 0.5, 0, 0.0), Vec4(
-                    0.90000000000000002, 0.90000000000000002, 0, 1)))
+                self.obj, 0.5, Vec4(0.5, 0.5, 0, 0.0),
+                Vec4(0.90000000000000002, 0.90000000000000002, 0, 1)))
         self.blinker.append(
             LerpColorInterval(
-                self.obj, 0.5, Vec4(
-                    0.90000000000000002, 0.90000000000000002, 0, 1), Vec4(
-                    0.5, 0.5, 0, 0.0)))
+                self.obj, 0.5,
+                Vec4(0.90000000000000002, 0.90000000000000002, 0, 1),
+                Vec4(0.5, 0.5, 0, 0.0)))
         self.blinker.loop()
         self.bNext.hide()
         self.iPage3.show()

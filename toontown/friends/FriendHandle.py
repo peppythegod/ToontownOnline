@@ -5,7 +5,6 @@ from toontown.chat import ToonChatGarbler
 
 
 class FriendHandle:
-
     def __init__(self, doId, name, style, petId, isAPet=False):
         self.doId = doId
         self.style = style
@@ -41,29 +40,25 @@ class FriendHandle:
         return idString + '-' + str(self.getDoId())
 
     def d_battleSOS(self, requesterId):
-        base.localAvatar.sendUpdate('battleSOS', [
-            requesterId], sendToId=self.doId)
+        base.localAvatar.sendUpdate(
+            'battleSOS', [requesterId], sendToId=self.doId)
 
     def d_teleportQuery(self, requesterId):
-        teleportNotify.debug('sending d_teleportQuery(%s)' % (requesterId,))
-        base.localAvatar.sendUpdate('teleportQuery', [
-            requesterId], sendToId=self.doId)
+        teleportNotify.debug('sending d_teleportQuery(%s)' % (requesterId, ))
+        base.localAvatar.sendUpdate(
+            'teleportQuery', [requesterId], sendToId=self.doId)
 
     def d_teleportResponse(self, avId, available, shardId, hoodId, zoneId):
-        teleportNotify.debug(
-            'sending teleportResponse%s' %
-            ((avId, available, shardId, hoodId, zoneId),))
-        base.localAvatar.sendUpdate('teleportResponse', [
-            avId,
-            available,
-            shardId,
-            hoodId,
-            zoneId], sendToId=self.doId)
+        teleportNotify.debug('sending teleportResponse%s' % (
+            (avId, available, shardId, hoodId, zoneId), ))
+        base.localAvatar.sendUpdate(
+            'teleportResponse', [avId, available, shardId, hoodId, zoneId],
+            sendToId=self.doId)
 
     def d_teleportGiveup(self, requesterId):
-        teleportNotify.debug('sending d_teleportGiveup(%s)' % (requesterId,))
-        base.localAvatar.sendUpdate('teleportGiveup', [
-            requesterId], sendToId=self.doId)
+        teleportNotify.debug('sending d_teleportGiveup(%s)' % (requesterId, ))
+        base.localAvatar.sendUpdate(
+            'teleportGiveup', [requesterId], sendToId=self.doId)
 
     def isUnderstandable(self):
         if self.commonChatFlags & base.localAvatar.commonChatFlags & ToontownGlobals.CommonChat:
@@ -96,7 +91,9 @@ class FriendHandle:
                 newwords.append(word)
                 continue
             if word[0] == '\x7':
-                newwords.append('\x1WLDisplay\x1' + self.chatGarbler.garbleSingle(self, word) + '\x2')
+                newwords.append('\x1WLDisplay\x1' +
+                                self.chatGarbler.garbleSingle(self, word) +
+                                '\x2')
                 scrubbed = 1
                 continue
             if base.whiteList.isWord(word):
@@ -116,7 +113,9 @@ class FriendHandle:
                 newwords.append(word)
                 continue
             if word[0] == '\x7':
-                newwords.append('\x1WLRed\x1' + self.chatGarbler.garbleSingle(self, word) + '\x2')
+                newwords.append('\x1WLRed\x1' +
+                                self.chatGarbler.garbleSingle(self, word) +
+                                '\x2')
                 continue
             if base.whiteList.isWord(word):
                 newwords.append(word)
@@ -126,7 +125,7 @@ class FriendHandle:
         newText = ' '.join(newwords)
         return newText
 
-    def setCommonAndWhitelistChatFlags(
-            self, commonChatFlags, whitelistChatFlags):
+    def setCommonAndWhitelistChatFlags(self, commonChatFlags,
+                                       whitelistChatFlags):
         self.commonChatFlags = commonChatFlags
         self.whitelistChatFlags = whitelistChatFlags

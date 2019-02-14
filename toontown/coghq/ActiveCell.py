@@ -19,7 +19,8 @@ class ActiveCell(BasicEntities.DistributedNodePathEntity):
         if 0 and __debug__:
             grid = self.level.entities.get(self.gridId, None)
             if grid:
-                pos = grid.getPos() + Vec3(self.col * grid.cellSize, self.row * grid.cellSize, 0)
+                pos = grid.getPos() + Vec3(self.col * grid.cellSize,
+                                           self.row * grid.cellSize, 0)
                 model = loader.loadModel(
                     'phase_5/models/modules/suit_walls.bam')
                 model.setScale(grid.cellSize, 1, grid.cellSize)

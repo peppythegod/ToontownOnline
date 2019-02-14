@@ -10,18 +10,14 @@ from toontown.parties.CalendarGuiDay import CalendarGuiDay
 class CalendarGuiMonth(DirectFrame):
     notify = directNotify.newCategory('CalendarGuiMonth')
 
-    def __init__(
-            self,
-            parent,
-            startingDateTime,
-            scale=1.0,
-            pos=(
-                0,
-                0,
-                -0.10000000000000001),
-            dayClickCallback=None,
-            onlyFutureDaysClickable=False,
-            onlyFutureMonthsClickable=False):
+    def __init__(self,
+                 parent,
+                 startingDateTime,
+                 scale=1.0,
+                 pos=(0, 0, -0.10000000000000001),
+                 dayClickCallback=None,
+                 onlyFutureDaysClickable=False,
+                 onlyFutureMonthsClickable=False):
         self.startDate = startingDateTime
         self.curDate = startingDateTime
         self.dayClickCallback = dayClickCallback
@@ -43,9 +39,7 @@ class CalendarGuiMonth(DirectFrame):
         self.weekDayLocators = []
         for i in xrange(7):
             self.weekDayLocators.append(
-                self.attachNewNode(
-                    'weekDayLocator-%d' %
-                    i))
+                self.attachNewNode('weekDayLocator-%d' % i))
             self.weekDayLocators[i].setZ(0.5)
             self.weekDayLocators[i].setX(i * 0.23999999999999999 + -0.75)
 
@@ -56,8 +50,7 @@ class CalendarGuiMonth(DirectFrame):
             oneWeek = []
             for col in xrange(7):
                 newDayLoc = self.attachNewNode(
-                    'dayLocator-row-%d-col-%d' %
-                    (row, col))
+                    'dayLocator-row-%d-col-%d' % (row, col))
                 newDayLoc.setX(col * 0.23999999999999999 + dayTopLeftX)
                 newDayLoc.setZ(row * -0.17999999999999999 + dayTopLeftZ)
                 oneWeek.append(newDayLoc)
@@ -65,11 +58,11 @@ class CalendarGuiMonth(DirectFrame):
             self.dayLocators.append(oneWeek)
 
         self.monthLeftLocator = self.attachNewNode('monthLeft')
-        self.monthLeftLocator.setPos(-0.29999999999999999,
-                                     0, 0.65000000000000002)
+        self.monthLeftLocator.setPos(-0.29999999999999999, 0,
+                                     0.65000000000000002)
         self.monthRightLocator = self.attachNewNode('monthRight')
-        self.monthRightLocator.setPos(
-            0.29999999999999999, 0, 0.65000000000000002)
+        self.monthRightLocator.setPos(0.29999999999999999, 0,
+                                      0.65000000000000002)
 
     def attachMarker(self, parent, scale=0.01, color=(1, 0, 0)):
         if self.showMarkers:
@@ -109,27 +102,20 @@ class CalendarGuiMonth(DirectFrame):
         self.yearLocator.setPos(self.monthLocator, 0, 0, -0.029999999999999999)
 
     def createGuiObjects(self):
-        self.monthLabel = DirectLabel(parent=self.monthLocator,
-                                      relief=None,
-                                      text=TTLocalizer.Months[self.startDate.month],
-                                      text_scale=0.074999999999999997,
-                                      text_font=ToontownGlobals.getMinnieFont(),
-                                      text_fg=(40 / 255.0,
-                                               140 / 255.0,
-                                               246 / 255.0,
-                                               1.0))
+        self.monthLabel = DirectLabel(
+            parent=self.monthLocator,
+            relief=None,
+            text=TTLocalizer.Months[self.startDate.month],
+            text_scale=0.074999999999999997,
+            text_font=ToontownGlobals.getMinnieFont(),
+            text_fg=(40 / 255.0, 140 / 255.0, 246 / 255.0, 1.0))
         self.yearLabel = DirectLabel(
             parent=self.yearLocator,
             relief=None,
-            text=str(
-                self.startDate.year),
+            text=str(self.startDate.year),
             text_scale=0.029999999999999999,
             text_font=ToontownGlobals.getMinnieFont(),
-            text_fg=(
-                140 / 255.0,
-                140 / 255.0,
-                246 / 255.0,
-                1.0))
+            text_fg=(140 / 255.0, 140 / 255.0, 246 / 255.0, 1.0))
         self.weekdayLabels = []
         for posIndex in xrange(7):
             adjustedNameIndex = (posIndex - 1) % 7
@@ -139,11 +125,7 @@ class CalendarGuiMonth(DirectFrame):
                     relief=None,
                     text=TTLocalizer.DayNamesAbbrev[adjustedNameIndex],
                     text_font=ToontownGlobals.getInterfaceFont(),
-                    text_fg=(
-                        255 / 255.0,
-                        146 / 255.0,
-                        113 / 255.0,
-                        1.0),
+                    text_fg=(255 / 255.0, 146 / 255.0, 113 / 255.0, 1.0),
                     text_scale=0.050000000000000003))
 
         self.createGuiDays()
@@ -151,22 +133,27 @@ class CalendarGuiMonth(DirectFrame):
         arrowDown = self.find('**/month_arrowR_down')
         arrowHover = self.find('**/month_arrowR_hover')
         self.monthLeftArrow = DirectButton(
-            parent=self.monthLeftLocator, relief=None, image=(
-                arrowUp, arrowDown, arrowHover, arrowUp), image3_color=Vec4(
-                1, 1, 1, 0.5), scale=(
-                -1.0, 1.0, 1.0), command=self._CalendarGuiMonth__doMonthLeft)
+            parent=self.monthLeftLocator,
+            relief=None,
+            image=(arrowUp, arrowDown, arrowHover, arrowUp),
+            image3_color=Vec4(1, 1, 1, 0.5),
+            scale=(-1.0, 1.0, 1.0),
+            command=self._CalendarGuiMonth__doMonthLeft)
         if self.onlyFutureMonthsClickable:
             self.monthLeftArrow.hide()
 
         self.monthRightArrow = DirectButton(
-            parent=self.monthRightLocator, relief=None, image=(
-                arrowUp, arrowDown, arrowHover, arrowUp), image3_color=Vec4(
-                1, 1, 1, 0.5), command=self._CalendarGuiMonth__doMonthRight)
+            parent=self.monthRightLocator,
+            relief=None,
+            image=(arrowUp, arrowDown, arrowHover, arrowUp),
+            image3_color=Vec4(1, 1, 1, 0.5),
+            command=self._CalendarGuiMonth__doMonthRight)
 
         def makeLabel(itemName, itemNum, *extraArgs):
             return DirectLabel(
-                text=itemName, frameColor=(
-                    0, 0, 0, 0), text_scale=0.040000000000000001)
+                text=itemName,
+                frameColor=(0, 0, 0, 0),
+                text_scale=0.040000000000000001)
 
         gui = loader.loadModel(
             'phase_4/models/parties/tt_m_gui_sbk_calendar_box')
@@ -180,58 +167,30 @@ class CalendarGuiMonth(DirectFrame):
         self.filterList = DirectScrolledList(
             parent=self.filterLocator,
             relief=None,
-            pos=(
-                0,
-                0,
-                0),
+            pos=(0, 0, 0),
             image=None,
             text_scale=0.025000000000000001,
-            incButton_image=(
-                arrowUp,
-                arrowDown,
-                arrowHover,
-                arrowUp),
+            incButton_image=(arrowUp, arrowDown, arrowHover, arrowUp),
             incButton_relief=None,
             incButton_pos=filterLocatorDownPos,
-            incButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
+            incButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
             incButtonCallback=self.filterChanged,
-            decButton_image=(
-                arrowUp,
-                arrowDown,
-                arrowHover,
-                arrowUp),
+            decButton_image=(arrowUp, arrowDown, arrowHover, arrowUp),
             decButton_relief=None,
             decButton_pos=filterLocatorUpPos,
-            decButton_scale=(
-                1,
-                1,
-                -1),
-            decButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
+            decButton_scale=(1, 1, -1),
+            decButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
             decButtonCallback=self.filterChanged,
             numItemsVisible=1,
             itemMakeFunction=makeLabel,
             items=[
                 TTLocalizer.CalendarShowAll,
                 TTLocalizer.CalendarShowOnlyHolidays,
-                TTLocalizer.CalendarShowOnlyParties],
-            itemFrame_frameSize=(
-                -0.20000000000000001,
-                0.20000000000000001,
-                -0.02,
-                0.050000000000000003),
-            itemFrame_frameColor=(
-                0,
-                0,
-                0,
-                0))
+                TTLocalizer.CalendarShowOnlyParties
+            ],
+            itemFrame_frameSize=(-0.20000000000000001, 0.20000000000000001,
+                                 -0.02, 0.050000000000000003),
+            itemFrame_frameColor=(0, 0, 0, 0))
         gui.removeNode()
 
     def getTopLeftDate(self):
@@ -247,12 +206,9 @@ class CalendarGuiMonth(DirectFrame):
         for row in self.dayLocators:
             for oneLocator in row:
                 self.guiDays.append(
-                    CalendarGuiDay(
-                        oneLocator,
-                        curDate,
-                        self.curDate,
-                        self.dayClickCallback,
-                        self.onlyFutureDaysClickable))
+                    CalendarGuiDay(oneLocator, curDate, self.curDate,
+                                   self.dayClickCallback,
+                                   self.onlyFutureDaysClickable))
                 curDate += timedelta(days=1)
 
     def changeDateForGuiDays(self):
@@ -275,18 +231,15 @@ class CalendarGuiMonth(DirectFrame):
                     newYear -= 1
                     continue
                 newMonth += 1
-            self.curDate = datetime(
-                newYear,
-                newMonth,
-                1,
-                self.curDate.time().hour,
-                self.curDate.time().minute,
-                self.curDate.time().second,
-                self.curDate.time().microsecond,
-                self.curDate.tzinfo)
+            self.curDate = datetime(newYear, newMonth, 1,
+                                    self.curDate.time().hour,
+                                    self.curDate.time().minute,
+                                    self.curDate.time().second,
+                                    self.curDate.time().microsecond,
+                                    self.curDate.tzinfo)
 
-        self.monthLabel['text'] = (TTLocalizer.Months[self.curDate.month],)
-        self.yearLabel['text'] = (str(self.curDate.year),)
+        self.monthLabel['text'] = (TTLocalizer.Months[self.curDate.month], )
+        self.yearLabel['text'] = (str(self.curDate.year), )
         startTime = globalClock.getRealTime()
         self.changeDateForGuiDays()
         endTime = globalClock.getRealTime()

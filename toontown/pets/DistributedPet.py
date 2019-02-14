@@ -18,22 +18,16 @@ import random
 if __dev__:
     import pdb
 
-BeanColors = (
-    VBase4(
-        1.0, 0.20000000000000001, 0.20000000000000001, 1.0), VBase4(
-            0.20000000000000001, 1.0, 0.20000000000000001, 1.0), VBase4(
-                0.20000000000000001, 0.20000000000000001, 1.0, 1.0), VBase4(
-                    0.0, 1.0, 1.0, 1.0), VBase4(
-                        1.0, 1.0, 0.0, 1.0), VBase4(
-                            1.0, 0.59999999999999998, 1.0, 1.0), VBase4(
-                                0.59999999999999998, 0.0, 0.59999999999999998, 1.0))
+BeanColors = (VBase4(1.0, 0.20000000000000001, 0.20000000000000001, 1.0),
+              VBase4(0.20000000000000001, 1.0, 0.20000000000000001, 1.0),
+              VBase4(0.20000000000000001, 0.20000000000000001, 1.0, 1.0),
+              VBase4(0.0, 1.0, 1.0, 1.0), VBase4(1.0, 1.0, 0.0, 1.0),
+              VBase4(1.0, 0.59999999999999998, 1.0, 1.0),
+              VBase4(0.59999999999999998, 0.0, 0.59999999999999998, 1.0))
 
 
-class DistributedPet(
-        DistributedSmoothNode.DistributedSmoothNode,
-        Pet.Pet,
-        PetBase.PetBase,
-        DelayDeletable):
+class DistributedPet(DistributedSmoothNode.DistributedSmoothNode, Pet.Pet,
+                     PetBase.PetBase, DelayDeletable):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedPet')
     swallowSfx = None
     callSfx = None
@@ -59,8 +53,7 @@ class DistributedPet(
         DistributedSmoothNode.DistributedSmoothNode.generate(self)
         self.trickIval = None
         self.movieTrack = None
-        self.traitList = [
-            0] * PetTraits.PetTraits.NumTraits
+        self.traitList = [0] * PetTraits.PetTraits.NumTraits
         self.requiredMoodComponents = {}
 
     def b_setLocation(self, parentId, zoneId):
@@ -88,9 +81,8 @@ class DistributedPet(
         if len(category) > 0:
             category = '-' + category
 
-        onScreenDebug.add(
-            '%s%s-%s' %
-            (self.getDisplayPrefix(), category, key), value)
+        onScreenDebug.add('%s%s-%s' % (self.getDisplayPrefix(), category, key),
+                          value)
         return 1
 
     def clearDisplay(self):
@@ -116,8 +108,7 @@ class DistributedPet(
         if self.isGenerated():
             Pet.Pet.setName(self, self.petName)
 
-        messenger.send('petNameChanged', [
-            self])
+        messenger.send('petNameChanged', [self])
 
     def setTraitSeed(self, traitSeed):
         self.traitSeed = traitSeed
@@ -182,8 +173,7 @@ class DistributedPet(
 
     def updateOfflineMood(self):
         self.mood.driftMood(
-            dt=self.getTimeSinceLastSeen(),
-            curMood=self.lastKnownMood)
+            dt=self.getTimeSinceLastSeen(), curMood=self.lastKnownMood)
 
     def _DistributedPet__handleMoodSet(self, component, value):
         if self.isGenerated():
@@ -215,10 +205,10 @@ class DistributedPet(
             if trickId == PetTricks.Tricks.BALK:
                 mood = self.getDominantMood()
                 self.trickIval = Parallel(
-                    self.trickIval, Sequence(
-                        Func(
-                            self.handleMoodChange, 'confusion'), Wait(1.0), Func(
-                            self.handleMoodChange, mood)))
+                    self.trickIval,
+                    Sequence(
+                        Func(self.handleMoodChange, 'confusion'), Wait(1.0),
+                        Func(self.handleMoodChange, mood)))
 
             self.trickIval.start(globalClockDelta.localElapsedTime(timestamp))
 
@@ -238,18 +228,11 @@ class DistributedPet(
 
         self.requiredMoodComponents = {}
         DistributedPet.notify.debug(
-            'time since last seen: %s' %
-            self.getTimeSinceLastSeen())
+            'time since last seen: %s' % self.getTimeSinceLastSeen())
         self.setDNA([
-            self.head,
-            self.ears,
-            self.nose,
-            self.tail,
-            self.bodyTexture,
-            self.color,
-            self.colorScale,
-            self.eyeColor,
-            self.gender])
+            self.head, self.ears, self.nose, self.tail, self.bodyTexture,
+            self.color, self.colorScale, self.eyeColor, self.gender
+        ])
         av = self.cr.doId2do.get(self.ownerId)
         if av:
             av.petDNA = self.style
@@ -278,12 +261,10 @@ class DistributedPet(
                     'phase_5.5/audio/sfx/pet_the_pet.mp3')
 
             self.handleMoodChange()
-            self.accept(
-                self.mood.getDominantMoodChangeEvent(),
-                self.handleMoodChange)
-            self.accept(
-                self.mood.getMoodChangeEvent(),
-                self.moodComponentChanged)
+            self.accept(self.mood.getDominantMoodChangeEvent(),
+                        self.handleMoodChange)
+            self.accept(self.mood.getMoodChangeEvent(),
+                        self.moodComponentChanged)
 
     def disable(self):
         DistributedPet.notify.debug('disable(), fake=%s' % self.bFake)
@@ -348,9 +329,7 @@ class DistributedPet(
         self.cTrav = base.petManager.cTrav
         self.cTrav.addCollider(self.cRayNodePath, self.lifter)
         taskMgr.add(
-            self._detectWater,
-            self.getDetectWaterTaskName(),
-            priority=32)
+            self._detectWater, self.getDetectWaterTaskName(), priority=32)
         self.initializeBodyCollisions('pet-%s' % self.doId)
 
     def _DistributedPet__cleanupCollisions(self):
@@ -375,8 +354,7 @@ class DistributedPet(
     def unlockPet(self):
         if self.lockedDown <= 0:
             DistributedPet.notify.warning(
-                '%s: unlockPet called on unlockedPet' %
-                self.doId)
+                '%s: unlockPet called on unlockedPet' % self.doId)
         else:
             self.lockedDown -= 1
             if not self.lockedDown:
@@ -386,9 +364,8 @@ class DistributedPet(
     def smoothPosition(self):
         DistributedSmoothNode.DistributedSmoothNode.smoothPosition(self)
         if not self.lockedDown:
-            self.trackAnimToSpeed(
-                self.smoother.getSmoothForwardVelocity(),
-                self.smoother.getSmoothRotationalVelocity())
+            self.trackAnimToSpeed(self.smoother.getSmoothForwardVelocity(),
+                                  self.smoother.getSmoothRotationalVelocity())
 
     def getDetectWaterTaskName(self):
         return self.uniqueName('detectWater')
@@ -421,8 +398,7 @@ class DistributedPet(
             self.clearMood()
         else:
             self.showMood(mood)
-        messenger.send('petStateUpdated', [
-            self])
+        messenger.send('petStateUpdated', [self])
 
     def getDominantMood(self):
         if not hasattr(self, 'mood'):
@@ -435,14 +411,12 @@ class DistributedPet(
 
     def teleportIn(self, timestamp):
         self.lockPet()
-        self.animFSM.request('teleportIn', [
-            timestamp])
+        self.animFSM.request('teleportIn', [timestamp])
         self.unlockPet()
 
     def teleportOut(self, timestamp):
         self.lockPet()
-        self.animFSM.request('teleportOut', [
-            timestamp])
+        self.animFSM.request('teleportOut', [timestamp])
         self.unlockPet()
 
     def avatarInteract(self, avId):
@@ -459,8 +433,8 @@ class DistributedPet(
         messenger.send('pet-interaction-done')
 
     def setUpMovieAvatar(self, av):
-        self.avDelayDelete = DelayDelete.DelayDelete(
-            av, 'Pet.setUpMovieAvatar')
+        self.avDelayDelete = DelayDelete.DelayDelete(av,
+                                                     'Pet.setUpMovieAvatar')
         av.headsUp(self, 0, 0, 0)
         av.stopLookAround()
 
@@ -500,7 +474,6 @@ class DistributedPet(
             base.localAvatar.lock()
 
     def _getPetMovieCompleteIval(self, av):
-
         def _petMovieComplete(self=self):
             if self.isLocalToon:
                 base.localAvatar.unsetCameraPosForPetInteraction()
@@ -508,17 +481,14 @@ class DistributedPet(
                 av.startSmooth()
 
         return Sequence(
-            Func(_petMovieComplete),
-            Wait(0.80000000000000004),
-            Func(
-                self.resetAvatarAndPet))
+            Func(_petMovieComplete), Wait(0.80000000000000004),
+            Func(self.resetAvatarAndPet))
 
     def setMovie(self, mode, avId, timestamp):
         timeStamp = globalClockDelta.localElapsedTime(timestamp)
-        if mode in (
-                PetConstants.PET_MOVIE_CALL,
-                PetConstants.PET_MOVIE_SCRATCH,
-                PetConstants.PET_MOVIE_FEED):
+        if mode in (PetConstants.PET_MOVIE_CALL,
+                    PetConstants.PET_MOVIE_SCRATCH,
+                    PetConstants.PET_MOVIE_FEED):
             if self.movieTrack is not None and self.movieTrack.isPlaying():
                 self.movieTrack.finish()
 
@@ -537,11 +507,13 @@ class DistributedPet(
 
             try:
                 self.movieTrack = Sequence(
-                    Func(
-                        self._petMovieStart, av), Parallel(
-                        av.getCallPetIval(), Sequence(
-                            Wait(0.54000000000000004), SoundInterval(
-                                self.callSfx))), self._getPetMovieCompleteIval(av))
+                    Func(self._petMovieStart, av),
+                    Parallel(
+                        av.getCallPetIval(),
+                        Sequence(
+                            Wait(0.54000000000000004),
+                            SoundInterval(self.callSfx))),
+                    self._getPetMovieCompleteIval(av))
                 self.movieTrack.start()
             except Exception:
                 error = None
@@ -551,13 +523,13 @@ class DistributedPet(
 
             try:
                 self.movieTrack = Sequence(
-                    Func(
-                        self._petMovieStart, av), Func(
-                        self.holdPetDownForMovie), Parallel(
-                        self.getInteractIval(
-                            self.Interactions.SCRATCH), av.getScratchPetIval(), SoundInterval(
-                            self.petSfx)), Func(
-                            self.releasePetFromHoldDown), self._getPetMovieCompleteIval(av))
+                    Func(self._petMovieStart, av),
+                    Func(self.holdPetDownForMovie),
+                    Parallel(
+                        self.getInteractIval(self.Interactions.SCRATCH),
+                        av.getScratchPetIval(), SoundInterval(self.petSfx)),
+                    Func(self.releasePetFromHoldDown),
+                    self._getPetMovieCompleteIval(av))
                 self.movieTrack.start()
             except Exception:
                 error = None
@@ -568,34 +540,44 @@ class DistributedPet(
             bean = self.bean.find('**/jellybean')
             bean.setColor(random.choice(BeanColors))
             self.movieTrack = Sequence(
-                Func(
-                    self._petMovieStart, av), Func(
-                    self.holdPetDownForMovie), Parallel(
-                    Func(
-                        base.playSfx, self.swallowSfx, 0, 1, 1, 2.5, self.bean), Sequence(
-                        ActorInterval(
-                            self, 'toBeg'), ActorInterval(
-                                self, 'beg'), ActorInterval(
-                                    self, 'fromBeg'), ActorInterval(
-                                        self, 'eat'), ActorInterval(
-                                            self, 'swallow'), Func(
-                                                self.loop, 'neutral')), Sequence(
-                                                    Wait(0.29999999999999999), ActorInterval(
-                                                        av, 'feedPet'), Func(
-                                                            av.animFSM.request, 'neutral')), Sequence(
-                                                                Wait(0.29999999999999999), Func(
-                                                                    self.bean.reparentTo, av.rightHand), Func(
-                                                                        self.bean.setPos, 0.10000000000000001, 0.0, 0.20000000000000001), Wait(2.1000000000000001), Func(
-                                                                            av.update, 0), Func(
-                                                                                av.update, 1), Func(
-                                                                                    av.update, 2), Func(
-                                                                                        self.bean.wrtReparentTo, render), Parallel(
-                                                                                            LerpHprInterval(
-                                                                                                self.bean, hpr=Point3(
-                                                                                                    random.random() * 360.0 * 2, random.random() * 360.0 * 2, random.random() * 360.0 * 2), duration=1.2), ProjectileInterval(
-                                                                                                        self.bean, endPos=self.find('**/joint_tongueBase').getPos(render), duration=1.2, gravityMult=0.45000000000000001)), Func(
-                                                                                                            self.bean.removeNode))), Func(
-                                                                                                                self.releasePetFromHoldDown), self._getPetMovieCompleteIval(av))
+                Func(self._petMovieStart, av), Func(self.holdPetDownForMovie),
+                Parallel(
+                    Func(base.playSfx, self.swallowSfx, 0, 1, 1, 2.5,
+                         self.bean),
+                    Sequence(
+                        ActorInterval(self, 'toBeg'), ActorInterval(
+                            self, 'beg'), ActorInterval(self, 'fromBeg'),
+                        ActorInterval(self, 'eat'),
+                        ActorInterval(self, 'swallow'),
+                        Func(self.loop, 'neutral')),
+                    Sequence(
+                        Wait(0.29999999999999999),
+                        ActorInterval(av, 'feedPet'),
+                        Func(av.animFSM.request, 'neutral')),
+                    Sequence(
+                        Wait(0.29999999999999999),
+                        Func(self.bean.reparentTo, av.rightHand),
+                        Func(self.bean.setPos, 0.10000000000000001, 0.0,
+                             0.20000000000000001), Wait(2.1000000000000001),
+                        Func(av.update, 0), Func(av.update, 1),
+                        Func(av.update, 2),
+                        Func(self.bean.wrtReparentTo, render),
+                        Parallel(
+                            LerpHprInterval(
+                                self.bean,
+                                hpr=Point3(random.random() * 360.0 * 2,
+                                           random.random() * 360.0 * 2,
+                                           random.random() * 360.0 * 2),
+                                duration=1.2),
+                            ProjectileInterval(
+                                self.bean,
+                                endPos=self.find('**/joint_tongueBase').getPos(
+                                    render),
+                                duration=1.2,
+                                gravityMult=0.45000000000000001)),
+                        Func(self.bean.removeNode))),
+                Func(self.releasePetFromHoldDown),
+                self._getPetMovieCompleteIval(av))
             self.movieTrack.start()
 
     def setTrickAptitudes(self, aptitudes):

@@ -1,5 +1,3 @@
-
-
 from PurchaseBase import *
 from toontown.toonbase import ToontownTimer
 COUNT_UP_RATE = 0.14999999999999999
@@ -25,25 +23,14 @@ class ClerkPurchase(PurchaseBase):
             parent=self.frame,
             relief=None,
             scale=1.04,
-            pos=(
-                0.70999999999999996,
-                0,
-                -0.044999999999999998),
-            image=(
-                purchaseModels.find('**/PurchScrn_BTN_UP'),
-                purchaseModels.find('**/PurchScrn_BTN_DN'),
-                purchaseModels.find('**/PurchScrn_BTN_RLVR')),
+            pos=(0.70999999999999996, 0, -0.044999999999999998),
+            image=(purchaseModels.find('**/PurchScrn_BTN_UP'),
+                   purchaseModels.find('**/PurchScrn_BTN_DN'),
+                   purchaseModels.find('**/PurchScrn_BTN_RLVR')),
             text=TTLocalizer.GagShopDoneShopping,
-            text_fg=(
-                0,
-                0.10000000000000001,
-                0.69999999999999996,
-                1),
+            text_fg=(0, 0.10000000000000001, 0.69999999999999996, 1),
             text_scale=0.050000000000000003,
-            text_pos=(
-                0,
-                0.014999999999999999,
-                0),
+            text_pos=(0, 0.014999999999999999, 0),
             command=self._ClerkPurchase__handleBackToPlayground)
         self.timer = ToontownTimer.ToontownTimer()
         self.timer.reparentTo(self.frame)

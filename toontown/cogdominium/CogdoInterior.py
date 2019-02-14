@@ -17,71 +17,45 @@ class CogdoInterior(Place.Place):
     def __init__(self, loader, parentFSM, doneEvent):
         Place.Place.__init__(self, loader, doneEvent)
         self.fsm = ClassicFSM.ClassicFSM('CogdoInterior', [
-            State.State('entrance', self.enterEntrance, self.exitEntrance, [
-                'Game',
-                'walk']),
-            State.State('Elevator', self.enterElevator, self.exitElevator, [
-                'Game',
-                'battle',
-                'walk',
-                'crane']),
-            State.State('Game', self.enterGame, self.exitGame, [
-                'battle',
-                'died',
-                'crane',
-                'walk']),
-            State.State('battle', self.enterBattle, self.exitBattle, [
-                'walk',
-                'died']),
-            State.State('crane', self.enterCrane, self.exitCrane, [
-                'walk',
-                'battle',
-                'finalBattle',
-                'died',
-                'ouch',
-                'squished']),
+            State.State('entrance', self.enterEntrance, self.exitEntrance,
+                        ['Game', 'walk']),
+            State.State('Elevator', self.enterElevator, self.exitElevator,
+                        ['Game', 'battle', 'walk', 'crane']),
+            State.State('Game', self.enterGame, self.exitGame,
+                        ['battle', 'died', 'crane', 'walk']),
+            State.State('battle', self.enterBattle, self.exitBattle,
+                        ['walk', 'died']),
+            State.State(
+                'crane', self.enterCrane, self.exitCrane,
+                ['walk', 'battle', 'finalBattle', 'died', 'ouch', 'squished']),
             State.State('walk', self.enterWalk, self.exitWalk, [
-                'stickerBook',
-                'stopped',
-                'battle',
-                'sit',
-                'died',
-                'teleportOut',
-                'Elevator',
-                'crane',
-                'DFA',
-                'trialerFA']),
-            State.State('sit', self.enterSit, self.exitSit, [
-                'walk']),
-            State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, [
-                'walk',
-                'stopped',
-                'sit',
-                'died',
-                'DFA',
-                'trialerFA',
-                'teleportOut',
-                'Elevator']),
-            State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA, [
-                'trialerFAReject',
-                'DFA']),
-            State.State('trialerFAReject', self.enterTrialerFAReject, self.exitTrialerFAReject, [
-                'walk']),
-            State.State('DFA', self.enterDFA, self.exitDFA, [
-                'DFAReject',
-                'teleportOut']),
-            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, [
-                'walk']),
-            State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
-                'walk']),
-            State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, [
-                'teleportIn']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk',
-                'elevatorOut',
-                'battle']),
+                'stickerBook', 'stopped', 'battle', 'sit', 'died',
+                'teleportOut', 'Elevator', 'crane', 'DFA', 'trialerFA'
+            ]),
+            State.State('sit', self.enterSit, self.exitSit, ['walk']),
+            State.State(
+                'stickerBook', self.enterStickerBook, self.exitStickerBook, [
+                    'walk', 'stopped', 'sit', 'died', 'DFA', 'trialerFA',
+                    'teleportOut', 'Elevator'
+                ]),
+            State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA,
+                        ['trialerFAReject', 'DFA']),
+            State.State('trialerFAReject', self.enterTrialerFAReject,
+                        self.exitTrialerFAReject, ['walk']),
+            State.State('DFA', self.enterDFA, self.exitDFA,
+                        ['DFAReject', 'teleportOut']),
+            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject,
+                        ['walk']),
+            State.State('teleportIn', self.enterTeleportIn,
+                        self.exitTeleportIn, ['walk']),
+            State.State('teleportOut', self.enterTeleportOut,
+                        self.exitTeleportOut, ['teleportIn']),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk', 'elevatorOut', 'battle']),
             State.State('died', self.enterDied, self.exitDied, []),
-            State.State('elevatorOut', self.enterElevatorOut, self.exitElevatorOut, [])], 'entrance', 'elevatorOut')
+            State.State('elevatorOut', self.enterElevatorOut,
+                        self.exitElevatorOut, [])
+        ], 'entrance', 'elevatorOut')
         self.parentFSM = parentFSM
         self.elevatorDoneEvent = 'elevatorDoneSI'
         self.currentFloor = 0
@@ -118,8 +92,7 @@ class CogdoInterior(Place.Place):
 
     def setState(self, state, battleEvent=None):
         if battleEvent:
-            self.fsm.request(state, [
-                battleEvent])
+            self.fsm.request(state, [battleEvent])
         else:
             self.fsm.request(state)
 
@@ -137,8 +110,7 @@ class CogdoInterior(Place.Place):
         messenger.send(self.doneEvent)
 
     def doRequestLeave(self, requestStatus):
-        self.fsm.request('trialerFA', [
-            requestStatus])
+        self.fsm.request('trialerFA', [requestStatus])
 
     def enterEntrance(self):
         pass
@@ -149,8 +121,7 @@ class CogdoInterior(Place.Place):
     def enterElevator(self, distElevator):
         self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
         self.elevator = Elevator.Elevator(
-            self.fsm.getStateNamed('Elevator'),
-            self.elevatorDoneEvent,
+            self.fsm.getStateNamed('Elevator'), self.elevatorDoneEvent,
             distElevator)
         self.elevator.load()
         self.elevator.enter()
@@ -164,16 +135,15 @@ class CogdoInterior(Place.Place):
         del self.elevator
 
     def detectedElevatorCollision(self, distElevator):
-        self.fsm.request('Elevator', [
-            distElevator])
+        self.fsm.request('Elevator', [distElevator])
 
     def handleElevatorDone(self, doneStatus):
         self.notify.debug('handling elevator done event')
         where = doneStatus['where']
         if where == 'reject':
             if hasattr(
-                    base.localAvatar,
-                    'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                    base.localAvatar, 'elevatorNotifier'
+            ) and base.localAvatar.elevatorNotifier.isNotifierOpen():
                 pass
             else:
                 self.fsm.request('walk')
@@ -182,10 +152,8 @@ class CogdoInterior(Place.Place):
         elif where == 'cogdoInterior':
             pass
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleElevatorDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleElevatorDone')
 
     def enterGame(self):
         base.localAvatar.setTeleportAvailable(0)
@@ -233,13 +201,13 @@ class CogdoInterior(Place.Place):
         base.localAvatar.setTeleportAvailable(0)
 
     def enterTeleportIn(self, requestStatus):
-        base.localAvatar.setPosHpr(
-            2.5, 11.5, ToontownGlobals.FloorOffset, 45.0, 0.0, 0.0)
+        base.localAvatar.setPosHpr(2.5, 11.5, ToontownGlobals.FloorOffset,
+                                   45.0, 0.0, 0.0)
         Place.Place.enterTeleportIn(self, requestStatus)
 
     def enterTeleportOut(self, requestStatus):
-        Place.Place.enterTeleportOut(
-            self, requestStatus, self._CogdoInterior__teleportOutDone)
+        Place.Place.enterTeleportOut(self, requestStatus,
+                                     self._CogdoInterior__teleportOutDone)
 
     def _CogdoInterior__teleportOutDone(self, requestStatus):
         hoodId = requestStatus['hoodId']
@@ -258,8 +226,7 @@ class CogdoInterior(Place.Place):
         self.ignore('setLocalEstateZone')
         self.doneStatus['avId'] = -1
         self.doneStatus['zoneId'] = self.getZoneId()
-        self.fsm.request('teleportIn', [
-            self.doneStatus])
+        self.fsm.request('teleportIn', [self.doneStatus])
         return Task.done
 
     def enterElevatorOut(self):

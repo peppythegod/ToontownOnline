@@ -19,22 +19,18 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
     def __init__(self, hood, parentFSMState, doneEvent):
         CogHQLoader.CogHQLoader.__init__(self, hood, parentFSMState, doneEvent)
         self.fsm.addState(
-            State.State(
-                'stageInterior', self.enterStageInterior, self.exitStageInterior, [
-                    'quietZone', 'cogHQExterior']))
+            State.State('stageInterior', self.enterStageInterior,
+                        self.exitStageInterior,
+                        ['quietZone', 'cogHQExterior']))
         self.fsm.addState(
-            State.State(
-                'factoryExterior', self.enterFactoryExterior, self.exitFactoryExterior, [
-                    'quietZone', 'cogHQExterior']))
-        for stateName in [
-            'start',
-            'cogHQExterior',
-                'quietZone']:
+            State.State('factoryExterior', self.enterFactoryExterior,
+                        self.exitFactoryExterior,
+                        ['quietZone', 'cogHQExterior']))
+        for stateName in ['start', 'cogHQExterior', 'quietZone']:
             state = self.fsm.getStateNamed(stateName)
             state.addTransition('stageInterior')
 
-        for stateName in [
-                'quietZone']:
+        for stateName in ['quietZone']:
             state = self.fsm.getStateNamed(stateName)
             state.addTransition('factoryExterior')
 
@@ -58,9 +54,8 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
     def loadPlaceGeom(self, zoneId):
         self.notify.info('loadPlaceGeom: %s' % zoneId)
         zoneId = zoneId - zoneId % 100
-        self.notify.debug(
-            'zoneId = %d ToontownGlobals.LawbotHQ=%d' %
-            (zoneId, ToontownGlobals.LawbotHQ))
+        self.notify.debug('zoneId = %d ToontownGlobals.LawbotHQ=%d' %
+                          (zoneId, ToontownGlobals.LawbotHQ))
         if zoneId == ToontownGlobals.LawbotHQ:
             self.geom = loader.loadModel(self.cogHQExteriorModelPath)
             ug = self.geom.find('**/underground')
@@ -76,8 +71,7 @@ class LawbotCogHQLoader(CogHQLoader.CogHQLoader):
                 self.notify.info('QA-REGRESSION: COGHQ: Visit LawbotLobby')
 
             self.notify.debug(
-                'cogHQLobbyModelPath = %s' %
-                self.cogHQLobbyModelPath)
+                'cogHQLobbyModelPath = %s' % self.cogHQLobbyModelPath)
             self.geom = loader.loadModel(self.cogHQLobbyModelPath)
             ug = self.geom.find('**/underground')
             ug.setBin('ground', -10)

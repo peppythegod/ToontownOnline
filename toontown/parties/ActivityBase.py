@@ -1,6 +1,4 @@
-
 class ActivityBase:
-
     def __init__(self, activityId, x, y, h):
         self.activityId = activityId
         self.x = x

@@ -4,7 +4,6 @@ from toontown.building import DistributedBuilding
 
 
 class DistributedAnimBuilding(DistributedBuilding.DistributedBuilding):
-
     def __init__(self, cr):
         DistributedBuilding.DistributedBuilding.__init__(self, cr)
 

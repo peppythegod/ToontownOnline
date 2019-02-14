@@ -12,7 +12,6 @@ TwoChoiceCustom = 5
 
 
 class OTPDialog(DirectDialog):
-
     def __init__(self, parent=None, style=NoButtons, **kw):
         if parent is None:
             parent = aspect2d
@@ -23,136 +22,76 @@ class OTPDialog(DirectDialog):
             buttons = loader.loadModel(self.path)
 
         if self.style == TwoChoiceCustom:
-            okImageList = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelImageList = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
-            buttonImage = [
-                okImageList,
-                cancelImageList]
-            buttonValue = [
-                DGG.DIALOG_OK,
-                DGG.DIALOG_CANCEL]
+            okImageList = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelImageList = (buttons.find('**/CloseBtn_UP'),
+                               buttons.find('**/CloseBtn_DN'),
+                               buttons.find('**/CloseBtn_Rllvr'))
+            buttonImage = [okImageList, cancelImageList]
+            buttonValue = [DGG.DIALOG_OK, DGG.DIALOG_CANCEL]
             if 'buttonText' in kw:
                 buttonText = kw['buttonText']
                 del kw['buttonText']
             else:
-                buttonText = [
-                    OTPLocalizer.DialogOK,
-                    OTPLocalizer.DialogCancel]
+                buttonText = [OTPLocalizer.DialogOK, OTPLocalizer.DialogCancel]
         elif self.style == TwoChoice:
-            okImageList = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelImageList = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
-            buttonImage = [
-                okImageList,
-                cancelImageList]
-            buttonText = [
-                OTPLocalizer.DialogOK,
-                OTPLocalizer.DialogCancel]
-            buttonValue = [
-                DGG.DIALOG_OK,
-                DGG.DIALOG_CANCEL]
+            okImageList = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelImageList = (buttons.find('**/CloseBtn_UP'),
+                               buttons.find('**/CloseBtn_DN'),
+                               buttons.find('**/CloseBtn_Rllvr'))
+            buttonImage = [okImageList, cancelImageList]
+            buttonText = [OTPLocalizer.DialogOK, OTPLocalizer.DialogCancel]
+            buttonValue = [DGG.DIALOG_OK, DGG.DIALOG_CANCEL]
         elif self.style == YesNo:
-            okImageList = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelImageList = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
-            buttonImage = [
-                okImageList,
-                cancelImageList]
-            buttonText = [
-                OTPLocalizer.DialogYes,
-                OTPLocalizer.DialogNo]
-            buttonValue = [
-                DGG.DIALOG_OK,
-                DGG.DIALOG_CANCEL]
+            okImageList = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelImageList = (buttons.find('**/CloseBtn_UP'),
+                               buttons.find('**/CloseBtn_DN'),
+                               buttons.find('**/CloseBtn_Rllvr'))
+            buttonImage = [okImageList, cancelImageList]
+            buttonText = [OTPLocalizer.DialogYes, OTPLocalizer.DialogNo]
+            buttonValue = [DGG.DIALOG_OK, DGG.DIALOG_CANCEL]
         elif self.style == Acknowledge:
-            okImageList = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            buttonImage = [
-                okImageList]
-            buttonText = [
-                OTPLocalizer.DialogOK]
-            buttonValue = [
-                DGG.DIALOG_OK]
+            okImageList = (buttons.find('**/ChtBx_OKBtn_UP'),
+                           buttons.find('**/ChtBx_OKBtn_DN'),
+                           buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            buttonImage = [okImageList]
+            buttonText = [OTPLocalizer.DialogOK]
+            buttonValue = [DGG.DIALOG_OK]
         elif self.style == CancelOnly:
-            cancelImageList = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
-            buttonImage = [
-                cancelImageList]
-            buttonText = [
-                OTPLocalizer.DialogCancel]
-            buttonValue = [
-                DGG.DIALOG_CANCEL]
+            cancelImageList = (buttons.find('**/CloseBtn_UP'),
+                               buttons.find('**/CloseBtn_DN'),
+                               buttons.find('**/CloseBtn_Rllvr'))
+            buttonImage = [cancelImageList]
+            buttonText = [OTPLocalizer.DialogCancel]
+            buttonValue = [DGG.DIALOG_CANCEL]
         elif self.style == NoButtons:
             buttonImage = []
             buttonText = []
             buttonValue = []
         else:
             self.notify.error('No such style as: ' + str(self.style))
-        optiondefs = (
-            ('buttonImageList',
-             buttonImage,
-             DGG.INITOPT),
-            ('buttonTextList',
-             buttonText,
-             DGG.INITOPT),
-            ('buttonValueList',
-             buttonValue,
-             DGG.INITOPT),
-            ('buttonPadSF',
-             2.2000000000000002,
-             DGG.INITOPT),
-            ('text_font',
-             DGG.getDefaultFont(),
-             None),
-            ('text_wordwrap',
-             12,
-             None),
-            ('text_scale',
-             0.070000000000000007,
-             None),
-            ('buttonSize',
-             (-0.050000000000000003,
-              0.050000000000000003,
-              -0.050000000000000003,
-              0.050000000000000003),
-                None),
-            ('button_pad',
-             (0,
-              0),
-                None),
-            ('button_relief',
-             None,
-             None),
-            ('button_text_pos',
-             (0,
-              -0.10000000000000001),
-                None),
-            ('fadeScreen',
-             0.5,
-             None),
-            ('image_color',
-             OTPGlobals.GlobalDialogColor,
-             None))
+        optiondefs = (('buttonImageList', buttonImage,
+                       DGG.INITOPT), ('buttonTextList', buttonText,
+                                      DGG.INITOPT), ('buttonValueList',
+                                                     buttonValue, DGG.INITOPT),
+                      ('buttonPadSF', 2.2000000000000002,
+                       DGG.INITOPT), ('text_font', DGG.getDefaultFont(),
+                                      None), ('text_wordwrap', 12, None),
+                      ('text_scale', 0.070000000000000007,
+                       None), ('buttonSize',
+                               (-0.050000000000000003, 0.050000000000000003,
+                                -0.050000000000000003, 0.050000000000000003),
+                               None), ('button_pad', (0, 0),
+                                       None), ('button_relief', None, None),
+                      ('button_text_pos', (0, -0.10000000000000001),
+                       None), ('fadeScreen', 0.5,
+                               None), ('image_color',
+                                       OTPGlobals.GlobalDialogColor, None))
         self.defineoptions(kw, optiondefs)
         DirectDialog.__init__(self, parent)
         self.initialiseoptions(OTPDialog)
@@ -163,14 +102,13 @@ class OTPDialog(DirectDialog):
 class GlobalDialog(OTPDialog):
     notify = DirectNotifyGlobal.directNotify.newCategory('GlobalDialog')
 
-    def __init__(
-            self,
-            message='',
-            doneEvent=None,
-            style=NoButtons,
-            okButtonText=OTPLocalizer.DialogOK,
-            cancelButtonText=OTPLocalizer.DialogCancel,
-            **kw):
+    def __init__(self,
+                 message='',
+                 doneEvent=None,
+                 style=NoButtons,
+                 okButtonText=OTPLocalizer.DialogOK,
+                 cancelButtonText=OTPLocalizer.DialogCancel,
+                 **kw):
         if not hasattr(self, 'path'):
             self.path = 'phase_3/models/gui/dialog_box_buttons_gui'
 
@@ -181,28 +119,15 @@ class GlobalDialog(OTPDialog):
         if style == NoButtons:
             buttonText = []
         elif style == Acknowledge:
-            buttonText = [
-                okButtonText]
+            buttonText = [okButtonText]
         elif style == CancelOnly:
-            buttonText = [
-                cancelButtonText]
+            buttonText = [cancelButtonText]
         else:
-            buttonText = [
-                okButtonText,
-                cancelButtonText]
-        optiondefs = (
-            ('dialogName',
-             'globalDialog',
-             DGG.INITOPT),
-            ('buttonTextList',
-             buttonText,
-             DGG.INITOPT),
-            ('text',
-             message,
-             None),
-            ('command',
-             self.handleButton,
-             None))
+            buttonText = [okButtonText, cancelButtonText]
+        optiondefs = (('dialogName', 'globalDialog',
+                       DGG.INITOPT), ('buttonTextList', buttonText,
+                                      DGG.INITOPT), ('text', message, None),
+                      ('command', self.handleButton, None))
         self.defineoptions(kw, optiondefs)
         OTPDialog.__init__(self, style=style)
         self.initialiseoptions(GlobalDialog)

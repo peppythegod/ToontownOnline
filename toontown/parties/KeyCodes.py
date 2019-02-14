@@ -4,7 +4,8 @@ ARROW_KEYCODE_MAP = {
     'arrow_up': 'u',
     'arrow_down': 'd',
     'arrow_left': 'l',
-    'arrow_right': 'r'}
+    'arrow_right': 'r'
+}
 KEYCODE_TIMEOUT_SECONDS = 1.5
 
 
@@ -16,11 +17,10 @@ class KeyCodes(DirectObject):
     KEY_UP_EVENT = 'KeyCodes-KEY_UP_EVENT'
     CLEAR_CODE_EVENT = 'KeyCodes-CLEAR_CODE_EVENT'
 
-    def __init__(
-            self,
-            keyMap=ARROW_KEYCODE_MAP,
-            patterns=None,
-            timeout=KEYCODE_TIMEOUT_SECONDS):
+    def __init__(self,
+                 keyMap=ARROW_KEYCODE_MAP,
+                 patterns=None,
+                 timeout=KEYCODE_TIMEOUT_SECONDS):
         self._keyMap = keyMap
         self._timeout = timeout
         self._keyCode = ''
@@ -94,28 +94,23 @@ class KeyCodes(DirectObject):
         self.ignoreAll()
 
     def _KeyCodes__acceptKeyDown(self, key):
-        self.accept(key, self._KeyCodes__handleKeyDown, [
-            key])
+        self.accept(key, self._KeyCodes__handleKeyDown, [key])
 
     def _KeyCodes__acceptKeyUp(self, key):
-        self.accept(key + '-up', self._KeyCodes__handleKeyUp, [
-            key])
+        self.accept(key + '-up', self._KeyCodes__handleKeyUp, [key])
 
     def _KeyCodes__handleKeyDown(self, key):
         self._keysPressed += 1
         if self._keyDown is None and self._keysPressed == 1:
             self._KeyCodes__updateElapsedTime()
-            messenger.send(KeyCodes.KEY_DOWN_EVENT, [
-                self._keyMap[key],
-                self._keyCodeCount])
+            messenger.send(KeyCodes.KEY_DOWN_EVENT,
+                           [self._keyMap[key], self._keyCodeCount])
             self._keyCode += self._keyMap[key]
             self._keyCodeCount += 1
             self._keyDown = key
             self._KeyCodes__checkForPattern()
         else:
-            messenger.send(KeyCodes.KEY_DOWN_EVENT, [
-                -1,
-                -1])
+            messenger.send(KeyCodes.KEY_DOWN_EVENT, [-1, -1])
 
     def _KeyCodes__handleKeyUp(self, key):
         arg = -1
@@ -127,8 +122,7 @@ class KeyCodes(DirectObject):
         if self._keysPressed == 0:
             self._keyDown = None
 
-        messenger.send(KeyCodes.KEY_UP_EVENT, [
-            arg])
+        messenger.send(KeyCodes.KEY_UP_EVENT, [arg])
 
     def _KeyCodes__updateElapsedTime(self):
         if self._keyCodeTime != 0.0 and globalClock.getFrameTime() - \
@@ -141,9 +135,9 @@ class KeyCodes(DirectObject):
 
     def _KeyCodes__checkForPattern(self):
         if self._keyCode in self._patterns:
-            messenger.send(KeyCodes.PATTERN_MATCH_EVENT, [
-                self._keyCode])
+            messenger.send(KeyCodes.PATTERN_MATCH_EVENT, [self._keyCode])
             self.reset()
-        elif self._keyCodeCount == self._patternLimit or len(self.getPossibleMatchesList()) == 0:
+        elif self._keyCodeCount == self._patternLimit or len(
+                self.getPossibleMatchesList()) == 0:
             messenger.send(KeyCodes.PATTERN_NO_MATCH_EVENT)
             self.reset()

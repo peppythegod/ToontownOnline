@@ -100,12 +100,10 @@ class Cannon:
         self.smokeNode.wrtReparentTo(render)
         track = Sequence(
             Parallel(
-                LerpScaleInterval(
-                    self.smokeNode, 0.5, 3), LerpColorScaleInterval(
-                    self.smokeNode, 0.5, Vec4(
-                        2, 2, 2, 0))), Func(
-                self.smokeNode.reparentTo, hidden), Func(
-                            self.smokeNode.clearColorScale))
+                LerpScaleInterval(self.smokeNode, 0.5, 3),
+                LerpColorScaleInterval(self.smokeNode, 0.5, Vec4(2, 2, 2, 0))),
+            Func(self.smokeNode.reparentTo, hidden),
+            Func(self.smokeNode.clearColorScale))
         base.playSfx(self.sndCannonFire)
         track.start()
 
@@ -133,16 +131,15 @@ class Cannon:
         if toon:
             toonName = toon.getName()
 
-        self.notify.debug(
-            '__setToonInside self.toonInside=%s\nstack=%s' %
-            (toonName, StackTrace().compact()))
+        self.notify.debug('__setToonInside self.toonInside=%s\nstack=%s' %
+                          (toonName, StackTrace().compact()))
         self.toonInside.stopSmooth()
         self.toonOriginalScale = toon.getScale()
         toon.useLOD(1000)
         self.toonParentNode = render.attachNewNode('toonOriginChange')
         self.toonInside.wrtReparentTo(self.toonParentNode)
-        self.toonInside.setPosHpr(
-            0, 0, -(self.toonInside.getHeight() / 2.0), 0, -90, 0)
+        self.toonInside.setPosHpr(0, 0, -(self.toonInside.getHeight() / 2.0),
+                                  0, -90, 0)
 
     def _Cannon__createToonHead(self, toon):
         self.toonHead = ToonHead.ToonHead()
@@ -180,8 +177,8 @@ class Cannon:
     def removeToonReadyToFire(self):
         toon = self.toonInside
         self.toonInside.wrtReparentTo(render)
-        y = self.toonHead.getY(
-            self.barrelNode) - self.toonInside.getHeight() - self.toonHead.getHeight()
+        y = self.toonHead.getY(self.barrelNode) - self.toonInside.getHeight(
+        ) - self.toonHead.getHeight()
         self.toonInside.setPosHpr(self.barrelNode, 0, y, 0, 0, -90, 0)
         return self._Cannon__removeToon()
 
@@ -204,9 +201,8 @@ class Cannon:
         if self.toonInside:
             toonName = self.toonInside.getName()
 
-        self.notify.debug(
-            '__cleanupToonInside self.toonInside=%s\nstack=%s' %
-            (toonName, StackTrace().compact()))
+        self.notify.debug('__cleanupToonInside self.toonInside=%s\nstack=%s' %
+                          (toonName, StackTrace().compact()))
         if self.toonHead is not None:
             self.hideToonHead()
             if hasattr(self.toonInside, 'nametag'):
@@ -235,10 +231,8 @@ class Cannon:
 
     def setRotation(self, rotation):
         self._Cannon__previousRotation = self._rotation
-        self._rotation = bound(
-            rotation,
-            CANNON_ROTATION_MIN,
-            CANNON_ROTATION_MAX)
+        self._rotation = bound(rotation, CANNON_ROTATION_MIN,
+                               CANNON_ROTATION_MAX)
 
     def getRotation(self):
         return self._rotation

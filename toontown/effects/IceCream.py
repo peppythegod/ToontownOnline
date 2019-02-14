@@ -6,7 +6,6 @@ from PooledEffect import PooledEffect
 
 
 class IceCream(PooledEffect, EffectController):
-
     def __init__(self):
         PooledEffect.__init__(self)
         EffectController.__init__(self)
@@ -68,12 +67,10 @@ class IceCream(PooledEffect, EffectController):
 
     def createTrack(self):
         self.track = Sequence(
-            Func(
-                self.p0.setBirthRate, 0.040000000000000001), Func(
-                self.p0.clearToInitial), Func(
-                self.f.start, self, self), Wait(0.20000000000000001), Func(
-                    self.p0.setBirthRate, 100.0), Wait(4.0), Func(
-                        self.cleanUpEffect))
+            Func(self.p0.setBirthRate, 0.040000000000000001),
+            Func(self.p0.clearToInitial), Func(self.f.start, self, self),
+            Wait(0.20000000000000001), Func(self.p0.setBirthRate, 100.0),
+            Wait(4.0), Func(self.cleanUpEffect))
 
     def setEffectScale(self, scale):
         self.effectScale = scale

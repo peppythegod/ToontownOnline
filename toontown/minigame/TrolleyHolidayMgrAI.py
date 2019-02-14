@@ -1,5 +1,3 @@
-
-
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals, TTLocalizer
 from toontown.ai import HolidayBaseAI

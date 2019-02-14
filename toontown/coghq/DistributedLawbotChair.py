@@ -139,10 +139,7 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
         self.cogJuror.prop.reparentTo(head)
         self.propTrack = Sequence(
             ActorInterval(
-                self.cogJuror.prop,
-                'propeller',
-                startFrame=8,
-                endFrame=25))
+                self.cogJuror.prop, 'propeller', startFrame=8, endFrame=25))
 
     def attachColSphere(self):
         chairTop = self.nodePath.find('**/top*')
@@ -226,19 +223,13 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
         z = self.courtroomCeiling - curPos[2]
         self.notify.debug('curPos =%s\nz=%f' % (curPos, z))
         cogTrack = Sequence(
-            Func(
-                self.cogJuror.setPos, x, y, z), Func(
-                self.cogJuror.unstash), Func(
-                self.propTrack.loop), self.cogJuror.posInterval(
-                    duration, self.landingPt, Point3(
-                        x, y, z)), Func(
-                            self.propTrack.finish), Func(
-                                self.stashCogJuror))
+            Func(self.cogJuror.setPos, x, y, z), Func(self.cogJuror.unstash),
+            Func(self.propTrack.loop),
+            self.cogJuror.posInterval(duration, self.landingPt,
+                                      Point3(x, y, z)),
+            Func(self.propTrack.finish), Func(self.stashCogJuror))
         audioTrack = SoundInterval(
-            self.propInSound,
-            duration=duration,
-            node=self.cogJuror,
-            loop=1)
+            self.propInSound, duration=duration, node=self.cogJuror, loop=1)
         self.cogJurorTrack = Parallel(audioTrack, cogTrack)
         self.cogJurorTrack.start()
 
@@ -273,8 +264,8 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
 
     def showCogJurorFlying(self):
         self.notify.debug('showCogJurorFlying')
-        self.startCogJuror(ToontownGlobals.LawbotBossCogJurorFlightTime, -
-                           (ToontownGlobals.LawbotBossCogJurorDistance))
+        self.startCogJuror(ToontownGlobals.LawbotBossCogJurorFlightTime,
+                           -(ToontownGlobals.LawbotBossCogJurorDistance))
 
     def setBossCogId(self, bossCogId):
         self.bossCogId = bossCogId
@@ -312,8 +303,8 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
         self.boss.touchedChairHandle(self, entry)
 
     def enterToonJuror(self):
-        self.chair.setColorScale(
-            0.20000000000000001, 0.20000000000000001, 1.0, 1.0)
+        self.chair.setColorScale(0.20000000000000001, 0.20000000000000001, 1.0,
+                                 1.0)
         self.boss.countToonJurors()
         if not self.cogJurorTrack:
             self.cogJuror.stash()
@@ -350,39 +341,25 @@ class DistributedLawbotChair(DistributedObject.DistributedObject, FSM.FSM):
 
             goingDown = self.nodePath.hprInterval(
                 self.downTime,
-                Point3(
-                    myHeadings[index] +
-                    self.origHpr[0],
-                    downAngle,
-                    self.origHpr[2]),
-                startHpr=Point3(
-                    myHeadings[index] +
-                    self.origHpr[0],
-                    0,
-                    self.origHpr[2]))
+                Point3(myHeadings[index] + self.origHpr[0], downAngle,
+                       self.origHpr[2]),
+                startHpr=Point3(myHeadings[index] + self.origHpr[0], 0,
+                                self.origHpr[2]))
             self.ival.append(goingDown)
             self.ival.append(Wait(self.stayDownTime))
             goingUp = self.nodePath.hprInterval(
                 self.upTime,
-                Point3(
-                    myHeadings[nextIndex] +
-                    self.origHpr[0],
-                    0,
-                    self.origHpr[2]),
-                startHpr=Point3(
-                    myHeadings[index] +
-                    self.origHpr[0],
-                    downAngle,
-                    self.origHpr[2]))
+                Point3(myHeadings[nextIndex] + self.origHpr[0], 0,
+                       self.origHpr[2]),
+                startHpr=Point3(myHeadings[index] + self.origHpr[0], downAngle,
+                                self.origHpr[2]))
             self.ival.append(goingUp)
 
         self.ival.loop()
-        self.accept(
-            'enterChairZap',
-            self._DistributedLawbotChair__touchedChair)
-        self.accept(
-            'enterChairHandleZap',
-            self._DistributedLawbotChair__touchedChairHandle)
+        self.accept('enterChairZap',
+                    self._DistributedLawbotChair__touchedChair)
+        self.accept('enterChairHandleZap',
+                    self._DistributedLawbotChair__touchedChairHandle)
 
     def computePos(self):
         rowIndex = self.index % 6

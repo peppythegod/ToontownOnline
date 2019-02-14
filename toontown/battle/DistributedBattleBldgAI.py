@@ -18,24 +18,20 @@ class DistributedBattleBldgAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBattleBldgAI')
 
-    def __init__(
-            self,
-            air,
-            zoneId,
-            roundCallback=None,
-            finishCallback=None,
-            maxSuits=4,
-            bossBattle=0):
+    def __init__(self,
+                 air,
+                 zoneId,
+                 roundCallback=None,
+                 finishCallback=None,
+                 maxSuits=4,
+                 bossBattle=0):
         DistributedBattleBaseAI.DistributedBattleBaseAI.__init__(
             self, air, zoneId, finishCallback, maxSuits, bossBattle)
         self.streetBattle = 0
         self.roundCallback = roundCallback
         self.fsm.addState(
-            State.State(
-                'BuildingReward',
-                self.enterBuildingReward,
-                self.exitBuildingReward,
-                ['Resume']))
+            State.State('BuildingReward', self.enterBuildingReward,
+                        self.exitBuildingReward, ['Resume']))
         playMovieState = self.fsm.getStateNamed('PlayMovie')
         playMovieState.addTransition('BuildingReward')
         self.elevatorPos = Point3(0, -30, 0)
@@ -60,14 +56,12 @@ class DistributedBattleBldgAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
             self.notify.debug('faceOffDone() - ignoring toon: %d' % toonId)
             return None
         elif self.fsm.getCurrentState().getName() != 'FaceOff':
-            self.notify.warning(
-                'faceOffDone() - in state: %s' %
-                self.fsm.getCurrentState().getName())
+            self.notify.warning('faceOffDone() - in state: %s' %
+                                self.fsm.getCurrentState().getName())
             return None
         elif self.toons.count(toonId) == 0:
             self.notify.warning(
-                'faceOffDone() - toon: %d not in toon list' %
-                toonId)
+                'faceOffDone() - toon: %d not in toon list' % toonId)
             return None
 
         self.responses[toonId] += 1
@@ -86,11 +80,8 @@ class DistributedBattleBldgAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
         self.joinableFsm.request('Joinable')
         self.runableFsm.request('Unrunable')
         self.timer.startCallback(
-            self.calcToonMoveTime(
-                self.pos,
-                self.elevatorPos) +
-            FACEOFF_TAUNT_T +
-            SERVER_BUFFER_TIME,
+            self.calcToonMoveTime(self.pos, self.elevatorPos) + FACEOFF_TAUNT_T
+            + SERVER_BUFFER_TIME,
             self._DistributedBattleBldgAI__serverFaceOffDone)
 
     def _DistributedBattleBldgAI__serverFaceOffDone(self):
@@ -113,12 +104,8 @@ class DistributedBattleBldgAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
         self.d_setMembers()
         self.b_setState('WaitForInput')
 
-    def localMovieDone(
-            self,
-            needUpdate,
-            deadToons,
-            deadSuits,
-            lastActiveSuitDied):
+    def localMovieDone(self, needUpdate, deadToons, deadSuits,
+                       lastActiveSuitDied):
         self.timer.stop()
         self.resumeNeedUpdate = needUpdate
         self.resumeDeadToons = deadToons
@@ -146,34 +133,35 @@ class DistributedBattleBldgAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
             if topFloor == 0:
                 self.b_setState('Reward')
             else:
-                for (
-                        floorNum,
-                        cogsThisFloor) in PythonUtil.enumerate(
+                for (floorNum, cogsThisFloor) in PythonUtil.enumerate(
                         self.suitsKilledPerFloor):
                     for toonId in self.activeToons:
                         toon = self.getToon(toonId)
                         if toon:
-                            (recovered, notRecovered) = self.air.questManager.recoverItems(
-                                toon, cogsThisFloor, self.zoneId)
+                            (recovered, notRecovered
+                             ) = self.air.questManager.recoverItems(
+                                 toon, cogsThisFloor, self.zoneId)
                             self.toonItems[toonId][0].extend(recovered)
                             self.toonItems[toonId][1].extend(notRecovered)
                             meritArray = self.air.promotionMgr.recoverMerits(
-                                toon, cogsThisFloor, self.zoneId, getCreditMultiplier(floorNum))
+                                toon, cogsThisFloor, self.zoneId,
+                                getCreditMultiplier(floorNum))
                             if toonId in self.helpfulToons:
                                 self.toonMerits[toonId] = addListsByValue(
                                     self.toonMerits[toonId], meritArray)
                             else:
                                 self.notify.debug(
-                                    'toon %d not helpful, skipping merits' % toonId)
+                                    'toon %d not helpful, skipping merits' %
+                                    toonId)
                         toonId in self.helpfulToons
 
                 self.d_setBattleExperience()
                 self.b_setState('BuildingReward')
         elif self.resumeNeedUpdate == 1:
             self.d_setMembers()
-            if len(
-                    self.resumeDeadSuits) > 0 or self.resumeLastActiveSuitDied == 0 or len(
-                    self.resumeDeadToons) > 0:
+            if len(self.resumeDeadSuits
+                   ) > 0 or self.resumeLastActiveSuitDied == 0 or len(
+                       self.resumeDeadToons) > 0:
                 self.needAdjust = 1
 
         self.setState('WaitForJoin')
@@ -197,9 +185,8 @@ class DistributedBattleBldgAI(DistributedBattleBaseAI.DistributedBattleBaseAI):
     def enterBuildingReward(self):
         self.resetResponses()
         self.assignRewards()
-        self.timer.startCallback(
-            BUILDING_REWARD_TIMEOUT,
-            self.serverRewardDone)
+        self.timer.startCallback(BUILDING_REWARD_TIMEOUT,
+                                 self.serverRewardDone)
 
     def exitBuildingReward(self):
         pass

@@ -17,42 +17,30 @@ from toontown.golf import GolfRewardDialog
 from toontown.toon import ToonHeadFrame
 
 
-class DistributedGolfCourse(
-        DistributedObject.DistributedObject,
-        FSM,
-        DelayDeletable):
+class DistributedGolfCourse(DistributedObject.DistributedObject, FSM,
+                            DelayDeletable):
     notify = directNotify.newCategory('DistributedGolfCourse')
     defaultTransitions = {
-        'Off': [
-            'Join'],
-        'Join': [
-            'WaitStartHole',
-            'Cleanup'],
-        'WaitStartHole': [
-            'PlayHole',
-            'Cleanup',
-            'WaitReward'],
-        'PlayHole': [
-            'WaitFinishCourse',
-            'WaitStartHole',
-            'WaitReward',
-            'Cleanup'],
-        'WaitReward': [
-            'WaitFinishCourse',
-            'Cleanup'],
-        'WaitFinishCourse': [
-            'Cleanup'],
-        'Cleanup': [
-            'Off']}
+        'Off': ['Join'],
+        'Join': ['WaitStartHole', 'Cleanup'],
+        'WaitStartHole': ['PlayHole', 'Cleanup', 'WaitReward'],
+        'PlayHole':
+        ['WaitFinishCourse', 'WaitStartHole', 'WaitReward', 'Cleanup'],
+        'WaitReward': ['WaitFinishCourse', 'Cleanup'],
+        'WaitFinishCourse': ['Cleanup'],
+        'Cleanup': ['Off']
+    }
     id = 0
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, base.cr)
         FSM.__init__(self, 'Golf_%s_FSM' % self.id)
         self.waitingStartLabel = DirectLabel(
-            text=TTLocalizer.MinigameWaitingForOtherPlayers, text_fg=VBase4(
-                1, 1, 1, 1), relief=None, pos=(
-                -0.59999999999999998, 0, -0.75), scale=0.074999999999999997)
+            text=TTLocalizer.MinigameWaitingForOtherPlayers,
+            text_fg=VBase4(1, 1, 1, 1),
+            relief=None,
+            pos=(-0.59999999999999998, 0, -0.75),
+            scale=0.074999999999999997)
         self.waitingStartLabel.hide()
         self.avIdList = []
         self.remoteAvIdList = []
@@ -89,8 +77,8 @@ class DistributedGolfCourse(
         self.normalExit = 1
         count = self.modelCount
         loader.beginBulkLoad(
-            'minigame', TTLocalizer.HeadingToMinigameTitle %
-            self.getTitle(), count, 1, TTLocalizer.TIP_GOLF)
+            'minigame', TTLocalizer.HeadingToMinigameTitle % self.getTitle(),
+            count, 1, TTLocalizer.TIP_GOLF)
         self.load()
         globalClock.syncFrameTime()
         self.onstage()
@@ -142,8 +130,7 @@ class DistributedGolfCourse(
         self.holeIds = holeIds
         self.coursePar = coursePar
         for avId in self.avIdList:
-            blankScoreList = [
-                0] * self.numHoles
+            blankScoreList = [0] * self.numHoles
             self.scores[avId] = blankScoreList
 
         self.request('WaitStartHole')
@@ -171,21 +158,19 @@ class DistributedGolfCourse(
                             av, GolfGlobals.PlayerColors[color], headPanel)
                         tPanels.setPos(-1.1699999999999999, 0,
                                        toonPanelsStart + whichToon * tpDiff)
-                        tPanels.setScale(
-                            0.29999999999999999, 1, 0.69999999999999996)
+                        tPanels.setScale(0.29999999999999999, 1,
+                                         0.69999999999999996)
                         tPanels.head.setPos(0, 10, 0.17999999999999999)
-                        tPanels.head.setScale(
-                            0.46999999999999997,
-                            0.20000000000000001,
-                            0.20000000000000001)
-                        tPanels.tag1.setPos(
-                            0.29999999999999999, 10, 0.17999999999999999)
+                        tPanels.head.setScale(0.46999999999999997,
+                                              0.20000000000000001,
+                                              0.20000000000000001)
+                        tPanels.tag1.setPos(0.29999999999999999, 10,
+                                            0.17999999999999999)
                         tPanels.tag1.setScale(0.1283, 0.055, 0.055)
                         tPanels.tag2.setPos(0, 10, 0.42999999999999999)
-                        tPanels.tag2.setScale(
-                            0.11700000000000001,
-                            0.050000000000000003,
-                            0.050000000000000003)
+                        tPanels.tag2.setScale(0.11700000000000001,
+                                              0.050000000000000003,
+                                              0.050000000000000003)
                         self.toonPanels.append(tPanels)
                         whichToon = whichToon + 1
                         color += 1
@@ -201,9 +186,7 @@ class DistributedGolfCourse(
 
     def setPlayHole(self):
         self.notify.debug('GOLF COURSE: received setPlayHole')
-        if self.state not in [
-            'PlayHole',
-                'Cleanup']:
+        if self.state not in ['PlayHole', 'Cleanup']:
             self.request('PlayHole')
 
     def getTitle(self):
@@ -217,9 +200,8 @@ class DistributedGolfCourse(
         self.numPlayers = len(self.avIdList)
         self.hasLocalToon = self.localAvId in self.avIdList
         if not self.hasLocalToon:
-            self.notify.warning(
-                'localToon (%s) not in list of golfers: %s' %
-                (self.localAvId, self.avIdList))
+            self.notify.warning('localToon (%s) not in list of golfers: %s' %
+                                (self.localAvId, self.avIdList))
             return None
 
         self.notify.info('GOLF COURSE: setParticipants: %s' % self.avIdList)
@@ -269,10 +251,14 @@ class DistributedGolfCourse(
                     toonPanel = self.toonPanels[y]
                     toonPanel.headModel.hide()
                     exitedToon = DirectLabel(
-                        parent=self.toonPanels[y], relief=None, pos=(
-                            0, 0, 0.40000000000000002), color=(
-                            1, 1, 1, 1), text_align=TextNode.ACenter, text=TTLocalizer.GolferExited %
-                        toonPanel.av.getName(), text_scale=0.070000000000000007, text_wordwrap=6)
+                        parent=self.toonPanels[y],
+                        relief=None,
+                        pos=(0, 0, 0.40000000000000002),
+                        color=(1, 1, 1, 1),
+                        text_align=TextNode.ACenter,
+                        text=TTLocalizer.GolferExited % toonPanel.av.getName(),
+                        text_scale=0.070000000000000007,
+                        text_wordwrap=6)
                     exitedToon.setScale(2, 1, 1)
                     self.exitedPanels.append(exitedToon)
                     self.exitedToonsWithPanels.append(avId)
@@ -394,36 +380,23 @@ class DistributedGolfCourse(
         retval = False
         self.notify.debug('Self state is: %s' % self.state)
         if self.getCurrentOrNextState(
-        ) == 'WaitReward' or self.getCurrentOrNextState() == 'WaitFinishCourse':
+        ) == 'WaitReward' or self.getCurrentOrNextState(
+        ) == 'WaitFinishCourse':
             retval = True
 
         return retval
 
-    def setReward(
-            self,
-            trophiesList,
-            rankingsList,
-            holeBestList,
-            courseBestList,
-            cupList,
-            tieBreakWinner,
-            aim0,
-            aim1,
-            aim2,
-            aim3):
+    def setReward(self, trophiesList, rankingsList, holeBestList,
+                  courseBestList, cupList, tieBreakWinner, aim0, aim1, aim2,
+                  aim3):
         self.trophiesList = trophiesList
         self.rankingsList = rankingsList
         self.holeBestList = holeBestList
         self.courseBestList = courseBestList
         self.cupList = cupList
         self.tieBreakWinner = tieBreakWinner
-        self.aimTimesList = [
-            aim0,
-            aim1,
-            aim2,
-            aim3]
-        if self.state not in [
-                'Cleanup']:
+        self.aimTimesList = [aim0, aim1, aim2, aim3]
+        if self.state not in ['Cleanup']:
             self.demand('WaitReward')
 
     def enterWaitReward(self):
@@ -441,19 +414,11 @@ class DistributedGolfCourse(
                 self.exit = True
 
         self.golfRewardDialog = GolfRewardDialog.GolfRewardDialog(
-            self.avIdList,
-            self.trophiesList,
-            self.rankingsList,
-            self.holeBestList,
-            self.courseBestList,
-            self.cupList,
-            self.localAvId,
-            self.tieBreakWinner,
-            self.aimTimesList)
+            self.avIdList, self.trophiesList, self.rankingsList,
+            self.holeBestList, self.courseBestList, self.cupList,
+            self.localAvId, self.tieBreakWinner, self.aimTimesList)
         self.rewardIval = Sequence(
-            Parallel(
-                Wait(5),
-                self.golfRewardDialog.getMovie()),
+            Parallel(Wait(5), self.golfRewardDialog.getMovie()),
             Func(doneWithRewardMovie))
         self.rewardIval.start()
 

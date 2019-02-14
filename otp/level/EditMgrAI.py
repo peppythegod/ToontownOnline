@@ -22,17 +22,17 @@ class EditMgrAI(EditMgrBase.EditMgrBase):
                     if id not in entIdDict:
                         idChosen = 1
                         break
-                        continue
-                elif self.lastAllocatedEntId != allocRange[0]:
-                    self.lastAllocatedEntId = allocRange[0]
-                    continue
+                else:
+                    if self.lastAllocatedEntId != allocRange[0]:
+                        self.lastAllocatedEntId = allocRange[0]
+                    else:
+                        self.notify.error('out of entIds')
                 self.notify.error('out of entIds')
-            data.update({
-                'entId': id})
+            data.update({'entId': id})
             self.lastAllocatedEntId = id
             self.level.setAttribChange(self.entId, 'insertEntity', data)
-            self.level.levelSpec.doSetAttrib(
-                self.entId, 'requestNewEntity', None)
+            self.level.levelSpec.doSetAttrib(self.entId, 'requestNewEntity',
+                                             None)
 
         def getSpecSaveEvent(self):
             return 'requestSave-%s' % self.level.levelId

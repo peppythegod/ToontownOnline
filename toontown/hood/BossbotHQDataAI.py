@@ -30,13 +30,17 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
         HoodDataAI.HoodDataAI.startup(self)
 
         def makeOfficeElevator(index, antiShuffle=0, minLaff=0):
-            destZone = (
-                ToontownGlobals.LawbotStageIntA,
-                ToontownGlobals.LawbotStageIntB,
-                ToontownGlobals.LawbotStageIntC,
-                ToontownGlobals.LawbotStageIntD)[index]
+            destZone = (ToontownGlobals.LawbotStageIntA,
+                        ToontownGlobals.LawbotStageIntB,
+                        ToontownGlobals.LawbotStageIntC,
+                        ToontownGlobals.LawbotStageIntD)[index]
             elev = DistributedLawOfficeElevatorExtAI.DistributedLawOfficeElevatorExtAI(
-                self.air, self.air.lawMgr, destZone, index, antiShuffle=0, minLaff=minLaff)
+                self.air,
+                self.air.lawMgr,
+                destZone,
+                index,
+                antiShuffle=0,
+                minLaff=minLaff)
             elev.generateWithRequired(ToontownGlobals.LawbotOfficeExt)
             self.addDistObj(elev)
 
@@ -45,7 +49,10 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
         self.lobbyMgr.generateWithRequired(ToontownGlobals.BossbotLobby)
         self.addDistObj(self.lobbyMgr)
         self.lobbyElevator = DistributedBBElevatorAI.DistributedBBElevatorAI(
-            self.air, self.lobbyMgr, ToontownGlobals.BossbotLobby, antiShuffle=1)
+            self.air,
+            self.lobbyMgr,
+            ToontownGlobals.BossbotLobby,
+            antiShuffle=1)
         self.lobbyElevator.generateWithRequired(ToontownGlobals.BossbotLobby)
         self.addDistObj(self.lobbyElevator)
         if simbase.config.GetBool('want-boarding-groups', 1):
@@ -73,12 +80,10 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
             extDoor.setOtherDoor(intDoor)
             intDoor.setOtherDoor(extDoor)
             intDoor.generateWithRequired(destinationZone)
-            intDoor.sendUpdate('setDoorIndex', [
-                intDoor.getDoorIndex()])
+            intDoor.sendUpdate('setDoorIndex', [intDoor.getDoorIndex()])
             self.addDistObj(intDoor)
             extDoor.generateWithRequired(self.canonicalHoodId)
-            extDoor.sendUpdate('setDoorIndex', [
-                extDoor.getDoorIndex()])
+            extDoor.sendUpdate('setDoorIndex', [extDoor.getDoorIndex()])
             self.addDistObj(extDoor)
 
         makeDoor(ToontownGlobals.BossbotLobby, 0, 0,
@@ -91,7 +96,8 @@ class BossbotHQDataAI(HoodDataAI.HoodDataAI):
 
     def createCogKarts(self):
         posList = ((154.762, 37.168999999999997, 0),
-                   (141.40299999999999, -81.887, 0), (-48.439999999999998, 15.308, 0))
+                   (141.40299999999999, -81.887, 0), (-48.439999999999998,
+                                                      15.308, 0))
         hprList = ((110.815, 0, 0), (61.231000000000002, 0, 0),
                    (-105.48099999999999, 0, 0))
         mins = ToontownGlobals.FactoryLaffMinimums[3]

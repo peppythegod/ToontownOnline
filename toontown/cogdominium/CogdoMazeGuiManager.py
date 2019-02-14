@@ -10,7 +10,6 @@ from CogdoMemoGui import CogdoMemoGui
 
 
 class CogdoMazeGuiManager:
-
     def __init__(self, maze, bossCode):
         self.maze = maze
         self.root = NodePath('CogdoMazeGui')
@@ -74,18 +73,18 @@ class CogdoMazeGuiManager:
 
     def showPickupCounter(self):
         ToontownIntervals.start(
-            ToontownIntervals.getPresentGuiIval(
-                self._memoGui, 'present_memo'))
+            ToontownIntervals.getPresentGuiIval(self._memoGui, 'present_memo'))
 
     def startGame(self, firstMessage):
         self._presentGuiIval = ToontownIntervals.start(
             Sequence(
                 ToontownIntervals.getPresentGuiIval(
-                    self._bossGui, '', startPos=(
-                        0, 0, -0.14999999999999999)), Func(
-                    self.mazeMapGui.show), ToontownIntervals.getPulseLargerIval(
-                        self.mazeMapGui, '', scale=self.mazeMapGui.getScale()), Func(
-                            self.setMessage, firstMessage), name='present_gui'))
+                    self._bossGui, '', startPos=(0, 0, -0.14999999999999999)),
+                Func(self.mazeMapGui.show),
+                ToontownIntervals.getPulseLargerIval(
+                    self.mazeMapGui, '', scale=self.mazeMapGui.getScale()),
+                Func(self.setMessage, firstMessage),
+                name='present_gui'))
 
     def hideMazeMap(self):
         self.mazeMapGui.hide()
@@ -112,8 +111,9 @@ class CogdoMazeGuiManager:
         self._timer.countdown(duration, timerExpiredCallback)
         self._presentTimerIval = ToontownIntervals.start(
             ToontownIntervals.getPresentGuiIval(
-                self._timer, 'present_timer', startPos=(
-                    0, 0, 0.34999999999999998)))
+                self._timer,
+                'present_timer',
+                startPos=(0, 0, 0.34999999999999998)))
 
     def hideTimer(self):
         if hasattr(self, 'timer') and self._timer is not None:

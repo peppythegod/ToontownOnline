@@ -9,9 +9,8 @@ from direct.task import Task
 smileyDoId = 1
 
 
-class DistCogdoCraneObject(
-        DistributedSmoothNode.DistributedSmoothNode,
-        FSM.FSM):
+class DistCogdoCraneObject(DistributedSmoothNode.DistributedSmoothNode,
+                           FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistCogdoCraneObject')
     wantsWatchDrift = 1
@@ -25,9 +24,11 @@ class DistCogdoCraneObject(
         self.cleanedUp = 0
         self.collisionNode = CollisionNode('object')
         self.collisionNode.setIntoCollideMask(
-            ToontownGlobals.PieBitmask | OTPGlobals.WallBitmask | ToontownGlobals.CashbotBossObjectBitmask | OTPGlobals.CameraBitmask)
-        self.collisionNode.setFromCollideMask(
-            ToontownGlobals.PieBitmask | OTPGlobals.FloorBitmask)
+            ToontownGlobals.PieBitmask | OTPGlobals.WallBitmask
+            | ToontownGlobals.CashbotBossObjectBitmask
+            | OTPGlobals.CameraBitmask)
+        self.collisionNode.setFromCollideMask(ToontownGlobals.PieBitmask
+                                              | OTPGlobals.FloorBitmask)
         self.collisionNodePath = NodePath(self.collisionNode)
         self.physicsActivated = 0
         self.toMagnetSoundInterval = Sequence()
@@ -85,18 +86,14 @@ class DistCogdoCraneObject(
             self.craneGame.physicsMgr.attachPhysicalNode(self.node())
             base.cTrav.addCollider(self.collisionNodePath, self.handler)
             self.physicsActivated = 1
-            self.accept(
-                self.collideName + '-floor',
-                self._DistCogdoCraneObject__hitFloor)
-            self.accept(
-                self.collideName + '-goon',
-                self._DistCogdoCraneObject__hitGoon)
-            self.acceptOnce(
-                self.collideName + '-headTarget',
-                self._DistCogdoCraneObject__hitBoss)
-            self.accept(
-                self.collideName + '-dropPlane',
-                self._DistCogdoCraneObject__hitDropPlane)
+            self.accept(self.collideName + '-floor',
+                        self._DistCogdoCraneObject__hitFloor)
+            self.accept(self.collideName + '-goon',
+                        self._DistCogdoCraneObject__hitGoon)
+            self.acceptOnce(self.collideName + '-headTarget',
+                            self._DistCogdoCraneObject__hitBoss)
+            self.accept(self.collideName + '-dropPlane',
+                        self._DistCogdoCraneObject__hitDropPlane)
 
     def deactivatePhysics(self):
         if self.physicsActivated:
@@ -136,8 +133,8 @@ class DistCogdoCraneObject(
         pass
 
     def _DistCogdoCraneObject__hitBoss(self, entry):
-        if (self.state == 'Dropped' or self.state ==
-                'LocalDropped') and self.craneId != self.craneGame.doId:
+        if (self.state == 'Dropped' or self.state == 'LocalDropped'
+            ) and self.craneId != self.craneGame.doId:
             vel = self.physicsObject.getVelocity()
             vel = self.crane.root.getRelativeVector(render, vel)
             vel.normalize()
@@ -211,15 +208,13 @@ class DistCogdoCraneObject(
         self.sendUpdate('hitFloor')
 
     def d_requestFree(self):
-        self.sendUpdate('requestFree', [
-            self.getX(),
-            self.getY(),
-            self.getZ(),
-            self.getH()])
+        self.sendUpdate(
+            'requestFree',
+            [self.getX(), self.getY(),
+             self.getZ(), self.getH()])
 
     def d_hitBoss(self, impact):
-        self.sendUpdate('hitBoss', [
-            impact])
+        self.sendUpdate('hitBoss', [impact])
 
     def defaultFilter(self, request, args):
         if self.craneGame is None:
@@ -326,9 +321,8 @@ class DistCogdoCraneObject(
             self.handler.setStaticFrictionCoef(0.90000000000000002)
             self.handler.setDynamicFrictionCoef(0.5)
             if self.wantsWatchDrift:
-                taskMgr.add(
-                    self._DistCogdoCraneObject__watchDrift,
-                    self.watchDriftName)
+                taskMgr.add(self._DistCogdoCraneObject__watchDrift,
+                            self.watchDriftName)
 
         else:
             self.startSmooth()

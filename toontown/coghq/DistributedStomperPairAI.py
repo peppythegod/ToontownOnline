@@ -11,9 +11,7 @@ class DistributedStomperPairAI(DistributedEntityAI.DistributedEntityAI):
 
     def __init__(self, level, entId):
         DistributedEntityAI.DistributedEntityAI.__init__(self, level, entId)
-        self.stompers = [
-            None,
-            None]
+        self.stompers = [None, None]
         self.hitPtsTaken = 3
 
     def generate(self):
@@ -26,8 +24,7 @@ class DistributedStomperPairAI(DistributedEntityAI.DistributedEntityAI):
         for id in doIds:
             self.children = simbase.air.doId2do[id]
 
-        self.sendUpdate('setChildren', [
-            doIds])
+        self.sendUpdate('setChildren', [doIds])
 
     def setSquash(self):
         avId = self.air.getAvatarIdFromSender()

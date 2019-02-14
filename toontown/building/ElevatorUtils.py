@@ -63,13 +63,12 @@ def getRightOpenInterval(distObj, rightDoor, type):
     return rightOpenInterval
 
 
-def getOpenInterval(
-        distObj,
-        leftDoor,
-        rightDoor,
-        openSfx,
-        finalOpenSfx,
-        type=ELEVATOR_NORMAL):
+def getOpenInterval(distObj,
+                    leftDoor,
+                    rightDoor,
+                    openSfx,
+                    finalOpenSfx,
+                    type=ELEVATOR_NORMAL):
     left = getLeftOpenInterval(distObj, leftDoor, type)
     right = getRightOpenInterval(distObj, rightDoor, type)
     openDuration = left.getDuration()
@@ -81,10 +80,7 @@ def getOpenInterval(
                 duration=openDuration,
                 volume=sfxVolume,
                 node=leftDoor),
-            SoundInterval(
-                finalOpenSfx,
-                volume=sfxVolume,
-                node=leftDoor))
+            SoundInterval(finalOpenSfx, volume=sfxVolume, node=leftDoor))
     else:
         sound = SoundInterval(openSfx, volume=sfxVolume, node=leftDoor)
     return Parallel(sound, left, right)
@@ -118,13 +114,12 @@ def getRightCloseInterval(distObj, rightDoor, type):
     return rightCloseInterval
 
 
-def getCloseInterval(
-        distObj,
-        leftDoor,
-        rightDoor,
-        closeSfx,
-        finalCloseSfx,
-        type=ELEVATOR_NORMAL):
+def getCloseInterval(distObj,
+                     leftDoor,
+                     rightDoor,
+                     closeSfx,
+                     finalCloseSfx,
+                     type=ELEVATOR_NORMAL):
     left = getLeftCloseInterval(distObj, leftDoor, type)
     right = getRightCloseInterval(distObj, rightDoor, type)
     closeDuration = left.getDuration()
@@ -136,10 +131,7 @@ def getCloseInterval(
                 duration=closeDuration,
                 volume=sfxVolume,
                 node=leftDoor),
-            SoundInterval(
-                finalCloseSfx,
-                volume=sfxVolume,
-                node=leftDoor))
+            SoundInterval(finalCloseSfx, volume=sfxVolume, node=leftDoor))
     else:
         sound = SoundInterval(closeSfx, volume=sfxVolume, node=leftDoor)
     return Parallel(sound, left, right)
@@ -159,32 +151,52 @@ def getRideElevatorInterval(type=ELEVATOR_NORMAL):
 
     if type in (ELEVATOR_VP, ELEVATOR_CFO, ELEVATOR_CJ, ELEVATOR_BB):
         ival = Sequence(
-            Wait(0.5), LerpPosInterval(
-                camera, 0.5, Point3(
-                    0, yValue, zMin), startPos=Point3(
-                    0, yValue, zMid), blendType='easeOut'), LerpPosInterval(
-                camera, 0.5, Point3(
-                    0, yValue, zMid), startPos=Point3(
-                    0, yValue, zMin)), Wait(1.0), LerpPosInterval(
-                camera, 0.5, Point3(
-                    0, yValue, zMax), startPos=Point3(
-                    0, yValue, zMid), blendType='easeOut'), LerpPosInterval(
-                camera, 1.0, Point3(
-                    0, yValue, zMid), startPos=Point3(
-                    0, yValue, zMax)))
+            Wait(0.5),
+            LerpPosInterval(
+                camera,
+                0.5,
+                Point3(0, yValue, zMin),
+                startPos=Point3(0, yValue, zMid),
+                blendType='easeOut'),
+            LerpPosInterval(
+                camera,
+                0.5,
+                Point3(0, yValue, zMid),
+                startPos=Point3(0, yValue, zMin)), Wait(1.0),
+            LerpPosInterval(
+                camera,
+                0.5,
+                Point3(0, yValue, zMax),
+                startPos=Point3(0, yValue, zMid),
+                blendType='easeOut'),
+            LerpPosInterval(
+                camera,
+                1.0,
+                Point3(0, yValue, zMid),
+                startPos=Point3(0, yValue, zMax)))
     else:
         ival = Sequence(
-            Wait(0.5), LerpPosInterval(
-                camera, 0.5, Point3(
-                    0, 14, 3.7999999999999998), startPos=Point3(
-                    0, 14, 4), blendType='easeOut'), LerpPosInterval(
-                camera, 0.5, Point3(
-                    0, 14, 4), startPos=Point3(
-                    0, 14, 3.7999999999999998)), Wait(1.0), LerpPosInterval(
-                camera, 0.5, Point3(
-                    0, 14, 4.2000000000000002), startPos=Point3(
-                    0, 14, 4), blendType='easeOut'), LerpPosInterval(
-                camera, 1.0, Point3(
-                    0, 14, 4), startPos=Point3(
-                    0, 14, 4.2000000000000002)))
+            Wait(0.5),
+            LerpPosInterval(
+                camera,
+                0.5,
+                Point3(0, 14, 3.7999999999999998),
+                startPos=Point3(0, 14, 4),
+                blendType='easeOut'),
+            LerpPosInterval(
+                camera,
+                0.5,
+                Point3(0, 14, 4),
+                startPos=Point3(0, 14, 3.7999999999999998)), Wait(1.0),
+            LerpPosInterval(
+                camera,
+                0.5,
+                Point3(0, 14, 4.2000000000000002),
+                startPos=Point3(0, 14, 4),
+                blendType='easeOut'),
+            LerpPosInterval(
+                camera,
+                1.0,
+                Point3(0, 14, 4),
+                startPos=Point3(0, 14, 4.2000000000000002)))
     return ival

@@ -54,7 +54,8 @@ class CogdoFlyingPlayer(FSM):
             backpackInstance = part.attachNewNode('backpackInstance')
             animal = self.toon.style.getAnimal()
             bodyScale = ToontownGlobals.toonBodyScales[animal]
-            backpackHeight = ToontownGlobals.torsoHeightDict[self.toon.style.torso] * bodyScale - 0.5
+            backpackHeight = ToontownGlobals.torsoHeightDict[
+                self.toon.style.torso] * bodyScale - 0.5
             backpackInstance.setPos(0.0, -0.32500000000000001, backpackHeight)
             self.backpackInstances.append(backpackInstance)
             self.backpack.instanceTo(backpackInstance)
@@ -95,38 +96,30 @@ class CogdoFlyingPlayer(FSM):
             fromData=0.0,
             toData=360.0,
             duration=self.baseSpinDuration,
-            name='%s.propellerSpinLerp-%s' %
-            (self.__class__.__name__,
-             self.toon.doId))
+            name='%s.propellerSpinLerp-%s' % (self.__class__.__name__,
+                                              self.toon.doId))
         singleBlinkTime = Globals.Gameplay.TargetedWarningSingleBlinkTime
         blinkTime = Globals.Gameplay.TargetedWarningBlinkTime
         self.blinkLoop = Sequence(
-            Wait(
-                singleBlinkTime /
-                2.0),
-            Func(
-                self.setBackpackTexture,
-                Globals.Gameplay.BackpackStates.Attacked),
-            Wait(
-                singleBlinkTime /
-                2.0),
-            Func(
-                self.setBackpackTexture,
-                Globals.Gameplay.BackpackStates.Targeted),
-            name='%s.blinkLoop-%s' %
-            (self.__class__.__name__,
-             self.toon.doId))
+            Wait(singleBlinkTime / 2.0),
+            Func(self.setBackpackTexture,
+                 Globals.Gameplay.BackpackStates.Attacked),
+            Wait(singleBlinkTime / 2.0),
+            Func(self.setBackpackTexture,
+                 Globals.Gameplay.BackpackStates.Targeted),
+            name='%s.blinkLoop-%s' % (self.__class__.__name__, self.toon.doId))
         self.blinkWarningSeq = Sequence(
-            Func(
-                self.blinkLoop.loop), Wait(blinkTime), Func(
-                self.blinkLoop.clearToInitial), name='%s.blinkWarningSeq-%s' %
-            (self.__class__.__name__, self.toon.doId))
+            Func(self.blinkLoop.loop),
+            Wait(blinkTime),
+            Func(self.blinkLoop.clearToInitial),
+            name='%s.blinkWarningSeq-%s' % (self.__class__.__name__,
+                                            self.toon.doId))
         dur = Globals.Gameplay.BackpackRefuelDuration
         self.refuelSeq = Sequence(
-            Func(
-                self.setPropellerSpinRate, Globals.Gameplay.RefuelPropSpeed), Wait(dur), Func(
-                self.returnBackpackToLastStateFunc), name='%s.refuelSeq-%s' %
-            (self.__class__.__name__, self.toon.doId))
+            Func(self.setPropellerSpinRate, Globals.Gameplay.RefuelPropSpeed),
+            Wait(dur),
+            Func(self.returnBackpackToLastStateFunc),
+            name='%s.refuelSeq-%s' % (self.__class__.__name__, self.toon.doId))
         scale = self.redTapeRing.getScale()
         pulseTime = 1.0
         self.pulseBubbleSeq = Parallel(
@@ -134,33 +127,22 @@ class CogdoFlyingPlayer(FSM):
                 LerpFunctionInterval(
                     self.redTapeRing.setScale,
                     fromData=scale,
-                    toData=scale *
-                    1.1000000000000001,
-                    duration=pulseTime /
-                    2.0,
+                    toData=scale * 1.1000000000000001,
+                    duration=pulseTime / 2.0,
                     blendType='easeInOut'),
                 LerpFunctionInterval(
                     self.redTapeRing.setScale,
-                    fromData=scale *
-                    1.1000000000000001,
+                    fromData=scale * 1.1000000000000001,
                     toData=scale,
-                    duration=pulseTime /
-                    2.0,
+                    duration=pulseTime / 2.0,
                     blendType='easeInOut')),
             LerpHprInterval(
                 self.redTapeRing,
                 pulseTime,
-                Vec3(
-                    360,
-                    0,
-                    0),
-                startHpr=Vec3(
-                    0,
-                    0,
-                    0)),
-            name='%s.pulseBubbleSeq-%s' %
-            (self.__class__.__name__,
-             self.toon.doId))
+                Vec3(360, 0, 0),
+                startHpr=Vec3(0, 0, 0)),
+            name='%s.pulseBubbleSeq-%s' % (self.__class__.__name__,
+                                           self.toon.doId))
         bouncePercent = 1.2
         scaleTime = 0.5
         scaleBounceTime = 0.25
@@ -171,25 +153,19 @@ class CogdoFlyingPlayer(FSM):
             startScale=0.0,
             blendType='easeInOut')
         self.popUpBubbleSeq = Sequence(
-            Func(
-                self.updateLerpStartScale,
-                self.popUpBubbleLerp,
-                self.redTapeRing),
-            Func(
-                self.redTapeRing.show),
+            Func(self.updateLerpStartScale, self.popUpBubbleLerp,
+                 self.redTapeRing),
+            Func(self.redTapeRing.show),
             self.popUpBubbleLerp,
             LerpScaleInterval(
                 self.redTapeRing,
                 scaleBounceTime,
                 scale,
-                startScale=scale *
-                bouncePercent,
+                startScale=scale * bouncePercent,
                 blendType='easeInOut'),
-            Func(
-                self.pulseBubbleSeq.loop),
-            name='%s.popUpBubbleSeq-%s' %
-            (self.__class__.__name__,
-             self.toon.doId))
+            Func(self.pulseBubbleSeq.loop),
+            name='%s.popUpBubbleSeq-%s' % (self.__class__.__name__,
+                                           self.toon.doId))
         self.removeBubbleLerp = LerpScaleInterval(
             self.redTapeRing,
             scaleBounceTime,
@@ -197,41 +173,39 @@ class CogdoFlyingPlayer(FSM):
             startScale=scale,
             blendType='easeInOut')
         self.removeBubbleSeq = Sequence(
-            Func(
-                self.pulseBubbleSeq.clearToInitial),
-            Func(
-                self.updateLerpStartScale,
-                self.removeBubbleLerp,
-                self.redTapeRing),
+            Func(self.pulseBubbleSeq.clearToInitial),
+            Func(self.updateLerpStartScale, self.removeBubbleLerp,
+                 self.redTapeRing),
             self.removeBubbleLerp,
             LerpScaleInterval(
                 self.redTapeRing,
                 scaleTime,
                 0.0,
-                startScale=scale *
-                bouncePercent,
+                startScale=scale * bouncePercent,
                 blendType='easeInOut'),
-            Func(
-                self.redTapeRing.hide),
-            name='%s.removeBubbleSeq-%s' %
-            (self.__class__.__name__,
-             self.toon.doId))
+            Func(self.redTapeRing.hide),
+            name='%s.removeBubbleSeq-%s' % (self.__class__.__name__,
+                                            self.toon.doId))
         self.redTapeRing.setScale(0.0)
         self.deathInterval = Sequence(
             Parallel(
-                LerpHprInterval(
-                    self.toon, 1.0, Vec3(
-                        720, 0, 0)), LerpFunctionInterval(
-                    self.toon.setScale, fromData=1.0, toData=0.10000000000000001, duration=1.0)), Func(
-                        self.toon.stash), name='%s.deathInterval-%s' %
-            (self.__class__.__name__, self.toon.doId))
+                LerpHprInterval(self.toon, 1.0, Vec3(720, 0, 0)),
+                LerpFunctionInterval(
+                    self.toon.setScale,
+                    fromData=1.0,
+                    toData=0.10000000000000001,
+                    duration=1.0)),
+            Func(self.toon.stash),
+            name='%s.deathInterval-%s' % (self.__class__.__name__,
+                                          self.toon.doId))
         self.spawnInterval = Sequence(
-            Func(
-                self.toon.stash), Func(
-                self.resetToon), Wait(1.0), Func(
-                self.toon.setAnimState, 'TeleportIn'), Func(
-                    self.toon.unstash), name='%s.spawnInterval-%s' %
-            (self.__class__.__name__, self.toon.doId))
+            Func(self.toon.stash),
+            Func(self.resetToon),
+            Wait(1.0),
+            Func(self.toon.setAnimState, 'TeleportIn'),
+            Func(self.toon.unstash),
+            name='%s.spawnInterval-%s' % (self.__class__.__name__,
+                                          self.toon.doId))
         singleBlinkTime = Globals.Gameplay.InvulSingleBlinkTime
         blinkTime = Globals.Gameplay.InvulBlinkTime
         invulBuffTime = Globals.Gameplay.InvulBuffTime
@@ -240,31 +214,23 @@ class CogdoFlyingPlayer(FSM):
                 self.redTapeRing.setAlphaScale,
                 fromData=1.0,
                 toData=0.0,
-                duration=singleBlinkTime /
-                2.0,
+                duration=singleBlinkTime / 2.0,
                 blendType='easeInOut'),
             LerpFunctionInterval(
                 self.redTapeRing.setAlphaScale,
                 fromData=0.0,
                 toData=1.0,
-                duration=singleBlinkTime /
-                2.0,
+                duration=singleBlinkTime / 2.0,
                 blendType='easeInOut'),
-            name='%s.blinkBubbleLoop-%s' %
-            (self.__class__.__name__,
-             self.toon.doId))
+            name='%s.blinkBubbleLoop-%s' % (self.__class__.__name__,
+                                            self.toon.doId))
         self.blinkBubbleSeq = Sequence(
-            Wait(
-                invulBuffTime -
-                blinkTime),
-            Func(
-                self.blinkBubbleLoop.loop),
+            Wait(invulBuffTime - blinkTime),
+            Func(self.blinkBubbleLoop.loop),
             Wait(blinkTime),
-            Func(
-                self.blinkBubbleLoop.finish),
-            name='%s.blinkBubbleSeq-%s' %
-            (self.__class__.__name__,
-                 self.toon.doId))
+            Func(self.blinkBubbleLoop.finish),
+            name='%s.blinkBubbleSeq-%s' % (self.__class__.__name__,
+                                           self.toon.doId))
 
     def returnBackpackToLastStateFunc(self):
         if self.backpackState == Globals.Gameplay.BackpackStates.Refuel:
@@ -361,17 +327,18 @@ class CogdoFlyingPlayer(FSM):
 
         if self.fuelState in [
                 Globals.Gameplay.FuelStates.FuelNoPropeller,
-                Globals.Gameplay.FuelStates.FuelNormal]:
+                Globals.Gameplay.FuelStates.FuelNormal
+        ]:
             self.propellerSmoke.stop()
         elif self.fuelState in [
                 Globals.Gameplay.FuelStates.FuelVeryLow,
-                Globals.Gameplay.FuelStates.FuelEmpty]:
+                Globals.Gameplay.FuelStates.FuelEmpty
+        ]:
             self.propellerSmoke.stop()
             self.propellerSmoke.setScale(0.25)
             self.propellerSmoke.setZ(self.toon.getHeight() + 2.5)
             self.propellerSmoke.loop(rate=48)
-        elif self.fuelState in [
-                Globals.Gameplay.FuelStates.FuelLow]:
+        elif self.fuelState in [Globals.Gameplay.FuelStates.FuelLow]:
             self.propellerSmoke.stop()
             self.propellerSmoke.setScale(0.082500000000000004)
             self.propellerSmoke.setZ(self.toon.getHeight() + 2.0)
@@ -436,9 +403,9 @@ class CogdoFlyingPlayer(FSM):
     def setPropellerSpinRate(self, newRate):
         self.lastPropellerSpinRate = self.propellerSpinRate
         self.propellerSpinRate = newRate
-        self.notify.debug(
-            '(%s) New propeller speed:%s, old propeller speed:%s' %
-            (self.toon.doId, self.propellerSpinRate, self.lastPropellerSpinRate))
+        self.notify.debug('(%s) New propeller speed:%s, old propeller speed:%s'
+                          % (self.toon.doId, self.propellerSpinRate,
+                             self.lastPropellerSpinRate))
         self.propellerSpinLerp.setPlayRate(newRate)
 
     def died(self, elapsedTime):
@@ -519,8 +486,8 @@ class CogdoFlyingPlayer(FSM):
             self.spawnInterval = None
 
     def start(self):
-        swapAvatarShadowPlacer(
-            self.toon, self.toon.uniqueName('toonShadowPlacer'))
+        swapAvatarShadowPlacer(self.toon,
+                               self.toon.uniqueName('toonShadowPlacer'))
         self.toon.startSmooth()
 
     def exit(self):

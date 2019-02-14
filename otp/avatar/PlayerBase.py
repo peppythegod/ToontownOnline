@@ -1,6 +1,4 @@
-
 class PlayerBase:
-
     def __init__(self):
         self.gmState = False
 

@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from toontown.toonbase.ToonBaseGlobal import *
@@ -31,19 +29,15 @@ class DistributedTwoDGame(DistributedMinigame):
     def __init__(self, cr):
         DistributedMinigame.__init__(self, cr)
         self.gameFSM = ClassicFSM.ClassicFSM('DistributedTwoDGame', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'play']),
-            State.State('play', self.enterPlay, self.exitPlay, [
-                'cleanup',
-                'pause',
-                'showScores']),
-            State.State('pause', self.enterPause, self.exitPause, [
-                'cleanup',
-                'play',
-                'showScores']),
-            State.State('showScores', self.enterShowScores, self.exitShowScores, [
-                'cleanup']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
+            State.State('off', self.enterOff, self.exitOff, ['play']),
+            State.State('play', self.enterPlay, self.exitPlay,
+                        ['cleanup', 'pause', 'showScores']),
+            State.State('pause', self.enterPause, self.exitPause,
+                        ['cleanup', 'play', 'showScores']),
+            State.State('showScores', self.enterShowScores,
+                        self.exitShowScores, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
         self.reportedDone = False
         self.showCollSpheres = False
@@ -176,10 +170,8 @@ class DistributedTwoDGame(DistributedMinigame):
         self.notify.debug('setGameStart')
         DistributedMinigame.setGameStart(self, timestamp)
         self.twoDWalk = TwoDWalk(
-            self.twoDDrive,
-            broadcast=not self.isSinglePlayer())
-        self.scores = [
-            0] * self.numPlayers
+            self.twoDDrive, broadcast=not self.isSinglePlayer())
+        self.scores = [0] * self.numPlayers
         spacing = 0.40000000000000002
         for i in xrange(self.numPlayers):
             avId = self.avIdList[i]
@@ -187,13 +179,12 @@ class DistributedTwoDGame(DistributedMinigame):
             scorePanel = MinigameAvatarScorePanel.MinigameAvatarScorePanel(
                 avId, avName)
             scorePanel.setScale(0.90000000000000002)
-            scorePanel.setPos(
-                0.75 - spacing * (self.numPlayers - 1 - i), 0.0, 0.84999999999999998)
+            scorePanel.setPos(0.75 - spacing * (self.numPlayers - 1 - i), 0.0,
+                              0.84999999999999998)
             scorePanel.makeTransparent(0.75)
             self.scorePanels.append(scorePanel)
 
-        self.gameFSM.request('play', [
-            timestamp])
+        self.gameFSM.request('play', [timestamp])
 
     def enterOff(self):
         self.notify.debug('enterOff')
@@ -205,19 +196,13 @@ class DistributedTwoDGame(DistributedMinigame):
         self.notify.debug('enterPlay')
         elapsedTime = globalClockDelta.localElapsedTime(timestamp)
         self.sectionMgr.enterPlay(elapsedTime)
-        handlers = [
-            None,
-            None,
-            None,
-            None,
-            self.shootKeyHandler]
+        handlers = [None, None, None, None, self.shootKeyHandler]
         self.twoDDrive.arrowKeys.setPressHandlers(handlers)
         self.twoDWalk.start()
         self.accept('jumpStart', self.startJump)
         self.accept('enemyHit', self.localToonHitByEnemy)
-        self.accept(
-            'twoDTreasureGrabbed',
-            self._DistributedTwoDGame__treasureGrabbed)
+        self.accept('twoDTreasureGrabbed',
+                    self._DistributedTwoDGame__treasureGrabbed)
         self.accept('enemyShot', self._DistributedTwoDGame__enemyShot)
         taskMgr.remove(self.UpdateLocalToonTask)
         taskMgr.add(
@@ -229,18 +214,14 @@ class DistributedTwoDGame(DistributedMinigame):
         self.timer.posInTopRightCorner()
         self.timer.setTime(ToonBlitzGlobals.GameDuration[self.getSafezoneId()])
         self.timer.countdown(
-            ToonBlitzGlobals.GameDuration[self.getSafezoneId()], self.timerExpired)
+            ToonBlitzGlobals.GameDuration[self.getSafezoneId()],
+            self.timerExpired)
 
     def exitPlay(self):
-        handlers = [
-            None,
-            None,
-            None,
-            None,
-            None]
+        handlers = [None, None, None, None, None]
         self.twoDDrive.arrowKeys.setPressHandlers(handlers)
-        if self.toonSDs[self.localAvId].fsm.getCurrentState(
-        ).getName() != 'victory':
+        if self.toonSDs[
+                self.localAvId].fsm.getCurrentState().getName() != 'victory':
             base.localAvatar.b_setAnimState('Happy', 1.0)
 
         self.ignore('jumpStart')
@@ -262,8 +243,9 @@ class DistributedTwoDGame(DistributedMinigame):
         lX = -0.69999999999999996
         cX = 0
         rX = 0.69999999999999996
-        scorePanelLocs = (((cX, bY),), ((lX, bY), (rX, bY)), ((
-            cX, bY), (lX, bY), (rX, bY)), ((lX, tY), (rX, tY), (lX, bY), (rX, bY)))
+        scorePanelLocs = (((cX, bY), ), ((lX, bY), (rX, bY)),
+                          ((cX, bY), (lX, bY), (rX, bY)), ((lX, tY), (rX, tY),
+                                                           (lX, bY), (rX, bY)))
         scorePanelLocs = scorePanelLocs[self.numPlayers - 1]
         for i in xrange(self.numPlayers):
             panel = self.scorePanels[i]
@@ -271,16 +253,21 @@ class DistributedTwoDGame(DistributedMinigame):
             lerpTrack.append(
                 Parallel(
                     LerpPosInterval(
-                        panel, lerpDur, Point3(
-                            pos[0], 0, pos[1]), blendType='easeInOut'), LerpScaleInterval(
-                        panel, lerpDur, Vec3(
-                            panel.getScale()) * 1.5, blendType='easeInOut')))
+                        panel,
+                        lerpDur,
+                        Point3(pos[0], 0, pos[1]),
+                        blendType='easeInOut'),
+                    LerpScaleInterval(
+                        panel,
+                        lerpDur,
+                        Vec3(panel.getScale()) * 1.5,
+                        blendType='easeInOut')))
 
         self.showScoreTrack = Parallel(
-            lerpTrack, self.getElevatorCloseTrack(), Sequence(
-                Wait(
-                    ToonBlitzGlobals.ShowScoresDuration), Func(
-                    self.gameOver)))
+            lerpTrack, self.getElevatorCloseTrack(),
+            Sequence(
+                Wait(ToonBlitzGlobals.ShowScoresDuration),
+                Func(self.gameOver)))
         self.showScoreTrack.start()
 
     def exitShowScores(self):
@@ -304,23 +291,13 @@ class DistributedTwoDGame(DistributedMinigame):
 
     def acceptInputs(self):
         if hasattr(self, 'twoDDrive'):
-            handlers = [
-                None,
-                None,
-                None,
-                None,
-                self.shootKeyHandler]
+            handlers = [None, None, None, None, self.shootKeyHandler]
             self.twoDDrive.arrowKeys.setPressHandlers(handlers)
             self.twoDDrive.start()
 
     def ignoreInputs(self):
         if hasattr(self, 'twoDDrive'):
-            handlers = [
-                None,
-                None,
-                None,
-                None,
-                None]
+            handlers = [None, None, None, None, None]
             self.twoDDrive.arrowKeys.setPressHandlers(handlers)
             self.twoDDrive.lastAction = None
             self.twoDDrive.stop()
@@ -329,8 +306,8 @@ class DistributedTwoDGame(DistributedMinigame):
         dt = globalClock.getDt()
         self.cameraMgr.update()
         if self.gameFSM.getCurrentState().getName() == 'play':
-            if not self.toonSDs[self.localAvId].fsm.getCurrentState(
-            ).getName() == 'victory':
+            if not self.toonSDs[self.localAvId].fsm.getCurrentState().getName(
+            ) == 'victory':
                 if not base.localAvatar.getY() == 0:
                     base.localAvatar.setY(0)
 
@@ -394,7 +371,8 @@ class DistributedTwoDGame(DistributedMinigame):
 
     def _DistributedTwoDGame__handleHeadCollisionIntoFloor(self, cevent):
         self.isHeadInFloor = True
-        if base.localAvatar.controlManager.currentControls.lifter.getVelocity() > 0:
+        if base.localAvatar.controlManager.currentControls.lifter.getVelocity(
+        ) > 0:
             base.localAvatar.controlManager.currentControls.lifter.setVelocity(
                 0.0)
             self.assetMgr.playHeadCollideSound()
@@ -405,10 +383,9 @@ class DistributedTwoDGame(DistributedMinigame):
     def _DistributedTwoDGame__placeToon(self, avId):
         toon = self.getAvatar(avId)
         i = self.avIdList.index(avId)
-        pos = Point3(
-            ToonBlitzGlobals.ToonStartingPosition[0] + i,
-            ToonBlitzGlobals.ToonStartingPosition[1],
-            ToonBlitzGlobals.ToonStartingPosition[2])
+        pos = Point3(ToonBlitzGlobals.ToonStartingPosition[0] + i,
+                     ToonBlitzGlobals.ToonStartingPosition[1],
+                     ToonBlitzGlobals.ToonStartingPosition[2])
         toon.setPos(pos)
         toon.setHpr(-90, 0, 0)
 
@@ -422,8 +399,7 @@ class DistributedTwoDGame(DistributedMinigame):
         if self.gameFSM.getCurrentState(
         ) is None or self.gameFSM.getCurrentState().getName() != 'play':
             self.notify.warning(
-                'ignoring msg: av %s performing some action.' %
-                avId)
+                'ignoring msg: av %s performing some action.' % avId)
             return False
 
         toon = self.getAvatar(avId)
@@ -436,9 +412,7 @@ class DistributedTwoDGame(DistributedMinigame):
         self.toonSDs[self.localAvId].shootGun()
         timestamp = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime())
-        self.sendUpdate('showShootGun', [
-            self.localAvId,
-            timestamp])
+        self.sendUpdate('showShootGun', [self.localAvId, timestamp])
 
     def showShootGun(self, avId, timestamp):
         if self.checkValidity(avId):
@@ -447,79 +421,77 @@ class DistributedTwoDGame(DistributedMinigame):
                 self.toonSDs[avId].shootGun()
 
     def localToonFellDown(self):
-        if self.toonSDs[self.localAvId].fsm.getCurrentState(
-        ).getName() != 'fallDown':
+        if self.toonSDs[
+                self.localAvId].fsm.getCurrentState().getName() != 'fallDown':
             self.toonSDs[self.localAvId].fsm.request('fallDown')
             timestamp = globalClockDelta.localToNetworkTime(
                 globalClock.getFrameTime())
             self.updateScore(
-                self.localAvId, ToonBlitzGlobals.ScoreLossPerFallDown[self.getSafezoneId()])
-            self.sendUpdate('toonFellDown', [
                 self.localAvId,
-                timestamp])
+                ToonBlitzGlobals.ScoreLossPerFallDown[self.getSafezoneId()])
+            self.sendUpdate('toonFellDown', [self.localAvId, timestamp])
 
     def toonFellDown(self, avId, timestamp):
         if self.checkValidity(avId):
             self.notify.debug('avatar %s fell down.' % avId)
             if avId != self.localAvId:
                 self.updateScore(
-                    avId, ToonBlitzGlobals.ScoreLossPerFallDown[self.getSafezoneId()])
+                    avId, ToonBlitzGlobals.ScoreLossPerFallDown[
+                        self.getSafezoneId()])
                 self.toonSDs[avId].fsm.request('fallDown')
 
     def localToonHitByEnemy(self):
-        currToonState = self.toonSDs[self.localAvId].fsm.getCurrentState(
-        ).getName()
+        currToonState = self.toonSDs[
+            self.localAvId].fsm.getCurrentState().getName()
         if not currToonState == 'fallBack' or currToonState == 'squish':
             self.toonSDs[self.localAvId].fsm.request('fallBack')
             timestamp = globalClockDelta.localToNetworkTime(
                 globalClock.getFrameTime())
             self.updateScore(
-                self.localAvId, ToonBlitzGlobals.ScoreLossPerEnemyCollision[self.getSafezoneId()])
-            self.sendUpdate('toonHitByEnemy', [
-                self.localAvId,
-                timestamp])
+                self.localAvId, ToonBlitzGlobals.ScoreLossPerEnemyCollision[
+                    self.getSafezoneId()])
+            self.sendUpdate('toonHitByEnemy', [self.localAvId, timestamp])
 
     def toonHitByEnemy(self, avId, timestamp):
         if self.checkValidity(avId):
             self.notify.debug('avatar %s hit by a suit' % avId)
             if avId != self.localAvId:
                 self.updateScore(
-                    avId, ToonBlitzGlobals.ScoreLossPerEnemyCollision[self.getSafezoneId()])
+                    avId, ToonBlitzGlobals.ScoreLossPerEnemyCollision[
+                        self.getSafezoneId()])
                 self.toonSDs[avId].fsm.request('fallBack')
 
     def localToonSquished(self):
-        currToonState = self.toonSDs[self.localAvId].fsm.getCurrentState(
-        ).getName()
+        currToonState = self.toonSDs[
+            self.localAvId].fsm.getCurrentState().getName()
         if not currToonState == 'fallBack' or currToonState == 'squish':
             self.toonSDs[self.localAvId].fsm.request('squish')
             timestamp = globalClockDelta.localToNetworkTime(
                 globalClock.getFrameTime())
             self.updateScore(
-                self.localAvId, ToonBlitzGlobals.ScoreLossPerStomperSquish[self.getSafezoneId()])
-            self.sendUpdate('toonSquished', [
-                self.localAvId,
-                timestamp])
+                self.localAvId, ToonBlitzGlobals.ScoreLossPerStomperSquish[
+                    self.getSafezoneId()])
+            self.sendUpdate('toonSquished', [self.localAvId, timestamp])
 
     def toonSquished(self, avId, timestamp):
         if self.checkValidity(avId):
             self.notify.debug('avatar %s is squished.' % avId)
             if avId != self.localAvId:
                 self.updateScore(
-                    avId, ToonBlitzGlobals.ScoreLossPerStomperSquish[self.getSafezoneId()])
+                    avId, ToonBlitzGlobals.ScoreLossPerStomperSquish[
+                        self.getSafezoneId()])
                 self.toonSDs[avId].fsm.request('squish')
 
     def localToonVictory(self):
         if not ToonBlitzGlobals.EndlessGame:
             self.ignoreInputs()
 
-        if not self.toonSDs[self.localAvId].fsm.getCurrentState(
-        ).getName() == 'victory':
+        if not self.toonSDs[
+                self.localAvId].fsm.getCurrentState().getName() == 'victory':
             self.toonSDs[self.localAvId].fsm.request('victory')
             timestamp = globalClockDelta.localToNetworkTime(
                 globalClock.getFrameTime())
-            self.sendUpdate('toonVictory', [
-                self.localAvId,
-                timestamp])
+            self.sendUpdate('toonVictory', [self.localAvId, timestamp])
 
     def toonVictory(self, avId, timestamp):
         if self.checkValidity(avId):
@@ -535,26 +507,22 @@ class DistributedTwoDGame(DistributedMinigame):
         if avId == self.localAvId:
             self.assetMgr.threeSparkles.play()
 
-    def _DistributedTwoDGame__treasureGrabbed(
-            self, sectionIndex, treasureIndex):
+    def _DistributedTwoDGame__treasureGrabbed(self, sectionIndex,
+                                              treasureIndex):
         self.notify.debug(
-            'treasure %s-%s grabbed' %
-            (sectionIndex, treasureIndex))
+            'treasure %s-%s grabbed' % (sectionIndex, treasureIndex))
         section = self.sectionMgr.sections[sectionIndex]
         section.treasureMgr.treasures[treasureIndex].hideTreasure()
         self.assetMgr.treasureGrabSound.play()
-        self.sendUpdate('claimTreasure', [
-            sectionIndex,
-            treasureIndex])
+        self.sendUpdate('claimTreasure', [sectionIndex, treasureIndex])
 
     def setTreasureGrabbed(self, avId, sectionIndex, treasureIndex):
         if not self.hasLocalToon:
             return None
 
         if self.gameFSM.getCurrentState().getName() == 'play':
-            self.notify.debug(
-                'treasure %s-%s grabbed by %s' %
-                (sectionIndex, treasureIndex, avId))
+            self.notify.debug('treasure %s-%s grabbed by %s' %
+                              (sectionIndex, treasureIndex, avId))
             numSections = len(self.sectionMgr.sections)
             if sectionIndex < numSections:
                 section = self.sectionMgr.sections[sectionIndex]
@@ -566,53 +534,47 @@ class DistributedTwoDGame(DistributedMinigame):
 
                     self.updateScore(
                         avId,
-                        ToonBlitzGlobals.ScoreGainPerTreasure *
-                        treasure.value)
+                        ToonBlitzGlobals.ScoreGainPerTreasure * treasure.value)
                 else:
                     self.notify.error(
-                        'WHOA!! treasureIndex %s is out of range; numTreasures = %s' %
-                        (treasureIndex, numTreasures))
+                        'WHOA!! treasureIndex %s is out of range; numTreasures = %s'
+                        % (treasureIndex, numTreasures))
                     base.localAvatar.sendLogMessage(
                         'treasureIndex %s is out of range; numTreasures = %s' %
                         (treasureIndex, numTreasures))
             else:
                 self.notify.error(
-                    'WHOA!! sectionIndex %s is out of range; numSections = %s' %
-                    (sectionIndex, numSections))
+                    'WHOA!! sectionIndex %s is out of range; numSections = %s'
+                    % (sectionIndex, numSections))
                 base.localAvatar.sendLogMessage(
                     'sectionIndex %s is out of range; numSections = %s' %
                     (sectionIndex, numSections))
 
     def _DistributedTwoDGame__enemyShot(self, sectionIndex, enemyIndex):
-        self.sectionMgr.sections[sectionIndex].enemyMgr.enemies[enemyIndex].doShotTrack(
-        )
-        self.sendUpdate('claimEnemyShot', [
-            sectionIndex,
-            enemyIndex])
+        self.sectionMgr.sections[sectionIndex].enemyMgr.enemies[
+            enemyIndex].doShotTrack()
+        self.sendUpdate('claimEnemyShot', [sectionIndex, enemyIndex])
 
     def setEnemyShot(self, avId, sectionIndex, enemyIndex, enemyHealth):
         if not self.hasLocalToon:
             return None
 
         if self.gameFSM.getCurrentState().getName() == 'play':
-            self.notify.debug(
-                'enemy %s is shot by %s. Health left %s' %
-                (enemyIndex, avId, enemyHealth))
+            self.notify.debug('enemy %s is shot by %s. Health left %s' %
+                              (enemyIndex, avId, enemyHealth))
             if enemyHealth > 0:
                 if not avId == self.localAvId:
-                    self.sectionMgr.sections[sectionIndex].enemyMgr.enemies[enemyIndex].doShotTrack(
-                    )
+                    self.sectionMgr.sections[sectionIndex].enemyMgr.enemies[
+                        enemyIndex].doShotTrack()
 
             else:
-                enemy = self.sectionMgr.sections[sectionIndex].enemyMgr.enemies[enemyIndex]
+                enemy = self.sectionMgr.sections[
+                    sectionIndex].enemyMgr.enemies[enemyIndex]
                 treasureSpawnPoint = Point3(
-                    enemy.suit.getX(),
-                    enemy.suit.getY(),
-                    enemy.suit.getZ() +
-                    enemy.suit.height /
-                    2.0)
-                self.spawnTreasure(
-                    sectionIndex, enemyIndex, treasureSpawnPoint)
+                    enemy.suit.getX(), enemy.suit.getY(),
+                    enemy.suit.getZ() + enemy.suit.height / 2.0)
+                self.spawnTreasure(sectionIndex, enemyIndex,
+                                   treasureSpawnPoint)
                 enemy.doDeathTrack()
 
     def updateScore(self, avId, deltaScore):
@@ -662,9 +624,8 @@ class DistributedTwoDGame(DistributedMinigame):
         leftDoorClose = LerpPosInterval(leftDoor, 2, Point3(3.02, 0, 0))
         rightDoorClose = LerpPosInterval(rightDoor, 2, Point3(-3.02, 0, 0))
         return Sequence(
-            Wait(
-                self.timeToRunToElevator), Parallel(
-                leftDoorClose, rightDoorClose))
+            Wait(self.timeToRunToElevator),
+            Parallel(leftDoorClose, rightDoorClose))
 
     def debugStartPause(self):
         self.sectionMgr.enterPause()

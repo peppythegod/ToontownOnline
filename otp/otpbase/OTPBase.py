@@ -7,7 +7,6 @@ import re
 
 
 class OTPBase(ShowBase):
-
     def __init__(self, windowType=None):
         self.wantEnviroDR = False
         ShowBase.__init__(self, windowType=windowType)
@@ -17,9 +16,7 @@ class OTPBase(ShowBase):
             Loader.phaseChecker = self.loaderPhaseChecker
             self.errorAccumulatorBuffer = ''
             taskMgr.add(
-                self.delayedErrorCheck,
-                'delayedErrorCheck',
-                priority=10000)
+                self.delayedErrorCheck, 'delayedErrorCheck', priority=10000)
 
         self.idTags = config.GetBool('want-id-tags', 0)
         if not self.idTags:
@@ -44,18 +41,15 @@ class OTPBase(ShowBase):
             if self.wantEnviroDR:
                 base.cam.node().setCameraMask(OTPRender.MainCameraBitmask)
             else:
-                base.cam.node().setCameraMask(
-                    OTPRender.MainCameraBitmask | OTPRender.EnviroCameraBitmask)
+                base.cam.node().setCameraMask(OTPRender.MainCameraBitmask
+                                              | OTPRender.EnviroCameraBitmask)
 
         taskMgr.setupTaskChain('net')
 
     def setTaskChainNetThreaded(self):
         if base.config.GetBool('want-threaded-network', 0):
             taskMgr.setupTaskChain(
-                'net',
-                numThreads=1,
-                frameBudget=0.001,
-                threadPriority=TPLow)
+                'net', numThreads=1, frameBudget=0.001, threadPriority=TPLow)
 
     def setTaskChainNetNonthreaded(self):
         taskMgr.setupTaskChain('net', numThreads=0, frameBudget=-1)
@@ -65,8 +59,7 @@ class OTPBase(ShowBase):
         if self.stereoEnabled:
             if not base.win.isStereo():
                 base.win.setRedBlueStereo(
-                    True,
-                    ColorWriteAttrib.CRed,
+                    True, ColorWriteAttrib.CRed,
                     ColorWriteAttrib.CGreen | ColorWriteAttrib.CBlue)
 
         if self.wantEnviroDR:
@@ -167,9 +160,7 @@ class OTPBase(ShowBase):
         taskMgr.remove('chasePixelZoom')
         if flag:
             taskMgr.add(
-                self._OTPBase__chasePixelZoom,
-                'chasePixelZoom',
-                priority=-52)
+                self._OTPBase__chasePixelZoom, 'chasePixelZoom', priority=-52)
         else:
             self.backgroundDrawable.setPixelZoom(1)
 
@@ -182,8 +173,8 @@ class OTPBase(ShowBase):
             d = math.sqrt(d2)
             self.pixelZoomCamMovedList.append((now, d))
 
-        while self.pixelZoomCamMovedList and self.pixelZoomCamMovedList[
-                0][0] < now - self.pixelZoomCamHistory:
+        while self.pixelZoomCamMovedList and self.pixelZoomCamMovedList[0][
+                0] < now - self.pixelZoomCamHistory:
             del self.pixelZoomCamMovedList[0]
         dist = sum(map(lambda pair: pair[1], self.pixelZoomCamMovedList))
         speed = dist / self.pixelZoomCamHistory

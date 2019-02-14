@@ -9,7 +9,6 @@ from toontown.quest import Quests
 
 
 class GagshopBuildingAI:
-
     def __init__(self, air, exteriorZone, interiorZone, blockNumber):
         self.air = air
         self.exteriorZone = exteriorZone
@@ -33,8 +32,8 @@ class GagshopBuildingAI:
             blockNumber, self.air, self.interiorZone)
         self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         self.interior.generateWithRequired(self.interiorZone)
-        door = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.EXT_STANDARD)
+        door = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber,
+                                                   DoorTypes.EXT_STANDARD)
         insideDoor = DistributedDoorAI.DistributedDoorAI(
             self.air, blockNumber, DoorTypes.INT_STANDARD)
         door.setOtherDoor(insideDoor)

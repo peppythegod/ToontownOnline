@@ -25,19 +25,12 @@ class PartyEditor(DirectObject, FSM):
         self.partyEditorGrid = PartyEditorGrid(self)
         self.currentElement = None
         self.defaultTransitions = {
-            'Hidden': [
-                'Idle',
-                'Cleanup'],
-            'Idle': [
-                'DraggingElement',
-                'Hidden',
-                'Cleanup'],
-            'DraggingElement': [
-                'Idle',
-                'DraggingElement',
-                'Hidden',
-                'Cleanup'],
-            'Cleanup': []}
+            'Hidden': ['Idle', 'Cleanup'],
+            'Idle': ['DraggingElement', 'Hidden', 'Cleanup'],
+            'DraggingElement':
+            ['Idle', 'DraggingElement', 'Hidden', 'Cleanup'],
+            'Cleanup': []
+        }
         self.initElementList()
         self.initPartyClock()
         self.initTrashCan()
@@ -58,24 +51,16 @@ class PartyEditor(DirectObject, FSM):
                 self.partyPlanner.gui.find('**/activitiesButtonUp_rollover'),
                 self.partyPlanner.gui.find('**/activitiesButtonUp_inactive')),
             decButton_relief=None,
-            decButton_pos=(
-                -0.050000000000000003,
-                0.0,
-                -0.38),
+            decButton_pos=(-0.050000000000000003, 0.0, -0.38),
             incButton_image=(
                 self.partyPlanner.gui.find('**/activitiesButtonDown_up'),
                 self.partyPlanner.gui.find('**/activitiesButtonDown_down'),
                 self.partyPlanner.gui.find('**/activitiesButtonDown_rollover'),
-                self.partyPlanner.gui.find('**/activitiesButtonDown_inactive')),
+                self.partyPlanner.gui.find('**/activitiesButtonDown_inactive')
+            ),
             incButton_relief=None,
-            incButton_pos=(
-                -0.050000000000000003,
-                0.0,
-                -0.93999999999999995),
-            itemFrame_pos=(
-                pos[0],
-                pos[1],
-                pos[2] + 0.040000000000000001),
+            incButton_pos=(-0.050000000000000003, 0.0, -0.93999999999999995),
+            itemFrame_pos=(pos[0], pos[1], pos[2] + 0.040000000000000001),
             itemFrame_relief=None,
             numItemsVisible=1,
             items=[])
@@ -87,10 +72,16 @@ class PartyEditor(DirectObject, FSM):
         isValentine = ToontownGlobals.VALENTINES_DAY in holidayIds
         for activityId in PartyGlobals.PartyEditorActivityOrder:
             if not not isVictory or activityId in PartyGlobals.VictoryPartyActivityIds:
-                if (not isWinter or activityId in PartyGlobals.WinterPartyActivityIds or not isValentine) and activityId in PartyGlobals.ValentinePartyActivityIds:
+                if (not isWinter
+                        or activityId in PartyGlobals.WinterPartyActivityIds
+                        or not isValentine
+                    ) and activityId in PartyGlobals.ValentinePartyActivityIds:
                     continue
             if not isVictory or activityId in PartyGlobals.VictoryPartyReplacementActivityIds:
-                if (isWinter or activityId in PartyGlobals.WinterPartyReplacementActivityIds or isValentine) and activityId in PartyGlobals.ValentinePartyReplacementActivityIds:
+                if (
+                        isWinter or activityId in PartyGlobals.
+                        WinterPartyReplacementActivityIds or isValentine
+                ) and activityId in PartyGlobals.ValentinePartyReplacementActivityIds:
                     continue
             pele = PartyEditorListElement(self, activityId)
             self.elementList.addItem(pele)
@@ -100,9 +91,16 @@ class PartyEditor(DirectObject, FSM):
 
         for decorationId in PartyGlobals.DecorationIds:
             if not not isVictory or decorationId in PartyGlobals.VictoryPartyDecorationIds:
-                if (not isWinter or decorationId in PartyGlobals.WinterPartyDecorationIds or not isValentine) and decorationId in PartyGlobals.ValentinePartyDecorationIds:
+                if (
+                        not isWinter or
+                        decorationId in PartyGlobals.WinterPartyDecorationIds
+                        or not isValentine
+                ) and decorationId in PartyGlobals.ValentinePartyDecorationIds:
                     continue
-            if (isVictory or decorationId in PartyGlobals.VictoryPartyReplacementDecorationIds or isValentine) and decorationId in PartyGlobals.ValentinePartyReplacementDecorationIds:
+            if (
+                    isVictory or decorationId in PartyGlobals.
+                    VictoryPartyReplacementDecorationIds or isValentine
+            ) and decorationId in PartyGlobals.ValentinePartyReplacementDecorationIds:
                 continue
             pele = PartyEditorListElement(
                 self, decorationId, isDecoration=True)
@@ -119,14 +117,12 @@ class PartyEditor(DirectObject, FSM):
         self.trashCanButton = DirectButton(
             parent=self.parent,
             relief=None,
-            pos=Point3(
-                *PartyGlobals.TrashCanPosition),
+            pos=Point3(*PartyGlobals.TrashCanPosition),
             scale=PartyGlobals.TrashCanScale,
-            geom=(
-                trashcanGui.find('**/TrashCan_CLSD'),
-                trashcanGui.find('**/TrashCan_OPEN'),
-                trashcanGui.find('**/TrashCan_RLVR'),
-                trashcanGui.find('**/TrashCan_RLVR')),
+            geom=(trashcanGui.find('**/TrashCan_CLSD'),
+                  trashcanGui.find('**/TrashCan_OPEN'),
+                  trashcanGui.find('**/TrashCan_RLVR'),
+                  trashcanGui.find('**/TrashCan_RLVR')),
             command=self.trashCanClicked)
         self.trashCanButton.bind(DirectGuiGlobals.ENTER, self.mouseEnterTrash)
         self.trashCanButton.bind(DirectGuiGlobals.EXIT, self.mouseExitTrash)
@@ -138,15 +134,17 @@ class PartyEditor(DirectObject, FSM):
         if not self.elementList['items']:
             return None
 
-        self.currentElement = self.elementList['items'][self.elementList.getSelectedIndex(
-        )]
-        self.elementList['items'][self.elementList.getSelectedIndex(
-        )].elementSelectedFromList()
-        if self.elementList['items'][self.elementList.getSelectedIndex()
-                                     ].isDecoration:
-            self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsClickedElementDecoration
+        self.currentElement = self.elementList['items'][
+            self.elementList.getSelectedIndex()]
+        self.elementList['items'][
+            self.elementList.getSelectedIndex()].elementSelectedFromList()
+        if self.elementList['items'][
+                self.elementList.getSelectedIndex()].isDecoration:
+            self.partyPlanner.instructionLabel[
+                'text'] = TTLocalizer.PartyPlannerEditorInstructionsClickedElementDecoration
         else:
-            self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsClickedElementActivity
+            self.partyPlanner.instructionLabel[
+                'text'] = TTLocalizer.PartyPlannerEditorInstructionsClickedElementActivity
 
     def listElementClicked(self):
         self.request('DraggingElement')
@@ -175,12 +173,14 @@ class PartyEditor(DirectObject, FSM):
             if purchaseSuccessful:
                 self.handleMutuallyExclusiveActivities()
             else:
-                self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsNoRoom
+                self.partyPlanner.instructionLabel[
+                    'text'] = TTLocalizer.PartyPlannerEditorInstructionsNoRoom
 
     def mouseEnterTrash(self, mouseEvent):
         self.mouseOverTrash = True
         self.oldInstructionText = self.partyPlanner.instructionLabel['text']
-        self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsTrash
+        self.partyPlanner.instructionLabel[
+            'text'] = TTLocalizer.PartyPlannerEditorInstructionsTrash
 
     def mouseExitTrash(self, mouseEvent):
         self.mouseOverTrash = False
@@ -197,11 +197,12 @@ class PartyEditor(DirectObject, FSM):
         if not fromDragging:
             self.elementList.scrollTo(0)
             self.elementList['items'][0].elementSelectedFromList()
-            self.currentElement = self.elementList['items'][self.elementList.getSelectedIndex(
-            )]
+            self.currentElement = self.elementList['items'][
+                self.elementList.getSelectedIndex()]
             self.currentElement.checkSoldOutAndPaidStatusAndAffordability()
 
-        self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsIdle
+        self.partyPlanner.instructionLabel[
+            'text'] = TTLocalizer.PartyPlannerEditorInstructionsIdle
         self.updateCostsAndBank()
         self.handleMutuallyExclusiveActivities()
 
@@ -215,11 +216,14 @@ class PartyEditor(DirectObject, FSM):
         for act in currentActivities:
             if act.id in mutSet and not (lastActivity == act.id):
                 act.removeFromGrid()
-                removedName = TTLocalizer.PartyActivityNameDict[act.id]['editor']
-                addedName = TTLocalizer.PartyActivityNameDict[lastActivity]['editor']
+                removedName = TTLocalizer.PartyActivityNameDict[
+                    act.id]['editor']
+                addedName = TTLocalizer.PartyActivityNameDict[lastActivity][
+                    'editor']
                 instr = TTLocalizer.PartyPlannerEditorInstructionsRemoved % {
                     'removed': removedName,
-                    'added': addedName}
+                    'added': addedName
+                }
                 self.partyPlanner.instructionLabel['text'] = instr
                 self.updateCostsAndBank()
                 continue
@@ -246,12 +250,15 @@ class PartyEditor(DirectObject, FSM):
         currentDecorations = self.partyEditorGrid.getDecorationsOnGrid()
         newCost = 0
         for elementTuple in currentActivities:
-            newCost += PartyGlobals.ActivityInformationDict[elementTuple[0]]['cost']
+            newCost += PartyGlobals.ActivityInformationDict[
+                elementTuple[0]]['cost']
 
         for elementTuple in currentDecorations:
-            newCost += PartyGlobals.DecorationInformationDict[elementTuple[0]]['cost']
+            newCost += PartyGlobals.DecorationInformationDict[
+                elementTuple[0]]['cost']
 
-        self.partyPlanner.costLabel['text'] = TTLocalizer.PartyPlannerTotalCost % newCost
+        self.partyPlanner.costLabel[
+            'text'] = TTLocalizer.PartyPlannerTotalCost % newCost
         if len(currentActivities) > 0 or len(currentDecorations) > 0:
             self.partyPlanner.setNextButtonState(enabled=True)
         else:
@@ -266,9 +273,11 @@ class PartyEditor(DirectObject, FSM):
     def enterDraggingElement(self):
         PartyEditor.notify.debug('Enter DraggingElement')
         if self.currentElement.isDecoration:
-            self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsDraggingDecoration
+            self.partyPlanner.instructionLabel[
+                'text'] = TTLocalizer.PartyPlannerEditorInstructionsDraggingDecoration
         else:
-            self.partyPlanner.instructionLabel['text'] = TTLocalizer.PartyPlannerEditorInstructionsDraggingActivity
+            self.partyPlanner.instructionLabel[
+                'text'] = TTLocalizer.PartyPlannerEditorInstructionsDraggingActivity
 
     def exitDraggingElement(self):
         PartyEditor.notify.debug('Exit DraggingElement')

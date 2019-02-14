@@ -18,17 +18,15 @@ class DistributedDonaldDockAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
         DistributedCCharBaseAI.DistributedCCharBaseAI.__init__(
             self, air, TTLocalizer.DonaldDock)
         self.fsm = ClassicFSM.ClassicFSM('DistributedDonaldDockAI', [
-            State.State('Off', self.enterOff, self.exitOff, [
-                'Lonely',
-                'TransitionToCostume']),
-            State.State('Lonely', self.enterLonely, self.exitLonely, [
-                'Chatty',
-                'TransitionToCostume']),
-            State.State('Chatty', self.enterChatty, self.exitChatty, [
-                'Lonely',
-                'TransitionToCostume']),
-            State.State('TransitionToCostume', self.enterTransitionToCostume, self.exitTransitionToCostume, [
-                'Off'])], 'Off', 'Off')
+            State.State('Off', self.enterOff, self.exitOff,
+                        ['Lonely', 'TransitionToCostume']),
+            State.State('Lonely', self.enterLonely, self.exitLonely,
+                        ['Chatty', 'TransitionToCostume']),
+            State.State('Chatty', self.enterChatty, self.exitChatty,
+                        ['Lonely', 'TransitionToCostume']),
+            State.State('TransitionToCostume', self.enterTransitionToCostume,
+                        self.exitTransitionToCostume, ['Off'])
+        ], 'Off', 'Off')
         self.fsm.enterInitialState()
         self.handleHolidays()
 
@@ -70,9 +68,8 @@ class DistributedDonaldDockAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
     def enterLonely(self):
         self.notify.debug('Entering Lonely')
         self.lonely.enter()
-        self.acceptOnce(
-            self.lonelyDoneEvent,
-            self._DistributedDonaldDockAI__decideNextState)
+        self.acceptOnce(self.lonelyDoneEvent,
+                        self._DistributedDonaldDockAI__decideNextState)
 
     def exitLonely(self):
         self.notify.debug('Exiting Lonely')
@@ -82,9 +79,8 @@ class DistributedDonaldDockAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
     def enterChatty(self):
         self.notify.debug('Entering Chatty')
         self.chatty.enter()
-        self.acceptOnce(
-            self.chattyDoneEvent,
-            self._DistributedDonaldDockAI__decideNextState)
+        self.acceptOnce(self.chattyDoneEvent,
+                        self._DistributedDonaldDockAI__decideNextState)
 
     def exitChatty(self):
         self.notify.debug('Exiting Chatty')
@@ -95,8 +91,8 @@ class DistributedDonaldDockAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
         if len(self.nearbyAvatars) == 1:
             self.fsm.request('Chatty')
         else:
-            self.notify.debug(
-                'avatarEnterNextState: num avatars: ' + str(len(self.nearbyAvatars)))
+            self.notify.debug('avatarEnterNextState: num avatars: ' +
+                              str(len(self.nearbyAvatars)))
 
     def avatarExitNextState(self):
         if len(self.nearbyAvatars) == 0:

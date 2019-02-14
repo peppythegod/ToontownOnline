@@ -1,5 +1,3 @@
-
-
 from direct.interval.IntervalGlobal import *
 from direct.task.Task import Task
 from otp.otpbase import OTPGlobals
@@ -12,16 +10,15 @@ class OrthoDrive:
     TASK_NAME = 'OrthoDriveTask'
     SET_ATREST_HEADING_TASK = 'setAtRestHeadingTask'
 
-    def __init__(
-            self,
-            speed,
-            maxFrameMove=None,
-            customCollisionCallback=None,
-            priority=0,
-            setHeading=1,
-            upHeading=0,
-            instantTurn=False,
-            wantSound=False):
+    def __init__(self,
+                 speed,
+                 maxFrameMove=None,
+                 customCollisionCallback=None,
+                 priority=0,
+                 setHeading=1,
+                 upHeading=0,
+                 instantTurn=False,
+                 wantSound=False):
         self.wantSound = wantSound
         self.speed = speed
         self.maxFrameMove = maxFrameMove
@@ -118,8 +115,8 @@ class OrthoDrive:
                 posOffset /= posOffsetLen
 
         if self.customCollisionCallback:
-            toonPos = self.customCollisionCallback(
-                toonPos, toonPos + posOffset)
+            toonPos = self.customCollisionCallback(toonPos,
+                                                   toonPos + posOffset)
         else:
             toonPos = toonPos + posOffset
         self.lt.setPos(toonPos)
@@ -127,21 +124,8 @@ class OrthoDrive:
         return Task.cont
 
     def _OrthoDrive__handleHeading(self, xVel, yVel):
-
         def getHeading(xVel, yVel):
-            angTab = [
-                [
-                    None,
-                    0,
-                    180],
-                [
-                    -90,
-                    -45,
-                    -135],
-                [
-                    90,
-                    45,
-                    135]]
+            angTab = [[None, 0, 180], [-90, -45, -135], [90, 45, 135]]
             return angTab[xVel][yVel] + self.upHeading
 
         def orientToon(angle, self=self):
@@ -149,9 +133,11 @@ class OrthoDrive:
             startAngle = fitSrcAngle2Dest(startAngle, angle)
             dur = 0.10000000000000001 * abs(startAngle - angle) / 90
             self.turnLocalToonIval = LerpHprInterval(
-                self.lt, dur, Point3(
-                    angle, 0, 0), startHpr=Point3(
-                    startAngle, 0, 0), name='OrthoDriveLerpHpr')
+                self.lt,
+                dur,
+                Point3(angle, 0, 0),
+                startHpr=Point3(startAngle, 0, 0),
+                name='OrthoDriveLerpHpr')
             if self.instantTurn:
                 self.turnLocalToonIval.finish()
             else:
@@ -168,14 +154,13 @@ class OrthoDrive:
                         pass
                     if not yVel:
 
-                        def setAtRestHeading(
-                                task, self=self, angle=curHeading):
+                        def setAtRestHeading(task, self=self,
+                                             angle=curHeading):
                             self.atRestHeading = angle
                             return Task.done
 
                         taskMgr.doMethodLater(
-                            0.050000000000000003,
-                            setAtRestHeading,
+                            0.050000000000000003, setAtRestHeading,
                             OrthoDrive.SET_ATREST_HEADING_TASK)
                     else:
                         self.atRestHeading = curHeading

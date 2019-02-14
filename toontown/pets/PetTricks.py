@@ -18,7 +18,8 @@ ScId2trickId = {
     21203: Tricks.ROLLOVER,
     21204: Tricks.BACKFLIP,
     21205: Tricks.DANCE,
-    21206: Tricks.SPEAK}
+    21206: Tricks.SPEAK
+}
 TrickId2scIds = invertDictLossless(ScId2trickId)
 TrickAnims = {
     Tricks.JUMP: 'jump',
@@ -28,7 +29,8 @@ TrickAnims = {
     Tricks.BACKFLIP: 'backflip',
     Tricks.DANCE: 'dance',
     Tricks.SPEAK: 'speak',
-    Tricks.BALK: 'neutral'}
+    Tricks.BALK: 'neutral'
+}
 TrickLengths = {
     Tricks.JUMP: 2.0,
     Tricks.BEG: 5.1669999999999998,
@@ -37,7 +39,8 @@ TrickLengths = {
     Tricks.BACKFLIP: 4.8799999999999999,
     Tricks.DANCE: 7.4199999999999999,
     Tricks.SPEAK: 0.75,
-    Tricks.BALK: 1.0}
+    Tricks.BALK: 1.0
+}
 TrickAccuracies = {
     Tricks.JUMP: 1.0,
     Tricks.BEG: 0.90000000000000002,
@@ -46,7 +49,8 @@ TrickAccuracies = {
     Tricks.BACKFLIP: 0.59999999999999998,
     Tricks.DANCE: 0.5,
     Tricks.SPEAK: 0.40000000000000002,
-    Tricks.BALK: 1.0}
+    Tricks.BALK: 1.0
+}
 TrickHeals = {
     Tricks.JUMP: (5, 10),
     Tricks.BEG: (6, 12),
@@ -55,7 +59,8 @@ TrickHeals = {
     Tricks.BACKFLIP: (9, 18),
     Tricks.DANCE: (10, 20),
     Tricks.SPEAK: (11, 22),
-    Tricks.BALK: (0, 0)}
+    Tricks.BALK: (0, 0)
+}
 TrickSounds = {
     Tricks.BACKFLIP: 'phase_5/audio/sfx/backflip.mp3',
     Tricks.ROLLOVER: 'phase_5/audio/sfx/rollover.mp3',
@@ -63,7 +68,8 @@ TrickSounds = {
     Tricks.BEG: 'phase_5/audio/sfx/beg.mp3',
     Tricks.DANCE: 'phase_5/audio/sfx/heal_dance.mp3',
     Tricks.JUMP: 'phase_5/audio/sfx/jump.mp3',
-    Tricks.SPEAK: 'phase_5/audio/sfx/speak_v1.mp3'}
+    Tricks.SPEAK: 'phase_5/audio/sfx/speak_v1.mp3'
+}
 
 
 def getSoundIval(trickId):
@@ -102,12 +108,7 @@ def getTrickIval(pet, trickId):
             animIval = Sequence()
             animIval.append(ActorInterval(pet, anims, playRate=animRate))
             animIval.append(
-                ActorInterval(
-                    pet,
-                    anims,
-                    playRate=-
-                    1.0 *
-                    animRate))
+                ActorInterval(pet, anims, playRate=-1.0 * animRate))
         elif trickId == Tricks.SPEAK:
             animIval = ActorInterval(
                 pet, anims, startFrame=10, playRate=animRate)
@@ -124,6 +125,4 @@ def getTrickIval(pet, trickId):
         trickIval.append(soundIval)
 
     return Sequence(
-        Func(
-            pet.lockPet), Wait(waitTime), trickIval, Func(
-            pet.unlockPet))
+        Func(pet.lockPet), Wait(waitTime), trickIval, Func(pet.unlockPet))

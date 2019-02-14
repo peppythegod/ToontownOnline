@@ -7,16 +7,15 @@ class MultiPageTextFrame(DirectFrame):
     defWidth = 1.8
     defHeight = 0.90000000000000002
 
-    def __init__(
-            self,
-            textList,
-            width=defWidth,
-            height=defHeight,
-            wordWrap=None,
-            hidePageNum=0,
-            pageChangeCallback=None,
-            parent=aspect2d,
-            **kw):
+    def __init__(self,
+                 textList,
+                 width=defWidth,
+                 height=defHeight,
+                 wordWrap=None,
+                 hidePageNum=0,
+                 pageChangeCallback=None,
+                 parent=aspect2d,
+                 **kw):
         self.textList = textList
         self.numPages = len(self.textList)
         self.pageChangeCallback = pageChangeCallback
@@ -25,42 +24,19 @@ class MultiPageTextFrame(DirectFrame):
 
         hWidth = width / 2.0
         hHeight = height / 2.0
-        optiondefs = (
-            ('relief',
-             DGG.SUNKEN,
-             None),
-            ('frameSize',
-             (-hWidth,
-              hWidth,
-              -hHeight,
-              hHeight),
-                None),
-            ('frameColor',
-             (0.84999999999999998,
-              0.84999999999999998,
-              0.59999999999999998,
-              1),
-                None),
-            ('borderWidth',
-             (0.01,
-              0.01),
-                None),
-            ('text',
-             '',
-             None),
-            ('text_pos',
-             (-hWidth * 0.94999999999999996,
-              hHeight * 0.93000000000000005),
-                None),
-            ('text_scale',
-             0.050000000000000003,
-             None),
-            ('text_align',
-             TextNode.ALeft,
-             None),
-            ('text_wordwrap',
-             wordWrap,
-             None))
+        optiondefs = (('relief', DGG.SUNKEN,
+                       None), ('frameSize', (-hWidth, hWidth, -hHeight,
+                                             hHeight), None),
+                      ('frameColor', (0.84999999999999998, 0.84999999999999998,
+                                      0.59999999999999998, 1),
+                       None), ('borderWidth', (0.01, 0.01), None), ('text', '',
+                                                                    None),
+                      ('text_pos', (-hWidth * 0.94999999999999996,
+                                    hHeight * 0.93000000000000005),
+                       None), ('text_scale', 0.050000000000000003,
+                               None), ('text_align', TextNode.ALeft,
+                                       None), ('text_wordwrap', wordWrap,
+                                               None))
         self.defineoptions(kw, optiondefs)
         DirectFrame.__init__(self, parent)
         self.initialiseoptions(MultiPageTextFrame)
@@ -71,55 +47,37 @@ class MultiPageTextFrame(DirectFrame):
             parent=self,
             relief=None,
             scale=buttonScale,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
-            image_scale=(
-                0.75,
-                1,
-                1),
-            pos=(
-                hWidth * 0.34999999999999998,
-                0,
-                buttonZ),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
+            image_scale=(0.75, 1, 1),
+            pos=(hWidth * 0.34999999999999998, 0, buttonZ),
             text=OTPLocalizer.MultiPageTextFrameNext,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0,
-                -0.02),
+            text_pos=(0, -0.02),
             command=self.turnPage,
             extraArgs=[1])
-        self.prevButton = DirectButton(parent=self,
-                                       relief=None,
-                                       scale=buttonScale,
-                                       image=(guiButton.find('**/QuitBtn_UP'),
-                                              guiButton.find('**/QuitBtn_DN'),
-                                              guiButton.find('**/QuitBtn_RLVR')),
-                                       image_scale=(0.75,
-                                                    1,
-                                                    1),
-                                       pos=(-hWidth * 0.34999999999999998,
-                                            0,
-                                            buttonZ),
-                                       text=OTPLocalizer.MultiPageTextFramePrev,
-                                       text_scale=0.050000000000000003,
-                                       text_pos=(0,
-                                                 -0.02),
-                                       command=self.turnPage,
-                                       extraArgs=[-1])
+        self.prevButton = DirectButton(
+            parent=self,
+            relief=None,
+            scale=buttonScale,
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
+            image_scale=(0.75, 1, 1),
+            pos=(-hWidth * 0.34999999999999998, 0, buttonZ),
+            text=OTPLocalizer.MultiPageTextFramePrev,
+            text_scale=0.050000000000000003,
+            text_pos=(0, -0.02),
+            command=self.turnPage,
+            extraArgs=[-1])
         self.pageNum = DirectLabel(
             relief=None,
             parent=self,
-            pos=(
-                0,
-                0,
-                -hHeight * 0.85999999999999999),
+            pos=(0, 0, -hHeight * 0.85999999999999999),
             text='',
             text_scale=0.050000000000000003,
-            text_pos=(
-                0,
-                0))
+            text_pos=(0, 0))
         if hidePageNum:
             self.pageNum.hide()
 
@@ -158,10 +116,8 @@ class MultiPageTextFrame(DirectFrame):
         self.setPage(self.curPage + delta)
 
     def acceptAgreementKeypresses(self):
-        self.accept('page_down-up', self.turnPage, extraArgs=[
-            1])
-        self.accept('page_up-up', self.turnPage, extraArgs=[
-            -1])
+        self.accept('page_down-up', self.turnPage, extraArgs=[1])
+        self.accept('page_up-up', self.turnPage, extraArgs=[-1])
 
     def ignoreAgreementKeypresses(self):
         self.ignore('page_down-up')

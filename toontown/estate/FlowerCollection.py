@@ -27,13 +27,12 @@ class FlowerCollection:
             speciesList.append(flower.getSpecies())
             varietyList.append(flower.getVariety())
 
-        return [
-            speciesList,
-            varietyList]
+        return [speciesList, varietyList]
 
     def hasFlower(self, species, variety):
         for flower in self.flowerlist:
-            if flower.getSpecies() == species and flower.getVariety() == variety:
+            if flower.getSpecies() == species and flower.getVariety(
+            ) == variety:
                 return 1
                 continue
 

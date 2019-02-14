@@ -64,8 +64,8 @@ class Piejectile(DirectObject, FlyingGag):
         self.forward.setPos(0, 1, 0)
         self.splatTaskName = 'splatTask %s' % self.name
         if self.hasTarget:
-            self.splatTask = taskMgr.doMethodLater(
-                self.maxTime, self.splat, self.splatTaskName)
+            self.splatTask = taskMgr.doMethodLater(self.maxTime, self.splat,
+                                                   self.splatTaskName)
         else:
             self.splatTask = taskMgr.doMethodLater(
                 self.maxTime / 2.5, self.splat, self.splatTaskName)
@@ -137,9 +137,7 @@ class Piejectile(DirectObject, FlyingGag):
         self.lookAt(lookPoint)
         self.taskName = 'updatePhysics%s' % self.name
         taskMgr.add(
-            self._Piejectile__updatePhysics,
-            self.taskName,
-            priority=25)
+            self._Piejectile__updatePhysics, self.taskName, priority=25)
 
     def checkTargetDistance(self):
         if self.hasTarget:
@@ -165,12 +163,10 @@ class Piejectile(DirectObject, FlyingGag):
         if self.deleting:
             return Task.done
 
-        self.timeRatio = (globalClock.getFrameTime() -
-                          self.startTime) / self.maxTime
-        self.windResistance.setCoef(
-            0.20000000000000001 +
-            0.80000000000000004 *
-            self.timeRatio)
+        self.timeRatio = (
+            globalClock.getFrameTime() - self.startTime) / self.maxTime
+        self.windResistance.setCoef(0.20000000000000001 +
+                                    0.80000000000000004 * self.timeRatio)
         if base.cr.doId2do.get(self.targetId) is None:
             self.hasTarget = 0
 
@@ -184,16 +180,10 @@ class Piejectile(DirectObject, FlyingGag):
 
             targetVel = self.targetKart.getVelocity()
             targetPos = self.targetKart.getPos()
-            targetAim = Point3(targetPos[0] +
-                               targetVel[0] *
-                               (targetDistance /
-                                distMax), targetPos[1] +
-                               targetVel[1] *
-                               (targetDistance /
-                                distMax), targetPos[2] +
-                               targetVel[2] *
-                               (targetDistance /
-                                distMax))
+            targetAim = Point3(
+                targetPos[0] + targetVel[0] * (targetDistance / distMax),
+                targetPos[1] + targetVel[1] * (targetDistance / distMax),
+                targetPos[2] + targetVel[2] * (targetDistance / distMax))
             self.lookAt(targetPos)
 
         if self.d2t < 7 and self.hasTarget:
@@ -202,42 +192,26 @@ class Piejectile(DirectObject, FlyingGag):
 
         self.count += 1
         dt = globalClock.getDt()
-        physicsFrame = int(
-            (globalClock.getFrameTime() -
-             self.physicsEpoch) *
-            self.physicsCalculationsPerSecond)
-        numFrames = min(
-            physicsFrame -
-            self.lastPhysicsFrame,
-            self.maxPhysicsFrames)
+        physicsFrame = int((globalClock.getFrameTime() - self.physicsEpoch) *
+                           self.physicsCalculationsPerSecond)
+        numFrames = min(physicsFrame - self.lastPhysicsFrame,
+                        self.maxPhysicsFrames)
         self.lastPhysicsFrame = physicsFrame
         if self.hasTarget:
             targetVel = self.targetKart.getVelocity()
             targetSpeed = targetVel.length()
             if self.d2t - 10 * self.physicsDt > self.lastD2t:
-                self.engine.setVector(Vec3(0, 150 +
-                                           150 *
-                                           self.timeRatio +
-                                           targetSpeed *
-                                           (1.0 +
-                                            1.0 *
-                                            self.timeRatio) +
-                                           self.d2t *
-                                           (1.0 +
-                                            1.0 *
-                                            self.timeRatio), 12))
+                self.engine.setVector(
+                    Vec3(
+                        0, 150 + 150 * self.timeRatio +
+                        targetSpeed * (1.0 + 1.0 * self.timeRatio) +
+                        self.d2t * (1.0 + 1.0 * self.timeRatio), 12))
             else:
-                self.engine.setVector(Vec3(0, 10 +
-                                           10 *
-                                           self.timeRatio +
-                                           targetSpeed *
-                                           (0.5 +
-                                            0.5 *
-                                            self.timeRatio) +
-                                           self.d2t *
-                                           (0.5 +
-                                            0.5 *
-                                            self.timeRatio), 12))
+                self.engine.setVector(
+                    Vec3(
+                        0, 10 + 10 * self.timeRatio +
+                        targetSpeed * (0.5 + 0.5 * self.timeRatio) +
+                        self.d2t * (0.5 + 0.5 * self.timeRatio), 12))
         else:
             self.engine.setVector(Vec3(0, 100, 3))
         for i in range(numFrames):

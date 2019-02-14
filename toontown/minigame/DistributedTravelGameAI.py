@@ -1,5 +1,3 @@
-
-
 from toontown.minigame.DistributedMinigameAI import *
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
@@ -18,16 +16,17 @@ class DistributedTravelGameAI(DistributedMinigameAI):
             self.DistributedTravelGameAI_initialized = 1
             DistributedMinigameAI.__init__(self, air, minigameId)
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedTravelGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive, [
-                    'waitClientsChoices']),
-                State.State('waitClientsChoices', self.enterWaitClientsChoices, self.exitWaitClientsChoices, [
-                    'processChoices',
-                    'cleanup']),
-                State.State('processChoices', self.enterProcessChoices, self.exitProcessChoices, [
-                    'waitClientsChoices',
-                    'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                    'inactive'])], 'inactive', 'inactive')
+                State.State('inactive', self.enterInactive, self.exitInactive,
+                            ['waitClientsChoices']),
+                State.State('waitClientsChoices', self.enterWaitClientsChoices,
+                            self.exitWaitClientsChoices,
+                            ['processChoices', 'cleanup']),
+                State.State('processChoices', self.enterProcessChoices,
+                            self.exitProcessChoices,
+                            ['waitClientsChoices', 'cleanup']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
             self.currentVotes = {}
             self.avatarChoices = {}
@@ -73,21 +72,13 @@ class DistributedTravelGameAI(DistributedMinigameAI):
         for avId in self.avIdList:
             scoreList.append(self.scoreDict[avId])
             curVotesList.append(self.currentVotes[avId])
-            bonusesList.append(
-                (self.avIdBonuses[avId][0],
-                 self.avIdBonuses[avId][1]))
+            bonusesList.append((self.avIdBonuses[avId][0],
+                                self.avIdBonuses[avId][1]))
 
         self.air.writeServerEvent(
-            'minigame_travel',
-            self.doId,
-            '%s|%s|%s|%s|%s|%s|%s|%s' %
-            (ToontownGlobals.TravelGameId,
-             self.getSafezoneId(),
-             self.avIdList,
-             scoreList,
-             self.boardIndex,
-             curVotesList,
-             bonusesList,
+            'minigame_travel', self.doId, '%s|%s|%s|%s|%s|%s|%s|%s' %
+            (ToontownGlobals.TravelGameId, self.getSafezoneId(), self.avIdList,
+             scoreList, self.boardIndex, curVotesList, bonusesList,
              self.desiredNextGame))
         self.gameFSM.request('cleanup')
         DistributedMinigameAI.gameOver(self)
@@ -101,12 +92,11 @@ class DistributedTravelGameAI(DistributedMinigameAI):
     def enterWaitClientsChoices(self):
         self.notify.debug('enterWaitClientsChoices')
         self.resetChoices()
-        taskMgr.doMethodLater(
-            TravelGameGlobals.InputTimeout,
-            self.waitClientsChoicesTimeout,
-            self.taskName('input-timeout'))
-        self.sendUpdate('setTimerStartTime', [
-            globalClockDelta.getFrameNetworkTime()])
+        taskMgr.doMethodLater(TravelGameGlobals.InputTimeout,
+                              self.waitClientsChoicesTimeout,
+                              self.taskName('input-timeout'))
+        self.sendUpdate('setTimerStartTime',
+                        [globalClockDelta.getFrameNetworkTime()])
 
     def exitWaitClientsChoices(self):
         taskMgr.remove(self.taskName('input-timeout'))
@@ -114,9 +104,7 @@ class DistributedTravelGameAI(DistributedMinigameAI):
     def enterProcessChoices(self):
         self.directionVotes = []
         for dir in range(TravelGameGlobals.MaxDirections):
-            self.directionVotes.append([
-                dir,
-                0])
+            self.directionVotes.append([dir, 0])
 
         for key in self.avatarChoices:
             choice = self.avatarChoices[key]
@@ -140,15 +128,13 @@ class DistributedTravelGameAI(DistributedMinigameAI):
             if vote[1] == winningVotes:
                 self.winningDirections.append(vote[0])
                 self.notify.debug(
-                    'add direction %d to winning directions' %
-                    vote[0])
+                    'add direction %d to winning directions' % vote[0])
                 continue
 
         self.directionReason = TravelGameGlobals.ReasonVote
         if len(self.winningDirections) > 1:
             self.notify.debug(
-                'multiple winningDirections=%s' %
-                self.winningDirections)
+                'multiple winningDirections=%s' % self.winningDirections)
             self.directionReason = TravelGameGlobals.ReasonRandom
 
         self.directionToGo = random.choice(self.winningDirections)
@@ -164,7 +150,8 @@ class DistributedTravelGameAI(DistributedMinigameAI):
             self.votesArray.append(vote)
             self.directionArray.append(direction)
 
-        curSwitch = TravelGameGlobals.BoardLayouts[self.boardIndex][self.currentSwitch]
+        curSwitch = TravelGameGlobals.BoardLayouts[self.boardIndex][
+            self.currentSwitch]
         self.destSwitch = curSwitch['links'][self.directionToGo]
         self.checkForEndGame()
 
@@ -203,25 +190,19 @@ class DistributedTravelGameAI(DistributedMinigameAI):
 
     def setAvatarChoice(self, votes, direction):
         avatarId = self.air.getAvatarIdFromSender()
-        self.notify.debug(
-            'setAvatarChoice: avatar: ' +
-            str(avatarId) +
-            ' votes: ' +
-            str(votes) +
-            ' direction: ' +
-            str(direction))
+        self.notify.debug('setAvatarChoice: avatar: ' + str(avatarId) +
+                          ' votes: ' + str(votes) + ' direction: ' +
+                          str(direction))
         self.avatarChoices[avatarId] = self.checkChoice(
             avatarId, votes, direction)
         self.currentVotes[avatarId] -= self.avatarChoices[avatarId][0]
         if self.currentVotes[avatarId] < 0:
-            self.notify.warning(
-                'currentVotes < 0  avId=%s, currentVotes=%s' %
-                (avatarId, self.currentVotes[avatarId]))
+            self.notify.warning('currentVotes < 0  avId=%s, currentVotes=%s' %
+                                (avatarId, self.currentVotes[avatarId]))
 
         self.notify.debug('currentVotes = %s' % self.currentVotes)
         self.notify.debug('avatarChoices = %s' % self.avatarChoices)
-        self.sendUpdate('setAvatarChose', [
-            avatarId])
+        self.sendUpdate('setAvatarChose', [avatarId])
         if self.allAvatarsChosen():
             self.notify.debug('setAvatarChoice: all avatars have chosen')
             self.gameFSM.request('processChoices')
@@ -251,7 +232,8 @@ class DistributedTravelGameAI(DistributedMinigameAI):
 
     def isLeaf(self, switchIndex):
         retval = False
-        links = TravelGameGlobals.BoardLayouts[self.boardIndex][switchIndex]['links']
+        links = TravelGameGlobals.BoardLayouts[
+            self.boardIndex][switchIndex]['links']
         if len(links) == 0:
             retval = True
 
@@ -283,22 +265,18 @@ class DistributedTravelGameAI(DistributedMinigameAI):
         delay = TravelGameGlobals.DisplayVotesTimePerPlayer * \
             (numPlayers + 1) + TravelGameGlobals.MoveTrolleyTime + TravelGameGlobals.FudgeTime
         if didWeReachMiniGame:
-            self.desiredNextGame = self.switchToMinigameDict[self.currentSwitch]
-            taskMgr.doMethodLater(
-                delay,
-                self.moveTimeoutTaskGameOver,
-                self.taskName('move-timeout'))
+            self.desiredNextGame = self.switchToMinigameDict[
+                self.currentSwitch]
+            taskMgr.doMethodLater(delay, self.moveTimeoutTaskGameOver,
+                                  self.taskName('move-timeout'))
             self.giveBonusBeans(self.currentSwitch)
         else:
-            taskMgr.doMethodLater(
-                delay,
-                self.moveTimeoutTask,
-                self.taskName('move-timeout'))
+            taskMgr.doMethodLater(delay, self.moveTimeoutTask,
+                                  self.taskName('move-timeout'))
         self.sendUpdate('setServerChoices', [
-            self.votesArray,
-            self.directionArray,
-            self.directionToGo,
-            self.directionReason])
+            self.votesArray, self.directionArray, self.directionToGo,
+            self.directionReason
+        ])
 
     def moveTimeoutTask(self, task):
         self.notify.debug('Done waiting for trolley move')
@@ -337,9 +315,7 @@ class DistributedTravelGameAI(DistributedMinigameAI):
             switches.append(key)
             minigames.append(self.switchToMinigameDict[key])
 
-        self.sendUpdate('setMinigames', [
-            switches,
-            minigames])
+        self.sendUpdate('setMinigames', [switches, minigames])
 
     def calcBonusBeans(self):
         possibleLeaves = []
@@ -352,7 +328,8 @@ class DistributedTravelGameAI(DistributedMinigameAI):
         for avId in self.avIdList:
             switch = random.choice(possibleLeaves)
             possibleLeaves.remove(switch)
-            beans = TravelGameGlobals.BoardLayouts[self.boardIndex][switch]['baseBonus']
+            beans = TravelGameGlobals.BoardLayouts[
+                self.boardIndex][switch]['baseBonus']
             baseBeans = TravelGameGlobals.BaseBeans
             numPlayerMultiplier = len(self.avIdList) / 4.0
             roundMultiplier = self.metagameRound / 2.0 + 1.0
@@ -365,16 +342,13 @@ class DistributedTravelGameAI(DistributedMinigameAI):
             switches.append(self.avIdBonuses[avId][0])
             beans.append(self.avIdBonuses[avId][1])
 
-        self.sendUpdate('setBonuses', [
-            switches,
-            beans])
+        self.sendUpdate('setBonuses', [switches, beans])
 
     def setStartingVote(self, avId, startingVote):
         DistributedMinigameAI.setStartingVote(self, avId, startingVote)
         self.currentVotes[avId] = startingVote
         self.notify.debug(
-            'setting current  vote of avId=%d to %d' %
-            (avId, startingVote))
+            'setting current  vote of avId=%d to %d' % (avId, startingVote))
 
     def handleExitedAvatar(self, avId):
         self.notify.warning(

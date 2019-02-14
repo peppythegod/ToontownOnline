@@ -9,18 +9,11 @@ from toontown.safezone import DistributedFindFourAI
 
 
 class DistributedPicnicTableAI(DistributedNodeAI):
-
     def __init__(self, air, zone, name, x, y, z, h, p, r):
         DistributedNodeAI.__init__(self, air)
         self.name = name
         self.air = air
-        self.seats = [
-            None,
-            None,
-            None,
-            None,
-            None,
-            None]
+        self.seats = [None, None, None, None, None, None]
         self.setPos(x, y, z)
         self.setHpr(h, p, r)
         self.playersSitting = 0
@@ -28,13 +21,10 @@ class DistributedPicnicTableAI(DistributedNodeAI):
         self.myHpr = (h, p, r)
         self.playerIdList = []
         self.checkersZoneId = None
-        self.generateOtpObject(air.districtId, zone, optionalFields=[
-            'setX',
-            'setY',
-            'setZ',
-            'setH',
-            'setP',
-            'setR'])
+        self.generateOtpObject(
+            air.districtId,
+            zone,
+            optionalFields=['setX', 'setY', 'setZ', 'setH', 'setP', 'setR'])
         self.observers = []
         self.allowPickers = []
         self.hasPicked = False
@@ -66,27 +56,20 @@ class DistributedPicnicTableAI(DistributedNodeAI):
                 continue
             tableStateList.append(x)
 
-        if self.game and self.game.fsm.getCurrentState().getName() == 'playing':
-            self.sendUpdate('setTableState', [
-                tableStateList,
-                1])
+        if self.game and self.game.fsm.getCurrentState().getName(
+        ) == 'playing':
+            self.sendUpdate('setTableState', [tableStateList, 1])
         else:
-            self.sendUpdate('setTableState', [
-                tableStateList,
-                0])
+            self.sendUpdate('setTableState', [tableStateList, 0])
 
     def sendIsPlaying(self):
         if self.game.fsm.getCurrentState().getName() == 'playing':
-            self.sendUpdate('setIsPlaying', [
-                1])
+            self.sendUpdate('setIsPlaying', [1])
         else:
-            self.sendUpdate('setIsPlaying', [
-                0])
+            self.sendUpdate('setIsPlaying', [0])
 
     def announceWinner(self, gameName, avId):
-        self.sendUpdate('announceWinner', [
-            gameName,
-            avId])
+        self.sendUpdate('announceWinner', [gameName, avId])
         self.gameDoId = None
         self.game = None
 
@@ -94,8 +77,7 @@ class DistributedPicnicTableAI(DistributedNodeAI):
         avId = self.air.getAvatarIdFromSender()
         if self.findAvatar(avId) is not None:
             self.notify.warning(
-                'Ignoring multiple requests from %s to board.' %
-                avId)
+                'Ignoring multiple requests from %s to board.' % avId)
             return None
 
         av = self.air.doId2do.get(avId)
@@ -128,8 +110,7 @@ class DistributedPicnicTableAI(DistributedNodeAI):
             self.allowPickers.append(avId)
 
         if self.hasPicked:
-            self.sendUpdateToAvatarId(avId, 'setZone', [
-                self.game.zoneId])
+            self.sendUpdateToAvatarId(avId, 'setZone', [self.game.zoneId])
 
         self.seats[seatIndex] = avId
         self.acceptOnce(
@@ -141,16 +122,9 @@ class DistributedPicnicTableAI(DistributedNodeAI):
             self.game.informGameOfPlayer()
 
         self.sendUpdate('fillSlot', [
-            avId,
-            seatIndex,
-            x,
-            y,
-            z,
-            h,
-            p,
-            r,
-            globalClockDelta.localToNetworkTime(self.timeOfBoarding),
-            self.doId])
+            avId, seatIndex, x, y, z, h, p, r,
+            globalClockDelta.localToNetworkTime(self.timeOfBoarding), self.doId
+        ])
         self.getTableState()
 
     def requestPickedGame(self, gameNum):
@@ -174,56 +148,32 @@ class DistributedPicnicTableAI(DistributedNodeAI):
         if gameNum == 1:
             if simbase.config.GetBool('want-chinese', 0):
                 self.game = DistributedChineseCheckersAI.DistributedChineseCheckersAI(
-                    self.air,
-                    self.doId,
-                    'chinese',
-                    self.getX(),
-                    self.getY(),
-                    self.getZ() +
-                    2.8300000000000001,
-                    self.getH(),
-                    self.getP(),
+                    self.air, self.doId, 'chinese', self.getX(), self.getY(),
+                    self.getZ() + 2.8300000000000001, self.getH(), self.getP(),
                     self.getR())
-                self.sendUpdate('setZone', [
-                    self.game.zoneId])
+                self.sendUpdate('setZone', [self.game.zoneId])
 
         elif gameNum == 2:
             if x <= 2:
                 if simbase.config.GetBool('want-checkers', 0):
                     self.game = DistributedCheckersAI.DistributedCheckersAI(
-                        self.air,
-                        self.doId,
-                        'checkers',
-                        self.getX(),
+                        self.air, self.doId, 'checkers', self.getX(),
                         self.getY(),
-                        self.getZ() +
-                        2.8300000000000001,
-                        self.getH(),
-                        self.getP(),
-                        self.getR())
-                    self.sendUpdate('setZone', [
-                        self.game.zoneId])
+                        self.getZ() + 2.8300000000000001, self.getH(),
+                        self.getP(), self.getR())
+                    self.sendUpdate('setZone', [self.game.zoneId])
 
         elif x <= 2:
             if simbase.config.GetBool('want-findfour', 0):
                 self.game = DistributedFindFourAI.DistributedFindFourAI(
-                    self.air,
-                    self.doId,
-                    'findFour',
-                    self.getX(),
-                    self.getY(),
-                    self.getZ() +
-                    2.8300000000000001,
-                    self.getH(),
-                    self.getP(),
+                    self.air, self.doId, 'findFour', self.getX(), self.getY(),
+                    self.getZ() + 2.8300000000000001, self.getH(), self.getP(),
                     self.getR())
-                self.sendUpdate('setZone', [
-                    self.game.zoneId])
+                self.sendUpdate('setZone', [self.game.zoneId])
 
     def requestZone(self):
         avId = self.air.getAvatarIdFromSender()
-        self.sendUpdateToAvatarId(avId, 'setZone', [
-            self.game.zoneId])
+        self.sendUpdateToAvatarId(avId, 'setZone', [self.game.zoneId])
 
     def requestGameZone(self):
         if self.hasPicked:
@@ -238,13 +188,11 @@ class DistributedPicnicTableAI(DistributedNodeAI):
                 extraArgs=[avId])
             if self.game:
                 if self.game.fsm.getCurrentState().getName() == 'playing':
-                    self.sendUpdateToAvatarId(avId, 'setGameZone', [
-                        self.checkersZoneId,
-                        1])
+                    self.sendUpdateToAvatarId(avId, 'setGameZone',
+                                              [self.checkersZoneId, 1])
                 else:
-                    self.sendUpdateToAvatarId(avId, 'setGameZone', [
-                        self.checkersZoneId,
-                        0])
+                    self.sendUpdateToAvatarId(avId, 'setGameZone',
+                                              [self.checkersZoneId, 0])
 
     def leaveObserve(self):
         avId = self.air.getAvatarIdFromSender()
@@ -267,7 +215,8 @@ class DistributedPicnicTableAI(DistributedNodeAI):
                 self.acceptExiter(avId)
             else:
                 self.notify.debug(
-                    'Player tried to exit after AI already kicked everyone out')
+                    'Player tried to exit after AI already kicked everyone out'
+                )
         else:
             self.notify.warning(
                 'avId: %s does not exist, but tried to exit picnicTable' %
@@ -277,18 +226,18 @@ class DistributedPicnicTableAI(DistributedNodeAI):
         seatIndex = self.findAvatar(avId)
         if seatIndex is None:
             if avId in self.observers:
-                self.sendUpdateToAvatarId(avId, 'emptySlot', [
-                    avId,
-                    255,
-                    globalClockDelta.getRealNetworkTime()])
+                self.sendUpdateToAvatarId(
+                    avId, 'emptySlot',
+                    [avId, 255,
+                     globalClockDelta.getRealNetworkTime()])
 
         else:
             self.seats[seatIndex] = None
             self.ignore(self.air.getAvatarExitEvent(avId))
-            self.sendUpdate('emptySlot', [
-                avId,
-                seatIndex,
-                globalClockDelta.getRealNetworkTime()])
+            self.sendUpdate(
+                'emptySlot',
+                [avId, seatIndex,
+                 globalClockDelta.getRealNetworkTime()])
             self.getTableState()
             numActive = 0
             for x in self.seats:
@@ -309,10 +258,8 @@ class DistributedPicnicTableAI(DistributedNodeAI):
                     self.hasPicked = False
 
     def _DistributedPicnicTableAI__handleUnexpectedExit(self, avId):
-        self.notify.warning(
-            'Avatar: ' +
-            str(avId) +
-            ' has exited unexpectedly')
+        self.notify.warning('Avatar: ' + str(avId) +
+                            ' has exited unexpectedly')
         seatIndex = self.findAvatar(avId)
         if seatIndex is None:
             pass

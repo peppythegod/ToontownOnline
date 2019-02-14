@@ -5,7 +5,6 @@ from toontown.toonbase import TTLocalizer
 
 
 class InviteInfoBase:
-
     def __init__(self, inviteKey, partyId, status):
         self.inviteKey = inviteKey
         self.partyId = partyId

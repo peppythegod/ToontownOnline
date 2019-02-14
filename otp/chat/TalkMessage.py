@@ -1,21 +1,18 @@
-
 class TalkMessage:
-
-    def __init__(
-            self,
-            messageId,
-            timeStamp,
-            body,
-            senderAvatarId,
-            senderAvatarName,
-            senderAccountId,
-            senderAccountName,
-            receiverAvatarId,
-            receiverAvatarName,
-            receiverAccountId,
-            receiverAccountName,
-            talkType,
-            extraInfo=None):
+    def __init__(self,
+                 messageId,
+                 timeStamp,
+                 body,
+                 senderAvatarId,
+                 senderAvatarName,
+                 senderAccountId,
+                 senderAccountName,
+                 receiverAvatarId,
+                 receiverAvatarName,
+                 receiverAccountId,
+                 receiverAccountName,
+                 talkType,
+                 extraInfo=None):
         self.timeStamp = timeStamp
         self.body = body
         self.senderAvatarId = senderAvatarId

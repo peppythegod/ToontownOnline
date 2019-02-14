@@ -14,15 +14,13 @@ from toontown.toonbase import TTLocalizer
 
 class DistributedLawOfficeElevatorInt(
         DistributedElevatorFloor.DistributedElevatorFloor):
-
     def __init__(self, cr):
         DistributedElevatorFloor.DistributedElevatorFloor.__init__(self, cr)
 
     def generate(self):
         DistributedElevator.DistributedElevator.generate(self)
-        self.accept(
-            'LawOffice_Spec_Loaded',
-            self._DistributedLawOfficeElevatorInt__placeElevator)
+        self.accept('LawOffice_Spec_Loaded',
+                    self._DistributedLawOfficeElevatorInt__placeElevator)
 
     def delete(self):
         self.elevatorModel.removeNode()
@@ -89,5 +87,6 @@ class DistributedLawOfficeElevatorInt(
                 'where': 'factoryInterior',
                 'how': 'teleportIn',
                 'zoneId': zoneId,
-                'hoodId': hoodId}
+                'hoodId': hoodId
+            }
             self.cr.playGame.getPlace().elevator.signalDone(doneStatus)

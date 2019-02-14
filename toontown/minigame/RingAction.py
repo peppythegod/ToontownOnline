@@ -1,5 +1,3 @@
-
-
 from direct.directnotify import DirectNotifyGlobal
 import RingTrack
 
@@ -15,7 +13,6 @@ class RingAction:
 
 
 class RingActionStaticPos(RingAction):
-
     def __init__(self, pos):
         RingAction.__init__(self)
         self._RingActionStaticPos__pos = pos
@@ -25,19 +22,17 @@ class RingActionStaticPos(RingAction):
 
 
 class RingActionFunction(RingAction):
-
     def __init__(self, func, args):
         RingAction.__init__(self)
         self._RingActionFunction__func = func
         self._RingActionFunction__args = args
 
     def eval(self, t):
-        return self._RingActionFunction__func(
-            t, *self._RingActionFunction__args)
+        return self._RingActionFunction__func(t,
+                                              *self._RingActionFunction__args)
 
 
 class RingActionRingTrack(RingAction):
-
     def __init__(self, ringTrack):
         RingAction.__init__(self)
         self._RingActionRingTrack__track = ringTrack

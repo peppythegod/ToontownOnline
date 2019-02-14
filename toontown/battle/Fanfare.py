@@ -21,14 +21,8 @@ def makePanel(toon, showToonName):
         relief=None,
         geom=DGG.getDefaultDialogGeom(),
         geom_color=ToontownGlobals.GlobalDialogColor,
-        geom_scale=(
-            1.75,
-            1,
-            0.75),
-        pos=(
-            0,
-            0,
-            0.58699999999999997))
+        geom_scale=(1.75, 1, 0.75),
+        pos=(0, 0, 0.58699999999999997))
     panel.initialiseoptions(RewardPanel)
     panel.setTransparency(1)
     panel.hide()
@@ -36,10 +30,7 @@ def makePanel(toon, showToonName):
         panel.avNameLabel = DirectLabel(
             parent=panel,
             relief=None,
-            pos=Vec3(
-                0,
-                0,
-                0.29999999999999999),
+            pos=Vec3(0, 0, 0.29999999999999999),
             text=toon.getName(),
             text_scale=0.080000000000000002)
 
@@ -66,44 +57,41 @@ def makeFanfare(delay, toon):
     return doFanfare(delay, toon, None)
 
 
-def makeFanfareWithMessage(
-        delay,
-        toon,
-        showToonName,
-        message,
-        messagePos,
-        messageScale,
-        wordwrap=100):
+def makeFanfareWithMessage(delay,
+                           toon,
+                           showToonName,
+                           message,
+                           messagePos,
+                           messageScale,
+                           wordwrap=100):
     panel = makePanel(toon, showToonName)
     makeMessageBox(panel, message, messagePos, messageScale, wordwrap)
     return doFanfare(delay, toon, panel)
 
 
-def makeFanfareWithImage(
-        delay,
-        toon,
-        showToonName,
-        image,
-        imagePos,
-        imageScale,
-        wordwrap=100):
+def makeFanfareWithImage(delay,
+                         toon,
+                         showToonName,
+                         image,
+                         imagePos,
+                         imageScale,
+                         wordwrap=100):
     panel = makePanel(toon, showToonName)
     makeMessageBox(panel, '', Vec3(0, 0, 0), 1, wordwrap)
     makeImageBox(panel.itemFrame, image, imagePos, imageScale)
     return doFanfare(delay, toon, panel)
 
 
-def makeFanfareWithMessageImage(
-        delay,
-        toon,
-        showToonName,
-        message,
-        messagePos,
-        messageScale,
-        image,
-        imagePos,
-        imageScale,
-        wordwrap=100):
+def makeFanfareWithMessageImage(delay,
+                                toon,
+                                showToonName,
+                                message,
+                                messagePos,
+                                messageScale,
+                                image,
+                                imagePos,
+                                imageScale,
+                                wordwrap=100):
     panel = makePanel(toon, showToonName)
     makeMessageBox(panel, message, messagePos, messageScale, wordwrap)
     makeImageBox(panel.itemFrame, image, imagePos, imageScale)
@@ -126,130 +114,97 @@ def doFanfare(delay, toon, panel):
     partyBallRight.setH(-90)
     partyBallRight.setColorScale(1, 1, 0, 0)
     partyBall.setZ(pos.getZ() + 3.2000000000000002)
-    ballShake1 = Sequence(Parallel(LerpHprInterval(partyBallLeft,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(90,
-                                                                 0,
-                                                                 0),
-                                                   hpr=Vec3(90,
-                                                            10,
-                                                            0),
-                                                   blendType='easeInOut'),
-                                   LerpHprInterval(partyBallRight,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(-90,
-                                                                 0,
-                                                                 0),
-                                                   hpr=Vec3(-90,
-                                                            -10,
-                                                            0),
-                                                   blendType='easeInOut')),
-                          Parallel(LerpHprInterval(partyBallLeft,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(90,
-                                                                 10,
-                                                                 0),
-                                                   hpr=Vec3(90,
-                                                            -10,
-                                                            0),
-                                                   blendType='easeInOut'),
-                                   LerpHprInterval(partyBallRight,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(-90,
-                                                                 -10,
-                                                                 0),
-                                                   hpr=Vec3(-90,
-                                                            10,
-                                                            0),
-                                                   blendType='easeInOut')),
-                          Parallel(LerpHprInterval(partyBallLeft,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(90,
-                                                                 -10,
-                                                                 0),
-                                                   hpr=Vec3(90,
-                                                            0,
-                                                            0),
-                                                   blendType='easeInOut'),
-                                   LerpHprInterval(partyBallRight,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(-90,
-                                                                 10,
-                                                                 0),
-                                                   hpr=Vec3(-90,
-                                                            0,
-                                                            0),
-                                                   blendType='easeInOut')))
-    ballShake2 = Sequence(Parallel(LerpHprInterval(partyBallLeft,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(90,
-                                                                 0,
-                                                                 0),
-                                                   hpr=Vec3(90,
-                                                            -10,
-                                                            0),
-                                                   blendType='easeInOut'),
-                                   LerpHprInterval(partyBallRight,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(-90,
-                                                                 0,
-                                                                 0),
-                                                   hpr=Vec3(-90,
-                                                            10,
-                                                            0),
-                                                   blendType='easeInOut')),
-                          Parallel(LerpHprInterval(partyBallLeft,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(90,
-                                                                 -10,
-                                                                 0),
-                                                   hpr=Vec3(90,
-                                                            10,
-                                                            0),
-                                                   blendType='easeInOut'),
-                                   LerpHprInterval(partyBallRight,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(-90,
-                                                                 10,
-                                                                 0),
-                                                   hpr=Vec3(-90,
-                                                            -10,
-                                                            0),
-                                                   blendType='easeInOut')),
-                          Parallel(LerpHprInterval(partyBallLeft,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(90,
-                                                                 10,
-                                                                 0),
-                                                   hpr=Vec3(90,
-                                                            0,
-                                                            0),
-                                                   blendType='easeInOut'),
-                                   LerpHprInterval(partyBallRight,
-                                                   duration=0.20000000000000001,
-                                                   startHpr=Vec3(-90,
-                                                                 -10,
-                                                                 0),
-                                                   hpr=Vec3(-90,
-                                                            0,
-                                                            0),
-                                                   blendType='easeInOut')))
-    openBall = Parallel(LerpHprInterval(partyBallLeft,
-                                        duration=0.20000000000000001,
-                                        startHpr=Vec3(90,
-                                                      0,
-                                                      0),
-                                        hpr=Vec3(90,
-                                                 30,
-                                                 0)),
-                        LerpHprInterval(partyBallRight,
-                                        duration=0.20000000000000001,
-                                        startHpr=Vec3(-90,
-                                                      0,
-                                                      0),
-                                        hpr=Vec3(-90,
-                                                 30,
-                                                 0)))
+    ballShake1 = Sequence(
+        Parallel(
+            LerpHprInterval(
+                partyBallLeft,
+                duration=0.20000000000000001,
+                startHpr=Vec3(90, 0, 0),
+                hpr=Vec3(90, 10, 0),
+                blendType='easeInOut'),
+            LerpHprInterval(
+                partyBallRight,
+                duration=0.20000000000000001,
+                startHpr=Vec3(-90, 0, 0),
+                hpr=Vec3(-90, -10, 0),
+                blendType='easeInOut')),
+        Parallel(
+            LerpHprInterval(
+                partyBallLeft,
+                duration=0.20000000000000001,
+                startHpr=Vec3(90, 10, 0),
+                hpr=Vec3(90, -10, 0),
+                blendType='easeInOut'),
+            LerpHprInterval(
+                partyBallRight,
+                duration=0.20000000000000001,
+                startHpr=Vec3(-90, -10, 0),
+                hpr=Vec3(-90, 10, 0),
+                blendType='easeInOut')),
+        Parallel(
+            LerpHprInterval(
+                partyBallLeft,
+                duration=0.20000000000000001,
+                startHpr=Vec3(90, -10, 0),
+                hpr=Vec3(90, 0, 0),
+                blendType='easeInOut'),
+            LerpHprInterval(
+                partyBallRight,
+                duration=0.20000000000000001,
+                startHpr=Vec3(-90, 10, 0),
+                hpr=Vec3(-90, 0, 0),
+                blendType='easeInOut')))
+    ballShake2 = Sequence(
+        Parallel(
+            LerpHprInterval(
+                partyBallLeft,
+                duration=0.20000000000000001,
+                startHpr=Vec3(90, 0, 0),
+                hpr=Vec3(90, -10, 0),
+                blendType='easeInOut'),
+            LerpHprInterval(
+                partyBallRight,
+                duration=0.20000000000000001,
+                startHpr=Vec3(-90, 0, 0),
+                hpr=Vec3(-90, 10, 0),
+                blendType='easeInOut')),
+        Parallel(
+            LerpHprInterval(
+                partyBallLeft,
+                duration=0.20000000000000001,
+                startHpr=Vec3(90, -10, 0),
+                hpr=Vec3(90, 10, 0),
+                blendType='easeInOut'),
+            LerpHprInterval(
+                partyBallRight,
+                duration=0.20000000000000001,
+                startHpr=Vec3(-90, 10, 0),
+                hpr=Vec3(-90, -10, 0),
+                blendType='easeInOut')),
+        Parallel(
+            LerpHprInterval(
+                partyBallLeft,
+                duration=0.20000000000000001,
+                startHpr=Vec3(90, 10, 0),
+                hpr=Vec3(90, 0, 0),
+                blendType='easeInOut'),
+            LerpHprInterval(
+                partyBallRight,
+                duration=0.20000000000000001,
+                startHpr=Vec3(-90, -10, 0),
+                hpr=Vec3(-90, 0, 0),
+                blendType='easeInOut')))
+    openBall = Parallel(
+        LerpHprInterval(
+            partyBallLeft,
+            duration=0.20000000000000001,
+            startHpr=Vec3(90, 0, 0),
+            hpr=Vec3(90, 30, 0)),
+        LerpHprInterval(
+            partyBallRight,
+            duration=0.20000000000000001,
+            startHpr=Vec3(-90, 0, 0),
+            hpr=Vec3(-90, 30, 0)))
     confettiNode = fanfareNode.attachNewNode('confetti')
     confettiNode.setScale(3)
     confettiNode.setZ(pos.getZ() + 2.5)
@@ -277,12 +232,8 @@ def doFanfare(delay, toon, panel):
             i += 1
         return seq
 
-    def getScaleBlendIntervals(
-            props,
-            duration,
-            startScale,
-            endScale,
-            blendType):
+    def getScaleBlendIntervals(props, duration, startScale, endScale,
+                               blendType):
         tracks = Parallel()
         for prop in props:
             tracks.append(
@@ -309,9 +260,7 @@ def doFanfare(delay, toon, panel):
     trumpetNode.setTransparency(1)
     trumpetNode.setColor(1, 1, 1, 0)
     trumpturn1 = LerpHprInterval(
-        trumpet1, duration=4, startHpr=Vec3(
-            80, 15, 0), hpr=Vec3(
-            150, 40, 0))
+        trumpet1, duration=4, startHpr=Vec3(80, 15, 0), hpr=Vec3(150, 40, 0))
     trumpturn2 = LerpHprInterval(
         trumpet2, duration=4, startHpr=Vec3(-80, 15, 0), hpr=Vec3(-150, 40, 0))
     trumpetTurn = Parallel(trumpturn1, trumpturn2)
@@ -332,51 +281,54 @@ def doFanfare(delay, toon, panel):
     red_p0.renderer.getColorInterpolationManager().addConstant(
         0.0, 1.0, Vec4(1.0, 0.0, 0.0, 1.0), 1)
     trumpetsAppear = LerpColorInterval(
-        trumpetNode, 0.29999999999999999, startColor=Vec4(
-            1, 1, 0, 0), color=Vec4(
-            1, 1, 0, 1))
+        trumpetNode,
+        0.29999999999999999,
+        startColor=Vec4(1, 1, 0, 0),
+        color=Vec4(1, 1, 0, 1))
     trumpetsVanish = LerpColorInterval(
-        trumpetNode, 0.29999999999999999, startColor=Vec4(
-            1, 1, 0, 1), color=Vec4(
-            1, 1, 0, 0))
-    crabHorn = globalBattleSoundCache.getSound(
-        'King_Crab.mp3')
-    drumroll = globalBattleSoundCache.getSound(
-        'SZ_MM_drumroll.mp3')
+        trumpetNode,
+        0.29999999999999999,
+        startColor=Vec4(1, 1, 0, 1),
+        color=Vec4(1, 1, 0, 0))
+    crabHorn = globalBattleSoundCache.getSound('King_Crab.mp3')
+    drumroll = globalBattleSoundCache.getSound('SZ_MM_drumroll.mp3')
     fanfare = globalBattleSoundCache.getSound('SZ_MM_fanfare.mp3')
     crabHorn.setTime(1.5)
     partyBall.setTransparency(1)
     partyBall.setColorScale(1, 1, 1, 1)
     ballAppear = Parallel(
         LerpColorScaleInterval(
-            partyBallLeft, 0.29999999999999999, startColorScale=Vec4(
-                1, 0, 0, 0), colorScale=Vec4(
-                1, 0, 0, 1)), LerpColorScaleInterval(
-                    partyBallRight, 0.29999999999999999, startColorScale=Vec4(
-                        1, 1, 0, 0), colorScale=Vec4(
-                            1, 1, 0, 1)))
+            partyBallLeft,
+            0.29999999999999999,
+            startColorScale=Vec4(1, 0, 0, 0),
+            colorScale=Vec4(1, 0, 0, 1)),
+        LerpColorScaleInterval(
+            partyBallRight,
+            0.29999999999999999,
+            startColorScale=Vec4(1, 1, 0, 0),
+            colorScale=Vec4(1, 1, 0, 1)))
     ballVanish = Parallel(
         LerpColorScaleInterval(
-            partyBallLeft, 0.29999999999999999, startColorScale=Vec4(
-                1, 0, 0, 1), colorScale=Vec4(
-                1, 0, 0, 0)), LerpColorScaleInterval(
-                    partyBallRight, 0.29999999999999999, startColorScale=Vec4(
-                        1, 1, 0, 1), colorScale=Vec4(
-                            1, 1, 0, 0)))
-    play = Parallel(SoundInterval(crabHorn, startTime=1.5, duration=4.0, node=toon), Sequence(Wait(0.25), longshake([
-        trumpet1,
-        trumpet2], 3, 0.20000000000000001), Wait(0.5), longshake([
-            trumpet1,
-            trumpet2], 3, 0.20000000000000001), Wait(0.5), longshake([
-                trumpet1,
-                trumpet2], 9, 0.10000000000000001), longshake([
-                    trumpet1,
-                    trumpet2], 3, 0.20000000000000001)))
+            partyBallLeft,
+            0.29999999999999999,
+            startColorScale=Vec4(1, 0, 0, 1),
+            colorScale=Vec4(1, 0, 0, 0)),
+        LerpColorScaleInterval(
+            partyBallRight,
+            0.29999999999999999,
+            startColorScale=Vec4(1, 1, 0, 1),
+            colorScale=Vec4(1, 1, 0, 0)))
+    play = Parallel(
+        SoundInterval(crabHorn, startTime=1.5, duration=4.0, node=toon),
+        Sequence(
+            Wait(0.25), longshake([trumpet1, trumpet2], 3,
+                                  0.20000000000000001), Wait(0.5),
+            longshake([trumpet1, trumpet2], 3, 0.20000000000000001), Wait(0.5),
+            longshake([trumpet1, trumpet2], 9, 0.10000000000000001),
+            longshake([trumpet1, trumpet2], 3, 0.20000000000000001)))
     killParticles = Parallel(
-        Func(
-            blue_p0.setLitterSize, 0), Func(
-            red_p0.setLitterSize, 0), Func(
-                yellow_p0.setLitterSize, 0))
+        Func(blue_p0.setLitterSize, 0), Func(red_p0.setLitterSize, 0),
+        Func(yellow_p0.setLitterSize, 0))
     p = Parallel(
         ParticleInterval(
             confettiBlue,
@@ -397,53 +349,26 @@ def doFanfare(delay, toon, panel):
             duration=3,
             cleanup=True))
     pOff = Parallel(
-        Func(
-            confettiBlue.remove), Func(
-            confettiRed.remove), Func(
-                confettiYellow.remove))
+        Func(confettiBlue.remove), Func(confettiRed.remove),
+        Func(confettiYellow.remove))
     partInterval = Parallel(
-        p, Sequence(
-            Wait(1.7), killParticles, Wait(1.3), pOff, Func(
-                p.finish)), Sequence(
-            Wait(3), Parallel(ballVanish)))
+        p, Sequence(Wait(1.7), killParticles, Wait(1.3), pOff, Func(p.finish)),
+        Sequence(Wait(3), Parallel(ballVanish)))
     seq1 = Parallel(
         Sequence(
-            Wait(
-                delay + 4.0999999999999996),
-            SoundInterval(
-                drumroll,
-                node=toon),
-            Wait(0.25),
-            SoundInterval(
-                fanfare,
-                node=toon)),
+            Wait(delay + 4.0999999999999996), SoundInterval(
+                drumroll, node=toon), Wait(0.25),
+            SoundInterval(fanfare, node=toon)),
         Sequence(
-            Wait(delay),
-            trumpetsAppear,
-            Wait(3),
-            ballAppear,
-            Wait(0.5),
-            ballShake1,
-            Wait(0.10000000000000001),
-            ballShake2,
-            Wait(0.20000000000000001),
-            Wait(0.10000000000000001),
-            Parallel(
-                openBall,
-                partInterval),
-            Func(
-                fanfareNode.remove)))
+            Wait(delay), trumpetsAppear, Wait(3), ballAppear, Wait(0.5),
+            ballShake1, Wait(0.10000000000000001), ballShake2,
+            Wait(0.20000000000000001), Wait(0.10000000000000001),
+            Parallel(openBall, partInterval), Func(fanfareNode.remove)))
     seq = Parallel(
         seq1,
         Sequence(
-            Wait(delay),
-            Parallel(
-                trumpetTurn,
-                Sequence(
-                    Wait(0.5),
-                    play)),
-            Wait(0.5),
-            trumpetsVanish))
+            Wait(delay), Parallel(trumpetTurn, Sequence(Wait(0.5), play)),
+            Wait(0.5), trumpetsVanish))
     if panel is not None:
         return (seq, panel)
 

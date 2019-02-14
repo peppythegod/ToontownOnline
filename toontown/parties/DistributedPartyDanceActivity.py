@@ -8,7 +8,8 @@ class DistributedPartyDanceActivity(DistributedPartyDanceActivityBase):
 
     def __init__(self, cr):
         DistributedPartyDanceActivityBase.__init__(
-            self, cr, PartyGlobals.ActivityIds.PartyDance, PartyGlobals.DancePatternToAnims)
+            self, cr, PartyGlobals.ActivityIds.PartyDance,
+            PartyGlobals.DancePatternToAnims)
 
     def getInstructions(self):
         return TTLocalizer.PartyDanceActivityInstructions

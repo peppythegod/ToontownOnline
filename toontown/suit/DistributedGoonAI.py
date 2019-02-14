@@ -44,8 +44,8 @@ class DistributedGoonAI(
         DistributedCrushableEntityAI.DistributedCrushableEntityAI.generate(
             self)
         if self.level:
-            self.level.setEntityCreateCallback(
-                self.parentEntId, self.startGoon)
+            self.level.setEntityCreateCallback(self.parentEntId,
+                                               self.startGoon)
 
     def startGoon(self):
         ts = 100 * random.random()
@@ -60,10 +60,7 @@ class DistributedGoonAI(
             5,
             self.sendMovie,
             self.taskName('resumeWalk'),
-            extraArgs=(
-                GOON_MOVIE_WALK,
-                avId,
-                pauseTime))
+            extraArgs=(GOON_MOVIE_WALK, avId, pauseTime))
 
     def requestStunned(self, pauseTime):
         avId = self.air.getAvatarIdFromSender()
@@ -74,10 +71,7 @@ class DistributedGoonAI(
             self.STUN_TIME,
             self.sendMovie,
             self.taskName('recovery'),
-            extraArgs=(
-                GOON_MOVIE_RECOVERY,
-                avId,
-                pauseTime))
+            extraArgs=(GOON_MOVIE_RECOVERY, avId, pauseTime))
 
     def requestResync(self, task=None):
         self.notify.debug('resyncGoon')
@@ -92,8 +86,8 @@ class DistributedGoonAI(
             else:
                 self.walkTrackTime = pauseTime
             self.notify.debug(
-                'GOON_MOVIE_WALK doId = %s, pathStartTime = %s, walkTrackTime = %s' %
-                (self.doId, self.pathStartTime, self.walkTrackTime))
+                'GOON_MOVIE_WALK doId = %s, pathStartTime = %s, walkTrackTime = %s'
+                % (self.doId, self.pathStartTime, self.walkTrackTime))
 
         if type == GOON_MOVIE_WALK or type == GOON_MOVIE_SYNC:
             curT = globalClock.getFrameTime()
@@ -103,10 +97,9 @@ class DistributedGoonAI(
                 pathT = pathT % self.totalPathTime
 
             self.sendUpdate('setMovie', [
-                type,
-                avId,
-                pathT,
-                ClockDelta.globalClockDelta.localToNetworkTime(curT)])
+                type, avId, pathT,
+                ClockDelta.globalClockDelta.localToNetworkTime(curT)
+            ])
             taskMgr.remove(self.taskName('sync'))
             taskMgr.doMethodLater(
                 self.UPDATE_TIMESTAMP_INTERVAL,
@@ -115,10 +108,9 @@ class DistributedGoonAI(
                 extraArgs=None)
         else:
             self.sendUpdate('setMovie', [
-                type,
-                avId,
-                pauseTime,
-                ClockDelta.globalClockDelta.getFrameNetworkTime()])
+                type, avId, pauseTime,
+                ClockDelta.globalClockDelta.getFrameNetworkTime()
+            ])
 
     def updateGrid(self):
         if not self.parameterized:
@@ -161,30 +153,22 @@ class DistributedGoonAI(
             self.notify.warning('Invalid path index given, using 0')
             pathIndex = 0
 
-        pathPts = pathData[pathIndex] + [
-            pathData[pathIndex][0]]
+        pathPts = pathData[pathIndex] + [pathData[pathIndex][0]]
         invVel = 1.0 / self.velocity
         t = 0
-        self.tSeg = [
-            t]
+        self.tSeg = [t]
         self.pathSeg = []
         for i in range(len(pathPts) - 1):
             ptA = pathPts[i]
             ptB = pathPts[i + 1]
             t += T_TURN
             self.tSeg.append(t)
-            self.pathSeg.append([
-                Vec3(0, 0, 0),
-                0,
-                ptA])
+            self.pathSeg.append([Vec3(0, 0, 0), 0, ptA])
             seg = Vec3(ptB - ptA)
             segLength = seg.length()
             t += invVel * segLength
             self.tSeg.append(t)
-            self.pathSeg.append([
-                seg,
-                segLength,
-                ptA])
+            self.pathSeg.append([seg, segLength, ptA])
 
         self.totalPathTime = t
         self.pathPts = pathPts
@@ -212,8 +196,7 @@ class DistributedGoonAI(
         self.velocity = velocity
 
     def d_setVelocity(self, velocity):
-        self.sendUpdate('setVelocity', [
-            velocity])
+        self.sendUpdate('setVelocity', [velocity])
 
     def getVelocity(self):
         return self.velocity
@@ -226,8 +209,7 @@ class DistributedGoonAI(
         self.hFov = hFov
 
     def d_setHFov(self, hFov):
-        self.sendUpdate('setHFov', [
-            hFov])
+        self.sendUpdate('setHFov', [hFov])
 
     def getHFov(self):
         return self.hFov
@@ -240,8 +222,7 @@ class DistributedGoonAI(
         self.attackRadius = attackRadius
 
     def d_setAttackRadius(self, attackRadius):
-        self.sendUpdate('setAttackRadius', [
-            attackRadius])
+        self.sendUpdate('setAttackRadius', [attackRadius])
 
     def getAttackRadius(self):
         return self.attackRadius
@@ -254,8 +235,7 @@ class DistributedGoonAI(
         self.strength = strength
 
     def d_setStrength(self, strength):
-        self.sendUpdate('setStrength', [
-            strength])
+        self.sendUpdate('setStrength', [strength])
 
     def getStrength(self):
         return self.strength
@@ -268,8 +248,7 @@ class DistributedGoonAI(
         self.scale = scale
 
     def d_setGoonScale(self, scale):
-        self.sendUpdate('setGoonScale', [
-            scale])
+        self.sendUpdate('setGoonScale', [scale])
 
     def getGoonScale(self):
         return self.scale
@@ -286,9 +265,5 @@ class DistributedGoonAI(
         self.setGoonScale(scale)
 
     def d_setupGoon(self, velocity, hFov, attackRadius, strength, scale):
-        self.sendUpdate('setupGoon', [
-            velocity,
-            hFov,
-            attackRadius,
-            strength,
-            scale])
+        self.sendUpdate('setupGoon',
+                        [velocity, hFov, attackRadius, strength, scale])

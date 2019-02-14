@@ -14,12 +14,14 @@ class HydrantTwoAnimatedProp(ZeroAnimatedProp.ZeroAnimatedProp):
         3: ('tt_a_ara_ttc_hydrant_firstMoveJump', 8 * PauseTimeMult),
         4: ('tt_a_ara_ttc_hydrant_firstMoveJumpBalance', 6 * PauseTimeMult),
         5: ('tt_a_ara_ttc_hydrant_firstMoveArmUp3', 4 * PauseTimeMult),
-        6: ('tt_a_ara_ttc_hydrant_firstMoveJumpSpin', 2 * PauseTimeMult)}
+        6: ('tt_a_ara_ttc_hydrant_firstMoveJumpSpin', 2 * PauseTimeMult)
+    }
     PhaseWeStartAnimating = 5
 
     def __init__(self, node):
         ZeroAnimatedProp.ZeroAnimatedProp.__init__(
-            self, node, 'hydrant', self.PhaseInfo, ToontownGlobals.HYDRANT_ZERO_HOLIDAY)
+            self, node, 'hydrant', self.PhaseInfo,
+            ToontownGlobals.HYDRANT_ZERO_HOLIDAY)
 
     def startIfNeeded(self):
 

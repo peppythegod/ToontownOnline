@@ -5,7 +5,8 @@ GlobalEntities = {
         'name': 'LevelMgr',
         'comment': '',
         'parentEntId': 0,
-        'modelFilename': 'phase_10/models/cogHQ/EndVault.bam'},
+        'modelFilename': 'phase_10/models/cogHQ/EndVault.bam'
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -13,7 +14,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -21,15 +23,15 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10000: {
         'type': 'cogdoBoardroomGameSettings',
         'name': '<unnamed>',
         'comment': '',
         'parentEntId': 0,
-        'TimerScale': 0.50287027196836931}}
+        'TimerScale': 0.50287027196836931
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

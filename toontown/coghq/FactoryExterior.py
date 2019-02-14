@@ -18,65 +18,42 @@ class FactoryExterior(BattlePlace.BattlePlace):
 
     def load(self):
         self.fsm = ClassicFSM.ClassicFSM('FactoryExterior', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'walk',
-                'tunnelIn',
-                'teleportIn',
-                'doorIn']),
+            State.State('start', self.enterStart, self.exitStart,
+                        ['walk', 'tunnelIn', 'teleportIn', 'doorIn']),
             State.State('walk', self.enterWalk, self.exitWalk, [
-                'stickerBook',
-                'teleportOut',
-                'tunnelOut',
-                'DFA',
-                'doorOut',
-                'elevator',
-                'stopped',
-                'WaitForBattle',
-                'battle']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk',
-                'teleportOut',
-                'elevator']),
-            State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, [
-                'walk',
-                'DFA',
-                'WaitForBattle',
-                'battle',
-                'elevator']),
-            State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, [
-                'battle',
-                'walk']),
-            State.State('battle', self.enterBattle, self.exitBattle, [
-                'walk',
-                'teleportOut',
-                'died']),
-            State.State('DFA', self.enterDFA, self.exitDFA, [
-                'DFAReject',
-                'teleportOut',
-                'tunnelOut']),
-            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, [
-                'walk']),
-            State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
-                'walk']),
-            State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, [
-                'teleportIn',
-                'final',
-                'WaitForBattle']),
-            State.State('doorIn', self.enterDoorIn, self.exitDoorIn, [
-                'walk']),
-            State.State('doorOut', self.enterDoorOut, self.exitDoorOut, [
-                'walk']),
-            State.State('died', self.enterDied, self.exitDied, [
-                'quietZone']),
-            State.State('tunnelIn', self.enterTunnelIn, self.exitTunnelIn, [
-                'walk']),
-            State.State('tunnelOut', self.enterTunnelOut, self.exitTunnelOut, [
-                'final']),
-            State.State('elevator', self.enterElevator, self.exitElevator, [
-                'walk',
-                'stopped']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+                'stickerBook', 'teleportOut', 'tunnelOut', 'DFA', 'doorOut',
+                'elevator', 'stopped', 'WaitForBattle', 'battle'
+            ]),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk', 'teleportOut', 'elevator']),
+            State.State(
+                'stickerBook', self.enterStickerBook, self.exitStickerBook,
+                ['walk', 'DFA', 'WaitForBattle', 'battle', 'elevator']),
+            State.State('WaitForBattle', self.enterWaitForBattle,
+                        self.exitWaitForBattle, ['battle', 'walk']),
+            State.State('battle', self.enterBattle, self.exitBattle,
+                        ['walk', 'teleportOut', 'died']),
+            State.State('DFA', self.enterDFA, self.exitDFA,
+                        ['DFAReject', 'teleportOut', 'tunnelOut']),
+            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject,
+                        ['walk']),
+            State.State('teleportIn', self.enterTeleportIn,
+                        self.exitTeleportIn, ['walk']),
+            State.State('teleportOut', self.enterTeleportOut,
+                        self.exitTeleportOut,
+                        ['teleportIn', 'final', 'WaitForBattle']),
+            State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk']),
+            State.State('doorOut', self.enterDoorOut, self.exitDoorOut,
+                        ['walk']),
+            State.State('died', self.enterDied, self.exitDied, ['quietZone']),
+            State.State('tunnelIn', self.enterTunnelIn, self.exitTunnelIn,
+                        ['walk']),
+            State.State('tunnelOut', self.enterTunnelOut, self.exitTunnelOut,
+                        ['final']),
+            State.State('elevator', self.enterElevator, self.exitElevator,
+                        ['walk', 'stopped']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
         self.parentFSM.getStateNamed('factoryExterior').addChild(self.fsm)
         BattlePlace.BattlePlace.load(self)
 
@@ -90,23 +67,19 @@ class FactoryExterior(BattlePlace.BattlePlace):
         BattlePlace.BattlePlace.enter(self)
         self.fsm.enterInitialState()
         base.playMusic(
-            self.loader.music,
-            looping=1,
-            volume=0.80000000000000004)
+            self.loader.music, looping=1, volume=0.80000000000000004)
         self.loader.geom.reparentTo(render)
-        self.nodeList = [
-            self.loader.geom]
+        self.nodeList = [self.loader.geom]
         self.loader.hood.startSky()
-        self._telemLimiter = TLGatherAllAvs(
-            'FactoryExterior', RotationLimitToH)
+        self._telemLimiter = TLGatherAllAvs('FactoryExterior',
+                                            RotationLimitToH)
         self.accept('doorDoneEvent', self.handleDoorDoneEvent)
         self.accept('DistributedDoor_doorTrigger', self.handleDoorTrigger)
         NametagGlobals.setMasterArrowsOn(1)
         self.tunnelOriginList = base.cr.hoodMgr.addLinkTunnelHooks(
             self, self.nodeList, self.zoneId)
         how = requestStatus['how']
-        self.fsm.request(how, [
-            requestStatus])
+        self.fsm.request(how, [requestStatus])
 
     def exit(self):
         self._telemLimiter.destroy()
@@ -143,8 +116,7 @@ class FactoryExterior(BattlePlace.BattlePlace):
         avId = requestStatus['avId']
         shardId = requestStatus['shardId']
         if hoodId == self.loader.hood.hoodId and zoneId == self.zoneId and shardId is None:
-            self.fsm.request('teleportIn', [
-                requestStatus])
+            self.fsm.request('teleportIn', [requestStatus])
         elif hoodId == ToontownGlobals.MyEstate:
             self.getEstateZoneAndGoHome(requestStatus)
         else:
@@ -157,8 +129,7 @@ class FactoryExterior(BattlePlace.BattlePlace):
     def enterElevator(self, distElevator, skipDFABoard=0):
         self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
         self.elevator = Elevator.Elevator(
-            self.fsm.getStateNamed('elevator'),
-            self.elevatorDoneEvent,
+            self.fsm.getStateNamed('elevator'), self.elevatorDoneEvent,
             distElevator)
         if skipDFABoard:
             self.elevator.skipDFABoard = 1
@@ -174,16 +145,15 @@ class FactoryExterior(BattlePlace.BattlePlace):
         del self.elevator
 
     def detectedElevatorCollision(self, distElevator):
-        self.fsm.request('elevator', [
-            distElevator])
+        self.fsm.request('elevator', [distElevator])
 
     def handleElevatorDone(self, doneStatus):
         self.notify.debug('handling elevator done event')
         where = doneStatus['where']
         if where == 'reject':
             if hasattr(
-                    base.localAvatar,
-                    'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                    base.localAvatar, 'elevatorNotifier'
+            ) and base.localAvatar.elevatorNotifier.isNotifierOpen():
                 pass
             else:
                 self.fsm.request('walk')
@@ -196,7 +166,5 @@ class FactoryExterior(BattlePlace.BattlePlace):
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleElevatorDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleElevatorDone')

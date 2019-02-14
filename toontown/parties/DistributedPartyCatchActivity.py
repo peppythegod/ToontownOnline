@@ -25,9 +25,8 @@ from toontown.parties.DistributedPartyCannonActivity import DistributedPartyCann
 from toontown.parties.activityFSMs import CatchActivityFSM
 
 
-class DistributedPartyCatchActivity(
-        DistributedPartyActivity,
-        DistributedPartyCatchActivityBase):
+class DistributedPartyCatchActivity(DistributedPartyActivity,
+                                    DistributedPartyCatchActivityBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedPartyCatchActivity')
     DropTaskName = 'dropSomething'
@@ -38,16 +37,12 @@ class DistributedPartyCatchActivity(
         'coconut': TTLocalizer.PartyCatchActivityCoconuts,
         'watermelon': TTLocalizer.PartyCatchActivityWatermelons,
         'pineapple': TTLocalizer.PartyCatchActivityPineapples,
-        'anvil': TTLocalizer.PartyCatchActivityAnvils}
+        'anvil': TTLocalizer.PartyCatchActivityAnvils
+    }
 
     class Generation:
-
-        def __init__(
-                self,
-                generation,
-                startTime,
-                startNetworkTime,
-                numPlayers):
+        def __init__(self, generation, startTime, startNetworkTime,
+                     numPlayers):
             self.generation = generation
             self.startTime = startTime
             self.startNetworkTime = startNetworkTime
@@ -74,7 +69,8 @@ class DistributedPartyCatchActivity(
 
     def getInstructions(self):
         return TTLocalizer.PartyCatchActivityInstructions % {
-            'badThing': self.DropObjectPlurals['anvil']}
+            'badThing': self.DropObjectPlurals['anvil']
+        }
 
     def generate(self):
         DistributedPartyActivity.generate(self)
@@ -94,12 +90,8 @@ class DistributedPartyCatchActivity(
 
         return self._orderedGenerations[self._orderedGenerationIndex]
 
-    def _addGeneration(
-            self,
-            generation,
-            startTime,
-            startNetworkTime,
-            numPlayers):
+    def _addGeneration(self, generation, startTime, startNetworkTime,
+                       numPlayers):
         pass
 
     def _removeGeneration(self, generation):
@@ -129,7 +121,8 @@ class DistributedPartyCatchActivity(
                 print {
                     0: 'SPOTS PER PLAYER',
                     1: 'DROPS PER MINUTE PER SPOT DURING NORMAL DROP PERIOD',
-                    2: 'DROPS PER MINUTE PER PLAYER DURING NORMAL DROP PERIOD'}[o]
+                    2: 'DROPS PER MINUTE PER PLAYER DURING NORMAL DROP PERIOD'
+                }[o]
                 for i in xrange(1, self.FallRateCap_Players + 10):
                     self.defineConstants(forceNumPlayers=i)
                     numDropLocations = self.DropRows * self.DropColumns
@@ -151,18 +144,15 @@ class DistributedPartyCatchActivity(
         self.treesAndFence = loader.loadModel(
             'phase_13/models/parties/%s' % arenaModel)
         self.treesAndFence.setScale(0.90000000000000002)
-        self.treesAndFence.find(
-            '**/fence_floor').setPos(0.0, 0.0, 0.10000000000000001)
+        self.treesAndFence.find('**/fence_floor').setPos(
+            0.0, 0.0, 0.10000000000000001)
         self.treesAndFence.reparentTo(self.root)
         ground = self.treesAndFence.find('**/groundPlane')
         ground.setBin('ground', 1)
         DistributedPartyActivity.load(self)
         exitText = TextNode('PartyCatchExitText')
-        exitText.setCardAsMargin(
-            0.10000000000000001,
-            0.10000000000000001,
-            0.10000000000000001,
-            0.10000000000000001)
+        exitText.setCardAsMargin(0.10000000000000001, 0.10000000000000001,
+                                 0.10000000000000001, 0.10000000000000001)
         exitText.setCardDecal(True)
         exitText.setCardColor(1.0, 1.0, 1.0, 0.0)
         exitText.setText(TTLocalizer.PartyCatchActivityExit)
@@ -184,9 +174,8 @@ class DistributedPartyCatchActivity(
         self.avatarNodePath = NodePath('PartyCatchAvatarNodePath')
         self.avatarNodePath.reparentTo(self.root)
         self._avatarNodePathParentToken = 3
-        base.cr.parentMgr.registerParent(
-            self._avatarNodePathParentToken,
-            self.avatarNodePath)
+        base.cr.parentMgr.registerParent(self._avatarNodePathParentToken,
+                                         self.avatarNodePath)
         self.toonSDs = {}
         self.dropShadow = loader.loadModelOnce(
             'phase_3/models/props/drop_shadow')
@@ -217,7 +206,8 @@ class DistributedPartyCatchActivity(
                 'pear': 0.5,
                 'coconut': 0.69999999999999996,
                 'watermelon': 0.59999999999999998,
-                'pineapple': 0.45000000000000001}
+                'pineapple': 0.45000000000000001
+            }
             if objType.name in modelScales:
                 model.setScale(modelScales[objType.name])
 
@@ -269,7 +259,7 @@ class DistributedPartyCatchActivity(
         del self.sndPerfect
 
     def setStartTimestamp(self, timestamp32):
-        self.notify.info('setStartTimestamp(%s)' % (timestamp32,))
+        self.notify.info('setStartTimestamp(%s)' % (timestamp32, ))
         self._startTimestamp = globalClockDelta.networkToLocalTime(
             timestamp32, bits=32)
 
@@ -290,8 +280,7 @@ class DistributedPartyCatchActivity(
             toonSD.load()
 
         self.notify.debug(
-            'handleToonJoined : currentState = %s' %
-            self.activityFSM.state)
+            'handleToonJoined : currentState = %s' % self.activityFSM.state)
         self.cr.doId2do[toonId].useLOD(500)
         if self.activityFSM.state == 'Active':
             if toonId in self.toonSDs:
@@ -328,16 +317,13 @@ class DistributedPartyCatchActivity(
     def _enableCollisions(self):
         DistributedPartyActivity._enableCollisions(self)
         self._enteredTree = False
-        self.accept(
-            'enter' + self.catchTreeZoneEvent,
-            self._toonMayHaveEnteredTree)
-        self.accept(
-            'again' + self.catchTreeZoneEvent,
-            self._toonMayHaveEnteredTree)
+        self.accept('enter' + self.catchTreeZoneEvent,
+                    self._toonMayHaveEnteredTree)
+        self.accept('again' + self.catchTreeZoneEvent,
+                    self._toonMayHaveEnteredTree)
         self.accept('exit' + self.catchTreeZoneEvent, self._toonExitedTree)
-        self.accept(
-            DistributedPartyCannonActivity.LOCAL_TOON_LANDED_EVENT,
-            self._handleCannonLanded)
+        self.accept(DistributedPartyCannonActivity.LOCAL_TOON_LANDED_EVENT,
+                    self._handleCannonLanded)
 
     def _disableCollisions(self):
         self.ignore(DistributedPartyCannonActivity.LOCAL_TOON_LANDED_EVENT)
@@ -364,11 +350,9 @@ class DistributedPartyCatchActivity(
 
     def _toonEnteredTree(self, collEntry):
         self.notify.debug(
-            '_toonEnteredTree : avid = %s' %
-            base.localAvatar.doId)
+            '_toonEnteredTree : avid = %s' % base.localAvatar.doId)
         self.notify.debug(
-            '_toonEnteredTree : currentState = %s' %
-            self.activityFSM.state)
+            '_toonEnteredTree : currentState = %s' % self.activityFSM.state)
         if self.isLocalToonInActivity():
             return None
 
@@ -383,12 +367,12 @@ class DistributedPartyCatchActivity(
 
     def _toonExitedTree(self, collEntry):
         self.notify.debug(
-            '_toonExitedTree : avid = %s' %
-            base.localAvatar.doId)
+            '_toonExitedTree : avid = %s' % base.localAvatar.doId)
         self._enteredTree = False
         if hasattr(
-                base.cr.playGame.getPlace(),
-                'fsm') and self.activityFSM.state == 'Active' and self.isLocalToonInActivity():
+                base.cr.playGame.getPlace(), 'fsm'
+        ) and self.activityFSM.state == 'Active' and self.isLocalToonInActivity(
+        ):
             if base.localAvatar.doId in self.toonSDs:
                 self.takeLocalAvatarOutOfActivity()
                 self.toonSDs[base.localAvatar.doId].fsm.request('notPlaying')
@@ -396,9 +380,10 @@ class DistributedPartyCatchActivity(
             self.d_toonExitDemand()
 
     def setToonsPlaying(self, toonIds):
-        self.notify.info('setToonsPlaying(%s)' % (toonIds,))
+        self.notify.info('setToonsPlaying(%s)' % (toonIds, ))
         DistributedPartyActivity.setToonsPlaying(self, toonIds)
-        if self.isLocalToonInActivity() and base.localAvatar.doId not in toonIds:
+        if self.isLocalToonInActivity(
+        ) and base.localAvatar.doId not in toonIds:
             if base.localAvatar.doId in self.toonSDs:
                 self.takeLocalAvatarOutOfActivity()
                 self.toonSDs[base.localAvatar.doId].fsm.request('notPlaying')
@@ -447,10 +432,10 @@ class DistributedPartyCatchActivity(
             g = 2.0 * (x - x_0 - v_0 * t) / t * t
             DistributedPartyCatchActivity.notify.debug('gravity=%s' % g)
             objType.trajectory = Trajectory(
-                0, Vec3(
-                    0, 0, x_0), Vec3(
-                    0, 0, v_0), gravMult=abs(
-                    g / Trajectory.gravity))
+                0,
+                Vec3(0, 0, x_0),
+                Vec3(0, 0, v_0),
+                gravMult=abs(g / Trajectory.gravity))
             objType.fallDuration = objType.onscreenDuration + self.OffscreenTime
 
     def grid2world(self, column, row):
@@ -464,11 +449,7 @@ class DistributedPartyCatchActivity(
 
     def showPosts(self):
         self.hidePosts()
-        self.posts = [
-            Toon.Toon(),
-            Toon.Toon(),
-            Toon.Toon(),
-            Toon.Toon()]
+        self.posts = [Toon.Toon(), Toon.Toon(), Toon.Toon(), Toon.Toon()]
         for i in range(len(self.posts)):
             tree = self.posts[i]
             tree.reparentTo(render)
@@ -514,8 +495,8 @@ class DistributedPartyCatchActivity(
 
     def handleToonDisabled(self, avId):
         DistributedPartyCatchActivity.notify.debug('handleToonDisabled')
-        DistributedPartyCatchActivity.notify.debug(
-            'avatar ' + str(avId) + ' disabled')
+        DistributedPartyCatchActivity.notify.debug('avatar ' + str(avId) +
+                                                   ' disabled')
         if avId in self.toonSDs:
             self.toonSDs[avId].exit(unexpectedExit=True)
 
@@ -538,11 +519,13 @@ class DistributedPartyCatchActivity(
                         self._toonEnteredTree(None)
 
     def putLocalAvatarInActivity(self):
-        if base.cr.playGame.getPlace() and hasattr(base.cr.playGame.getPlace(), 'fsm'):
-            base.cr.playGame.getPlace().fsm.request('activity', [
-                False])
+        if base.cr.playGame.getPlace() and hasattr(base.cr.playGame.getPlace(),
+                                                   'fsm'):
+            base.cr.playGame.getPlace().fsm.request('activity', [False])
         else:
-            self.notify.info("Avoided crash: toontown.parties.DistributedPartyCatchActivity:632, toontown.parties.DistributedPartyCatchActivity:1198, toontown.parties.activityFSMMixins:49, direct.fsm.FSM:423, AttributeError: 'NoneType' object has no attribute 'fsm'")
+            self.notify.info(
+                "Avoided crash: toontown.parties.DistributedPartyCatchActivity:632, toontown.parties.DistributedPartyCatchActivity:1198, toontown.parties.activityFSMMixins:49, direct.fsm.FSM:423, AttributeError: 'NoneType' object has no attribute 'fsm'"
+            )
         base.localAvatar.stopUpdateSmartCamera()
         camera.reparentTo(self.treesAndFence)
         camera.setPosHpr(0.0, -63.0, 30.0, 0.0, -20.0, 0.0)
@@ -585,16 +568,13 @@ class DistributedPartyCatchActivity(
         self.ltLegsCollNode.addSolid(CollisionSphere(0, 0, radius, radius))
         self.ltHeadCollNode.addSolid(CollisionSphere(0, 0, 0, radius))
         self.ltLHandCollNode.addSolid(
-            CollisionSphere(
-                0, 0, 0, 2 * radius / 3.0))
+            CollisionSphere(0, 0, 0, 2 * radius / 3.0))
         self.ltRHandCollNode.addSolid(
-            CollisionSphere(
-                0, 0, 0, 2 * radius / 3.0))
+            CollisionSphere(0, 0, 0, 2 * radius / 3.0))
         self.toonCollNodes = [
-            legsCollNodepath,
-            headCollNodepath,
-            lHandCollNodepath,
-            rHandCollNodepath]
+            legsCollNodepath, headCollNodepath, lHandCollNodepath,
+            rHandCollNodepath
+        ]
 
     def destroyCatchCollisions(self):
         if not hasattr(self, 'ltLegsCollNode'):
@@ -615,19 +595,15 @@ class DistributedPartyCatchActivity(
         pass
 
     def _DistributedPartyCatchActivity__handleCatch(self, generation, objNum):
-        DistributedPartyCatchActivity.notify.debug('catch: %s' % [
-            generation,
-            objNum])
+        DistributedPartyCatchActivity.notify.debug(
+            'catch: %s' % [generation, objNum])
         if base.localAvatar.doId not in self.toonIds:
             return None
 
         self.showCatch(base.localAvatar.doId, generation, objNum)
         objName = self._id2gen[generation].droppedObjNames[objNum]
         objTypeId = PartyGlobals.Name2DOTypeId[objName]
-        self.sendUpdate('claimCatch', [
-            generation,
-            objNum,
-            objTypeId])
+        self.sendUpdate('claimCatch', [generation, objNum, objTypeId])
         self.finishDropInterval(generation, objNum)
 
     def showCatch(self, avId, generation, objNum):
@@ -659,12 +635,10 @@ class DistributedPartyCatchActivity(
 
     def setObjectCaught(self, avId, generation, objNum):
         self.notify.info(
-            'setObjectCaught(%s, %s, %s)' %
-            (avId, generation, objNum))
+            'setObjectCaught(%s, %s, %s)' % (avId, generation, objNum))
         if self.activityFSM.state != 'Active':
             DistributedPartyCatchActivity.notify.warning(
-                'ignoring msg: object %s caught by %s' %
-                (objNum, avId))
+                'ignoring msg: object %s caught by %s' % (objNum, avId))
             return None
 
         isLocal = avId == base.localAvatar.doId
@@ -693,7 +667,7 @@ class DistributedPartyCatchActivity(
                 dropInterval.finish()
 
     def setGenerations(self, generations):
-        self.notify.info('setGenerations(%s)' % (generations,))
+        self.notify.info('setGenerations(%s)' % (generations, ))
         gen2t = {}
         gen2nt = {}
         gen2np = {}
@@ -722,23 +696,15 @@ class DistributedPartyCatchActivity(
         if gen.hasBeenScheduled:
             return None
 
-        fruitIndex = int(
-            (gen.startTime +
-             0.5 *
-             self.DropPeriod) /
-            PartyGlobals.CatchActivityDuration)
+        fruitIndex = int((gen.startTime + 0.5 * self.DropPeriod) /
+                         PartyGlobals.CatchActivityDuration)
         fruitNames = [
-            'apple',
-            'orange',
-            'pear',
-            'coconut',
-            'watermelon',
-            'pineapple']
+            'apple', 'orange', 'pear', 'coconut', 'watermelon', 'pineapple'
+        ]
         fruitName = fruitNames[fruitIndex % len(fruitNames)]
         rng = RandomNumGen(genId + self._generationSeedBase)
-        gen.droppedObjNames = [
-            fruitName] * self.numFruits + [
-            'anvil'] * self.numAnvils
+        gen.droppedObjNames = [fruitName
+                               ] * self.numFruits + ['anvil'] * self.numAnvils
         rng.shuffle(gen.droppedObjNames)
         dropPlacer = PartyRegionDropPlacer(
             self,
@@ -813,26 +779,22 @@ class DistributedPartyCatchActivity(
     def getDropIval(self, x, y, dropObjName, generation, num):
         objType = PartyGlobals.Name2DropObjectType[dropObjName]
         id = (generation, num)
-        dropNode = hidden.attachNewNode('catchDropNode%s' % (id,))
+        dropNode = hidden.attachNewNode('catchDropNode%s' % (id, ))
         dropNode.setPos(x, y, 0)
         shadow = self.dropShadow.copyTo(dropNode)
         shadow.setZ(PartyGlobals.CatchDropShadowHeight)
         shadow.setColor(1, 1, 1, 1)
         object = self.getObjModel(dropObjName)
         object.reparentTo(hidden)
-        if dropObjName in [
-            'watermelon',
-                'anvil']:
+        if dropObjName in ['watermelon', 'anvil']:
             objH = object.getH()
-            absDelta = {
-                'watermelon': 12,
-                'anvil': 15}[dropObjName]
+            absDelta = {'watermelon': 12, 'anvil': 15}[dropObjName]
             delta = (self.randomNumGen.random() * 2.0 - 1.0) * absDelta
             newH = objH + delta
         else:
             newH = self.randomNumGen.random() * 360.0
         object.setH(newH)
-        sphereName = 'FallObj%s' % (id,)
+        sphereName = 'FallObj%s' % (id, )
         radius = self.ObjRadius
         if objType.good:
             radius *= lerp(1.0, 1.3, 0.5)
@@ -856,10 +818,8 @@ class DistributedPartyCatchActivity(
             catchEventName,
             Functor(
                 eatCollEntry,
-                Functor(
-                    self._DistributedPartyCatchActivity__handleCatch,
-                    id[0],
-                    id[1])))
+                Functor(self._DistributedPartyCatchActivity__handleCatch,
+                        id[0], id[1])))
 
         def cleanup(self=self, dropNode=dropNode, id=id, event=catchEventName):
             self.ignore(event)
@@ -873,15 +833,11 @@ class DistributedPartyCatchActivity(
                 (self.OffscreenTime / self.BaselineDropDuration)
             shadowScaleIval = Sequence(
                 LerpScaleInterval(
-                    shadow,
-                    self.OffscreenTime,
-                    intermedScale,
-                    startScale=0))
+                    shadow, self.OffscreenTime, intermedScale, startScale=0))
             shadowScaleIval.append(
                 LerpScaleInterval(
                     shadow,
-                    duration -
-                    self.OffscreenTime,
+                    duration - self.OffscreenTime,
                     targetShadowScale,
                     startScale=intermedScale))
         else:
@@ -889,9 +845,10 @@ class DistributedPartyCatchActivity(
                 shadow, duration, targetShadowScale, startScale=0)
         targetShadowAlpha = 0.40000000000000002
         shadowAlphaIval = LerpColorScaleInterval(
-            shadow, self.OffscreenTime, Point4(
-                1, 1, 1, targetShadowAlpha), startColorScale=Point4(
-                1, 1, 1, 0))
+            shadow,
+            self.OffscreenTime,
+            Point4(1, 1, 1, targetShadowAlpha),
+            startColorScale=Point4(1, 1, 1, 0))
         shadowIval = Parallel(shadowScaleIval, shadowAlphaIval)
         if self.useGravity:
 
@@ -909,18 +866,20 @@ class DistributedPartyCatchActivity(
             startPos = Point3(0, 0, self.MinOffscreenHeight)
             object.setPos(startPos)
             dropIval = LerpPosInterval(
-                object, onscreenDuration, Point3(
-                    0, 0, 0), startPos=startPos, blendType='easeIn')
+                object,
+                onscreenDuration,
+                Point3(0, 0, 0),
+                startPos=startPos,
+                blendType='easeIn')
         ival = Sequence(
-            Func(
-                Functor(
-                    dropNode.reparentTo, self.root)), Parallel(
+            Func(Functor(dropNode.reparentTo, self.root)),
+            Parallel(
                 Sequence(
-                    WaitInterval(
-                        self.OffscreenTime), Func(
-                            Functor(
-                                object.reparentTo, dropNode)), dropIval), shadowIval), Func(cleanup), name='drop%s' %
-            (id,))
+                    WaitInterval(self.OffscreenTime),
+                    Func(Functor(object.reparentTo, dropNode)), dropIval),
+                shadowIval),
+            Func(cleanup),
+            name='drop%s' % (id, ))
         if objType == PartyGlobals.Name2DropObjectType['anvil']:
             ival.append(Func(self.playAnvil))
 
@@ -1019,9 +978,7 @@ class DistributedPartyCatchActivity(
             text.removeNode()
 
         textTrack = Sequence(
-            Func(
-                perfectText.reparentTo,
-                aspect2d),
+            Func(perfectText.reparentTo, aspect2d),
             Parallel(
                 LerpScaleInterval(
                     perfectText,
@@ -1029,24 +986,16 @@ class DistributedPartyCatchActivity(
                     scale=0.29999999999999999,
                     startScale=0.0),
                 LerpFunctionInterval(
-                    fadeFunc,
-                    fromData=0.0,
-                    toData=1.0,
-                    duration=0.5)),
+                    fadeFunc, fromData=0.0, toData=1.0, duration=0.5)),
             Wait(2.0),
             Parallel(
-                LerpScaleInterval(
-                    perfectText,
-                    duration=0.5,
-                    scale=1.0),
+                LerpScaleInterval(perfectText, duration=0.5, scale=1.0),
                 LerpFunctionInterval(
                     fadeFunc,
                     fromData=1.0,
                     toData=0.0,
                     duration=0.5,
-                    blendType='easeIn')),
-            Func(destroyText),
-            WaitInterval(0.5))
+                    blendType='easeIn')), Func(destroyText), WaitInterval(0.5))
         soundTrack = SoundInterval(self.sndPerfect)
         self.finishIval = Parallel(textTrack, soundTrack)
         self.finishIval.start()

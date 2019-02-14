@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from DistributedMinigame import *
@@ -9,15 +7,13 @@ from toontown.toonbase import TTLocalizer
 
 
 class DistributedMinigameTemplate(DistributedMinigame):
-
     def __init__(self, cr):
         DistributedMinigame.__init__(self, cr)
-        self.gameFSM = ClassicFSM.ClassicFSM(
-            'DistributedMinigameTemplate', [
-                State.State(
-                    'off', self.enterOff, self.exitOff, ['play']), State.State(
-                    'play', self.enterPlay, self.exitPlay, ['cleanup']), State.State(
-                    'cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedMinigameTemplate', [
+            State.State('off', self.enterOff, self.exitOff, ['play']),
+            State.State('play', self.enterPlay, self.exitPlay, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
 
     def getTitle(self):

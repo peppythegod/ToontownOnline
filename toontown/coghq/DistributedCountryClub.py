@@ -27,9 +27,14 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
         self.lastCamEnterRoom = 0
         self.titleColor = (1, 1, 1, 1)
         self.titleText = OnscreenText.OnscreenText(
-            '', fg=self.titleColor, shadow=(
-                0, 0, 0, 1), font=ToontownGlobals.getSignFont(), pos=(
-                0, -0.5), scale=0.10000000000000001, drawOrder=0, mayChange=1)
+            '',
+            fg=self.titleColor,
+            shadow=(0, 0, 0, 1),
+            font=ToontownGlobals.getSignFont(),
+            pos=(0, -0.5),
+            scale=0.10000000000000001,
+            drawOrder=0,
+            mayChange=1)
         self.titleSequence = None
 
     def generate(self):
@@ -99,8 +104,10 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
     def setRoomDoIds(self, roomDoIds):
         self.roomDoIds = roomDoIds
         continue
-        self.roomWatcher = [](_[1], [DistributedCountryClubRoom.getCountryClubRoomReadyPostName(
-            doId) for doId in self.roomDoIds], self.gotAllRooms)
+        self.roomWatcher = [](_[1], [
+            DistributedCountryClubRoom.getCountryClubRoomReadyPostName(doId)
+            for doId in self.roomDoIds
+        ], self.gotAllRooms)
 
     def gotAllRooms(self):
         self.notify.debug('countryClub %s: got all rooms' % self.doId)
@@ -163,9 +170,7 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
             bboard.post(DistributedCountryClub.ReadyPost, self)
 
         self.acceptOnce(firstSetZoneDoneEvent, handleFirstSetZoneDone)
-        zoneList = [
-            OTPGlobals.UberZone,
-            self.zoneId]
+        zoneList = [OTPGlobals.UberZone, self.zoneId]
         for room in self.rooms:
             zoneList.extend(room.zoneIds)
 
@@ -194,8 +199,7 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
 
     def getAllRoomsTimeout(self):
         self.notify.warning(
-            'countryClub %s: timed out waiting for room objs' %
-            self.doId)
+            'countryClub %s: timed out waiting for room objs' % self.doId)
 
     def toonEnterRoom(self, roomNum):
         self.notify.debug('toonEnterRoom: %s' % roomNum)
@@ -245,8 +249,7 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
             return None
 
         base.localAvatar.setSystemMessage(
-            avId, TTLocalizer.CountryClubBossConfrontedMsg %
-            av.getName())
+            avId, TTLocalizer.CountryClubBossConfrontedMsg % av.getName())
 
     def warpToRoom(self, roomId):
         for i in xrange(len(self.rooms)):
@@ -286,9 +289,8 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
             self.geom = None
 
         base.localAvatar.setCameraCollisionsCanMove(0)
-        if hasattr(
-                self,
-                'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
+        if hasattr(self,
+                   'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
             self.cr.relatedObjectMgr.abortRequest(self.relatedObjectMgrRequest)
             del self.relatedObjectMgrRequest
 
@@ -312,9 +314,8 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
         panel.setFactoryToonIdList(avIds)
 
     def handleScreenshot(self):
-        base.addScreenshotString(
-            'countryClubId: %s, floor (from 1): %s' %
-            (self.countryClubId, self.floorNum + 1))
+        base.addScreenshotString('countryClubId: %s, floor (from 1): %s' %
+                                 (self.countryClubId, self.floorNum + 1))
         if hasattr(self, 'currentRoomName'):
             base.addScreenshotString('%s' % self.currentRoomName)
 
@@ -354,11 +355,11 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
 
             self.titleSequence = None
             self.titleSequence = Sequence(
-                Func(
-                    self.showTitleText), Wait(3.1000000000000001), LerpColorScaleInterval(
-                    self.titleText, duration=0.5, colorScale=Vec4(
-                        1, 1, 1, 0.0)), Func(
-                    self.hideTitleText))
+                Func(self.showTitleText), Wait(3.1000000000000001),
+                LerpColorScaleInterval(
+                    self.titleText,
+                    duration=0.5,
+                    colorScale=Vec4(1, 1, 1, 0.0)), Func(self.hideTitleText))
             self.titleSequence.start()
 
     def showTitleText(self):

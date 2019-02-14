@@ -106,45 +106,23 @@ def unloadFriendsList():
 
 
 class FriendsListPanel(DirectFrame, StateData.StateData):
-
     def __init__(self):
         self.leftmostPanel = FLPPets
         self.rightmostPanel = FLPPlayers
         if base.cr.productName in [
-            'DisneyOnline-UK',
-            'DisneyOnline-AP',
-            'JP',
-            'FR',
-                'BR']:
+                'DisneyOnline-UK', 'DisneyOnline-AP', 'JP', 'FR', 'BR'
+        ]:
             self.rightmostPanel = FLPAll
 
         DirectFrame.__init__(self, relief=None)
-        self.listScrollIndex = [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0]
+        self.listScrollIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.initialiseoptions(FriendsListPanel)
         StateData.StateData.__init__(self, 'friends-list-done')
         self.friends = {}
         self.textRolloverColor = Vec4(1, 1, 0, 1)
         self.textDownColor = Vec4(0.5, 0.90000000000000002, 1, 1)
-        self.textDisabledColor = Vec4(
-            0.40000000000000002,
-            0.80000000000000004,
-            0.40000000000000002,
-            1)
+        self.textDisabledColor = Vec4(0.40000000000000002, 0.80000000000000004,
+                                      0.40000000000000002, 1)
         self.panelType = FLPOnline
 
     def load(self):
@@ -155,53 +133,38 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
         auxGui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
         self.title = DirectLabel(
-            parent=self, relief=None, text='', text_scale=TTLocalizer.FLPtitle, text_fg=(
-                0, 0.10000000000000001, 0.40000000000000002, 1), pos=(
-                0.0070000000000000001, 0.0, 0.20000000000000001))
+            parent=self,
+            relief=None,
+            text='',
+            text_scale=TTLocalizer.FLPtitle,
+            text_fg=(0, 0.10000000000000001, 0.40000000000000002, 1),
+            pos=(0.0070000000000000001, 0.0, 0.20000000000000001))
         background_image = gui.find('**/FriendsBox_Open')
         self['image'] = background_image
         self.setPos(1.1000000000000001, 0, 0.54000000000000004)
         self.scrollList = DirectScrolledList(
             parent=self,
             relief=None,
-            incButton_image=(
-                gui.find('**/FndsLst_ScrollUp'),
-                gui.find('**/FndsLst_ScrollDN'),
-                gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                gui.find('**/FndsLst_ScrollUp')),
+            incButton_image=(gui.find('**/FndsLst_ScrollUp'),
+                             gui.find('**/FndsLst_ScrollDN'),
+                             gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             gui.find('**/FndsLst_ScrollUp')),
             incButton_relief=None,
-            incButton_pos=(
-                0.0,
-                0.0,
-                -0.316),
+            incButton_pos=(0.0, 0.0, -0.316),
             incButton_image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
+                0.59999999999999998, 0.59999999999999998, 0.59999999999999998,
                 0.59999999999999998),
-            incButton_scale=(
-                1.0,
-                1.0,
-                -1.0),
-            decButton_image=(
-                gui.find('**/FndsLst_ScrollUp'),
-                gui.find('**/FndsLst_ScrollDN'),
-                gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                gui.find('**/FndsLst_ScrollUp')),
+            incButton_scale=(1.0, 1.0, -1.0),
+            decButton_image=(gui.find('**/FndsLst_ScrollUp'),
+                             gui.find('**/FndsLst_ScrollDN'),
+                             gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             gui.find('**/FndsLst_ScrollUp')),
             decButton_relief=None,
-            decButton_pos=(
-                0.0,
-                0.0,
-                0.11700000000000001),
+            decButton_pos=(0.0, 0.0, 0.11700000000000001),
             decButton_image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
+                0.59999999999999998, 0.59999999999999998, 0.59999999999999998,
                 0.59999999999999998),
-            itemFrame_pos=(
-                -0.17000000000000001,
-                0.0,
-                0.059999999999999998),
+            itemFrame_pos=(-0.17000000000000001, 0.0, 0.059999999999999998),
             itemFrame_relief=None,
             numItemsVisible=8,
             items=[])
@@ -213,108 +176,62 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         self.close = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                auxGui.find('**/CloseBtn_UP'),
-                auxGui.find('**/CloseBtn_DN'),
-                auxGui.find('**/CloseBtn_Rllvr')),
-            pos=(
-                0.01,
-                0,
-                -0.38),
+            image=(auxGui.find('**/CloseBtn_UP'),
+                   auxGui.find('**/CloseBtn_DN'),
+                   auxGui.find('**/CloseBtn_Rllvr')),
+            pos=(0.01, 0, -0.38),
             command=self._FriendsListPanel__close)
-        self.left = DirectButton(parent=self,
-                                 relief=None,
-                                 image=(gui.find('**/Horiz_Arrow_UP'),
-                                        gui.find('**/Horiz_Arrow_DN'),
-                                        gui.find('**/Horiz_Arrow_Rllvr'),
-                                        gui.find('**/Horiz_Arrow_UP')),
-                                 image3_color=Vec4(0.59999999999999998,
-                                                   0.59999999999999998,
-                                                   0.59999999999999998,
-                                                   0.59999999999999998),
-                                 pos=(-0.14999999999999999,
-                                      0.0,
-                                      -0.38),
-                                 scale=(-1.0,
-                                        1.0,
-                                        1.0),
-                                 command=self._FriendsListPanel__left)
+        self.left = DirectButton(
+            parent=self,
+            relief=None,
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 0.59999999999999998),
+            pos=(-0.14999999999999999, 0.0, -0.38),
+            scale=(-1.0, 1.0, 1.0),
+            command=self._FriendsListPanel__left)
         self.right = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                gui.find('**/Horiz_Arrow_UP'),
-                gui.find('**/Horiz_Arrow_DN'),
-                gui.find('**/Horiz_Arrow_Rllvr'),
-                gui.find('**/Horiz_Arrow_UP')),
-            image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998),
-            pos=(
-                0.17000000000000001,
-                0,
-                -0.38),
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 0.59999999999999998),
+            pos=(0.17000000000000001, 0, -0.38),
             command=self._FriendsListPanel__right)
         self.newFriend = DirectButton(
             parent=self,
             relief=None,
-            pos=(
-                -0.14000000000000001,
-                0.0,
-                0.14000000000000001),
-            image=(
-                auxGui.find('**/Frnds_Btn_UP'),
-                auxGui.find('**/Frnds_Btn_DN'),
-                auxGui.find('**/Frnds_Btn_RLVR')),
-            text=(
-                '',
-                TTLocalizer.FriendsListPanelNewFriend,
-                TTLocalizer.FriendsListPanelNewFriend),
+            pos=(-0.14000000000000001, 0.0, 0.14000000000000001),
+            image=(auxGui.find('**/Frnds_Btn_UP'),
+                   auxGui.find('**/Frnds_Btn_DN'),
+                   auxGui.find('**/Frnds_Btn_RLVR')),
+            text=('', TTLocalizer.FriendsListPanelNewFriend,
+                  TTLocalizer.FriendsListPanelNewFriend),
             text_scale=TTLocalizer.FLPnewFriend,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_bg=(
-                1,
-                1,
-                1,
-                1),
-            text_pos=(
-                0.10000000000000001,
-                -0.085000000000000006),
+            text_fg=(0, 0, 0, 1),
+            text_bg=(1, 1, 1, 1),
+            text_pos=(0.10000000000000001, -0.085000000000000006),
             textMayChange=0,
             command=self._FriendsListPanel__newFriend)
         self.secrets = DirectButton(
             parent=self,
             relief=None,
             pos=TTLocalizer.FLPsecretsPos,
-            image=(
-                auxGui.find('**/ChtBx_ChtBtn_UP'),
-                auxGui.find('**/ChtBx_ChtBtn_DN'),
-                auxGui.find('**/ChtBx_ChtBtn_RLVR')),
-            text=(
-                '',
-                TTLocalizer.FriendsListPanelSecrets,
-                TTLocalizer.FriendsListPanelSecrets,
-                ''),
+            image=(auxGui.find('**/ChtBx_ChtBtn_UP'),
+                   auxGui.find('**/ChtBx_ChtBtn_DN'),
+                   auxGui.find('**/ChtBx_ChtBtn_RLVR')),
+            text=('', TTLocalizer.FriendsListPanelSecrets,
+                  TTLocalizer.FriendsListPanelSecrets, ''),
             text_scale=TTLocalizer.FLPsecrets,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_bg=(
-                1,
-                1,
-                1,
-                1),
-            text_pos=(
-                -0.040000000000000001,
-                -0.085000000000000006),
+            text_fg=(0, 0, 0, 1),
+            text_bg=(1, 1, 1, 1),
+            text_pos=(-0.040000000000000001, -0.085000000000000006),
             textMayChange=0,
             command=self._FriendsListPanel__secrets)
         gui.removeNode()
@@ -401,11 +318,8 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         if colorChoice and bold:
             fontScale = 0.040000000000000001
             colorS = 0.69999999999999996
-            bg = (
-                colorChoice[0] * colorS,
-                colorChoice[1] * colorS,
-                colorChoice[2] * colorS,
-                colorChoice[3])
+            bg = (colorChoice[0] * colorS, colorChoice[1] * colorS,
+                  colorChoice[2] * colorS, colorChoice[3])
 
         db = DirectButton(
             relief=None,
@@ -420,27 +334,17 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
             text_font=fontChoice,
             textMayChange=0,
             command=command,
-            extraArgs=[
-                thing,
-                showType])
+            extraArgs=[thing, showType])
         if playerId:
-            accountName = DirectLabel(parent=db,
-                                      pos=Vec3(-0.02,
-                                               0,
-                                               0),
-                                      text=rolloverName,
-                                      text_fg=(0,
-                                               0,
-                                               0,
-                                               1),
-                                      text_bg=(1,
-                                               1,
-                                               1,
-                                               1),
-                                      text_pos=(0,
-                                                0),
-                                      text_scale=0.044999999999999998,
-                                      text_align=TextNode.ARight)
+            accountName = DirectLabel(
+                parent=db,
+                pos=Vec3(-0.02, 0, 0),
+                text=rolloverName,
+                text_fg=(0, 0, 0, 1),
+                text_bg=(1, 1, 1, 1),
+                text_pos=(0, 0),
+                text_scale=0.044999999999999998,
+                text_align=TextNode.ARight)
             accountName.reparentTo(db.stateNodePath[2])
 
         return db
@@ -465,21 +369,16 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         self.accept('friendOnline', self._FriendsListPanel__friendOnline)
         self.accept('friendPlayers', self._FriendsListPanel__friendPlayers)
         self.accept('friendOffline', self._FriendsListPanel__friendOffline)
-        self.accept(
-            'friendsListChanged',
-            self._FriendsListPanel__friendsListChanged)
-        self.accept(
-            'ignoreListChanged',
-            self._FriendsListPanel__ignoreListChanged)
-        self.accept(
-            'friendsMapComplete',
-            self._FriendsListPanel__friendsListChanged)
-        self.accept(
-            OTPGlobals.PlayerFriendAddEvent,
-            self._FriendsListPanel__friendsListChanged)
-        self.accept(
-            OTPGlobals.PlayerFriendUpdateEvent,
-            self._FriendsListPanel__friendsListChanged)
+        self.accept('friendsListChanged',
+                    self._FriendsListPanel__friendsListChanged)
+        self.accept('ignoreListChanged',
+                    self._FriendsListPanel__ignoreListChanged)
+        self.accept('friendsMapComplete',
+                    self._FriendsListPanel__friendsListChanged)
+        self.accept(OTPGlobals.PlayerFriendAddEvent,
+                    self._FriendsListPanel__friendsListChanged)
+        self.accept(OTPGlobals.PlayerFriendUpdateEvent,
+                    self._FriendsListPanel__friendsListChanged)
 
     def exit(self):
         if self.isEntered == 0:
@@ -530,10 +429,7 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
 
     def _FriendsListPanel__newFriend(self):
         messenger.send('wakeup')
-        messenger.send('friendAvatar', [
-            None,
-            None,
-            None])
+        messenger.send('friendAvatar', [None, None, None])
 
     def _FriendsListPanel__choseFriend(self, friendId, showType=0):
         messenger.send('wakeup')
@@ -544,10 +440,8 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
 
         if handle is not None:
             self.notify.info(
-                "Clicked on name in friend's list. doId = %s" %
-                handle.doId)
-            messenger.send('clickedNametag', [
-                handle])
+                "Clicked on name in friend's list. doId = %s" % handle.doId)
+            messenger.send('clickedNametag', [handle])
 
     def _FriendsListPanel__chosePlayerFriend(self, friendId, showType=1):
         messenger.send('wakeup')
@@ -562,12 +456,9 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
 
         if playerFriendInfo is not None:
             self.notify.info(
-                "Clicked on name in player friend's list. Id = %s" %
-                friendId)
-            messenger.send('clickedNametagPlayer', [
-                handle,
-                friendId,
-                showType])
+                "Clicked on name in player friend's list. Id = %s" % friendId)
+            messenger.send('clickedNametagPlayer',
+                           [handle, friendId, showType])
 
     def _FriendsListPanel__updateScrollList(self):
         newFriends = []
@@ -587,16 +478,18 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
                         if playerFriendInfo.understandableYesNo:
                             if playerFriendInfo.avatarId:
                                 freeChatDouble.insert(
-                                    0, (playerFriendInfo.avatarId, 0, playerFriendId, 1))
+                                    0, (playerFriendInfo.avatarId, 0,
+                                        playerFriendId, 1))
                             else:
                                 freeChatOneRef.insert(
                                     0, (0, 0, playerFriendId, 1))
                         elif playerFriendInfo.avatarId:
-                            speedChatDouble.insert(
-                                0, (playerFriendInfo.avatarId, 0, playerFriendId, 1))
+                            speedChatDouble.insert(0,
+                                                   (playerFriendInfo.avatarId,
+                                                    0, playerFriendId, 1))
                         else:
-                            speedChatOneRef.insert(
-                                0, (0, 0, playerFriendId, 1))
+                            speedChatOneRef.insert(0,
+                                                   (0, 0, playerFriendId, 1))
                     elif playerFriendInfo.understandableYesNo:
                         freeChatOneRef.insert(0, (0, 0, playerFriendId, 1))
                     else:
@@ -612,16 +505,18 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
                         if playerFriendInfo.understandableYesNo:
                             if playerFriendInfo.avatarId:
                                 freeChatDouble.insert(
-                                    0, (playerFriendInfo.avatarId, 0, playerFriendId, 1))
+                                    0, (playerFriendInfo.avatarId, 0,
+                                        playerFriendId, 1))
                             else:
                                 freeChatOneRef.insert(
                                     0, (0, 0, playerFriendId, 1))
                         elif playerFriendInfo.avatarId:
-                            speedChatDouble.insert(
-                                0, (playerFriendInfo.avatarId, 0, playerFriendId, 1))
+                            speedChatDouble.insert(0,
+                                                   (playerFriendInfo.avatarId,
+                                                    0, playerFriendId, 1))
                         else:
-                            speedChatOneRef.insert(
-                                0, (0, 0, playerFriendId, 1))
+                            speedChatOneRef.insert(0,
+                                                   (0, 0, playerFriendId, 1))
 
         if self.panelType == FLPAll:
             if base.friendMode == 0:
@@ -633,10 +528,12 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
                         if playerId:
                             if friendPair[1] & ToontownGlobals.FriendChat:
                                 freeChatDouble.insert(
-                                    0, (friendPair[0], friendPair[1], playerId, 0))
+                                    0, (friendPair[0], friendPair[1], playerId,
+                                        0))
                             else:
                                 speedChatDouble.insert(
-                                    0, (friendPair[0], friendPair[1], playerId, 0))
+                                    0, (friendPair[0], friendPair[1], playerId,
+                                        0))
                         elif base.cr.isFriendOnline(friendPair[0]):
                             if friendPair[1] & ToontownGlobals.FriendChat:
                                 freeChatOneRef.insert(
@@ -650,11 +547,12 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
                         else:
                             speedChatOneRef.insert(
                                 0, (friendPair[0], friendPair[1], 0, 0))
-                    offlineFriends.append(
-                        (friendPair[0], friendPair[1], playerId, 0))
+                    offlineFriends.append((friendPair[0], friendPair[1],
+                                           playerId, 0))
 
                 if hasattr(base.cr, 'playerFriendsManager'):
-                    for avatarId in base.cr.playerFriendsManager.getAllOnlinePlayerAvatars():
+                    for avatarId in base.cr.playerFriendsManager.getAllOnlinePlayerAvatars(
+                    ):
                         playerId = base.cr.playerFriendsManager.findPlayerIdFromAvId(
                             avatarId)
                         playerFriendInfo = base.cr.playerFriendsManager.playerId2Info.get(
@@ -680,16 +578,18 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
                     if hasattr(
                             base.cr,
                             'playerFriendsManager') and base.cr.isFriendOnline(
-                            friendPair[0]):
+                                friendPair[0]):
                         playerId = base.cr.playerFriendsManager.findPlayerIdFromAvId(
                             friendPair[0])
                         if playerId:
                             if friendPair[1] & ToontownGlobals.FriendChat:
                                 freeChatDouble.insert(
-                                    0, (friendPair[0], friendPair[1], playerId, 0))
+                                    0, (friendPair[0], friendPair[1], playerId,
+                                        0))
                             else:
                                 speedChatDouble.insert(
-                                    0, (friendPair[0], friendPair[1], playerId, 0))
+                                    0, (friendPair[0], friendPair[1], playerId,
+                                        0))
                         elif friendPair[1] & ToontownGlobals.FriendChat:
                             freeChatOneRef.insert(
                                 0, (friendPair[0], friendPair[1], 0, 0))
@@ -697,12 +597,13 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
                             speedChatOneRef.insert(
                                 0, (friendPair[0], friendPair[1], 0, 0))
                     if base.cr.isFriendOnline(friendPair[0]):
-                        offlineFriends.append(
-                            (friendPair[0], friendPair[1], 0, 0))
+                        offlineFriends.append((friendPair[0], friendPair[1], 0,
+                                               0))
                         continue
 
                 if hasattr(base.cr, 'playerFriendsManager'):
-                    for avatarId in base.cr.playerFriendsManager.getAllOnlinePlayerAvatars():
+                    for avatarId in base.cr.playerFriendsManager.getAllOnlinePlayerAvatars(
+                    ):
                         playerId = base.cr.playerFriendsManager.findPlayerIdFromAvId(
                             avatarId)
                         playerFriendInfo = base.cr.playerFriendsManager.playerId2Info.get(
@@ -718,7 +619,8 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
 
             elif base.friendMode == 1:
                 for friendId in base.cr.avatarFriendsManager.avatarFriendsList:
-                    friendInfo = base.cr.avatarFriendsManager.avatarId2Info[friendId]
+                    friendInfo = base.cr.avatarFriendsManager.avatarId2Info[
+                        friendId]
                     playerId = base.cr.playerFriendsManager.findPlayerIdFromAvId(
                         friendPair[0])
                     if friendInfo.onlineYesNo:
@@ -838,8 +740,8 @@ class FriendsListPanel(DirectFrame, StateData.StateData):
         else:
             self.right['state'] = 'normal'
 
-    def _FriendsListPanel__friendOnline(
-            self, doId, commonChatFlags, whitelistChatFlags):
+    def _FriendsListPanel__friendOnline(self, doId, commonChatFlags,
+                                        whitelistChatFlags):
         if self.panelType == FLPOnline:
             self._FriendsListPanel__updateScrollList()
 

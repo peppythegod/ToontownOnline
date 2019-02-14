@@ -7,7 +7,6 @@ SPIN_RATE = 1.25
 
 
 class DistributedDGFlower(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
 
@@ -29,9 +28,8 @@ class DistributedDGFlower(DistributedObject.DistributedObject):
         self.flowerTrigSphereNode.addSolid(self.flowerTrigSphere)
         self.flowerTrigSphereNode.setCollideMask(ToontownGlobals.WallBitmask)
         self.bigFlower.attachNewNode(self.flowerTrigSphereNode)
-        taskMgr.add(
-            self._DistributedDGFlower__flowerSpin,
-            self.taskName('DG-flowerSpin'))
+        taskMgr.add(self._DistributedDGFlower__flowerSpin,
+                    self.taskName('DG-flowerSpin'))
         self.accept('enterbigFlowerTrigger',
                     self._DistributedDGFlower__flowerEnter)
         self.accept('exitbigFlowerTrigger',

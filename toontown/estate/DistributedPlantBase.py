@@ -208,19 +208,16 @@ class DistributedPlantBase(DistributedLawnDecor.DistributedLawnDecor):
         waterTrack.append(
             Sequence(
                 Parallel(
-                    ActorInterval(
-                        toon, 'water'), SoundInterval(
-                        sound, node=toon, volume=0.5)), Func(
-                    toon.loop, 'neutral')))
+                    ActorInterval(toon, 'water'),
+                    SoundInterval(sound, node=toon, volume=0.5)),
+                Func(toon.loop, 'neutral')))
         if hasattr(self, 'dropShadow') and self.dropShadow:
             newColor = self.dropShadow.getColor()
             alpha = min(1.0, newColor.getW() + 1 / 5.0)
             newColor.setW(alpha)
             waterTrack.append(
-                LerpColorInterval(
-                    self.dropShadow,
-                    2.1000000000000001,
-                    newColor))
+                LerpColorInterval(self.dropShadow, 2.1000000000000001,
+                                  newColor))
 
         return waterTrack
 

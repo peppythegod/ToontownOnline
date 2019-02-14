@@ -57,7 +57,8 @@ class CatalogGardenItem(CatalogItem.CatalogItem):
         if 'photoAnimation' in GardenGlobals.Specials[self.gardenIndex]:
             modelPath = photoModel + \
                 GardenGlobals.Specials[self.gardenIndex]['photoAnimation'][0]
-            animationName = GardenGlobals.Specials[self.gardenIndex]['photoAnimation'][1]
+            animationName = GardenGlobals.Specials[
+                self.gardenIndex]['photoAnimation'][1]
             animationPath = photoModel + animationName
             self.model = Actor.Actor()
             self.model.loadModel(modelPath)
@@ -90,8 +91,8 @@ class CatalogGardenItem(CatalogItem.CatalogItem):
         return
 
     def output(self, store=-1):
-        return 'CatalogGardenItem(%s%s)' % (
-            self.gardenIndex, self.formatOptionalData(store))
+        return 'CatalogGardenItem(%s%s)' % (self.gardenIndex,
+                                            self.formatOptionalData(store))
 
     def compareTo(self, other):
         return 0

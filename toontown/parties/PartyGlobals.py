@@ -26,210 +26,131 @@ MaxToonsAtAParty = 20
 DefaultPartyDuration = 0.5
 DelayBeforeAutoKick = 30.0
 MaxHostedPartiesPerToon = 1
-PartyEditorGridBounds = ((-0.11, 0.28899999999999998),
-                         (0.55000000000000004, -0.44700000000000001))
-PartyEditorGridCenter = (PartyEditorGridBounds[0][0] +
-                         (PartyEditorGridBounds[1][0] -
-                          PartyEditorGridBounds[0][0]) /
-                         2.0, PartyEditorGridBounds[1][1] +
-                         (PartyEditorGridBounds[0][1] -
-                          PartyEditorGridBounds[1][1]) /
-                         2.0)
+PartyEditorGridBounds = ((-0.11, 0.28899999999999998), (0.55000000000000004,
+                                                        -0.44700000000000001))
+PartyEditorGridCenter = (
+    PartyEditorGridBounds[0][0] +
+    (PartyEditorGridBounds[1][0] - PartyEditorGridBounds[0][0]) / 2.0,
+    PartyEditorGridBounds[1][1] +
+    (PartyEditorGridBounds[0][1] - PartyEditorGridBounds[1][1]) / 2.0)
 PartyEditorGridSize = (18, 15)
 PartyEditorGridSquareSize = (
-    (PartyEditorGridBounds[1][0] -
-     PartyEditorGridBounds[0][0]) /
-    float(
+    (PartyEditorGridBounds[1][0] - PartyEditorGridBounds[0][0]) / float(
         PartyEditorGridSize[0]),
-    (PartyEditorGridBounds[0][1] -
-     PartyEditorGridBounds[1][1]) /
-    float(
+    (PartyEditorGridBounds[0][1] - PartyEditorGridBounds[1][1]) / float(
         PartyEditorGridSize[1]))
 PartyEditorGridRotateThreshold = 0.080000000000000002
 AvailableGridSquares = 202
 TrashCanPosition = (-0.23999999999999999, 0.0, -0.65000000000000002)
 TrashCanScale = 0.69999999999999996
-PartyEditorTrashBounds = (
-    (-0.16, -0.38), (-0.050000000000000003, -0.56000000000000005))
+PartyEditorTrashBounds = ((-0.16, -0.38), (-0.050000000000000003,
+                                           -0.56000000000000005))
 ActivityRequestStatus = PythonUtil.Enum(('Joining', 'Exiting'))
-InviteStatus = PythonUtil.Enum(
-    ('NotRead', 'ReadButNotReplied', 'Accepted', 'Rejected'))
+InviteStatus = PythonUtil.Enum(('NotRead', 'ReadButNotReplied', 'Accepted',
+                                'Rejected'))
 InviteTheme = PythonUtil.Enum(
-    ('Birthday',
-     'GenericMale',
-     'GenericFemale',
-     'Racing',
-     'Valentoons',
-     'VictoryParty',
-     'Winter'))
-PartyStatus = PythonUtil.Enum(
-    ('Pending',
-     'Cancelled',
-     'Finished',
-     'CanStart',
-     'Started',
-     'NeverStarted'))
-AddPartyErrorCode = PythonUtil.Enum(
-    ('AllOk', 'ValidationError', 'DatabaseError', 'TooManyHostedParties'))
+    ('Birthday', 'GenericMale', 'GenericFemale', 'Racing', 'Valentoons',
+     'VictoryParty', 'Winter'))
+PartyStatus = PythonUtil.Enum(('Pending', 'Cancelled', 'Finished', 'CanStart',
+                               'Started', 'NeverStarted'))
+AddPartyErrorCode = PythonUtil.Enum(('AllOk', 'ValidationError',
+                                     'DatabaseError', 'TooManyHostedParties'))
 ChangePartyFieldErrorCode = PythonUtil.Enum(
-    ('AllOk',
-     'ValidationError',
-     'DatabaseError',
-     'AlreadyStarted',
+    ('AllOk', 'ValidationError', 'DatabaseError', 'AlreadyStarted',
      'AlreadyRefunded'))
-ActivityTypes = PythonUtil.Enum(
-    ('HostInitiated', 'GuestInitiated', 'Continuous'))
+ActivityTypes = PythonUtil.Enum(('HostInitiated', 'GuestInitiated',
+                                 'Continuous'))
 PartyGateDenialReasons = PythonUtil.Enum(('Unavailable', 'Full'))
 ActivityIds = PythonUtil.Enum(
-    ('PartyJukebox',
-     'PartyCannon',
-     'PartyTrampoline',
-     'PartyCatch',
-     'PartyDance',
-     'PartyTugOfWar',
-     'PartyFireworks',
-     'PartyClock',
-     'PartyJukebox40',
-     'PartyDance20',
-     'PartyCog',
-     'PartyVictoryTrampoline',
-     'PartyWinterCatch',
-     'PartyWinterTrampoline',
-     'PartyWinterCog',
-     'PartyValentineDance',
-     'PartyValentineDance20',
-     'PartyValentineJukebox',
-     'PartyValentineJukebox40',
-     'PartyValentineTrampoline'))
+    ('PartyJukebox', 'PartyCannon', 'PartyTrampoline', 'PartyCatch',
+     'PartyDance', 'PartyTugOfWar', 'PartyFireworks', 'PartyClock',
+     'PartyJukebox40', 'PartyDance20', 'PartyCog', 'PartyVictoryTrampoline',
+     'PartyWinterCatch', 'PartyWinterTrampoline', 'PartyWinterCog',
+     'PartyValentineDance', 'PartyValentineDance20', 'PartyValentineJukebox',
+     'PartyValentineJukebox40', 'PartyValentineTrampoline'))
 PartyEditorActivityOrder = [
-    ActivityIds.PartyCog,
-    ActivityIds.PartyWinterCog,
-    ActivityIds.PartyJukebox,
-    ActivityIds.PartyJukebox40,
-    ActivityIds.PartyValentineJukebox,
-    ActivityIds.PartyValentineJukebox40,
-    ActivityIds.PartyCannon,
-    ActivityIds.PartyTrampoline,
-    ActivityIds.PartyValentineTrampoline,
-    ActivityIds.PartyVictoryTrampoline,
-    ActivityIds.PartyWinterTrampoline,
-    ActivityIds.PartyCatch,
-    ActivityIds.PartyWinterCatch,
-    ActivityIds.PartyDance,
-    ActivityIds.PartyDance20,
-    ActivityIds.PartyValentineDance,
-    ActivityIds.PartyValentineDance20,
-    ActivityIds.PartyTugOfWar,
-    ActivityIds.PartyFireworks,
-    ActivityIds.PartyClock]
+    ActivityIds.PartyCog, ActivityIds.PartyWinterCog, ActivityIds.PartyJukebox,
+    ActivityIds.PartyJukebox40, ActivityIds.PartyValentineJukebox,
+    ActivityIds.PartyValentineJukebox40, ActivityIds.PartyCannon,
+    ActivityIds.PartyTrampoline, ActivityIds.PartyValentineTrampoline,
+    ActivityIds.PartyVictoryTrampoline, ActivityIds.PartyWinterTrampoline,
+    ActivityIds.PartyCatch, ActivityIds.PartyWinterCatch,
+    ActivityIds.PartyDance, ActivityIds.PartyDance20,
+    ActivityIds.PartyValentineDance, ActivityIds.PartyValentineDance20,
+    ActivityIds.PartyTugOfWar, ActivityIds.PartyFireworks,
+    ActivityIds.PartyClock
+]
 UnreleasedActivityIds = ()
-MutuallyExclusiveActivities = (
-    (ActivityIds.PartyJukebox,
-     ActivityIds.PartyJukebox40),
-    (ActivityIds.PartyValentineJukebox,
-     ActivityIds.PartyValentineJukebox40),
-    (ActivityIds.PartyDance,
-     ActivityIds.PartyDance20),
-    (ActivityIds.PartyValentineDance,
-     ActivityIds.PartyValentineDance20))
-VictoryPartyActivityIds = frozenset([
-    ActivityIds.PartyVictoryTrampoline])
-VictoryPartyReplacementActivityIds = frozenset([
-    ActivityIds.PartyTrampoline])
+MutuallyExclusiveActivities = ((ActivityIds.PartyJukebox,
+                                ActivityIds.PartyJukebox40),
+                               (ActivityIds.PartyValentineJukebox,
+                                ActivityIds.PartyValentineJukebox40),
+                               (ActivityIds.PartyDance,
+                                ActivityIds.PartyDance20),
+                               (ActivityIds.PartyValentineDance,
+                                ActivityIds.PartyValentineDance20))
+VictoryPartyActivityIds = frozenset([ActivityIds.PartyVictoryTrampoline])
+VictoryPartyReplacementActivityIds = frozenset([ActivityIds.PartyTrampoline])
 WinterPartyActivityIds = frozenset([
-    ActivityIds.PartyWinterCatch,
-    ActivityIds.PartyWinterTrampoline,
-    ActivityIds.PartyWinterCog])
+    ActivityIds.PartyWinterCatch, ActivityIds.PartyWinterTrampoline,
+    ActivityIds.PartyWinterCog
+])
 WinterPartyReplacementActivityIds = frozenset([
-    ActivityIds.PartyCatch,
-    ActivityIds.PartyTrampoline,
-    ActivityIds.PartyCog])
+    ActivityIds.PartyCatch, ActivityIds.PartyTrampoline, ActivityIds.PartyCog
+])
 ValentinePartyActivityIds = frozenset([
-    ActivityIds.PartyValentineDance,
-    ActivityIds.PartyValentineDance20,
-    ActivityIds.PartyValentineJukebox,
-    ActivityIds.PartyValentineJukebox40,
-    ActivityIds.PartyValentineTrampoline])
+    ActivityIds.PartyValentineDance, ActivityIds.PartyValentineDance20,
+    ActivityIds.PartyValentineJukebox, ActivityIds.PartyValentineJukebox40,
+    ActivityIds.PartyValentineTrampoline
+])
 ValentinePartyReplacementActivityIds = frozenset([
-    ActivityIds.PartyDance,
-    ActivityIds.PartyDance20,
-    ActivityIds.PartyJukebox,
-    ActivityIds.PartyJukebox40,
-    ActivityIds.PartyTrampoline])
+    ActivityIds.PartyDance, ActivityIds.PartyDance20, ActivityIds.PartyJukebox,
+    ActivityIds.PartyJukebox40, ActivityIds.PartyTrampoline
+])
 DecorationIds = PythonUtil.Enum(
-    ('BalloonAnvil',
-     'BalloonStage',
-     'Bow',
-     'Cake',
-     'Castle',
-     'GiftPile',
-     'Horn',
-     'MardiGras',
-     'NoiseMakers',
-     'Pinwheel',
-     'GagGlobe',
-     'BannerJellyBean',
-     'CakeTower',
-     'HeartTarget',
-     'HeartBanner',
-     'FlyingHeart',
-     'Hydra',
-     'BannerVictory',
-     'CannonVictory',
-     'CogStatueVictory',
-     'TubeCogVictory',
-     'CogIceCreamVictory',
-     'cogIceCreamWinter',
-     'StageWinter',
-     'CogStatueWinter',
-     'snowman',
-     'snowDoodle',
-     'BalloonAnvilValentine'))
+    ('BalloonAnvil', 'BalloonStage', 'Bow', 'Cake', 'Castle', 'GiftPile',
+     'Horn', 'MardiGras', 'NoiseMakers', 'Pinwheel', 'GagGlobe',
+     'BannerJellyBean', 'CakeTower', 'HeartTarget', 'HeartBanner',
+     'FlyingHeart', 'Hydra', 'BannerVictory', 'CannonVictory',
+     'CogStatueVictory', 'TubeCogVictory', 'CogIceCreamVictory',
+     'cogIceCreamWinter', 'StageWinter', 'CogStatueWinter', 'snowman',
+     'snowDoodle', 'BalloonAnvilValentine'))
 DECORATION_VOLUME = 1.0
 DECORATION_CUTOFF = 45
 VictoryPartyDecorationIds = frozenset([
-    DecorationIds.Hydra,
-    DecorationIds.BannerVictory,
-    DecorationIds.CannonVictory,
-    DecorationIds.CogStatueVictory,
-    DecorationIds.TubeCogVictory,
-    DecorationIds.CogIceCreamVictory])
+    DecorationIds.Hydra, DecorationIds.BannerVictory,
+    DecorationIds.CannonVictory, DecorationIds.CogStatueVictory,
+    DecorationIds.TubeCogVictory, DecorationIds.CogIceCreamVictory
+])
 WinterPartyDecorationIds = frozenset([
-    DecorationIds.cogIceCreamWinter,
-    DecorationIds.StageWinter,
-    DecorationIds.CogStatueWinter,
-    DecorationIds.snowman,
-    DecorationIds.snowDoodle])
-VictoryPartyReplacementDecorationIds = frozenset([
-    DecorationIds.BannerJellyBean])
+    DecorationIds.cogIceCreamWinter, DecorationIds.StageWinter,
+    DecorationIds.CogStatueWinter, DecorationIds.snowman,
+    DecorationIds.snowDoodle
+])
+VictoryPartyReplacementDecorationIds = frozenset(
+    [DecorationIds.BannerJellyBean])
 ValentinePartyDecorationIds = frozenset([
-    DecorationIds.BalloonAnvilValentine,
-    DecorationIds.HeartBanner,
-    DecorationIds.HeartTarget,
-    DecorationIds.FlyingHeart])
-ValentinePartyReplacementDecorationIds = frozenset([
-    DecorationIds.BalloonAnvil,
-    DecorationIds.BannerJellyBean])
+    DecorationIds.BalloonAnvilValentine, DecorationIds.HeartBanner,
+    DecorationIds.HeartTarget, DecorationIds.FlyingHeart
+])
+ValentinePartyReplacementDecorationIds = frozenset(
+    [DecorationIds.BalloonAnvil, DecorationIds.BannerJellyBean])
 UnreleasedDecorationIds = ()
-GoToPartyStatus = PythonUtil.Enum(
-    ('AllowedToGo',
-     'PartyFull',
-     'PrivateParty',
-     'PartyOver',
-     'PartyNotActive'))
+GoToPartyStatus = PythonUtil.Enum(('AllowedToGo', 'PartyFull', 'PrivateParty',
+                                   'PartyOver', 'PartyNotActive'))
 PlayGroundToPartyClockColors = {
     'the_burrrgh': (53.0 / 255.0, 116.0 / 255.0, 148.0 / 255.0, 1.0),
     'daisys_garden': (52.0 / 255.0, 153.0 / 255.0, 95.0 / 255.0, 1.0),
     'donalds_dock': (60.0 / 255.0, 98.0 / 255.0, 142.0 / 255.0, 1.0),
     'donalds_dreamland': (79.0 / 255.0, 92.0 / 255.0, 120.0 / 255.0, 1.0),
     'minnies_melody_land': (128.0 / 255.0, 62.0 / 255.0, 142.0 / 255.0, 1.0),
-    'toontown_central': (77.0 / 255.0, 137.0 / 255.0, 52.0 / 255.0, 1.0)}
-PartyGridUnitLength = [
-    14.4,
-    14.6]
+    'toontown_central': (77.0 / 255.0, 137.0 / 255.0, 52.0 / 255.0, 1.0)
+}
+PartyGridUnitLength = [14.4, 14.6]
 PartyGridHeadingConverter = 15.0
-PartyGridToPandaOffset = (-PartyGridUnitLength[0] * PartyEditorGridSize[0] /
-                          2.0, -PartyGridUnitLength[1] * PartyEditorGridSize[1] / 2.0)
+PartyGridToPandaOffset = (
+    -PartyGridUnitLength[0] * PartyEditorGridSize[0] / 2.0,
+    -PartyGridUnitLength[1] * PartyEditorGridSize[1] / 2.0)
 PartyCostMultiplier = 1
 MinimumPartyCost = 100 * PartyCostMultiplier
 ActivityInformationDict = {
@@ -239,140 +160,161 @@ ActivityInformationDict = {
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyJukebox_activity_1x1'},
+        'gridAsset': 'PartyJukebox_activity_1x1'
+    },
     ActivityIds.PartyJukebox40: {
         'cost': int(100 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyJukebox_activity_1x1'},
+        'gridAsset': 'PartyJukebox_activity_1x1'
+    },
     ActivityIds.PartyValentineJukebox: {
         'cost': int(50 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyJukebox_activity_1x1'},
+        'gridAsset': 'PartyJukebox_activity_1x1'
+    },
     ActivityIds.PartyValentineJukebox40: {
         'cost': int(100 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyJukebox_activity_1x1'},
+        'gridAsset': 'PartyJukebox_activity_1x1'
+    },
     ActivityIds.PartyCannon: {
         'cost': int(50 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 5,
         'limitPerParty': 10,
         'paidOnly': False,
-        'gridAsset': 'PartyCannon_activity_1x1'},
+        'gridAsset': 'PartyCannon_activity_1x1'
+    },
     ActivityIds.PartyTrampoline: {
         'cost': int(50 * PartyCostMultiplier),
         'gridsize': (2, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 8,
         'paidOnly': False,
-        'gridAsset': 'PartyTrampoline_activity_2x2'},
+        'gridAsset': 'PartyTrampoline_activity_2x2'
+    },
     ActivityIds.PartyValentineTrampoline: {
         'cost': int(50 * PartyCostMultiplier),
         'gridsize': (2, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 8,
         'paidOnly': False,
-        'gridAsset': 'PartyTrampoline_activity_2x2'},
+        'gridAsset': 'PartyTrampoline_activity_2x2'
+    },
     ActivityIds.PartyVictoryTrampoline: {
         'cost': int(50 * PartyCostMultiplier),
         'gridsize': (2, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 8,
         'paidOnly': False,
-        'gridAsset': 'PartyTrampoline_activity_2x2'},
+        'gridAsset': 'PartyTrampoline_activity_2x2'
+    },
     ActivityIds.PartyWinterTrampoline: {
         'cost': int(50 * PartyCostMultiplier),
         'gridsize': (2, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 8,
         'paidOnly': False,
-        'gridAsset': 'PartyTrampoline_activity_2x2'},
+        'gridAsset': 'PartyTrampoline_activity_2x2'
+    },
     ActivityIds.PartyCatch: {
         'cost': int(300 * PartyCostMultiplier),
         'gridsize': (5, 5),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyCatch_activity_5x5'},
+        'gridAsset': 'PartyCatch_activity_5x5'
+    },
     ActivityIds.PartyWinterCatch: {
         'cost': int(300 * PartyCostMultiplier),
         'gridsize': (5, 5),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyCatch_activity_5x5'},
+        'gridAsset': 'PartyCatch_activity_5x5'
+    },
     ActivityIds.PartyCog: {
         'cost': int(300 * PartyCostMultiplier),
         'gridsize': (5, 5),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyCog_activity_5x5'},
+        'gridAsset': 'PartyCog_activity_5x5'
+    },
     ActivityIds.PartyWinterCog: {
         'cost': int(300 * PartyCostMultiplier),
         'gridsize': (5, 5),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyCog_activity_5x5'},
+        'gridAsset': 'PartyCog_activity_5x5'
+    },
     ActivityIds.PartyDance: {
         'cost': int(100 * PartyCostMultiplier),
         'gridsize': (3, 3),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyDance_activity_3x3'},
+        'gridAsset': 'PartyDance_activity_3x3'
+    },
     ActivityIds.PartyDance20: {
         'cost': int(200 * PartyCostMultiplier),
         'gridsize': (3, 3),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyDance_activity_3x3'},
+        'gridAsset': 'PartyDance_activity_3x3'
+    },
     ActivityIds.PartyValentineDance: {
         'cost': int(100 * PartyCostMultiplier),
         'gridsize': (3, 3),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyDance_activity_3x3'},
+        'gridAsset': 'PartyDance_activity_3x3'
+    },
     ActivityIds.PartyValentineDance20: {
         'cost': int(200 * PartyCostMultiplier),
         'gridsize': (3, 3),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': True,
-        'gridAsset': 'PartyDance_activity_3x3'},
+        'gridAsset': 'PartyDance_activity_3x3'
+    },
     ActivityIds.PartyTugOfWar: {
         'cost': int(200 * PartyCostMultiplier),
         'gridsize': (4, 4),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyTufOfWar_activity_4x4'},
+        'gridAsset': 'PartyTufOfWar_activity_4x4'
+    },
     ActivityIds.PartyFireworks: {
         'cost': int(200 * PartyCostMultiplier),
         'gridsize': (4, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyFireworks_activity_2x4'},
+        'gridAsset': 'PartyFireworks_activity_2x4'
+    },
     ActivityIds.PartyClock: {
         'cost': MinimumPartyCost,
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 1,
         'paidOnly': False,
-        'gridAsset': 'PartyClock_activity_1x1'}}
+        'gridAsset': 'PartyClock_activity_1x1'
+    }
+}
 DecorationInformationDict = {
     DecorationIds.BalloonAnvil: {
         'cost': int(10 * PartyCostMultiplier),
@@ -380,199 +322,228 @@ DecorationInformationDict = {
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.BalloonAnvilValentine: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.BalloonStage: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.Bow: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.Cake: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.Castle: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.GiftPile: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.Horn: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.MardiGras: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.NoiseMakers: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.Pinwheel: {
         'cost': int(10 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.GagGlobe: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.BannerJellyBean: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.CakeTower: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.HeartTarget: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.HeartBanner: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.FlyingHeart: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.Hydra: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (2, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_propStage_2x2'},
+        'gridAsset': 'decoration_propStage_2x2'
+    },
     DecorationIds.BannerVictory: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.CannonVictory: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.CogStatueVictory: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.TubeCogVictory: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.CogIceCreamVictory: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.cogIceCreamWinter: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.StageWinter: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (2, 2),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_propStage_2x2'},
+        'gridAsset': 'decoration_propStage_2x2'
+    },
     DecorationIds.CogStatueWinter: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.snowman: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'},
+        'gridAsset': 'decoration_1x1'
+    },
     DecorationIds.snowDoodle: {
         'cost': int(25 * PartyCostMultiplier),
         'gridsize': (1, 1),
         'numberPerPurchase': 1,
         'limitPerParty': 5,
         'paidOnly': False,
-        'gridAsset': 'decoration_1x1'}}
+        'gridAsset': 'decoration_1x1'
+    }
+}
 DefaultRulesTimeout = 10.0
 DenialReasons = PythonUtil.Enum(('Default', 'Full', 'SilentFail'), start=0)
-FireworkShows = PythonUtil.Enum(('Summer',), start=200)
+FireworkShows = PythonUtil.Enum(('Summer', ), start=200)
 FireworksGlobalXOffset = 160.0
 FireworksGlobalYOffset = -20.0
 FireworksPostLaunchDelay = 5.0
@@ -597,36 +568,19 @@ CogActivityConclusionDuration = 12
 CogActivityDuration = 90
 CogActivityMinPlayersPerTeam = 1
 CogActivityMaxPlayersPerTeam = 4
-CogActivityColors = (
-    VBase4(
-        0.22,
-        0.40000000000000002,
-        0.97999999999999998,
-        1.0),
-    VBase4(
-        1.0,
-        0.42999999999999999,
-        0.040000000000000001,
-        1.0))
-CogActivitySplatColorBase = VBase4(
-    0.97999999999999998, 0.90000000000000002, 0.094, 1.0)
+CogActivityColors = (VBase4(0.22, 0.40000000000000002, 0.97999999999999998,
+                            1.0),
+                     VBase4(1.0, 0.42999999999999999, 0.040000000000000001,
+                            1.0))
+CogActivitySplatColorBase = VBase4(0.97999999999999998, 0.90000000000000002,
+                                   0.094, 1.0)
 CogActivitySplatColors = (
-    VBase4(
-        CogActivityColors[0][0] /
-        CogActivitySplatColorBase[0],
-        CogActivityColors[0][1] /
-        CogActivitySplatColorBase[1],
-        CogActivityColors[0][2] /
-        CogActivitySplatColorBase[2],
-        1.0),
-    VBase4(
-        CogActivityColors[1][0] /
-        CogActivitySplatColorBase[0],
-        CogActivityColors[1][1] /
-        CogActivitySplatColorBase[1],
-        CogActivityColors[1][2] /
-        CogActivitySplatColorBase[2],
-        1.0))
+    VBase4(CogActivityColors[0][0] / CogActivitySplatColorBase[0],
+           CogActivityColors[0][1] / CogActivitySplatColorBase[1],
+           CogActivityColors[0][2] / CogActivitySplatColorBase[2], 1.0),
+    VBase4(CogActivityColors[1][0] / CogActivitySplatColorBase[0],
+           CogActivityColors[1][1] / CogActivitySplatColorBase[1],
+           CogActivityColors[1][2] / CogActivitySplatColorBase[2], 1.0))
 CogPinataHeadZ = 4.7000000000000002
 CogActivityHitPoints = 1
 CogActivityHitPointsForHead = 3
@@ -635,14 +589,10 @@ CogPinataPushHeadFactor = CogPinataPushBodyFactor * \
     abs(CogActivityHitPointsForHead - CogActivityHitPoints)
 CogActivityAvgBeansPerSecond = 0.14999999999999999
 CogActivityBeansToAward = round(
-    CogActivityAvgBeansPerSecond *
-    CogActivityDuration *
-    2.0)
+    CogActivityAvgBeansPerSecond * CogActivityDuration * 2.0)
 CogActivityWinBeans = int(round(CogActivityBeansToAward * 0.59999999999999998))
 CogActivityLossBeans = int(
-    round(
-        CogActivityBeansToAward *
-        0.40000000000000002))
+    round(CogActivityBeansToAward * 0.40000000000000002))
 CogActivityTieBeans = int(round(CogActivityBeansToAward * 0.40000000000000002))
 CogActivityPerfectWinBeans = int(round(CogActivityBeansToAward * 0.75))
 CogActivityPerfectLossBeans = int(round(CogActivityBeansToAward * 0.25))
@@ -654,8 +604,8 @@ CogActivityPowerMeterWidth = 0.10000000000000001
 CogActivityPowerMeterPos = (0.33000000000000002, 0.0, 0.0)
 CogActivityPowerMeterTextPos = (0.33000000000000002, -0.26000000000000001)
 CogActivityVictoryBarPos = (-0.55000000000000004, 0.0, 0.82499999999999996)
-CogActivityVictoryBarOrangePos = (
-    0.17249999999999999, 0.0, -0.032500000000000001)
+CogActivityVictoryBarOrangePos = (0.17249999999999999, 0.0,
+                                  -0.032500000000000001)
 CogActivityVictoryBarPiePos = (0.46999999999999997, 0.0, -0.014999999999999999)
 CogActivityVictoryBarArrow = (0.0, 0.0, 0.10000000000000001)
 CogActivityBarUnitScale = 1.1000000000000001
@@ -680,12 +630,13 @@ TugOfWarMinimumPlayersPerTeam = 1
 TugOfWarMaximumPlayersPerTeam = 4
 TugOfWarStartGameTimeout = 8
 TugOfWarJoinCollisionEndPoints = [
-    Point3(6.0, 0.0, 0.0),
-    Point3(-6.0, 0.0, 0.0)]
+    Point3(6.0, 0.0, 0.0), Point3(-6.0, 0.0, 0.0)
+]
 TugOfWarJoinCollisionRadius = 1.75
 TugOfWarJoinCollisionPositions = [
     Point3(-10.5, 0.25, 4.5),
-    Point3(10.5, -0.25, 4.5)]
+    Point3(10.5, -0.25, 4.5)
+]
 TugOfWarInitialToonPositionsXOffset = 8.0
 TugOfWarToonPositionXSeparation = 2.0
 TugOfWarToonPositionZ = 2.5499999999999998
@@ -699,21 +650,14 @@ TugOfWarPowerMeterRulesTarget = 8
 TugOfWarDisabledArrowColor = VBase4(1.0, 0.0, 0.0, 0.29999999999999999)
 TugOfWarEnabledArrowColor = VBase4(1.0, 0.0, 0.0, 1.0)
 TugOfWarHilightedArrowColor = VBase4(1.0, 0.69999999999999996, 0.0, 1.0)
-TugOfWarTargetRateList = [
-    (8.0, 6),
-    (5.0, 7),
-    (6.0, 8),
-    (6.0, 10),
-    (7.0, 11),
-    (8.0, 12)]
+TugOfWarTargetRateList = [(8.0, 6), (5.0, 7), (6.0, 8), (6.0, 10), (7.0, 11),
+                          (8.0, 12)]
 TugOfWarKeyPressTimeToLive = 1.0
 TugOfWarKeyPressUpdateRate = 0.10000000000000001
 TugOfWarKeyPressReportRate = 0.20000000000000001
 TugOfWarMovementFactor = 0.029999999999999999
 TugOfWarSplashZOffset = 1.0
-TugOfWarHeadings = [
-    240.0,
-    120.0]
+TugOfWarHeadings = [240.0, 120.0]
 TugOfWarConclusionDuration = 4.0
 TugOfWarFallInWinReward = 15
 TugOfWarFallInLossReward = 4
@@ -734,7 +678,6 @@ CatchConclusionDuration = 3.0
 
 
 class DropObject:
-
     def __init__(self, name, good, onscreenDurMult, modelPath):
         self.name = name
         self.good = good
@@ -752,7 +695,9 @@ DropObjectTypes = [
     DropObject('coconut', 1, 1.0, 'phase_4/models/minigames/coconut'),
     DropObject('watermelon', 1, 1.0, 'phase_4/models/minigames/watermelon'),
     DropObject('pineapple', 1, 1.0, 'phase_4/models/minigames/pineapple'),
-    DropObject('anvil', 0, 0.40000000000000002, 'phase_4/models/props/anvil-mod')]
+    DropObject('anvil', 0, 0.40000000000000002,
+               'phase_4/models/props/anvil-mod')
+]
 Name2DropObjectType = {}
 for type in DropObjectTypes:
     Name2DropObjectType[type.name] = type
@@ -763,35 +708,35 @@ for i in range(len(names)):
     Name2DOTypeId[names[i]] = i
 
 DOTypeId2Name = names
-NumFruits = [
-    {
-        2000: 18,
-        1000: 19,
-        5000: 22,
-        4000: 24,
-        3000: 27,
-        9000: 28},
-    {
-        2000: 30,
-        1000: 33,
-        5000: 38,
-        4000: 42,
-        3000: 46,
-        9000: 50},
-    {
-        2000: 42,
-        1000: 48,
-        5000: 54,
-        4000: 60,
-        3000: 66,
-        9000: 71},
-    {
-        2000: 56,
-        1000: 63,
-        5000: 70,
-        4000: 78,
-        3000: 85,
-        9000: 92}]
+NumFruits = [{
+    2000: 18,
+    1000: 19,
+    5000: 22,
+    4000: 24,
+    3000: 27,
+    9000: 28
+}, {
+    2000: 30,
+    1000: 33,
+    5000: 38,
+    4000: 42,
+    3000: 46,
+    9000: 50
+}, {
+    2000: 42,
+    1000: 48,
+    5000: 54,
+    4000: 60,
+    3000: 66,
+    9000: 71
+}, {
+    2000: 56,
+    1000: 63,
+    5000: 70,
+    4000: 78,
+    3000: 85,
+    9000: 92
+}]
 DancePatternToAnims = {
     'dduu': 'slip-backward',
     'ldddud': 'happy-dance',
@@ -802,7 +747,8 @@ DancePatternToAnims = {
     'udlr': 'good-putt',
     'udllrr': 'victory',
     'ulu': 'jump',
-    'uudd': 'slip-forward'}
+    'uudd': 'slip-forward'
+}
 DancePatternToAnims20 = {
     'ddd': 'down',
     'dduu': 'slip-backward',
@@ -823,7 +769,8 @@ DancePatternToAnims20 = {
     'udllrr': 'victory',
     'ulu': 'jump',
     'uudd': 'slip-forward',
-    'uuu': 'up'}
+    'uuu': 'up'
+}
 DanceAnimToName = {
     'right': TTLocalizer.DanceAnimRight,
     'reel-neutral': TTLocalizer.DanceAnimReelNeutral,
@@ -846,13 +793,9 @@ DanceAnimToName = {
     'victory': TTLocalizer.DanceAnimVictory,
     'push': TTLocalizer.DanceAnimPush,
     'angry': TTLocalizer.DanceAnimAngry,
-    'left': TTLocalizer.DanceAnimLeft}
-DanceReverseLoopAnims = [
-    'left',
-    'right',
-    'up',
-    'down',
-    'good-putt']
+    'left': TTLocalizer.DanceAnimLeft
+}
+DanceReverseLoopAnims = ['left', 'right', 'up', 'down', 'good-putt']
 ToonDancingStates = PythonUtil.Enum(('Init', 'DanceMove', 'Run', 'Cleanup'))
 JUKEBOX_TIMEOUT = 30.0
 MUSIC_PATH = 'phase_%s/audio/bgm/'
@@ -860,204 +803,110 @@ MUSIC_MIN_LENGTH_SECONDS = 50.0
 MUSIC_GAP = 2.5
 PhaseToMusicData = {
     3.5: {
-        'TC_SZ.mid': [
-            TTLocalizer.MusicTcSz,
-            57]},
+        'TC_SZ.mid': [TTLocalizer.MusicTcSz, 57]
+    },
     3: {
-        'create_a_toon.mid': [
-            TTLocalizer.MusicCreateAToon,
-            175],
-        'tt_theme.mid': [
-            TTLocalizer.MusicTtTheme,
-            51]},
+        'create_a_toon.mid': [TTLocalizer.MusicCreateAToon, 175],
+        'tt_theme.mid': [TTLocalizer.MusicTtTheme, 51]
+    },
     4: {
-        'TC_nbrhood.mid': [
-            TTLocalizer.MusicTcNbrhood,
-            59],
-        'MG_TwoDGame.mid': [
-            TTLocalizer.MusicMgTwodgame,
-            60],
-        'MG_Vine.mid': [
-            TTLocalizer.MusicMgVine,
-            32],
-        'FF_safezone.mid': [
-            TTLocalizer.MusicFfSafezone,
-            47]},
+        'TC_nbrhood.mid': [TTLocalizer.MusicTcNbrhood, 59],
+        'MG_TwoDGame.mid': [TTLocalizer.MusicMgTwodgame, 60],
+        'MG_Vine.mid': [TTLocalizer.MusicMgVine, 32],
+        'FF_safezone.mid': [TTLocalizer.MusicFfSafezone, 47]
+    },
     6: {
-        'DD_SZ.mid': [
-            TTLocalizer.MusicDdSz,
-            33],
-        'GS_SZ.mid': [
-            TTLocalizer.MusicGsSz,
-            60],
-        'OZ_SZ.mid': [
-            TTLocalizer.MusicOzSz,
-            31],
-        'GZ_SZ.mid': [
-            TTLocalizer.MusicGzSz,
-            59],
-        'MM_SZ.mid': [
-            TTLocalizer.MusicMmSz,
-            76]},
+        'DD_SZ.mid': [TTLocalizer.MusicDdSz, 33],
+        'GS_SZ.mid': [TTLocalizer.MusicGsSz, 60],
+        'OZ_SZ.mid': [TTLocalizer.MusicOzSz, 31],
+        'GZ_SZ.mid': [TTLocalizer.MusicGzSz, 59],
+        'MM_SZ.mid': [TTLocalizer.MusicMmSz, 76]
+    },
     8: {
-        'DG_SZ.mid': [
-            TTLocalizer.MusicDgSz,
-            48],
-        'DL_SZ.mid': [
-            TTLocalizer.MusicDlSz,
-            33],
-        'TB_SZ.mid': [
-            TTLocalizer.MusicTbSz,
-            54]},
+        'DG_SZ.mid': [TTLocalizer.MusicDgSz, 48],
+        'DL_SZ.mid': [TTLocalizer.MusicDlSz, 33],
+        'TB_SZ.mid': [TTLocalizer.MusicTbSz, 54]
+    },
     9: {
-        'encntr_hall_of_fame.mid': [
-            TTLocalizer.MusicEncntrHallOfFame,
-            51],
-        'encntr_head_suit_theme.mid': [
-            TTLocalizer.MusicEncntrHeadSuitTheme,
-            29]},
+        'encntr_hall_of_fame.mid': [TTLocalizer.MusicEncntrHallOfFame, 51],
+        'encntr_head_suit_theme.mid':
+        [TTLocalizer.MusicEncntrHeadSuitTheme, 29]
+    },
     11: {
-        'LB_juryBG.mid': [
-            TTLocalizer.MusicLbJurybg,
-            30]},
+        'LB_juryBG.mid': [TTLocalizer.MusicLbJurybg, 30]
+    },
     13: {
-        'party_original_theme.mid': [
-            TTLocalizer.MusicPartyOriginalTheme,
-            56],
-        'party_generic_theme_jazzy.mid': [
-            TTLocalizer.MusicPartyGenericThemeJazzy,
-            64]}}
+        'party_original_theme.mid': [TTLocalizer.MusicPartyOriginalTheme, 56],
+        'party_generic_theme_jazzy.mid':
+        [TTLocalizer.MusicPartyGenericThemeJazzy, 64]
+    }
+}
 PhaseToMusicData40 = {
     3.5: {
-        'encntr_general_bg.mid': [
-            TTLocalizer.MusicEncntrGeneralBg,
-            30],
-        'TC_SZ.mid': [
-            TTLocalizer.MusicTcSz,
-            57]},
+        'encntr_general_bg.mid': [TTLocalizer.MusicEncntrGeneralBg, 30],
+        'TC_SZ.mid': [TTLocalizer.MusicTcSz, 57]
+    },
     3: {
-        'create_a_toon.mid': [
-            TTLocalizer.MusicCreateAToon,
-            175],
-        'tt_theme.mid': [
-            TTLocalizer.MusicTtTheme,
-            51]},
+        'create_a_toon.mid': [TTLocalizer.MusicCreateAToon, 175],
+        'tt_theme.mid': [TTLocalizer.MusicTtTheme, 51]
+    },
     4: {
-        'minigame_race.mid': [
-            TTLocalizer.MusicMinigameRace,
-            77],
-        'TC_nbrhood.mid': [
-            TTLocalizer.MusicTcNbrhood,
-            59],
-        'MG_TwoDGame.mid': [
-            TTLocalizer.MusicMgTwodgame,
-            60],
-        'MG_CogThief.mid': [
-            TTLocalizer.MusicMgCogthief,
-            61],
-        'MG_Vine.mid': [
-            TTLocalizer.MusicMgVine,
-            32],
-        'MG_IceGame.mid': [
-            TTLocalizer.MusicMgIcegame,
-            56],
-        'FF_safezone.mid': [
-            TTLocalizer.MusicFfSafezone,
-            47]},
+        'minigame_race.mid': [TTLocalizer.MusicMinigameRace, 77],
+        'TC_nbrhood.mid': [TTLocalizer.MusicTcNbrhood, 59],
+        'MG_TwoDGame.mid': [TTLocalizer.MusicMgTwodgame, 60],
+        'MG_CogThief.mid': [TTLocalizer.MusicMgCogthief, 61],
+        'MG_Vine.mid': [TTLocalizer.MusicMgVine, 32],
+        'MG_IceGame.mid': [TTLocalizer.MusicMgIcegame, 56],
+        'FF_safezone.mid': [TTLocalizer.MusicFfSafezone, 47]
+    },
     6: {
-        'DD_SZ.mid': [
-            TTLocalizer.MusicDdSz,
-            33],
-        'GZ_PlayGolf.mid': [
-            TTLocalizer.MusicGzPlaygolf,
-            61],
-        'GS_SZ.mid': [
-            TTLocalizer.MusicGsSz,
-            60],
-        'OZ_SZ.mid': [
-            TTLocalizer.MusicOzSz,
-            31],
-        'GS_Race_CC.mid': [
-            TTLocalizer.MusicGsRaceCc,
-            58],
-        'GS_Race_SS.mid': [
-            TTLocalizer.MusicGsRaceSs,
-            61],
-        'GS_Race_RR.mid': [
-            TTLocalizer.MusicGsRaceRr,
-            60],
-        'GZ_SZ.mid': [
-            TTLocalizer.MusicGzSz,
-            59],
-        'MM_SZ.mid': [
-            TTLocalizer.MusicMmSz,
-            76],
-        'DD_nbrhood.mid': [
-            TTLocalizer.MusicDdNbrhood,
-            67],
-        'GS_KartShop.mid': [
-            TTLocalizer.MusicGsKartshop,
-            32]},
+        'DD_SZ.mid': [TTLocalizer.MusicDdSz, 33],
+        'GZ_PlayGolf.mid': [TTLocalizer.MusicGzPlaygolf, 61],
+        'GS_SZ.mid': [TTLocalizer.MusicGsSz, 60],
+        'OZ_SZ.mid': [TTLocalizer.MusicOzSz, 31],
+        'GS_Race_CC.mid': [TTLocalizer.MusicGsRaceCc, 58],
+        'GS_Race_SS.mid': [TTLocalizer.MusicGsRaceSs, 61],
+        'GS_Race_RR.mid': [TTLocalizer.MusicGsRaceRr, 60],
+        'GZ_SZ.mid': [TTLocalizer.MusicGzSz, 59],
+        'MM_SZ.mid': [TTLocalizer.MusicMmSz, 76],
+        'DD_nbrhood.mid': [TTLocalizer.MusicDdNbrhood, 67],
+        'GS_KartShop.mid': [TTLocalizer.MusicGsKartshop, 32]
+    },
     7: {
-        'encntr_general_bg_indoor.mid': [
-            TTLocalizer.MusicEncntrGeneralBgIndoor,
-            31],
-        'encntr_suit_winning_indoor.mid': [
-            TTLocalizer.MusicEncntrGeneralSuitWinningIndoor,
-            36]},
+        'encntr_general_bg_indoor.mid':
+        [TTLocalizer.MusicEncntrGeneralBgIndoor, 31],
+        'encntr_suit_winning_indoor.mid':
+        [TTLocalizer.MusicEncntrGeneralSuitWinningIndoor, 36]
+    },
     8: {
-        'DL_nbrhood.mid': [
-            TTLocalizer.MusicDlNbrhood,
-            30],
-        'DG_SZ.mid': [
-            TTLocalizer.MusicDgSz,
-            48],
-        'DL_SZ.mid': [
-            TTLocalizer.MusicDlSz,
-            33],
-        'TB_SZ.mid': [
-            TTLocalizer.MusicTbSz,
-            54]},
+        'DL_nbrhood.mid': [TTLocalizer.MusicDlNbrhood, 30],
+        'DG_SZ.mid': [TTLocalizer.MusicDgSz, 48],
+        'DL_SZ.mid': [TTLocalizer.MusicDlSz, 33],
+        'TB_SZ.mid': [TTLocalizer.MusicTbSz, 54]
+    },
     9: {
-        'encntr_hall_of_fame.mid': [
-            TTLocalizer.MusicEncntrHallOfFame,
-            51],
-        'CHQ_FACT_bg.mid': [
-            TTLocalizer.MusicChqFactBg,
-            50],
-        'encntr_suit_winning.mid': [
-            TTLocalizer.MusicEncntrSuitWinning,
-            31],
-        'encntr_head_suit_theme.mid': [
-            TTLocalizer.MusicEncntrHeadSuitTheme,
-            29]},
+        'encntr_hall_of_fame.mid': [TTLocalizer.MusicEncntrHallOfFame, 51],
+        'CHQ_FACT_bg.mid': [TTLocalizer.MusicChqFactBg, 50],
+        'encntr_suit_winning.mid': [TTLocalizer.MusicEncntrSuitWinning, 31],
+        'encntr_head_suit_theme.mid':
+        [TTLocalizer.MusicEncntrHeadSuitTheme, 29]
+    },
     11: {
-        'LB_juryBG.mid': [
-            TTLocalizer.MusicLbJurybg,
-            30],
-        'LB_courtyard.mid': [
-            TTLocalizer.MusicLbCourtyard,
-            32]},
+        'LB_juryBG.mid': [TTLocalizer.MusicLbJurybg, 30],
+        'LB_courtyard.mid': [TTLocalizer.MusicLbCourtyard, 32]
+    },
     12: {
-        'Bossbot_Factory_v1.mid': [
-            TTLocalizer.MusicBossbotFactoryV1,
-            30],
-        'BossBot_CEO_v1.mid': [
-            TTLocalizer.MusicBossbotCeoV1,
-            31]},
+        'Bossbot_Factory_v1.mid': [TTLocalizer.MusicBossbotFactoryV1, 30],
+        'BossBot_CEO_v1.mid': [TTLocalizer.MusicBossbotCeoV1, 31]
+    },
     13: {
-        'party_original_theme.mid': [
-            TTLocalizer.MusicPartyOriginalTheme,
-            56],
-        'party_polka_dance.mid': [
-            TTLocalizer.MusicPartyPolkaDance,
-            63],
-        'party_waltz_dance.mid': [
-            TTLocalizer.MusicPartyWaltzDance,
-            63],
-        'party_generic_theme_jazzy.mid': [
-            TTLocalizer.MusicPartyGenericThemeJazzy,
-            64]}}
+        'party_original_theme.mid': [TTLocalizer.MusicPartyOriginalTheme, 56],
+        'party_polka_dance.mid': [TTLocalizer.MusicPartyPolkaDance, 63],
+        'party_waltz_dance.mid': [TTLocalizer.MusicPartyWaltzDance, 63],
+        'party_generic_theme_jazzy.mid':
+        [TTLocalizer.MusicPartyGenericThemeJazzy, 64]
+    }
+}
 
 
 def countMusic():
@@ -1097,47 +946,30 @@ CannonJellyBeanReward = 2
 CannonMaxTotalReward = 200
 CatchMaxTotalReward = 1000
 PartyCannonCollisions = {
-    'clouds': [
-        'cloudSphere-0'],
+    'clouds': ['cloudSphere-0'],
     'bounce': [
-        'wall_collision',
-        'discoBall_collision',
-        'platform_left_collision',
-        'platform_right_collision'],
-    'trampoline_bounce': 'TrampolineCollision',
+        'wall_collision', 'discoBall_collision', 'platform_left_collision',
+        'platform_right_collision'
+    ],
+    'trampoline_bounce':
+    'TrampolineCollision',
     'ground': [
-        'floor_collision',
-        'danceFloor_collision',
-        'danceFloorRamp_collision',
-        'hill_collision',
-        'fence_floor'],
+        'floor_collision', 'danceFloor_collision', 'danceFloorRamp_collision',
+        'hill_collision', 'fence_floor'
+    ],
     'fence': [
-        'dockTube1_collision',
-        'dockTube2_collision',
-        'dockTube2_collision',
-        'dockTube2_collision',
-        'palm_collision_01',
-        'palm_collision_02',
-        'palm_collision_03',
-        'wall_1_collision',
-        'wall_2_collision',
-        'wall_3_collision',
-        'wall_4_collision',
-        'wall_5_collision',
-        'wall_6_collision',
-        'tree_collision',
-        'partyDecoration_collision',
-        'launchPad_railing_collision',
-        'launchPad_floor_collision',
-        'launchPad_collision',
-        'launchPad_railing2_collision',
-        'launchPad__rocket_collision',
-        'launchPad_lever_collision',
-        'launchPad_bridge_collision',
-        'launchPad_sphere2_collision',
-        'launchPad_sphere1_collision',
-        'partyClock_collision',
-        'sign_collision']}
+        'dockTube1_collision', 'dockTube2_collision', 'dockTube2_collision',
+        'dockTube2_collision', 'palm_collision_01', 'palm_collision_02',
+        'palm_collision_03', 'wall_1_collision', 'wall_2_collision',
+        'wall_3_collision', 'wall_4_collision', 'wall_5_collision',
+        'wall_6_collision', 'tree_collision', 'partyDecoration_collision',
+        'launchPad_railing_collision', 'launchPad_floor_collision',
+        'launchPad_collision', 'launchPad_railing2_collision',
+        'launchPad__rocket_collision', 'launchPad_lever_collision',
+        'launchPad_bridge_collision', 'launchPad_sphere2_collision',
+        'launchPad_sphere1_collision', 'partyClock_collision', 'sign_collision'
+    ]
+}
 
 
 def getCostOfParty(partyInfo):

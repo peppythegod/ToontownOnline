@@ -1,5 +1,3 @@
-
-
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
@@ -38,17 +36,16 @@ class VineSpider(NodePath.NodePath, DirectObject):
         self.setPos(-100, 0, 0)
         center = Point3(0, 0, 0)
         self.sphereName = 'spiderSphere-%s-%s' % (gameId, self.serialNum)
-        self.collSphere = CollisionSphere(
-            center[0], center[1], center[2], self.RADIUS)
+        self.collSphere = CollisionSphere(center[0], center[1], center[2],
+                                          self.RADIUS)
         self.collSphere.setTangible(0)
         self.collNode = CollisionNode(self.sphereName)
         self.collNode.setIntoCollideMask(VineGameGlobals.SpiderBitmask)
         self.collNode.addSolid(self.collSphere)
         self.collNodePath = self.attachNewNode(self.collNode)
         self.collNodePath.hide()
-        self.accept(
-            'enter' + self.sphereName,
-            self._VineSpider__handleEnterSphere)
+        self.accept('enter' + self.sphereName,
+                    self._VineSpider__handleEnterSphere)
         self.reparentTo(render)
 
     def destroy(self):
@@ -66,8 +63,7 @@ class VineSpider(NodePath.NodePath, DirectObject):
         print collEntry
         self.ignoreAll()
         self.notify.debug('treasuerGrabbed')
-        messenger.send('VineSpiderGrabbed', [
-            self.serialNum])
+        messenger.send('VineSpiderGrabbed', [self.serialNum])
 
     def showGrab(self):
         self.reparentTo(hidden)

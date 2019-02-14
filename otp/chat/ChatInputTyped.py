@@ -18,10 +18,9 @@ class ChatInputTyped(DirectObject.DirectObject):
         if __dev__:
             wantHistory = 1
 
-        self.wantHistory = base.config.GetBool(
-            'want-chat-history', wantHistory)
-        self.history = [
-            '']
+        self.wantHistory = base.config.GetBool('want-chat-history',
+                                               wantHistory)
+        self.history = ['']
         self.historySize = base.config.GetInt('chat-history-size', 10)
         self.historyIndex = 0
 
@@ -48,7 +47,8 @@ class ChatInputTyped(DirectObject.DirectObject):
             if hasattr(self, 'whisperPos'):
                 self.chatFrame.setPos(self.whisperPos)
 
-            self.whisperLabel['text'] = OTPLocalizer.ChatInputWhisperLabel % self.whisperName
+            self.whisperLabel[
+                'text'] = OTPLocalizer.ChatInputWhisperLabel % self.whisperName
             self.whisperLabel.show()
         elif hasattr(self, 'normalPos'):
             self.chatFrame.setPos(self.normalPos)
@@ -92,7 +92,8 @@ class ChatInputTyped(DirectObject.DirectObject):
                     messenger.send('Chat-Failed player typed chat test')
                     self.deactivate()
 
-            elif not base.talkAssistant.checkWhisperTypedChatAvatar(self.whisperId):
+            elif not base.talkAssistant.checkWhisperTypedChatAvatar(
+                    self.whisperId):
                 messenger.send('Chat-Failed avatar typed chat test')
                 self.deactivate()
 
@@ -135,7 +136,8 @@ class ChatInputTyped(DirectObject.DirectObject):
     def _ChatInputTyped__execMessage(self, message):
         if not ChatInputTyped.ExecNamespace:
             ChatInputTyped.ExecNamespace = {}
-            exec 'from pandac.PandaModules import *' in globals(), self.ExecNamespace
+            exec 'from pandac.PandaModules import *' in globals(
+            ), self.ExecNamespace
             self.importExecNamespace()
 
         try:
@@ -153,19 +155,21 @@ class ChatInputTyped(DirectObject.DirectObject):
 
                 exec message in globals(), ChatInputTyped.ExecNamespace
                 return 'ok'
+            except:
+                exception = sys.exc_info()[0]
+                extraInfo = sys.exc_info()[1]
+                if extraInfo:
+                    return str(extraInfo)
+                else:
+                    return str(exception)
+
+        except:
             exception = sys.exc_info()[0]
             extraInfo = sys.exc_info()[1]
             if extraInfo:
                 return str(extraInfo)
             else:
                 return str(exception)
-
-        exception = sys.exc_info()[0]
-        extraInfo = sys.exc_info()[1]
-        if extraInfo:
-            return str(extraInfo)
-        else:
-            return str(exception)
 
     def cancelButtonPressed(self):
         self.chatEntry.set('')
@@ -178,8 +182,7 @@ class ChatInputTyped(DirectObject.DirectObject):
         pass
 
     def addToHistory(self, text):
-        self.history = [
-            text] + self.history[:self.historySize - 1]
+        self.history = [text] + self.history[:self.historySize - 1]
         self.historyIndex = 0
 
     def getPrevHistory(self):

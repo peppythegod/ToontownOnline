@@ -22,14 +22,15 @@ FrameScale = 1.3999999999999999
 
 
 class DistributedToonInterior(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.fsm = ClassicFSM.ClassicFSM('DistributedToonInterior', [
-            State.State('toon', self.enterToon, self.exitToon, [
-                'beingTakenOver']),
-            State.State('beingTakenOver', self.enterBeingTakenOver, self.exitBeingTakenOver, []),
-            State.State('off', self.enterOff, self.exitOff, [])], 'toon', 'off')
+            State.State('toon', self.enterToon, self.exitToon,
+                        ['beingTakenOver']),
+            State.State('beingTakenOver', self.enterBeingTakenOver,
+                        self.exitBeingTakenOver, []),
+            State.State('off', self.enterOff, self.exitOff, [])
+        ], 'toon', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
@@ -73,8 +74,8 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
                     self.replaceRandomInModel(newNP)
 
             elif key1 == 't':
-                texture = self.randomDNAItem(
-                    category, self.dnaStore.findTexture)
+                texture = self.randomDNAItem(category,
+                                             self.dnaStore.findTexture)
                 np.setTexture(texture, 100)
                 newNP = np
 
@@ -82,12 +83,10 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
                 if category == 'TI_wallpaper' or category == 'TI_wallpaper_border':
                     self.randomGenerator.seed(self.zoneId)
                     newNP.setColorScale(
-                        self.randomGenerator.choice(
-                            self.colors[category]))
+                        self.randomGenerator.choice(self.colors[category]))
                 else:
                     newNP.setColorScale(
-                        self.randomGenerator.choice(
-                            self.colors[category]))
+                        self.randomGenerator.choice(self.colors[category]))
             category == 'TI_wallpaper_border'
 
     def setup(self):
@@ -107,20 +106,17 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
         door = self.dnaStore.findNode(doorModelName)
         door_origin = render.find('**/door_origin;+s')
         doorNP = door.copyTo(door_origin)
-        door_origin.setScale(
-            0.80000000000000004,
-            0.80000000000000004,
-            0.80000000000000004)
+        door_origin.setScale(0.80000000000000004, 0.80000000000000004,
+                             0.80000000000000004)
         door_origin.setPos(door_origin, 0, -0.025000000000000001, 0)
         color = self.randomGenerator.choice(self.colors['TI_door'])
-        DNADoor.setupDoor(doorNP, self.interior, door_origin,
-                          self.dnaStore, str(self.block), color)
+        DNADoor.setupDoor(doorNP, self.interior, door_origin, self.dnaStore,
+                          str(self.block), color)
         doorFrame = doorNP.find('door_*_flat')
         doorFrame.wrtReparentTo(self.interior)
         doorFrame.setColor(color)
         sign = hidden.find(
-            '**/tb%s:*_landmark_*_DNARoot/**/sign;+s' %
-            (self.block,))
+            '**/tb%s:*_landmark_*_DNARoot/**/sign;+s' % (self.block, ))
         if not sign.isEmpty():
             signOrigin = self.interior.find('**/sign_origin;+s')
             newSignNP = sign.copyTo(signOrigin)
@@ -142,16 +138,11 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
                 scale = min(xScale, zScale)
                 xCenter = (ur[0] + ll[0]) / 2.0
                 zCenter = (ur[2] + ll[2]) / 2.0
-                newSignNP.setPosHprScale((SIGN_RIGHT +
-                                          SIGN_LEFT) /
-                                         2.0 -
-                                         xCenter *
-                                         scale, -
-                                         0.10000000000000001, (SIGN_TOP +
-                                                               SIGN_BOTTOM) /
-                                         2.0 -
-                                         zCenter *
-                                         scale, 0.0, 0.0, 0.0, scale, scale, scale)
+                newSignNP.setPosHprScale(
+                    (SIGN_RIGHT + SIGN_LEFT) / 2.0 - xCenter * scale,
+                    -0.10000000000000001,
+                    (SIGN_TOP + SIGN_BOTTOM) / 2.0 - zCenter * scale, 0.0, 0.0,
+                    0.0, scale, scale, scale)
 
         trophyOrigin = self.interior.find('**/trophy_origin')
         trophy = self.buildTrophy()
@@ -193,7 +184,8 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
         head = ToonHead.ToonHead()
         head.setupHead(dna)
         head.setPosHprScale(0, -0.050000000000000003, -0.050000000000000003,
-                            180, 0, 0, 0.55000000000000004, 0.02, 0.55000000000000004)
+                            180, 0, 0, 0.55000000000000004, 0.02,
+                            0.55000000000000004)
         if dna.head[0] == 'r':
             head.setZ(-0.14999999999999999)
         elif dna.head[0] == 'h':
@@ -215,8 +207,7 @@ class DistributedToonInterior(DistributedObject.DistributedObject):
         return frame
 
     def setState(self, state, timestamp):
-        self.fsm.request(state, [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
     def enterOff(self):
         pass

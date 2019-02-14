@@ -16,10 +16,9 @@ def cloudSkyTrack(task):
     return Task.cont
 
 
-def startCloudSky(
-        hood,
-        parent=camera,
-        effects=CompassEffect.PRot | CompassEffect.PZ):
+def startCloudSky(hood,
+                  parent=camera,
+                  effects=CompassEffect.PRot | CompassEffect.PZ):
     hood.sky.reparentTo(parent)
     hood.sky.setDepthTest(0)
     hood.sky.setDepthWrite(0)

@@ -17,9 +17,8 @@ if __dev__:
     from otp.level import EditorGlobals
 
 
-class DistributedFactory(
-        DistributedLevel.DistributedLevel,
-        FactoryBase.FactoryBase):
+class DistributedFactory(DistributedLevel.DistributedLevel,
+                         FactoryBase.FactoryBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedFactory')
 
     def __init__(self, cr):
@@ -70,8 +69,7 @@ class DistributedFactory(
             return None
 
         base.localAvatar.setSystemMessage(
-            avId, TTLocalizer.ForemanConfrontedMsg %
-            av.getName())
+            avId, TTLocalizer.ForemanConfrontedMsg % av.getName())
 
     def setDefeated(self):
         self.notify.info('setDefeated')
@@ -102,15 +100,18 @@ class DistributedFactory(
 
         self.acceptOnce(firstSetZoneDoneEvent, handleFirstSetZoneDone)
         modelCount = len(levelSpec.getAllEntIds())
-        loader.beginBulkLoad('factory', TTLocalizer.HeadingToFactoryTitle %
-                             TTLocalizer.FactoryNames[self.factoryId], modelCount, 1, TTLocalizer.TIP_COGHQ)
+        loader.beginBulkLoad(
+            'factory', TTLocalizer.HeadingToFactoryTitle %
+            TTLocalizer.FactoryNames[self.factoryId], modelCount, 1,
+            TTLocalizer.TIP_COGHQ)
         DistributedLevel.DistributedLevel.privGotSpec(self, levelSpec)
         loader.endBulkLoad('factory')
 
         def printPos(self=self):
             pos = base.localAvatar.getPos(self.getZoneNode(self.lastToonZone))
             h = base.localAvatar.getH(self.getZoneNode(self.lastToonZone))
-            print 'factory pos: %s, h: %s, zone %s' % (repr(pos), h, self.lastToonZone)
+            print 'factory pos: %s, h: %s, zone %s' % (repr(pos), h,
+                                                       self.lastToonZone)
             posStr = 'X: %.3f' % pos[0] + '\nY: %.3f' % pos[1] + '\nZ: %.3f' % pos[2] + \
                 '\nH: %.3f' % h + '\nZone: %s' % str(self.lastToonZone)
             base.localAvatar.setChatAbsolute(posStr, CFThought | CFTimeout)
@@ -134,9 +135,8 @@ class DistributedFactory(
         if hasattr(self, 'suits'):
             del self.suits
 
-        if hasattr(
-                self,
-                'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
+        if hasattr(self,
+                   'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
             self.cr.relatedObjectMgr.abortRequest(self.relatedObjectMgrRequest)
             del self.relatedObjectMgrRequest
 

@@ -11,72 +11,42 @@ EFFECT_RADIUS = 30
 RESISTANCE_TOONUP = 0
 RESISTANCE_RESTOCK = 1
 RESISTANCE_MONEY = 2
-resistanceMenu = [
-    RESISTANCE_TOONUP,
-    RESISTANCE_RESTOCK,
-    RESISTANCE_MONEY]
+resistanceMenu = [RESISTANCE_TOONUP, RESISTANCE_RESTOCK, RESISTANCE_MONEY]
 resistanceDict = {
     RESISTANCE_TOONUP: {
         'menuName': TTL.ResistanceToonupMenu,
         'itemText': TTL.ResistanceToonupItem,
         'chatText': TTL.ResistanceToonupChat,
-        'values': [
-            10,
-            20,
-            40,
-            80,
-            -1],
-        'items': [
-            0,
-            1,
-            2,
-            3,
-            4]},
+        'values': [10, 20, 40, 80, -1],
+        'items': [0, 1, 2, 3, 4]
+    },
     RESISTANCE_MONEY: {
         'menuName': TTL.ResistanceMoneyMenu,
         'itemText': TTL.ResistanceMoneyItem,
         'chatText': TTL.ResistanceMoneyChat,
-        'values': [
-            100,
-            200,
-            350,
-            600],
-        'items': [
-            0,
-            1,
-            2,
-            3]},
+        'values': [100, 200, 350, 600],
+        'items': [0, 1, 2, 3]
+    },
     RESISTANCE_RESTOCK: {
-        'menuName': TTL.ResistanceRestockMenu,
-        'itemText': TTL.ResistanceRestockItem,
-        'chatText': TTL.ResistanceRestockChat,
+        'menuName':
+        TTL.ResistanceRestockMenu,
+        'itemText':
+        TTL.ResistanceRestockItem,
+        'chatText':
+        TTL.ResistanceRestockChat,
         'values': [
-            TTBG.HEAL_TRACK,
-            TTBG.TRAP_TRACK,
-            TTBG.LURE_TRACK,
-            TTBG.SOUND_TRACK,
-            TTBG.THROW_TRACK,
-            TTBG.SQUIRT_TRACK,
-            TTBG.DROP_TRACK,
-            -1],
+            TTBG.HEAL_TRACK, TTBG.TRAP_TRACK, TTBG.LURE_TRACK,
+            TTBG.SOUND_TRACK, TTBG.THROW_TRACK, TTBG.SQUIRT_TRACK,
+            TTBG.DROP_TRACK, -1
+        ],
         'extra': [
-            TTL.MovieNPCSOSHeal,
-            TTL.MovieNPCSOSTrap,
-            TTL.MovieNPCSOSLure,
-            TTL.MovieNPCSOSSound,
-            TTL.MovieNPCSOSThrow,
-            TTL.MovieNPCSOSSquirt,
-            TTL.MovieNPCSOSDrop,
-            TTL.MovieNPCSOSAll],
-        'items': [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7]}}
+            TTL.MovieNPCSOSHeal, TTL.MovieNPCSOSTrap, TTL.MovieNPCSOSLure,
+            TTL.MovieNPCSOSSound, TTL.MovieNPCSOSThrow, TTL.MovieNPCSOSSquirt,
+            TTL.MovieNPCSOSDrop, TTL.MovieNPCSOSAll
+        ],
+        'items': [0, 1, 2, 3, 4, 5, 6, 7]
+    }
+}
 
 
 def encodeId(menuIndex, itemIndex):
@@ -152,17 +122,16 @@ def doEffect(textId, speakingToon, nearbyToons):
             'resistanceEffectSparkle.ptf')
         fadeColor = VBase4(1, 0.5, 1, 1)
     elif menuIndex == RESISTANCE_MONEY:
-        effect = BattleParticles.loadParticleFile(
-            'resistanceEffectBean.ptf')
-        bean = loader.loadModel(
-            'phase_4/models/props/jellybean4.bam')
+        effect = BattleParticles.loadParticleFile('resistanceEffectBean.ptf')
+        bean = loader.loadModel('phase_4/models/props/jellybean4.bam')
         bean = bean.find('**/jellybean')
         colors = {
             'particles-1': (1, 1, 0, 1),
             'particles-2': (1, 0, 0, 1),
             'particles-3': (0, 1, 0, 1),
             'particles-4': (0, 0, 1, 1),
-            'particles-5': (1, 0, 1, 1)}
+            'particles-5': (1, 0, 1, 1)
+        }
         for (name, color) in colors.items():
             node = bean.copyTo(NodePath())
             node.setColorScale(*color)
@@ -196,7 +165,8 @@ def doEffect(textId, speakingToon, nearbyToons):
             'particles-3': icons[2],
             'particles-4': icons[3],
             'particles-5': icons[4],
-            'particles-6': icons[5]}
+            'particles-6': icons[5]
+        }
         for (name, icon) in iconDict.items():
             p = effect.getParticlesNamed(name)
             p.renderer.setFromNode(icon)
@@ -209,22 +179,16 @@ def doEffect(textId, speakingToon, nearbyToons):
         toon = base.cr.doId2do.get(toonId)
         if toon and not (toon.ghostMode):
             i = Sequence(
-                toon.doToonColorScale(
-                    fadeColor, 0.29999999999999999), toon.doToonColorScale(
-                    toon.defaultColorScale, 0.29999999999999999), Func(
-                    toon.restoreDefaultColorScale))
+                toon.doToonColorScale(fadeColor, 0.29999999999999999),
+                toon.doToonColorScale(toon.defaultColorScale,
+                                      0.29999999999999999),
+                Func(toon.restoreDefaultColorScale))
             recolorToons.append(i)
             continue
 
     i = Parallel(
         ParticleInterval(
-            effect,
-            speakingToon,
-            worldRelative=0,
-            duration=3,
-            cleanup=True),
-        Sequence(
-            Wait(0.20000000000000001),
-            recolorToons),
+            effect, speakingToon, worldRelative=0, duration=3, cleanup=True),
+        Sequence(Wait(0.20000000000000001), recolorToons),
         autoFinish=1)
     i.start()

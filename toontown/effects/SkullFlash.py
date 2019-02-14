@@ -6,7 +6,6 @@ from EffectController import EffectController
 
 
 class SkullFlash(PooledEffect, EffectController):
-
     def __init__(self):
         PooledEffect.__init__(self)
         EffectController.__init__(self)
@@ -19,10 +18,9 @@ class SkullFlash(PooledEffect, EffectController):
         self.effectModel.reparentTo(self)
         self.effectModel.setColorScale(0, 0, 0, 0)
         self.setAttrib(
-            ColorBlendAttrib.make(
-                ColorBlendAttrib.MAdd,
-                ColorBlendAttrib.OIncomingAlpha,
-                ColorBlendAttrib.OOne))
+            ColorBlendAttrib.make(ColorBlendAttrib.MAdd,
+                                  ColorBlendAttrib.OIncomingAlpha,
+                                  ColorBlendAttrib.OOne))
         self.setBillboardPointWorld()
         self.setDepthWrite(0)
         self.setLightOff()
@@ -31,16 +29,15 @@ class SkullFlash(PooledEffect, EffectController):
     def createTrack(self):
         self.effectModel.setColorScale(0, 0, 0, 0)
         fadeBlast = self.effectModel.colorScaleInterval(
-            self.fadeTime, Vec4(
-                0, 0, 0, 0), startColorScale=Vec4(
-                self.effectColor), blendType='easeOut')
+            self.fadeTime,
+            Vec4(0, 0, 0, 0),
+            startColorScale=Vec4(self.effectColor),
+            blendType='easeOut')
         scaleBlast = self.effectModel.scaleInterval(
             self.fadeTime, 2.0, startScale=1.0, blendType='easeOut')
         self.track = Sequence(
-            Wait(
-                self.startDelay), Parallel(
-                fadeBlast, scaleBlast), Func(
-                self.cleanUpEffect))
+            Wait(self.startDelay), Parallel(fadeBlast, scaleBlast),
+            Func(self.cleanUpEffect))
 
     def cleanUpEffect(self):
         EffectController.cleanUpEffect(self)

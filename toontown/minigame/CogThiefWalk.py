@@ -1,5 +1,3 @@
-
-
 from toontown.safezone import Walk
 
 

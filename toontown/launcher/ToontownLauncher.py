@@ -40,7 +40,8 @@ sys.stderr = logErr
 print('\n\nStarting Toontown...')
 
 if 1:
-    print 'Current time: ' + time.asctime(time.localtime(time.time())) + ' ' + time.tzname[0]
+    print 'Current time: ' + time.asctime(time.localtime(
+        time.time())) + ' ' + time.tzname[0]
     print 'sys.path = ', sys.path
     print 'sys.argv = ', sys.argv
 
@@ -48,8 +49,10 @@ if 1:
 class ToontownLauncher(LauncherBase):
     GameName = 'Toontown'
     LauncherPhases = [3, 3.5, 4, 5, 5.5, 6, 7, 8, 9, 10, 11, 12, 13]
-    TmpOverallMap = [0.25, 0.15, 0.12, 0.17, 0.08, 0.07, 0.05, 0.05, 0.017,
-                     0.011, 0.01, 0.012, 0.01]
+    TmpOverallMap = [
+        0.25, 0.15, 0.12, 0.17, 0.08, 0.07, 0.05, 0.05, 0.017, 0.011, 0.01,
+        0.012, 0.01
+    ]
     RegistryKey = 'Software\\Disney\\Disney Online\\Toontown'
     ForegroundSleepTime = 0.01
     Localizer = TTLocalizer
@@ -75,10 +78,10 @@ class ToontownLauncher(LauncherBase):
         self.tutorialCompleteKey = 'TUTORIAL_DONE'
         self.toontownRegistryKey = 'Software\\Disney\\Disney Online\\Toontown'
         if self.testServerFlag:
-            self.toontownRegistryKey = '%s%s' % (
-                self.toontownRegistryKey, 'Test')
-        self.toontownRegistryKey = '%s%s' % (
-            self.toontownRegistryKey, self.getProductName())
+            self.toontownRegistryKey = '%s%s' % (self.toontownRegistryKey,
+                                                 'Test')
+        self.toontownRegistryKey = '%s%s' % (self.toontownRegistryKey,
+                                             self.getProductName())
         LauncherBase.__init__(self)
         self.webAcctParams = 'WEB_ACCT_PARAMS'
         self.parseWebAcctParams()
@@ -124,13 +127,13 @@ class ToontownLauncher(LauncherBase):
 
         self.secretNeedsParentPasswordKey = 1
         if 'secretsNeedsParentPassword' in dict:
-            self.secretNeedsParentPasswordKey = dict['secretsNeedsParentPassword']
+            self.secretNeedsParentPasswordKey = dict[
+                'secretsNeedsParentPassword']
         else:
             self.notify.warning(
                 'no secretNeedsParentPassword token in webAcctParams')
-        self.notify.info(
-            'secretNeedsParentPassword = %d' %
-            self.secretNeedsParentPasswordKey)
+        self.notify.info('secretNeedsParentPassword = %d' %
+                         self.secretNeedsParentPasswordKey)
 
         self.chatEligibleKey = 0
         if 'chatEligible' in dict:
@@ -161,15 +164,14 @@ class ToontownLauncher(LauncherBase):
         if t == types.IntType:
             WindowsRegistry.setIntValue(self.toontownRegistryKey, name, value)
         elif t == types.StringType:
-            WindowsRegistry.setStringValue(
-                self.toontownRegistryKey, name, value)
+            WindowsRegistry.setStringValue(self.toontownRegistryKey, name,
+                                           value)
         else:
             self.notify.warning(
-                'setRegistry: Invalid type for registry value: ' +
-                repr(value))
+                'setRegistry: Invalid type for registry value: ' + repr(value))
 
     def getRegistry(self, name, missingValue=None):
-        self.notify.info('getRegistry%s' % ((name, missingValue),))
+        self.notify.info('getRegistry%s' % ((name, missingValue), ))
         if not self.WIN32:
             if missingValue is None:
                 missingValue = ''
@@ -184,8 +186,8 @@ class ToontownLauncher(LauncherBase):
         if t == WindowsRegistry.TInt:
             if missingValue is None:
                 missingValue = 0
-            return WindowsRegistry.getIntValue(self.toontownRegistryKey,
-                                               name, missingValue)
+            return WindowsRegistry.getIntValue(self.toontownRegistryKey, name,
+                                               missingValue)
         elif t == WindowsRegistry.TString:
             if missingValue is None:
                 missingValue = ''
@@ -195,17 +197,13 @@ class ToontownLauncher(LauncherBase):
             return missingValue
 
     def getCDDownloadPath(self, origPath, serverFilePath):
-        return '%s/%s%s/CD_%d/%s' % (origPath,
-                                     self.ServerVersion,
-                                     self.ServerVersionSuffix,
-                                     self.fromCD,
+        return '%s/%s%s/CD_%d/%s' % (origPath, self.ServerVersion,
+                                     self.ServerVersionSuffix, self.fromCD,
                                      serverFilePath)
 
     def getDownloadPath(self, origPath, serverFilePath):
-        return '%s/%s%s/%s' % (origPath,
-                               self.ServerVersion,
-                               self.ServerVersionSuffix,
-                               serverFilePath)
+        return '%s/%s%s/%s' % (origPath, self.ServerVersion,
+                               self.ServerVersionSuffix, serverFilePath)
 
     def getPercentPatchComplete(self, bytesWritten):
         if self.totalPatchDownload:
@@ -239,7 +237,8 @@ class ToontownLauncher(LauncherBase):
             exitCode2exitPage = {
                 OTPLauncherGlobals.ExitEnableChat: 'chat',
                 OTPLauncherGlobals.ExitSetParentPassword: 'setparentpassword',
-                OTPLauncherGlobals.ExitPurchase: 'purchase'}
+                OTPLauncherGlobals.ExitPurchase: 'purchase'
+            }
             if code in exitCode2exitPage:
                 self.setRegistry('EXIT_PAGE', exitCode2exitPage[code])
                 self.setRegistry(self.PandaErrorCodeKey, 0)

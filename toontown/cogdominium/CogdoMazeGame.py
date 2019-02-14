@@ -22,10 +22,10 @@ class CogdoMazeGame(DirectObject):
     notify = directNotify.newCategory('CogdoMazeGame')
     UpdateTaskName = 'CogdoMazeGameUpdateTask'
     RemoveGagTaskName = 'CogdoMazeGameRemoveGag'
-    PlayerCoolerCollision = '%s-into-%s' % (
-        Globals.LocalPlayerCollisionName, Globals.WaterCoolerCollisionName)
-    PlayerDropCollision = '%s-into-%s' % (
-        Globals.LocalPlayerCollisionName, Globals.DropCollisionName)
+    PlayerCoolerCollision = '%s-into-%s' % (Globals.LocalPlayerCollisionName,
+                                            Globals.WaterCoolerCollisionName)
+    PlayerDropCollision = '%s-into-%s' % (Globals.LocalPlayerCollisionName,
+                                          Globals.DropCollisionName)
 
     def __init__(self, distGame):
         self.distGame = distGame
@@ -108,8 +108,8 @@ class CogdoMazeGame(DirectObject):
 
         self.pickups = []
         self.gagModel = CogdoUtil.loadMazeModel('waterBalloon')
-        self._movie = CogdoMazeGameIntro(
-            self.maze, self._exit, self.distGame.randomNumGen)
+        self._movie = CogdoMazeGameIntro(self.maze, self._exit,
+                                         self.distGame.randomNumGen)
         self._movie.load()
 
     def _initAudio(self):
@@ -233,22 +233,18 @@ class CogdoMazeGame(DirectObject):
 
     def start(self):
         self.accept(self.PlayerDropCollision, self.handleLocalToonMeetsDrop)
-        self.accept(
-            self.PlayerCoolerCollision,
-            self.handleLocalToonMeetsWaterCooler)
-        self.accept(
-            CogdoMazeExit.EnterEventName,
-            self.handleLocalToonEntersDoor)
+        self.accept(self.PlayerCoolerCollision,
+                    self.handleLocalToonMeetsWaterCooler)
+        self.accept(CogdoMazeExit.EnterEventName,
+                    self.handleLocalToonEntersDoor)
         self.accept(CogdoMemo.EnterEventName, self.handleLocalToonMeetsPickup)
         if self._allowSuitsHitToons:
-            self.accept(
-                CogdoMazeSuit.COLLISION_EVENT_NAME,
-                self.handleLocalToonMeetsSuit)
+            self.accept(CogdoMazeSuit.COLLISION_EVENT_NAME,
+                        self.handleLocalToonMeetsSuit)
 
         self.accept(CogdoMazePlayer.GagHitEventName, self.handleToonMeetsGag)
-        self.accept(
-            CogdoMazeSuit.GagHitEventName,
-            self.handleLocalSuitMeetsGag)
+        self.accept(CogdoMazeSuit.GagHitEventName,
+                    self.handleLocalSuitMeetsGag)
         self.accept(CogdoMazeSuit.DeathEventName, self.handleSuitDeath)
         self.accept(CogdoMazeSuit.ThinkEventName, self.handleSuitThink)
         self.accept(CogdoMazeBossSuit.ShakeEventName, self.handleBossShake)
@@ -374,8 +370,8 @@ class CogdoMazeGame(DirectObject):
         else:
             self._quakeSfx1.getAudioSound().setVolume(volume)
         volume = shake * shake / Globals.CameraShakeMax
-        if not (self.hackTemp) and self._quakeSfx2.getAudioSound(
-        ).status() != self._quakeSfx2.getAudioSound().PLAYING:
+        if not (self.hackTemp) and self._quakeSfx2.getAudioSound().status(
+        ) != self._quakeSfx2.getAudioSound().PLAYING:
             taskMgr.doMethodLater(
                 1.5,
                 self._quakeSfx2.loop,
@@ -464,10 +460,8 @@ class CogdoMazeGame(DirectObject):
             return None
 
         if Globals.DropShakeEnabled:
-            self.shakeCamera(
-                node,
-                Globals.DropShakeStrength,
-                Globals.DropMaxDistance)
+            self.shakeCamera(node, Globals.DropShakeStrength,
+                             Globals.DropMaxDistance)
 
     def shakeCamera(self, node, strength, distanceCutoff=60.0):
         distance = self.localPlayer.toon.getDistance(node)
@@ -624,8 +618,8 @@ class CogdoMazeGame(DirectObject):
 
         if not self._exit.revealed:
             self.toonRevealsDoor(localToonId)
-            self.distGame.d_sendRequestAction(
-                Globals.GameActions.RevealDoor, 0)
+            self.distGame.d_sendRequestAction(Globals.GameActions.RevealDoor,
+                                              0)
 
     def handleToonWentSad(self, toonId):
         if toonId == self.localPlayer.toon.doId:

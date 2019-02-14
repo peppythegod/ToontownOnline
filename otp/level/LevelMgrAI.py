@@ -3,7 +3,6 @@ import LevelMgrBase
 
 
 class LevelMgrAI(LevelMgrBase.LevelMgrBase):
-
     def __init__(self, level, entId):
         LevelMgrBase.LevelMgrBase.__init__(self, level, entId)
         self.level.zoneNum2zoneId = {}
@@ -21,8 +20,9 @@ class LevelMgrAI(LevelMgrBase.LevelMgrBase):
         zoneEnt = self.level.getEntity(entId)
         self.level.zoneNum2zoneId[zoneEnt.entId] = zoneEnt.getZoneId()
         self.privCreateSortedZoneIdList()
-        self.accept(self.level.getEntityDestroyEvent(entId),
-                    Functor(self.handleZoneDestroy, entId))
+        self.accept(
+            self.level.getEntityDestroyEvent(entId),
+            Functor(self.handleZoneDestroy, entId))
 
     def handleZoneDestroy(self, entId):
         zoneEnt = self.level.getEntity(entId)

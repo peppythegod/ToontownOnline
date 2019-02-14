@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE10a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,17 +26,20 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10009: {
         'type': 'healBarrel',
         'name': '<unnamed>',
         'comment': '',
         'parentEntId': 0,
-        'pos': Point3(63.974136352499997, -10.934322357199999, 9.9769611358599999),
+        'pos': Point3(63.974136352499997, -10.934322357199999,
+                      9.9769611358599999),
         'hpr': Vec3(270.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'rewardPerGrab': 8,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     10010: {
         'type': 'healBarrel',
         'name': 'copy of <unnamed>',
@@ -44,15 +49,24 @@ GlobalEntities = {
         'hpr': Vec3(349.35876464799998, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'rewardPerGrab': 8,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     10000: {
-        'type': 'nodepath',
-        'name': 'mixers',
-        'comment': '',
-        'parentEntId': 0,
-        'pos': Point3(-19.239728927600002, 0.0, 5.5399999618500004),
-        'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(0.75800174474699999, 0.75800174474699999, 0.75800174474699999)},
+        'type':
+        'nodepath',
+        'name':
+        'mixers',
+        'comment':
+        '',
+        'parentEntId':
+        0,
+        'pos':
+        Point3(-19.239728927600002, 0.0, 5.5399999618500004),
+        'hpr':
+        Vec3(0.0, 0.0, 0.0),
+        'scale':
+        Vec3(0.75800174474699999, 0.75800174474699999, 0.75800174474699999)
+    },
     10004: {
         'type': 'paintMixer',
         'name': 'mixer0',
@@ -69,7 +83,8 @@ GlobalEntities = {
         'period': 8.0,
         'phaseShift': 0.0,
         'shaftScale': 1,
-        'waitPercent': 0.10000000000000001},
+        'waitPercent': 0.10000000000000001
+    },
     10005: {
         'type': 'paintMixer',
         'name': 'mixer1',
@@ -86,7 +101,8 @@ GlobalEntities = {
         'period': 8.0,
         'phaseShift': 0.5,
         'shaftScale': 1,
-        'waitPercent': 0.10000000000000001},
+        'waitPercent': 0.10000000000000001
+    },
     10006: {
         'type': 'paintMixer',
         'name': 'mixer2',
@@ -103,9 +119,8 @@ GlobalEntities = {
         'period': 8.0,
         'phaseShift': 0.5,
         'shaftScale': 1,
-        'waitPercent': 0.10000000000000001}}
+        'waitPercent': 0.10000000000000001
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

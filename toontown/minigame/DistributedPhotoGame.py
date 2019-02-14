@@ -1,5 +1,3 @@
-
-
 from direct.directnotify import DirectNotifyGlobal
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
@@ -70,19 +68,15 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         DistributedMinigame.__init__(self, cr)
         PhotoGameBase.PhotoGameBase.__init__(self)
         self.gameFSM = ClassicFSM.ClassicFSM('DistributedPhotoGame', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'aim']),
-            State.State('aim', self.enterAim, self.exitAim, [
-                'showResults',
-                'cleanup',
-                'zoom']),
-            State.State('zoom', self.enterZoom, self.exitZoom, [
-                'showResults',
-                'cleanup',
-                'aim']),
-            State.State('showResults', self.enterShowResults, self.exitShowResults, [
-                'cleanup']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
+            State.State('off', self.enterOff, self.exitOff, ['aim']),
+            State.State('aim', self.enterAim, self.exitAim,
+                        ['showResults', 'cleanup', 'zoom']),
+            State.State('zoom', self.enterZoom, self.exitZoom,
+                        ['showResults', 'cleanup', 'aim']),
+            State.State('showResults', self.enterShowResults,
+                        self.exitShowResults, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
         self.tripod = None
         self.leftPressed = 0
@@ -147,47 +141,23 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.filmPanel = DirectLabel(
             parent=hidden,
             relief=None,
-            pos=(
-                1.1599999999999999,
-                0.0,
-                0.45000000000000001),
+            pos=(1.1599999999999999, 0.0, 0.45000000000000001),
             scale=0.65000000000000002,
-            text=str(
-                self.filmCount),
+            text=str(self.filmCount),
             text_scale=0.20000000000000001,
-            text_fg=(
-                0.94999999999999996,
-                0.94999999999999996,
-                0,
-                1),
-            text_pos=(
-                0.080000000000000002,
-                -0.14999999999999999),
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_pos=(0.080000000000000002, -0.14999999999999999),
             text_font=ToontownGlobals.getSignFont(),
             image=self.filmImage,
-            image_scale=Point3(
-                1.0,
-                0.0,
-                0.84999999999999998))
+            image_scale=Point3(1.0, 0.0, 0.84999999999999998))
         self.filmPanelTitle = DirectLabel(
             parent=self.filmPanel,
             relief=None,
-            pos=(
-                0.080000000000000002,
-                0,
-                0.040000000000000001),
+            pos=(0.080000000000000002, 0, 0.040000000000000001),
             scale=0.080000000000000002,
             text=TTLocalizer.PhotoGameFilm,
-            text_fg=(
-                0.94999999999999996,
-                0.94999999999999996,
-                0,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1))
         self.music = base.loadMusic('phase_4/audio/bgm/MG_cannon_game.mid')
         self.sndPhotoMove = base.loadSfx(
             'phase_4/audio/sfx/MG_cannon_adjust.mp3')
@@ -213,17 +183,10 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         viewfinderImage.setScale(0.55000000000000004, 1.0, 0.55000000000000004)
         self.blackoutNode = base.aspect2d.attachNewNode('blackout node')
         self.blackoutNode.setP(90)
-        BuildGeometry.addSquareGeom(
-            self.blackoutNode,
-            self.screenSizeX *
-            2.2000000000000002,
-            self.screenSizeZ *
-            2.2000000000000002,
-            Vec4(
-                1.0,
-                1.0,
-                1.0,
-                1.0))
+        BuildGeometry.addSquareGeom(self.blackoutNode,
+                                    self.screenSizeX * 2.2000000000000002,
+                                    self.screenSizeZ * 2.2000000000000002,
+                                    Vec4(1.0, 1.0, 1.0, 1.0))
         self.blackoutNode.setTransparency(TransparencyAttrib.MAlpha)
         self.blackoutNode.setColorScale(0.0, 0.0, 0.0, 0.5)
         self.blackoutNode.setDepthWrite(1)
@@ -390,23 +353,21 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                     rowString = '%s' % row
 
                 pickerNode = CollisionNode(
-                    '%s %s %s' %
-                    (rowString, columnString, rayQuality))
+                    '%s %s %s' % (rowString, columnString, rayQuality))
                 pickerNP = camera.attachNewNode(pickerNode)
                 pickerNode.setFromCollideMask(GeomNode.getDefaultCollideMask())
                 pickerRay = CollisionRay()
                 pickerNode.addSolid(pickerRay)
-                self.rayArray.append(
-                    (row, column, pickerNode, pickerNP, pickerRay))
+                self.rayArray.append((row, column, pickerNode, pickerNP,
+                                      pickerRay))
                 self.traverser.addCollider(pickerNP, self.queue)
 
         if WANTDOTS:
             self.markerDict = {}
             for rayEntry in self.rayArray:
                 markerNode = self.viewfinderNode.attachNewNode('marker Node')
-                BuildGeometry.addSquareGeom(
-                    markerNode, 0.01, 0.01, Vec4(
-                        1.0, 1.0, 1.0, 1.0))
+                BuildGeometry.addSquareGeom(markerNode, 0.01, 0.01,
+                                            Vec4(1.0, 1.0, 1.0, 1.0))
                 markerNode.setX(RAYSPREADX * rayEntry[0])
                 markerNode.setY(RAYSPREADY * rayEntry[1])
                 markerNode.setDepthWrite(1)
@@ -441,16 +402,20 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             newLeft = 0
             newUp = 0
             newDown = 0
-            if self.viewfinderNode.getX() > self.screenSizeX * 0.94999999999999996:
+            if self.viewfinderNode.getX(
+            ) > self.screenSizeX * 0.94999999999999996:
                 newRight = 1
 
-            if self.viewfinderNode.getX() < self.screenSizeX * -0.94999999999999996:
+            if self.viewfinderNode.getX(
+            ) < self.screenSizeX * -0.94999999999999996:
                 newLeft = 1
 
-            if self.viewfinderNode.getZ() > self.screenSizeZ * 0.94999999999999996:
+            if self.viewfinderNode.getZ(
+            ) > self.screenSizeZ * 0.94999999999999996:
                 newUp = 1
 
-            if self.viewfinderNode.getZ() < self.screenSizeZ * -0.94999999999999996:
+            if self.viewfinderNode.getZ(
+            ) < self.screenSizeZ * -0.94999999999999996:
                 newDown = 1
 
             if not (self.edgeRight) and newRight:
@@ -491,10 +456,10 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             return None
 
         for rayEntry in self.rayArray:
-            posX = (self.viewfinderNode.getX() + RAYSPREADX *
-                    rayEntry[0]) / self.screenSizeX
-            posY = (self.viewfinderNode.getZ() + RAYSPREADY *
-                    rayEntry[1]) / self.screenSizeZ
+            posX = (self.viewfinderNode.getX() +
+                    RAYSPREADX * rayEntry[0]) / self.screenSizeX
+            posY = (self.viewfinderNode.getZ() +
+                    RAYSPREADY * rayEntry[1]) / self.screenSizeZ
             rayEntry[4].setFromLens(self.lensNode, posX, posY)
 
         self.traverser.traverse(self.subjectNode)
@@ -505,8 +470,10 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             entry = self.queue.getEntry(i)
             object = None
             objectIndex = None
-            subjectIndexString = entry.getIntoNodePath().getNetTag('subjectIndex')
-            sceneryIndexString = entry.getIntoNodePath().getNetTag('sceneryIndex')
+            subjectIndexString = entry.getIntoNodePath().getNetTag(
+                'subjectIndex')
+            sceneryIndexString = entry.getIntoNodePath().getNetTag(
+                'sceneryIndex')
             if subjectIndexString:
                 objectIndex = int(subjectIndexString)
                 object = self.subjects[objectIndex]
@@ -529,9 +496,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
             if object:
                 newEntry = (entry.getFromNode(), object)
-                distance = Vec3(
-                    entry.getSurfacePoint(
-                        self.tripod)).lengthSquared()
+                distance = Vec3(entry.getSurfacePoint(
+                    self.tripod)).lengthSquared()
                 name = entry.getFromNode().getName()
                 if name not in distDict:
                     distDict[name] = distance
@@ -564,15 +530,14 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                 quality = 1
                 onCenter = 1
             if superParent not in centerDict:
-                centerDict[superParent] = (
-                    onCenter, overB, overT, overR, overL)
+                centerDict[superParent] = (onCenter, overB, overT, overR,
+                                           overL)
                 continue
-            centerDict[superParent] = (
-                onCenter + centerDict[superParent][0],
-                overB + centerDict[superParent][1],
-                overT + centerDict[superParent][2],
-                overR + centerDict[superParent][3],
-                overL + centerDict[superParent][4])
+            centerDict[superParent] = (onCenter + centerDict[superParent][0],
+                                       overB + centerDict[superParent][1],
+                                       overT + centerDict[superParent][2],
+                                       overR + centerDict[superParent][3],
+                                       overL + centerDict[superParent][4])
 
         if WANTDOTS:
             for key in self.markerDict:
@@ -594,8 +559,9 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         for subject in centerDictKeys:
             score = self.judgePhoto(subject, centerDict)
             self.notify.debug('Photo is %s / 5 stars' % score)
-            self.notify.debug('assignment compare %s %s' % (
-                self.determinePhotoContent(subject), self.assignments[self.currentAssignment]))
+            self.notify.debug('assignment compare %s %s' %
+                              (self.determinePhotoContent(subject),
+                               self.assignments[self.currentAssignment]))
             content = self.determinePhotoContent(subject)
             if content:
                 photoAnalysisZero = (content[0], content[1])
@@ -613,15 +579,14 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                         buffer.setActive(1)
                         texturePanel.show()
                         texturePanel.setColorScale(1, 1, 1, 1)
-                        taskMgr.doMethodLater(
-                            0.20000000000000001, buffer.setActive, 'capture Image', [0])
+                        taskMgr.doMethodLater(0.20000000000000001,
+                                              buffer.setActive,
+                                              'capture Image', [0])
                         if score > self.assignmentDataDict[assignment][0]:
                             self.assignmentDataDict[assignment][0] = score
                             self.updateAssignmentPanels()
-                            self.sendUpdate('newClientPhotoScore', [
-                                subjectIndex,
-                                content[1],
-                                score])
+                            self.sendUpdate('newClientPhotoScore',
+                                            [subjectIndex, content[1], score])
 
                 else:
                     self.notify.debug('assignment not complete')
@@ -645,15 +610,12 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         if self.filmCount == 0:
             self.sendUpdate('filmOut', [])
 
+        self.notify.debug('Screen angles H:%s V:%s' % (self.swivel.getH(),
+                                                       self.swivel.getP()))
         self.notify.debug(
-            'Screen angles H:%s V:%s' %
-            (self.swivel.getH(), self.swivel.getP()))
-        self.notify.debug(
-            'Viewfinder to screen angles H:%s V:%s' %
-            (horzAngle, vertAngle))
-        self.notify.debug(
-            'Viewfinder to screen angles with math H:%s V:%s' %
-            (hMDegree, vMDegree))
+            'Viewfinder to screen angles H:%s V:%s' % (horzAngle, vertAngle))
+        self.notify.debug('Viewfinder to screen angles with math H:%s V:%s' %
+                          (hMDegree, vMDegree))
 
     def newAIPhotoScore(self, playerId, assignmentIndex, score):
         if len(self.assignments) > assignmentIndex:
@@ -666,9 +628,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
     def determinePhotoContent(self, subject):
         if self.getSubjectTrackState(subject):
-            return [
-                subject,
-                self.getSubjectTrackState(subject)[2]]
+            return [subject, self.getSubjectTrackState(subject)[2]]
         else:
             return None
 
@@ -679,9 +639,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         a1 = camera.getH(render) % 360
         a2 = subject.getH(render) % 360
         angle = abs((a1 + 180 - a2) % 360 - 180)
-        self.notify.debug(
-            'angle camera:%s subject:%s between:%s' %
-            (camera.getH(render), subject.getH(render), angle))
+        self.notify.debug('angle camera:%s subject:%s between:%s' %
+                          (camera.getH(render), subject.getH(render), angle))
         self.notify.debug(str(angle))
         centering = centerDict[subject]
         if isinstance(subject, type(self.subjectToon)):
@@ -754,8 +713,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             self.currentFov = self.zoomFov
             base.camLens.setFov(self.zoomFov)
             self.blackoutNode.show()
-            self.swivel.setHpr(self.swivel, hMove * -
-                               (self.zoomFlip), vMove * self.zoomFlip, 0)
+            self.swivel.setHpr(self.swivel, hMove * -(self.zoomFlip),
+                               vMove * self.zoomFlip, 0)
         else:
             self.notify.debug('Zoom Out')
             hMove = hMDegree * ((1.0 - ZOOMRATIO) / ZOOMRATIO)
@@ -763,8 +722,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             self.currentFov = self.outFov
             base.camLens.setFov(self.outFov)
             self.blackoutNode.hide()
-            self.swivel.setHpr(self.swivel, hMove *
-                               self.zoomFlip, vMove * -(self.zoomFlip), 0)
+            self.swivel.setHpr(self.swivel, hMove * self.zoomFlip,
+                               vMove * -(self.zoomFlip), 0)
 
     def _DistributedPhotoGame__doZoom(self):
         self.notify.debug('Toggle View')
@@ -794,8 +753,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             base.camLens.setFov(self.zoomFov)
             self.blackoutNode.show()
             orgQuat = self.swivel.getQuat()
-            self.swivel.setHpr(self.swivel, hMove * -
-                               (self.zoomFlip), vMove * self.zoomFlip, 0)
+            self.swivel.setHpr(self.swivel, hMove * -(self.zoomFlip),
+                               vMove * self.zoomFlip, 0)
             self.swivel.setR(0.0)
             newQuat = self.swivel.getQuat()
             self.swivel.setQuat(orgQuat)
@@ -822,8 +781,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             self.currentFov = self.outFov
             base.camLens.setFov(self.outFov)
             orgQuat = self.swivel.getQuat()
-            self.swivel.setHpr(self.swivel, hMove *
-                               self.zoomFlip, vMove * -(self.zoomFlip), 0)
+            self.swivel.setHpr(self.swivel, hMove * self.zoomFlip,
+                               vMove * -(self.zoomFlip), 0)
             self.swivel.setR(0.0)
             newQuat = self.swivel.getQuat()
             self.swivel.setQuat(orgQuat)
@@ -878,9 +837,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         for pathIndex in range(len(self.data['PATHS'])):
             path = self.data['PATHS'][pathIndex]
             subject = Toon.Toon()
-            gender = random.choice([
-                'm',
-                'f'])
+            gender = random.choice(['m', 'f'])
             seed = int(random.random() * 571)
             if gender == 'm':
                 boy = 1
@@ -922,7 +879,6 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.subjectTracks[subject] = subjectTrack
 
     def generateToonTrack(self, subject, path, pathIndex):
-
         def getNextIndex(curIndex, path):
             return (curIndex + 1) % len(path)
 
@@ -951,8 +907,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
             nextInterval = LerpQuatInterval(subject, turnTime, quat=nextQuat)
             subjectTrack.append(nextInterval)
-            subjectTimeline.append(
-                (timeAccum, nextInterval.getDuration(), 'turn', 1.0))
+            subjectTimeline.append((timeAccum, nextInterval.getDuration(),
+                                    'turn', 1.0))
             timeAccum += nextInterval.getDuration()
             movetype = random.choice(self.data['MOVEMODES'][animSetIndex])
             pointTime = pointTime * movetype[1]
@@ -960,8 +916,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                 nextInterval = Sequence()
                 startInterval = Func(subject.setP, -60)
                 midInterval = Parallel(
-                    LerpPosInterval(
-                        subject, pointTime, nextPoint), ActorInterval(
+                    LerpPosInterval(subject, pointTime, nextPoint),
+                    ActorInterval(
                         subject, movetype[0], loop=1, duration=pointTime))
                 nextInterval.append(startInterval)
                 nextInterval.append(midInterval)
@@ -969,31 +925,27 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                 nextInterval = Sequence()
                 startInterval = Func(subject.setP, 0)
                 midInterval = Parallel(
-                    LerpPosInterval(
-                        subject, pointTime, nextPoint), ActorInterval(
+                    LerpPosInterval(subject, pointTime, nextPoint),
+                    ActorInterval(
                         subject, movetype[0], loop=1, duration=pointTime))
                 nextInterval.append(startInterval)
                 nextInterval.append(midInterval)
             subjectTrack.append(nextInterval)
-            subjectTimeline.append(
-                (timeAccum, nextInterval.getDuration(), movetype[0], 1.0))
+            subjectTimeline.append((timeAccum, nextInterval.getDuration(),
+                                    movetype[0], 1.0))
             timeAccum += nextInterval.getDuration()
             if animChoice:
                 nextInterval = ActorInterval(subject, animChoice, loop=0)
                 subjectTrack.append(nextInterval)
-                subjectTimeline.append(
-                    (timeAccum, nextInterval.getDuration(), animChoice, 2.0))
+                subjectTimeline.append((timeAccum, nextInterval.getDuration(),
+                                        animChoice, 2.0))
                 timeAccum += nextInterval.getDuration()
 
             pathPointIndex += 1
         subject.setPos(orgPos)
         subject.setQuat(orgQuat)
         subjectTrack.append(
-            Func(
-                self.regenerateToonTrack,
-                subject,
-                path,
-                pathIndex))
+            Func(self.regenerateToonTrack, subject, path, pathIndex))
         return (subjectTrack, subjectTimeline)
 
     def slowDistance(self, point1, point2):
@@ -1050,9 +1002,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self._DistributedPhotoGame__putCameraOnTripod()
         if not base.config.GetBool('endless-cannon-game', 0):
             self.timer.show()
-            self.timer.countdown(
-                self.data['TIME'],
-                self._DistributedPhotoGame__gameTimerExpired)
+            self.timer.countdown(self.data['TIME'],
+                                 self._DistributedPhotoGame__gameTimerExpired)
 
         self.filmPanel.reparentTo(aspect2d)
         self.scoreMult = MinigameGlobals.getScoreMult(self.cr.playGame.hood.id)
@@ -1095,14 +1046,9 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             if assignment not in self.assignments:
                 self.assignments.append(assignment)
                 self.assignmentDataDict[assignment] = [
-                    score,
-                    panel,
-                    topScore,
-                    topScorerId,
-                    textureBuffer,
-                    texturePanel,
-                    texture,
-                    panelToon]
+                    score, panel, topScore, topScorerId, textureBuffer,
+                    texturePanel, texture, panelToon
+                ]
                 continue
 
         self.notify.debug('assignments')
@@ -1125,15 +1071,10 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             panel.setX(Xoff - spacing * index)
             panel.setZ(Zoff)
             texturePanel.setZ(0.065000000000000002)
-            rot = random.choice([
-                0.0,
-                2.0,
-                -2.0,
-                -4.0,
-                6.0])
+            rot = random.choice([0.0, 2.0, -2.0, -4.0, 6.0])
             panel.setR(rot)
-            textureBuffer = base.win.makeTextureBuffer(
-                'Photo Capture', 128, 128)
+            textureBuffer = base.win.makeTextureBuffer('Photo Capture', 128,
+                                                       128)
             dr = textureBuffer.makeDisplayRegion()
             dr.setCamera(self.captureCam)
             texture = textureBuffer.getTexture()
@@ -1218,15 +1159,9 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         assignedToon.setY(-100.0)
         model.setY(-10.0)
         screen = model.attachNewNode('screen node')
-        BuildGeometry.addSquareGeom(
-            screen,
-            0.35999999999999999,
-            0.27000000000000002,
-            Vec4(
-                1.0,
-                1.0,
-                1.0,
-                1.0))
+        BuildGeometry.addSquareGeom(screen, 0.35999999999999999,
+                                    0.27000000000000002,
+                                    Vec4(1.0, 1.0, 1.0, 1.0))
         screen.setHpr(0, 90, 0)
         screen.setDepthTest(1)
         starImage = loader.loadModel('phase_4/models/minigames/photogame_star')
@@ -1234,9 +1169,11 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.starDict[model] = []
         for index in range(NUMSTARS):
             star = DirectLabel(
-                parent=starParent, image=starImage, image_color=(
-                    1, 1, 1, 1), image_scale=Point3(
-                    STARSIZE, 0.0, STARSIZE), relief=None)
+                parent=starParent,
+                image=starImage,
+                image_color=(1, 1, 1, 1),
+                image_scale=Point3(STARSIZE, 0.0, STARSIZE),
+                relief=None)
             star.setX(STARSIZE * -0.5 * float(NUMSTARS) +
                       float(index + 0.5) * STARSIZE)
             star.setZ(-0.050000000000000003 - STARSIZE)
@@ -1259,8 +1196,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
             model.setPos(-center[0], 2, -center[2])
             corner = Vec3(bMax - center)
             scaleFactor = self.screenSizeX / PhotoGameGlobals.ONSCREENASSIGNMENTS
-            scale.setScale(0.40000000000000002 * scaleFactor /
-                           max(corner[0], corner[1], corner[2]))
+            scale.setScale(0.40000000000000002 * scaleFactor / max(
+                corner[0], corner[1], corner[2]))
 
         return (frame, ival)
 
@@ -1274,27 +1211,14 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         frame = DirectFrame(
             parent=hidden,
             image=photoImage,
-            image_color=(
-                1,
-                1,
-                1,
-                1),
-            image_scale=Point3(
-                1.6000000000000001 * assignmentScale,
-                0.0,
-                1.75 * assignmentScale),
-            frameSize=(
-                -size,
-                size,
-                -size,
-                size),
+            image_color=(1, 1, 1, 1),
+            image_scale=Point3(1.6000000000000001 * assignmentScale, 0.0,
+                               1.75 * assignmentScale),
+            frameSize=(-size, size, -size, size),
             text='HC Score',
             textMayChange=1,
             text_wordwrap=9,
-            text_pos=Point3(
-                0.0,
-                -0.13500000000000001,
-                0.0),
+            text_pos=Point3(0.0, -0.13500000000000001, 0.0),
             text_scale=0.044999999999999998,
             relief=None)
         return frame
@@ -1305,27 +1229,18 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         size = 1.0
         scoreImage = loader.loadModel(
             'phase_4/models/minigames/photogame_camera')
-        frame = DirectFrame(parent=hidden,
-                            image=scoreImage,
-                            image_color=(1,
-                                         1,
-                                         1,
-                                         1),
-                            image_scale=Point3(0.64000000000000001,
-                                               0.0,
-                                               0.64000000000000001),
-                            frameSize=(-size,
-                                       size,
-                                       -size,
-                                       size),
-                            text='Score Frame',
-                            textMayChange=1,
-                            text_wordwrap=9,
-                            text_pos=Point3(0.0,
-                                            0.0,
-                                            0.0),
-                            text_scale=0.050000000000000003,
-                            relief=None)
+        frame = DirectFrame(
+            parent=hidden,
+            image=scoreImage,
+            image_color=(1, 1, 1, 1),
+            image_scale=Point3(0.64000000000000001, 0.0, 0.64000000000000001),
+            frameSize=(-size, size, -size, size),
+            text='Score Frame',
+            textMayChange=1,
+            text_wordwrap=9,
+            text_pos=Point3(0.0, 0.0, 0.0),
+            text_scale=0.050000000000000003,
+            relief=None)
         return frame
 
     def enterOff(self):
@@ -1337,9 +1252,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
     def enterAim(self):
         self.notify.debug('enterAim')
         self._DistributedPhotoGame__enableAimInterface()
-        taskMgr.add(
-            self._DistributedPhotoGame__moveViewfinder,
-            'photo game viewfinder Task')
+        taskMgr.add(self._DistributedPhotoGame__moveViewfinder,
+                    'photo game viewfinder Task')
         self.accept('mouse1', self._DistributedPhotoGame__handleMouseClick)
         base.localAvatar.laffMeter.stop()
         base.transitions.noIris()
@@ -1351,9 +1265,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
     def enterZoom(self):
         self.notify.debug('enterZoom')
-        taskMgr.add(
-            self._DistributedPhotoGame__moveViewfinder,
-            'photo game viewfinder Task')
+        taskMgr.add(self._DistributedPhotoGame__moveViewfinder,
+                    'photo game viewfinder Task')
         self._DistributedPhotoGame__doZoom()
 
     def exitZoom(self):
@@ -1394,9 +1307,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.accept(self.UP_KEY, self._DistributedPhotoGame__upKeyPressed)
         self.accept(self.DOWN_KEY, self._DistributedPhotoGame__downKeyPressed)
         self.accept(self.LEFT_KEY, self._DistributedPhotoGame__leftKeyPressed)
-        self.accept(
-            self.RIGHT_KEY,
-            self._DistributedPhotoGame__rightKeyPressed)
+        self.accept(self.RIGHT_KEY,
+                    self._DistributedPhotoGame__rightKeyPressed)
         self._DistributedPhotoGame__spawnLocalPhotoMoveTask()
 
     def _DistributedPhotoGame__disableAimInterface(self):
@@ -1414,37 +1326,32 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
     def _DistributedPhotoGame__fireKeyPressed(self):
         self.ignore(self.FIRE_KEY)
-        self.accept(
-            self.FIRE_KEY + '-up',
-            self._DistributedPhotoGame__fireKeyReleased)
+        self.accept(self.FIRE_KEY + '-up',
+                    self._DistributedPhotoGame__fireKeyReleased)
         self._DistributedPhotoGame__firePressed()
 
     def _DistributedPhotoGame__upKeyPressed(self):
         self.ignore(self.UP_KEY)
-        self.accept(
-            self.UP_KEY + '-up',
-            self._DistributedPhotoGame__upKeyReleased)
+        self.accept(self.UP_KEY + '-up',
+                    self._DistributedPhotoGame__upKeyReleased)
         self._DistributedPhotoGame__upPressed()
 
     def _DistributedPhotoGame__downKeyPressed(self):
         self.ignore(self.DOWN_KEY)
-        self.accept(
-            self.DOWN_KEY + '-up',
-            self._DistributedPhotoGame__downKeyReleased)
+        self.accept(self.DOWN_KEY + '-up',
+                    self._DistributedPhotoGame__downKeyReleased)
         self._DistributedPhotoGame__downPressed()
 
     def _DistributedPhotoGame__leftKeyPressed(self):
         self.ignore(self.LEFT_KEY)
-        self.accept(
-            self.LEFT_KEY + '-up',
-            self._DistributedPhotoGame__leftKeyReleased)
+        self.accept(self.LEFT_KEY + '-up',
+                    self._DistributedPhotoGame__leftKeyReleased)
         self._DistributedPhotoGame__leftPressed()
 
     def _DistributedPhotoGame__rightKeyPressed(self):
         self.ignore(self.RIGHT_KEY)
-        self.accept(
-            self.RIGHT_KEY + '-up',
-            self._DistributedPhotoGame__rightKeyReleased)
+        self.accept(self.RIGHT_KEY + '-up',
+                    self._DistributedPhotoGame__rightKeyReleased)
         self._DistributedPhotoGame__rightPressed()
 
     def _DistributedPhotoGame__fireKeyReleased(self):
@@ -1459,9 +1366,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
     def _DistributedPhotoGame__rightKeyReleased(self):
         self.ignore(self.RIGHT_KEY + '-up')
-        self.accept(
-            self.RIGHT_KEY,
-            self._DistributedPhotoGame__rightKeyPressed)
+        self.accept(self.RIGHT_KEY,
+                    self._DistributedPhotoGame__rightKeyPressed)
         self._DistributedPhotoGame__rightReleased()
 
     def _DistributedPhotoGame__upKeyReleased(self):
@@ -1552,7 +1458,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         pos = [
             self.swivel.getHpr()[0],
             self.swivel.getHpr()[1],
-            self.swivel.getHpr()[2]]
+            self.swivel.getHpr()[2]
+        ]
         oldRot = pos[0]
         oldAng = pos[1]
         rotVel = 0
@@ -1624,13 +1531,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                         s * 3.0 / 4.0,
                         blendType='easeOut'),
                     self.filmPanel.scaleInterval(
-                        0.14999999999999999,
-                        s,
-                        blendType='easeIn')),
-                Sequence(
-                    Wait(0.25),
-                    SoundInterval(
-                        self.sndFilmTick)),
+                        0.14999999999999999, s, blendType='easeIn')),
+                Sequence(Wait(0.25), SoundInterval(self.sndFilmTick)),
                 name='photoGameFilmJarThrob')
             self.jarIval.start()
 
@@ -1735,29 +1637,28 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.bg = boatGeom
         self.boatTrack = Sequence()
         self.boatTrack.append(
-            LerpHprInterval(
-                self.boat, 90.0, Point3(
-                    360, 0, 0)))
+            LerpHprInterval(self.boat, 90.0, Point3(360, 0, 0)))
         self.boatTrack.loop()
         self.boatTrack2 = Sequence()
         self.boatTrack2.append(
             LerpPosInterval(
-                self.boat, 5.0, Point3(
-                    0, 0, 2.0), Point3(
-                    0, 0, 1.0), blendType='easeInOut'))
+                self.boat,
+                5.0,
+                Point3(0, 0, 2.0),
+                Point3(0, 0, 1.0),
+                blendType='easeInOut'))
         self.boatTrack2.append(
             LerpPosInterval(
-                self.boat, 5.0, Point3(
-                    0, 0, 1.0), Point3(
-                    0, 0, 2.0), blendType='easeInOut'))
+                self.boat,
+                5.0,
+                Point3(0, 0, 1.0),
+                Point3(0, 0, 2.0),
+                blendType='easeInOut'))
         self.boatTrack2.loop()
         ddFog = Fog('DDFog Photo')
         ddFog.setColor(
-            Vec4(
-                0.80000000000000004,
-                0.80000000000000004,
-                0.80000000000000004,
-                1.0))
+            Vec4(0.80000000000000004, 0.80000000000000004, 0.80000000000000004,
+                 1.0))
         ddFog.setLinearRange(0.0, 400.0)
         render.setFog(ddFog)
         water = self.scene.find('**/top_surface')
@@ -1792,8 +1693,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
         self.scene.find('**/door_trigger_5*').hide()
         self.scene.find('**/doorFrameHoleRight_0*').hide()
         self.scene.find('**/doorFrameHoleLeft_0*').hide()
-        for name in [
-                '**/o10_2']:
+        for name in ['**/o10_2']:
             maze = self.scene.find(name)
             maze.reparentTo(self.subjectNode)
             maze.setTag('sceneryIndex', '%s' % len(self.scenery))
@@ -1869,8 +1769,8 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
 
     def constructDL(self):
         self.photoRoot = render.attachNewNode('DL PhotoRoot')
-        self.photoRoot.setPos(-70.227999999999994,
-                              87.587999999999994, 4.3970000000000002)
+        self.photoRoot.setPos(-70.227999999999994, 87.587999999999994,
+                              4.3970000000000002)
         self.sky = loader.loadModel('phase_8/models/props/DL_sky')
         self.sky.reparentTo(render)
         self.sky.setBin('background', -100)
@@ -1923,8 +1823,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                 else:
                     className = animPropNode.getName()[14:-8]
                 symbols = {}
-                base.cr.importModule(symbols, 'toontown.hood', [
-                    className])
+                base.cr.importModule(symbols, 'toontown.hood', [className])
                 classObj = getattr(symbols[className], className)
                 animPropObj = classObj(animPropNode)
                 animPropList = self.animPropDict.setdefault(i, [])
@@ -1936,8 +1835,7 @@ class DistributedPhotoGame(DistributedMinigame, PhotoGameBase.PhotoGameBase):
                 interactivePropNode = interactivePropNodes.getPath(j)
                 className = 'GenericAnimatedProp'
                 symbols = {}
-                base.cr.importModule(symbols, 'toontown.hood', [
-                    className])
+                base.cr.importModule(symbols, 'toontown.hood', [className])
                 classObj = getattr(symbols[className], className)
                 interactivePropObj = classObj(interactivePropNode)
                 animPropList = self.animPropDict.get(i)

@@ -15,12 +15,11 @@ class BeanRecipeGui(DirectFrame):
         bottom = 0
         top = 0.080000000000000002
         borderWidth = 0.01
-        optiondefs = [
-            ('relief', DGG.RIDGE, None),
-            ('state', 'normal', None),
-            ('pos', (0, 0, 0), None),
-            ('frameSize', (left, right, bottom, top), None),
-            ('borderWidth', (borderWidth, borderWidth), self.setBorderWidth)]
+        optiondefs = [('relief', DGG.RIDGE, None), ('state', 'normal', None),
+                      ('pos', (0, 0, 0), None),
+                      ('frameSize', (left, right, bottom, top), None),
+                      ('borderWidth', (borderWidth, borderWidth),
+                       self.setBorderWidth)]
         self.defineoptions(kw, optiondefs)
         DirectFrame.__init__(self, parent)
         self.initialiseoptions(BeanRecipeGui)
@@ -28,8 +27,8 @@ class BeanRecipeGui(DirectFrame):
         xIncrement = 0.051999999999999998
         for i in range(len(recipe)):
             beanIndex = GardenGlobals.BeanColorLetters.index(recipe[i])
-            self.createJellyBeanBox(
-                beanIndex, borderWidth + xIncrement * i, borderWidth)
+            self.createJellyBeanBox(beanIndex, borderWidth + xIncrement * i,
+                                    borderWidth)
 
         for j in range(len(recipe), GardenGlobals.getNumberOfShovelBoxes()):
             self.createEmptyBeanBox(borderWidth + xIncrement * j, borderWidth)
@@ -42,49 +41,22 @@ class BeanRecipeGui(DirectFrame):
         zAdj = 0.029999999999999999
         newBox = DirectButton(
             parent=self,
-            pos=(
-                xPos + xAdj,
-                0,
-                zPos + zAdj),
+            pos=(xPos + xAdj, 0, zPos + zAdj),
             geom=DGG.getDefaultDialogGeom(),
-            geom_scale=(
-                0.10000000000000001,
-                1.0,
-                0.10000000000000001),
+            geom_scale=(0.10000000000000001, 1.0, 0.10000000000000001),
             geom_color=geomColor,
-            scale=(
-                0.5,
-                1,
-                0.5),
+            scale=(0.5, 1, 0.5),
             relief=None,
             state=state,
             command=command,
             extraArgs=[beanIndex],
             text=TTLocalizer.BeanColorWords[beanIndex],
-            text_pos=(
-                0.0,
-                0.10000000000000001),
+            text_pos=(0.0, 0.10000000000000001),
             text_scale=0.070000000000000007,
-            text_fg=Vec4(
-                0,
-                0,
-                0,
-                0),
-            text1_fg=Vec4(
-                0,
-                0,
-                0,
-                1),
-            text2_fg=Vec4(
-                0,
-                0,
-                0,
-                1),
-            text3_fg=Vec4(
-                0,
-                0,
-                0,
-                0),
+            text_fg=Vec4(0, 0, 0, 0),
+            text1_fg=Vec4(0, 0, 0, 1),
+            text2_fg=Vec4(0, 0, 0, 1),
+            text3_fg=Vec4(0, 0, 0, 0),
             clickSound=None,
             pressEffect=0)
         beanParent = newBox.attachNewNode('bean_%d' % beanIndex)
@@ -98,14 +70,23 @@ class BeanRecipeGui(DirectFrame):
         xAdj = 0.029999999999999999
         zAdj = 0.029999999999999999
         newBox = DirectButton(
-            parent=self, pos=(
-                xPos + xAdj, 0, zPos + zAdj), geom=DGG.getDefaultDialogGeom(), geom_scale=(
-                0.10000000000000001, 1.0, 0.10000000000000001), geom_color=geomColor, scale=(
-                0.5, 1, 0.5), relief=None, state=state, command=command, text='', text_pos=(
-                    0.0, 0.10000000000000001), text_scale=0.070000000000000007, text_fg=Vec4(
-                        0, 0, 0, 0), text1_fg=Vec4(
-                            0, 0, 0, 1), text2_fg=Vec4(
-                                0, 0, 0, 1), text3_fg=Vec4(
-                                    0, 0, 0, 0), clickSound=None, pressEffect=0)
+            parent=self,
+            pos=(xPos + xAdj, 0, zPos + zAdj),
+            geom=DGG.getDefaultDialogGeom(),
+            geom_scale=(0.10000000000000001, 1.0, 0.10000000000000001),
+            geom_color=geomColor,
+            scale=(0.5, 1, 0.5),
+            relief=None,
+            state=state,
+            command=command,
+            text='',
+            text_pos=(0.0, 0.10000000000000001),
+            text_scale=0.070000000000000007,
+            text_fg=Vec4(0, 0, 0, 0),
+            text1_fg=Vec4(0, 0, 0, 1),
+            text2_fg=Vec4(0, 0, 0, 1),
+            text3_fg=Vec4(0, 0, 0, 0),
+            clickSound=None,
+            pressEffect=0)
         newBox.setColorScale(0.5, 0.5, 0.5, 1)
         self.jellyBeanBoxList.append(newBox)

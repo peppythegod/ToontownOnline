@@ -8,7 +8,6 @@ if __debug__:
 
 
 class DistributedAnimDoor(DistributedDoor.DistributedDoor):
-
     def __init__(self, cr):
         DistributedDoor.DistributedDoor.__init__(self, cr)
         base.animDoor = self
@@ -35,11 +34,8 @@ class DistributedAnimDoor(DistributedDoor.DistributedDoor):
             else:
                 building = self.getBuilding()
                 doorNP = building.find('**/door_origin')
-                self.notify.debug(
-                    'creating doorOrigin at %s %s' %
-                    (str(
-                        doorNP.getPos()), str(
-                        doorNP.getHpr())))
+                self.notify.debug('creating doorOrigin at %s %s' % (str(
+                    doorNP.getPos()), str(doorNP.getHpr())))
                 otherNP = NodePath('doorOrigin')
                 otherNP.setPos(doorNP.getPos())
                 otherNP.setHpr(doorNP.getHpr())
@@ -104,14 +100,17 @@ class DistributedAnimDoor(DistributedDoor.DistributedDoor):
             h = -100
         self.finishDoorTrack()
         self.doorTrack = Parallel(
-            SoundInterval(
-                self.openSfx, node=rightDoor), Sequence(
-                HprInterval(
-                    rightDoor, VBase3(
-                        0, 0, 0)), Wait(0.40000000000000002), LerpHprInterval(
-                    nodePath=rightDoor, duration=0.59999999999999998, hpr=VBase3(
-                        h, 0, 0), startHpr=VBase3(
-                        0, 0, 0), blendType='easeInOut')), name=trackName)
+            SoundInterval(self.openSfx, node=rightDoor),
+            Sequence(
+                HprInterval(rightDoor, VBase3(0, 0, 0)),
+                Wait(0.40000000000000002),
+                LerpHprInterval(
+                    nodePath=rightDoor,
+                    duration=0.59999999999999998,
+                    hpr=VBase3(h, 0, 0),
+                    startHpr=VBase3(0, 0, 0),
+                    blendType='easeInOut')),
+            name=trackName)
         self.doorTrack.start(ts)
 
     def enterClosing(self, ts):
@@ -130,15 +129,17 @@ class DistributedAnimDoor(DistributedDoor.DistributedDoor):
         self.finishDoorTrack()
         self.doorTrack = Sequence(
             LerpHprInterval(
-                nodePath=rightDoor, duration=1.0, hpr=VBase3(
-                    0, 0, 0), startHpr=VBase3(
-                    h, 0, 0), blendType='easeInOut'), SoundInterval(
-                self.closeSfx, node=rightDoor), name=trackName)
+                nodePath=rightDoor,
+                duration=1.0,
+                hpr=VBase3(0, 0, 0),
+                startHpr=VBase3(h, 0, 0),
+                blendType='easeInOut'),
+            SoundInterval(self.closeSfx, node=rightDoor),
+            name=trackName)
         self.doorTrack.start(ts)
         if hasattr(self, 'done'):
             request = self.getRequestStatus()
-            messenger.send('doorDoneEvent', [
-                request])
+            messenger.send('doorDoneEvent', [request])
 
     def exitDoorEnterOpening(self, ts):
         bldgActor = self.getBuildingActor()
@@ -152,12 +153,15 @@ class DistributedAnimDoor(DistributedDoor.DistributedDoor):
             trackName = 'doorDoorExitTrack-%d' % self.doId
             self.finishDoorExitTrack()
             self.doorExitTrack = Parallel(
-                SoundInterval(
-                    self.openSfx, node=leftDoor), Sequence(
+                SoundInterval(self.openSfx, node=leftDoor),
+                Sequence(
                     LerpHprInterval(
-                        nodePath=leftDoor, duration=0.59999999999999998, hpr=VBase3(
-                            h, 0, 0), startHpr=VBase3(
-                            0, 0, 0), blendType='easeInOut')), name=trackName)
+                        nodePath=leftDoor,
+                        duration=0.59999999999999998,
+                        hpr=VBase3(h, 0, 0),
+                        startHpr=VBase3(0, 0, 0),
+                        blendType='easeInOut')),
+                name=trackName)
             self.doorExitTrack.start(ts)
         else:
             self.notify.warning(
@@ -176,8 +180,11 @@ class DistributedAnimDoor(DistributedDoor.DistributedDoor):
             self.finishDoorExitTrack()
             self.doorExitTrack = Sequence(
                 LerpHprInterval(
-                    nodePath=leftDoor, duration=1.0, hpr=VBase3(
-                        0, 0, 0), startHpr=VBase3(
-                        h, 0, 0), blendType='easeInOut'), SoundInterval(
-                    self.closeSfx, node=leftDoor), name=trackName)
+                    nodePath=leftDoor,
+                    duration=1.0,
+                    hpr=VBase3(0, 0, 0),
+                    startHpr=VBase3(h, 0, 0),
+                    blendType='easeInOut'),
+                SoundInterval(self.closeSfx, node=leftDoor),
+                name=trackName)
             self.doorExitTrack.start(ts)

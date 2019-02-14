@@ -6,10 +6,8 @@ from toontown.coghq import BanquetTableBase
 from toontown.toonbase import ToontownGlobals
 
 
-class DistributedBanquetTableAI(
-        DistributedObjectAI.DistributedObjectAI,
-        FSM.FSM,
-        BanquetTableBase.BanquetTableBase):
+class DistributedBanquetTableAI(DistributedObjectAI.DistributedObjectAI,
+                                FSM.FSM, BanquetTableBase.BanquetTableBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBanquetTableAI')
 
@@ -24,7 +22,8 @@ class DistributedBanquetTableAI(
         self.dinerInfo = {}
         for i in xrange(self.numDiners):
             self.dinerStatus[i] = self.INACTIVE
-            diffSettings = ToontownGlobals.BossbotBossDifficultySettings[self.boss.battleDifficulty]
+            diffSettings = ToontownGlobals.BossbotBossDifficultySettings[
+                self.boss.battleDifficulty]
             hungryDuration = diffSettings[4]
             eatingDuration = diffSettings[5]
             hungryDuration += random.uniform(-5, 5)
@@ -74,9 +73,7 @@ class DistributedBanquetTableAI(
         return (hungryDurations, eatingDurations, dinerLevels)
 
     def d_setDinerStatus(self, chairIndex, newStatus):
-        self.sendUpdate('setDinerStatus', [
-            chairIndex,
-            newStatus])
+        self.sendUpdate('setDinerStatus', [chairIndex, newStatus])
 
     def b_setDinerStatus(self, chairIndex, newStatus):
         self.setDinerStatus(chairIndex, newStatus)
@@ -100,10 +97,7 @@ class DistributedBanquetTableAI(
         elif state == 'Flat':
             newState = 'L'
 
-        self.sendUpdate('setState', [
-            newState,
-            avId,
-            extraInfo])
+        self.sendUpdate('setState', [newState, avId, extraInfo])
 
     def b_setState(self, state, avId=0, extraInfo=0):
         if state == 'Controlled' or state == 'Flat':
@@ -126,10 +120,7 @@ class DistributedBanquetTableAI(
 
         taskName = self.uniqueName('transition-%d' % chairIndex)
         newTask = self.doMethodLater(
-            eatingDur,
-            self.finishedEating,
-            taskName,
-            extraArgs=[chairIndex])
+            eatingDur, self.finishedEating, taskName, extraArgs=[chairIndex])
         self.transitionTasks[chairIndex] = newTask
 
     def finishedEating(self, chairIndex):
@@ -137,7 +128,8 @@ class DistributedBanquetTableAI(
             self.removeTask(self.transitionTasks[chairIndex])
 
         self.incrementFoodEaten(chairIndex)
-        if self.numFoodEaten[chairIndex] >= ToontownGlobals.BossbotNumFoodToExplode:
+        if self.numFoodEaten[
+                chairIndex] >= ToontownGlobals.BossbotNumFoodToExplode:
             self.b_setDinerStatus(chairIndex, self.DEAD)
             self.boss.incrementDinersExploded()
         else:
@@ -196,20 +188,17 @@ class DistributedBanquetTableAI(
 
     def forceControl(self, avId):
         self.notify.debug(
-            'forceContrl  tableIndex=%d avId=%d' %
-            (self.index, avId))
+            'forceContrl  tableIndex=%d avId=%d' % (self.index, avId))
         tableId = self._DistributedBanquetTableAI__getTableId(avId)
         if tableId == self.doId:
             if self.state == 'Flat':
                 self.b_setState('Controlled', avId)
             else:
                 self.notify.warning(
-                    'invalid forceControl from state %s' %
-                    self.state)
+                    'invalid forceControl from state %s' % self.state)
         else:
             self.notify.warning(
-                'tableId %d  != self.doId %d ' %
-                (tableId, self.doId))
+                'tableId %d  != self.doId %d ' % (tableId, self.doId))
 
     def requestFree(self, gotHitByBoss):
         avId = self.air.getAvatarIdFromSender()
@@ -221,8 +210,7 @@ class DistributedBanquetTableAI(
 
             else:
                 self.notify.debug(
-                    'requestFree denied in state %s' %
-                    self.state)
+                    'requestFree denied in state %s' % self.state)
 
     def _DistributedBanquetTableAI__getTableId(self, avId):
         if self.boss and self.boss.tables is not None:

@@ -30,8 +30,7 @@ class DistributedParty(DistributedObject.DistributedObject):
 
     def setPartyState(self, partyState):
         self.isPartyEnding = partyState
-        messenger.send('partyStateChanged', [
-            partyState])
+        messenger.send('partyStateChanged', [partyState])
 
     def getPartyState(self):
         return self.isPartyEnding
@@ -56,290 +55,66 @@ class DistributedParty(DistributedObject.DistributedObject):
         base.partyHasJukebox = PartyGlobals.ActivityIds.PartyJukebox40 in allActIds
         self.grid = [
             [
-                False,
-                False,
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False,
-                False],
+                False, False, False, False, False, True, True, True, True,
+                True, True, True, True, True, True, False, False, False
+            ],
             [
-                False,
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False,
-                False],
+                False, False, False, False, True, True, True, True, True, True,
+                True, True, True, True, True, False, False, False
+            ],
             [
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False],
+                False, False, False, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, False, False
+            ],
             [
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False],
+                False, False, False, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, False, False
+            ],
             [
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False],
+                False, False, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, False
+            ],
             [
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
+                False, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, True
+            ],
             [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
+                True, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, True
+            ],
             [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
+                True, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, True
+            ],
             [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
+                True, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, True
+            ],
             [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
+                True, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, True
+            ],
             [
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
+                False, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, True, True, True, True
+            ],
             [
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False,
-                False,
-                False],
+                False, True, True, True, True, True, True, True, True, True,
+                True, True, True, True, False, False, False, False
+            ],
             [
-                False,
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False,
-                False,
-                False,
-                False],
+                False, False, False, False, True, True, True, True, True, True,
+                True, True, True, False, False, False, False, False
+            ],
             [
-                False,
-                False,
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False,
-                False,
-                False,
-                False,
-                False],
+                False, False, False, False, False, True, True, True, True,
+                True, True, True, False, False, False, False, False, False
+            ],
             [
-                False,
-                False,
-                False,
-                False,
-                False,
-                False,
-                True,
-                True,
-                True,
-                True,
-                True,
-                False,
-                False,
-                False,
-                False,
-                False,
-                False,
-                False]]
+                False, False, False, False, False, False, True, True, True,
+                True, True, False, False, False, False, False, False, False
+            ]
+        ]
 
         def fillGrid(x, y, size):
             for i in range(-size[1] / 2 + 1, size[1] / 2 + 1):
@@ -347,12 +122,16 @@ class DistributedParty(DistributedObject.DistributedObject):
                     self.grid[i + y][j + x] = False
 
         for activityBase in self.partyInfo.activityList:
-            fillGrid(activityBase.x, activityBase.y,
-                     PartyGlobals.ActivityInformationDict[activityBase.activityId]['gridsize'])
+            fillGrid(
+                activityBase.x, activityBase.y,
+                PartyGlobals.ActivityInformationDict[
+                    activityBase.activityId]['gridsize'])
 
         for decorBase in self.partyInfo.decors:
-            fillGrid(decorBase.x, decorBase.y,
-                     PartyGlobals.DecorationInformationDict[decorBase.decorId]['gridsize'])
+            fillGrid(
+                decorBase.x, decorBase.y,
+                PartyGlobals.DecorationInformationDict[
+                    decorBase.decorId]['gridsize'])
 
         self.loadGrass()
 
@@ -416,11 +195,10 @@ class DistributedParty(DistributedObject.DistributedObject):
         for decorBase in self.partyInfo.decors:
             self.decorationsList.append(
                 Decoration(
-                    PartyGlobals.DecorationIds.getString(
-                        decorBase.decorId), PartyUtils.convertDistanceFromPartyGrid(
-                        decorBase.x, 0), PartyUtils.convertDistanceFromPartyGrid(
-                        decorBase.y, 1), PartyUtils.convertDegreesFromPartyGrid(
-                        decorBase.h)))
+                    PartyGlobals.DecorationIds.getString(decorBase.decorId),
+                    PartyUtils.convertDistanceFromPartyGrid(decorBase.x, 0),
+                    PartyUtils.convertDistanceFromPartyGrid(decorBase.y, 1),
+                    PartyUtils.convertDegreesFromPartyGrid(decorBase.h)))
 
     def unload(self):
         if hasattr(self, 'decorationsList') and self.decorationsList:
@@ -445,8 +223,7 @@ class DistributedParty(DistributedObject.DistributedObject):
 
     def announceGenerate(self):
         DistributedObject.DistributedObject.announceGenerate(self)
-        self.sendUpdate('avIdEnteredParty', [
-            base.localAvatar.doId])
+        self.sendUpdate('avIdEnteredParty', [base.localAvatar.doId])
         globalClock.syncFrameTime()
         self.startPartyClock()
         base.localAvatar.chatMgr.chatInputSpeedChat.addInsidePartiesMenu()
@@ -462,12 +239,8 @@ class DistributedParty(DistributedObject.DistributedObject):
                     np.setScale(12)
                     np.setP(-90.0)
                     np.setPos(
-                        PartyUtils.convertDistanceFromPartyGrid(
-                            j,
-                            0) - 6.0,
-                        PartyUtils.convertDistanceFromPartyGrid(
-                            i,
-                            1) - 6.0,
+                        PartyUtils.convertDistanceFromPartyGrid(j, 0) - 6.0,
+                        PartyUtils.convertDistanceFromPartyGrid(i, 1) - 6.0,
                         0.10000000000000001)
                     np.reparentTo(self.testGrid)
                     if self.grid[i][j]:
@@ -487,10 +260,9 @@ class DistributedParty(DistributedObject.DistributedObject):
         for y in range(len(self.grid)):
             for x in range(len(self.grid[0])):
                 if self.grid[y][x]:
-                    pos = (
-                        PartyUtils.convertDistanceFromPartyGrid(
-                            x, 0), PartyUtils.convertDistanceFromPartyGrid(
-                            y, 1), 0.10000000000000001)
+                    pos = (PartyUtils.convertDistanceFromPartyGrid(x, 0),
+                           PartyUtils.convertDistanceFromPartyGrid(y, 1),
+                           0.10000000000000001)
                     clearPositions.append(pos)
                     continue
 
@@ -519,11 +291,8 @@ class DistributedParty(DistributedObject.DistributedObject):
             return None
 
         nameText = TextNode('nameText')
-        nameText.setCardAsMargin(
-            0.10000000000000001,
-            0.10000000000000001,
-            0.10000000000000001,
-            0.10000000000000001)
+        nameText.setCardAsMargin(0.10000000000000001, 0.10000000000000001,
+                                 0.10000000000000001, 0.10000000000000001)
         nameText.setCardDecal(True)
         nameText.setCardColor(1.0, 1.0, 1.0, 0.0)
         r = 232.0 / 255.0
@@ -588,10 +357,10 @@ class DistributedParty(DistributedObject.DistributedObject):
         self.backTimer['second']['text'] = secondsLeft
         taskMgr.doMethodLater(0.5, self.partyClockTask, 'UpdatePartyClock')
         if self.secondsLeftInParty != int(self.secondsLeftInParty):
-            self.partyClockModel.find(
-                '**/middleRotateFront_grp').setR(-6.0 * (self.secondsLeftInParty % 60))
-            self.partyClockModel.find(
-                '**/middleRotateBack_grp').setR(6.0 * (self.secondsLeftInParty % 60))
+            self.partyClockModel.find('**/middleRotateFront_grp').setR(
+                -6.0 * (self.secondsLeftInParty % 60))
+            self.partyClockModel.find('**/middleRotateBack_grp').setR(
+                6.0 * (self.secondsLeftInParty % 60))
 
     def getAvIdsAtParty(self):
         return self.avIdsAtParty
@@ -602,14 +371,14 @@ class DistributedParty(DistributedObject.DistributedObject):
     def loadPartyCountdownTimer(self):
         self.partyClockModel = loader.loadModel(
             'phase_13/models/parties/partyClock')
-        self.partyClockModel.setPos(
-            self.partyClockInfo[0], self.partyClockInfo[1], 0.0)
+        self.partyClockModel.setPos(self.partyClockInfo[0],
+                                    self.partyClockInfo[1], 0.0)
         self.partyClockModel.setH(self.partyClockInfo[2])
         self.partyClockModel.reparentTo(base.cr.playGame.hood.loader.geom)
-        self.partyClockModel.find(
-            '**/frontText_locator').setY(-1.1000000000000001)
-        self.partyClockModel.find(
-            '**/backText_locator').setY(0.63300000000000001)
+        self.partyClockModel.find('**/frontText_locator').setY(
+            -1.1000000000000001)
+        self.partyClockModel.find('**/backText_locator').setY(
+            0.63300000000000001)
         self.frontTimer = self.getTimer(
             self.partyClockModel.find('**/frontText_locator'))
         base.frontTimerLoc = self.partyClockModel.find('**/frontText_locator')
@@ -628,11 +397,8 @@ class DistributedParty(DistributedObject.DistributedObject):
             text='59',
             text_align=TextNode.ACenter,
             text_font=timeFont,
-            text_fg=(
-                0.69999999999999996,
-                0.29999999999999999,
-                0.29999999999999999,
-                1.0),
+            text_fg=(0.69999999999999996, 0.29999999999999999,
+                     0.29999999999999999, 1.0),
             scale=TTLocalizer.DPtimerMinute)
         timer['colon'] = DirectLabel(
             parent=parent,
@@ -641,11 +407,8 @@ class DistributedParty(DistributedObject.DistributedObject):
             text=':',
             text_align=TextNode.ACenter,
             text_font=timeFont,
-            text_fg=(
-                0.69999999999999996,
-                0.29999999999999999,
-                0.29999999999999999,
-                1.0),
+            text_fg=(0.69999999999999996, 0.29999999999999999,
+                     0.29999999999999999, 1.0),
             scale=TTLocalizer.DPtimerColon)
         timer['second'] = DirectLabel(
             parent=parent,
@@ -654,26 +417,17 @@ class DistributedParty(DistributedObject.DistributedObject):
             text='14',
             text_align=TextNode.ACenter,
             text_font=timeFont,
-            text_fg=(
-                0.69999999999999996,
-                0.29999999999999999,
-                0.29999999999999999,
-                1.0),
+            text_fg=(0.69999999999999996, 0.29999999999999999,
+                     0.29999999999999999, 1.0),
             scale=TTLocalizer.DPtimerSecond)
         timer['textLabel'] = DirectLabel(
             parent=parent,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                1.1499999999999999),
+            pos=(0.0, 0.0, 1.1499999999999999),
             text=TTLocalizer.PartyCountdownClockText,
             text_font=timeFont,
-            text_fg=(
-                0.69999999999999996,
-                0.29999999999999999,
-                0.29999999999999999,
-                1.0),
+            text_fg=(0.69999999999999996, 0.29999999999999999,
+                     0.29999999999999999, 1.0),
             scale=TTLocalizer.DPtimerTextLabel)
         return timer
 
@@ -696,19 +450,24 @@ class DistributedParty(DistributedObject.DistributedObject):
     def doSpawnTitleText(self, text):
         self.titleColor = (1.0, 0.5, 0.40000000000000002, 1.0)
         self.titleText = OnscreenText.OnscreenText(
-            text, fg=self.titleColor, font=ToontownGlobals.getSignFont(), pos=(
-                0, -0.5), scale=0.16, drawOrder=0, mayChange=1, wordwrap=16)
+            text,
+            fg=self.titleColor,
+            font=ToontownGlobals.getSignFont(),
+            pos=(0, -0.5),
+            scale=0.16,
+            drawOrder=0,
+            mayChange=1,
+            wordwrap=16)
         self.titleText.setText(text)
         self.titleText.show()
         self.titleText.setColor(Vec4(*self.titleColor))
         self.titleText.clearColorScale()
         self.titleText.setFg(self.titleColor)
         seq = Task.sequence(
-            Task.pause(0.10000000000000001), Task.pause(6.0), self.titleText.lerpColorScale(
-                Vec4(
-                    1.0, 1.0, 1.0, 1.0), Vec4(
-                    1.0, 1.0, 1.0, 0.0), 0.5), Task(
-                self.hideTitleTextTask))
+            Task.pause(0.10000000000000001), Task.pause(6.0),
+            self.titleText.lerpColorScale(
+                Vec4(1.0, 1.0, 1.0, 1.0), Vec4(1.0, 1.0, 1.0, 0.0), 0.5),
+            Task(self.hideTitleTextTask))
         taskMgr.add(seq, 'titleText')
 
     def hideTitleTextTask(self, task):

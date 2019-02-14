@@ -20,11 +20,8 @@ class DistributedMintBattle(DistributedLevelBattle.DistributedLevelBattle):
     def __init__(self, cr):
         DistributedLevelBattle.DistributedLevelBattle.__init__(self, cr)
         self.fsm.addState(
-            State.State(
-                'MintReward',
-                self.enterMintReward,
-                self.exitMintReward,
-                ['Resume']))
+            State.State('MintReward', self.enterMintReward,
+                        self.exitMintReward, ['Resume']))
         offState = self.fsm.getStateNamed('Off')
         offState.addTransition('MintReward')
         playMovieState = self.fsm.getStateNamed('PlayMovie')
@@ -40,8 +37,7 @@ class DistributedMintBattle(DistributedLevelBattle.DistributedLevelBattle):
                 messenger.send('localToonConfrontedMintBoss')
 
         self.movie.playReward(
-            ts,
-            self.uniqueName('building-reward'),
+            ts, self.uniqueName('building-reward'),
             self._DistributedMintBattle__handleMintRewardDone)
 
     def _DistributedMintBattle__handleMintRewardDone(self):

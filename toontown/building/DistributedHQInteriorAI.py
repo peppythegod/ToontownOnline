@@ -4,7 +4,6 @@ import cPickle
 
 
 class DistributedHQInteriorAI(DistributedObjectAI.DistributedObjectAI):
-
     def __init__(self, block, air, zoneId):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.block = block
@@ -22,9 +21,7 @@ class DistributedHQInteriorAI(DistributedObjectAI.DistributedObjectAI):
         DistributedObjectAI.DistributedObjectAI.delete(self)
 
     def getZoneIdAndBlock(self):
-        r = [
-            self.zoneId,
-            self.block]
+        r = [self.zoneId, self.block]
         return r
 
     def leaderboardChanged(self):
@@ -37,8 +34,9 @@ class DistributedHQInteriorAI(DistributedObjectAI.DistributedObjectAI):
     def sendNewLeaderBoard(self):
         if self.air:
             self.isDirty = False
-            self.sendUpdate('setLeaderBoard', [
-                cPickle.dumps(self.air.trophyMgr.getLeaderInfo(), 1)])
+            self.sendUpdate(
+                'setLeaderBoard',
+                [cPickle.dumps(self.air.trophyMgr.getLeaderInfo(), 1)])
 
     def getLeaderBoard(self):
         return cPickle.dumps(self.air.trophyMgr.getLeaderInfo(), 1)
@@ -49,5 +47,4 @@ class DistributedHQInteriorAI(DistributedObjectAI.DistributedObjectAI):
     def setTutorial(self, flag):
         if self.tutorial != flag:
             self.tutorial = flag
-            self.sendUpdate('setTutorial', [
-                self.tutorial])
+            self.sendUpdate('setTutorial', [self.tutorial])

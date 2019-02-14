@@ -38,72 +38,46 @@ class ToontownFriendSecret(FriendSecret.FriendSecret):
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
         self.avatarButton = DirectButton(
             parent=self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=TTLocalizer.FriendInviterToon,
             text_scale=0.070000000000000007,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                -0.34999999999999998,
-                0.0,
-                -0.050000000000000003),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(-0.34999999999999998, 0.0, -0.050000000000000003),
             command=self._FriendSecret__handleAvatar)
         avatarText = DirectLabel(
             parent=self,
             relief=None,
-            pos=Vec3(
-                0.34999999999999998,
-                0,
-                -0.29999999999999999),
+            pos=Vec3(0.34999999999999998, 0, -0.29999999999999999),
             text=TTLocalizer.FriendInviterToonFriendInfo,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                0),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, 0),
             text_scale=0.055,
             text_align=TextNode.ACenter)
         avatarText.reparentTo(self.avatarButton.stateNodePath[2])
         self.avatarButton.hide()
         self.accountButton = DirectButton(
             parent=self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=TTLocalizer.FriendInviterPlayer,
             text_scale=0.070000000000000007,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.34999999999999998,
-                0.0,
-                -0.050000000000000003),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.34999999999999998, 0.0, -0.050000000000000003),
             command=self._FriendSecret__handleAccount)
-        accountText = DirectLabel(parent=self,
-                                  relief=None,
-                                  pos=Vec3(-0.34999999999999998,
-                                           0,
-                                           -0.29999999999999999),
-                                  text=TTLocalizer.FriendInviterPlayerFriendInfo,
-                                  text_fg=(0,
-                                           0,
-                                           0,
-                                           1),
-                                  text_pos=(0,
-                                            0),
-                                  text_scale=0.055,
-                                  text_align=TextNode.ACenter)
+        accountText = DirectLabel(
+            parent=self,
+            relief=None,
+            pos=Vec3(-0.34999999999999998, 0, -0.29999999999999999),
+            text=TTLocalizer.FriendInviterPlayerFriendInfo,
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, 0),
+            text_scale=0.055,
+            text_align=TextNode.ACenter)
         accountText.reparentTo(self.accountButton.stateNodePath[2])
         self.accountButton.hide()
         buttons.removeNode()

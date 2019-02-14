@@ -11,19 +11,15 @@ import CogdoUtil
 class CogdoGameGatherable(NodePath, DirectObject):
     EnterEventName = 'CogdoGameGatherable_Enter'
 
-    def __init__(
-            self,
-            serialNum,
-            model,
-            triggerRadius,
-            triggerOffset=(
-                0,
-                0,
-                0),
-            animate=True,
-            animDuration=0.20000000000000001,
-            instanceModel=True,
-            name='CogdoGameGatherable'):
+    def __init__(self,
+                 serialNum,
+                 model,
+                 triggerRadius,
+                 triggerOffset=(0, 0, 0),
+                 animate=True,
+                 animDuration=0.20000000000000001,
+                 instanceModel=True,
+                 name='CogdoGameGatherable'):
         NodePath.__init__(self, '%s-%d' % (name, serialNum))
         self.serialNum = serialNum
         self._animate = animate
@@ -41,11 +37,8 @@ class CogdoGameGatherable(NodePath, DirectObject):
         self._wasPickedUp = False
 
     def _initCollisions(self, triggerRadius, triggerOffset):
-        self.collSphere = CollisionSphere(
-            triggerOffset[0],
-            triggerOffset[1],
-            triggerOffset[2],
-            triggerRadius)
+        self.collSphere = CollisionSphere(triggerOffset[0], triggerOffset[1],
+                                          triggerOffset[2], triggerRadius)
         self.collSphere.setTangible(0)
         self.collNode = CollisionNode(self.getName())
         self.collNode.addSolid(self.collSphere)
@@ -79,8 +72,7 @@ class CogdoGameGatherable(NodePath, DirectObject):
         NodePath.hide(self)
 
     def _handleEnterCollision(self, collEntry):
-        messenger.send(CogdoGameGatherable.EnterEventName, [
-            self])
+        messenger.send(CogdoGameGatherable.EnterEventName, [self])
 
     def wasPickedUp(self):
         return self._wasPickedUp
@@ -113,10 +105,8 @@ class CogdoGameGatherable(NodePath, DirectObject):
                     lerpFlyToToon,
                     fromData=0.0,
                     toData=1.0,
-                    duration=self._animDuration),
-                Wait(0.10000000000000001),
-                Func(
-                    self.hide))
+                    duration=self._animDuration), Wait(0.10000000000000001),
+                Func(self.hide))
             self._animSeq.start(elapsedSeconds)
         else:
             self.hide()
@@ -125,13 +115,12 @@ class CogdoGameGatherable(NodePath, DirectObject):
 class CogdoMemo(CogdoGameGatherable):
     EnterEventName = 'CogdoMemo_Enter'
 
-    def __init__(
-            self,
-            serialNum,
-            model=None,
-            pitch=0,
-            triggerRadius=1.0,
-            spinRate=60):
+    def __init__(self,
+                 serialNum,
+                 model=None,
+                 pitch=0,
+                 triggerRadius=1.0,
+                 spinRate=60):
         if model is None:
             node = CogdoUtil.loadModel('memo', 'shared')
             model = node.find('**/memo')
@@ -141,11 +130,7 @@ class CogdoMemo(CogdoGameGatherable):
         model.setP(pitch)
         self._spinRate = spinRate
         CogdoGameGatherable.__init__(
-            self,
-            serialNum,
-            model,
-            triggerRadius,
-            name='CogdoMemo')
+            self, serialNum, model, triggerRadius, name='CogdoMemo')
 
     def destroy(self):
         del self._spinRate
@@ -156,5 +141,4 @@ class CogdoMemo(CogdoGameGatherable):
         self.setH(self.getH() + self._spinRate * dt)
 
     def _handleEnterCollision(self, collEntry):
-        messenger.send(CogdoMemo.EnterEventName, [
-            self])
+        messenger.send(CogdoMemo.EnterEventName, [self])

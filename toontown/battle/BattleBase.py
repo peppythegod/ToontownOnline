@@ -80,65 +80,19 @@ def attackAffectsGroup(track, level, type=None):
 
 
 def getToonAttack(id, track=NO_ATTACK, level=-1, target=-1):
-    return [
-        id,
-        track,
-        level,
-        target,
-        [],
-        0,
-        0,
-        [],
-        0,
-        0]
+    return [id, track, level, target, [], 0, 0, [], 0, 0]
 
 
 def getDefaultSuitAttacks():
-    suitAttacks = [
-        [
-            NO_ID,
-            NO_ATTACK,
-            -1,
-            [],
-            0,
-            0,
-            0],
-        [
-            NO_ID,
-            NO_ATTACK,
-            -1,
-            [],
-            0,
-            0,
-            0],
-        [
-            NO_ID,
-            NO_ATTACK,
-            -1,
-            [],
-            0,
-            0,
-            0],
-        [
-            NO_ID,
-            NO_ATTACK,
-            -1,
-            [],
-            0,
-            0,
-            0]]
+    suitAttacks = [[NO_ID, NO_ATTACK, -1, [], 0, 0, 0],
+                   [NO_ID, NO_ATTACK, -1, [], 0, 0, 0],
+                   [NO_ID, NO_ATTACK, -1, [], 0, 0, 0],
+                   [NO_ID, NO_ATTACK, -1, [], 0, 0, 0]]
     return suitAttacks
 
 
 def getDefaultSuitAttack():
-    return [
-        NO_ID,
-        NO_ATTACK,
-        -1,
-        [],
-        0,
-        0,
-        0]
+    return [NO_ID, NO_ATTACK, -1, [], 0, 0, 0]
 
 
 def findToonAttack(toons, attacks, track):
@@ -190,51 +144,25 @@ MAX_EXPECTED_DISTANCE_FROM_BATTLE = 50.0
 
 class BattleBase:
     notify = DirectNotifyGlobal.directNotify.newCategory('BattleBase')
-    suitPoints = (((Point3(0,
-                           5,
-                           0),
-                    179),
-                   ),
-                  ((Point3(2,
-                           5.2999999999999998,
-                           0),
-                    170),
-                   (Point3(-2,
-                           5.2999999999999998,
-                           0),
-                    180)),
-                  ((Point3(4,
-                           5.2000000000000002,
-                           0),
-                    170),
-                   (Point3(0,
-                           6,
-                           0),
-                      179),
-                   (Point3(-4,
-                           5.2000000000000002,
-                           0),
-                      190)),
-                  ((Point3(6,
-                           4.4000000000000004,
-                           0),
-                    160),
-                   (Point3(2,
-                           6.2999999999999998,
-                           0),
-                      170),
-                   (Point3(-2,
-                           6.2999999999999998,
-                           0),
-                      190),
-                   (Point3(-6,
-                           4.4000000000000004,
-                           0),
-                      200)))
-    suitPendingPoints = ((Point3(-4, 8.1999999999999993, 0), 190), (Point3(0, 9, 0), 179),
-                         (Point3(4, 8.1999999999999993, 0), 170), (Point3(8, 3.2000000000000002, 0), 160))
-    toonPoints = (((Point3(0, -6, 0), 0),), ((Point3(1.5, -6.5, 0), 5), (Point3(-1.5, -6.5, 0), -5)), ((Point3(3, -6.75, 0), 5), (Point3(0, -7, 0), 0),
-                                                                                                       (Point3(-3, -6.75, 0), -5)), ((Point3(4.5, -7, 0), 10), (Point3(1.5, -7.5, 0), 5), (Point3(-1.5, -7.5, 0), -5), (Point3(-4.5, -7, 0), -10)))
+    suitPoints = (((Point3(0, 5, 0),
+                    179), ), ((Point3(2, 5.2999999999999998, 0), 170), (Point3(
+                        -2, 5.2999999999999998, 0), 180)),
+                  ((Point3(4, 5.2000000000000002, 0),
+                    170), (Point3(0, 6, 0), 179), (Point3(
+                        -4, 5.2000000000000002, 0), 190)), ((Point3(
+                            6, 4.4000000000000004, 0), 160), (Point3(
+                                2, 6.2999999999999998, 0), 170), (Point3(
+                                    -2, 6.2999999999999998, 0), 190), (Point3(
+                                        -6, 4.4000000000000004, 0), 200)))
+    suitPendingPoints = ((Point3(-4, 8.1999999999999993, 0), 190), (Point3(
+        0, 9, 0), 179), (Point3(4, 8.1999999999999993, 0), 170), (Point3(
+            8, 3.2000000000000002, 0), 160))
+    toonPoints = (((Point3(0, -6, 0), 0), ), ((Point3(1.5, -6.5, 0), 5),
+                                              (Point3(-1.5, -6.5, 0), -5)),
+                  ((Point3(3, -6.75, 0), 5), (Point3(0, -7, 0), 0), (Point3(
+                      -3, -6.75, 0), -5)), ((Point3(4.5, -7, 0), 10), (Point3(
+                          1.5, -7.5, 0), 5), (Point3(-1.5, -7.5, 0), -5),
+                                            (Point3(-4.5, -7, 0), -10)))
     toonPendingPoints = ((Point3(-3, -8, 0), -5), (Point3(0, -9, 0), 0),
                          (Point3(3, -8, 0), 5), (Point3(5.5, -5.5, 0), 20))
     posA = Point3(0, 10, 0)
@@ -246,28 +174,10 @@ class BattleBase:
     posG = Point3(10, 0, 0)
     posH = Point3(7.0709999999999997, 7.0709999999999997, 0)
     allPoints = (posA, posB, posC, posD, posE, posF, posG, posH)
-    toonCwise = [
-        posA,
-        posB,
-        posC,
-        posD,
-        posE]
-    toonCCwise = [
-        posH,
-        posG,
-        posF,
-        posE]
-    suitCwise = [
-        posE,
-        posF,
-        posG,
-        posH,
-        posA]
-    suitCCwise = [
-        posD,
-        posC,
-        posB,
-        posA]
+    toonCwise = [posA, posB, posC, posD, posE]
+    toonCCwise = [posH, posG, posF, posE]
+    suitCwise = [posE, posF, posG, posH, posA]
+    suitCCwise = [posD, posC, posB, posA]
     suitSpeed = 4.7999999999999998
     toonSpeed = 8.0
 
@@ -318,8 +228,7 @@ class BattleBase:
                 continue
 
         self.notify.debug(
-            'buildJoinPointList() - avp: %s nearp: %s' %
-            (avPos, nearestP))
+            'buildJoinPointList() - avp: %s nearp: %s' % (avPos, nearestP))
         dist = Vec3(avPos - destPos).length()
         if dist < minDist:
             self.notify.debug('buildJoinPointList() - destPos is nearest')
@@ -328,8 +237,7 @@ class BattleBase:
         if toon == 1:
             if nearestP == BattleBase.posE:
                 self.notify.debug('buildJoinPointList() - posE')
-                plist = [
-                    BattleBase.posE]
+                plist = [BattleBase.posE]
             elif BattleBase.toonCwise.count(nearestP) == 1:
                 self.notify.debug('buildJoinPointList() - clockwise')
                 index = BattleBase.toonCwise.index(nearestP)
@@ -340,8 +248,7 @@ class BattleBase:
                 plist = BattleBase.toonCCwise[index + 1:]
         elif nearestP == BattleBase.posA:
             self.notify.debug('buildJoinPointList() - posA')
-            plist = [
-                BattleBase.posA]
+            plist = [BattleBase.posA]
         elif BattleBase.suitCwise.count(nearestP) == 1:
             self.notify.debug('buildJoinPointList() - clockwise')
             index = BattleBase.suitCwise.index(nearestP)

@@ -101,7 +101,8 @@ def getWhereName(zoneId, isToon):
                 where = 'cogHQLobby'
             elif suffix == 200:
                 where = 'factoryExterior'
-            elif getHoodId(zoneId) == LawbotHQ and suffix in (300, 400, 500, 600):
+            elif getHoodId(zoneId) == LawbotHQ and suffix in (300, 400, 500,
+                                                              600):
                 where = 'stageInterior'
             elif getHoodId(zoneId) == BossbotHQ and suffix in (500, 600, 700):
                 where = 'countryClubInterior'
@@ -111,8 +112,8 @@ def getWhereName(zoneId, isToon):
                 elif getHoodId(zoneId) == CashbotHQ:
                     where = 'mintInterior'
                 else:
-                    zoneUtilNotify.error(
-                        'unknown cogHQ interior for hood: ' + str(getHoodId(zoneId)))
+                    zoneUtilNotify.error('unknown cogHQ interior for hood: ' +
+                                         str(getHoodId(zoneId)))
             else:
                 zoneUtilNotify.error('unknown cogHQ where: ' + str(zoneId))
         elif suffix == 0:
@@ -220,7 +221,8 @@ def overrideOn(branch, exteriorList, interiorList):
     tutorialDict = {
         'branch': branch,
         'exteriors': exteriorList,
-        'interiors': interiorList}
+        'interiors': interiorList
+    }
 
 
 def overrideOff():

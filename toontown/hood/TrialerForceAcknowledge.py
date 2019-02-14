@@ -6,7 +6,6 @@ from toontown.toontowngui import TeaserPanel
 
 
 class TrialerForceAcknowledge:
-
     def __init__(self, doneEvent):
         self.doneEvent = doneEvent
         self.dialog = None
@@ -16,8 +15,7 @@ class TrialerForceAcknowledge:
 
         def letThrough(self=self, doneStatus=doneStatus):
             doneStatus['mode'] = 'pass'
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            messenger.send(self.doneEvent, [doneStatus])
 
         if not base.restrictTrialers:
             letThrough()
@@ -32,8 +30,7 @@ class TrialerForceAcknowledge:
             return None
 
         if ZoneUtil.getCanonicalHoodId(destHood) in (
-                ToontownGlobals.ToontownCentral,
-                ToontownGlobals.MyEstate,
+                ToontownGlobals.ToontownCentral, ToontownGlobals.MyEstate,
                 ToontownGlobals.GoofySpeedway):
             letThrough()
             return None
@@ -56,5 +53,4 @@ class TrialerForceAcknowledge:
             self.dialog = None
 
     def handleOk(self):
-        messenger.send(self.doneEvent, [
-            self.doneStatus])
+        messenger.send(self.doneEvent, [self.doneStatus])

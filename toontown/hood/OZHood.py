@@ -7,26 +7,21 @@ import SkyUtil
 
 
 class OZHood(ToonHood.ToonHood):
-
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
-        ToonHood.ToonHood.__init__(
-            self, parentFSM, doneEvent, dnaStore, hoodId)
+        ToonHood.ToonHood.__init__(self, parentFSM, doneEvent, dnaStore,
+                                   hoodId)
         self.id = OutdoorZone
         self.safeZoneLoaderClass = OZSafeZoneLoader.OZSafeZoneLoader
         self.storageDNAFile = 'phase_6/dna/storage_OZ.dna'
         self.holidayStorageDNADict = {
-            HALLOWEEN_PROPS: [
-                'phase_6/dna/halloween_props_storage_OZ.dna'],
-            SPOOKY_PROPS: [
-                'phase_6/dna/halloween_props_storage_OZ.dna']}
+            HALLOWEEN_PROPS: ['phase_6/dna/halloween_props_storage_OZ.dna'],
+            SPOOKY_PROPS: ['phase_6/dna/halloween_props_storage_OZ.dna']
+        }
         self.skyFile = 'phase_3.5/models/props/TT_sky'
         self.spookySkyFile = 'phase_3.5/models/props/BR_sky'
         self.titleColor = (1.0, 0.5, 0.40000000000000002, 1.0)
-        self.whiteFogColor = Vec4(
-            0.94999999999999996,
-            0.94999999999999996,
-            0.94999999999999996,
-            1)
+        self.whiteFogColor = Vec4(0.94999999999999996, 0.94999999999999996,
+                                  0.94999999999999996, 1)
         self.underwaterFogColor = Vec4(0.0, 0.0, 0.59999999999999998, 1.0)
 
     def load(self):
@@ -91,9 +86,10 @@ class OZHood(ToonHood.ToonHood):
         self.sky.reparentTo(camera)
         self.sky.setTransparency(TransparencyAttrib.MDual, 1)
         fadeIn = self.sky.colorScaleInterval(
-            1.5, Vec4(
-                1, 1, 1, 1), startColorScale=Vec4(
-                1, 1, 1, 0.25), blendType='easeInOut')
+            1.5,
+            Vec4(1, 1, 1, 1),
+            startColorScale=Vec4(1, 1, 1, 0.25),
+            blendType='easeInOut')
         fadeIn.start()
         self.sky.setZ(0.0)
         self.sky.setHpr(0.0, 0.0, 0.0)

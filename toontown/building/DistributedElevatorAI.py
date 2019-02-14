@@ -35,25 +35,21 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
 
         self.accepting = 0
         self.fsm = ClassicFSM.ClassicFSM('DistributedElevatorAI', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'opening',
-                'closed']),
-            State.State('opening', self.enterOpening, self.exitOpening, [
-                'waitEmpty',
-                'waitCountdown']),
-            State.State('waitEmpty', self.enterWaitEmpty, self.exitWaitEmpty, [
-                'waitCountdown']),
-            State.State('waitCountdown', self.enterWaitCountdown, self.exitWaitCountdown, [
-                'waitEmpty',
-                'allAboard']),
-            State.State('allAboard', self.enterAllAboard, self.exitAllAboard, [
-                'closing',
-                'waitEmpty']),
-            State.State('closing', self.enterClosing, self.exitClosing, [
-                'closed',
-                'waitEmpty']),
-            State.State('closed', self.enterClosed, self.exitClosed, [
-                'opening'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['opening', 'closed']),
+            State.State('opening', self.enterOpening, self.exitOpening,
+                        ['waitEmpty', 'waitCountdown']),
+            State.State('waitEmpty', self.enterWaitEmpty, self.exitWaitEmpty,
+                        ['waitCountdown']),
+            State.State('waitCountdown', self.enterWaitCountdown,
+                        self.exitWaitCountdown, ['waitEmpty', 'allAboard']),
+            State.State('allAboard', self.enterAllAboard, self.exitAllAboard,
+                        ['closing', 'waitEmpty']),
+            State.State('closing', self.enterClosing, self.exitClosing,
+                        ['closed', 'waitEmpty']),
+            State.State('closed', self.enterClosed, self.exitClosed,
+                        ['opening'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
         self.boardingParty = None
 
@@ -108,9 +104,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         self.rejectBoarder(avId, reason)
 
     def rejectBoarder(self, avId, reason=0):
-        self.sendUpdateToAvatarId(avId, 'rejectBoard', [
-            avId,
-            reason])
+        self.sendUpdateToAvatarId(avId, 'rejectBoard', [avId, reason])
 
     def acceptingBoardersHandler(self, avId, reason=0, wantBoardingShow=0):
         self.notify.debug('acceptingBoardersHandler')
@@ -130,9 +124,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         if wantBoardingShow:
             self.timeOfGroupBoarding = globalClock.getRealTime()
 
-        self.sendUpdate('fillSlot' + str(seatIndex), [
-            avId,
-            wantBoardingShow])
+        self.sendUpdate('fillSlot' + str(seatIndex), [avId, wantBoardingShow])
 
     def rejectingExitersHandler(self, avId):
         self.rejectExiter(avId)
@@ -144,30 +136,22 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         self.acceptExiter(avId)
 
     def clearEmptyNow(self, seatIndex):
-        self.sendUpdate('emptySlot' + str(seatIndex), [
-            0,
-            0,
-            globalClockDelta.getRealNetworkTime(),
-            0])
+        self.sendUpdate('emptySlot' + str(seatIndex),
+                        [0, 0, globalClockDelta.getRealNetworkTime(), 0])
 
     def clearFullNow(self, seatIndex):
         avId = self.seats[seatIndex]
         if avId is None:
-            self.notify.warning(
-                'Clearing an empty seat index: ' +
-                str(seatIndex) +
-                ' ... Strange...')
+            self.notify.warning('Clearing an empty seat index: ' +
+                                str(seatIndex) + ' ... Strange...')
         else:
             self.seats[seatIndex] = None
-            self.sendUpdate('fillSlot' + str(seatIndex), [
-                0,
-                0])
+            self.sendUpdate('fillSlot' + str(seatIndex), [0, 0])
             self.ignore(self.air.getAvatarExitEvent(avId))
 
     def d_setState(self, state):
-        self.sendUpdate('setState', [
-            state,
-            globalClockDelta.getRealNetworkTime()])
+        self.sendUpdate('setState',
+                        [state, globalClockDelta.getRealNetworkTime()])
 
     def getState(self):
         return self.fsm.getCurrentState().getName()
@@ -188,19 +172,18 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         avId = self.air.getAvatarIdFromSender()
         if self.findAvatar(avId) is not None:
             self.notify.warning(
-                'Ignoring multiple requests from %s to board.' %
-                avId)
+                'Ignoring multiple requests from %s to board.' % avId)
             return None
 
         av = self.air.doId2do.get(avId)
         if av:
             boardResponse = self.checkBoard(av)
-            newArgs = (avId,) + args + (boardResponse,)
+            newArgs = (avId, ) + args + (boardResponse, )
             if self.boardingParty and self.boardingParty.hasActiveGroup(
                     avId) and self.boardingParty.getGroupLeader(avId) != avId:
                 self.notify.warning(
-                    'Rejecting %s from boarding the elevator because he is already part of a Boarding Group.' %
-                    avId)
+                    'Rejecting %s from boarding the elevator because he is already part of a Boarding Group.'
+                    % avId)
                 self.rejectingBoardersHandler(*newArgs)
                 return None
 
@@ -218,13 +201,12 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         avId = avatar.doId
         if self.findAvatar(avId) is not None:
             self.notify.warning(
-                'Ignoring multiple requests from %s to board.' %
-                avId)
+                'Ignoring multiple requests from %s to board.' % avId)
             return None
 
         if av:
             boardResponse = self.checkBoard(av)
-            newArgs = (avId,) + (boardResponse,) + (wantBoardingShow,)
+            newArgs = (avId, ) + (boardResponse, ) + (wantBoardingShow, )
             if boardResponse == 0:
                 self.acceptingBoardersHandler(*newArgs)
             else:
@@ -239,7 +221,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
         avId = self.air.getAvatarIdFromSender()
         av = self.air.doId2do.get(avId)
         if av:
-            newArgs = (avId,) + args
+            newArgs = (avId, ) + args
             if self.accepting:
                 self.acceptingExitersHandler(*newArgs)
             else:
@@ -327,8 +309,7 @@ class DistributedElevatorAI(DistributedObjectAI.DistributedObjectAI):
                 simbase.air.elevatorTripId = 1
 
             simbase.air.elevatorTripId += 1
-            self.sendUpdate('setElevatorTripId', [
-                self.elevatorTripId])
+            self.sendUpdate('setElevatorTripId', [self.elevatorTripId])
 
     def setAntiShuffle(self, antiShuffle):
         self.antiShuffle = antiShuffle

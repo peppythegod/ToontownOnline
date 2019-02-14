@@ -33,11 +33,7 @@ class MakeAToon(StateData.StateData):
         self.isPaid = isPaid
         StateData.StateData.__init__(self, doneEvent)
         self.phase = 3
-        self.names = [
-            '',
-            '',
-            '',
-            '']
+        self.names = ['', '', '', '']
         self.dnastring = None
         self.dna = None
         self.progressing = 0
@@ -57,39 +53,32 @@ class MakeAToon(StateData.StateData):
             self.nameList.append(av.name)
 
         self.fsm = ClassicFSM.ClassicFSM('MakeAToon', [
-            State.State('Init', self.enterInit, self.exitInit, [
-                'GenderShop',
-                'NameShop']),
-            State.State('GenderShop', self.enterGenderShop, self.exitGenderShop, [
-                'BodyShop']),
-            State.State('BodyShop', self.enterBodyShop, self.exitBodyShop, [
-                'GenderShop',
-                'ColorShop']),
-            State.State('ColorShop', self.enterColorShop, self.exitColorShop, [
-                'BodyShop',
-                'ClothesShop']),
-            State.State('ClothesShop', self.enterClothesShop, self.exitClothesShop, [
-                'ColorShop',
-                'NameShop']),
-            State.State('NameShop', self.enterNameShop, self.exitNameShop, [
-                'ClothesShop']),
-            State.State('Done', self.enterDone, self.exitDone, [])], 'Init', 'Done')
+            State.State('Init', self.enterInit, self.exitInit,
+                        ['GenderShop', 'NameShop']),
+            State.State('GenderShop', self.enterGenderShop,
+                        self.exitGenderShop, ['BodyShop']),
+            State.State('BodyShop', self.enterBodyShop, self.exitBodyShop,
+                        ['GenderShop', 'ColorShop']),
+            State.State('ColorShop', self.enterColorShop, self.exitColorShop,
+                        ['BodyShop', 'ClothesShop']),
+            State.State('ClothesShop', self.enterClothesShop,
+                        self.exitClothesShop, ['ColorShop', 'NameShop']),
+            State.State('NameShop', self.enterNameShop, self.exitNameShop,
+                        ['ClothesShop']),
+            State.State('Done', self.enterDone, self.exitDone, [])
+        ], 'Init', 'Done')
         self.parentFSM = parentFSM
         self.parentFSM.getStateNamed('createAvatar').addChild(self.fsm)
         self.gs = GenderShop.GenderShop(self, 'GenderShop-done')
         self.bs = BodyShop.BodyShop('BodyShop-done')
         self.cos = ColorShop.ColorShop('ColorShop-done')
         self.cls = MakeClothesGUI.MakeClothesGUI('ClothesShop-done')
-        self.ns = NameShop.NameShop(
-            self, 'NameShop-done', avList, index, self.isPaid)
+        self.ns = NameShop.NameShop(self, 'NameShop-done', avList, index,
+                                    self.isPaid)
         self.shop = GENDERSHOP
         self.shopsVisited = []
         if self.warp:
-            self.shopsVisited = [
-                GENDERSHOP,
-                BODYSHOP,
-                COLORSHOP,
-                CLOTHESSHOP]
+            self.shopsVisited = [GENDERSHOP, BODYSHOP, COLORSHOP, CLOTHESSHOP]
 
         self.music = None
         self.soundBack = None
@@ -159,235 +148,135 @@ class MakeAToon(StateData.StateData):
             relief=None,
             text=TTLocalizer.CreateYourToon,
             text_font=ToontownGlobals.getSignFont(),
-            text_fg=(
-                0.0,
-                0.65000000000000002,
-                0.34999999999999998,
-                1),
+            text_fg=(0.0, 0.65000000000000002, 0.34999999999999998, 1),
             text_scale=0.17999999999999999,
-            text_pos=(
-                0,
-                -0.029999999999999999),
-            pos=(
-                0,
-                0,
-                0.85999999999999999))
+            text_pos=(0, -0.029999999999999999),
+            pos=(0, 0, 0.85999999999999999))
         self.guiTopBar.hide()
         self.guiBottomBar = DirectFrame(
-            relief=None, image_scale=(
-                1.25, 1, 1), pos=(
-                0.01, 0, -0.85999999999999999))
+            relief=None,
+            image_scale=(1.25, 1, 1),
+            pos=(0.01, 0, -0.85999999999999999))
         self.guiBottomBar.hide()
         self.guiCheckButton = DirectButton(
             parent=self.guiBottomBar,
             relief=None,
-            image=(
-                guiAcceptUp,
-                guiAcceptDown,
-                guiAcceptUp,
-                guiAcceptDown),
+            image=(guiAcceptUp, guiAcceptDown, guiAcceptUp, guiAcceptDown),
             image_scale=halfButtonScale,
             image1_scale=halfButtonHoverScale,
             image2_scale=halfButtonHoverScale,
-            pos=(
-                1.165,
-                0,
-                -0.017999999999999999),
+            pos=(1.165, 0, -0.017999999999999999),
             command=self._MakeAToon__handleNext,
-            text=(
-                '',
-                TTLocalizer.MakeAToonDone,
-                TTLocalizer.MakeAToonDone),
+            text=('', TTLocalizer.MakeAToonDone, TTLocalizer.MakeAToonDone),
             text_font=ToontownGlobals.getInterfaceFont(),
             text_scale=0.080000000000000002,
             text_align=TextNode.ARight,
-            text_pos=(
-                0.13,
-                0.13),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_pos=(0.13, 0.13),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.guiCheckButton.hide()
         self.guiCancelButton = DirectButton(
             parent=self.guiBottomBar,
             relief=None,
-            image=(
-                guiCancelUp,
-                guiCancelDown,
-                guiCancelUp,
-                guiCancelDown),
+            image=(guiCancelUp, guiCancelDown, guiCancelUp, guiCancelDown),
             image_scale=halfButtonScale,
             image1_scale=halfButtonHoverScale,
             image2_scale=halfButtonHoverScale,
-            pos=(
-                -1.179,
-                0,
-                -0.010999999999999999),
+            pos=(-1.179, 0, -0.010999999999999999),
             command=self._MakeAToon__handleCancel,
-            text=(
-                '',
-                TTLocalizer.MakeAToonCancel,
-                TTLocalizer.MakeAToonCancel),
+            text=('', TTLocalizer.MakeAToonCancel,
+                  TTLocalizer.MakeAToonCancel),
             text_font=ToontownGlobals.getInterfaceFont(),
             text_scale=TTLocalizer.MATguiCancelButton,
-            text_pos=(
-                0,
-                0.115),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_pos=(0, 0.115),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.guiCancelButton.hide()
         self.guiNextButton = DirectButton(
             parent=self.guiBottomBar,
             relief=None,
-            image=(
-                guiNextUp,
-                guiNextDown,
-                guiNextUp,
-                guiNextDisabled),
-            image_scale=(
-                0.29999999999999999,
-                0.29999999999999999,
-                0.29999999999999999),
-            image1_scale=(
-                0.34999999999999998,
-                0.34999999999999998,
-                0.34999999999999998),
-            image2_scale=(
-                0.34999999999999998,
-                0.34999999999999998,
-                0.34999999999999998),
-            pos=(
-                1.165,
-                0,
-                -0.017999999999999999),
+            image=(guiNextUp, guiNextDown, guiNextUp, guiNextDisabled),
+            image_scale=(0.29999999999999999, 0.29999999999999999,
+                         0.29999999999999999),
+            image1_scale=(0.34999999999999998, 0.34999999999999998,
+                          0.34999999999999998),
+            image2_scale=(0.34999999999999998, 0.34999999999999998,
+                          0.34999999999999998),
+            pos=(1.165, 0, -0.017999999999999999),
             command=self._MakeAToon__handleNext,
-            text=(
-                '',
-                TTLocalizer.MakeAToonNext,
-                TTLocalizer.MakeAToonNext,
-                ''),
+            text=('', TTLocalizer.MakeAToonNext, TTLocalizer.MakeAToonNext,
+                  ''),
             text_font=ToontownGlobals.getInterfaceFont(),
             text_scale=TTLocalizer.MATguiNextButton,
-            text_pos=(
-                0,
-                0.115),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_pos=(0, 0.115),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.guiNextButton.hide()
-        self.guiLastButton = DirectButton(parent=self.guiBottomBar,
-                                          relief=None,
-                                          image=(guiNextUp,
-                                                 guiNextDown,
-                                                 guiNextUp,
-                                                 guiNextDown),
-                                          image3_color=Vec4(0.5,
-                                                            0.5,
-                                                            0.5,
-                                                            0.75),
-                                          image_scale=(-0.29999999999999999,
-                                                       0.29999999999999999,
-                                                       0.29999999999999999),
-                                          image1_scale=(-0.34999999999999998,
-                                                        0.34999999999999998,
-                                                        0.34999999999999998),
-                                          image2_scale=(-0.34999999999999998,
-                                                        0.34999999999999998,
-                                                        0.34999999999999998),
-                                          pos=(0.82499999999999996,
-                                               0,
-                                               -0.017999999999999999),
-                                          command=self._MakeAToon__handleLast,
-                                          text=('',
-                                                TTLocalizer.MakeAToonLast,
-                                                TTLocalizer.MakeAToonLast,
-                                                ''),
-                                          text_font=ToontownGlobals.getInterfaceFont(),
-                                          text_scale=0.080000000000000002,
-                                          text_pos=(0,
-                                                    0.115),
-                                          text_fg=(1,
-                                                   1,
-                                                   1,
-                                                   1),
-                                          text_shadow=(0,
-                                                       0,
-                                                       0,
-                                                       1))
+        self.guiLastButton = DirectButton(
+            parent=self.guiBottomBar,
+            relief=None,
+            image=(guiNextUp, guiNextDown, guiNextUp, guiNextDown),
+            image3_color=Vec4(0.5, 0.5, 0.5, 0.75),
+            image_scale=(-0.29999999999999999, 0.29999999999999999,
+                         0.29999999999999999),
+            image1_scale=(-0.34999999999999998, 0.34999999999999998,
+                          0.34999999999999998),
+            image2_scale=(-0.34999999999999998, 0.34999999999999998,
+                          0.34999999999999998),
+            pos=(0.82499999999999996, 0, -0.017999999999999999),
+            command=self._MakeAToon__handleLast,
+            text=('', TTLocalizer.MakeAToonLast, TTLocalizer.MakeAToonLast,
+                  ''),
+            text_font=ToontownGlobals.getInterfaceFont(),
+            text_scale=0.080000000000000002,
+            text_pos=(0, 0.115),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.guiLastButton.hide()
-        self.rotateLeftButton = DirectButton(parent=self.guiBottomBar,
-                                             relief=None,
-                                             image=(rotateUp,
-                                                    rotateDown,
-                                                    rotateUp,
-                                                    rotateDown),
-                                             image_scale=(-0.40000000000000002,
-                                                          0.40000000000000002,
-                                                          0.40000000000000002),
-                                             image1_scale=(-0.5,
-                                                           0.5,
-                                                           0.5),
-                                             image2_scale=(-0.5,
-                                                           0.5,
-                                                           0.5),
-                                             pos=(-0.32924900000000001,
-                                                  0,
-                                                  0.202961))
+        self.rotateLeftButton = DirectButton(
+            parent=self.guiBottomBar,
+            relief=None,
+            image=(rotateUp, rotateDown, rotateUp, rotateDown),
+            image_scale=(-0.40000000000000002, 0.40000000000000002,
+                         0.40000000000000002),
+            image1_scale=(-0.5, 0.5, 0.5),
+            image2_scale=(-0.5, 0.5, 0.5),
+            pos=(-0.32924900000000001, 0, 0.202961))
         self.rotateLeftButton.hide()
         self.rotateLeftButton.bind(DGG.B1PRESS, self.rotateToonLeft)
         self.rotateLeftButton.bind(DGG.B1RELEASE, self.stopToonRotateLeftTask)
         self.rotateRightButton = DirectButton(
-            parent=self.guiBottomBar, relief=None, image=(
-                rotateUp, rotateDown, rotateUp, rotateDown), image_scale=(
-                0.40000000000000002, 0.40000000000000002, 0.40000000000000002), image1_scale=(
-                0.5, 0.5, 0.5), image2_scale=(
-                    0.5, 0.5, 0.5), pos=(
-                        0.30953399999999998, 0, 0.20611599999999999))
+            parent=self.guiBottomBar,
+            relief=None,
+            image=(rotateUp, rotateDown, rotateUp, rotateDown),
+            image_scale=(0.40000000000000002, 0.40000000000000002,
+                         0.40000000000000002),
+            image1_scale=(0.5, 0.5, 0.5),
+            image2_scale=(0.5, 0.5, 0.5),
+            pos=(0.30953399999999998, 0, 0.20611599999999999))
         self.rotateRightButton.hide()
         self.rotateRightButton.bind(DGG.B1PRESS, self.rotateToonRight)
-        self.rotateRightButton.bind(
-            DGG.B1RELEASE, self.stopToonRotateRightTask)
+        self.rotateRightButton.bind(DGG.B1RELEASE,
+                                    self.stopToonRotateRightTask)
         gui.removeNode()
         self.roomDropActor = Actor()
         self.roomDropActor.loadModel('phase_3/models/makeatoon/roomAnim_model')
-        self.roomDropActor.loadAnims({
-            'drop': 'phase_3/models/makeatoon/roomAnim_roomDrop'})
+        self.roomDropActor.loadAnims(
+            {'drop': 'phase_3/models/makeatoon/roomAnim_roomDrop'})
         self.roomDropActor.reparentTo(render)
         self.dropJoint = self.roomDropActor.find('**/droppingJoint')
         self.roomSquishActor = Actor()
         self.roomSquishActor.loadModel(
             'phase_3/models/makeatoon/roomAnim_model')
-        self.roomSquishActor.loadAnims({
-            'squish': 'phase_3/models/makeatoon/roomAnim_roomSquish'})
+        self.roomSquishActor.loadAnims(
+            {'squish': 'phase_3/models/makeatoon/roomAnim_roomSquish'})
         self.roomSquishActor.reparentTo(render)
         self.squishJoint = self.roomSquishActor.find('**/scalingJoint')
         self.propSquishActor = Actor()
         self.propSquishActor.loadModel(
             'phase_3/models/makeatoon/roomAnim_model')
-        self.propSquishActor.loadAnims({
-            'propSquish': 'phase_3/models/makeatoon/roomAnim_propSquish'})
+        self.propSquishActor.loadAnims(
+            {'propSquish': 'phase_3/models/makeatoon/roomAnim_propSquish'})
         self.propSquishActor.reparentTo(render)
         self.propSquishActor.pose('propSquish', 0)
         self.propJoint = self.propSquishActor.find('**/propJoint')
@@ -395,11 +284,16 @@ class MakeAToon(StateData.StateData):
         self.spotlightActor.loadModel(
             'phase_3/models/makeatoon/roomAnim_model')
         self.spotlightActor.loadAnims({
-            'spotlightShake': 'phase_3/models/makeatoon/roomAnim_spotlightShake'})
+            'spotlightShake':
+            'phase_3/models/makeatoon/roomAnim_spotlightShake'
+        })
         self.spotlightActor.reparentTo(render)
         self.spotlightJoint = self.spotlightActor.find('**/spotlightJoint')
-        ee = DirectFrame(pos=(-1, 1, 1), frameSize=(-0.01, 0.01, -0.01, 0.01),
-                         frameColor=(0, 0, 0, 0.050000000000000003), state='normal')
+        ee = DirectFrame(
+            pos=(-1, 1, 1),
+            frameSize=(-0.01, 0.01, -0.01, 0.01),
+            frameColor=(0, 0, 0, 0.050000000000000003),
+            state='normal')
         ee.bind(DGG.B1PRESS, lambda x, ee=ee: self.toggleSlide())
         self.eee = ee
         self.room = loader.loadModel(
@@ -460,7 +354,8 @@ class MakeAToon(StateData.StateData):
         self.crashSounds.append(
             base.loadSfx('phase_3/audio/sfx/tt_s_ara_mat_crash_boing.mp3'))
         self.crashSounds.append(
-            base.loadSfx('phase_3/audio/sfx/tt_s_ara_mat_crash_glassBoing.mp3'))
+            base.loadSfx(
+                'phase_3/audio/sfx/tt_s_ara_mat_crash_glassBoing.mp3'))
         self.crashSounds.append(
             base.loadSfx('phase_3/audio/sfx/tt_s_ara_mat_crash_wood.mp3'))
         self.crashSounds.append(
@@ -626,8 +521,8 @@ class MakeAToon(StateData.StateData):
         else:
             self.dropRoom(self.genderWalls, self.genderProps)
         self.guiTopBar['text'] = TTLocalizer.CreateYourToonTitle
-        self.guiTopBar['text_fg'] = (
-            1, 0.92000000000000004, 0.20000000000000001, 1)
+        self.guiTopBar['text_fg'] = (1, 0.92000000000000004,
+                                     0.20000000000000001, 1)
         self.guiTopBar['text_scale'] = TTLocalizer.MATenterGenderShop
         base.transitions.fadeIn()
         self.accept('GenderShop-done', self._MakeAToon__handleGenderShopDone)
@@ -734,8 +629,8 @@ class MakeAToon(StateData.StateData):
         base.cr.centralLogger.writeClientEvent('MAT - enteringClothesShop')
         self.shop = CLOTHESSHOP
         self.guiTopBar['text'] = TTLocalizer.PickClothesTitle
-        self.guiTopBar['text_fg'] = (
-            1, 0.92000000000000004, 0.20000000000000001, 1)
+        self.guiTopBar['text_fg'] = (1, 0.92000000000000004,
+                                     0.20000000000000001, 1)
         self.guiTopBar['text_scale'] = TTLocalizer.MATenterClothesShop
         self.accept('ClothesShop-done', self._MakeAToon__handleClothesShopDone)
         self.dropRoom(self.clothesWalls, self.clothesProps)
@@ -795,10 +690,8 @@ class MakeAToon(StateData.StateData):
         else:
             waittime = 0.20000000000000001
         self.ns.enter(self.toon, self.nameList, self.warp)
-        taskMgr.doMethodLater(
-            waittime,
-            self.nameShopOpening,
-            'nameShopOpeningTask')
+        taskMgr.doMethodLater(waittime, self.nameShopOpening,
+                              'nameShopOpeningTask')
 
     def exitNameShop(self):
         self.squishRoom(self.nameWalls)
@@ -880,12 +773,8 @@ class MakeAToon(StateData.StateData):
 
         squishDuration = self.roomSquishActor.getDuration('squish')
         self.roomSquishIval = Sequence(
-            Func(
-                self.roomSquishActor.play,
-                'squish'),
-            Wait(squishDuration),
-            Func(
-                room.hide))
+            Func(self.roomSquishActor.play, 'squish'), Wait(squishDuration),
+            Func(room.hide))
         self.roomSquishIval.start()
 
     def squishProp(self, prop):
@@ -895,16 +784,11 @@ class MakeAToon(StateData.StateData):
 
             squishDuration = self.propSquishActor.getDuration('propSquish')
             self.propSquishIval = Sequence(
-                Func(
-                    self.propSquishActor.play,
-                    'propSquish'),
-                Wait(squishDuration),
-                Func(
-                    prop.hide))
+                Func(self.propSquishActor.play, 'propSquish'),
+                Wait(squishDuration), Func(prop.hide))
             self.propSquishIval.start()
 
     def dropRoom(self, walls, props):
-
         def propReparentTo(props):
             if not props.isEmpty():
                 props.reparentTo(self.propJoint)
@@ -921,21 +805,21 @@ class MakeAToon(StateData.StateData):
         dropDuration = self.roomDropActor.getDuration('drop')
         self.dropIval = Parallel(
             Sequence(
-                Func(
-                    self.roomDropActor.play, 'drop'), Wait(dropDuration), Func(
-                    walls.reparentTo, self.squishJoint), Func(
-                    propReparentTo, props), Func(
-                        self.propSquishActor.pose, 'propSquish', 0), Func(
-                            self.roomSquishActor.pose, 'squish', 0)), Sequence(
-                                Wait(0.25), Func(
-                                    self.smoke.show), Func(
-                                        self.smoke.node().play), LerpColorScaleInterval(
-                                            self.smoke, 0.5, Vec4(
-                                                1, 1, 1, 0), startColorScale=Vec4(
-                                                    1, 1, 1, 1)), Func(
-                                                        self.smoke.hide)), Func(
-                                                            self.spotlightActor.play, 'spotlightShake'), Func(
-                                                                self.playRandomCrashSound))
+                Func(self.roomDropActor.play, 'drop'), Wait(dropDuration),
+                Func(walls.reparentTo, self.squishJoint),
+                Func(propReparentTo, props),
+                Func(self.propSquishActor.pose, 'propSquish', 0),
+                Func(self.roomSquishActor.pose, 'squish', 0)),
+            Sequence(
+                Wait(0.25), Func(self.smoke.show),
+                Func(self.smoke.node().play),
+                LerpColorScaleInterval(
+                    self.smoke,
+                    0.5,
+                    Vec4(1, 1, 1, 0),
+                    startColorScale=Vec4(1, 1, 1, 1)), Func(self.smoke.hide)),
+            Func(self.spotlightActor.play, 'spotlightShake'),
+            Func(self.playRandomCrashSound))
         self.dropIval.start()
 
     def startFocusOutIval(self):
@@ -943,8 +827,8 @@ class MakeAToon(StateData.StateData):
             self.focusInIval.pause()
 
         if not self.focusOutIval.isPlaying():
-            self.focusOutIval = LerpScaleInterval(
-                self.spotlight, 0.25, self.spotlightFinalScale)
+            self.focusOutIval = LerpScaleInterval(self.spotlight, 0.25,
+                                                  self.spotlightFinalScale)
             self.focusOutIval.start()
 
     def startFocusInIval(self):
@@ -952,8 +836,8 @@ class MakeAToon(StateData.StateData):
             self.focusOutIval.pause()
 
         if not self.focusInIval.isPlaying():
-            self.focusInIval = LerpScaleInterval(
-                self.spotlight, 0.25, self.spotlightOriginalScale)
+            self.focusInIval = LerpScaleInterval(self.spotlight, 0.25,
+                                                 self.spotlightOriginalScale)
             self.focusInIval.start()
 
     def cleanupFocusOutIval(self):

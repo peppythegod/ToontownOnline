@@ -6,30 +6,23 @@ from toontown.toonbase.ToontownGlobals import *
 
 
 class DDHood(ToonHood.ToonHood):
-
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
-        ToonHood.ToonHood.__init__(
-            self, parentFSM, doneEvent, dnaStore, hoodId)
+        ToonHood.ToonHood.__init__(self, parentFSM, doneEvent, dnaStore,
+                                   hoodId)
         self.id = DonaldsDock
         self.townLoaderClass = DDTownLoader.DDTownLoader
         self.safeZoneLoaderClass = DDSafeZoneLoader.DDSafeZoneLoader
         self.storageDNAFile = 'phase_6/dna/storage_DD.dna'
         self.holidayStorageDNADict = {
-            WINTER_DECORATIONS: [
-                'phase_6/dna/winter_storage_DD.dna'],
-            WACKY_WINTER_DECORATIONS: [
-                'phase_6/dna/winter_storage_DD.dna'],
-            HALLOWEEN_PROPS: [
-                'phase_6/dna/halloween_props_storage_DD.dna'],
-            SPOOKY_PROPS: [
-                'phase_6/dna/halloween_props_storage_DD.dna']}
+            WINTER_DECORATIONS: ['phase_6/dna/winter_storage_DD.dna'],
+            WACKY_WINTER_DECORATIONS: ['phase_6/dna/winter_storage_DD.dna'],
+            HALLOWEEN_PROPS: ['phase_6/dna/halloween_props_storage_DD.dna'],
+            SPOOKY_PROPS: ['phase_6/dna/halloween_props_storage_DD.dna']
+        }
         self.skyFile = 'phase_3.5/models/props/BR_sky'
         self.titleColor = (0.80000000000000004, 0.59999999999999998, 0.5, 1.0)
-        self.whiteFogColor = Vec4(
-            0.80000000000000004,
-            0.80000000000000004,
-            0.80000000000000004,
-            1)
+        self.whiteFogColor = Vec4(0.80000000000000004, 0.80000000000000004,
+                                  0.80000000000000004, 1)
         self.underwaterFogColor = Vec4(0.0, 0.0, 0.59999999999999998, 1.0)
         self.spookySkyFile = 'phase_3.5/models/props/BR_sky'
 

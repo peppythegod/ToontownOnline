@@ -6,10 +6,9 @@ from toontown.launcher import DownloadForceAcknowledge
 
 
 class TTSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
-        SafeZoneLoader.SafeZoneLoader.__init__(
-            self, hood, parentFSM, doneEvent)
+        SafeZoneLoader.SafeZoneLoader.__init__(self, hood, parentFSM,
+                                               doneEvent)
         self.playgroundClass = TTPlayground.TTPlayground
         self.musicFile = 'phase_4/audio/bgm/TC_nbrhood.mid'
         self.activityMusicFile = 'phase_3.5/audio/bgm/TC_SZ_activity.mid'
@@ -21,7 +20,8 @@ class TTSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
         self.birdSound = map(base.loadSfx, [
             'phase_4/audio/sfx/SZ_TC_bird1.mp3',
             'phase_4/audio/sfx/SZ_TC_bird2.mp3',
-            'phase_4/audio/sfx/SZ_TC_bird3.mp3'])
+            'phase_4/audio/sfx/SZ_TC_bird3.mp3'
+        ])
 
     def unload(self):
         del self.birdSound

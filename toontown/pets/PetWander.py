@@ -6,7 +6,6 @@ from toontown.pets import PetConstants
 
 
 class PetWander(CPetChase, DirectObject.DirectObject):
-
     def __init__(self, minDist=5.0, moveAngle=20.0):
         self.movingTarget = hidden.attachNewNode('petWanderTarget')
         CPetChase.__init__(self, self.movingTarget, minDist, moveAngle)

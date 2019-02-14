@@ -4,10 +4,8 @@ from direct.directnotify import DirectNotifyGlobal
 from toontown.coghq import FoodBeltBase
 
 
-class DistributedFoodBeltAI(
-        DistributedObjectAI.DistributedObjectAI,
-        FSM.FSM,
-        FoodBeltBase.FoodBeltBase):
+class DistributedFoodBeltAI(DistributedObjectAI.DistributedObjectAI, FSM.FSM,
+                            FoodBeltBase.FoodBeltBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedFoodBeltAI')
 
@@ -40,8 +38,7 @@ class DistributedFoodBeltAI(
         elif state == 'Toonup':
             newState = 'T'
 
-        self.sendUpdate('setState', [
-            newState])
+        self.sendUpdate('setState', [newState])
 
     def b_setState(self, state):
         self.request(state)

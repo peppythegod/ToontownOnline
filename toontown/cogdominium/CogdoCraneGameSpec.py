@@ -5,7 +5,8 @@ GlobalEntities = {
         'name': 'LevelMgr',
         'comment': '',
         'parentEntId': 0,
-        'modelFilename': 'phase_10/models/cogHQ/EndVault.bam'},
+        'modelFilename': 'phase_10/models/cogHQ/EndVault.bam'
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -13,7 +14,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -21,7 +23,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10001: {
         'type': 'cogdoCraneCogSettings',
         'name': '<unnamed>',
@@ -31,7 +34,8 @@ GlobalEntities = {
         'CogFlyAwayHeight': 50.0,
         'CogMachineInteractDuration': 2.0,
         'CogSpawnPeriod': 10.0,
-        'CogWalkSpeed': 12.07161265369133},
+        'CogWalkSpeed': 12.07161265369133
+    },
     10000: {
         'type': 'cogdoCraneGameSettings',
         'name': '<unnamed>',
@@ -42,9 +46,8 @@ GlobalEntities = {
         'Gravity': -32,
         'MagnetMass': 1.0,
         'MoneyBagGrabHeight': -4.0999999999999996,
-        'RopeLinkMass': 1.0}}
+        'RopeLinkMass': 1.0
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

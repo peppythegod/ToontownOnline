@@ -3,7 +3,6 @@ from direct.interval.SoundInterval import SoundInterval
 
 
 class CogdoGameSfx:
-
     def __init__(self, audioSound, audioMgr, source=None):
         self._audioSound = audioSound
         self._audioMgr = audioMgr
@@ -98,14 +97,13 @@ class CogdoGameAudioManager:
 
             del self._soundIvals[audioSound]
 
-    def createSfxIval(
-            self,
-            sfxName,
-            volume=1.0,
-            duration=0.0,
-            startTime=0.0,
-            source=None,
-            cutoff=None):
+    def createSfxIval(self,
+                      sfxName,
+                      volume=1.0,
+                      duration=0.0,
+                      startTime=0.0,
+                      source=None,
+                      cutoff=None):
         sound = loader.loadSfx(self._sfxFiles[sfxName])
         self._audioSounds.append(sound)
         return self._createSoundIval(
@@ -116,15 +114,14 @@ class CogdoGameAudioManager:
             source=source,
             cutoff=cutoff)
 
-    def _createSoundIval(
-            self,
-            audioSound,
-            volume=1.0,
-            duration=0.0,
-            startTime=0.0,
-            source=None,
-            register=False,
-            cutoff=None):
+    def _createSoundIval(self,
+                         audioSound,
+                         volume=1.0,
+                         duration=0.0,
+                         startTime=0.0,
+                         source=None,
+                         register=False,
+                         cutoff=None):
         if cutoff is None:
             cutoff = self._cutoff
 
@@ -138,13 +135,12 @@ class CogdoGameAudioManager:
             listenerNode=self._listener)
         return ival
 
-    def playSound(
-            self,
-            audioSound,
-            loop=False,
-            source=None,
-            playRate=1.0,
-            volume=1.0):
+    def playSound(self,
+                  audioSound,
+                  loop=False,
+                  source=None,
+                  playRate=1.0,
+                  volume=1.0):
         audioSound.setPlayRate(playRate)
         if source is not None and loop:
             self._cleanupSoundIval(audioSound)

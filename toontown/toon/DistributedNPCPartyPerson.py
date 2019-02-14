@@ -11,8 +11,8 @@ from toontown.parties import PartyGlobals
 from toontown.toonbase import ToontownGlobals
 from toontown.toontowngui import TeaserPanel
 
+
 class DistributedNPCPartyPerson(DistributedNPCToonBase):
-    
     def __init__(self, cr):
         DistributedNPCToonBase.__init__(self, cr)
         self.isInteractingWithLocalToon = 0
@@ -21,7 +21,6 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         self.askGui = None
         self.teaserDialog = None
 
-    
     def disable(self):
         self.ignoreAll()
         taskMgr.remove(self.uniqueName('popupAskGUI'))
@@ -29,73 +28,72 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         self.av = None
         if self.isInteractingWithLocalToon:
             base.localAvatar.posCamera(0, 0)
-        
+
         DistributedNPCToonBase.disable(self)
 
-    
     def delete(self):
         if self.askGui:
             self.ignore(self.planPartyQuestionGuiDoneEvent)
             self.askGui.cleanup()
             del self.askGui
-        
+
         DistributedNPCToonBase.delete(self)
 
-    
     def generate(self):
         DistributedNPCToonBase.generate(self)
 
-    
     def announceGenerate(self):
         DistributedNPCToonBase.announceGenerate(self)
         self.planPartyQuestionGuiDoneEvent = 'planPartyQuestionDone'
-        self.askGui = TTDialog.TTGlobalDialog(dialogName = self.uniqueName('askGui'), doneEvent = self.planPartyQuestionGuiDoneEvent, message = TTLocalizer.PartyDoYouWantToPlan, style = TTDialog.YesNo, okButtonText = OTPLocalizer.DialogYes, cancelButtonText = OTPLocalizer.DialogNo)
+        self.askGui = TTDialog.TTGlobalDialog(
+            dialogName=self.uniqueName('askGui'),
+            doneEvent=self.planPartyQuestionGuiDoneEvent,
+            message=TTLocalizer.PartyDoYouWantToPlan,
+            style=TTDialog.YesNo,
+            okButtonText=OTPLocalizer.DialogYes,
+            cancelButtonText=OTPLocalizer.DialogNo)
         self.askGui.hide()
 
-    
     def initToonState(self):
         self.setAnimState('neutral', 1.05, None, None)
         if self.posIndex % 2 == 0:
             side = 'left'
         else:
             side = 'right'
-        npcOrigin = self.cr.playGame.hood.loader.geom.find('**/party_person_%s;+s' % side)
+        npcOrigin = self.cr.playGame.hood.loader.geom.find(
+            '**/party_person_%s;+s' % side)
         if not npcOrigin.isEmpty():
             self.reparentTo(npcOrigin)
             self.clearMat()
         else:
-            self.notify.warning('announceGenerate: Could not find party_person_%s' % side)
+            self.notify.warning(
+                'announceGenerate: Could not find party_person_%s' % side)
 
-    
     def getCollSphereRadius(self):
         return 1.0
 
-    
     def handleCollisionSphereEnter(self, collEntry):
         base.cr.playGame.getPlace().fsm.request('purchase')
         self.sendUpdate('avatarEnter', [])
 
-    
     def _DistributedNPCPartyPerson__handleUnexpectedExit(self):
         self.notify.warning('unexpected exit')
         self.av = None
 
-    
     def setupAvatars(self, av):
         self.ignoreAvatars()
         av.stopLookAround()
-        av.lerpLookAt(Point3(-0.5, 4, 0), time = 0.5)
+        av.lerpLookAt(Point3(-0.5, 4, 0), time=0.5)
         self.stopLookAround()
-        self.lerpLookAt(Point3(av.getPos(self)), time = 0.5)
+        self.lerpLookAt(Point3(av.getPos(self)), time=0.5)
 
-    
     def resetPartyPerson(self):
         self.ignoreAll()
         taskMgr.remove(self.uniqueName('popupAskGUI'))
         taskMgr.remove(self.uniqueName('lerpCamera'))
         if self.askGui:
             self.askGui.hide()
-        
+
         self.show()
         self.startLookAround()
         self.detectAvatars()
@@ -103,11 +101,9 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         if self.isInteractingWithLocalToon:
             if hasattr(self, 'teaserDialog') and not (self.teaserDialog):
                 self.freeAvatar()
-            
-        
+
         return Task.done
 
-    
     def setMovie(self, mode, npcId, avId, extraArgs, timestamp):
         timeStamp = ClockDelta.globalClockDelta.localElapsedTime(timestamp)
         self.remain = NPCToons.CLERK_COUNTDOWN_TIME - timeStamp
@@ -115,7 +111,7 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
         self.isInteractingWithLocalToon = avId == base.localAvatar.doId
         if mode == NPCToons.PARTY_MOVIE_CLEAR:
             return None
-        
+
         if mode == NPCToons.PARTY_MOVIE_TIMEOUT:
             taskMgr.remove(self.uniqueName('lerpCamera'))
             if self.isInteractingWithLocalToon:
@@ -123,9 +119,9 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
                 if self.askGui:
                     self.askGui.hide()
                     self.ignore(self.planPartyQuestionGuiDoneEvent)
-                
-            
-            self.setChatAbsolute(TTLocalizer.STOREOWNER_TOOKTOOLONG, CFSpeech | CFTimeout)
+
+            self.setChatAbsolute(TTLocalizer.STOREOWNER_TOOKTOOLONG,
+                                 CFSpeech | CFTimeout)
             self.resetPartyPerson()
         elif mode == NPCToons.PARTY_MOVIE_START:
             self.av = base.cr.doId2do.get(avId)
@@ -133,14 +129,28 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
                 self.notify.warning('Avatar %d not found in doId' % avId)
                 return None
             else:
-                self.accept(self.av.uniqueName('disable'), self._DistributedNPCPartyPerson__handleUnexpectedExit)
+                self.accept(
+                    self.av.uniqueName('disable'),
+                    self._DistributedNPCPartyPerson__handleUnexpectedExit)
             self.setupAvatars(self.av)
             if self.isInteractingWithLocalToon:
                 camera.wrtReparentTo(render)
-                camera.lerpPosHpr(-5, 9, base.localAvatar.getHeight() - 0.5, -150, -2, 0, 1, other = self, blendType = 'easeOut', task = self.uniqueName('lerpCamera'))
-                taskMgr.doMethodLater(1.0, self.popupAskGUI, self.uniqueName('popupAskGUI'))
+                camera.lerpPosHpr(
+                    -5,
+                    9,
+                    base.localAvatar.getHeight() - 0.5,
+                    -150,
+                    -2,
+                    0,
+                    1,
+                    other=self,
+                    blendType='easeOut',
+                    task=self.uniqueName('lerpCamera'))
+                taskMgr.doMethodLater(1.0, self.popupAskGUI,
+                                      self.uniqueName('popupAskGUI'))
             else:
-                self.setChatAbsolute(TTLocalizer.PartyDoYouWantToPlan, CFSpeech | CFTimeout)
+                self.setChatAbsolute(TTLocalizer.PartyDoYouWantToPlan,
+                                     CFSpeech | CFTimeout)
         elif mode == NPCToons.PARTY_MOVIE_COMPLETE:
             chatStr = TTLocalizer.PartyPlannerOnYourWay
             self.setChatAbsolute(chatStr, CFSpeech | CFTimeout)
@@ -162,16 +172,18 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
                     'hoodId': hoodId,
                     'zoneId': zoneId,
                     'shardId': None,
-                    'avId': avId }
+                    'avId': avId
+                }
                 place.requestLeave(requestStatus)
-            
+
         elif mode == NPCToons.PARTY_MOVIE_MAYBENEXTTIME:
             self.av = base.cr.doId2do.get(avId)
             if self.av is None:
                 self.notify.warning('Avatar %d not found in doId' % avId)
                 return None
             else:
-                self.setChatAbsolute(TTLocalizer.PartyPlannerMaybeNextTime, CFSpeech | CFTimeout)
+                self.setChatAbsolute(TTLocalizer.PartyPlannerMaybeNextTime,
+                                     CFSpeech | CFTimeout)
             self.resetPartyPerson()
         elif mode == NPCToons.PARTY_MOVIE_ALREADYHOSTING:
             chatStr = TTLocalizer.PartyPlannerHostingTooMany
@@ -189,9 +201,7 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
             chatStr = TTLocalizer.PartyPlannerNpcMinCost % PartyGlobals.MinimumPartyCost
             self.setChatAbsolute(chatStr, CFSpeech | CFTimeout)
             self.resetPartyPerson()
-        
 
-    
     def _DistributedNPCPartyPerson__handleAskDone(self):
         self.ignore(self.planPartyQuestionGuiDoneEvent)
         doneStatus = self.askGui.doneStatus
@@ -201,29 +211,25 @@ class DistributedNPCPartyPerson(DistributedNPCToonBase):
                 wantsToPlan = 0
                 place = base.cr.playGame.getPlace()
                 if place:
-                    place.fsm.request('stopped', force = 1)
-                
-                self.teaserDialog = TeaserPanel.TeaserPanel(pageName = 'parties', doneFunc = self.handleOkTeaser)
-            
+                    place.fsm.request('stopped', force=1)
+
+                self.teaserDialog = TeaserPanel.TeaserPanel(
+                    pageName='parties', doneFunc=self.handleOkTeaser)
+
         else:
             wantsToPlan = 0
-        self.sendUpdate('answer', [
-            wantsToPlan])
+        self.sendUpdate('answer', [wantsToPlan])
         self.askGui.hide()
 
-    
     def popupAskGUI(self, task):
         self.setChatAbsolute('', CFSpeech)
-        self.acceptOnce(self.planPartyQuestionGuiDoneEvent, self._DistributedNPCPartyPerson__handleAskDone)
+        self.acceptOnce(self.planPartyQuestionGuiDoneEvent,
+                        self._DistributedNPCPartyPerson__handleAskDone)
         self.askGui.show()
 
-    
     def handleOkTeaser(self):
         self.teaserDialog.destroy()
         del self.teaserDialog
         place = base.cr.playGame.getPlace()
         if place:
             place.fsm.request('walk')
-        
-
-

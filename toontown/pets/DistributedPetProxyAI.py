@@ -21,8 +21,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.petName = 'unnamed'
         self.traitSeed = 0
         self.safeZone = ToontownGlobals.ToontownCentral
-        self.traitList = [
-            0] * PetTraits.PetTraits.NumTraits
+        self.traitList = [0] * PetTraits.PetTraits.NumTraits
         self.head = -1
         self.ears = -1
         self.nose = -1
@@ -62,8 +61,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setOwnerId(ownerId)
 
     def d_setOwnerId(self, ownerId):
-        self.sendUpdate('setOwnerId', [
-            ownerId])
+        self.sendUpdate('setOwnerId', [ownerId])
 
     def setOwnerId(self, ownerId):
         self.ownerId = ownerId
@@ -76,8 +74,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setPetName(petName)
 
     def d_setPetName(self, petName):
-        self.sendUpdate('setPetName', [
-            petName])
+        self.sendUpdate('setPetName', [petName])
 
     def setPetName(self, petName):
         self.petName = petName
@@ -90,8 +87,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setTraitSeed(traitSeed)
 
     def d_setTraitSeed(self, traitSeed):
-        self.sendUpdate('setTraitSeed', [
-            traitSeed])
+        self.sendUpdate('setTraitSeed', [traitSeed])
 
     def setTraitSeed(self, traitSeed):
         self.traitSeed = traitSeed
@@ -104,8 +100,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setSafeZone(safeZone)
 
     def d_setSafeZone(self, safeZone):
-        self.sendUpdate('setSafeZone', [
-            safeZone])
+        self.sendUpdate('setSafeZone', [safeZone])
 
     def setSafeZone(self, safeZone):
         self.safeZone = safeZone
@@ -124,16 +119,14 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
             def traitGetter(i=i):
                 return self.traitList[i]
 
-            def b_traitSetter(
-                    value,
-                    setterName=setterName,
-                    d_setterName=d_setterName):
+            def b_traitSetter(value,
+                              setterName=setterName,
+                              d_setterName=d_setterName):
                 self.__dict__[d_setterName](value)
                 self.__dict__[setterName](value)
 
             def d_traitSetter(value, setterName=setterName):
-                self.sendUpdate(setterName, [
-                    value])
+                self.sendUpdate(setterName, [value])
 
             def traitSetter(value, i=i):
                 self.traitList[i] = value
@@ -155,8 +148,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setHead(head)
 
     def d_setHead(self, head):
-        self.sendUpdate('setHead', [
-            head])
+        self.sendUpdate('setHead', [head])
 
     def setHead(self, head):
         self.head = head
@@ -169,8 +161,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setEars(ears)
 
     def d_setEars(self, ears):
-        self.sendUpdate('setEars', [
-            ears])
+        self.sendUpdate('setEars', [ears])
 
     def setEars(self, ears):
         self.ears = ears
@@ -183,8 +174,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setNose(nose)
 
     def d_setNose(self, nose):
-        self.sendUpdate('setNose', [
-            nose])
+        self.sendUpdate('setNose', [nose])
 
     def setNose(self, nose):
         self.nose = nose
@@ -197,8 +187,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setTail(tail)
 
     def d_setTail(self, tail):
-        self.sendUpdate('setTail', [
-            tail])
+        self.sendUpdate('setTail', [tail])
 
     def setTail(self, tail):
         self.tail = tail
@@ -211,8 +200,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setBodyTexture(bodyTexture)
 
     def d_setBodyTexture(self, bodyTexture):
-        self.sendUpdate('setBodyTexture', [
-            bodyTexture])
+        self.sendUpdate('setBodyTexture', [bodyTexture])
 
     def setBodyTexture(self, bodyTexture):
         self.bodyTexture = bodyTexture
@@ -225,8 +213,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setColor(color)
 
     def d_setColor(self, color):
-        self.sendUpdate('setColor', [
-            color])
+        self.sendUpdate('setColor', [color])
 
     def setColor(self, color):
         self.color = color
@@ -239,8 +226,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setColorScale(colorScale)
 
     def d_setColorScale(self, colorScale):
-        self.sendUpdate('setColorScale', [
-            colorScale])
+        self.sendUpdate('setColorScale', [colorScale])
 
     def setColorScale(self, colorScale):
         self.colorScale = colorScale
@@ -253,8 +239,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setEyeColor(eyeColor)
 
     def d_setEyeColor(self, eyeColor):
-        self.sendUpdate('setEyeColor', [
-            eyeColor])
+        self.sendUpdate('setEyeColor', [eyeColor])
 
     def setEyeColor(self, eyeColor):
         self.eyeColor = eyeColor
@@ -267,8 +252,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setGender(gender)
 
     def d_setGender(self, gender):
-        self.sendUpdate('setGender', [
-            gender])
+        self.sendUpdate('setGender', [gender])
 
     def setGender(self, gender):
         self.gender = gender
@@ -281,8 +265,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
         self.setLastSeenTimestamp(timestamp)
 
     def d_setLastSeenTimestamp(self, timestamp):
-        self.sendUpdate('setLastSeenTimestamp', [
-            timestamp])
+        self.sendUpdate('setLastSeenTimestamp', [timestamp])
 
     def setLastSeenTimestamp(self, timestamp):
         self.lastSeenTimestamp = timestamp
@@ -318,8 +301,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
                 self.__dict__[setterName](value)
 
             def d_moodSetter(value, setterName=setterName):
-                self.sendUpdate(setterName, [
-                    value])
+                self.sendUpdate(setterName, [value])
 
             def moodSetter(value, compName=compName):
                 self._DistributedPetProxyAI__handleMoodSet(compName, value)
@@ -349,8 +331,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
 
         while len(aptitudes) < len(PetTricks.Tricks) - 1:
             aptitudes.append(0.0)
-        self.sendUpdate('setTrickAptitudes', [
-            aptitudes])
+        self.sendUpdate('setTrickAptitudes', [aptitudes])
 
     def setTrickAptitudes(self, aptitudes, local=0):
         if not local:
@@ -457,8 +438,7 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
 
         cutoff *= PetTricks.TrickAccuracies[trickId]
         DistributedPetProxyAI.notify.debug(
-            '_willDoTrick: %s / %s' %
-            (randVal, cutoff))
+            '_willDoTrick: %s / %s' % (randVal, cutoff))
         return randVal < cutoff
 
     def _handleDidTrick(self, trickId):
@@ -467,23 +447,20 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
             return None
 
         aptitude = self.getTrickAptitude(trickId)
-        self.setTrickAptitude(
-            trickId,
-            aptitude +
-            PetTricks.AptitudeIncrementDidTrick)
+        self.setTrickAptitude(trickId,
+                              aptitude + PetTricks.AptitudeIncrementDidTrick)
         self.addToMood(
             'fatigue',
-            lerp(
-                PetTricks.MaxTrickFatigue,
-                PetTricks.MinTrickFatigue,
-                aptitude))
+            lerp(PetTricks.MaxTrickFatigue, PetTricks.MinTrickFatigue,
+                 aptitude))
         self.d_setDominantMood(self.mood.getDominantMood())
 
     def attemptBattleTrick(self, trickId):
         self.lerpMoods({
             'boredom': -0.10000000000000001,
             'excitement': 0.050000000000000003,
-            'loneliness': -0.050000000000000003})
+            'loneliness': -0.050000000000000003
+        })
         if self._willDoTrick(trickId):
             self._handleDidTrick(trickId)
             self.b_setLastSeenTimestamp(self.getCurEpochTimestamp())
@@ -509,5 +486,4 @@ class DistributedPetProxyAI(DistributedObjectAI.DistributedObjectAI):
                     self.__dict__[setter](self.mood.getComponent(comp))
 
     def d_setDominantMood(self, dominantMood):
-        self.sendUpdate('setDominantMood', [
-            dominantMood])
+        self.sendUpdate('setDominantMood', [dominantMood])

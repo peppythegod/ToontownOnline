@@ -30,8 +30,7 @@ class DistributedMazeAI(DistributedEntityAI.DistributedEntityAI):
         if not hasattr(self, 'gameStartTime'):
             self.gameStartTime = globalClock.getRealTime()
             self.b_setGameStart(
-                globalClockDelta.localToNetworkTime(
-                    self.gameStartTime))
+                globalClockDelta.localToNetworkTime(self.gameStartTime))
 
     def b_setGameStart(self, timestamp):
         self.d_setGameStart(timestamp)
@@ -39,8 +38,7 @@ class DistributedMazeAI(DistributedEntityAI.DistributedEntityAI):
 
     def d_setGameStart(self, timestamp):
         self.notify.debug('BASE: Sending setGameStart')
-        self.sendUpdate('setGameStart', [
-            timestamp])
+        self.sendUpdate('setGameStart', [timestamp])
 
     def setGameStart(self, timestamp):
         self.notify.debug('BASE: setGameStart')
@@ -48,10 +46,8 @@ class DistributedMazeAI(DistributedEntityAI.DistributedEntityAI):
         self.prepareForGameStartOrRestart()
 
     def prepareForGameStartOrRestart(self):
-        self.doMethodLater(
-            self.GameDuration,
-            self.gameEndingTimeHit,
-            self.mazeEndTimeTaskName)
+        self.doMethodLater(self.GameDuration, self.gameEndingTimeHit,
+                           self.mazeEndTimeTaskName)
 
     def setFinishedMaze(self):
         senderId = self.air.getAvatarIdFromSender()
@@ -68,10 +64,9 @@ class DistributedMazeAI(DistributedEntityAI.DistributedEntityAI):
                     if numToons == len(self.finishedList) + 1:
                         lastToon = 1
 
-                self.sendUpdate('toonFinished', [
-                    senderId,
-                    len(self.finishedList),
-                    lastToon])
+                self.sendUpdate(
+                    'toonFinished',
+                    [senderId, len(self.finishedList), lastToon])
 
             self.finishedList.append(senderId)
 
@@ -97,5 +92,4 @@ class DistributedMazeAI(DistributedEntityAI.DistributedEntityAI):
             playerIds = room.presentAvIds
             if av and senderId in playerIds:
                 av.takeDamage(self.DamageOnFailure, quietly=0)
-                room.sendUpdate('forceOuch', [
-                    self.DamageOnFailure])
+                room.sendUpdate('forceOuch', [self.DamageOnFailure])

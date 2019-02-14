@@ -12,30 +12,19 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import ToontownBattleGlobals
 import random
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieSquirt')
-hitSoundFiles = (
-    'AA_squirt_flowersquirt.mp3',
-    'AA_squirt_glasswater.mp3',
-    'AA_squirt_neonwatergun.mp3',
-    'AA_squirt_seltzer.mp3',
-    'firehose_spray.mp3',
-    'AA_throw_stormcloud.mp3',
-    'AA_squirt_Geyser.mp3')
-missSoundFiles = (
-    'AA_squirt_flowersquirt_miss.mp3',
-    'AA_squirt_glasswater_miss.mp3',
-    'AA_squirt_neonwatergun_miss.mp3',
-    'AA_squirt_seltzer_miss.mp3',
-    'firehose_spray.mp3',
-    'AA_throw_stormcloud_miss.mp3',
-    'AA_squirt_Geyser.mp3')
+hitSoundFiles = ('AA_squirt_flowersquirt.mp3', 'AA_squirt_glasswater.mp3',
+                 'AA_squirt_neonwatergun.mp3', 'AA_squirt_seltzer.mp3',
+                 'firehose_spray.mp3', 'AA_throw_stormcloud.mp3',
+                 'AA_squirt_Geyser.mp3')
+missSoundFiles = ('AA_squirt_flowersquirt_miss.mp3',
+                  'AA_squirt_glasswater_miss.mp3',
+                  'AA_squirt_neonwatergun_miss.mp3',
+                  'AA_squirt_seltzer_miss.mp3', 'firehose_spray.mp3',
+                  'AA_throw_stormcloud_miss.mp3', 'AA_squirt_Geyser.mp3')
 sprayScales = [
-    0.20000000000000001,
-    0.29999999999999999,
-    0.10000000000000001,
-    0.59999999999999998,
-    0.80000000000000004,
-    1.0,
-    2.0]
+    0.20000000000000001, 0.29999999999999999, 0.10000000000000001,
+    0.59999999999999998, 0.80000000000000004, 1.0, 2.0
+]
 WaterSprayColor = Point4(0.75, 0.75, 1.0, 0.80000000000000004)
 
 
@@ -56,16 +45,14 @@ def doSquirts(squirts):
             if suitId in suitSquirtsDict:
                 suitSquirtsDict[suitId].append(squirt)
             else:
-                suitSquirtsDict[suitId] = [
-                    squirt]
+                suitSquirtsDict[suitId] = [squirt]
 
         isinstance(squirt['target'], type([]))
         suitId = squirt['target']['suit'].doId
         if suitId in suitSquirtsDict:
             suitSquirtsDict[suitId].append(squirt)
             continue
-        suitSquirtsDict[suitId] = [
-            squirt]
+        suitSquirtsDict[suitId] = [squirt]
 
     suitSquirts = suitSquirtsDict.values()
 
@@ -90,8 +77,8 @@ def doSquirts(squirts):
             continue
 
     camDuration = mtrack.getDuration()
-    camTrack = MovieCamera.chooseSquirtShot(
-        squirts, suitSquirtsDict, camDuration)
+    camTrack = MovieCamera.chooseSquirtShot(squirts, suitSquirtsDict,
+                                            camDuration)
     return (mtrack, camTrack)
 
 
@@ -128,23 +115,17 @@ def __doSquirt(squirt, delay, fShowStun, uberClone=0):
     squirtSequence = Sequence(Wait(delay))
     if isinstance(squirt['target'], type([])):
         for target in squirt['target']:
-            notify.debug(
-                'toon: %s squirts prop: %d at suit: %d for hp: %d' %
-                (squirt['toon'].getName(),
-                 squirt['level'],
-                    target['suit'].doId,
-                    target['hp']))
+            notify.debug('toon: %s squirts prop: %d at suit: %d for hp: %d' %
+                         (squirt['toon'].getName(), squirt['level'],
+                          target['suit'].doId, target['hp']))
 
     else:
-        notify.debug(
-            'toon: %s squirts prop: %d at suit: %d for hp: %d' %
-            (squirt['toon'].getName(),
-             squirt['level'],
-                squirt['target']['suit'].doId,
-                squirt['target']['hp']))
+        notify.debug('toon: %s squirts prop: %d at suit: %d for hp: %d' %
+                     (squirt['toon'].getName(), squirt['level'],
+                      squirt['target']['suit'].doId, squirt['target']['hp']))
     if uberClone:
-        ival = squirtfn_array[squirt['level']](
-            squirt, delay, fShowStun, uberClone)
+        ival = squirtfn_array[squirt['level']](squirt, delay, fShowStun,
+                                               uberClone)
         if ival:
             squirtSequence.append(ival)
 
@@ -153,8 +134,7 @@ def __doSquirt(squirt, delay, fShowStun, uberClone=0):
         if ival:
             squirtSequence.append(ival)
 
-    return [
-        squirtSequence]
+    return [squirtSequence]
 
 
 def __suitTargetPoint(suit):
@@ -164,7 +144,6 @@ def __suitTargetPoint(suit):
 
 
 def __getSplashTrack(point, scale, delay, battle, splashHold=0.01):
-
     def prepSplash(splash, point):
         if callable(point):
             point = point()
@@ -178,45 +157,31 @@ def __getSplashTrack(point, scale, delay, battle, splashHold=0.01):
     splash = globalPropPool.getProp('splash-from-splat')
     splash.setScale(scale)
     return Sequence(
-        Func(
-            battle.movie.needRestoreRenderProp,
-            splash),
-        Wait(delay),
-        Func(
-            prepSplash,
-            splash,
-            point),
-        ActorInterval(
-            splash,
-            'splash-from-splat'),
-        Wait(splashHold),
-        Func(
-            MovieUtil.removeProp,
-            splash),
-        Func(
-            battle.movie.clearRenderProp,
-            splash))
+        Func(battle.movie.needRestoreRenderProp, splash), Wait(delay),
+        Func(prepSplash, splash, point),
+        ActorInterval(splash, 'splash-from-splat'), Wait(splashHold),
+        Func(MovieUtil.removeProp, splash),
+        Func(battle.movie.clearRenderProp, splash))
 
 
-def __getSuitTrack(
-        suit,
-        tContact,
-        tDodge,
-        hp,
-        hpbonus,
-        kbbonus,
-        anim,
-        died,
-        leftSuits,
-        rightSuits,
-        battle,
-        toon,
-        fShowStun,
-        beforeStun=0.5,
-        afterStun=1.8,
-        geyser=0,
-        uberRepeat=0,
-        revived=0):
+def __getSuitTrack(suit,
+                   tContact,
+                   tDodge,
+                   hp,
+                   hpbonus,
+                   kbbonus,
+                   anim,
+                   died,
+                   leftSuits,
+                   rightSuits,
+                   battle,
+                   toon,
+                   fShowStun,
+                   beforeStun=0.5,
+                   afterStun=1.8,
+                   geyser=0,
+                   uberRepeat=0,
+                   revived=0):
     if hp > 0:
         suitTrack = Sequence()
         sival = ActorInterval(suit, anim)
@@ -226,45 +191,32 @@ def __getSuitTrack(
             suitType = getSuitBodyType(suit.getStyleName())
             animTrack = Sequence()
             animTrack.append(
-                ActorInterval(
-                    suit,
-                    anim,
-                    duration=0.20000000000000001))
+                ActorInterval(suit, anim, duration=0.20000000000000001))
             if suitType == 'a':
                 animTrack.append(
                     ActorInterval(
-                        suit,
-                        'slip-forward',
-                        startTime=2.4300000000000002))
+                        suit, 'slip-forward', startTime=2.4300000000000002))
             elif suitType == 'b':
                 animTrack.append(
                     ActorInterval(
-                        suit,
-                        'slip-forward',
-                        startTime=1.9399999999999999))
+                        suit, 'slip-forward', startTime=1.9399999999999999))
             elif suitType == 'c':
                 animTrack.append(
                     ActorInterval(
-                        suit,
-                        'slip-forward',
-                        startTime=2.5800000000000001))
+                        suit, 'slip-forward', startTime=2.5800000000000001))
 
             animTrack.append(Func(battle.unlureSuit, suit))
             moveTrack = Sequence(
                 Wait(0.20000000000000001),
                 LerpPosInterval(
-                    suit,
-                    0.59999999999999998,
-                    pos=suitPos,
-                    other=battle))
+                    suit, 0.59999999999999998, pos=suitPos, other=battle))
             sival = Parallel(animTrack, moveTrack)
         elif geyser:
             suitStartPos = suit.getPos()
             suitFloat = Point3(0, 0, 14)
-            suitEndPos = Point3(
-                suitStartPos[0] + suitFloat[0],
-                suitStartPos[1] + suitFloat[1],
-                suitStartPos[2] + suitFloat[2])
+            suitEndPos = Point3(suitStartPos[0] + suitFloat[0],
+                                suitStartPos[1] + suitFloat[1],
+                                suitStartPos[2] + suitFloat[2])
             suitType = getSuitBodyType(suit.getStyleName())
             if suitType == 'a':
                 startFlailFrame = 16
@@ -286,8 +238,7 @@ def __getSuitTrack(
                     suit.pingpong,
                     'slip-backward',
                     fromFrame=startFlailFrame,
-                    toFrame=endFlailFrame),
-                Wait(0.5),
+                    toFrame=endFlailFrame), Wait(0.5),
                 ActorInterval(
                     suit,
                     'slip-backward',
@@ -307,13 +258,12 @@ def __getSuitTrack(
                 fluid=1)
         elif fShowStun == 1:
             sival = Parallel(
-                ActorInterval(
-                    suit, anim), MovieUtil.createSuitStunInterval(
-                    suit, beforeStun, afterStun))
+                ActorInterval(suit, anim),
+                MovieUtil.createSuitStunInterval(suit, beforeStun, afterStun))
         else:
             sival = ActorInterval(suit, anim)
-        showDamage = Func(suit.showHpText, -
-                          hp, openEnded=0, attackTrack=SQUIRT_TRACK)
+        showDamage = Func(
+            suit.showHpText, -hp, openEnded=0, attackTrack=SQUIRT_TRACK)
         updateHealthBar = Func(suit.updateHealthBar, hp)
         suitTrack.append(Wait(tContact))
         suitTrack.append(showDamage)
@@ -329,29 +279,37 @@ def __getSuitTrack(
         bonusTrack = Sequence(Wait(tContact))
         if kbbonus > 0:
             bonusTrack.append(Wait(0.75))
-            bonusTrack.append(Func(suit.showHpText, -
-                                   kbbonus, 2, openEnded=0, attackTrack=SQUIRT_TRACK))
+            bonusTrack.append(
+                Func(
+                    suit.showHpText,
+                    -kbbonus,
+                    2,
+                    openEnded=0,
+                    attackTrack=SQUIRT_TRACK))
 
         if hpbonus > 0:
             bonusTrack.append(Wait(0.75))
-            bonusTrack.append(Func(suit.showHpText, -
-                                   hpbonus, 1, openEnded=0, attackTrack=SQUIRT_TRACK))
+            bonusTrack.append(
+                Func(
+                    suit.showHpText,
+                    -hpbonus,
+                    1,
+                    openEnded=0,
+                    attackTrack=SQUIRT_TRACK))
 
         if died != 0:
             suitTrack.append(
-                MovieUtil.createSuitDeathTrack(
-                    suit, toon, battle))
+                MovieUtil.createSuitDeathTrack(suit, toon, battle))
         else:
             suitTrack.append(Func(suit.loop, 'neutral'))
         if revived != 0:
             suitTrack.append(
-                MovieUtil.createSuitReviveTrack(
-                    suit, toon, battle))
+                MovieUtil.createSuitReviveTrack(suit, toon, battle))
 
         return Parallel(suitTrack, bonusTrack)
     else:
-        return MovieUtil.createSuitDodgeMultitrack(
-            tDodge, suit, leftSuits, rightSuits)
+        return MovieUtil.createSuitDodgeMultitrack(tDodge, suit, leftSuits,
+                                                   rightSuits)
 
 
 def say(statement):
@@ -399,30 +357,23 @@ def __doFlower(squirt, delay, fShowStun):
     tracks = Parallel()
     button = globalPropPool.getProp('button')
     button2 = MovieUtil.copyProp(button)
-    buttons = [
-        button,
-        button2]
+    buttons = [button, button2]
     hands = toon.getLeftHands()
     toonTrack = Sequence(
-        Func(
-            MovieUtil.showProps, buttons, hands), Func(
-            toon.headsUp, battle, suitPos), ActorInterval(
-                toon, 'pushbutton'), Func(
-                    MovieUtil.removeProps, buttons), Func(
-                        toon.loop, 'neutral'), Func(
-                            toon.setHpr, battle, origHpr))
+        Func(MovieUtil.showProps, buttons, hands),
+        Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'pushbutton'),
+        Func(MovieUtil.removeProps, buttons), Func(toon.loop, 'neutral'),
+        Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     tracks.append(
-        __getSoundTrack(
-            level,
-            hitSuit,
-            tTotalFlowerToonAnimationTime -
-            0.40000000000000002,
-            toon))
+        __getSoundTrack(level, hitSuit,
+                        tTotalFlowerToonAnimationTime - 0.40000000000000002,
+                        toon))
     flower = globalPropPool.getProp('squirting-flower')
     flower.setScale(1.5, 1.5, 1.5)
 
-    def targetPoint(suit=suit): return __suitTargetPoint(suit)
+    def targetPoint(suit=suit):
+        return __suitTargetPoint(suit)
 
     def getSprayStartPos(flower=flower):
         toon.update(0)
@@ -457,40 +408,28 @@ def __doFlower(squirt, delay, fShowStun):
         'attachFlower-InstanceNode')
     flower_jointpath1 = flower_jointpath0.instanceTo(flower_joint1)
     flowerTrack = Sequence(
-        Wait(tFlowerFirstAppears),
-        Func(
-            flower.reparentTo,
-            flower_jointpath0),
+        Wait(tFlowerFirstAppears), Func(flower.reparentTo, flower_jointpath0),
         LerpScaleInterval(
             flower,
             dFlowerScaleTime,
             flower.getScale(),
             startScale=MovieUtil.PNT3_NEARZERO),
-        Wait(
-            tTotalFlowerToonAnimationTime -
-            dFlowerScaleTime -
-            tFlowerFirstAppears))
+        Wait(tTotalFlowerToonAnimationTime - dFlowerScaleTime -
+             tFlowerFirstAppears))
     if hp <= 0:
         flowerTrack.append(Wait(0.5))
 
     flowerTrack.append(sprayTrack)
     flowerTrack.append(
-        LerpScaleInterval(
-            flower,
-            dFlowerScaleTime,
-            MovieUtil.PNT3_NEARZERO))
+        LerpScaleInterval(flower, dFlowerScaleTime, MovieUtil.PNT3_NEARZERO))
     flowerTrack.append(Func(flower_jointpath1.removeNode))
     flowerTrack.append(Func(flower_jointpath0.removeNode))
     flowerTrack.append(Func(MovieUtil.removeProp, flower))
     tracks.append(flowerTrack)
     if hp > 0:
         tracks.append(
-            __getSplashTrack(
-                targetPoint,
-                scale,
-                tSprayStarts +
-                dSprayScale,
-                battle))
+            __getSplashTrack(targetPoint, scale, tSprayStarts + dSprayScale,
+                             battle))
 
     if hp > 0 or delay <= 0:
         tracks.append(
@@ -547,15 +486,13 @@ def __doWaterGlass(squirt, delay, fShowStun):
     hand_jointpath0 = hands[0].attachNewNode('handJoint0-path')
     hand_jointpath1 = hand_jointpath0.instanceTo(hands[1])
     glassTrack = Sequence(
-        Func(
-            MovieUtil.showProp, glass, hand_jointpath0), ActorInterval(
-            glass, 'glass'), Func(
-                hand_jointpath1.removeNode), Func(
-                    hand_jointpath0.removeNode), Func(
-                        MovieUtil.removeProp, glass))
+        Func(MovieUtil.showProp, glass, hand_jointpath0),
+        ActorInterval(glass, 'glass'), Func(hand_jointpath1.removeNode),
+        Func(hand_jointpath0.removeNode), Func(MovieUtil.removeProp, glass))
     tracks.append(glassTrack)
 
-    def targetPoint(suit=suit): return __suitTargetPoint(suit)
+    def targetPoint(suit=suit):
+        return __suitTargetPoint(suit)
 
     def getSprayStartPos(toon=toon):
         toon.update(0)
@@ -569,9 +506,9 @@ def __doWaterGlass(squirt, delay, fShowStun):
             joint = lod0.find('**/joint_head')
         n = hidden.attachNewNode('pointInFrontOfHead')
         n.reparentTo(toon)
-        n.setPos(joint.getPos(toon) +
-                 Point3(0, 0.29999999999999999, -
-                        0.20000000000000001))
+        n.setPos(
+            joint.getPos(toon) +
+            Point3(0, 0.29999999999999999, -0.20000000000000001))
         p = n.getPos(render)
         n.removeNode()
         del n
@@ -590,12 +527,7 @@ def __doWaterGlass(squirt, delay, fShowStun):
     tracks.append(Sequence(Wait(tSpray), sprayTrack))
     if hp > 0:
         tracks.append(
-            __getSplashTrack(
-                targetPoint,
-                scale,
-                tSpray +
-                dSprayScale,
-                battle))
+            __getSplashTrack(targetPoint, scale, tSpray + dSprayScale, battle))
 
     if hp > 0 or delay <= 0:
         tracks.append(
@@ -646,20 +578,8 @@ def __doWaterGun(squirt, delay, fShowStun):
     tSuitDodges = 1.1000000000000001
     tracks = Parallel()
     toonTrack = Sequence(
-        Func(
-            toon.headsUp,
-            battle,
-            suitPos),
-        ActorInterval(
-            toon,
-            'water-gun'),
-        Func(
-            toon.loop,
-            'neutral'),
-        Func(
-            toon.setHpr,
-            battle,
-            origHpr))
+        Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'water-gun'),
+        Func(toon.loop, 'neutral'), Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     soundTrack = __getSoundTrack(level, hitSuit, 1.8, toon)
     tracks.append(soundTrack)
@@ -668,7 +588,8 @@ def __doWaterGun(squirt, delay, fShowStun):
     hand_jointpath0 = hands[0].attachNewNode('handJoint0-path')
     hand_jointpath1 = hand_jointpath0.instanceTo(hands[1])
 
-    def targetPoint(suit=suit): return __suitTargetPoint(suit)
+    def targetPoint(suit=suit):
+        return __suitTargetPoint(suit)
 
     def getSprayStartPos(pistol=pistol, toon=toon):
         toon.update(0)
@@ -686,46 +607,30 @@ def __doWaterGun(squirt, delay, fShowStun):
         dSprayScale,
         horizScale=scale,
         vertScale=scale)
-    pistolPos = Point3(
-        0.28000000000000003,
-        0.10000000000000001,
-        0.080000000000000002)
-    pistolHpr = VBase3(85.599999999999994, -
-                       4.4400000000000004, 94.430000000000007)
+    pistolPos = Point3(0.28000000000000003, 0.10000000000000001,
+                       0.080000000000000002)
+    pistolHpr = VBase3(85.599999999999994, -4.4400000000000004,
+                       94.430000000000007)
     pistolTrack = Sequence(
-        Func(
-            MovieUtil.showProp,
-            pistol,
-            hand_jointpath0,
-            pistolPos,
-            pistolHpr),
+        Func(MovieUtil.showProp, pistol, hand_jointpath0, pistolPos,
+             pistolHpr),
         LerpScaleInterval(
             pistol,
             dPistolScale,
             pistol.getScale(),
-            startScale=MovieUtil.PNT3_NEARZERO),
-        Wait(
-            tSpray -
-            dPistolScale))
+            startScale=MovieUtil.PNT3_NEARZERO), Wait(tSpray - dPistolScale))
     pistolTrack.append(sprayTrack)
     pistolTrack.append(Wait(dPistolHold))
     pistolTrack.append(
-        LerpScaleInterval(
-            pistol,
-            dPistolScale,
-            MovieUtil.PNT3_NEARZERO))
+        LerpScaleInterval(pistol, dPistolScale, MovieUtil.PNT3_NEARZERO))
     pistolTrack.append(Func(hand_jointpath1.removeNode))
     pistolTrack.append(Func(hand_jointpath0.removeNode))
     pistolTrack.append(Func(MovieUtil.removeProp, pistol))
     tracks.append(pistolTrack)
     if hp > 0:
         tracks.append(
-            __getSplashTrack(
-                targetPoint,
-                0.29999999999999999,
-                tSpray +
-                dSprayScale,
-                battle))
+            __getSplashTrack(targetPoint, 0.29999999999999999,
+                             tSpray + dSprayScale, battle))
 
     if hp > 0 or delay <= 0:
         tracks.append(
@@ -775,32 +680,18 @@ def __doSeltzerBottle(squirt, delay, fShowStun):
     tSuitDodges = max(tContact - 0.69999999999999996, 0.0)
     tracks = Parallel()
     toonTrack = Sequence(
-        Func(
-            toon.headsUp,
-            battle,
-            suitPos),
-        ActorInterval(
-            toon,
-            'hold-bottle'),
-        Func(
-            toon.loop,
-            'neutral'),
-        Func(
-            toon.setHpr,
-            battle,
-            origHpr))
+        Func(toon.headsUp, battle, suitPos), ActorInterval(
+            toon, 'hold-bottle'), Func(toon.loop, 'neutral'),
+        Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
-    soundTrack = __getSoundTrack(
-        level,
-        hitSuit,
-        tSpray -
-        0.10000000000000001,
-        toon)
+    soundTrack = __getSoundTrack(level, hitSuit, tSpray - 0.10000000000000001,
+                                 toon)
     tracks.append(soundTrack)
     bottle = globalPropPool.getProp('bottle')
     hands = toon.getRightHands()
 
-    def targetPoint(suit=suit): return __suitTargetPoint(suit)
+    def targetPoint(suit=suit):
+        return __suitTargetPoint(suit)
 
     def getSprayStartPos(bottle=bottle, toon=toon):
         toon.update(0)
@@ -826,37 +717,23 @@ def __doSeltzerBottle(squirt, delay, fShowStun):
     hand_jointpath0 = hands[0].attachNewNode('handJoint0-path')
     hand_jointpath1 = hand_jointpath0.instanceTo(hands[1])
     bottleTrack = Sequence(
-        Func(
-            MovieUtil.showProp,
-            bottle,
-            hand_jointpath0),
+        Func(MovieUtil.showProp, bottle, hand_jointpath0),
         LerpScaleInterval(
             bottle,
             dBottleScale,
             bottle.getScale(),
-            startScale=MovieUtil.PNT3_NEARZERO),
-        Wait(
-            tSpray -
-            dBottleScale))
+            startScale=MovieUtil.PNT3_NEARZERO), Wait(tSpray - dBottleScale))
     bottleTrack.append(sprayTrack)
     bottleTrack.append(Wait(dBottleHold))
     bottleTrack.append(
-        LerpScaleInterval(
-            bottle,
-            dBottleScale,
-            MovieUtil.PNT3_NEARZERO))
+        LerpScaleInterval(bottle, dBottleScale, MovieUtil.PNT3_NEARZERO))
     bottleTrack.append(Func(hand_jointpath1.removeNode))
     bottleTrack.append(Func(hand_jointpath0.removeNode))
     bottleTrack.append(Func(MovieUtil.removeProp, bottle))
     tracks.append(bottleTrack)
     if hp > 0:
         tracks.append(
-            __getSplashTrack(
-                targetPoint,
-                scale,
-                tSpray +
-                dSprayScale,
-                battle))
+            __getSplashTrack(targetPoint, scale, tSpray + dSprayScale, battle))
 
     if (hp > 0 or delay <= 0) and suit:
         tracks.append(
@@ -907,18 +784,16 @@ def __doFireHose(squirt, delay, fShowStun):
     tSuitDodges = 2.1000000000000001
     tracks = Parallel()
     toonTrack = Sequence(
-        Wait(tAppearDelay), Func(
-            toon.headsUp, battle, suitPos), ActorInterval(
-            toon, 'firehose'), Func(
-                toon.loop, 'neutral'), Func(
-                    toon.setHpr, battle, origHpr))
+        Wait(tAppearDelay), Func(toon.headsUp, battle, suitPos),
+        ActorInterval(toon, 'firehose'), Func(toon.loop, 'neutral'),
+        Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     soundTrack = __getSoundTrack(level, hitSuit, tSprayDelay, toon)
     tracks.append(soundTrack)
     hose = globalPropPool.getProp('firehose')
     hydrant = globalPropPool.getProp('hydrant')
     hose.reparentTo(hydrant)
-    (hose.pose('firehose', 2),)
+    (hose.pose('firehose', 2), )
     hydrantNode = toon.attachNewNode('hydrantNode')
     hydrantNode.clearTransform(toon.getGeomNode().getChild(0))
     hydrantScale = hydrantNode.attachNewNode('hydrantScale')
@@ -936,7 +811,8 @@ def __doFireHose(squirt, delay, fShowStun):
     base.setPos(toon, 0, 0, 0)
     toon.loop('neutral')
 
-    def targetPoint(suit=suit): return __suitTargetPoint(suit)
+    def targetPoint(suit=suit):
+        return __suitTargetPoint(suit)
 
     def getSprayStartPos(hose=hose, toon=toon, targetPoint=targetPoint):
         toon.update(0)
@@ -971,81 +847,37 @@ def __doFireHose(squirt, delay, fShowStun):
     tracks.append(sprayTrack)
     hydrantNode.detachNode()
     propTrack = Sequence(
-        Func(
-            battle.movie.needRestoreRenderProp,
-            hydrantNode),
-        Func(
-            hydrantNode.reparentTo,
-            toon),
+        Func(battle.movie.needRestoreRenderProp, hydrantNode),
+        Func(hydrantNode.reparentTo, toon),
         LerpScaleInterval(
             hydrantScale,
             tAppearDelay * 0.5,
-            Point3(
-                1,
-                1,
-                1.3999999999999999),
-            startScale=Point3(
-                1,
-                1,
-                0.01)),
+            Point3(1, 1, 1.3999999999999999),
+            startScale=Point3(1, 1, 0.01)),
         LerpScaleInterval(
             hydrantScale,
             tAppearDelay * 0.29999999999999999,
-            Point3(
-                1,
-                1,
-                0.80000000000000004),
-            startScale=Point3(
-                1,
-                1,
-                1.3999999999999999)),
+            Point3(1, 1, 0.80000000000000004),
+            startScale=Point3(1, 1, 1.3999999999999999)),
         LerpScaleInterval(
             hydrantScale,
             tAppearDelay * 0.10000000000000001,
-            Point3(
-                1,
-                1,
-                1.2),
-            startScale=Point3(
-                1,
-                1,
-                0.80000000000000004)),
+            Point3(1, 1, 1.2),
+            startScale=Point3(1, 1, 0.80000000000000004)),
         LerpScaleInterval(
             hydrantScale,
             tAppearDelay * 0.10000000000000001,
-            Point3(
-                1,
-                1,
-                1),
-            startScale=Point3(
-                1,
-                1,
-                1.2)),
-        ActorInterval(
-            hose,
-            'firehose',
-            duration=dAnimHold),
-        Wait(
-            dHoseHold - 0.20000000000000001),
+            Point3(1, 1, 1),
+            startScale=Point3(1, 1, 1.2)),
+        ActorInterval(hose, 'firehose', duration=dAnimHold),
+        Wait(dHoseHold - 0.20000000000000001),
         LerpScaleInterval(
             hydrantScale,
             0.20000000000000001,
-            Point3(
-                1,
-                1,
-                0.01),
-            startScale=Point3(
-                1,
-                1,
-                1)),
-        Func(
-            MovieUtil.removeProps,
-            [
-                hydrantNode,
-                hose]),
-        Func(
-            battle.movie.clearRenderProp,
-            hydrantNode))
+            Point3(1, 1, 0.01),
+            startScale=Point3(1, 1, 1)),
+        Func(MovieUtil.removeProps, [hydrantNode, hose]),
+        Func(battle.movie.clearRenderProp, hydrantNode))
     tracks.append(propTrack)
     if hp > 0:
         tracks.append(
@@ -1107,18 +939,13 @@ def __doStormCloud(squirt, delay, fShowStun):
     tracks.append(soundTrack2)
     button = globalPropPool.getProp('button')
     button2 = MovieUtil.copyProp(button)
-    buttons = [
-        button,
-        button2]
+    buttons = [button, button2]
     hands = toon.getLeftHands()
     toonTrack = Sequence(
-        Func(
-            MovieUtil.showProps, buttons, hands), Func(
-            toon.headsUp, battle, suitPos), ActorInterval(
-                toon, 'pushbutton'), Func(
-                    MovieUtil.removeProps, buttons), Func(
-                        toon.loop, 'neutral'), Func(
-                            toon.setHpr, battle, origHpr))
+        Func(MovieUtil.showProps, buttons, hands),
+        Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'pushbutton'),
+        Func(MovieUtil.removeProps, buttons), Func(toon.loop, 'neutral'),
+        Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     cloud = globalPropPool.getProp('stormcloud')
     cloud2 = MovieUtil.copyProp(cloud)
@@ -1131,10 +958,7 @@ def __doStormCloud(squirt, delay, fShowStun):
     cloudHeight = suit.height + 3
     cloudPosPoint = Point3(0, 0, cloudHeight)
     scaleUpPoint = Point3(3, 3, 3)
-    rainEffects = [
-        rainEffect,
-        rainEffect2,
-        rainEffect3]
+    rainEffects = [rainEffect, rainEffect2, rainEffect3]
     rainDelay = 1
     effectDelay = 0.29999999999999999
     if hp > 0:
@@ -1142,77 +966,63 @@ def __doStormCloud(squirt, delay, fShowStun):
     else:
         cloudHold = 1.7
 
-    def getCloudTrack(
-            cloud,
-            suit,
-            cloudPosPoint,
-            scaleUpPoint,
-            rainEffects,
-            rainDelay,
-            effectDelay,
-            cloudHold,
-            useEffect,
-            battle=battle,
-            trickleEffect=trickleEffect):
+    def getCloudTrack(cloud,
+                      suit,
+                      cloudPosPoint,
+                      scaleUpPoint,
+                      rainEffects,
+                      rainDelay,
+                      effectDelay,
+                      cloudHold,
+                      useEffect,
+                      battle=battle,
+                      trickleEffect=trickleEffect):
         track = Sequence(
-            Func(
-                MovieUtil.showProp, cloud, suit, cloudPosPoint), Func(
-                cloud.pose, 'stormcloud', 0), LerpScaleInterval(
-                cloud, 1.5, scaleUpPoint, startScale=MovieUtil.PNT3_NEARZERO), Wait(rainDelay))
+            Func(MovieUtil.showProp, cloud, suit, cloudPosPoint),
+            Func(cloud.pose, 'stormcloud', 0),
+            LerpScaleInterval(
+                cloud, 1.5, scaleUpPoint, startScale=MovieUtil.PNT3_NEARZERO),
+            Wait(rainDelay))
         if useEffect == 1:
             ptrack = Parallel()
             delay = cloudHold * 0.25
             trickleDuration = cloudHold * 0.25
             trickleTrack = Sequence(
-                Func(
-                    battle.movie.needRestoreParticleEffect,
-                    trickleEffect),
+                Func(battle.movie.needRestoreParticleEffect, trickleEffect),
                 ParticleInterval(
                     trickleEffect,
                     cloud,
                     worldRelative=0,
                     duration=trickleDuration,
                     cleanup=True),
-                Func(
-                    battle.movie.clearRestoreParticleEffect,
-                    trickleEffect))
+                Func(battle.movie.clearRestoreParticleEffect, trickleEffect))
             track.append(trickleTrack)
             for i in range(0, 3):
                 dur = cloudHold - 2 * trickleDuration
                 ptrack.append(
                     Sequence(
-                        Func(
-                            battle.movie.needRestoreParticleEffect,
-                            rainEffects[i]),
-                        Wait(delay),
+                        Func(battle.movie.needRestoreParticleEffect,
+                             rainEffects[i]), Wait(delay),
                         ParticleInterval(
                             rainEffects[i],
                             cloud,
                             worldRelative=0,
                             duration=dur,
                             cleanup=True),
-                        Func(
-                            battle.movie.clearRestoreParticleEffect,
-                            rainEffects[i])))
+                        Func(battle.movie.clearRestoreParticleEffect,
+                             rainEffects[i])))
                 delay += effectDelay
 
             ptrack.append(
                 Sequence(
-                    Wait(
-                        3 * effectDelay),
+                    Wait(3 * effectDelay),
                     ActorInterval(
-                        cloud,
-                        'stormcloud',
-                        startTime=1,
-                        duration=cloudHold)))
+                        cloud, 'stormcloud', startTime=1, duration=cloudHold)))
             track.append(ptrack)
         else:
             track.append(
                 ActorInterval(
-                    cloud,
-                    'stormcloud',
-                    startTime=1,
-                    duration=cloudHold))
+                    cloud, 'stormcloud', startTime=1, duration=cloudHold))
         track.append(LerpScaleInterval(cloud, 0.5, MovieUtil.PNT3_NEARZERO))
         track.append(Func(MovieUtil.removeProp, cloud))
         return track
@@ -1275,22 +1085,17 @@ def __doGeyser(squirt, delay, fShowStun, uberClone=0):
     tSuitDodges = 1.8
     button = globalPropPool.getProp('button')
     button2 = MovieUtil.copyProp(button)
-    buttons = [
-        button,
-        button2]
+    buttons = [button, button2]
     hands = toon.getLeftHands()
     battle = squirt['battle']
     origHpr = toon.getHpr(battle)
     suit = squirt['target'][0]['suit']
     suitPos = suit.getPos(battle)
     toonTrack = Sequence(
-        Func(
-            MovieUtil.showProps, buttons, hands), Func(
-            toon.headsUp, battle, suitPos), ActorInterval(
-                toon, 'pushbutton'), Func(
-                    MovieUtil.removeProps, buttons), Func(
-                        toon.loop, 'neutral'), Func(
-                            toon.setHpr, battle, origHpr))
+        Func(MovieUtil.showProps, buttons, hands),
+        Func(toon.headsUp, battle, suitPos), ActorInterval(toon, 'pushbutton'),
+        Func(MovieUtil.removeProps, buttons), Func(toon.loop, 'neutral'),
+        Func(toon.setHpr, battle, origHpr))
     tracks.append(toonTrack)
     for target in squirt['target']:
         suit = target['suit']
@@ -1321,17 +1126,16 @@ def __doGeyser(squirt, delay, fShowStun, uberClone=0):
         else:
             geyserHold = 0.5
 
-        def getGeyserTrack(
-                geyser,
-                suit,
-                geyserPosPoint,
-                scaleUpPoint,
-                rainEffects,
-                rainDelay,
-                effectDelay,
-                geyserHold,
-                useEffect,
-                battle=battle):
+        def getGeyserTrack(geyser,
+                           suit,
+                           geyserPosPoint,
+                           scaleUpPoint,
+                           rainEffects,
+                           rainDelay,
+                           effectDelay,
+                           geyserHold,
+                           useEffect,
+                           battle=battle):
             geyserMound = MovieUtil.copyProp(geyser)
             geyserRemoveM = geyserMound.findAllMatches('**/Splash*')
             geyserRemoveM.addPathsFrom(geyserMound.findAllMatches('**/spout'))
@@ -1346,33 +1150,23 @@ def __doGeyser(squirt, delay, fShowStun, uberClone=0):
 
             track = Sequence(
                 Wait(rainDelay),
-                Func(
-                    MovieUtil.showProp,
-                    geyserMound,
-                    battle,
-                    suit.getPos(battle)),
-                Func(
-                    MovieUtil.showProp,
-                    geyserWater,
-                    battle,
-                    suit.getPos(battle)),
+                Func(MovieUtil.showProp, geyserMound, battle,
+                     suit.getPos(battle)),
+                Func(MovieUtil.showProp, geyserWater, battle,
+                     suit.getPos(battle)),
                 LerpScaleInterval(
                     geyserWater,
                     1.0,
                     scaleUpPoint,
                     startScale=MovieUtil.PNT3_NEARZERO),
-                Wait(
-                    geyserHold * 0.5),
+                Wait(geyserHold * 0.5),
                 LerpScaleInterval(
                     geyserWater,
                     0.5,
                     MovieUtil.PNT3_NEARZERO,
                     startScale=scaleUpPoint))
             track.append(
-                LerpScaleInterval(
-                    geyserMound,
-                    0.5,
-                    MovieUtil.PNT3_NEARZERO))
+                LerpScaleInterval(geyserMound, 0.5, MovieUtil.PNT3_NEARZERO))
             track.append(Func(MovieUtil.removeProp, geyserMound))
             track.append(Func(MovieUtil.removeProp, geyserWater))
             track.append(Func(MovieUtil.removeProp, geyser))
@@ -1421,11 +1215,5 @@ def __doGeyser(squirt, delay, fShowStun, uberClone=0):
     return tracks
 
 
-squirtfn_array = (
-    __doFlower,
-    __doWaterGlass,
-    __doWaterGun,
-    __doSeltzerBottle,
-    __doFireHose,
-    __doStormCloud,
-    __doGeyser)
+squirtfn_array = (__doFlower, __doWaterGlass, __doWaterGun, __doSeltzerBottle,
+                  __doFireHose, __doStormCloud, __doGeyser)

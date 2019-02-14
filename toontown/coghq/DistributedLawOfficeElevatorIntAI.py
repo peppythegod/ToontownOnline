@@ -11,7 +11,6 @@ from direct.task import Task
 
 class DistributedLawOfficeElevatorIntAI(
         DistributedElevatorFloorAI.DistributedElevatorFloorAI):
-
     def __init__(self, air, lawOfficeId, bldg, avIds):
         DistributedElevatorFloorAI.DistributedElevatorFloorAI.__init__(
             self, air, bldg, avIds)
@@ -25,9 +24,7 @@ class DistributedLawOfficeElevatorIntAI(
         if numPlayers > 0:
             players = []
             for i in self.seats:
-                if i not in [
-                        None,
-                        0]:
+                if i not in [None, 0]:
                     players.append(i)
                     continue
 

@@ -1,5 +1,3 @@
-
-
 from DistributedMinigameAI import *
 from toontown.ai.ToonBarrier import *
 from direct.fsm import ClassicFSM, State
@@ -9,7 +7,6 @@ import MinigameGlobals
 
 
 class DistributedCatchGameAI(DistributedMinigameAI):
-
     def __init__(self, air, minigameId):
 
         try:
@@ -18,12 +15,13 @@ class DistributedCatchGameAI(DistributedMinigameAI):
             self.DistributedCatchGameAI_initialized = 1
             DistributedMinigameAI.__init__(self, air, minigameId)
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedCatchGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive, [
-                    'play']),
-                State.State('play', self.enterPlay, self.exitPlay, [
-                    'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                    'inactive'])], 'inactive', 'inactive')
+                State.State('inactive', self.enterInactive, self.exitInactive,
+                            ['play']),
+                State.State('play', self.enterPlay, self.exitPlay,
+                            ['cleanup']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
 
     def generate(self):
@@ -53,9 +51,8 @@ class DistributedCatchGameAI(DistributedMinigameAI):
 
     def gameOver(self):
         self.notify.debug('gameOver')
-        self.notify.debug(
-            'fruits: %s, fruits caught: %s' %
-            (self.numFruits, self.fruitsCaught))
+        self.notify.debug('fruits: %s, fruits caught: %s' %
+                          (self.numFruits, self.fruitsCaught))
         perfect = self.fruitsCaught >= self.numFruits
         for avId in self.avIdList:
             self.scoreDict[avId] = max(1, int(self.scoreDict[avId] / 2))
@@ -76,8 +73,7 @@ class DistributedCatchGameAI(DistributedMinigameAI):
 
     def enterPlay(self):
         self.notify.debug('enterPlay')
-        self.caughtList = [
-            0] * 100
+        self.caughtList = [0] * 100
         table = CatchGameGlobals.NumFruits[self.numPlayers - 1]
         self.numFruits = table[self.getSafezoneId()]
         self.notify.debug('numFruits: %s' % self.numFruits)
@@ -91,18 +87,14 @@ class DistributedCatchGameAI(DistributedMinigameAI):
 
         def handleTimeout(avIds, self=self):
             self.notify.debug(
-                'handleTimeout: avatars %s did not report "done"' %
-                avIds)
+                'handleTimeout: avatars %s did not report "done"' % avIds)
             self.setGameAbort()
 
         self.doneBarrier = ToonBarrier(
-            'waitClientsDone',
-            self.uniqueName('waitClientsDone'),
+            'waitClientsDone', self.uniqueName('waitClientsDone'),
             self.avIdList,
-            CatchGameGlobals.GameDuration +
-            MinigameGlobals.latencyTolerance,
-            allToonsDone,
-            handleTimeout)
+            CatchGameGlobals.GameDuration + MinigameGlobals.latencyTolerance,
+            allToonsDone, handleTimeout)
 
     def exitPlay(self):
         del self.caughtList
@@ -116,30 +108,26 @@ class DistributedCatchGameAI(DistributedMinigameAI):
         if DropObjTypeId < 0 or DropObjTypeId >= len(
                 CatchGameGlobals.DOTypeId2Name):
             self.air.writeServerEvent(
-                'warning',
-                DropObjTypeId,
+                'warning', DropObjTypeId,
                 'CatchGameAI.claimCatch DropObjTypeId out of range')
             return None
 
         if objNum < 0 and objNum > 5000 or objNum >= 2 * len(self.caughtList):
             self.air.writeServerEvent(
-                'warning', objNum, 'CatchGameAI.claimCatch objNum is too high or negative')
+                'warning', objNum,
+                'CatchGameAI.claimCatch objNum is too high or negative')
             return None
 
         if objNum >= len(self.caughtList):
-            self.caughtList += [
-                0] * len(self.caughtList)
+            self.caughtList += [0] * len(self.caughtList)
 
         if not self.caughtList[objNum]:
             self.caughtList[objNum] = 1
             avId = self.air.getAvatarIdFromSender()
-            self.sendUpdate('setObjectCaught', [
-                avId,
-                objNum])
+            self.sendUpdate('setObjectCaught', [avId, objNum])
             objName = CatchGameGlobals.DOTypeId2Name[DropObjTypeId]
             self.notify.debug(
-                'avatar %s caught object %s: %s' %
-                (avId, objNum, objName))
+                'avatar %s caught object %s: %s' % (avId, objNum, objName))
             if CatchGameGlobals.Name2DropObjectType[objName].good:
                 self.scoreDict[avId] += 1
                 self.fruitsCaught += 1

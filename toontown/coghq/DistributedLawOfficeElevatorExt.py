@@ -14,7 +14,6 @@ from toontown.toonbase import TTLocalizer
 
 class DistributedLawOfficeElevatorExt(
         DistributedElevatorExt.DistributedElevatorExt):
-
     def __init__(self, cr):
         DistributedElevatorExt.DistributedElevatorExt.__init__(self, cr)
         self.type = ELEVATOR_OFFICE
@@ -39,13 +38,20 @@ class DistributedLawOfficeElevatorExt(
             0: ToontownGlobals.LawbotStageIntA,
             1: ToontownGlobals.LawbotStageIntB,
             2: ToontownGlobals.LawbotStageIntC,
-            3: ToontownGlobals.LawbotStageIntD}
+            3: ToontownGlobals.LawbotStageIntD
+        }
         self.intZoneId = entranceId2zoneId[entranceId]
         locator = geom.find('**/elevator_signorigin_%s' % entranceId)
         backgroundGeom = geom.find('**/ElevatorFrameFront_%d' % entranceId)
         backgroundGeom.node().setEffect(DecalEffect.make())
-        signText = DirectGui.OnscreenText(text=TextEncoder.upper(TTLocalizer.GlobalStreetNames[self.intZoneId][-1]), font=ToontownGlobals.getSuitFont(
-        ), scale=2, fg=(0.87, 0.87, 0.87, 1), mayChange=False, parent=backgroundGeom)
+        signText = DirectGui.OnscreenText(
+            text=TextEncoder.upper(
+                TTLocalizer.GlobalStreetNames[self.intZoneId][-1]),
+            font=ToontownGlobals.getSuitFont(),
+            scale=2,
+            fg=(0.87, 0.87, 0.87, 1),
+            mayChange=False,
+            parent=backgroundGeom)
         signText.setPosHpr(locator, 0, 0, 0, 0, 0, 0)
         signText.setDepthWrite(0)
 
@@ -80,15 +86,14 @@ class DistributedLawOfficeElevatorExt(
                 'how': 'teleportIn',
                 'zoneId': zoneId,
                 'hoodId': hoodId,
-                'stageId': self.intZoneId}
+                'stageId': self.intZoneId
+            }
             self.cr.playGame.getPlace().elevator.signalDone(doneStatus)
 
     def setLawOfficeInteriorZoneForce(self, zoneId):
         place = self.cr.playGame.getPlace()
         if place:
-            place.fsm.request('elevator', [
-                self,
-                1])
+            place.fsm.request('elevator', [self, 1])
             hoodId = self.cr.playGame.hood.hoodId
             doneStatus = {
                 'loader': 'cogHQLoader',
@@ -96,17 +101,18 @@ class DistributedLawOfficeElevatorExt(
                 'how': 'teleportIn',
                 'zoneId': zoneId,
                 'hoodId': hoodId,
-                'stageId': self.intZoneId}
+                'stageId': self.intZoneId
+            }
             if hasattr(place, 'elevator') and place.elevator:
                 place.elevator.signalDone(doneStatus)
             else:
                 self.notify.warning(
-                    "setMintInteriorZoneForce: Couldn't find playGame.getPlace().elevator, zoneId: %s" %
-                    zoneId)
+                    "setMintInteriorZoneForce: Couldn't find playGame.getPlace().elevator, zoneId: %s"
+                    % zoneId)
         else:
             self.notify.warning(
-                "setLawOfficeInteriorZoneForce: Couldn't find playGame.getPlace(), zoneId: %s" %
-                zoneId)
+                "setLawOfficeInteriorZoneForce: Couldn't find playGame.getPlace(), zoneId: %s"
+                % zoneId)
 
     def getDestName(self):
         if self.intZoneId == ToontownGlobals.LawbotStageIntA:

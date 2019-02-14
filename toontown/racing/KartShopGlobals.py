@@ -6,7 +6,8 @@ class KartShopGlobals:
         'guiDone': 'guiDone',
         'returnKart': 'returnKart',
         'buyKart': 'buyAKart',
-        'buyAccessory': 'buyAccessory'}
+        'buyAccessory': 'buyAccessory'
+    }
     KARTCLERK_TIMER = 180
     MAX_KART_ACC = 16
 
@@ -18,7 +19,8 @@ class KartGlobals:
     BOARDING_TIME = 10.0
     ENTER_RACE_TIME = 6.0
     ERROR_CODE = PythonUtil.Enum(
-        'success, eGeneric, eTickets, eBoardOver, eNoKart, eOccupied, eTrackClosed, eTooLate, eUnpaid')
+        'success, eGeneric, eTickets, eBoardOver, eNoKart, eOccupied, eTrackClosed, eTooLate, eUnpaid'
+    )
     FRONT_LEFT_SPOT = 0
     FRONT_RIGHT_SPOT = 1
     REAR_LEFT_SPOT = 2

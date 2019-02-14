@@ -20,12 +20,8 @@ def showFriendSecret(secretType=AvatarSecret):
     elif not base.cr.isParentPasswordSet():
         chatMgr = base.localAvatar.chatMgr
         if base.cr.productName in [
-            'DisneyOnline-AP',
-            'DisneyOnline-UK',
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+                'DisneyOnline-AP', 'DisneyOnline-UK', 'JP', 'DE', 'BR', 'FR'
+        ]:
             chatMgr = base.localAvatar.chatMgr
             if not base.cr.isPaid():
                 chatMgr.fsm.request('unpaidChatWarning')
@@ -38,12 +34,8 @@ def showFriendSecret(secretType=AvatarSecret):
     elif not base.cr.allowSecretChat():
         chatMgr = base.localAvatar.chatMgr
         if base.cr.productName in [
-            'DisneyOnline-AP',
-            'DisneyOnline-UK',
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+                'DisneyOnline-AP', 'DisneyOnline-UK', 'JP', 'DE', 'BR', 'FR'
+        ]:
             chatMgr = base.localAvatar.chatMgr
             if not base.cr.isPaid():
                 chatMgr.fsm.request('unpaidChatWarning')
@@ -86,8 +78,8 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
         'FriendSecretNeedsParentLogin')
 
     def __init__(self, secretType):
-        StateData.StateData.__init__(
-            self, 'friend-secret-needs-parent-login-done')
+        StateData.StateData.__init__(self,
+                                     'friend-secret-needs-parent-login-done')
         self.dialog = None
         self.secretType = secretType
 
@@ -100,18 +92,15 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                 'phase_3/models/gui/dialog_box_buttons_gui')
             nameBalloon = loader.loadModel(
                 'phase_3/models/props/chatbox_input')
-            optionsButtonImage = (
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR'))
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelButtonImage = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
+            optionsButtonImage = (guiButton.find('**/QuitBtn_UP'),
+                                  guiButton.find('**/QuitBtn_DN'),
+                                  guiButton.find('**/QuitBtn_RLVR'))
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                                 buttons.find('**/CloseBtn_DN'),
+                                 buttons.find('**/CloseBtn_Rllvr'))
             withParentAccount = False
 
             try:
@@ -134,21 +123,12 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                 okCommand = self._FriendSecretNeedsParentLogin__handleCancel
             self.dialog = DirectFrame(
                 parent=aspect2dp,
-                pos=(
-                    0.0,
-                    0.10000000000000001,
-                    0.20000000000000001),
+                pos=(0.0, 0.10000000000000001, 0.20000000000000001),
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=OTPGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.3999999999999999,
-                    1.0,
-                    1.25),
-                image_pos=(
-                    0,
-                    0,
-                    -0.10000000000000001),
+                image_scale=(1.3999999999999999, 1.0, 1.25),
+                image_pos=(0, 0, -0.10000000000000001),
                 text=OTPLocalizer.FriendSecretNeedsParentLoginWarning,
                 text_wordwrap=21.5,
                 text_scale=0.055,
@@ -160,19 +140,14 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                 relief=None,
                 text=OTPLocalizer.FriendSecretNeedsPasswordWarningOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
                 pos=okPos,
                 command=okCommand)
             DirectLabel(
                 parent=self.dialog,
                 relief=None,
-                pos=(
-                    0,
-                    0,
-                    0.34999999999999998),
+                pos=(0, 0, 0.34999999999999998),
                 text=OTPLocalizer.FriendSecretNeedsPasswordWarningTitle,
                 textMayChange=0,
                 text_scale=0.080000000000000002)
@@ -180,10 +155,7 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                 self.usernameLabel = DirectLabel(
                     parent=self.dialog,
                     relief=None,
-                    pos=(
-                        -0.070000000000000007,
-                        0.0,
-                        -0.10000000000000001),
+                    pos=(-0.070000000000000007, 0.0, -0.10000000000000001),
                     text=OTPLocalizer.ParentLogin,
                     text_scale=0.059999999999999998,
                     text_align=TextNode.ARight,
@@ -192,16 +164,10 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                     parent=self.dialog,
                     relief=None,
                     image=nameBalloon,
-                    image1_color=(
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        1.0),
+                    image1_color=(0.80000000000000004, 0.80000000000000004,
+                                  0.80000000000000004, 1.0),
                     scale=0.064000000000000001,
-                    pos=(
-                        0.0,
-                        0.0,
-                        -0.10000000000000001),
+                    pos=(0.0, 0.0, -0.10000000000000001),
                     width=OTPGlobals.maxLoginWidth,
                     numLines=1,
                     focus=1,
@@ -211,10 +177,7 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                 self.passwordLabel = DirectLabel(
                     parent=self.dialog,
                     relief=None,
-                    pos=(
-                        -0.02,
-                        0.0,
-                        -0.29999999999999999),
+                    pos=(-0.02, 0.0, -0.29999999999999999),
                     text=OTPLocalizer.ParentPassword,
                     text_scale=0.059999999999999998,
                     text_align=TextNode.ARight,
@@ -223,16 +186,10 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                     parent=self.dialog,
                     relief=None,
                     image=nameBalloon,
-                    image1_color=(
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        1.0),
+                    image1_color=(0.80000000000000004, 0.80000000000000004,
+                                  0.80000000000000004, 1.0),
                     scale=0.064000000000000001,
-                    pos=(
-                        0.040000000000000001,
-                        0.0,
-                        -0.29999999999999999),
+                    pos=(0.040000000000000001, 0.0, -0.29999999999999999),
                     width=OTPGlobals.maxLoginWidth,
                     numLines=1,
                     focus=1,
@@ -245,14 +202,9 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
                     relief=None,
                     text=OTPLocalizer.FriendSecretNeedsPasswordWarningCancel,
                     text_scale=0.050000000000000003,
-                    text_pos=(
-                        0.0,
-                        -0.10000000000000001),
+                    text_pos=(0.0, -0.10000000000000001),
                     textMayChange=1,
-                    pos=(
-                        0.20000000000000001,
-                        0.0,
-                        -0.5),
+                    pos=(0.20000000000000001, 0.0, -0.5),
                     command=self._FriendSecretNeedsParentLogin__handleCancel)
                 if withParentAccount:
                     self.usernameEntry.enterText('')
@@ -268,7 +220,8 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
             buttons.removeNode()
             nameBalloon.removeNode()
         else:
-            self.dialog['text'] = OTPLocalizer.FriendSecretNeedsParentLoginWarning
+            self.dialog[
+                'text'] = OTPLocalizer.FriendSecretNeedsParentLoginWarning
             if self.usernameEntry:
                 self.usernameEntry['focus'] = 1
                 self.usernameEntry.enterText('')
@@ -309,7 +262,8 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
             base.localAvatar.chatMgr.problemActivatingChat[
                 'text'] = OTPLocalizer.ProblemActivatingChat % message
         else:
-            self.dialog['text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongPassword
+            self.dialog[
+                'text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongPassword
             self.passwordEntry['focus'] = 1
             self.passwordEntry.enterText('')
 
@@ -329,7 +283,8 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
             base.localAvatar.chatMgr.problemActivatingChat[
                 'text'] = OTPLocalizer.ProblemActivatingChat % message
         else:
-            self.dialog['text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongPassword
+            self.dialog[
+                'text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongPassword
             self.passwordEntry['focus'] = 1
             self.passwordEntry.enterText('')
 
@@ -347,11 +302,13 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
             self.exit()
             openFriendSecret(self.secretType)
         elif reason == 1:
-            self.dialog['text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongUsername
+            self.dialog[
+                'text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongUsername
             self.usernameEntry['focus'] = 1
             self.usernameEntry.enterText('')
         elif reason == 2:
-            self.dialog['text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongPassword
+            self.dialog[
+                'text'] = OTPLocalizer.FriendSecretNeedsPasswordWarningWrongPassword
             self.passwordEntry['focus'] = 1
             self.passwordEntry.enterText('')
         else:
@@ -368,11 +325,15 @@ class FriendSecret(DirectFrame, StateData.StateData):
 
     def __init__(self, secretType):
         DirectFrame.__init__(
-            self, parent=aspect2dp, pos=(
-                0, 0, 0.29999999999999999), relief=None, image=DGG.getDefaultDialogGeom(), image_scale=(
-                1.6000000000000001, 1, 1.3999999999999999), image_pos=(
-                0, 0, -0.050000000000000003), image_color=OTPGlobals.GlobalDialogColor, borderWidth=(
-                    0.01, 0.01))
+            self,
+            parent=aspect2dp,
+            pos=(0, 0, 0.29999999999999999),
+            relief=None,
+            image=DGG.getDefaultDialogGeom(),
+            image_scale=(1.6000000000000001, 1, 1.3999999999999999),
+            image_pos=(0, 0, -0.050000000000000003),
+            image_color=OTPGlobals.GlobalDialogColor,
+            borderWidth=(0.01, 0.01))
         StateData.StateData.__init__(self, 'friend-secret-done')
         self.initialiseoptions(FriendSecret)
         self.prefix = OTPGlobals.getDefaultProductPrefix()
@@ -380,8 +341,7 @@ class FriendSecret(DirectFrame, StateData.StateData):
         self.notify.debug('### secretType = %s' % self.secretType)
         self.requestedSecretType = secretType
         self.notify.debug(
-            '### requestedSecretType = %s' %
-            self.requestedSecretType)
+            '### requestedSecretType = %s' % self.requestedSecretType)
 
     def unload(self):
         if self.isLoaded == 0:
@@ -410,37 +370,24 @@ class FriendSecret(DirectFrame, StateData.StateData):
         self.introText = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                0.40000000000000002),
+            pos=(0, 0, 0.40000000000000002),
             scale=0.050000000000000003,
             text=OTPLocalizer.FriendSecretIntro,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(0, 0, 0, 1),
             text_wordwrap=30)
         self.introText.hide()
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         self.getSecret = DirectButton(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                -0.11),
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            pos=(0, 0, -0.11),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=OTPLocalizer.FSgetSecret,
             text=OTPLocalizer.FriendSecretGetSecret,
             text_scale=OTPLocalizer.FSgetSecretButton,
-            text_pos=(
-                0,
-                -0.02),
+            text_pos=(0, -0.02),
             command=self._FriendSecret__determineSecret)
         self.getSecret.hide()
         self.enterSecretText = DirectLabel(
@@ -449,61 +396,39 @@ class FriendSecret(DirectFrame, StateData.StateData):
             pos=OTPLocalizer.FSenterSecretTextPos,
             scale=0.050000000000000003,
             text=OTPLocalizer.FriendSecretEnterSecret,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(0, 0, 0, 1),
             text_wordwrap=30)
         self.enterSecretText.hide()
-        self.enterSecret = DirectEntry(parent=self,
-                                       relief=DGG.SUNKEN,
-                                       scale=0.059999999999999998,
-                                       pos=(-0.59999999999999998,
-                                            0,
-                                            -0.38),
-                                       frameColor=(0.80000000000000004,
-                                                   0.80000000000000004,
-                                                   0.5,
-                                                   1),
-                                       borderWidth=(0.10000000000000001,
-                                                    0.10000000000000001),
-                                       numLines=1,
-                                       width=20,
-                                       frameSize=(-0.40000000000000002,
-                                                  20.399999999999999,
-                                                  -0.40000000000000002,
-                                                  1.1000000000000001),
-                                       command=self._FriendSecret__enterSecret)
+        self.enterSecret = DirectEntry(
+            parent=self,
+            relief=DGG.SUNKEN,
+            scale=0.059999999999999998,
+            pos=(-0.59999999999999998, 0, -0.38),
+            frameColor=(0.80000000000000004, 0.80000000000000004, 0.5, 1),
+            borderWidth=(0.10000000000000001, 0.10000000000000001),
+            numLines=1,
+            width=20,
+            frameSize=(-0.40000000000000002, 20.399999999999999,
+                       -0.40000000000000002, 1.1000000000000001),
+            command=self._FriendSecret__enterSecret)
         self.enterSecret.resetFrameSize()
         self.enterSecret.hide()
         self.ok1 = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=OTPLocalizer.FSok1,
             text=OTPLocalizer.FriendSecretEnter,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
-            pos=(
-                0,
-                0,
-                -0.5),
+            text_pos=(0, -0.02),
+            pos=(0, 0, -0.5),
             command=self._FriendSecret__ok1)
         self.ok1.hide()
-        if base.cr.productName in [
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+        if base.cr.productName in ['JP', 'DE', 'BR', 'FR']:
 
             class ShowHide:
-
                 def show(self):
                     pass
 
@@ -515,62 +440,47 @@ class FriendSecret(DirectFrame, StateData.StateData):
         self.ok2 = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=OTPLocalizer.FSok2,
             text=OTPLocalizer.FriendSecretOK,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
-            pos=(
-                0,
-                0,
-                -0.56999999999999995),
+            text_pos=(0, -0.02),
+            pos=(0, 0, -0.56999999999999995),
             command=self._FriendSecret__ok2)
         self.ok2.hide()
         self.cancel = DirectButton(
             parent=self,
             relief=None,
             text=OTPLocalizer.FriendSecretCancel,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=OTPLocalizer.FScancel,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
-            pos=(
-                0,
-                0,
-                -0.56999999999999995),
+            text_pos=(0, -0.02),
+            pos=(0, 0, -0.56999999999999995),
             command=self._FriendSecret__cancel)
         self.cancel.hide()
         self.nextText = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                0.29999999999999999),
+            pos=(0, 0, 0.29999999999999999),
             scale=0.059999999999999998,
             text='',
             text_scale=OTPLocalizer.FSnextText,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(0, 0, 0, 1),
             text_wordwrap=25.5)
         self.nextText.hide()
         self.secretText = DirectLabel(
-            parent=self, relief=None, pos=(
-                0, 0, -0.41999999999999998), scale=0.10000000000000001, text='', text_fg=(
-                0, 0, 0, 1), text_wordwrap=30)
+            parent=self,
+            relief=None,
+            pos=(0, 0, -0.41999999999999998),
+            scale=0.10000000000000001,
+            text='',
+            text_fg=(0, 0, 0, 1),
+            text_wordwrap=30)
         self.secretText.hide()
         guiButton.removeNode()
         self.makeFriendTypeButtons()
@@ -587,74 +497,44 @@ class FriendSecret(DirectFrame, StateData.StateData):
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
         self.avatarButton = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=OTPLocalizer.FriendSecretDetermineSecretAvatar,
             text_scale=0.070000000000000007,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                -0.34999999999999998,
-                0.0,
-                -0.050000000000000003),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(-0.34999999999999998, 0.0, -0.050000000000000003),
             command=self._FriendSecret__handleAvatar)
         avatarText = DirectLabel(
             parent=self,
             relief=None,
-            pos=Vec3(
-                0.34999999999999998,
-                0,
-                -0.29999999999999999),
+            pos=Vec3(0.34999999999999998, 0, -0.29999999999999999),
             text=OTPLocalizer.FriendSecretDetermineSecretAvatarRollover,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                0),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, 0),
             text_scale=0.055,
             text_align=TextNode.ACenter)
         avatarText.reparentTo(self.avatarButton.stateNodePath[2])
         self.avatarButton.hide()
         self.accountButton = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=OTPLocalizer.FriendSecretDetermineSecretAccount,
             text_scale=0.070000000000000007,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.34999999999999998,
-                0.0,
-                -0.050000000000000003),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.34999999999999998, 0.0, -0.050000000000000003),
             command=self._FriendSecret__handleAccount)
         accountText = DirectLabel(
             parent=self,
             relief=None,
-            pos=Vec3(
-                -0.34999999999999998,
-                0,
-                -0.29999999999999999),
+            pos=Vec3(-0.34999999999999998, 0, -0.29999999999999999),
             text=OTPLocalizer.FriendSecretDetermineSecretAccountRollover,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                0),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, 0),
             text_scale=0.055,
             text_align=TextNode.ACenter)
         accountText.reparentTo(self.accountButton.stateNodePath[2])
@@ -734,9 +614,8 @@ class FriendSecret(DirectFrame, StateData.StateData):
                 return None
 
             base.cr.friendManager.up_requestSecret()
-            self.accept(
-                'requestSecretResponse',
-                self._FriendSecret__gotAvatarSecret)
+            self.accept('requestSecretResponse',
+                        self._FriendSecret__gotAvatarSecret)
         elif base.cr.needParentPasswordForSecretChat():
             self.notify.info('### requestLimitedSecret')
             base.cr.playerFriendsManager.sendRequestLimitedSecret(
@@ -806,17 +685,14 @@ class FriendSecret(DirectFrame, StateData.StateData):
             if secret[0:2] == self.prefix:
                 secret = secret[3:]
                 self.notify.info('### use TT secret')
-                self.accept(
-                    'submitSecretResponse',
-                    self._FriendSecret__enteredSecret)
+                self.accept('submitSecretResponse',
+                            self._FriendSecret__enteredSecret)
                 base.cr.friendManager.up_submitSecret(secret)
             else:
-                self.accept(
-                    OTPGlobals.PlayerFriendUpdateEvent,
-                    self._FriendSecret__useAccountSecret)
-                self.accept(
-                    OTPGlobals.PlayerFriendRejectUseSecretEvent,
-                    self._FriendSecret__rejectUseAccountSecret)
+                self.accept(OTPGlobals.PlayerFriendUpdateEvent,
+                            self._FriendSecret__useAccountSecret)
+                self.accept(OTPGlobals.PlayerFriendRejectUseSecretEvent,
+                            self._FriendSecret__rejectUseAccountSecret)
                 if base.cr.needParentPasswordForSecretChat():
                     self.notify.info('### useLimitedSecret')
                     base.cr.playerFriendsManager.sendRequestUseLimitedSecret(
@@ -837,31 +713,34 @@ class FriendSecret(DirectFrame, StateData.StateData):
         if result == 1:
             handle = base.cr.identifyAvatar(avId)
             if handle is not None:
-                self.nextText['text'] = OTPLocalizer.FriendSecretEnteredSecretSuccess % handle.getName(
-                )
+                self.nextText[
+                    'text'] = OTPLocalizer.FriendSecretEnteredSecretSuccess % handle.getName(
+                    )
             else:
-                self.accept(
-                    'friendsMapComplete',
-                    self._FriendSecret__nowFriends,
-                    [avId])
+                self.accept('friendsMapComplete',
+                            self._FriendSecret__nowFriends, [avId])
                 ready = base.cr.fillUpFriendsMap()
                 if ready:
                     self._FriendSecret__nowFriends(avId)
 
                 return None
         elif result == 0:
-            self.nextText['text'] = OTPLocalizer.FriendSecretEnteredSecretUnknown
+            self.nextText[
+                'text'] = OTPLocalizer.FriendSecretEnteredSecretUnknown
         elif result == 2:
             handle = base.cr.identifyAvatar(avId)
             if handle is not None:
-                self.nextText['text'] = OTPLocalizer.FriendSecretEnteredSecretFull % handle.getName(
-                )
+                self.nextText[
+                    'text'] = OTPLocalizer.FriendSecretEnteredSecretFull % handle.getName(
+                    )
             else:
-                self.nextText['text'] = OTPLocalizer.FriendSecretEnteredSecretFullNoName
+                self.nextText[
+                    'text'] = OTPLocalizer.FriendSecretEnteredSecretFullNoName
         elif result == 3:
             self.nextText['text'] = OTPLocalizer.FriendSecretEnteredSecretSelf
         elif result == 4:
-            self.nextText['text'] = OTPLocalizer.FriendSecretEnteredSecretWrongProduct % self.prefix
+            self.nextText[
+                'text'] = OTPLocalizer.FriendSecretEnteredSecretWrongProduct % self.prefix
 
         self.nextText.show()
         self.cancel.hide()
@@ -888,8 +767,9 @@ class FriendSecret(DirectFrame, StateData.StateData):
         self.ignore('friendsMapComplete')
         handle = base.cr.identifyAvatar(avId)
         if handle is not None:
-            self.nextText['text'] = OTPLocalizer.FriendSecretNowFriends % handle.getName(
-            )
+            self.nextText[
+                'text'] = OTPLocalizer.FriendSecretNowFriends % handle.getName(
+                )
         else:
             self.nextText['text'] = OTPLocalizer.FriendSecretNowFriendsNoName
         self.nextText.show()

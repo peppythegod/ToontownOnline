@@ -44,7 +44,8 @@ class StageManagerAI(DirectObject.DirectObject):
                         continue
                 else:
                     StageRoomSpecs = StageRoomSpecs
-                    roomName = StageRoomSpecs.CashbotStageRoomId2RoomName[roomId]
+                    roomName = StageRoomSpecs.CashbotStageRoomId2RoomName[
+                        roomId]
                     StageManagerAI.notify.warning(
                         'room %s (%s) not found in any floor of stage %s' %
                         (roomId, roomName, stageId))

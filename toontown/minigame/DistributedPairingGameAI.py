@@ -1,5 +1,3 @@
-
-
 from DistributedMinigameAI import *
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
@@ -24,12 +22,13 @@ class DistributedPairingGameAI(DistributedMinigameAI):
             self.DistributedPairingGameAI_initialized = 1
             DistributedMinigameAI.__init__(self, air, minigameId)
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedPairingGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive, [
-                    'play']),
-                State.State('play', self.enterPlay, self.exitPlay, [
-                    'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                    'inactive'])], 'inactive', 'inactive')
+                State.State('inactive', self.enterInactive, self.exitInactive,
+                            ['play']),
+                State.State('play', self.enterPlay, self.exitPlay,
+                            ['cleanup']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
             self.gameFSM.enterInitialState()
             self.deckSeed = random.randint(0, 4000000)
@@ -56,14 +55,13 @@ class DistributedPairingGameAI(DistributedMinigameAI):
         if self.OneCardInMultiplayer and len(self.avIdList) > 1:
             self.maxOpenCards = 1
 
-        self.sendUpdate('setMaxOpenCards', [
-            self.maxOpenCards])
+        self.sendUpdate('setMaxOpenCards', [self.maxOpenCards])
         DistributedMinigameAI.setGameReady(self)
         for avId in self.avIdList:
             self.faceUpDict[avId] = []
 
-        self.deck = PairingGameGlobals.createDeck(
-            self.deckSeed, self.numPlayers)
+        self.deck = PairingGameGlobals.createDeck(self.deckSeed,
+                                                  self.numPlayers)
         for index in xrange(len(self.deck.cards)):
             cardValue = self.deck.cards[index]
             oneCard = PlayingCardBase(cardValue)
@@ -102,17 +100,10 @@ class DistributedPairingGameAI(DistributedMinigameAI):
 
         logAvId = self.avIdList[0]
         self.air.writeServerEvent(
-            'minigame_pairing',
-            self.doId,
-            '%s|%s|%s|%s|%s|%s|%s|%s' %
-            (ToontownGlobals.PairingGameId,
-             self.getSafezoneId(),
-             self.avIdList,
-             self.scoreDict[logAvId],
-             self.gameDuration,
-             self.matches,
-             self.flips,
-             lowFlipBonus))
+            'minigame_pairing', self.doId, '%s|%s|%s|%s|%s|%s|%s|%s' %
+            (ToontownGlobals.PairingGameId, self.getSafezoneId(),
+             self.avIdList, self.scoreDict[logAvId], self.gameDuration,
+             self.matches, self.flips, lowFlipBonus))
         self.gameFSM.request('cleanup')
         DistributedMinigameAI.gameOver(self)
 
@@ -133,19 +124,15 @@ class DistributedPairingGameAI(DistributedMinigameAI):
 
         def handleTimeout(avIds, self=self):
             self.notify.debug(
-                'handleTimeout: avatars %s did not report "done"' %
-                avIds)
+                'handleTimeout: avatars %s did not report "done"' % avIds)
             self.setGameAbort()
 
         self.gameDuration = PairingGameGlobals.calcGameDuration(
             self.getDifficulty())
         self.doneBarrier = ToonBarrier(
-            'waitClientsDone',
-            self.uniqueName('waitClientsDone'),
+            'waitClientsDone', self.uniqueName('waitClientsDone'),
             self.avIdList,
-            self.gameDuration +
-            MinigameGlobals.latencyTolerance,
-            allToonsDone,
+            self.gameDuration + MinigameGlobals.latencyTolerance, allToonsDone,
             handleTimeout)
 
     def exitPlay(self):
@@ -220,22 +207,20 @@ class DistributedPairingGameAI(DistributedMinigameAI):
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
-                'openCardRequest from non-player av %s' %
-                avId)
+                'suspicious', avId,
+                'openCardRequest from non-player av %s' % avId)
             return None
 
         if deckOrderIndex < 0 or deckOrderIndex >= len(self.cards):
             self.logSuspicious(
-                avId, 'openCardRequest: invalid deckOrderIndex: %s' %
-                deckOrderIndex)
+                avId,
+                'openCardRequest: invalid deckOrderIndex: %s' % deckOrderIndex)
             return None
 
         if bonusGlowCard < 0 or bonusGlowCard >= len(self.cards):
             self.logSuspicious(
-                avId, 'openCardRequest: invalid bonusGlowCard: %s' %
-                bonusGlowCard)
+                avId,
+                'openCardRequest: invalid bonusGlowCard: %s' % bonusGlowCard)
             return None
 
         cardsToTurnDown = []
@@ -260,21 +245,16 @@ class DistributedPairingGameAI(DistributedMinigameAI):
             else:
                 matchingCard = cardA
             pointsToGive = 1
-            if bonusGlowCard in [
-                    cardA,
-                    cardB]:
+            if bonusGlowCard in [cardA, cardB]:
                 pointsToGive += 1
 
             self.points += pointsToGive
             self.matches += 1
 
         self.flips += 1
-        self.sendUpdate('openCardResult', [
-            cardToTurnUp,
-            avId,
-            matchingCard,
-            self.points,
-            cardsToTurnDown])
+        self.sendUpdate(
+            'openCardResult',
+            [cardToTurnUp, avId, matchingCard, self.points, cardsToTurnDown])
 
     def reportDone(self):
         if self.gameFSM.getCurrentState().getName() != 'play':

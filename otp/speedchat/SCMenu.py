@@ -13,9 +13,8 @@ class SCMenu(SCObject, NodePath):
     SpeedChatRolloverTolerance = config.GetFloat(
         'speedchat-rollover-tolerance', 0.080000000000000002)
     WantFade = config.GetBool('want-speedchat-fade', 0)
-    FadeDuration = config.GetFloat(
-        'speedchat-fade-duration',
-        0.20000000000000001)
+    FadeDuration = config.GetFloat('speedchat-fade-duration',
+                                   0.20000000000000001)
     SerialNum = 0
     BackgroundModelName = None
     GuiModelName = None
@@ -43,24 +42,11 @@ class SCMenu(SCObject, NodePath):
 
             return results
 
-        (self.bgTop,
-         self.bgBottom,
-         self.bgLeft,
-         self.bgRight,
-         self.bgMiddle,
-         self.bgTopLeft,
-         self.bgBottomLeft,
-         self.bgTopRight,
-         self.bgBottomRight) = findNodes([('top',
-                                           'top1'),
-                                          'bottom',
-                                          'left',
-                                          'right',
-                                          'middle',
-                                          'topLeft',
-                                          'bottomLeft',
-                                          'topRight',
-                                          'bottomRight'])
+        (self.bgTop, self.bgBottom, self.bgLeft, self.bgRight, self.bgMiddle,
+         self.bgTopLeft, self.bgBottomLeft, self.bgTopRight,
+         self.bgBottomRight) = findNodes(
+             [('top', 'top1'), 'bottom', 'left', 'right', 'middle', 'topLeft',
+              'bottomLeft', 'topRight', 'bottomRight'])
         self.bg.reparentTo(self, -1)
         self._SCMenu__members = []
         self.activeMember = None
@@ -188,7 +174,10 @@ class SCMenu(SCObject, NodePath):
             else:
                 self.stopFade()
                 self.fadeIval = LerpFunctionInterval(
-                    self.fadeFunc, fromData=0.0, toData=1.0, duration=SCMenu.FadeDuration)
+                    self.fadeFunc,
+                    fromData=0.0,
+                    toData=1.0,
+                    duration=SCMenu.FadeDuration)
                 self.fadeIval.play()
                 if parentMenu is not None:
                     parentMenu.childHasFaded = 1
@@ -245,10 +234,9 @@ class SCMenu(SCObject, NodePath):
 
             minFrameRate = 1.0 / SCMenu.SpeedChatRolloverTolerance
             if globalClock.getAverageFrameRate() > minFrameRate:
-                taskMgr.doMethodLater(
-                    SCMenu.SpeedChatRolloverTolerance,
-                    doActiveMemberSwitch,
-                    self.ActiveMemberSwitchTaskName)
+                taskMgr.doMethodLater(SCMenu.SpeedChatRolloverTolerance,
+                                      doActiveMemberSwitch,
+                                      self.ActiveMemberSwitchTaskName)
                 self.activeCandidate = member
             else:
                 self._SCMenu__setActiveMember(member)
@@ -276,7 +264,6 @@ class SCMenu(SCObject, NodePath):
             self.privScheduleFinalize()
 
     def privScheduleFinalize(self):
-
         def finalizeMenu(task, self=self):
             self.finalize()
             return Task.done
@@ -385,8 +372,7 @@ class SCMenu(SCObject, NodePath):
             self._SCMenu__members = list(self._SCMenu__members)
 
         self._SCMenu__members.append(element)
-        self.privMemberListChanged(added=[
-            element])
+        self.privMemberListChanged(added=[element])
 
     def extend(self, elements):
         self += elements
@@ -406,9 +392,7 @@ class SCMenu(SCObject, NodePath):
 
         removedMember = self._SCMenu__members[index]
         self._SCMenu__members[index] = value
-        self.privMemberListChanged(added=[
-            value], removed=[
-            removedMember])
+        self.privMemberListChanged(added=[value], removed=[removedMember])
 
     def __delitem__(self, index):
         if isinstance(self._SCMenu__members, types.TupleType):
@@ -416,8 +400,7 @@ class SCMenu(SCObject, NodePath):
 
         removedMember = self._SCMenu__members[index]
         del self._SCMenu__members[index]
-        self.privMemberListChanged(removed=[
-            removedMember])
+        self.privMemberListChanged(removed=[removedMember])
 
     def __getslice__(self, i, j):
         if isinstance(self._SCMenu__members, types.TupleType):

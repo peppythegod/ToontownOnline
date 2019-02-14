@@ -26,5 +26,4 @@ class DistributedBankMgr(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.delete(self)
 
     def d_transferMoney(self, amount):
-        self.sendUpdate('transferMoney', [
-            amount])
+        self.sendUpdate('transferMoney', [amount])

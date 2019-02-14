@@ -6,14 +6,13 @@ import HTTPUtil
 class RemoteValueSet:
     notify = DirectNotifyGlobal.directNotify.newCategory('RemoteValueSet')
 
-    def __init__(
-            self,
-            url,
-            http,
-            body='',
-            expectedHeader=None,
-            expectedFields=[],
-            onUnexpectedResponse=None):
+    def __init__(self,
+                 url,
+                 http,
+                 body='',
+                 expectedHeader=None,
+                 expectedFields=[],
+                 onUnexpectedResponse=None):
         if onUnexpectedResponse is None:
             onUnexpectedResponse = self._RemoteValueSet__onUnexpectedResponse
 
@@ -44,8 +43,8 @@ class RemoteValueSet:
             if len(expectedFields):
                 if name not in expectedFields:
                     self.notify.warning(
-                        "received field '%s' that is not in expected field list" %
-                        name)
+                        "received field '%s' that is not in expected field list"
+                        % name)
 
             self.dict[name] = value
 
@@ -64,8 +63,8 @@ class RemoteValueSet:
         return key in self.dict
 
     def getBool(self, name, default=None):
-        return self._RemoteValueSet__getValue(
-            name, lambda x: int(x) != 0, default)
+        return self._RemoteValueSet__getValue(name, lambda x: int(x) != 0,
+                                              default)
 
     def getInt(self, name, default=None):
         return self._RemoteValueSet__getValue(name, int, default)

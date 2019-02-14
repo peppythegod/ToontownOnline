@@ -28,121 +28,81 @@ class Street(BattlePlace.BattlePlace):
     def __init__(self, loader, parentFSM, doneEvent):
         BattlePlace.BattlePlace.__init__(self, loader, doneEvent)
         self.fsm = ClassicFSM.ClassicFSM('Street', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'walk',
-                'tunnelIn',
-                'doorIn',
-                'teleportIn',
-                'elevatorIn']),
+            State.State(
+                'start', self.enterStart, self.exitStart,
+                ['walk', 'tunnelIn', 'doorIn', 'teleportIn', 'elevatorIn']),
             State.State('walk', self.enterWalk, self.exitWalk, [
-                'push',
-                'sit',
-                'stickerBook',
-                'WaitForBattle',
-                'battle',
-                'DFA',
-                'trialerFA',
-                'doorOut',
-                'elevator',
-                'tunnelIn',
-                'tunnelOut',
-                'teleportOut',
-                'quest',
-                'stopped',
-                'fishing',
-                'purchase',
-                'died']),
-            State.State('sit', self.enterSit, self.exitSit, [
-                'walk']),
-            State.State('push', self.enterPush, self.exitPush, [
-                'walk']),
-            State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, [
-                'walk',
-                'push',
-                'sit',
-                'battle',
-                'DFA',
-                'trialerFA',
-                'doorOut',
-                'elevator',
-                'tunnelIn',
-                'tunnelOut',
-                'WaitForBattle',
-                'teleportOut',
-                'quest',
-                'stopped',
-                'fishing',
-                'purchase']),
-            State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, [
-                'battle',
-                'walk']),
-            State.State('battle', self.enterBattle, self.exitBattle, [
-                'walk',
-                'teleportOut',
-                'died']),
-            State.State('doorIn', self.enterDoorIn, self.exitDoorIn, [
-                'walk']),
-            State.State('doorOut', self.enterDoorOut, self.exitDoorOut, [
-                'walk']),
-            State.State('elevatorIn', self.enterElevatorIn, self.exitElevatorIn, [
-                'walk']),
-            State.State('elevator', self.enterElevator, self.exitElevator, [
-                'walk']),
-            State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA, [
-                'trialerFAReject',
-                'DFA']),
-            State.State('trialerFAReject', self.enterTrialerFAReject, self.exitTrialerFAReject, [
-                'walk']),
-            State.State('DFA', self.enterDFA, self.exitDFA, [
-                'DFAReject',
-                'teleportOut',
-                'tunnelOut']),
-            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, [
-                'walk']),
-            State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
-                'walk',
-                'teleportOut',
-                'quietZone',
-                'WaitForBattle',
-                'battle']),
-            State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, [
-                'teleportIn',
-                'quietZone',
-                'WaitForBattle']),
-            State.State('died', self.enterDied, self.exitDied, [
-                'quietZone']),
-            State.State('tunnelIn', self.enterTunnelIn, self.exitTunnelIn, [
-                'walk']),
-            State.State('tunnelOut', self.enterTunnelOut, self.exitTunnelOut, [
-                'final']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'teleportIn']),
-            State.State('quest', self.enterQuest, self.exitQuest, [
-                'walk',
-                'stopped']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk']),
-            State.State('fishing', self.enterFishing, self.exitFishing, [
-                'walk']),
-            State.State('purchase', self.enterPurchase, self.exitPurchase, [
-                'walk']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+                'push', 'sit', 'stickerBook', 'WaitForBattle', 'battle', 'DFA',
+                'trialerFA', 'doorOut', 'elevator', 'tunnelIn', 'tunnelOut',
+                'teleportOut', 'quest', 'stopped', 'fishing', 'purchase',
+                'died'
+            ]),
+            State.State('sit', self.enterSit, self.exitSit, ['walk']),
+            State.State('push', self.enterPush, self.exitPush, ['walk']),
+            State.State(
+                'stickerBook', self.enterStickerBook, self.exitStickerBook, [
+                    'walk', 'push', 'sit', 'battle', 'DFA', 'trialerFA',
+                    'doorOut', 'elevator', 'tunnelIn', 'tunnelOut',
+                    'WaitForBattle', 'teleportOut', 'quest', 'stopped',
+                    'fishing', 'purchase'
+                ]),
+            State.State('WaitForBattle', self.enterWaitForBattle,
+                        self.exitWaitForBattle, ['battle', 'walk']),
+            State.State('battle', self.enterBattle, self.exitBattle,
+                        ['walk', 'teleportOut', 'died']),
+            State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk']),
+            State.State('doorOut', self.enterDoorOut, self.exitDoorOut,
+                        ['walk']),
+            State.State('elevatorIn', self.enterElevatorIn,
+                        self.exitElevatorIn, ['walk']),
+            State.State('elevator', self.enterElevator, self.exitElevator,
+                        ['walk']),
+            State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA,
+                        ['trialerFAReject', 'DFA']),
+            State.State('trialerFAReject', self.enterTrialerFAReject,
+                        self.exitTrialerFAReject, ['walk']),
+            State.State('DFA', self.enterDFA, self.exitDFA,
+                        ['DFAReject', 'teleportOut', 'tunnelOut']),
+            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject,
+                        ['walk']),
+            State.State(
+                'teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
+                    'walk', 'teleportOut', 'quietZone', 'WaitForBattle',
+                    'battle'
+                ]),
+            State.State('teleportOut', self.enterTeleportOut,
+                        self.exitTeleportOut,
+                        ['teleportIn', 'quietZone', 'WaitForBattle']),
+            State.State('died', self.enterDied, self.exitDied, ['quietZone']),
+            State.State('tunnelIn', self.enterTunnelIn, self.exitTunnelIn,
+                        ['walk']),
+            State.State('tunnelOut', self.enterTunnelOut, self.exitTunnelOut,
+                        ['final']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['teleportIn']),
+            State.State('quest', self.enterQuest, self.exitQuest,
+                        ['walk', 'stopped']),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk']),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk']),
+            State.State('fishing', self.enterFishing, self.exitFishing,
+                        ['walk']),
+            State.State('purchase', self.enterPurchase, self.exitPurchase,
+                        ['walk']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
         self.parentFSM = parentFSM
         self.tunnelOriginList = []
         self.elevatorDoneEvent = 'elevatorDone'
         self.halloweenLights = []
 
     def enter(self, requestStatus, visibilityFlag=1, arrowsOn=1):
-        teleportDebug(requestStatus, 'Street.enter(%s)' % (requestStatus,))
+        teleportDebug(requestStatus, 'Street.enter(%s)' % (requestStatus, ))
         self._ttfToken = None
         self.fsm.enterInitialState()
         base.playMusic(
-            self.loader.music,
-            looping=1,
-            volume=0.80000000000000004)
+            self.loader.music, looping=1, volume=0.80000000000000004)
         self.loader.geom.reparentTo(render)
         if visibilityFlag:
             self.visibilityOn()
@@ -163,42 +123,34 @@ class Street(BattlePlace.BattlePlace):
         newsManager = base.cr.newsManager
         if newsManager:
             holidayIds = base.cr.newsManager.getDecorationHolidayId()
-            if (ToontownGlobals.HALLOWEEN_COSTUMES in holidayIds or ToontownGlobals.SPOOKY_COSTUMES in holidayIds) and self.loader.hood.spookySkyFile:
+            if (ToontownGlobals.HALLOWEEN_COSTUMES in holidayIds
+                    or ToontownGlobals.SPOOKY_COSTUMES in holidayIds
+                ) and self.loader.hood.spookySkyFile:
                 lightsOff = Sequence(
                     LerpColorScaleInterval(
-                        base.cr.playGame.hood.loader.geom, 0.10000000000000001, Vec4(
-                            0.55000000000000004, 0.55000000000000004, 0.65000000000000002, 1)), Func(
-                        self.loader.hood.startSpookySky))
+                        base.cr.playGame.hood.loader.geom, 0.10000000000000001,
+                        Vec4(0.55000000000000004, 0.55000000000000004,
+                             0.65000000000000002, 1)),
+                    Func(self.loader.hood.startSpookySky))
                 lightsOff.start()
             else:
                 self.loader.hood.startSky()
                 lightsOn = LerpColorScaleInterval(
-                    base.cr.playGame.hood.loader.geom,
-                    0.10000000000000001,
-                    Vec4(
-                        1,
-                        1,
-                        1,
-                        1))
+                    base.cr.playGame.hood.loader.geom, 0.10000000000000001,
+                    Vec4(1, 1, 1, 1))
                 lightsOn.start()
         else:
             self.loader.hood.startSky()
             lightsOn = LerpColorScaleInterval(
-                base.cr.playGame.hood.loader.geom,
-                0.10000000000000001,
-                Vec4(
-                    1,
-                    1,
-                    1,
-                    1))
+                base.cr.playGame.hood.loader.geom, 0.10000000000000001,
+                Vec4(1, 1, 1, 1))
             lightsOn.start()
         self.accept('doorDoneEvent', self.handleDoorDoneEvent)
         self.accept('DistributedDoor_doorTrigger', self.handleDoorTrigger)
         self.enterZone(requestStatus['zoneId'])
         self.tunnelOriginList = base.cr.hoodMgr.addLinkTunnelHooks(
             self, self.loader.nodeList, self.zoneId)
-        self.fsm.request(requestStatus['how'], [
-            requestStatus])
+        self.fsm.request(requestStatus['how'], [requestStatus])
         self.replaceStreetSignTextures()
 
     def exit(self, visibilityFlag=1):
@@ -235,9 +187,7 @@ class Street(BattlePlace.BattlePlace):
 
     def enterElevatorIn(self, requestStatus):
         self._eiwbTask = taskMgr.add(
-            Functor(
-                self._elevInWaitBldgTask,
-                requestStatus['bldgDoId']),
+            Functor(self._elevInWaitBldgTask, requestStatus['bldgDoId']),
             uniqueName('elevInWaitBldg'))
 
     def _elevInWaitBldgTask(self, bldgDoId, task):
@@ -259,8 +209,7 @@ class Street(BattlePlace.BattlePlace):
         base.localAvatar.cantLeaveGame = 1
         self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
         self.elevator = Elevator.Elevator(
-            self.fsm.getStateNamed('elevator'),
-            self.elevatorDoneEvent,
+            self.fsm.getStateNamed('elevator'), self.elevatorDoneEvent,
             distElevator)
         self.elevator.load()
         self.elevator.enter()
@@ -273,16 +222,15 @@ class Street(BattlePlace.BattlePlace):
         del self.elevator
 
     def detectedElevatorCollision(self, distElevator):
-        self.fsm.request('elevator', [
-            distElevator])
+        self.fsm.request('elevator', [distElevator])
 
     def handleElevatorDone(self, doneStatus):
         self.notify.debug('handling elevator done event')
         where = doneStatus['where']
         if where == 'reject':
             if hasattr(
-                    base.localAvatar,
-                    'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                    base.localAvatar, 'elevatorNotifier'
+            ) and base.localAvatar.elevatorNotifier.isNotifierOpen():
                 pass
             else:
                 self.fsm.request('walk')
@@ -292,19 +240,16 @@ class Street(BattlePlace.BattlePlace):
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleElevatorDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleElevatorDone')
 
     def enterTunnelIn(self, requestStatus):
         self.enterZone(requestStatus['zoneId'])
         BattlePlace.BattlePlace.enterTunnelIn(self, requestStatus)
 
     def enterTeleportIn(self, requestStatus):
-        teleportDebug(
-            requestStatus, 'Street.enterTeleportIn(%s)' %
-            (requestStatus,))
+        teleportDebug(requestStatus,
+                      'Street.enterTeleportIn(%s)' % (requestStatus, ))
         zoneId = requestStatus['zoneId']
         self._ttfToken = self.addSetZoneCompleteCallback(
             Functor(self._teleportToFriend, requestStatus))
@@ -326,7 +271,8 @@ class Street(BattlePlace.BattlePlace):
                     'shardId': None,
                     'loader': 'safeZoneLoader',
                     'where': 'playground',
-                    'avId': avId}
+                    'avId': avId
+                }
                 self.fsm.request('final')
                 self._Street__teleportOutDone(requestStatus)
 
@@ -348,11 +294,10 @@ class Street(BattlePlace.BattlePlace):
         shardId = requestStatus['shardId']
         if hoodId == self.loader.hood.id and shardId is None:
             if zoneId == self.zoneId:
-                self.fsm.request('teleportIn', [
-                    requestStatus])
-            elif requestStatus['where'] == 'street' and ZoneUtil.getBranchZone(zoneId) == self.loader.branchZone:
-                self.fsm.request('quietZone', [
-                    requestStatus])
+                self.fsm.request('teleportIn', [requestStatus])
+            elif requestStatus['where'] == 'street' and ZoneUtil.getBranchZone(
+                    zoneId) == self.loader.branchZone:
+                self.fsm.request('quietZone', [requestStatus])
             else:
                 self.doneStatus = requestStatus
                 messenger.send(self.doneEvent)
@@ -370,8 +315,7 @@ class Street(BattlePlace.BattlePlace):
         self.ignore('setLocalEstateZone')
         self.doneStatus['avId'] = -1
         self.doneStatus['zoneId'] = self.getZoneId()
-        self.fsm.request('teleportIn', [
-            self.doneStatus])
+        self.fsm.request('teleportIn', [self.doneStatus])
         return Task.done
 
     def renameFloorPolys(self, nodeList):
@@ -482,9 +426,7 @@ class Street(BattlePlace.BattlePlace):
                     sign.setTexture(signTexture, 1)
 
                 if inDreamland:
-                    sign.setColorScale(
-                        0.52500000000000002,
-                        0.52500000000000002,
-                        0.52500000000000002,
-                        1)
+                    sign.setColorScale(0.52500000000000002,
+                                       0.52500000000000002,
+                                       0.52500000000000002, 1)
                     continue

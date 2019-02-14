@@ -8,20 +8,19 @@ from direct.task import Task
 
 
 class DistributedBoatAI(DistributedObjectAI.DistributedObjectAI):
-
     def __init__(self, air):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.fsm = ClassicFSM.ClassicFSM('DistributedBoatAI', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'DockedEast']),
-            State.State('DockedEast', self.enterDockedEast, self.exitDockedEast, [
-                'SailingWest']),
-            State.State('SailingWest', self.enterSailingWest, self.exitSailingWest, [
-                'DockedWest']),
-            State.State('DockedWest', self.enterDockedWest, self.exitDockedWest, [
-                'SailingEast']),
-            State.State('SailingEast', self.enterSailingEast, self.exitSailingEast, [
-                'DockedEast'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['DockedEast']),
+            State.State('DockedEast', self.enterDockedEast,
+                        self.exitDockedEast, ['SailingWest']),
+            State.State('SailingWest', self.enterSailingWest,
+                        self.exitSailingWest, ['DockedWest']),
+            State.State('DockedWest', self.enterDockedWest,
+                        self.exitDockedWest, ['SailingEast']),
+            State.State('SailingEast', self.enterSailingEast,
+                        self.exitSailingEast, ['DockedEast'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def delete(self):
@@ -29,15 +28,15 @@ class DistributedBoatAI(DistributedObjectAI.DistributedObjectAI):
         DistributedObjectAI.DistributedObjectAI.delete(self)
 
     def b_setState(self, state):
-        self.sendUpdate('setState', [
-            state,
-            globalClockDelta.getRealNetworkTime()])
+        self.sendUpdate('setState',
+                        [state, globalClockDelta.getRealNetworkTime()])
         self.fsm.request(state)
 
     def getState(self):
         return [
             self.fsm.getCurrentState().getName(),
-            globalClockDelta.getRealNetworkTime()]
+            globalClockDelta.getRealNetworkTime()
+        ]
 
     def start(self):
         self.b_setState('DockedEast')
@@ -49,10 +48,8 @@ class DistributedBoatAI(DistributedObjectAI.DistributedObjectAI):
         pass
 
     def enterDockedEast(self):
-        taskMgr.doMethodLater(
-            10.0,
-            self._DistributedBoatAI__departEast,
-            'depart-east')
+        taskMgr.doMethodLater(10.0, self._DistributedBoatAI__departEast,
+                              'depart-east')
 
     def exitDockedEast(self):
         taskMgr.remove('depart-east')
@@ -62,10 +59,8 @@ class DistributedBoatAI(DistributedObjectAI.DistributedObjectAI):
         return Task.done
 
     def enterSailingWest(self):
-        taskMgr.doMethodLater(
-            20.0,
-            self._DistributedBoatAI__dockWest,
-            'dock-west')
+        taskMgr.doMethodLater(20.0, self._DistributedBoatAI__dockWest,
+                              'dock-west')
 
     def exitSailingWest(self):
         taskMgr.remove('dock-west')
@@ -75,10 +70,8 @@ class DistributedBoatAI(DistributedObjectAI.DistributedObjectAI):
         return Task.done
 
     def enterDockedWest(self):
-        taskMgr.doMethodLater(
-            10.0,
-            self._DistributedBoatAI__departWest,
-            'depart-west')
+        taskMgr.doMethodLater(10.0, self._DistributedBoatAI__departWest,
+                              'depart-west')
 
     def exitDockedWest(self):
         taskMgr.remove('depart-west')
@@ -88,10 +81,8 @@ class DistributedBoatAI(DistributedObjectAI.DistributedObjectAI):
         return Task.done
 
     def enterSailingEast(self):
-        taskMgr.doMethodLater(
-            20.0,
-            self._DistributedBoatAI__dockEast,
-            'dock-east')
+        taskMgr.doMethodLater(20.0, self._DistributedBoatAI__dockEast,
+                              'dock-east')
 
     def exitSailingEast(self):
         taskMgr.remove('dock-east')

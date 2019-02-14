@@ -50,7 +50,7 @@ class MintManagerAI(DirectObject.DirectObject):
                         (roomId, roomName, mintId))
 
         mintZone = self.air.allocateZone()
-        mint = DistributedMintAI.DistributedMintAI(
-            self.air, mintId, mintZone, floor, players)
+        mint = DistributedMintAI.DistributedMintAI(self.air, mintId, mintZone,
+                                                   floor, players)
         mint.generateWithRequired(mintZone)
         return mintZone

@@ -6,7 +6,8 @@ from direct.directnotify import DirectNotifyGlobal
 SFX = PythonUtil.Enum('poof, magic')
 SFXPATHS = {
     SFX.poof: 'phase_4/audio/sfx/firework_distance_02.mp3',
-    SFX.magic: 'phase_4/audio/sfx/SZ_DD_treasure.mp3'}
+    SFX.magic: 'phase_4/audio/sfx/SZ_DD_treasure.mp3'
+}
 
 
 class DustCloud(NodePath):
@@ -34,7 +35,6 @@ class DustCloud(NodePath):
         self.hide()
 
     def createTrack(self, rate=24):
-
         def getSoundFuncIfAble(soundId):
             sound = DustCloud.sounds.get(soundId)
             if self.wantSound and sound:
@@ -48,26 +48,15 @@ class DustCloud(NodePath):
 
         tflipDuration = self.seqNode.getNumChildren() / float(rate)
         self.track = Sequence(
-            Func(
-                self.show),
-            Func(
-                self.messaging),
-            Func(
-                self.seqNode.play,
-                0,
-                self.seqNode.getNumFrames() -
-                1),
-            Func(
-                self.seqNode.setFrameRate,
-                rate),
-            Func(
-                getSoundFuncIfAble(
-                    SFX.poof)),
+            Func(self.show),
+            Func(self.messaging),
+            Func(self.seqNode.play, 0,
+                 self.seqNode.getNumFrames() - 1),
+            Func(self.seqNode.setFrameRate, rate),
+            Func(getSoundFuncIfAble(SFX.poof)),
             Wait(tflipDuration),
-            Func(
-                self._resetTrack),
-            name='dustCloud-track-%d' %
-            self.trackId)
+            Func(self._resetTrack),
+            name='dustCloud-track-%d' % self.trackId)
 
     def _resetTrack(self):
         self.seqNode.setFrameRate(0)

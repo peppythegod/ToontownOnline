@@ -19,10 +19,8 @@ def getStageRoomReadyPostName(doId):
     return 'stageRoomReady-%s' % doId
 
 
-class DistributedStageRoom(
-        DistributedLevel.DistributedLevel,
-        StageRoomBase.StageRoomBase,
-        StageRoom.StageRoom):
+class DistributedStageRoom(DistributedLevel.DistributedLevel,
+                           StageRoomBase.StageRoomBase, StageRoom.StageRoom):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedStageRoom')
     EmulateEntrancePoint = False
@@ -154,7 +152,8 @@ class DistributedStageRoom(
             bboard.post(EditorGlobals.EditTargetPostName, self)
 
         if self.stage is not None:
-            self.stage.currentRoomName = StageRoomSpecs.CashbotStageRoomId2RoomName[self.roomId]
+            self.stage.currentRoomName = StageRoomSpecs.CashbotStageRoomId2RoomName[
+                self.roomId]
 
         def printPos(self=self):
             thisZone = self.getZoneNode(LevelConstants.UberZoneEntId)
@@ -187,9 +186,8 @@ class DistributedStageRoom(
         if hasattr(self, 'suits'):
             del self.suits
 
-        if hasattr(
-                self,
-                'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
+        if hasattr(self,
+                   'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
             self.cr.relatedObjectMgr.abortRequest(self.relatedObjectMgrRequest)
             del self.relatedObjectMgrRequest
 
@@ -244,8 +242,9 @@ class DistributedStageRoom(
 
     def __str__(self):
         if hasattr(self, 'roomId'):
-            return '%s %s: %s' % (self.__class__.__name__, self.roomId,
-                                  StageRoomSpecs.CashbotStageRoomId2RoomName[self.roomId])
+            return '%s %s: %s' % (
+                self.__class__.__name__, self.roomId,
+                StageRoomSpecs.CashbotStageRoomId2RoomName[self.roomId])
         else:
             return 'DistributedStageRoom'
 

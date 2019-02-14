@@ -9,7 +9,6 @@ from otp.avatar.ShadowCaster import ShadowCaster
 
 
 class DistributedProjectile(DistributedSmoothNode, ShadowCaster, NodePath):
-
     def __init__(self, cr):
         ShadowCaster.__init__(self)
         DistributedSmoothNode.__init__(self, cr)

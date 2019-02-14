@@ -3,16 +3,8 @@ from toontown.toonbase import ToontownBattleGlobals
 
 def genRewardDicts(entries):
     toonRewardDicts = []
-    for (
-        toonId,
-        origExp,
-        earnedExp,
-        origQuests,
-        items,
-        missedItems,
-        origMerits,
-        merits,
-            parts) in entries:
+    for (toonId, origExp, earnedExp, origQuests, items, missedItems,
+         origMerits, merits, parts) in entries:
         if toonId != -1:
             dict = {}
             toon = base.cr.doId2do.get(toonId)

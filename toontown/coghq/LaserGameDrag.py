@@ -5,16 +5,12 @@ import random
 
 
 class LaserGameDrag(LaserGameBase.LaserGameBase):
-
     def __init__(self, funcSuccess, funcFail, funcSendGrid, funcSetGrid):
-        LaserGameBase.LaserGameBase.__init__(
-            self, funcSuccess, funcFail, funcSendGrid, funcSetGrid)
+        LaserGameBase.LaserGameBase.__init__(self, funcSuccess, funcFail,
+                                             funcSendGrid, funcSetGrid)
         self.setGridSize(6, 6)
         self.blankGrid()
-        self.symbolList = [
-            16,
-            13,
-            17]
+        self.symbolList = [16, 13, 17]
 
     def win(self):
         if not self.finshed:

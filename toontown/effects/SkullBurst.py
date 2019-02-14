@@ -6,7 +6,6 @@ from EffectController import EffectController
 
 
 class SkullBurst(PooledEffect, EffectController):
-
     def __init__(self):
         PooledEffect.__init__(self)
         EffectController.__init__(self)
@@ -20,10 +19,9 @@ class SkullBurst(PooledEffect, EffectController):
         self.effectModel.reparentTo(self)
         self.effectModel.setColorScale(0, 0, 0, 0)
         self.setAttrib(
-            ColorBlendAttrib.make(
-                ColorBlendAttrib.MAdd,
-                ColorBlendAttrib.OIncomingAlpha,
-                ColorBlendAttrib.OOne))
+            ColorBlendAttrib.make(ColorBlendAttrib.MAdd,
+                                  ColorBlendAttrib.OIncomingAlpha,
+                                  ColorBlendAttrib.OOne))
         self.setBillboardPointWorld()
         self.setDepthWrite(0)
         self.setLightOff()
@@ -33,23 +31,23 @@ class SkullBurst(PooledEffect, EffectController):
         self.effectModel.setColorScale(0, 0, 0, 0)
         self.effectModel.setScale(700 * self.effectScale)
         fadeIn = self.effectModel.colorScaleInterval(
-            0.20000000000000001, Vec4(
-                self.effectColor), startColorScale=Vec4(
-                0, 0, 0, 0), blendType='easeIn')
+            0.20000000000000001,
+            Vec4(self.effectColor),
+            startColorScale=Vec4(0, 0, 0, 0),
+            blendType='easeIn')
         fadeBlast = self.effectModel.colorScaleInterval(
-            self.fadeTime, Vec4(
-                0, 0, 0, 0), startColorScale=Vec4(
-                self.effectColor), blendType='easeIn')
+            self.fadeTime,
+            Vec4(0, 0, 0, 0),
+            startColorScale=Vec4(self.effectColor),
+            blendType='easeIn')
         scaleBlast = self.effectModel.scaleInterval(
             self.fadeTime,
             850 * self.effectScale,
             startScale=750 * self.effectScale,
             blendType='easeOut')
         self.track = Sequence(
-            Wait(
-                self.startDelay), fadeIn, Parallel(
-                fadeBlast, scaleBlast), Func(
-                self.cleanUpEffect))
+            Wait(self.startDelay), fadeIn, Parallel(fadeBlast, scaleBlast),
+            Func(self.cleanUpEffect))
 
     def setEffectColor(self, color):
         self.effectColor = color

@@ -13,44 +13,38 @@ from direct.showbase import PythonUtil
 from toontown.toontowngui import TTDialog
 from toontown.toonbase import TTLocalizer
 from otp.otpbase import OTPLocalizer
-camPos50 = (Point3(0.0, -10.0, 50.0), Point3(0.0, -9.6600000000000001, 49.060000000000002),
-            Point3(0.0, 1.5, 12.380000000000001), Point3(0.0, 1.5, -3.1000000000000001), 1)
+camPos50 = (Point3(0.0, -10.0, 50.0),
+            Point3(0.0, -9.6600000000000001, 49.060000000000002),
+            Point3(0.0, 1.5, 12.380000000000001),
+            Point3(0.0, 1.5, -3.1000000000000001), 1)
 camPos40 = (Point3(0.0, -15.0, 40.0), Point3(0.0, -14.5, 39.130000000000003),
-            Point3(0.0, 1.5, 12.380000000000001), Point3(0.0, 1.5, -3.1000000000000001), 1)
-camPos30 = (Point3(0.0, -20.0, 30.0), Point3(0.0, -19.289999999999999, 29.289999999999999),
-            Point3(0.0, 1.5, 12.380000000000001), Point3(0.0, 1.5, -3.1000000000000001), 1)
+            Point3(0.0, 1.5, 12.380000000000001),
+            Point3(0.0, 1.5, -3.1000000000000001), 1)
+camPos30 = (Point3(0.0, -20.0, 30.0),
+            Point3(0.0, -19.289999999999999, 29.289999999999999),
+            Point3(0.0, 1.5, 12.380000000000001),
+            Point3(0.0, 1.5, -3.1000000000000001), 1)
 camPos20 = (Point3(0.0, -20.0, 20.0), Point3(0.0, -19.129999999999999, 19.5),
-            Point3(0.0, 1.5, 12.380000000000001), Point3(0.0, 1.5, -3.1000000000000001), 1)
-camPosList = [
-    camPos20,
-    camPos30,
-    camPos40,
-    camPos50]
+            Point3(0.0, 1.5, 12.380000000000001),
+            Point3(0.0, 1.5, -3.1000000000000001), 1)
+camPosList = [camPos20, camPos30, camPos40, camPos50]
 DEFAULT_CAM_INDEX = 2
 NormalPickerPanelColor = (1, 0.90000000000000002, 0.745, 1)
-DisabledPickerPanelColor = (
-    0.69999999999999996,
-    0.65000000000000002,
-    0.57999999999999996,
-    1)
+DisabledPickerPanelColor = (0.69999999999999996, 0.65000000000000002,
+                            0.57999999999999996, 1)
 DeletePickerPanelColor = (1, 0.40000000000000002, 0.40000000000000002, 1)
-DisabledDeletePickerPanelColor = (
-    0.69999999999999996,
-    0.29999999999999999,
-    0.29999999999999999,
-    1)
+DisabledDeletePickerPanelColor = (0.69999999999999996, 0.29999999999999999,
+                                  0.29999999999999999, 1)
 
 
 class FurnitureItemPanel(DirectButton):
-
-    def __init__(
-            self,
-            item,
-            itemId,
-            command=None,
-            deleteMode=0,
-            withinFunc=None,
-            helpCategory=None):
+    def __init__(self,
+                 item,
+                 itemId,
+                 command=None,
+                 deleteMode=0,
+                 withinFunc=None,
+                 helpCategory=None):
         self.item = item
         self.itemId = itemId
         self.command = command
@@ -60,16 +54,13 @@ class FurnitureItemPanel(DirectButton):
             framePanelColor = DeletePickerPanelColor
         else:
             framePanelColor = NormalPickerPanelColor
-        DirectButton.__init__(self,
-                              relief=DGG.RAISED,
-                              frameSize=(-0.25,
-                                         0.25,
-                                         -0.20000000000000001,
-                                         0.20000000000000001),
-                              frameColor=framePanelColor,
-                              borderWidth=(0.02,
-                                           0.02),
-                              command=self.clicked)
+        DirectButton.__init__(
+            self,
+            relief=DGG.RAISED,
+            frameSize=(-0.25, 0.25, -0.20000000000000001, 0.20000000000000001),
+            frameColor=framePanelColor,
+            borderWidth=(0.02, 0.02),
+            command=self.clicked)
         if self.deleteMode:
             helpCategory = 'FurnitureItemPanelDelete'
 
@@ -110,18 +101,11 @@ class FurnitureItemPanel(DirectButton):
         self.nameLabel = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                0.17000000000000001),
+            pos=(0, 0, 0.17000000000000001),
             scale=0.45000000000000001,
             text=text,
             text_scale=0.14999999999999999,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(0, 0, 0, 1),
             text_pos=text_pos,
             text_font=ToontownGlobals.getInterfaceFont(),
             text_wordwrap=panelWidth)
@@ -153,9 +137,10 @@ class FurnitureItemPanel(DirectButton):
         if category is None:
             category = self.origHelpCategory
 
-        self.bind(DGG.ENTER, base.cr.objectManager.showHelpText, extraArgs=[
-            category,
-            self.item.getName()])
+        self.bind(
+            DGG.ENTER,
+            base.cr.objectManager.showHelpText,
+            extraArgs=[category, self.item.getName()])
         self.bind(DGG.EXIT, base.cr.objectManager.hideHelpText)
 
     def setDeleteMode(self, deleteMode):
@@ -189,7 +174,6 @@ class FurnitureItemPanel(DirectButton):
 
 
 class MovableObject(NodePath, DirectObject):
-
     def __init__(self, dfitem, parent=render):
         NodePath.__init__(self)
         self.assign(dfitem)
@@ -325,43 +309,28 @@ class MovableObject(NodePath, DirectObject):
         cn.setIntoCollideMask(ToontownGlobals.FurnitureSideBitmask)
         self.collisionNodePath.attachNewNode(cn)
         cp = CollisionPolygon(
-            Point3(
-                mx, My, mz), Point3(
-                mx, my, mz), Point3(
-                mx, my, Mz), Point3(
-                    mx, My, Mz))
+            Point3(mx, My, mz), Point3(mx, my, mz), Point3(mx, my, Mz),
+            Point3(mx, My, Mz))
         cn.addSolid(cp)
         cp = CollisionPolygon(
-            Point3(
-                Mx, my, mz), Point3(
-                Mx, My, mz), Point3(
-                Mx, My, Mz), Point3(
-                    Mx, my, Mz))
+            Point3(Mx, my, mz), Point3(Mx, My, mz), Point3(Mx, My, Mz),
+            Point3(Mx, my, Mz))
         cn.addSolid(cp)
         cp = CollisionPolygon(
-            Point3(
-                mx, my, mz), Point3(
-                Mx, my, mz), Point3(
-                Mx, my, Mz), Point3(
-                    mx, my, Mz))
+            Point3(mx, my, mz), Point3(Mx, my, mz), Point3(Mx, my, Mz),
+            Point3(mx, my, Mz))
         cn.addSolid(cp)
         cp = CollisionPolygon(
-            Point3(
-                Mx, My, mz), Point3(
-                mx, My, mz), Point3(
-                mx, My, Mz), Point3(
-                    Mx, My, Mz))
+            Point3(Mx, My, mz), Point3(mx, My, mz), Point3(mx, My, Mz),
+            Point3(Mx, My, Mz))
         cn.addSolid(cp)
         if self.getIsTable():
             cn = CollisionNode('topCollisionNode')
             cn.setIntoCollideMask(ToontownGlobals.FurnitureTopBitmask)
             self.collisionNodePath.attachNewNode(cn)
             cp = CollisionPolygon(
-                Point3(
-                    mx, my, Mz), Point3(
-                    Mx, my, Mz), Point3(
-                    Mx, My, Mz), Point3(
-                    mx, My, Mz))
+                Point3(mx, my, Mz), Point3(Mx, my, Mz), Point3(Mx, My, Mz),
+                Point3(mx, My, Mz))
             cn.addSolid(cp)
 
 
@@ -386,8 +355,9 @@ class ObjectManager(NodePath, DirectObject):
         self.iSphere = SelectionSphere()
         self.houseExtents = None
         self.doorBlocker = None
-        cp = CollisionPolygon(Point3(-100, -100, 0), Point3(100, -100, 0),
-                              Point3(100, 100, 0), Point3(-100, 100, 0))
+        cp = CollisionPolygon(
+            Point3(-100, -100, 0), Point3(100, -100, 0), Point3(100, 100, 0),
+            Point3(-100, 100, 0))
         cn = CollisionNode('dragCollisionNode')
         cn.addSolid(cp)
         cn.setIntoCollideMask(ToontownGlobals.FurnitureDragBitmask)
@@ -448,30 +418,23 @@ class ObjectManager(NodePath, DirectObject):
         self._ObjectManager__updateDeleteButtons()
         self.showAtticPicker()
         base.localAvatar.laffMeter.stop()
-        base.setCellsAvailable(base.leftCells + [
-            base.bottomCells[0]], 0)
+        base.setCellsAvailable(base.leftCells + [base.bottomCells[0]], 0)
         if self.guiInterval:
             self.guiInterval.finish()
 
         self.guiInterval = self.furnitureGui.posHprScaleInterval(
             1.0,
-            Point3(
-                -1.1599999999999999,
-                1,
-                -0.029999999999999999),
+            Point3(-1.1599999999999999, 1, -0.029999999999999999),
             Vec3(0),
             Vec3(0.059999999999999998),
-            startPos=Point3(
-                -1.1899999999999999,
-                1,
-                0.33000000000000002),
+            startPos=Point3(-1.1899999999999999, 1, 0.33000000000000002),
             startHpr=Vec3(0),
             startScale=Vec3(0.040000000000000001),
             blendType='easeInOut',
             name='lerpFurnitureButton')
         self.guiInterval.start()
-        taskMgr.add(self.recenterButtonFrameTask,
-                    'recenterButtonFrameTask', 10)
+        taskMgr.add(self.recenterButtonFrameTask, 'recenterButtonFrameTask',
+                    10)
         messenger.send('wakeup')
 
     def exitFurnitureMode(self, furnitureManager):
@@ -506,8 +469,7 @@ class ObjectManager(NodePath, DirectObject):
 
         self._ObjectManager__cleanupVerifyDelete()
         self.furnitureGui.hide()
-        base.setCellsAvailable(base.leftCells + [
-            base.bottomCells[0]], 1)
+        base.setCellsAvailable(base.leftCells + [base.bottomCells[0]], 1)
         base.localAvatar.laffMeter.start()
         taskMgr.remove('recenterButtonFrameTask')
         self.cleanupDialog()
@@ -544,10 +506,7 @@ class ObjectManager(NodePath, DirectObject):
         targetH = ROUND_TO(toonH, 90)
         base.localAvatar.hprInterval(
             duration=1,
-            hpr=Vec3(
-                targetH,
-                0,
-                0),
+            hpr=Vec3(targetH, 0, 0),
             other=self.targetNodePath,
             blendType='easeInOut',
             name='editModeTransition').start()
@@ -573,8 +532,7 @@ class ObjectManager(NodePath, DirectObject):
     def pickObject(self):
         self.iRay.setParentNP(base.cam)
         entry = self.iRay.pickGeom(
-            targetNodePath=self.targetNodePath,
-            skipFlags=SKIP_ALL)
+            targetNodePath=self.targetNodePath, skipFlags=SKIP_ALL)
         if entry:
             nodePath = entry.getIntoNodePath()
             if self.isMovableObject(nodePath):
@@ -645,15 +603,15 @@ class ObjectManager(NodePath, DirectObject):
                 object.unstashBuiltInCollisionNodes()
 
             self.centerMarker['image'] = [
-                self.grabUp,
-                self.grabDown,
-                self.grabRollover]
+                self.grabUp, self.grabDown, self.grabRollover
+            ]
             self.centerMarker.configure(
-                text=[
-                    '', TTLocalizer.HDMoveLabel], text_pos=(
-                    0, 1), text_scale=0.69999999999999996, text_fg=(
-                    1, 1, 1, 1), text_shadow=(
-                    0, 0, 0, 1), image_scale=0.29999999999999999)
+                text=['', TTLocalizer.HDMoveLabel],
+                text_pos=(0, 1),
+                text_scale=0.69999999999999996,
+                text_fg=(1, 1, 1, 1),
+                text_shadow=(0, 0, 0, 1),
+                image_scale=0.29999999999999999)
 
     def moveObjectStart(self):
         self.moveObjectStop()
@@ -673,10 +631,12 @@ class ObjectManager(NodePath, DirectObject):
             self.startPoseValid = 0
             self.centerMarker['image'] = self.grabDown
             self.centerMarker.configure(
-                text=TTLocalizer.HDMoveLabel, text_pos=(
-                    0, 1), text_scale=0.69999999999999996, text_fg=(
-                    1, 1, 1, 1), text_shadow=(
-                    0, 0, 0, 1), image_scale=0.29999999999999999)
+                text=TTLocalizer.HDMoveLabel,
+                text_pos=(0, 1),
+                text_scale=0.69999999999999996,
+                text_fg=(1, 1, 1, 1),
+                text_shadow=(0, 0, 0, 1),
+                image_scale=0.29999999999999999)
             taskMgr.add(self.moveObjectTask, 'moveObjectTask')
             self.movingObject = 1
 
@@ -687,8 +647,9 @@ class ObjectManager(NodePath, DirectObject):
     def markNewPosition(self, isValid):
         if not isValid:
             if self.startPoseValid:
-                self.collisionOffsetNP.setPosHpr(
-                    self.startPose, self.selectedObject.dragPoint, Vec3(0))
+                self.collisionOffsetNP.setPosHpr(self.startPose,
+                                                 self.selectedObject.dragPoint,
+                                                 Vec3(0))
 
         else:
             self.startPoseValid = 1
@@ -714,18 +675,14 @@ class ObjectManager(NodePath, DirectObject):
             self.collisionOffsetNP.iPosHpr()
         if self.gridSpacing:
             pos = self.dragPointNP.getPos(target)
-            self.gridSnapNP.setPos(
-                target, ROUND_TO(
-                    pos[0], self.gridSpacing), ROUND_TO(
-                    pos[1], self.gridSpacing), pos[2])
+            self.gridSnapNP.setPos(target, ROUND_TO(pos[0], self.gridSpacing),
+                                   ROUND_TO(pos[1], self.gridSpacing), pos[2])
 
         self.iRay.setParentNP(base.cam)
         entry = self.iRay.pickBitMask3D(
             bitMask=so.getWallBitmask(),
             targetNodePath=target,
-            dir=Vec3(
-                self.getNearProjectionPoint(
-                    self.gridSnapNP)),
+            dir=Vec3(self.getNearProjectionPoint(self.gridSnapNP)),
             skipFlags=SKIP_BACKFACE | SKIP_CAMERA | SKIP_UNPICKABLE)
         fWall = 0
         if not so.getOnTable():
@@ -745,28 +702,25 @@ class ObjectManager(NodePath, DirectObject):
 
         self.iRay.setParentNP(target)
         entry = self.iRay.pickBitMask3D(
-            bitMask=so.getFloorBitmask(), targetNodePath=target, origin=Point3(
-                self.gridSnapNP.getPos(target) + Vec3(
-                    0, 0, 10)), dir=Vec3(
-                0, 0, -1), skipFlags=SKIP_BACKFACE | SKIP_CAMERA | SKIP_UNPICKABLE)
+            bitMask=so.getFloorBitmask(),
+            targetNodePath=target,
+            origin=Point3(self.gridSnapNP.getPos(target) + Vec3(0, 0, 10)),
+            dir=Vec3(0, 0, -1),
+            skipFlags=SKIP_BACKFACE | SKIP_CAMERA | SKIP_UNPICKABLE)
         if not entry:
             self.markNewPosition(0)
             return Task.cont
 
         nodePath = entry.getIntoNodePath()
         if self.isMovableObject(nodePath):
-            self.gridSnapNP.setPos(
-                target, Point3(
-                    entry.getSurfacePoint(target)))
+            self.gridSnapNP.setPos(target, Point3(
+                entry.getSurfacePoint(target)))
         else:
             self.gridSnapNP.setPos(
                 target,
                 Point3(
                     entry.getSurfacePoint(target) +
-                    Vec3(
-                        0,
-                        0,
-                        ToontownGlobals.FloorOffset)))
+                    Vec3(0, 0, ToontownGlobals.FloorOffset)))
             if not fWall:
                 self.iSphere.setParentNP(self.gridSnapNP)
                 self.iSphere.setCenterRadius(0, Point3(0), so.radius * 1.25)
@@ -799,8 +753,8 @@ class ObjectManager(NodePath, DirectObject):
 
                 offsetDict[eid] = maxOffsetVec
 
-            entry = self.iSegment.findNextCollisionEntry(
-                skipFlags=SKIP_CAMERA | SKIP_UNPICKABLE)
+            entry = self.iSegment.findNextCollisionEntry(skipFlags=SKIP_CAMERA
+                                                         | SKIP_UNPICKABLE)
         if offsetDict:
             keys = offsetDict.keys()
             ortho1 = offsetDict[keys[0]]
@@ -844,30 +798,26 @@ class ObjectManager(NodePath, DirectObject):
 
         self.iSegment4.setParentNP(so)
         entry = self.iSegment4.pickBitMask(
-            bitMask=so.getWallBitmask(), targetNodePath=target, endPointList=[
-                (so.c0, Point3(
-                    m.xformPoint(
-                        so.c0))), (so.c1, Point3(
-                            m.xformPoint(
-                                so.c1))), (so.c2, Point3(
-                                    m.xformPoint(
-                                        so.c2))), (so.c3, Point3(
-                                            m.xformPoint(
-                                                so.c3)))], skipFlags=SKIP_CAMERA | SKIP_UNPICKABLE)
+            bitMask=so.getWallBitmask(),
+            targetNodePath=target,
+            endPointList=[(so.c0, Point3(m.xformPoint(so.c0))),
+                          (so.c1, Point3(m.xformPoint(so.c1))),
+                          (so.c2, Point3(m.xformPoint(so.c2))),
+                          (so.c3, Point3(m.xformPoint(so.c3)))],
+            skipFlags=SKIP_CAMERA | SKIP_UNPICKABLE)
         maxLen = 0
         maxOffset = None
         while entry:
             offset = Vec3(
-                entry.getSurfacePoint(
-                    entry.getFromNodePath()) -
+                entry.getSurfacePoint(entry.getFromNodePath()) -
                 entry.getFrom().getPointA())
             offsetLen = Vec3(offset).length()
             if offsetLen > maxLen:
                 maxLen = offsetLen
                 maxOffset = offset
 
-            entry = self.iSegment4.findNextCollisionEntry(
-                skipFlags=SKIP_CAMERA | SKIP_UNPICKABLE)
+            entry = self.iSegment4.findNextCollisionEntry(skipFlags=SKIP_CAMERA
+                                                          | SKIP_UNPICKABLE)
         if maxOffset:
             self.collisionOffsetNP.setPos(self.collisionOffsetNP, maxOffset)
 
@@ -882,19 +832,8 @@ class ObjectManager(NodePath, DirectObject):
         entry = self.iSegment.pickBitMask(
             bitMask=so.getWallBitmask(),
             targetNodePath=self.targetNodePath,
-            endPointList=[
-                (so.c0,
-                 so.c1),
-                (so.c1,
-                 so.c2),
-                (so.c2,
-                 so.c3),
-                (so.c3,
-                 so.c0),
-                (so.c0,
-                 so.c2),
-                (so.c1,
-                 so.c3)],
+            endPointList=[(so.c0, so.c1), (so.c1, so.c2), (so.c2, so.c3),
+                          (so.c3, so.c0), (so.c0, so.c2), (so.c1, so.c3)],
             skipFlags=SKIP_CAMERA | SKIP_UNPICKABLE)
         return entry
 
@@ -1013,10 +952,8 @@ class ObjectManager(NodePath, DirectObject):
         so.dfitem.stopAdjustPosHpr()
 
     def moveObjectInit(self):
-        self.dragPointNP.setPosHpr(
-            self.selectedObject,
-            self.selectedObject.dragPoint,
-            Vec3(0))
+        self.dragPointNP.setPosHpr(self.selectedObject,
+                                   self.selectedObject.dragPoint, Vec3(0))
         self.gridSnapNP.iPosHpr()
         self.collisionOffsetNP.iPosHpr()
         self.selectedObject.wrtReparentTo(self.collisionOffsetNP)
@@ -1063,27 +1000,12 @@ class ObjectManager(NodePath, DirectObject):
         self.grabRollover = guiModels.find('**/handrollover')
         self.centerMarker = DirectButton(
             parent=self.buttonFrame,
-            text=[
-                '',
-                TTLocalizer.HDMoveLabel],
-            text_pos=(
-                0,
-                1),
+            text=['', TTLocalizer.HDMoveLabel],
+            text_pos=(0, 1),
             text_scale=0.69999999999999996,
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            image=[
-                self.grabUp,
-                self.grabDown,
-                self.grabRollover],
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            image=[self.grabUp, self.grabDown, self.grabRollover],
             image_scale=0.29999999999999999,
             relief=None,
             scale=0.12)
@@ -1093,29 +1015,45 @@ class ObjectManager(NodePath, DirectObject):
         guiCCWArrowDown = guiModels.find('**/LarrowDown')
         guiCCWArrowRollover = guiModels.find('**/LarrowRollover')
         self.rotateLeftButton = DirectButton(
-            parent=self.buttonFrame, relief=None, image=(
-                guiCCWArrowUp, guiCCWArrowDown, guiCCWArrowRollover, guiCCWArrowUp), image_pos=(
-                0, 0, 0.10000000000000001), image_scale=0.14999999999999999, image3_color=Vec4(
-                0.5, 0.5, 0.5, 0.75), text=(
-                    '', TTLocalizer.HDRotateCCWLabel, TTLocalizer.HDRotateCCWLabel, ''), text_pos=(
-                        0.13500000000000001, -0.10000000000000001), text_scale=0.10000000000000001, text_align=TextNode.ARight, text_fg=(
-                            1, 1, 1, 1), text_shadow=(
-                                0, 0, 0, 1), pos=(
-                                    -0.125, 0, -0.20000000000000001), scale=0.69999999999999996, command=self.rotateLeft)
+            parent=self.buttonFrame,
+            relief=None,
+            image=(guiCCWArrowUp, guiCCWArrowDown, guiCCWArrowRollover,
+                   guiCCWArrowUp),
+            image_pos=(0, 0, 0.10000000000000001),
+            image_scale=0.14999999999999999,
+            image3_color=Vec4(0.5, 0.5, 0.5, 0.75),
+            text=('', TTLocalizer.HDRotateCCWLabel,
+                  TTLocalizer.HDRotateCCWLabel, ''),
+            text_pos=(0.13500000000000001, -0.10000000000000001),
+            text_scale=0.10000000000000001,
+            text_align=TextNode.ARight,
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            pos=(-0.125, 0, -0.20000000000000001),
+            scale=0.69999999999999996,
+            command=self.rotateLeft)
         self.rotateLeftButton.bind(DGG.EXIT, self.enableButtonFrameTask)
         guiCWArrowUp = guiModels.find('**/RarrowUp')
         guiCWArrowDown = guiModels.find('**/RarrowDown')
         guiCWArrowRollover = guiModels.find('**/RarrowRollover')
         self.rotateRightButton = DirectButton(
-            parent=self.buttonFrame, relief=None, image=(
-                guiCWArrowUp, guiCWArrowDown, guiCWArrowRollover, guiCWArrowUp), image_pos=(
-                0, 0, 0.10000000000000001), image_scale=0.14999999999999999, image3_color=Vec4(
-                0.5, 0.5, 0.5, 0.75), text=(
-                    '', TTLocalizer.HDRotateCWLabel, TTLocalizer.HDRotateCWLabel, ''), text_pos=(
-                        -0.13500000000000001, -0.10000000000000001), text_scale=0.10000000000000001, text_align=TextNode.ALeft, text_fg=(
-                            1, 1, 1, 1), text_shadow=(
-                                0, 0, 0, 1), pos=(
-                                    0.125, 0, -0.20000000000000001), scale=0.69999999999999996, command=self.rotateRight)
+            parent=self.buttonFrame,
+            relief=None,
+            image=(guiCWArrowUp, guiCWArrowDown, guiCWArrowRollover,
+                   guiCWArrowUp),
+            image_pos=(0, 0, 0.10000000000000001),
+            image_scale=0.14999999999999999,
+            image3_color=Vec4(0.5, 0.5, 0.5, 0.75),
+            text=('', TTLocalizer.HDRotateCWLabel, TTLocalizer.HDRotateCWLabel,
+                  ''),
+            text_pos=(-0.13500000000000001, -0.10000000000000001),
+            text_scale=0.10000000000000001,
+            text_align=TextNode.ALeft,
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            pos=(0.125, 0, -0.20000000000000001),
+            scale=0.69999999999999996,
+            command=self.rotateRight)
         self.rotateRightButton.bind(DGG.EXIT, self.enableButtonFrameTask)
         self.buttonFrame.hide()
 
@@ -1143,47 +1081,58 @@ class ObjectManager(NodePath, DirectObject):
         tNodePath.setPos(self.selectedObject.center)
         nearVec = self.getNearProjectionPoint(tNodePath)
         nearVec *= base.camLens.getFocalLength() / base.camLens.getNear()
-        render2dX = CLAMP(nearVec[0] /
-                          base.camLens.getFilmSize()[0] /
-                          2.0, -
-                          0.90000000000000002, 0.90000000000000002)
+        render2dX = CLAMP(nearVec[0] / base.camLens.getFilmSize()[0] / 2.0,
+                          -0.90000000000000002, 0.90000000000000002)
         aspect2dX = render2dX * base.getAspectRatio()
-        aspect2dZ = CLAMP(nearVec[2] /
-                          base.camLens.getFilmSize()[1] /
-                          2.0, -
-                          0.80000000000000004, 0.90000000000000002)
+        aspect2dZ = CLAMP(nearVec[2] / base.camLens.getFilmSize()[1] / 2.0,
+                          -0.80000000000000004, 0.90000000000000002)
         tNodePath.removeNode()
         return Vec3(aspect2dX, 0, aspect2dZ)
 
     def createMainControls(self, guiModels):
         attic = guiModels.find('**/attic')
-        self.furnitureGui = DirectFrame(relief=None,
-                                        pos=(-1.1899999999999999,
-                                             1,
-                                             0.33000000000000002),
-                                        scale=0.040000000000000001,
-                                        image=attic)
+        self.furnitureGui = DirectFrame(
+            relief=None,
+            pos=(-1.1899999999999999, 1, 0.33000000000000002),
+            scale=0.040000000000000001,
+            image=attic)
         bMoveStopUp = guiModels.find('**/bu_atticX/bu_attic_up')
         bMoveStopDown = guiModels.find('**/bu_atticX/bu_attic_down')
         bMoveStopRollover = guiModels.find('**/bu_atticX/bu_attic_rollover')
         self.bStopMoveFurniture = DirectButton(
-            parent=self.furnitureGui, relief=None, image=[
-                bMoveStopUp, bMoveStopDown, bMoveStopRollover, bMoveStopUp], text=[
-                '', TTLocalizer.HDStopMoveFurnitureButton, TTLocalizer.HDStopMoveFurnitureButton], text_fg=(
-                1, 1, 1, 1), text_shadow=(
-                    0, 0, 0, 1), text_font=ToontownGlobals.getInterfaceFont(), pos=(
-                        -0.29999999999999999, 0, 9.4000000000000004), command=base.localAvatar.stopMoveFurniture)
+            parent=self.furnitureGui,
+            relief=None,
+            image=[bMoveStopUp, bMoveStopDown, bMoveStopRollover, bMoveStopUp],
+            text=[
+                '', TTLocalizer.HDStopMoveFurnitureButton,
+                TTLocalizer.HDStopMoveFurnitureButton
+            ],
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_font=ToontownGlobals.getInterfaceFont(),
+            pos=(-0.29999999999999999, 0, 9.4000000000000004),
+            command=base.localAvatar.stopMoveFurniture)
         self.bindHelpText(self.bStopMoveFurniture, 'DoneMoving')
         self.atticRoof = DirectLabel(
             parent=self.furnitureGui,
             relief=None,
             image=guiModels.find('**/rooftile'))
-        self.itemBackgroundFrame = DirectFrame(parent=self.furnitureGui, relief=None, image=guiModels.find(
-            '**/item_backgroun'), image_pos=(0, 0, -22), image_scale=(1, 1, 5))
-        self.scrollUpFrame = DirectFrame(parent=self.furnitureGui, relief=None, image=guiModels.find(
-            '**/scrollup'), pos=(0, 0, -0.57999999999999996))
+        self.itemBackgroundFrame = DirectFrame(
+            parent=self.furnitureGui,
+            relief=None,
+            image=guiModels.find('**/item_backgroun'),
+            image_pos=(0, 0, -22),
+            image_scale=(1, 1, 5))
+        self.scrollUpFrame = DirectFrame(
+            parent=self.furnitureGui,
+            relief=None,
+            image=guiModels.find('**/scrollup'),
+            pos=(0, 0, -0.57999999999999996))
         self.camButtonFrame = DirectFrame(
-            parent=self.furnitureGui, relief=None, image=guiModels.find('**/low'), pos=(0, 0, -11.69))
+            parent=self.furnitureGui,
+            relief=None,
+            image=guiModels.find('**/low'),
+            pos=(0, 0, -11.69))
         tagUp = guiModels.find('**/tag_up')
         tagDown = guiModels.find('**/tag_down')
         tagRollover = guiModels.find('**/tag_rollover')
@@ -1191,17 +1140,9 @@ class ObjectManager(NodePath, DirectObject):
             parent=self.itemBackgroundFrame,
             relief=None,
             text=TTLocalizer.HDInAtticLabel,
-            text_pos=(
-                -0.10000000000000001,
-                -0.25),
-            image=[
-                tagUp,
-                tagDown,
-                tagRollover],
-            pos=(
-                2.8500000000000001,
-                0,
-                4),
+            text_pos=(-0.10000000000000001, -0.25),
+            image=[tagUp, tagDown, tagRollover],
+            pos=(2.8500000000000001, 0, 4),
             scale=0.80000000000000004,
             command=self.showAtticPicker)
         self.bindHelpText(self.inAtticButton, 'Attic')
@@ -1209,25 +1150,21 @@ class ObjectManager(NodePath, DirectObject):
             parent=self.itemBackgroundFrame,
             relief=None,
             text=TTLocalizer.HDInRoomLabel,
-            text_pos=(
-                -0.10000000000000001,
-                -0.25),
-            image=[
-                tagUp,
-                tagDown,
-                tagRollover],
-            pos=(
-                2.8500000000000001,
-                0,
-                1.1000000000000001),
+            text_pos=(-0.10000000000000001, -0.25),
+            image=[tagUp, tagDown, tagRollover],
+            pos=(2.8500000000000001, 0, 1.1000000000000001),
             scale=0.80000000000000004,
             command=self.showInRoomPicker)
         self.bindHelpText(self.inRoomButton, 'Room')
         self.inTrashButton = DirectButton(
-            parent=self.itemBackgroundFrame, relief=None, text=TTLocalizer.HDInTrashLabel, text_pos=(
-                -0.10000000000000001, -0.25), image=[
-                tagUp, tagDown, tagRollover], pos=(
-                2.8500000000000001, 0, -1.8), scale=0.80000000000000004, command=self.showInTrashPicker)
+            parent=self.itemBackgroundFrame,
+            relief=None,
+            text=TTLocalizer.HDInTrashLabel,
+            text_pos=(-0.10000000000000001, -0.25),
+            image=[tagUp, tagDown, tagRollover],
+            pos=(2.8500000000000001, 0, -1.8),
+            scale=0.80000000000000004,
+            command=self.showInTrashPicker)
         self.bindHelpText(self.inTrashButton, 'Trash')
         for i in range(4):
             self.inAtticButton.component('text%d' % i).setR(-90)
@@ -1238,81 +1175,119 @@ class ObjectManager(NodePath, DirectObject):
         backInAtticDown = guiModels.find('**/bu_backinattic_down1')
         backInAtticRollover = guiModels.find('**/bu_backinattic_rollover2')
         self.sendToAtticButton = DirectButton(
-            parent=self.furnitureGui, relief=None, pos=(
-                0.40000000000000002, 0, 12.800000000000001), text=[
-                '', TTLocalizer.HDToAtticLabel], text_fg=(
-                1, 1, 1, 1), text_shadow=(
-                    0, 0, 0, 1), text_pos=(
-                        1.2, -0.29999999999999999), image=[
-                backInAtticUp, backInAtticDown, backInAtticRollover], command=self.sendItemToAttic)
+            parent=self.furnitureGui,
+            relief=None,
+            pos=(0.40000000000000002, 0, 12.800000000000001),
+            text=['', TTLocalizer.HDToAtticLabel],
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_pos=(1.2, -0.29999999999999999),
+            image=[backInAtticUp, backInAtticDown, backInAtticRollover],
+            command=self.sendItemToAttic)
         self.sendToAtticButton.hide()
         self.bindHelpText(self.sendToAtticButton, 'SendToAttic')
         zoomInUp = guiModels.find('**/bu_RzoomOut_up')
         zoomInDown = guiModels.find('**/bu_RzoomOut_down')
         zoomInRollover = guiModels.find('**/bu_RzoomOut_rollover')
         self.zoomInButton = DirectButton(
-            parent=self.camButtonFrame, image=[
-                zoomInUp, zoomInDown, zoomInRollover], relief=None, pos=(
-                0.90000000000000002, 0, -0.75), command=self.zoomCamIn)
+            parent=self.camButtonFrame,
+            image=[zoomInUp, zoomInDown, zoomInRollover],
+            relief=None,
+            pos=(0.90000000000000002, 0, -0.75),
+            command=self.zoomCamIn)
         self.bindHelpText(self.zoomInButton, 'ZoomIn')
         zoomOutUp = guiModels.find('**/bu_LzoomIn_up')
         zoomOutDown = guiModels.find('**/bu_LzoomIn_down')
         zoomOutRollover = guiModels.find('**/buLzoomIn_rollover')
         self.zoomOutButton = DirectButton(
-            parent=self.camButtonFrame, image=[
-                zoomOutUp, zoomOutDown, zoomOutRollover], relief=None, pos=(
-                -1.3999999999999999, 0, -0.75), command=self.zoomCamOut)
+            parent=self.camButtonFrame,
+            image=[zoomOutUp, zoomOutDown, zoomOutRollover],
+            relief=None,
+            pos=(-1.3999999999999999, 0, -0.75),
+            command=self.zoomCamOut)
         self.bindHelpText(self.zoomOutButton, 'ZoomOut')
         camCCWUp = guiModels.find('**/bu_Rarrow_up1')
         camCCWDown = guiModels.find('**/bu_Rarrow_down1')
         camCCWRollover = guiModels.find('**/bu_Rarrow_orllover')
         self.rotateCamLeftButton = DirectButton(
-            parent=self.camButtonFrame, image=[
-                camCCWUp, camCCWDown, camCCWRollover], relief=None, pos=(
-                0.90000000000000002, 0, -3.0), command=self.rotateCamCCW)
+            parent=self.camButtonFrame,
+            image=[camCCWUp, camCCWDown, camCCWRollover],
+            relief=None,
+            pos=(0.90000000000000002, 0, -3.0),
+            command=self.rotateCamCCW)
         self.bindHelpText(self.rotateCamLeftButton, 'RotateLeft')
         camCWUp = guiModels.find('**/bu_Larrow_up1')
         camCWDown = guiModels.find('**/bu_Larrow_down1')
         camCWRollover = guiModels.find('**/bu_Larrow_rollover2')
         self.rotateCamRightButton = DirectButton(
-            parent=self.camButtonFrame, image=[
-                camCWUp, camCWDown, camCWRollover], relief=None, pos=(
-                -1.3999999999999999, 0, -3.0), command=self.rotateCamCW)
+            parent=self.camButtonFrame,
+            image=[camCWUp, camCWDown, camCWRollover],
+            relief=None,
+            pos=(-1.3999999999999999, 0, -3.0),
+            command=self.rotateCamCW)
         self.bindHelpText(self.rotateCamRightButton, 'RotateRight')
         trashcanGui = loader.loadModel('phase_3/models/gui/trashcan_gui')
         trashcanUp = trashcanGui.find('**/TrashCan_CLSD')
         trashcanDown = trashcanGui.find('**/TrashCan_OPEN')
         trashcanRollover = trashcanGui.find('**/TrashCan_RLVR')
         self.deleteEnterButton = DirectButton(
-            parent=self.furnitureGui, image=(
-                trashcanUp, trashcanDown, trashcanRollover, trashcanUp), text=[
-                '', TTLocalizer.InventoryDelete, TTLocalizer.InventoryDelete, ''], text_fg=(
-                1, 1, 1, 1), text_shadow=(
-                    0, 0, 0, 1), text_scale=0.10000000000000001, text_align=TextNode.ACenter, text_pos=(
-                        0, -0.12), text_font=ToontownGlobals.getInterfaceFont(), textMayChange=0, relief=None, pos=(
-                            3.7000000000000002, 0.0, -13.800000000000001), scale=7.1299999999999999, command=self.enterDeleteMode)
+            parent=self.furnitureGui,
+            image=(trashcanUp, trashcanDown, trashcanRollover, trashcanUp),
+            text=[
+                '', TTLocalizer.InventoryDelete, TTLocalizer.InventoryDelete,
+                ''
+            ],
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_scale=0.10000000000000001,
+            text_align=TextNode.ACenter,
+            text_pos=(0, -0.12),
+            text_font=ToontownGlobals.getInterfaceFont(),
+            textMayChange=0,
+            relief=None,
+            pos=(3.7000000000000002, 0.0, -13.800000000000001),
+            scale=7.1299999999999999,
+            command=self.enterDeleteMode)
         self.bindHelpText(self.deleteEnterButton, 'DeleteEnter')
         self.deleteExitButton = DirectButton(
-            parent=self.furnitureGui, image=(
-                trashcanUp, trashcanDown, trashcanRollover, trashcanUp), text=(
-                '', TTLocalizer.InventoryDone, TTLocalizer.InventoryDone, ''), text_fg=(
-                1, 1, 1, 1), text_shadow=(
-                    0, 0, 0, 1), text_scale=0.10000000000000001, text_align=TextNode.ACenter, text_pos=(
-                        0, -0.12), text_font=ToontownGlobals.getInterfaceFont(), textMayChange=0, relief=None, pos=(
-                            3.7000000000000002, 0.0, -13.800000000000001), scale=7.1299999999999999, command=self.exitDeleteMode)
+            parent=self.furnitureGui,
+            image=(trashcanUp, trashcanDown, trashcanRollover, trashcanUp),
+            text=('', TTLocalizer.InventoryDone, TTLocalizer.InventoryDone,
+                  ''),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_scale=0.10000000000000001,
+            text_align=TextNode.ACenter,
+            text_pos=(0, -0.12),
+            text_font=ToontownGlobals.getInterfaceFont(),
+            textMayChange=0,
+            relief=None,
+            pos=(3.7000000000000002, 0.0, -13.800000000000001),
+            scale=7.1299999999999999,
+            command=self.exitDeleteMode)
         self.bindHelpText(self.deleteExitButton, 'DeleteExit')
         self.deleteExitButton.hide()
-        self.trashcanBase = DirectLabel(parent=self.furnitureGui, image=guiModels.find(
-            '**/trashcan_base'), relief=None, pos=(0, 0, -11.640000000000001))
+        self.trashcanBase = DirectLabel(
+            parent=self.furnitureGui,
+            image=guiModels.find('**/trashcan_base'),
+            relief=None,
+            pos=(0, 0, -11.640000000000001))
         self.furnitureGui.hide()
         self.helpText = DirectLabel(
-            parent=self.furnitureGui, relief=DGG.SUNKEN, frameSize=(
-                -0.5, 10, -3, 0.90000000000000002), frameColor=(
-                0.20000000000000001, 0.20000000000000001, 0.20000000000000001, 0.5), borderWidth=(
-                0.01, 0.01), text='', text_wordwrap=12, text_fg=(
-                    1, 1, 1, 1), text_shadow=(
-                        0, 0, 0, 1), text_scale=0.80000000000000004, pos=(
-                            3, 0.0, -7), scale=1, text_align=TextNode.ALeft)
+            parent=self.furnitureGui,
+            relief=DGG.SUNKEN,
+            frameSize=(-0.5, 10, -3, 0.90000000000000002),
+            frameColor=(0.20000000000000001, 0.20000000000000001,
+                        0.20000000000000001, 0.5),
+            borderWidth=(0.01, 0.01),
+            text='',
+            text_wordwrap=12,
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_scale=0.80000000000000004,
+            pos=(3, 0.0, -7),
+            scale=1,
+            text_align=TextNode.ALeft)
         self.helpText.hide()
 
     def createAtticPicker(self):
@@ -1437,67 +1412,32 @@ class ObjectManager(NodePath, DirectObject):
         gui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
         picker = DirectScrolledList(
             parent=self.furnitureGui,
-            pos=(
-                -0.38,
-                0.0,
-                3),
+            pos=(-0.38, 0.0, 3),
             scale=7.125,
             relief=None,
             items=itemList,
             numItemsVisible=5,
             text=text,
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
             text_scale=0.10000000000000001,
-            text_pos=(
-                0,
-                0.40000000000000002),
-            decButton_image=(
-                gui.find('**/FndsLst_ScrollUp'),
-                gui.find('**/FndsLst_ScrollDN'),
-                gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                gui.find('**/FndsLst_ScrollUp')),
+            text_pos=(0, 0.40000000000000002),
+            decButton_image=(gui.find('**/FndsLst_ScrollUp'),
+                             gui.find('**/FndsLst_ScrollDN'),
+                             gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             gui.find('**/FndsLst_ScrollUp')),
             decButton_relief=None,
-            decButton_scale=(
-                1.5,
-                1.5,
-                1.5),
-            decButton_pos=(
-                0,
-                0,
-                0.29999999999999999),
-            decButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.10000000000000001),
-            incButton_image=(
-                gui.find('**/FndsLst_ScrollUp'),
-                gui.find('**/FndsLst_ScrollDN'),
-                gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                gui.find('**/FndsLst_ScrollUp')),
+            decButton_scale=(1.5, 1.5, 1.5),
+            decButton_pos=(0, 0, 0.29999999999999999),
+            decButton_image3_color=Vec4(1, 1, 1, 0.10000000000000001),
+            incButton_image=(gui.find('**/FndsLst_ScrollUp'),
+                             gui.find('**/FndsLst_ScrollDN'),
+                             gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             gui.find('**/FndsLst_ScrollUp')),
             incButton_relief=None,
-            incButton_scale=(
-                1.5,
-                1.5,
-                -1.5),
-            incButton_pos=(
-                0,
-                0,
-                -1.8779999999999999),
-            incButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.10000000000000001))
+            incButton_scale=(1.5, 1.5, -1.5),
+            incButton_pos=(0, 0, -1.8779999999999999),
+            incButton_image3_color=Vec4(1, 1, 1, 0.10000000000000001))
         picker.setName(name)
         picker.scrollTo(selectedIndex)
         return picker
@@ -1569,20 +1509,20 @@ class ObjectManager(NodePath, DirectObject):
             callback = PythonUtil.Functor(
                 self._ObjectManager__sendItemToAtticCallback,
                 self.selectedObject.id())
-            self.furnitureManager.moveItemToAttic(
-                self.selectedObject.dfitem, callback)
+            self.furnitureManager.moveItemToAttic(self.selectedObject.dfitem,
+                                                  callback)
             self.deselectObject()
 
     def _ObjectManager__sendItemToAtticCallback(self, objectId, retcode, item):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
-            self.notify.info(
-                'Unable to send item %s to attic, reason %s.' %
-                (item.getName(), retcode))
+            self.notify.info('Unable to send item %s to attic, reason %s.' %
+                             (item.getName(), retcode))
             return None
 
         del self.objectDict[objectId]
-        if self.selectedObject is not None and self.selectedObject.id() == objectId:
+        if self.selectedObject is not None and self.selectedObject.id(
+        ) == objectId:
             self.selectedObject.detachNode()
             self.deselectObject()
 
@@ -1657,22 +1597,21 @@ class ObjectManager(NodePath, DirectObject):
     def deleteItemFromRoom(self, dfitem, objectId, itemIndex):
         messenger.send('wakeup')
         callback = PythonUtil.Functor(
-            self._ObjectManager__deleteItemFromRoomCallback,
-            objectId,
+            self._ObjectManager__deleteItemFromRoomCallback, objectId,
             itemIndex)
         self.furnitureManager.deleteItemFromRoom(dfitem, callback)
 
-    def _ObjectManager__deleteItemFromRoomCallback(
-            self, objectId, itemIndex, retcode, item):
+    def _ObjectManager__deleteItemFromRoomCallback(self, objectId, itemIndex,
+                                                   retcode, item):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
-            self.notify.info(
-                'Unable to delete item %s from room, reason %s.' %
-                (item.getName(), retcode))
+            self.notify.info('Unable to delete item %s from room, reason %s.' %
+                             (item.getName(), retcode))
             return None
 
         del self.objectDict[objectId]
-        if self.selectedObject is not None and self.selectedObject.id() == objectId:
+        if self.selectedObject is not None and self.selectedObject.id(
+        ) == objectId:
             self.selectedObject.detachNode()
             self.deselectObject()
 
@@ -1690,15 +1629,14 @@ class ObjectManager(NodePath, DirectObject):
             self.requestDelete(item, itemIndex, self.deleteItemFromAttic)
             return None
 
-        pos = self.targetNodePath.getRelativePoint(
-            base.localAvatar, Point3(0, 2, 0))
+        pos = self.targetNodePath.getRelativePoint(base.localAvatar,
+                                                   Point3(0, 2, 0))
         hpr = Point3(0, 0, 0)
         if abs(pos[0]) > 3000 and abs(pos[1]) > 3000 or abs(pos[2]) > 300:
             self.notify.warning(
-                'bringItemFromAttic extreme pos targetNodePath=%s avatar=%s %s' %
-                (repr(
-                    self.targetNodePath.getPos(render)), repr(
-                    base.localAvatar.getPos(render)), repr(pos)))
+                'bringItemFromAttic extreme pos targetNodePath=%s avatar=%s %s'
+                % (repr(self.targetNodePath.getPos(render)),
+                   repr(base.localAvatar.getPos(render)), repr(pos)))
 
         if item.getFlags() & CatalogFurnitureItem.FLPainting:
             for object in self.objectDict.values():
@@ -1708,32 +1646,28 @@ class ObjectManager(NodePath, DirectObject):
             target = self.targetNodePath
             self.iRay.setParentNP(base.localAvatar)
             entry = self.iRay.pickBitMask3D(
-                bitMask=ToontownGlobals.WallBitmask, targetNodePath=target, origin=Point3(
-                    0, 0, 6), dir=Vec3(
-                    0, 1, 0), skipFlags=SKIP_BACKFACE | SKIP_CAMERA | SKIP_UNPICKABLE)
+                bitMask=ToontownGlobals.WallBitmask,
+                targetNodePath=target,
+                origin=Point3(0, 0, 6),
+                dir=Vec3(0, 1, 0),
+                skipFlags=SKIP_BACKFACE | SKIP_CAMERA | SKIP_UNPICKABLE)
             for object in self.objectDict.values():
                 object.unstashBuiltInCollisionNodes()
 
             if entry:
-                self.alignObject(entry, target, fClosest=0,
-                                 wallOffset=0.10000000000000001)
+                self.alignObject(
+                    entry, target, fClosest=0, wallOffset=0.10000000000000001)
                 pos = self.gridSnapNP.getPos(target)
                 hpr = self.gridSnapNP.getHpr(target)
             else:
                 self.notify.warning('wall not found for painting')
 
         self.furnitureManager.moveItemFromAttic(
-            itemIndex,
-            (pos[0],
-             pos[1],
-                pos[2],
-                hpr[0],
-                hpr[1],
-                hpr[2]),
+            itemIndex, (pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2]),
             self._ObjectManager__bringItemFromAtticCallback)
 
-    def _ObjectManager__bringItemFromAtticCallback(
-            self, retcode, dfitem, itemIndex):
+    def _ObjectManager__bringItemFromAtticCallback(self, retcode, dfitem,
+                                                   itemIndex):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
             self.notify.info(
@@ -1763,13 +1697,12 @@ class ObjectManager(NodePath, DirectObject):
         self.furnitureManager.deleteItemFromAttic(
             item, itemIndex, self._ObjectManager__deleteItemFromAtticCallback)
 
-    def _ObjectManager__deleteItemFromAtticCallback(
-            self, retcode, item, itemIndex):
+    def _ObjectManager__deleteItemFromAtticCallback(self, retcode, item,
+                                                    itemIndex):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
-            self.notify.info(
-                'Unable to delete furniture item %s, reason %s.' %
-                (itemIndex, retcode))
+            self.notify.info('Unable to delete furniture item %s, reason %s.' %
+                             (itemIndex, retcode))
             return None
 
         self.atticItemPanels[itemIndex].destroy()
@@ -1791,7 +1724,8 @@ class ObjectManager(NodePath, DirectObject):
         else:
             room = 1
         self.furnitureManager.moveWallpaperFromAttic(
-            itemIndex, room, self._ObjectManager__bringWallpaperFromAtticCallback)
+            itemIndex, room,
+            self._ObjectManager__bringWallpaperFromAtticCallback)
 
     def _ObjectManager__bringWallpaperFromAtticCallback(
             self, retcode, itemIndex, room):
@@ -1816,15 +1750,15 @@ class ObjectManager(NodePath, DirectObject):
     def deleteWallpaperFromAttic(self, item, itemIndex):
         messenger.send('wakeup')
         self.furnitureManager.deleteWallpaperFromAttic(
-            item, itemIndex, self._ObjectManager__deleteWallpaperFromAtticCallback)
+            item, itemIndex,
+            self._ObjectManager__deleteWallpaperFromAtticCallback)
 
     def _ObjectManager__deleteWallpaperFromAtticCallback(
             self, retcode, item, itemIndex):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
-            self.notify.info(
-                'Unable to delete wallpaper %s, reason %s.' %
-                (itemIndex, retcode))
+            self.notify.info('Unable to delete wallpaper %s, reason %s.' %
+                             (itemIndex, retcode))
             return None
 
         self.atticWallpaperPanels[itemIndex].destroy()
@@ -1848,8 +1782,8 @@ class ObjectManager(NodePath, DirectObject):
         self.furnitureManager.moveWindowFromAttic(
             itemIndex, slot, self._ObjectManager__bringWindowFromAtticCallback)
 
-    def _ObjectManager__bringWindowFromAtticCallback(
-            self, retcode, itemIndex, slot):
+    def _ObjectManager__bringWindowFromAtticCallback(self, retcode, itemIndex,
+                                                     slot):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
             self.notify.info(
@@ -1878,15 +1812,15 @@ class ObjectManager(NodePath, DirectObject):
     def deleteWindowFromAttic(self, item, itemIndex):
         messenger.send('wakeup')
         self.furnitureManager.deleteWindowFromAttic(
-            item, itemIndex, self._ObjectManager__deleteWindowFromAtticCallback)
+            item, itemIndex,
+            self._ObjectManager__deleteWindowFromAtticCallback)
 
-    def _ObjectManager__deleteWindowFromAtticCallback(
-            self, retcode, item, itemIndex):
+    def _ObjectManager__deleteWindowFromAtticCallback(self, retcode, item,
+                                                      itemIndex):
         self._ObjectManager__enableItemButtons(1)
         if retcode < 0:
-            self.notify.info(
-                'Unable to delete window %s, reason %s.' %
-                (itemIndex, retcode))
+            self.notify.info('Unable to delete window %s, reason %s.' %
+                             (itemIndex, retcode))
             return None
 
         self.atticWindowPanels[itemIndex].destroy()
@@ -1918,32 +1852,20 @@ class ObjectManager(NodePath, DirectObject):
         cn.setIntoCollideMask(ToontownGlobals.GhostBitmask)
         self.houseExtents.attachNewNode(cn)
         cp = CollisionPolygon(
-            Point3(
-                mx, my, mz), Point3(
-                mx, My, mz), Point3(
-                mx, My, Mz), Point3(
-                    mx, my, Mz))
+            Point3(mx, my, mz), Point3(mx, My, mz), Point3(mx, My, Mz),
+            Point3(mx, my, Mz))
         cn.addSolid(cp)
         cp = CollisionPolygon(
-            Point3(
-                Mx, My, mz), Point3(
-                Mx, my, mz), Point3(
-                Mx, my, Mz), Point3(
-                    Mx, My, Mz))
+            Point3(Mx, My, mz), Point3(Mx, my, mz), Point3(Mx, my, Mz),
+            Point3(Mx, My, Mz))
         cn.addSolid(cp)
         cp = CollisionPolygon(
-            Point3(
-                Mx, my, mz), Point3(
-                mx, my, mz), Point3(
-                mx, my, Mz), Point3(
-                    Mx, my, Mz))
+            Point3(Mx, my, mz), Point3(mx, my, mz), Point3(mx, my, Mz),
+            Point3(Mx, my, Mz))
         cn.addSolid(cp)
         cp = CollisionPolygon(
-            Point3(
-                mx, My, mz), Point3(
-                Mx, My, mz), Point3(
-                Mx, My, Mz), Point3(
-                    mx, My, Mz))
+            Point3(mx, My, mz), Point3(Mx, My, mz), Point3(Mx, My, Mz),
+            Point3(mx, My, Mz))
         cn.addSolid(cp)
 
     def makeDoorBlocker(self):
@@ -1958,33 +1880,24 @@ class ObjectManager(NodePath, DirectObject):
         if self.verifyFrame is None:
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelButtonImage = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                                 buttons.find('**/CloseBtn_DN'),
+                                 buttons.find('**/CloseBtn_Rllvr'))
             self.verifyFrame = DirectFrame(
-                pos=(
-                    -0.40000000000000002,
-                    0.10000000000000001,
-                    0.29999999999999999),
+                pos=(-0.40000000000000002, 0.10000000000000001,
+                     0.29999999999999999),
                 scale=0.75,
                 relief=None,
                 image=DGG.getDefaultDialogGeom(),
                 image_color=ToontownGlobals.GlobalDialogColor,
-                image_scale=(
-                    1.2,
-                    1,
-                    1.3),
+                image_scale=(1.2, 1, 1.3),
                 text='',
                 text_wordwrap=19,
                 text_scale=0.059999999999999998,
-                text_pos=(
-                    0,
-                    0.5),
+                text_pos=(0, 0.5),
                 textMayChange=1,
                 sortOrder=NO_FADE_SORT_INDEX)
             self.okButton = DirectButton(
@@ -1993,31 +1906,25 @@ class ObjectManager(NodePath, DirectObject):
                 relief=None,
                 text=OTPLocalizer.DialogOK,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    -0.22,
-                    0.0,
-                    -0.5))
+                pos=(-0.22, 0.0, -0.5))
             self.cancelButton = DirectButton(
                 parent=self.verifyFrame,
                 image=cancelButtonImage,
                 relief=None,
                 text=OTPLocalizer.DialogCancel,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.22,
-                    0.0,
-                    -0.5))
+                pos=(0.22, 0.0, -0.5))
             self.deleteItemText = DirectLabel(
-                parent=self.verifyFrame, relief=None, text='', text_wordwrap=16, pos=(
-                    0.0, 0.0, -0.40000000000000002), scale=0.089999999999999997)
+                parent=self.verifyFrame,
+                relief=None,
+                text='',
+                text_wordwrap=16,
+                pos=(0.0, 0.0, -0.40000000000000002),
+                scale=0.089999999999999997)
 
         self.verifyFrame['text'] = verifyText
         self.deleteItemText['text'] = item.getName()
@@ -2077,10 +1984,7 @@ class ObjectManager(NodePath, DirectObject):
         if hasattr(self, 'inTrashButton'):
             self.inTrashButton['state'] = buttonState
 
-        pickers = [
-            self.atticPicker,
-            self.inRoomPicker,
-            self.inTrashPicker]
+        pickers = [self.atticPicker, self.inRoomPicker, self.inTrashPicker]
         for picker in pickers:
             if picker:
                 for panel in picker['items']:
@@ -2094,34 +1998,29 @@ class ObjectManager(NodePath, DirectObject):
 
     def requestDelete(self, item, itemIndex, deleteFunction):
         self._ObjectManager__cleanupVerifyDelete()
-        if self.furnitureManager.ownerId != base.localAvatar.doId or not item.isDeletable():
+        if self.furnitureManager.ownerId != base.localAvatar.doId or not item.isDeletable(
+        ):
             self.warnNonDeletableItem(item)
             return None
 
-        self.createVerifyDialog(
-            item,
-            TTLocalizer.HDDeleteItem,
-            self._ObjectManager__handleVerifyDeleteOK,
-            self._ObjectManager__resetAndCleanup)
+        self.createVerifyDialog(item, TTLocalizer.HDDeleteItem,
+                                self._ObjectManager__handleVerifyDeleteOK,
+                                self._ObjectManager__resetAndCleanup)
         self.verifyItems = (deleteFunction, item, itemIndex)
 
     def requestRoomDelete(self, dfitem, objectId, itemIndex):
         self._ObjectManager__cleanupVerifyDelete()
         item = dfitem.item
-        if self.furnitureManager.ownerId != base.localAvatar.doId or not item.isDeletable():
+        if self.furnitureManager.ownerId != base.localAvatar.doId or not item.isDeletable(
+        ):
             self.warnNonDeletableItem(item)
             return None
 
-        self.createVerifyDialog(
-            item,
-            TTLocalizer.HDDeleteItem,
-            self._ObjectManager__handleVerifyDeleteOK,
-            self._ObjectManager__resetAndCleanup)
-        self.verifyItems = (
-            self.deleteItemFromRoom,
-            dfitem,
-            objectId,
-            itemIndex)
+        self.createVerifyDialog(item, TTLocalizer.HDDeleteItem,
+                                self._ObjectManager__handleVerifyDeleteOK,
+                                self._ObjectManager__resetAndCleanup)
+        self.verifyItems = (self.deleteItemFromRoom, dfitem, objectId,
+                            itemIndex)
 
     def warnNonDeletableItem(self, item):
         message = TTLocalizer.HDNonDeletableItem
@@ -2160,11 +2059,9 @@ class ObjectManager(NodePath, DirectObject):
             self.requestRoomDelete(dfitem, objectId, itemIndex)
             return None
 
-        self.createVerifyDialog(
-            item,
-            TTLocalizer.HDReturnVerify,
-            self._ObjectManager__handleVerifyReturnOK,
-            self._ObjectManager__resetAndCleanup)
+        self.createVerifyDialog(item, TTLocalizer.HDReturnVerify,
+                                self._ObjectManager__handleVerifyReturnOK,
+                                self._ObjectManager__resetAndCleanup)
         self.verifyItems = (item, objectId)
 
     def _ObjectManager__handleVerifyReturnOK(self):
@@ -2177,8 +2074,7 @@ class ObjectManager(NodePath, DirectObject):
         self._ObjectManager__cleanupVerifyDelete()
         self._ObjectManager__enableItemButtons(0)
         self.createVerifyDialog(
-            item,
-            TTLocalizer.HDReturnFromTrashVerify,
+            item, TTLocalizer.HDReturnFromTrashVerify,
             self._ObjectManager__handleVerifyReturnFromTrashOK,
             self._ObjectManager__resetAndCleanup)
         self.verifyItems = (item, itemIndex)
@@ -2196,16 +2092,15 @@ class ObjectManager(NodePath, DirectObject):
         self.furnitureManager.recoverDeletedItem(
             item, itemIndex, self._ObjectManager__recoverDeletedItemCallback)
 
-    def _ObjectManager__recoverDeletedItemCallback(
-            self, retcode, item, itemIndex):
+    def _ObjectManager__recoverDeletedItemCallback(self, retcode, item,
+                                                   itemIndex):
         self._ObjectManager__cleanupVerifyDelete()
         if retcode < 0:
             if retcode == ToontownGlobals.FM_HouseFull:
                 self.showHouseFullDialog()
 
-            self.notify.info(
-                'Unable to recover deleted item %s, reason %s.' %
-                (itemIndex, retcode))
+            self.notify.info('Unable to recover deleted item %s, reason %s.' %
+                             (itemIndex, retcode))
             return None
 
         self._ObjectManager__enableItemButtons(1)
@@ -2249,13 +2144,10 @@ class ObjectManager(NodePath, DirectObject):
         self.dialog.show()
 
     def bindHelpText(self, button, category):
-        button.bind(DGG.ENTER, self.showHelpText, extraArgs=[
-            category,
-            None])
+        button.bind(DGG.ENTER, self.showHelpText, extraArgs=[category, None])
         button.bind(DGG.EXIT, self.hideHelpText)
 
     def showHelpText(self, category, itemName, xy):
-
         def showIt(task):
             helpText = TTLocalizer.HDHelpDict.get(category)
             if helpText:

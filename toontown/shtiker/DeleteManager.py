@@ -19,5 +19,4 @@ class DeleteManager(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.disable(self)
 
     def d_setInventory(self, newInventoryString):
-        self.sendUpdate('setInventory', [
-            newInventoryString])
+        self.sendUpdate('setInventory', [newInventoryString])

@@ -14,11 +14,8 @@ from toontown.coghq import LaserGameDrag
 import random
 
 
-class DistributedLaserFieldAI(
-        BattleBlockerAI.BattleBlockerAI,
-        NodePath,
-        BasicEntities.NodePathAttribs):
-
+class DistributedLaserFieldAI(BattleBlockerAI.BattleBlockerAI, NodePath,
+                              BasicEntities.NodePathAttribs):
     def __init__(self, level, entId):
         BattleBlockerAI.BattleBlockerAI.__init__(self, level, entId)
         node = hidden.attachNewNode('DistributedLaserFieldAI')
@@ -41,11 +38,7 @@ class DistributedLaserFieldAI(
 
     def setGridGame(self, gameName):
         if gameName == 'Random':
-            gameName = random.choice([
-                'MineSweeper',
-                'Roll',
-                'Avoid',
-                'Drag'])
+            gameName = random.choice(['MineSweeper', 'Roll', 'Avoid', 'Drag'])
 
         self.gridGame = gameName
         if hasattr(self, 'game'):
@@ -69,22 +62,17 @@ class DistributedLaserFieldAI(
                 self.trapDisable, self.trapFire, self.sendField, self.setGrid)
         self.game.startGrid()
         self.sendField()
-        self.sendUpdate('setGridGame', [
-            gameName])
+        self.sendUpdate('setGridGame', [gameName])
 
     def generate(self):
         BattleBlockerAI.BattleBlockerAI.generate(self)
         if self.switchId != 0:
             self.accept(
-                self.getOutputEventName(
-                    self.switchId),
-                self.reactToSwitch)
+                self.getOutputEventName(self.switchId), self.reactToSwitch)
 
         self.detectName = 'laserField %s' % self.doId
-        taskMgr.doMethodLater(
-            1.0,
-            self._DistributedLaserFieldAI__detect,
-            self.detectName)
+        taskMgr.doMethodLater(1.0, self._DistributedLaserFieldAI__detect,
+                              self.detectName)
         self.setPos(self.pos)
         self.setHpr(self.hpr)
         self.setGridGame(self.gridGame)
@@ -121,8 +109,7 @@ class DistributedLaserFieldAI(
         return fieldData
 
     def sendField(self):
-        self.sendUpdate('setField', [
-            self.getField()])
+        self.sendUpdate('setField', [self.getField()])
 
     def _DistributedLaserFieldAI__detect(self, task):
         isThereAnyToons = False
@@ -136,8 +123,9 @@ class DistributedLaserFieldAI(
                     continue
 
             if isThereAnyToons:
-                taskMgr.doMethodLater(
-                    1.0, self._DistributedLaserFieldAI__detect, self.detectName)
+                taskMgr.doMethodLater(1.0,
+                                      self._DistributedLaserFieldAI__detect,
+                                      self.detectName)
                 self._DistributedLaserFieldAI__run()
 
         return Task.done
@@ -153,10 +141,8 @@ class DistributedLaserFieldAI(
         self.gridNumX = random.randint(1, 4)
         self.gridNumY = random.randint(1, 4)
         self.gridScale = random.randint(1, 4)
-        self.sendUpdate('setGrid', [
-            self.gridNumX,
-            self.gridNumY,
-            self.gridScale])
+        self.sendUpdate('setGrid',
+                        [self.gridNumX, self.gridNumY, self.gridScale])
 
     def reactToSwitch(self, on):
         if on and self.canButton:
@@ -172,19 +158,16 @@ class DistributedLaserFieldAI(
         if not __dev__ and 1:
             self.canButton = 0
 
-        self.sendUpdate('setActiveLF', [
-            0])
+        self.sendUpdate('setActiveLF', [0])
         if not self.playedSound:
-            self.sendUpdate('setSuccess', [
-                0])
+            self.sendUpdate('setSuccess', [0])
 
         self.playedSound = 1
 
     def setBattleFinished(self):
         print 'battle Finished'
         BattleBlockerAI.BattleBlockerAI.setBattleFinished(self)
-        messenger.send(self.getOutputEventName(), [
-            1])
+        messenger.send(self.getOutputEventName(), [1])
         self.switchFire()
 
     def switchFire(self):
@@ -197,14 +180,12 @@ class DistributedLaserFieldAI(
     def trapDisable(self):
         self.enabled = 0
         suits = self.level.planner.battleCellId2suits.get(self.cellId)
-        messenger.send(self.getOutputEventName(), [
-            1])
+        messenger.send(self.getOutputEventName(), [1])
         if self.hasShownSuits == 0:
             for suit in suits:
                 suit.requestRemoval()
 
-        self.sendUpdate('setActiveLF', [
-            0])
+        self.sendUpdate('setActiveLF', [0])
         stage = self.air.getDo(self.level.stageDoId)
         reward = stage.getPuzzelReward()
         if self.healReady:
@@ -218,8 +199,7 @@ class DistributedLaserFieldAI(
 
         self.healReady = 0
         if not self.playedSound:
-            self.sendUpdate('setSuccess', [
-                1])
+            self.sendUpdate('setSuccess', [1])
 
         self.playedSound = 1
         self.switchFire()
@@ -231,8 +211,7 @@ class DistributedLaserFieldAI(
             suitArray.append(suit.doId)
 
         if suitArray:
-            self.sendUpdate('hideSuit', [
-                suitArray])
+            self.sendUpdate('hideSuit', [suitArray])
 
     def showSuits(self):
         if self.hasShownSuits == 0:
@@ -243,8 +222,7 @@ class DistributedLaserFieldAI(
                 suitArray.append(suit.doId)
 
             if suitArray:
-                self.sendUpdate('showSuit', [
-                    suitArray])
+                self.sendUpdate('showSuit', [suitArray])
 
         self.hasShownSuits = 1
 

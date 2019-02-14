@@ -10,15 +10,13 @@ from direct.task import Task
 
 class DistributedFactoryElevatorExtAI(
         DistributedElevatorExtAI.DistributedElevatorExtAI):
-
-    def __init__(
-            self,
-            air,
-            bldg,
-            factoryId,
-            entranceId,
-            antiShuffle=0,
-            minLaff=0):
+    def __init__(self,
+                 air,
+                 bldg,
+                 factoryId,
+                 entranceId,
+                 antiShuffle=0,
+                 minLaff=0):
         DistributedElevatorExtAI.DistributedElevatorExtAI.__init__(
             self, air, bldg, antiShuffle=antiShuffle, minLaff=minLaff)
         self.factoryId = factoryId
@@ -32,19 +30,17 @@ class DistributedFactoryElevatorExtAI(
         if numPlayers > 0:
             players = []
             for i in self.seats:
-                if i not in [
-                        None,
-                        0]:
+                if i not in [None, 0]:
                     players.append(i)
                     continue
 
-            factoryZone = self.bldg.createFactory(
-                self.factoryId, self.entranceId, players)
+            factoryZone = self.bldg.createFactory(self.factoryId,
+                                                  self.entranceId, players)
             for seatIndex in range(len(self.seats)):
                 avId = self.seats[seatIndex]
                 if avId:
-                    self.sendUpdateToAvatarId(avId, 'setFactoryInteriorZone', [
-                        factoryZone])
+                    self.sendUpdateToAvatarId(avId, 'setFactoryInteriorZone',
+                                              [factoryZone])
                     self.clearFullNow(seatIndex)
                     continue
 
@@ -58,8 +54,8 @@ class DistributedFactoryElevatorExtAI(
 
     def sendAvatarsToDestination(self, avIdList):
         if len(avIdList) > 0:
-            factoryZone = self.bldg.createFactory(
-                self.factoryId, self.entranceId, avIdList)
+            factoryZone = self.bldg.createFactory(self.factoryId,
+                                                  self.entranceId, avIdList)
             for avId in avIdList:
                 if avId:
                     self.sendUpdateToAvatarId(

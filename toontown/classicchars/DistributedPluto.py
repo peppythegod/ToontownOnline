@@ -24,12 +24,11 @@ class DistributedPluto(DistributedCCharBase.DistributedCCharBase):
             DistributedCCharBase.DistributedCCharBase.__init__(
                 self, cr, TTLocalizer.Pluto, 'p')
             self.fsm = ClassicFSM.ClassicFSM('DistributedPluto', [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral, [
-                    'Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, [
-                    'Neutral'])], 'Off', 'Off')
+                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+                State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                            ['Walk']),
+                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+            ], 'Off', 'Off')
             self.fsm.enterInitialState()
             self.handleHolidays()
 
@@ -58,26 +57,23 @@ class DistributedPluto(DistributedCCharBase.DistributedCCharBase):
     def generate(self):
         DistributedCCharBase.DistributedCCharBase.generate(self, self.diffPath)
         self.neutralDoneEvent = self.taskName('pluto-neutral-done')
-        self.neutral = CharStateDatas.CharNeutralState(
-            self.neutralDoneEvent, self)
+        self.neutral = CharStateDatas.CharNeutralState(self.neutralDoneEvent,
+                                                       self)
         self.walkDoneEvent = self.taskName('pluto-walk-done')
         if self.diffPath is None:
             self.walk = CharStateDatas.CharWalkState(self.walkDoneEvent, self)
         else:
-            self.walk = CharStateDatas.CharWalkState(
-                self.walkDoneEvent, self, self.diffPath)
+            self.walk = CharStateDatas.CharWalkState(self.walkDoneEvent, self,
+                                                     self.diffPath)
         self.walkStartTrack = Sequence(
-            self.actorInterval('stand'), Func(
-                self.stand))
+            self.actorInterval('stand'), Func(self.stand))
         self.neutralStartTrack = Sequence(
             self.actorInterval('sit'), Func(self.sit))
         self.fsm.request('Neutral')
 
     def stand(self):
-        self.dropShadow.setScale(
-            0.90000000000000002,
-            1.3500000000000001,
-            0.90000000000000002)
+        self.dropShadow.setScale(0.90000000000000002, 1.3500000000000001,
+                                 0.90000000000000002)
         if hasattr(self, 'collNodePath'):
             self.collNodePath.setScale(1.0, 1.5, 1.0)
 
@@ -95,9 +91,8 @@ class DistributedPluto(DistributedCCharBase.DistributedCCharBase):
     def enterNeutral(self):
         self.notify.debug('Neutral ' + self.getName() + '...')
         self.neutral.enter(self.neutralStartTrack)
-        self.acceptOnce(
-            self.neutralDoneEvent,
-            self._DistributedPluto__decideNextState)
+        self.acceptOnce(self.neutralDoneEvent,
+                        self._DistributedPluto__decideNextState)
 
     def exitNeutral(self):
         self.ignore(self.neutralDoneEvent)
@@ -106,9 +101,8 @@ class DistributedPluto(DistributedCCharBase.DistributedCCharBase):
     def enterWalk(self):
         self.notify.debug('Walking ' + self.getName() + '...')
         self.walk.enter(self.walkStartTrack)
-        self.acceptOnce(
-            self.walkDoneEvent,
-            self._DistributedPluto__decideNextState)
+        self.acceptOnce(self.walkDoneEvent,
+                        self._DistributedPluto__decideNextState)
 
     def exitWalk(self):
         self.ignore(self.walkDoneEvent)

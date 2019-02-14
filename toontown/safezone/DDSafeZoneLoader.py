@@ -8,10 +8,9 @@ from toontown.toonbase import ToontownGlobals
 
 
 class DDSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
-        SafeZoneLoader.SafeZoneLoader.__init__(
-            self, hood, parentFSM, doneEvent)
+        SafeZoneLoader.SafeZoneLoader.__init__(self, hood, parentFSM,
+                                               doneEvent)
         self.playgroundClass = DDPlayground.DDPlayground
         self.musicFile = 'phase_6/audio/bgm/DD_nbrhood.mid'
         self.activityMusicFile = 'phase_6/audio/bgm/DD_SZ_activity.mid'

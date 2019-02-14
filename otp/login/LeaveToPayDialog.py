@@ -7,7 +7,6 @@ import os
 
 
 class LeaveToPayDialog:
-
     def __init__(self, paidUser, destructorHook=None, doneFunc=None):
         self.destructorHook = destructorHook
         self.dialog = None
@@ -25,10 +24,8 @@ class LeaveToPayDialog:
     def show(self):
         if self.paidUser:
             if base.cr.productName in [
-                'DisneyOnline-AP',
-                'DisneyOnline-UK',
-                'JP',
-                    'FR']:
+                    'DisneyOnline-AP', 'DisneyOnline-UK', 'JP', 'FR'
+            ]:
                 directFrameText = OTPLocalizer.LeaveToEnableChatUK
                 directButtonYesText = OTPLocalizer.LeaveToEnableChatUKYes
                 directButtonNoText = OTPLocalizer.LeaveToEnableChatUKNo
@@ -43,57 +40,44 @@ class LeaveToPayDialog:
         if self.dialog is None:
             buttons = loader.loadModel(
                 'phase_3/models/gui/dialog_box_buttons_gui')
-            okButtonImage = (
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr'))
-            cancelButtonImage = (
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr'))
-            self.dialog = DirectFrame(parent=aspect2dp,
-                                      pos=(0.0,
-                                           0.0,
-                                           0.0),
-                                      relief=None,
-                                      image=DGG.getDefaultDialogGeom(),
-                                      image_color=OTPGlobals.GlobalDialogColor,
-                                      image_scale=(0.90000000000000002,
-                                                   1.0,
-                                                   0.5),
-                                      text=directFrameText,
-                                      text_align=TextNode.ALeft,
-                                      text_wordwrap=14,
-                                      text_scale=OTPLocalizer.LTPDdirectFrameText,
-                                      text_pos=(-0.40000000000000002,
-                                                0.14999999999999999),
-                                      textMayChange=0)
-            DirectButton(self.dialog,
-                         image=okButtonImage,
-                         relief=None,
-                         text=directButtonYesText,
-                         text_scale=OTPLocalizer.LTPDdirectButtonYesText,
-                         text_pos=(0.0,
-                                   -0.10000000000000001),
-                         textMayChange=0,
-                         pos=(-0.23000000000000001,
-                              0.0,
-                              -0.10000000000000001),
-                         command=self.okHandler)
+            okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                             buttons.find('**/ChtBx_OKBtn_DN'),
+                             buttons.find('**/ChtBx_OKBtn_Rllvr'))
+            cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                                 buttons.find('**/CloseBtn_DN'),
+                                 buttons.find('**/CloseBtn_Rllvr'))
+            self.dialog = DirectFrame(
+                parent=aspect2dp,
+                pos=(0.0, 0.0, 0.0),
+                relief=None,
+                image=DGG.getDefaultDialogGeom(),
+                image_color=OTPGlobals.GlobalDialogColor,
+                image_scale=(0.90000000000000002, 1.0, 0.5),
+                text=directFrameText,
+                text_align=TextNode.ALeft,
+                text_wordwrap=14,
+                text_scale=OTPLocalizer.LTPDdirectFrameText,
+                text_pos=(-0.40000000000000002, 0.14999999999999999),
+                textMayChange=0)
+            DirectButton(
+                self.dialog,
+                image=okButtonImage,
+                relief=None,
+                text=directButtonYesText,
+                text_scale=OTPLocalizer.LTPDdirectButtonYesText,
+                text_pos=(0.0, -0.10000000000000001),
+                textMayChange=0,
+                pos=(-0.23000000000000001, 0.0, -0.10000000000000001),
+                command=self.okHandler)
             DirectButton(
                 self.dialog,
                 image=cancelButtonImage,
                 relief=None,
                 text=directButtonNoText,
                 text_scale=OTPLocalizer.LTPDdirectButtonNoText,
-                text_pos=(
-                    0.0,
-                    -0.10000000000000001),
+                text_pos=(0.0, -0.10000000000000001),
                 textMayChange=0,
-                pos=(
-                    0.23000000000000001,
-                    0.0,
-                    -0.10000000000000001),
+                pos=(0.23000000000000001, 0.0, -0.10000000000000001),
                 command=self.cancelHandler)
             buttons.removeNode()
 
@@ -125,19 +109,15 @@ class LeaveToPayDialog:
         errorCode = None
         if self.paidUser:
             if base.cr.productName in [
-                'DisneyOnline-AP',
-                'DisneyOnline-UK',
-                'JP',
-                'DE',
-                    'FR']:
+                    'DisneyOnline-AP', 'DisneyOnline-UK', 'JP', 'DE', 'FR'
+            ]:
                 errorCode = OTPLauncherGlobals.ExitEnableChat
             else:
                 errorCode = OTPLauncherGlobals.ExitSetParentPassword
         else:
             errorCode = OTPLauncherGlobals.ExitPurchase
         base.setExitErrorCode(errorCode)
-        base.cr.loginFSM.request('shutdown', [
-            errorCode])
+        base.cr.loginFSM.request('shutdown', [errorCode])
 
     def _LeaveToPayDialog__handleLeaveToPayCancel(self):
         if self.doneFunc:

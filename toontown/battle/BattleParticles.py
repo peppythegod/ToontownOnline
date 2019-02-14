@@ -3,65 +3,24 @@ import os
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase import AppRunnerGlobal
 notify = DirectNotifyGlobal.directNotify.newCategory('BattleParticles')
-TutorialParticleEffects = (
-    'gearExplosionBig.ptf',
-    'gearExplosionSmall.ptf',
-    'gearExplosion.ptf')
-ParticleNames = (
-    'audit-div',
-    'audit-five',
-    'audit-four',
-    'audit-minus',
-    'audit-mult',
-    'audit-one',
-    'audit-plus',
-    'audit-six',
-    'audit-three',
-    'audit-two',
-    'blah',
-    'brainstorm-box',
-    'brainstorm-env',
-    'brainstorm-track',
-    'buzzwords-crash',
-    'buzzwords-inc',
-    'buzzwords-main',
-    'buzzwords-over',
-    'buzzwords-syn',
-    'confetti',
-    'doubletalk-double',
-    'doubletalk-dup',
-    'doubletalk-good',
-    'filibuster-cut',
-    'filibuster-fiscal',
-    'filibuster-impeach',
-    'filibuster-inc',
-    'jargon-brow',
-    'jargon-deep',
-    'jargon-hoop',
-    'jargon-ipo',
-    'legalese-hc',
-    'legalese-qpq',
-    'legalese-vd',
-    'mumbojumbo-boiler',
-    'mumbojumbo-creative',
-    'mumbojumbo-deben',
-    'mumbojumbo-high',
-    'mumbojumbo-iron',
-    'poundsign',
-    'schmooze-genius',
-    'schmooze-instant',
-    'schmooze-master',
-    'schmooze-viz',
-    'roll-o-dex',
-    'rollodex-card',
-    'dagger',
-    'fire',
-    'snow-particle',
-    'raindrop',
-    'gear',
-    'checkmark',
-    'dollar-sign',
-    'spark')
+TutorialParticleEffects = ('gearExplosionBig.ptf', 'gearExplosionSmall.ptf',
+                           'gearExplosion.ptf')
+ParticleNames = ('audit-div', 'audit-five', 'audit-four', 'audit-minus',
+                 'audit-mult', 'audit-one', 'audit-plus', 'audit-six',
+                 'audit-three', 'audit-two', 'blah', 'brainstorm-box',
+                 'brainstorm-env', 'brainstorm-track', 'buzzwords-crash',
+                 'buzzwords-inc', 'buzzwords-main', 'buzzwords-over',
+                 'buzzwords-syn', 'confetti', 'doubletalk-double',
+                 'doubletalk-dup', 'doubletalk-good', 'filibuster-cut',
+                 'filibuster-fiscal', 'filibuster-impeach', 'filibuster-inc',
+                 'jargon-brow', 'jargon-deep', 'jargon-hoop', 'jargon-ipo',
+                 'legalese-hc', 'legalese-qpq', 'legalese-vd',
+                 'mumbojumbo-boiler', 'mumbojumbo-creative',
+                 'mumbojumbo-deben', 'mumbojumbo-high', 'mumbojumbo-iron',
+                 'poundsign', 'schmooze-genius', 'schmooze-instant',
+                 'schmooze-master', 'schmooze-viz', 'roll-o-dex',
+                 'rollodex-card', 'dagger', 'fire', 'snow-particle',
+                 'raindrop', 'gear', 'checkmark', 'dollar-sign', 'spark')
 particleModel = None
 particleSearchPath = None
 
@@ -102,11 +61,9 @@ def loadParticleFile(name):
             pass
         basePath = './toontown'
         particleSearchPath.appendDirectory(
-            Filename.fromOsSpecific(
-                basePath + '/src/battle'))
+            Filename.fromOsSpecific(basePath + '/src/battle'))
         particleSearchPath.appendDirectory(
-            Filename.fromOsSpecific(
-                basePath + '/src/safezone'))
+            Filename.fromOsSpecific(basePath + '/src/safezone'))
         particleSearchPath.appendDirectory(Filename('phase_3.5/etc'))
         particleSearchPath.appendDirectory(Filename('phase_4/etc'))
         particleSearchPath.appendDirectory(Filename('phase_5/etc'))
@@ -228,11 +185,8 @@ def __makeRubOut(color=None):
         particles.renderer.setColor(color)
     else:
         particles.renderer.setColor(
-            Vec4(
-                0.54000000000000004,
-                0.92000000000000004,
-                0.32000000000000001,
-                0.69999999999999996))
+            Vec4(0.54000000000000004, 0.92000000000000004, 0.32000000000000001,
+                 0.69999999999999996))
     return effect
 
 

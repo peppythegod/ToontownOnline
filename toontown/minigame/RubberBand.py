@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.interval.IntervalGlobal import *
@@ -23,10 +21,7 @@ class RubberBand:
         self._taskPriority = taskPriority
         self.SomeCounter += 1
         if not heldOffset:
-            self.heldOffset = [
-                0,
-                0,
-                0]
+            self.heldOffset = [0, 0, 0]
 
         self.setup()
 
@@ -52,8 +47,7 @@ class RubberBand:
         self.post2Pos = Point3(width, 0, height)
         taskMgr.add(
             self.redraw,
-            'recreateBand %s' %
-            self.bandNumber,
+            'recreateBand %s' % self.bandNumber,
             priority=self._taskPriority)
         self.colorRelax = {}
         self.colorRelax['Red'] = 1.0
@@ -120,25 +114,17 @@ class RubberBand:
         colorHigh = 1.0
         colorLow = 0.5
         shapeVertexs = []
-        shapeVertexs.append(
-            (self.post1Pos[0],
-             self.post1Pos[1],
-             bandBottomOrigin +
-             0.45000000000000001))
-        shapeVertexs.append(
-            (self.post1Pos[0],
-             self.post1Pos[1],
-             bandTopOrigin +
-             0.45000000000000001))
+        shapeVertexs.append((self.post1Pos[0], self.post1Pos[1],
+                             bandBottomOrigin + 0.45000000000000001))
+        shapeVertexs.append((self.post1Pos[0], self.post1Pos[1],
+                             bandTopOrigin + 0.45000000000000001))
         colorMultList.append(colorLow)
         colorMultList.append(colorHigh)
         s2 = pow(2, 0.5)
         s2dif = s2 - 1
         objPosXSecondary = objPosX - 0.5
-        shapeVertexs.append(
-            (objPosXSecondary,
-             objPosYSecondary,
-             bandBottomHeld))
+        shapeVertexs.append((objPosXSecondary, objPosYSecondary,
+                             bandBottomHeld))
         shapeVertexs.append((objPosXSecondary, objPosYSecondary, bandTopHeld))
         colorMultList.append(colorLow)
         colorMultList.append(colorHigh)
@@ -147,40 +133,30 @@ class RubberBand:
         colorMultList.append(colorLow)
         colorMultList.append(colorHigh)
         objPosXSecondary = objPosX + 0.5
-        shapeVertexs.append(
-            (objPosXSecondary,
-             objPosYSecondary,
-             bandBottomHeld))
+        shapeVertexs.append((objPosXSecondary, objPosYSecondary,
+                             bandBottomHeld))
         shapeVertexs.append((objPosXSecondary, objPosYSecondary, bandTopHeld))
         colorMultList.append(colorLow)
         colorMultList.append(colorHigh)
-        shapeVertexs.append(
-            (self.post2Pos[0],
-             self.post2Pos[1],
-             bandBottomOrigin +
-             0.45000000000000001))
-        shapeVertexs.append(
-            (self.post2Pos[0],
-             self.post2Pos[1],
-             bandTopOrigin +
-             0.45000000000000001))
+        shapeVertexs.append((self.post2Pos[0], self.post2Pos[1],
+                             bandBottomOrigin + 0.45000000000000001))
+        shapeVertexs.append((self.post2Pos[0], self.post2Pos[1],
+                             bandTopOrigin + 0.45000000000000001))
         colorMultList.append(colorLow)
         colorMultList.append(colorHigh)
         gFormat = GeomVertexFormat.getV3cp()
-        bandVertexData = GeomVertexData(
-            'holds my vertices', gFormat, Geom.UHDynamic)
+        bandVertexData = GeomVertexData('holds my vertices', gFormat,
+                                        Geom.UHDynamic)
         bandVertexWriter = GeomVertexWriter(bandVertexData, 'vertex')
         bandColorWriter = GeomVertexWriter(bandVertexData, 'color')
         for index in range(len(shapeVertexs)):
-            bandVertexWriter.addData3f(
-                shapeVertexs[index][0],
-                shapeVertexs[index][1],
-                shapeVertexs[index][2])
-            bandColorWriter.addData4f(
-                color['Red'] * colorMultList[index],
-                color['Green'] * colorMultList[index],
-                color['Blue'] * colorMultList[index],
-                color['Alpha'] * colorMultList[index])
+            bandVertexWriter.addData3f(shapeVertexs[index][0],
+                                       shapeVertexs[index][1],
+                                       shapeVertexs[index][2])
+            bandColorWriter.addData4f(color['Red'] * colorMultList[index],
+                                      color['Green'] * colorMultList[index],
+                                      color['Blue'] * colorMultList[index],
+                                      color['Alpha'] * colorMultList[index])
 
         bandTris = GeomTristrips(Geom.UHStatic)
         for index in range(len(shapeVertexs)):

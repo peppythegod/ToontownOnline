@@ -57,30 +57,15 @@ CashbotMintRoomId2RoomName = {
     22: 'CashbotMintOilRoom_Battle00',
     23: 'CashbotMintLobby_Battle01',
     24: 'CashbotMintPaintMixerReward_Battle00',
-    25: 'CashbotMintPipeRoom_Battle01'}
+    25: 'CashbotMintPipeRoom_Battle01'
+}
 CashbotMintRoomName2RoomId = invertDict(CashbotMintRoomId2RoomName)
-CashbotMintEntranceIDs = (0,)
-CashbotMintMiddleRoomIDs = (
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16)
+CashbotMintEntranceIDs = (0, )
+CashbotMintMiddleRoomIDs = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                            16)
 CashbotMintFinalRoomIDs = (17, 18, 19, 20, 21, 22, 23, 24, 25)
-CashbotMintConnectorRooms = (
-    'phase_10/models/cashbotHQ/connector_7cubeL2',
-    'phase_10/models/cashbotHQ/connector_7cubeR2')
+CashbotMintConnectorRooms = ('phase_10/models/cashbotHQ/connector_7cubeL2',
+                             'phase_10/models/cashbotHQ/connector_7cubeR2')
 CashbotMintSpecModules = {}
 if not isClient():
     print 'EXECWARNING MintRoomSpecs: %s' % CashbotMintRoomName2RoomId
@@ -98,14 +83,18 @@ CogSpecModules = {
     'CashbotMintDuctRoom_Battle01': CashbotMintDuctRoom_Battle01_Cogs,
     'CashbotMintGearRoom_Battle00': CashbotMintGearRoom_Battle00_Cogs,
     'CashbotMintGearRoom_Battle01': CashbotMintGearRoom_Battle01_Cogs,
-    'CashbotMintLavaRoomFoyer_Battle00': CashbotMintLavaRoomFoyer_Battle00_Cogs,
-    'CashbotMintLavaRoomFoyer_Battle01': CashbotMintLavaRoomFoyer_Battle01_Cogs,
+    'CashbotMintLavaRoomFoyer_Battle00':
+    CashbotMintLavaRoomFoyer_Battle00_Cogs,
+    'CashbotMintLavaRoomFoyer_Battle01':
+    CashbotMintLavaRoomFoyer_Battle01_Cogs,
     'CashbotMintLobby_Battle00': CashbotMintLobby_Battle00_Cogs,
     'CashbotMintLobby_Battle01': CashbotMintLobby_Battle01_Cogs,
     'CashbotMintOilRoom_Battle00': CashbotMintOilRoom_Battle00_Cogs,
-    'CashbotMintPaintMixerReward_Battle00': CashbotMintPaintMixerReward_Battle00_Cogs,
+    'CashbotMintPaintMixerReward_Battle00':
+    CashbotMintPaintMixerReward_Battle00_Cogs,
     'CashbotMintPipeRoom_Battle00': CashbotMintPipeRoom_Battle00_Cogs,
-    'CashbotMintPipeRoom_Battle01': CashbotMintPipeRoom_Battle01_Cogs}
+    'CashbotMintPipeRoom_Battle01': CashbotMintPipeRoom_Battle01_Cogs
+}
 roomId2numBattles = {}
 for (roomName, roomId) in CashbotMintRoomName2RoomId.items():
     if roomName not in CogSpecModules:

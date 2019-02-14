@@ -79,159 +79,91 @@ class EventsPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.EventsPageHostTabName,
             text_scale=TTLocalizer.EPhostTab,
             text_align=TextNode.ACenter,
-            text_pos=(
-                0.12,
-                0.0),
+            text_pos=(0.12, 0.0),
             image=gui.find('**/tabs/polySurface1'),
-            image_pos=(
-                0.55000000000000004,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.55000000000000004, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[EventsPage_Host],
-            pos=(
-                0.92000000000000004,
-                0,
-                0.55000000000000004))
+            pos=(0.92000000000000004, 0, 0.55000000000000004))
         self.invitedTab = DirectButton(
             parent=self,
             relief=None,
             text=TTLocalizer.EventsPageInvitedTabName,
             text_scale=TTLocalizer.EPinvitedTab,
-            text_pos=(
-                0.12,
-                0.0),
+            text_pos=(0.12, 0.0),
             text_align=TextNode.ACenter,
             image=gui.find('**/tabs/polySurface2'),
-            image_pos=(
-                0.12,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.12, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[EventsPage_Invited],
-            pos=(
-                0.92000000000000004,
-                0,
-                0.10000000000000001))
+            pos=(0.92000000000000004, 0, 0.10000000000000001))
         self.calendarTab = DirectButton(
             parent=self,
             relief=None,
             text=TTLocalizer.EventsPageCalendarTabName,
             text_scale=TTLocalizer.EPcalendarTab,
-            text_pos=(
-                0.12,
-                0.0),
+            text_pos=(0.12, 0.0),
             text_align=TextNode.ACenter,
             image=gui.find('**/tabs/polySurface2'),
-            image_pos=(
-                0.12,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.12, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[EventsPage_Calendar],
-            pos=(
-                0.92000000000000004,
-                0,
-                0.10000000000000001))
+            pos=(0.92000000000000004, 0, 0.10000000000000001))
         self.newsTab = DirectButton(
             parent=self,
             relief=None,
             text=TTLocalizer.EventsPageNewsTabName,
             text_scale=TTLocalizer.EPnewsTab,
-            text_pos=(
-                0.12,
-                0.0),
+            text_pos=(0.12, 0.0),
             text_align=TextNode.ACenter,
             image=gui.find('**/tabs/polySurface2'),
-            image_pos=(
-                0.12,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.12, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
             extraArgs=[EventsPage_News],
-            pos=(
-                0.92000000000000004,
-                0,
-                0.10000000000000001))
+            pos=(0.92000000000000004, 0, 0.10000000000000001))
         self.newsTab.hide()
         if self.UseNewsTab:
             self.newsTab.show()
             self.calendarTab.setPos(-0.75, 0, 0.77500000000000002)
             self.hostTab.setPos(-0.33000000000000002, 0, 0.77500000000000002)
-            self.invitedTab.setPos(
-                0.089999999999999997, 0, 0.77500000000000002)
+            self.invitedTab.setPos(0.089999999999999997, 0,
+                                   0.77500000000000002)
             self.newsTab.setPos(0.51000000000000001, 0, 0.77500000000000002)
         else:
-            self.calendarTab.setPos(-0.55000000000000004,
-                                    0, 0.77500000000000002)
+            self.calendarTab.setPos(-0.55000000000000004, 0,
+                                    0.77500000000000002)
             self.hostTab.setPos(-0.13, 0, 0.77500000000000002)
             self.invitedTab.setPos(0.28000000000000003, 0, 0.77500000000000002)
 
@@ -242,12 +174,15 @@ class EventsPage(ShtikerPage.ShtikerPage):
             parent=self.hostedPartyDisplay,
             relief=None,
             geom=self.hostingGui.find('**/background_flat'))
-        (self.hostingGuestList, self.hostingGuestLabel) = self.createListAndLabel(
-            self.hostedPartyDisplay, self.hostingGui, 'guests', 7)
-        (self.hostingActivityList, self.hostingActivityLabel) = self.createListAndLabel(
-            self.hostedPartyDisplay, self.hostingGui, 'activities', 1)
-        (self.hostingDecorationList, self.hostingDecorationLabel) = self.createListAndLabel(
-            self.hostedPartyDisplay, self.hostingGui, 'decorations', 1)
+        (self.hostingGuestList,
+         self.hostingGuestLabel) = self.createListAndLabel(
+             self.hostedPartyDisplay, self.hostingGui, 'guests', 7)
+        (self.hostingActivityList,
+         self.hostingActivityLabel) = self.createListAndLabel(
+             self.hostedPartyDisplay, self.hostingGui, 'activities', 1)
+        (self.hostingDecorationList,
+         self.hostingDecorationLabel) = self.createListAndLabel(
+             self.hostedPartyDisplay, self.hostingGui, 'decorations', 1)
         self.hostingDateLabel = DirectLabel(
             parent=self.hostedPartyDisplay,
             relief=None,
@@ -261,31 +196,25 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.hostingCancelButton = DirectButton(
             parent=self.hostedPartyDisplay,
             relief=None,
-            geom=(
-                self.hostingGui.find('**/cancelPartyButton_up'),
-                self.hostingGui.find('**/cancelPartyButton_down'),
-                self.hostingGui.find('**/cancelPartyButton_rollover'),
-                self.hostingGui.find('**/cancelPartyButton_inactive')),
+            geom=(self.hostingGui.find('**/cancelPartyButton_up'),
+                  self.hostingGui.find('**/cancelPartyButton_down'),
+                  self.hostingGui.find('**/cancelPartyButton_rollover'),
+                  self.hostingGui.find('**/cancelPartyButton_inactive')),
             text=TTLocalizer.EventsPageHostTabCancelButton,
             text_scale=TTLocalizer.EPhostingCancelButton,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             command=self._EventsPage__doCancelParty)
         pos = self.hostingGui.find('**/startParty_text_locator').getPos()
         self.partyGoButton = DirectButton(
             parent=self.hostedPartyDisplay,
             relief=None,
-            geom=(
-                self.hostingGui.find('**/startPartyButton_up'),
-                self.hostingGui.find('**/startPartyButton_down'),
-                self.hostingGui.find('**/startPartyButton_rollover'),
-                self.hostingGui.find('**/startPartyButton_inactive')),
+            geom=(self.hostingGui.find('**/startPartyButton_up'),
+                  self.hostingGui.find('**/startPartyButton_down'),
+                  self.hostingGui.find('**/startPartyButton_rollover'),
+                  self.hostingGui.find('**/startPartyButton_inactive')),
             text=TTLocalizer.EventsPageGoButton,
             text_scale=TTLocalizer.EPpartyGoButton,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             textMayChange=True,
             command=self._startParty)
         self.publicPrivateLabel = DirectLabel(
@@ -303,10 +232,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
             relief=None,
             scale=0.10000000000000001,
             boxBorder=0.080000000000000002,
-            boxImage=(
-                uncheckedImage,
-                checkedImage,
-                None),
+            boxImage=(uncheckedImage, checkedImage, None),
             boxImageScale=10,
             boxRelief=None,
             text=TTLocalizer.EventsPageHostTabToggleToPublic,
@@ -314,20 +240,14 @@ class EventsPage(ShtikerPage.ShtikerPage):
             text_scale=TTLocalizer.EPpublicButton,
             pos=pos,
             command=self._EventsPage__changePublicPrivate,
-            indicator_pos=(
-                -0.69999999999999996,
-                0,
-                0.20000000000000001))
+            indicator_pos=(-0.69999999999999996, 0, 0.20000000000000001))
         pos = self.hostingGui.find('**/private_text_locator').getPos()
         self.privateButton = DirectCheckButton(
             parent=self.hostedPartyDisplay,
             relief=None,
             scale=0.10000000000000001,
             boxBorder=0.080000000000000002,
-            boxImage=(
-                uncheckedImage,
-                checkedImage,
-                None),
+            boxImage=(uncheckedImage, checkedImage, None),
             boxImageScale=10,
             boxRelief=None,
             text=TTLocalizer.EventsPageHostTabToggleToPrivate,
@@ -335,10 +255,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
             text_scale=TTLocalizer.EPprivateButton,
             pos=pos,
             command=self._EventsPage__changePublicPrivate,
-            indicator_pos=(
-                -0.69999999999999996,
-                0,
-                0.20000000000000001))
+            indicator_pos=(-0.69999999999999996, 0, 0.20000000000000001))
         self.confirmCancelPartyEvent = 'confirmCancelPartyEvent'
         self.accept(self.confirmCancelPartyEvent, self.confirmCancelOfParty)
         self.confirmCancelPartyGui = TTDialog.TTGlobalDialog(
@@ -360,9 +277,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
             style=TTDialog.Acknowledge)
         self.confirmTooLatePartyGui.hide()
         self.confirmPublicPrivateChangeEvent = 'confirmPublicPrivateChangeEvent'
-        self.accept(
-            self.confirmPublicPrivateChangeEvent,
-            self.confirmPublicPrivateChange)
+        self.accept(self.confirmPublicPrivateChangeEvent,
+                    self.confirmPublicPrivateChange)
         self.confirmPublicPrivateGui = TTDialog.TTGlobalDialog(
             dialogName=self.uniqueName('confirmPublicPrivateGui'),
             doneEvent=self.confirmPublicPrivateChangeEvent,
@@ -370,14 +286,12 @@ class EventsPage(ShtikerPage.ShtikerPage):
             style=TTDialog.Acknowledge)
         self.confirmPublicPrivateGui.hide()
         self.cancelPartyResultGuiEvent = 'cancelPartyResultGuiEvent'
-        self.accept(
-            self.cancelPartyResultGuiEvent,
-            self.cancelPartyResultGuiCommand)
+        self.accept(self.cancelPartyResultGuiEvent,
+                    self.cancelPartyResultGuiCommand)
         self.cancelPartyResultGui = TTDialog.TTGlobalDialog(
             dialogName=self.uniqueName('cancelPartyResultGui'),
             doneEvent=self.cancelPartyResultGuiEvent,
-            message=TTLocalizer.EventsPageCancelPartyResultOk %
-            0,
+            message=TTLocalizer.EventsPageCancelPartyResultOk % 0,
             style=TTDialog.Acknowledge)
         self.cancelPartyResultGui.doneStatus = ''
         self.cancelPartyResultGui.hide()
@@ -399,35 +313,24 @@ class EventsPage(ShtikerPage.ShtikerPage):
             relief=None,
             geom=self.invitationGui.find('**/activities_background'))
         (self.invitationPartyList,
-         self.invitationPartyLabel) = self.createListAndLabel(self.invitationDisplay,
-                                                              self.invitationGui,
-                                                              'parties',
-                                                              7,
-                                                              'ButtonDown',
-                                                              'ButtonUp',
-                                                              'Text_locator')
+         self.invitationPartyLabel) = self.createListAndLabel(
+             self.invitationDisplay, self.invitationGui, 'parties', 7,
+             'ButtonDown', 'ButtonUp', 'Text_locator')
         (self.invitationActivityList,
-         self.invitationActivityLabel) = self.createListAndLabel(self.invitationDisplay,
-                                                                 self.invitationGui,
-                                                                 'activities',
-                                                                 1,
-                                                                 'ButtonDown',
-                                                                 'ButtonUp',
-                                                                 'Text_locator')
+         self.invitationActivityLabel) = self.createListAndLabel(
+             self.invitationDisplay, self.invitationGui, 'activities', 1,
+             'ButtonDown', 'ButtonUp', 'Text_locator')
         pos = self.invitationGui.find('**/startText_locator').getPos()
         self.invitePartyGoButton = DirectButton(
             parent=self.invitationDisplay,
             relief=None,
-            geom=(
-                self.invitationGui.find('**/startButton_up'),
-                self.invitationGui.find('**/startButton_down'),
-                self.invitationGui.find('**/startButton_rollover'),
-                self.invitationGui.find('**/startButton_inactive')),
+            geom=(self.invitationGui.find('**/startButton_up'),
+                  self.invitationGui.find('**/startButton_down'),
+                  self.invitationGui.find('**/startButton_rollover'),
+                  self.invitationGui.find('**/startButton_inactive')),
             text=TTLocalizer.EventsPageInviteGoButton,
             text_scale=TTLocalizer.EPinvitePartyGoButton,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             textMayChange=True,
             command=self._inviteStartParty)
         self.invitationDateTimeLabel = DirectLabel(
@@ -436,33 +339,25 @@ class EventsPage(ShtikerPage.ShtikerPage):
             text='',
             textMayChange=True,
             text_scale=0.070000000000000007,
-            pos=(
-                0,
-                0,
-                -0.65000000000000002))
+            pos=(0, 0, -0.65000000000000002))
 
     def loadCalendarTab(self):
         self.calendarDisplay = self.attachNewNode('calendar')
         self.toontownTimeLabel = DirectLabel(
             parent=self.calendarDisplay,
-            pos=(
-                0.17499999999999999,
-                0,
-                -0.68999999999999995),
+            pos=(0.17499999999999999, 0, -0.68999999999999995),
             text_align=TextNode.ARight,
             relief=None,
             text=TTLocalizer.EventsPageToontownTimeIs,
             text_scale=0.065000000000000002,
             text_font=ToontownGlobals.getMinnieFont(),
-            text_fg=(
-                255 / 255.0,
-                146 / 255.0,
-                113 / 255.0,
-                1),
+            text_fg=(255 / 255.0, 146 / 255.0, 113 / 255.0, 1),
             textMayChange=0)
         curServerDate = base.cr.toontownTimeManager.getCurServerDateTime()
         self.calendarGuiMonth = CalendarGuiMonth(
-            self.calendarDisplay, curServerDate, onlyFutureMonthsClickable=True)
+            self.calendarDisplay,
+            curServerDate,
+            onlyFutureMonthsClickable=True)
         pos = (0.34999999999999998, 0, -0.68999999999999995)
         self.toontownTimeGui = ServerTimeGui(self.calendarDisplay, pos)
 
@@ -471,8 +366,9 @@ class EventsPage(ShtikerPage.ShtikerPage):
         newspaper = loader.loadModel(
             'phase_4/models/parties/tt_m_gui_sbk_newspaper.bam')
         self.newsFrame = DirectLabel(
-            relief=None, parent=self.newsDisplay, pos=(
-                0, 0, -0.10000000000000001))
+            relief=None,
+            parent=self.newsDisplay,
+            pos=(0, 0, -0.10000000000000001))
         newspaper.reparentTo(self.newsFrame)
         self.createArticleTextList()
         self.articleImage = None
@@ -482,19 +378,13 @@ class EventsPage(ShtikerPage.ShtikerPage):
             text_scale=0.10000000000000001,
             text_wordwrap=13,
             parent=self.newsFrame,
-            pos=(
-                0,
-                0,
-                0.27500000000000002))
+            pos=(0, 0, 0.27500000000000002))
         self.createArticleIndexList()
         titlePos = self.newsFrame.find('**/loc_toontimeTimes').getPos()
         self.newsPaperTitle = DirectLabel(
             text=TTLocalizer.EventsPageNewsPaperTitle,
             relief=None,
-            text_scale=(
-                0.13,
-                0.25,
-                1),
+            text_scale=(0.13, 0.25, 1),
             text_align=TextNode.ACenter,
             text_font=ToontownGlobals.getMinnieFont(),
             parent=self.newsFrame,
@@ -528,14 +418,11 @@ class EventsPage(ShtikerPage.ShtikerPage):
         dot = DirectFrame(
             relief=None,
             geom=self.hostingGui.find('**/questionMark'),
-            pos=(
-                0.5,
-                0.0,
-                0.01))
+            pos=(0.5, 0.0, 0.01))
         if inviteStatus == PartyGlobals.InviteStatus.Accepted:
-            dot['geom'] = (self.hostingGui.find('**/checkmark'),)
+            dot['geom'] = (self.hostingGui.find('**/checkmark'), )
         elif inviteStatus == PartyGlobals.InviteStatus.Rejected:
-            dot['geom'] = (self.hostingGui.find('**/x'),)
+            dot['geom'] = (self.hostingGui.find('**/x'), )
 
         PartyUtils.truncateTextOfLabelBasedOnWidth(
             label, name, PartyGlobals.EventsPageGuestNameMaxWidth)
@@ -543,7 +430,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
         return label
 
     def getActivityItem(self, activityBase, count=1):
-        activityName = TTLocalizer.PartyActivityNameDict[activityBase.activityId]['generic']
+        activityName = TTLocalizer.PartyActivityNameDict[
+            activityBase.activityId]['generic']
         if count == 1:
             textForActivity = activityName
         else:
@@ -551,22 +439,21 @@ class EventsPage(ShtikerPage.ShtikerPage):
         iconString = PartyGlobals.ActivityIds.getString(
             activityBase.activityId)
         geom = getPartyActivityIcon(self.activityIconsModel, iconString)
-        label = DirectLabel(relief=None,
-                            geom=geom,
-                            geom_scale=0.38,
-                            geom_pos=Vec3(0.0,
-                                          0.0,
-                                          -0.17000000000000001),
-                            text=textForActivity,
-                            text_scale=TTLocalizer.EPactivityItemLabel,
-                            text_align=TextNode.ACenter,
-                            text_pos=(-0.01,
-                                      -0.42999999999999999),
-                            text_wordwrap=7.0)
+        label = DirectLabel(
+            relief=None,
+            geom=geom,
+            geom_scale=0.38,
+            geom_pos=Vec3(0.0, 0.0, -0.17000000000000001),
+            text=textForActivity,
+            text_scale=TTLocalizer.EPactivityItemLabel,
+            text_align=TextNode.ACenter,
+            text_pos=(-0.01, -0.42999999999999999),
+            text_wordwrap=7.0)
         return label
 
     def getDecorationItem(self, decorBase, count=1):
-        decorationName = TTLocalizer.PartyDecorationNameDict[decorBase.decorId]['editor']
+        decorationName = TTLocalizer.PartyDecorationNameDict[
+            decorBase.decorId]['editor']
         if count == 1:
             textForDecoration = decorationName
         else:
@@ -582,9 +469,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
             text=textForDecoration,
             text_scale=TTLocalizer.EPdecorationItemLabel,
             text_align=TextNode.ACenter,
-            text_pos=(
-                -0.01,
-                -0.42999999999999999),
+            text_pos=(-0.01, -0.42999999999999999),
             text_wordwrap=7.0)
         label['geom_scale'] = (2.6000000000000001, 0.01, 0.050000000000000003)
         label['geom_pos'] = (0.0, 0.0, -0.33000000000000002)
@@ -616,8 +501,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
             if inviteInfo is None:
                 EventsPage.notify.error(
-                    'No invitation info for party id %d' %
-                    partyInfo.partyId)
+                    'No invitation info for party id %d' % partyInfo.partyId)
                 return None
 
             if inviteInfo.status == PartyGlobals.InviteStatus.NotRead:
@@ -628,18 +512,13 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 relief=None,
                 text=hostName,
                 text_align=TextNode.ALeft,
-                text_bg=Vec4(
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0),
+                text_bg=Vec4(0.0, 0.0, 0.0, 0.0),
                 text_scale=0.044999999999999998,
                 textMayChange=True,
                 command=self.invitePartyClicked)
             PartyUtils.truncateTextOfLabelBasedOnWidth(
                 item, hostName, PartyGlobals.EventsPageHostNameMaxWidth)
-            item['extraArgs'] = [
-                item]
+            item['extraArgs'] = [item]
             item.setPythonTag('activityIds', partyInfo.getActivityIds())
             item.setPythonTag('partyStatus', partyInfo.status)
             item.setPythonTag('hostId', partyInfo.hostId)
@@ -661,8 +540,11 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.selectedInvitationItem['text_bg'] = Vec4(1.0, 1.0, 0.0, 1.0)
         self.fillInviteActivityList(item.getPythonTag('activityIds'))
         startTime = item.getPythonTag('startTime')
-        self.invitationDateTimeLabel['text'] = TTLocalizer.EventsPageInvitedTabTime % (PartyUtils.formatDate(
-            startTime.year, startTime.month, startTime.day), PartyUtils.formatTime(startTime.hour, startTime.minute))
+        self.invitationDateTimeLabel[
+            'text'] = TTLocalizer.EventsPageInvitedTabTime % (
+                PartyUtils.formatDate(startTime.year, startTime.month,
+                                      startTime.day),
+                PartyUtils.formatTime(startTime.hour, startTime.minute))
 
     def fillInviteActivityList(self, activityIds):
         self.invitationActivityList.removeAndDestroyAllItems()
@@ -675,10 +557,11 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
         for activityId in countDict:
             if countDict[activityId] == 1:
-                textOfActivity = TTLocalizer.PartyActivityNameDict[activityId]['generic']
+                textOfActivity = TTLocalizer.PartyActivityNameDict[activityId][
+                    'generic']
             else:
-                textOfActivity = TTLocalizer.PartyActivityNameDict[activityId]['generic'] + ' x ' + str(
-                    countDict[activityId])
+                textOfActivity = TTLocalizer.PartyActivityNameDict[activityId][
+                    'generic'] + ' x ' + str(countDict[activityId])
             geom = getPartyActivityIcon(
                 self.activityIconsModel,
                 PartyGlobals.ActivityIds.getString(activityId))
@@ -687,14 +570,9 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 text=textOfActivity,
                 text_align=TextNode.ACenter,
                 text_scale=0.050000000000000003,
-                text_pos=(
-                    0.0,
-                    -0.14999999999999999),
+                text_pos=(0.0, -0.14999999999999999),
                 geom_scale=0.29999999999999999,
-                geom_pos=Vec3(
-                    0.0,
-                    0.0,
-                    0.070000000000000007),
+                geom_pos=Vec3(0.0, 0.0, 0.070000000000000007),
                 geom=geom)
             self.invitationActivityList.addItem(item)
 
@@ -706,7 +584,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.doneStatus = {
             'mode': 'startparty',
             'firstStart': False,
-            'hostId': self.selectedInvitationItem.getPythonTag('hostId')}
+            'hostId': self.selectedInvitationItem.getPythonTag('hostId')
+        }
         messenger.send(self.doneEvent)
 
     def loadHostedPartyInfo(self):
@@ -726,45 +605,52 @@ class EventsPage(ShtikerPage.ShtikerPage):
                     self.loadGuests()
                     self.loadActivities()
                     self.loadDecorations()
-                    self.hostingDateLabel['text'] = TTLocalizer.EventsPageHostTabDateTimeLabel % (PartyUtils.formatDate(
-                        partyInfo.startTime.year,
-                        partyInfo.startTime.month,
-                        partyInfo.startTime.day),
-                        PartyUtils.formatTime(
-                        partyInfo.startTime.hour,
-                        partyInfo.startTime.minute))
+                    self.hostingDateLabel[
+                        'text'] = TTLocalizer.EventsPageHostTabDateTimeLabel % (
+                            PartyUtils.formatDate(partyInfo.startTime.year,
+                                                  partyInfo.startTime.month,
+                                                  partyInfo.startTime.day),
+                            PartyUtils.formatTime(partyInfo.startTime.hour,
+                                                  partyInfo.startTime.minute))
                     self.isPrivate = partyInfo.isPrivate
                     self._EventsPage__setPublicPrivateButton()
                     if partyInfo.status == PartyGlobals.PartyStatus.CanStart:
                         self.partyGoButton['state'] = DirectGuiGlobals.NORMAL
                         self.partyGoButton['text'] = (
-                            TTLocalizer.EventsPageGoButton,)
+                            TTLocalizer.EventsPageGoButton, )
                     elif partyInfo.status == PartyGlobals.PartyStatus.Started:
                         place = base.cr.playGame.getPlace()
                         if isinstance(place, Party):
                             if hasattr(base, 'distributedParty'):
                                 if base.distributedParty.partyInfo.hostId == base.localAvatar.doId:
-                                    self.partyGoButton['state'] = DirectGuiGlobals.DISABLED
+                                    self.partyGoButton[
+                                        'state'] = DirectGuiGlobals.DISABLED
                                 else:
-                                    self.partyGoButton['state'] = DirectGuiGlobals.NORMAL
+                                    self.partyGoButton[
+                                        'state'] = DirectGuiGlobals.NORMAL
                             else:
-                                self.partyGoButton['state'] = DirectGuiGlobals.NORMAL
+                                self.partyGoButton[
+                                    'state'] = DirectGuiGlobals.NORMAL
                                 self.notify.warning(
-                                    'base.distributedParty is not defined when base.cr.playGame.getPlace is party. This should never happen.')
+                                    'base.distributedParty is not defined when base.cr.playGame.getPlace is party. This should never happen.'
+                                )
                         else:
-                            self.partyGoButton['state'] = DirectGuiGlobals.NORMAL
+                            self.partyGoButton[
+                                'state'] = DirectGuiGlobals.NORMAL
                         self.partyGoButton['text'] = (
-                            TTLocalizer.EventsPageGoBackButton,)
+                            TTLocalizer.EventsPageGoBackButton, )
                     else:
                         self.partyGoButton['text'] = (
-                            TTLocalizer.EventsPageGoButton,)
+                            TTLocalizer.EventsPageGoButton, )
                         self.partyGoButton['state'] = DirectGuiGlobals.DISABLED
                     if partyInfo.status not in (
                             PartyGlobals.PartyStatus.Pending,
                             PartyGlobals.PartyStatus.CanStart):
-                        self.hostingCancelButton['state'] = DirectGuiGlobals.DISABLED
+                        self.hostingCancelButton[
+                            'state'] = DirectGuiGlobals.DISABLED
                     else:
-                        self.hostingCancelButton['state'] = DirectGuiGlobals.NORMAL
+                        self.hostingCancelButton[
+                            'state'] = DirectGuiGlobals.NORMAL
                     self.hostingDateLabel.show()
                     self.hostedPartyDisplay.show()
                     return None
@@ -805,7 +691,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.doneStatus = {
             'mode': 'startparty',
             'firstStart': firstStart,
-            'hostId': None}
+            'hostId': None
+        }
         messenger.send(self.doneEvent)
 
     def loadGuests(self):
@@ -946,51 +833,47 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.confirm.cleanup()
         del self.confirm
 
-    def createListAndLabel(
-            self,
-            parent,
-            gui,
-            typeString,
-            itemsVisible,
-            downString='DownArrow',
-            upString='UpArrow',
-            textString='_text_locator'):
+    def createListAndLabel(self,
+                           parent,
+                           gui,
+                           typeString,
+                           itemsVisible,
+                           downString='DownArrow',
+                           upString='UpArrow',
+                           textString='_text_locator'):
         list = DirectScrolledList(
-            parent=parent, relief=None, incButton_image=(
-                gui.find(
-                    '**/%s%s_up' %
-                    (typeString, downString)), gui.find(
-                    '**/%s%s_down' %
-                    (typeString, downString)), gui.find(
-                    '**/%s%s_rollover' %
-                    (typeString, downString)), gui.find(
-                        '**/%s%s_inactive' %
-                        (typeString, downString))), incButton_relief=None, decButton_image=(
-                            gui.find(
-                                '**/%s%s_up' %
-                                (typeString, upString)), gui.find(
-                                    '**/%s%s_down' %
-                                    (typeString, upString)), gui.find(
-                                        '**/%s%s_rollover' %
-                                        (typeString, upString)), gui.find(
-                                            '**/%s%s_inactive' %
-                                            (typeString, upString))), decButton_relief=None, itemFrame_pos=gui.find(
-                                                '**/%s_locator' %
-                typeString).getPos(), itemFrame_relief=None, numItemsVisible=itemsVisible, forceHeight=0.070000000000000007)
+            parent=parent,
+            relief=None,
+            incButton_image=(
+                gui.find('**/%s%s_up' % (typeString, downString)),
+                gui.find('**/%s%s_down' % (typeString, downString)),
+                gui.find('**/%s%s_rollover' % (typeString, downString)),
+                gui.find('**/%s%s_inactive' % (typeString, downString))),
+            incButton_relief=None,
+            decButton_image=(gui.find('**/%s%s_up' % (typeString, upString)),
+                             gui.find('**/%s%s_down' % (typeString, upString)),
+                             gui.find(
+                                 '**/%s%s_rollover' % (typeString, upString)),
+                             gui.find(
+                                 '**/%s%s_inactive' % (typeString, upString))),
+            decButton_relief=None,
+            itemFrame_pos=gui.find('**/%s_locator' % typeString).getPos(),
+            itemFrame_relief=None,
+            numItemsVisible=itemsVisible,
+            forceHeight=0.070000000000000007)
         strings = {
             'guests': TTLocalizer.EventsPageHostingTabGuestListTitle,
             'activities': TTLocalizer.EventsPageHostingTabActivityListTitle,
-            'decorations': TTLocalizer.EventsPageHostingTabDecorationsListTitle,
-            'parties': TTLocalizer.EventsPageHostingTabPartiesListTitle}
+            'decorations':
+            TTLocalizer.EventsPageHostingTabDecorationsListTitle,
+            'parties': TTLocalizer.EventsPageHostingTabPartiesListTitle
+        }
         label = DirectLabel(
             parent=parent,
             relief=None,
             text=strings[typeString],
             text_scale=TTLocalizer.EPcreateListAndLabel,
-            pos=gui.find(
-                '**/%s%s' %
-                (typeString,
-                 textString)).getPos())
+            pos=gui.find('**/%s%s' % (typeString, textString)).getPos())
         return (list, label)
 
     def setMode(self, mode, updateAnyways=0):
@@ -1019,7 +902,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
             self.newsDisplay.hide()
             self.loadHostedPartyInfo()
             if self.hostedPartyInfo is None:
-                self.titleLabel['text'] = TTLocalizer.EventsPageHostTabTitleNoParties
+                self.titleLabel[
+                    'text'] = TTLocalizer.EventsPageHostTabTitleNoParties
             else:
                 self.titleLabel['text'] = TTLocalizer.EventsPageHostTabTitle
         elif self.mode == EventsPage_Invited:
@@ -1072,26 +956,24 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
     def _EventsPage__changePublicPrivate(self, indicator):
         self._EventsPage__setPublicPrivateButton()
-        self.confirmPublicPrivateGui['text'] = TTLocalizer.EventsPagePublicPrivateChange
+        self.confirmPublicPrivateGui[
+            'text'] = TTLocalizer.EventsPagePublicPrivateChange
         self.confirmPublicPrivateGui.buttonList[0].hide()
         self.confirmPublicPrivateGui.show()
         base.cr.partyManager.sendChangePrivateRequest(
             self.hostedPartyInfo.partyId, not (self.isPrivate))
-        self.accept(
-            'changePartyPrivateResponseReceived',
-            self.changePartyPrivateResponseReceived)
-        taskMgr.doMethodLater(5.0,
-                              self.changePartyPrivateResponseReceived,
-                              'changePartyPrivateResponseReceivedTimeOut',
-                              [0,
-                               0,
-                               PartyGlobals.ChangePartyFieldErrorCode.DatabaseError])
+        self.accept('changePartyPrivateResponseReceived',
+                    self.changePartyPrivateResponseReceived)
+        taskMgr.doMethodLater(
+            5.0, self.changePartyPrivateResponseReceived,
+            'changePartyPrivateResponseReceivedTimeOut',
+            [0, 0, PartyGlobals.ChangePartyFieldErrorCode.DatabaseError])
 
-    def changePartyPrivateResponseReceived(
-            self, partyId, newPrivateStatus, errorCode):
+    def changePartyPrivateResponseReceived(self, partyId, newPrivateStatus,
+                                           errorCode):
         EventsPage.notify.debug(
-            'changePartyPrivateResponseReceived called with partyId = %d, newPrivateStatus = %d, errorCode = %d' %
-            (partyId, newPrivateStatus, errorCode))
+            'changePartyPrivateResponseReceived called with partyId = %d, newPrivateStatus = %d, errorCode = %d'
+            % (partyId, newPrivateStatus, errorCode))
         taskMgr.remove('changePartyPrivateResponseReceivedTimeOut')
         self.ignore('changePartyPrivateResponseReceived')
         if errorCode == PartyGlobals.ChangePartyFieldErrorCode.AllOk:
@@ -1100,9 +982,11 @@ class EventsPage(ShtikerPage.ShtikerPage):
         else:
             self.confirmPublicPrivateGui.buttonList[0].show()
             if errorCode == PartyGlobals.ChangePartyFieldErrorCode.AlreadyStarted:
-                self.confirmPublicPrivateGui['text'] = TTLocalizer.EventsPagePublicPrivateAlreadyStarted
+                self.confirmPublicPrivateGui[
+                    'text'] = TTLocalizer.EventsPagePublicPrivateAlreadyStarted
             else:
-                self.confirmPublicPrivateGui['text'] = TTLocalizer.EventsPagePublicPrivateNoGo
+                self.confirmPublicPrivateGui[
+                    'text'] = TTLocalizer.EventsPagePublicPrivateNoGo
         self._EventsPage__setPublicPrivateButton()
 
     def _EventsPage__doCancelParty(self):
@@ -1115,34 +999,33 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.confirmCancelPartyGui.hide()
         if self.confirmCancelPartyGui.doneStatus == 'ok':
             base.cr.partyManager.sendChangePartyStatusRequest(
-                self.hostedPartyInfo.partyId, PartyGlobals.PartyStatus.Cancelled)
-            self.accept(
-                'changePartyStatusResponseReceived',
-                self.changePartyStatusResponseReceived)
+                self.hostedPartyInfo.partyId,
+                PartyGlobals.PartyStatus.Cancelled)
+            self.accept('changePartyStatusResponseReceived',
+                        self.changePartyStatusResponseReceived)
         else:
             self.hostingCancelButton['state'] = DirectGuiGlobals.NORMAL
 
-    def changePartyStatusResponseReceived(
-            self,
-            partyId,
-            newPartyStatus,
-            errorCode,
-            beansRefunded):
+    def changePartyStatusResponseReceived(self, partyId, newPartyStatus,
+                                          errorCode, beansRefunded):
         EventsPage.notify.debug(
-            'changePartyStatusResponseReceived called with partyId = %d, newPartyStatus = %d, errorCode = %d' %
-            (partyId, newPartyStatus, errorCode))
+            'changePartyStatusResponseReceived called with partyId = %d, newPartyStatus = %d, errorCode = %d'
+            % (partyId, newPartyStatus, errorCode))
         if errorCode == PartyGlobals.ChangePartyFieldErrorCode.AllOk:
             if newPartyStatus == PartyGlobals.PartyStatus.Cancelled:
                 self.loadHostedPartyInfo()
-                self.cancelPartyResultGui['text'] = TTLocalizer.EventsPageCancelPartyResultOk % beansRefunded
+                self.cancelPartyResultGui[
+                    'text'] = TTLocalizer.EventsPageCancelPartyResultOk % beansRefunded
                 self.cancelPartyResultGui.show()
 
         elif errorCode == PartyGlobals.ChangePartyFieldErrorCode.AlreadyRefunded and newPartyStatus == PartyGlobals.PartyStatus.NeverStarted:
             self.loadHostedPartyInfo()
-            self.cancelPartyResultGui['text'] = TTLocalizer.EventsPageCancelPartyAlreadyRefunded
+            self.cancelPartyResultGui[
+                'text'] = TTLocalizer.EventsPageCancelPartyAlreadyRefunded
             self.cancelPartyResultGui.show()
         else:
-            self.cancelPartyResultGui['text'] = TTLocalizer.EventsPageCancelPartyResultError
+            self.cancelPartyResultGui[
+                'text'] = TTLocalizer.EventsPageCancelPartyResultError
             self.cancelPartyResultGui.show()
             self.hostingCancelButton['state'] = DirectGuiGlobals.NORMAL
 
@@ -1156,21 +1039,21 @@ class EventsPage(ShtikerPage.ShtikerPage):
         bottomLeft = self.newsFrame.find('**/loc_textBoxBtmLf')
         topRight = self.newsFrame.find('**/loc_textBoxTopRt')
         topLeft = self.newsFrame.find('**/loc_textBoxTopLf')
-        self.notify.debug(
-            'bottomLeft=%s topRight=%s' %
-            (bottomLeft.getPos(), topRight.getPos()))
+        self.notify.debug('bottomLeft=%s topRight=%s' % (bottomLeft.getPos(),
+                                                         topRight.getPos()))
         buttonOffSet = 0.044999999999999998
         selectedIndex = 0
         self.articleListXorigin = bottomLeft.getPos().getX()
-        self.articleListFrameSizeX = topRight.getPos().getX() - bottomLeft.getPos().getX()
+        self.articleListFrameSizeX = topRight.getPos().getX(
+        ) - bottomLeft.getPos().getX()
         self.articleListZorigin = bottomLeft.getPos().getZ()
-        self.articleListFrameSizeZ = topRight.getPos().getZ() - bottomLeft.getPos().getZ()
+        self.articleListFrameSizeZ = topRight.getPos().getZ(
+        ) - bottomLeft.getPos().getZ()
         self.articleArrowButtonScale = 1.3
         self.articleItemFrameXorigin = bottomLeft.getPos().getX()
         self.articleButtonXstart = self.articleItemFrameXorigin + 0.25
 
         def makeButton(itemName, itemNum, *extraArgs):
-
             def buttonCommand():
                 print itemName, itemNum
 
@@ -1183,8 +1066,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
         itemHeight = 0.062
         topLeftStart = topLeft.getPos()
         self.notify.debug(
-            'topLeft=%s topLeftStart=%s' %
-            (topLeft.getPos(), topLeftStart))
+            'topLeft=%s topLeftStart=%s' % (topLeft.getPos(), topLeftStart))
         scrollTopUp = self.newsFrame.find('**/scrollTopUp')
         scrollTopDown = self.newsFrame.find('**/scrollTopDown')
         scrollTopHover = self.newsFrame.find('**/scrollTopHover')
@@ -1206,46 +1088,27 @@ class EventsPage(ShtikerPage.ShtikerPage):
             parent=self.newsFrame,
             relief=None,
             pos=topLeftStart,
-            incButton_image=(
-                self.newsFrame.find('**/scrollBtmUp'),
-                self.newsFrame.find('**/scrollBtmDown'),
-                self.newsFrame.find('**/scrollBtmHover'),
-                self.newsFrame.find('**/scrollBtmUp')),
+            incButton_image=(self.newsFrame.find('**/scrollBtmUp'),
+                             self.newsFrame.find('**/scrollBtmDown'),
+                             self.newsFrame.find('**/scrollBtmHover'),
+                             self.newsFrame.find('**/scrollBtmUp')),
             incButton_relief=None,
             incButton_pos=incButtonPos,
-            incButton_image3_color=(
-                1.0,
-                1.0,
-                1.0,
-                0.10000000000000001),
-            decButton_image=(
-                self.newsFrame.find('**/scrollTopUp'),
-                self.newsFrame.find('**/scrollTopDown'),
-                self.newsFrame.find('**/scrollTopHover'),
-                self.newsFrame.find('**/scrollTopUp')),
+            incButton_image3_color=(1.0, 1.0, 1.0, 0.10000000000000001),
+            decButton_image=(self.newsFrame.find('**/scrollTopUp'),
+                             self.newsFrame.find('**/scrollTopDown'),
+                             self.newsFrame.find('**/scrollTopHover'),
+                             self.newsFrame.find('**/scrollTopUp')),
             decButton_relief=None,
             decButton_pos=decButtonPos,
-            decButton_image3_color=(
-                1.0,
-                1.0,
-                1.0,
-                0.10000000000000001),
+            decButton_image3_color=(1.0, 1.0, 1.0, 0.10000000000000001),
             text_scale=0.050000000000000003,
-            frameSize=(
-                self.articleListXorigin,
-                self.articleListXorigin +
-                self.articleListFrameSizeX,
-                self.articleListZorigin,
-                self.articleListZorigin +
-                self.articleListFrameSizeZ),
-            frameColor=(
-                0.81999999999999995,
-                0.80000000000000004,
-                0.75,
-                1),
-            borderWidth=(
-                0.01,
-                0.01),
+            frameSize=(self.articleListXorigin,
+                       self.articleListXorigin + self.articleListFrameSizeX,
+                       self.articleListZorigin,
+                       self.articleListZorigin + self.articleListFrameSizeZ),
+            frameColor=(0.81999999999999995, 0.80000000000000004, 0.75, 1),
+            borderWidth=(0.01, 0.01),
             numItemsVisible=self.numLinesInTextList,
             itemMakeFunction=makeButton,
             forceHeight=itemHeight)
@@ -1256,22 +1119,15 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.articleIndexList = DirectScrolledList(
             parent=self.newsFrame,
             relief=None,
-            pos=(
-                0,
-                0,
-                0),
-            incButton_image=(
-                self.newsFrame.find('**/pageRtUp'),
-                self.newsFrame.find('**/pageRtUp'),
-                self.newsFrame.find('**/pageRtHover'),
-                None),
+            pos=(0, 0, 0),
+            incButton_image=(self.newsFrame.find('**/pageRtUp'),
+                             self.newsFrame.find('**/pageRtUp'),
+                             self.newsFrame.find('**/pageRtHover'), None),
             incButton_relief=None,
             incButton_scale=1,
-            decButton_image=(
-                self.newsFrame.find('**/pageLfUp'),
-                self.newsFrame.find('**/pageLfUp'),
-                self.newsFrame.find('**/pageLfHover'),
-                None),
+            decButton_image=(self.newsFrame.find('**/pageLfUp'),
+                             self.newsFrame.find('**/pageLfUp'),
+                             self.newsFrame.find('**/pageLfHover'), None),
             decButton_relief=None,
             decButton_scale=1,
             text_scale=0.050000000000000003,
@@ -1288,9 +1144,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
         curArticleIndex = self.articleIndexList.getSelectedIndex()
         if curArticleIndex in self.articleImages and curArticleIndex in self.articleText:
-            self.displayArticle(
-                self.articleImages[curArticleIndex],
-                self.articleText[curArticleIndex])
+            self.displayArticle(self.articleImages[curArticleIndex],
+                                self.articleText[curArticleIndex])
 
     def getRssFeed(self):
         if self.gotRssFeed:
@@ -1299,15 +1154,10 @@ class EventsPage(ShtikerPage.ShtikerPage):
         self.rssFeed = feedparser.parse('http://www.wdwinfo.com/news/rss.xml')
         feedText = []
 
-        def addFeedText(
-                unicodeText,
-                textSize=0.029999999999999999,
-                color=(
-                    0,
-                    0,
-                    0,
-                    1),
-                feedText=feedText):
+        def addFeedText(unicodeText,
+                        textSize=0.029999999999999999,
+                        color=(0, 0, 0, 1),
+                        feedText=feedText):
             feedText.append(
                 DirectLabel(
                     relief=None,
@@ -1316,17 +1166,14 @@ class EventsPage(ShtikerPage.ShtikerPage):
                     text_align=TextNode.ALeft,
                     text_fg=color,
                     textMayChange=0,
-                    pos=(
-                        0,
-                        0,
-                        0)))
+                    pos=(0, 0, 0)))
 
         addFeedText(self.rssFeed['channel']['title'], 0.059999999999999998)
         addFeedText(self.rssFeed['channel']['subtitle'], 0.040000000000000001)
         for entry in self.rssFeed['entries']:
             addFeedText('')
             addFeedText(entry['title'], 0.040000000000000001, (0, 0, 1, 1))
-            (addFeedText(entry['updated'], 0.025000000000000001),)
+            (addFeedText(entry['updated'], 0.025000000000000001), )
             addFeedText(entry['summary'], 0.035000000000000003)
 
         self.feedText = feedText
@@ -1339,10 +1186,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
         if not self.NonblockingDownload:
             if not taskMgr.hasTaskNamed(self.DownloadArticlesTaskName):
-                taskMgr.doMethodLater(
-                    0.5,
-                    self.downloadArticlesTask,
-                    self.DownloadArticlesTaskName)
+                taskMgr.doMethodLater(0.5, self.downloadArticlesTask,
+                                      self.DownloadArticlesTaskName)
 
         elif not self.downloadArticlesInProgress:
             self.downloadArticlesNonblocking()
@@ -1355,7 +1200,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
             urlfile = urllib.urlopen(self.getNewsUrl())
         except IOError:
             self.notify.warning('Could not open %s' % self.getNewsUrl())
-            self.newsStatusLabel['text'] = TTLocalizer.EventsPageNewsUnavailable
+            self.newsStatusLabel[
+                'text'] = TTLocalizer.EventsPageNewsUnavailable
             return None
 
         urlStrings = urlfile.read()
@@ -1375,8 +1221,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 imageFile.close()
             except IOError:
                 self.notify.warning(
-                    'image url %d could not open %s' %
-                    (index, imageUrl))
+                    'image url %d could not open %s' % (index, imageUrl))
 
             text = ''
             self.articleText[index] = text
@@ -1392,8 +1237,7 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 textFile.close()
             except IOError:
                 self.notify.warning(
-                    'text url %d could not open %s' %
-                    (index, textUrl))
+                    'text url %d could not open %s' % (index, textUrl))
 
             self.articleIndexList.addItem('')
 
@@ -1445,16 +1289,9 @@ class EventsPage(ShtikerPage.ShtikerPage):
             parent=self.newsFrame,
             relief=DirectGuiGlobals.FLAT,
             image=webTexture,
-            image_scale=(
-                curXSize / 2.0,
-                1,
-                curYSize / 2.0),
+            image_scale=(curXSize / 2.0, 1, curYSize / 2.0),
             pos=center,
-            frameSize=(
-                minX,
-                maxX,
-                minY,
-                maxY))
+            frameSize=(minX, maxX, minY, maxY))
         foo1 = Point3(0, 0, 0)
         foo2 = Point3(0, 0, 0)
         self.articleImage.calcTightBounds(foo1, foo2)
@@ -1504,53 +1341,33 @@ class EventsPage(ShtikerPage.ShtikerPage):
             parent=self.newsFrame,
             items=self.feedText,
             relief=None,
-            pos=(
-                -0.5,
-                0,
-                0.40000000000000002),
+            pos=(-0.5, 0, 0.40000000000000002),
             incButton_image=(
                 self.scrollButtonGui.find('**/FndsLst_ScrollUp'),
                 self.scrollButtonGui.find('**/FndsLst_ScrollDN'),
                 self.scrollButtonGui.find('**/FndsLst_ScrollUp_Rllvr'),
                 self.scrollButtonGui.find('**/FndsLst_ScrollUp')),
             incButton_relief=None,
-            incButton_scale=(
-                self.newsArrowButtonScale,
-                self.newsArrowButtonScale,
-                -(
-                    self.newsArrowButtonScale)),
-            incButton_pos=(
-                self.newsButtonXstart,
-                0,
-                self.newsListZorigin - buttonOffSet),
-            incButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
+            incButton_scale=(self.newsArrowButtonScale,
+                             self.newsArrowButtonScale,
+                             -(self.newsArrowButtonScale)),
+            incButton_pos=(self.newsButtonXstart, 0,
+                           self.newsListZorigin - buttonOffSet),
+            incButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
             decButton_image=(
                 self.scrollButtonGui.find('**/FndsLst_ScrollUp'),
                 self.scrollButtonGui.find('**/FndsLst_ScrollDN'),
                 self.scrollButtonGui.find('**/FndsLst_ScrollUp_Rllvr'),
                 self.scrollButtonGui.find('**/FndsLst_ScrollUp')),
             decButton_relief=None,
-            decButton_scale=(
-                self.newsArrowButtonScale,
-                self.newsArrowButtonScale,
-                self.newsArrowButtonScale),
+            decButton_scale=(self.newsArrowButtonScale,
+                             self.newsArrowButtonScale,
+                             self.newsArrowButtonScale),
             decButton_pos=(
-                self.newsButtonXstart,
-                0,
+                self.newsButtonXstart, 0,
                 self.newsListZorigin + self.newsListFrameSizeZ + buttonOffSet),
-            decButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
-            itemFrame_pos=(
-                self.newsItemFrameXorigin,
-                0,
-                0),
+            decButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
+            itemFrame_pos=(self.newsItemFrameXorigin, 0, 0),
             itemFrame_scale=1.0,
             itemFrame_relief=DirectGuiGlobals.SUNKEN,
             itemFrame_frameSize=(
@@ -1558,14 +1375,9 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 self.newsListXorigin + self.newsListFrameSizeX,
                 self.newsListZorigin,
                 self.newsListZorigin + self.newsListFrameSizeZ),
-            itemFrame_frameColor=(
-                0.81999999999999995,
-                0.80000000000000004,
-                0.75,
-                1),
-            itemFrame_borderWidth=(
-                0.01,
-                0.01),
+            itemFrame_frameColor=(0.81999999999999995, 0.80000000000000004,
+                                  0.75, 1),
+            itemFrame_borderWidth=(0.01, 0.01),
             numItemsVisible=14)
         self.newsList.scrollTo(selectedIndex)
 
@@ -1599,7 +1411,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
                     self.urls = data.split('\r\n')
             else:
                 self.notify.warning('Could not open %s' % url)
-                self.newsStatusLabel['text'] = TTLocalizer.EventsPageNewsUnavailable
+                self.newsStatusLabel[
+                    'text'] = TTLocalizer.EventsPageNewsUnavailable
                 self.gotArticles = True
                 return None
             if self.urls:
@@ -1624,9 +1437,9 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
                 else:
                     img.read(StringStream(data))
-            self.notify.warning(
-                'image url %d could not read %s' %
-                (self.curArticleIndex, url))
+            except:
+                self.notify.warning('image url %d could not read %s' %
+                                    (self.curArticleIndex, url))
 
         else:
             text = ''
@@ -1698,10 +1511,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
 
     def startCheckingAsyncRequest(self, url):
         taskMgr.remove(self.DownloadArticlesTaskName)
-        task = taskMgr.doMethodLater(
-            0.5,
-            self.pollDownloadTask,
-            self.DownloadArticlesTaskName)
+        task = taskMgr.doMethodLater(0.5, self.pollDownloadTask,
+                                     self.DownloadArticlesTaskName)
         task.url = url
 
     def stopCheckingAsyncRequest(self):
@@ -1715,8 +1526,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
             if self.nonBlock.getStatusString() == 'OK':
                 allOk = True
             else:
-                self.notify.warning('%s for %s' %
-                                    (self.nonBlock.getStatusString(), task.url))
+                self.notify.warning(
+                    '%s for %s' % (self.nonBlock.getStatusString(), task.url))
             self.doneGettingUrl(task.url, self.ramfile, allOk)
         else:
             return Task.again

@@ -17,13 +17,11 @@ class DistributedSillyMeterMgr(
     def announceGenerate(self):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.announceGenerate(
             self)
-        messenger.send('SillyMeterIsRunning', [
-            self.isRunning])
+        messenger.send('SillyMeterIsRunning', [self.isRunning])
 
     def delete(self):
         self.notify.debug('deleting SillyMetermgr')
-        messenger.send('SillyMeterIsRunning', [
-            False])
+        messenger.send('SillyMeterIsRunning', [False])
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.delete(self)
         if hasattr(self.cr, 'SillyMeterMgr'):
             del self.cr.SillyMeterMgr
@@ -31,14 +29,12 @@ class DistributedSillyMeterMgr(
     def setCurPhase(self, newPhase):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.setCurPhase(
             self, newPhase)
-        messenger.send('SillyMeterPhase', [
-            newPhase])
+        messenger.send('SillyMeterPhase', [newPhase])
 
     def setIsRunning(self, isRunning):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.setIsRunning(
             self, isRunning)
-        messenger.send('SillyMeterIsRunning', [
-            isRunning])
+        messenger.send('SillyMeterIsRunning', [isRunning])
 
     def getCurPhaseDuration(self):
         if len(self.holidayDates) > 0:
@@ -53,8 +49,7 @@ class DistributedSillyMeterMgr(
             holidayDuration = endHolidayTime - startHolidayTime
             if holidayDuration < 0:
                 self.notify.error(
-                    'Duration not set for phase %' %
-                    self.curPhase)
+                    'Duration not set for phase %' % self.curPhase)
                 return -1
             else:
                 return holidayDuration

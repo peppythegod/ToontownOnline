@@ -6,7 +6,6 @@ import DistributedBarrelBase
 
 
 class DistributedBeanBarrel(DistributedBarrelBase.DistributedBarrelBase):
-
     def __init__(self, cr):
         DistributedBarrelBase.DistributedBarrelBase.__init__(self, cr)
         self.numGags = 0

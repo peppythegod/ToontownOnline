@@ -8,7 +8,6 @@ from DroppedGag import *
 
 
 class DistributedGag(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.nodePath = None
@@ -29,7 +28,8 @@ class DistributedGag(DistributedObject.DistributedObject):
             self.makeNodePath()
 
         self.delta = -globalClockDelta.networkToLocalTime(
-            self.initTime, globalClock.getFrameTime(), 16, 100) + globalClock.getFrameTime()
+            self.initTime, globalClock.getFrameTime(), 16,
+            100) + globalClock.getFrameTime()
         if self.type == 0:
             self.name = self.uniqueName('banana')
         elif self.type == 1:
@@ -44,15 +44,10 @@ class DistributedGag(DistributedObject.DistributedObject):
             startPos = base.cr.doId2do[self.ownerId].getPos(render)
             endPos = Vec3(self.pos[0], self.pos[1], self.pos[2])
             throwIt = ProjectileInterval(
-                self.nodePath,
-                startPos=startPos,
-                endPos=endPos,
-                duration=1)
+                self.nodePath, startPos=startPos, endPos=endPos, duration=1)
             throwIt.start()
-        taskMgr.doMethodLater(
-            0.80000000000000004 - self.delta,
-            self.addCollider,
-            self.uniqueName('addCollider'))
+        taskMgr.doMethodLater(0.80000000000000004 - self.delta,
+                              self.addCollider, self.uniqueName('addCollider'))
 
     def addCollider(self, t):
         bs = CollisionSphere(0, 0, 0, 2)
@@ -66,9 +61,10 @@ class DistributedGag(DistributedObject.DistributedObject):
 
     def b_imHit(self, cevent):
         self.ignoreAll()
-        self.sendUpdate('hitSomebody', [
-            localAvatar.doId,
-            globalClockDelta.getFrameNetworkTime(16, 100)])
+        self.sendUpdate(
+            'hitSomebody',
+            [localAvatar.doId,
+             globalClockDelta.getFrameNetworkTime(16, 100)])
         if self.type == 0:
             base.race.localKart.hitBanana()
         elif self.type == 1:

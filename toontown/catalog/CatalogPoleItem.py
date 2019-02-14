@@ -28,19 +28,18 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
         return TTLocalizer.PoleTypeName
 
     def getName(self):
-        return TTLocalizer.FishingRod % TTLocalizer.FishingRodNameDict[self.rodId]
+        return TTLocalizer.FishingRod % TTLocalizer.FishingRodNameDict[
+            self.rodId]
 
     def recordPurchase(self, avatar, optional):
         if self.rodId < 0 or self.rodId > FishGlobals.MaxRodId:
-            self.notify.warning(
-                'Invalid fishing pole: %s for avatar %s' %
-                (self.rodId, avatar.doId))
+            self.notify.warning('Invalid fishing pole: %s for avatar %s' %
+                                (self.rodId, avatar.doId))
             return ToontownGlobals.P_InvalidIndex
 
         if self.rodId < avatar.getFishingRod():
-            self.notify.warning(
-                'Avatar already has pole: %s for avatar %s' %
-                (self.rodId, avatar.doId))
+            self.notify.warning('Avatar already has pole: %s for avatar %s' %
+                                (self.rodId, avatar.doId))
             return ToontownGlobals.P_ItemUnneeded
 
         avatar.b_setFishingRod(self.rodId)
@@ -54,8 +53,8 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
 
     def getPicture(self, avatar):
         rodPath = FishGlobals.RodFileDict.get(self.rodId)
-        pole = Actor.Actor(rodPath, {
-            'cast': 'phase_4/models/props/fishing-pole-chan'})
+        pole = Actor.Actor(rodPath,
+                           {'cast': 'phase_4/models/props/fishing-pole-chan'})
         pole.setPosHpr(1.47, 0, -1.6699999999999999, 90, 55, -90)
         pole.setScale(0.80000000000000004)
         pole.setDepthTest(1)
@@ -77,8 +76,8 @@ class CatalogPoleItem(CatalogItem.CatalogItem):
         return CatalogItem.CatalogItem.getAcceptItemErrorText(self, retcode)
 
     def output(self, store=-1):
-        return 'CatalogPoleItem(%s%s)' % (
-            self.rodId, self.formatOptionalData(store))
+        return 'CatalogPoleItem(%s%s)' % (self.rodId,
+                                          self.formatOptionalData(store))
 
     def getFilename(self):
         return FishGlobals.RodFileDict.get(self.rodId)

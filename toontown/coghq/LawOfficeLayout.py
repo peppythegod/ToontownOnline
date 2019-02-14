@@ -5,11 +5,9 @@ from toontown.toonbase import ToontownGlobals
 from direct.showbase.PythonUtil import normalDistrib, lerp
 import random
 OfficeBuildingFloorSequences = {
-    13300: [
-        (0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0)]}
-Index2Spec = {
-    0: 'LawOffice_Spec_Tier0_a',
-    1: 'LawOffice_Spec_Tier0_b'}
+    13300: [(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0)]
+}
+Index2Spec = {0: 'LawOffice_Spec_Tier0_a', 1: 'LawOffice_Spec_Tier0_b'}
 LawbotFloorSpecs = {}
 for floorIndex, floorSpec in Index2Spec.items():
     LawbotFloorSpecs[floorIndex] = __import__('toontown.coghq.' + floorSpec)
@@ -22,8 +20,10 @@ class LawOfficeLayout:
         self.lawOfficeId = lawOfficeId
         self.floorIds = []
         if self.lawOfficeId in OfficeBuildingFloorSequences:
-            self.floorIds = OfficeBuildingFloorSequences[self.lawOfficeId][random.randint(
-                0, len(OfficeBuildingFloorSequences[self.lawOfficeId])) - 1]
+            self.floorIds = OfficeBuildingFloorSequences[
+                self.lawOfficeId][random.randint(
+                    0, len(OfficeBuildingFloorSequences[self.lawOfficeId])) -
+                                  1]
         else:
             self.notify.warning('no layout for Law Office ID: using defaults')
             self.floorIds = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

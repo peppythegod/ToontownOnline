@@ -4,7 +4,6 @@ from toontown.toon import NPCToons
 
 
 class NewbiePurchaseManager(PurchaseManager.PurchaseManager):
-
     def setOwnedNewbieId(self, ownedNewbieId):
         self.ownedNewbieId = ownedNewbieId
 
@@ -49,11 +48,10 @@ class NewbiePurchaseManager(PurchaseManager.PurchaseManager):
             del self.movie
 
     def playMovie(self):
-        self.movie = QuestParser.NPCMoviePlayer(
-            'gag_intro', base.localAvatar, self.npc)
-        self.movie.setVar(
-            'backToPlaygroundButton',
-            self.purchase.backToPlayground)
+        self.movie = QuestParser.NPCMoviePlayer('gag_intro', base.localAvatar,
+                                                self.npc)
+        self.movie.setVar('backToPlaygroundButton',
+                          self.purchase.backToPlayground)
         self.movie.setVar('playAgainButton', self.purchase.playAgain)
         self.movie.setVar('purchaseBg', self.purchase.bg)
         self.movie.play()

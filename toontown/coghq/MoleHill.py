@@ -8,7 +8,6 @@ from toontown.battle import BattleProps
 
 
 class MoleHill(NodePath):
-
     def __init__(self, x, y, z, moleField, index):
         NodePath.__init__(self, 'MoleHill-%d' % index)
         self.moleField = moleField
@@ -26,11 +25,10 @@ class MoleHill(NodePath):
         self.hill = loader.loadModel('phase_12/models/bossbotHQ/mole_hole')
         self.hill.setZ(0.0)
         self.hill.reparentTo(self)
-        self.hillColName = 'moleHillCol-%d-%d' % (
-            self.moleField.doId, self.index)
-        self.moleField.accept(
-            'enter' + self.hillColName,
-            self.moleField.handleEnterHill)
+        self.hillColName = 'moleHillCol-%d-%d' % (self.moleField.doId,
+                                                  self.index)
+        self.moleField.accept('enter' + self.hillColName,
+                              self.moleField.handleEnterHill)
         self.mole = self.attachNewNode('mole')
         self.mole.reparentTo(self)
         self.mole.setScale(0.75)
@@ -45,9 +43,8 @@ class MoleHill(NodePath):
         self.moleColNodePath = self.mole.attachNewNode(collNode)
         self.moleColNodePath.stash()
         self.moleColNodePath.setScale(1.0)
-        self.moleField.accept(
-            'enter' + moleColName,
-            self.moleField.handleEnterMole)
+        self.moleField.accept('enter' + moleColName,
+                              self.moleField.handleEnterMole)
 
     def destroy(self):
         if self.popIval:
@@ -68,8 +65,10 @@ class MoleHill(NodePath):
 
     def setHillType(self, type):
         if self.isUp:
-            if (self.hillType == MoleFieldBase.HILL_MOLE or type == MoleFieldBase.HILL_BOMB or self.hillType ==
-                    MoleFieldBase.HILL_BOMB) and type == MoleFieldBase.HILL_MOLE:
+            if (self.hillType == MoleFieldBase.HILL_MOLE
+                    or type == MoleFieldBase.HILL_BOMB
+                    or self.hillType == MoleFieldBase.HILL_BOMB
+                ) and type == MoleFieldBase.HILL_MOLE:
                 return None
 
         self.hillType = type
@@ -95,57 +94,64 @@ class MoleHill(NodePath):
                     'GearExplosion', numParticles=10)
                 bigGearExplosion = BattleParticles.createParticleEffect(
                     'BigGearExplosion', numParticles=30)
-                gears2MTrack = Track(
-                    (0.0,
-                     ParticleInterval(
-                         singleGear,
-                         self.hill,
-                         worldRelative=1,
-                         duration=5.7000000000000002,
-                         cleanup=True)),
-                    (0.0,
-                     ParticleInterval(
-                         smallGearExplosion,
-                         self.hill,
-                         worldRelative=0,
-                         duration=1.2,
-                         cleanup=True)),
-                    (0.29999999999999999,
-                     ParticleInterval(
-                         bigGearExplosion,
-                         self.hill,
-                         worldRelative=0,
-                         duration=1.0,
-                         cleanup=True)),
-                    name='gears2MTrack')
+                gears2MTrack = Track((0.0,
+                                      ParticleInterval(
+                                          singleGear,
+                                          self.hill,
+                                          worldRelative=1,
+                                          duration=5.7000000000000002,
+                                          cleanup=True)),
+                                     (0.0,
+                                      ParticleInterval(
+                                          smallGearExplosion,
+                                          self.hill,
+                                          worldRelative=0,
+                                          duration=1.2,
+                                          cleanup=True)),
+                                     (0.29999999999999999,
+                                      ParticleInterval(
+                                          bigGearExplosion,
+                                          self.hill,
+                                          worldRelative=0,
+                                          duration=1.0,
+                                          cleanup=True)),
+                                     name='gears2MTrack')
                 gears2MTrack.start()
                 self.popIval = Sequence(
                     Parallel(
                         Sequence(
                             LerpPosInterval(
-                                self.moleHead, 0.050000000000000003, Point3(
-                                    0.28000000000000003, 0.0, 0.0)), LerpPosInterval(
-                                self.moleHead, 0.050000000000000003, Point3(
-                                    0.0, -0.23000000000000001, 0.0)), LerpPosInterval(
-                                self.moleHead, 0.050000000000000003, Point3(
-                                    0.0, 0.0, 0.28000000000000003)), LerpPosInterval(
-                                        self.moleHead, 0.050000000000000003, Point3(
-                                            -0.34999999999999998, 0.0, 0.0)), LerpPosInterval(
-                                                self.moleHead, 0.050000000000000003, Point3(
-                                                    0.0, 0.28000000000000003, 0.0)), LerpPosInterval(
-                                                        self.moleHead, 0.050000000000000003, Point3(
-                                                            0.31, 0.0, 0.0)), LerpPosInterval(
-                                                                self.moleHead, 0.050000000000000003, Point3(
-                                                                    0.0, -0.32000000000000001, 0.0)), LerpPosInterval(
-                                                                        self.moleHead, 0.050000000000000003, Point3(
-                                                                            0.0, 0.0, 0.47999999999999998)), LerpPosInterval(
-                                                                                self.moleHead, 0.050000000000000003, Point3(
-                                                                                    -0.28000000000000003, 0.0, 0.0)), LerpPosInterval(
-                                                                                        self.moleHead, 0.050000000000000003, Point3(
-                                                                                            0.0, 0.28999999999999998, 0.0)))), LerpPosInterval(
-                                                                                                self.mole, 0.5, Point3(
-                                                                                                    0, 0, -2.5)), Func(
-                                                                                                        self.setHillType, MoleFieldBase.HILL_BOMB))
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.28000000000000003, 0.0, 0.0)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.0, -0.23000000000000001, 0.0)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.0, 0.0, 0.28000000000000003)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(-0.34999999999999998, 0.0, 0.0)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.0, 0.28000000000000003, 0.0)),
+                            LerpPosInterval(self.moleHead,
+                                            0.050000000000000003,
+                                            Point3(0.31, 0.0, 0.0)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.0, -0.32000000000000001, 0.0)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.0, 0.0, 0.47999999999999998)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(-0.28000000000000003, 0.0, 0.0)),
+                            LerpPosInterval(
+                                self.moleHead, 0.050000000000000003,
+                                Point3(0.0, 0.28999999999999998, 0.0)))),
+                    LerpPosInterval(self.mole, 0.5, Point3(0, 0, -2.5)),
+                    Func(self.setHillType, MoleFieldBase.HILL_BOMB))
                 self.popIval.start()
             else:
                 self.moleHead.setH(0)
@@ -165,64 +171,62 @@ class MoleHill(NodePath):
             self.popIval = Sequence(
                 Parallel(
                     Sequence(
-                        LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.17999999999999999, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, -0.13, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.0, 0.17999999999999999)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                -0.14999999999999999, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.17999999999999999, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.11, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, -0.12, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.0, 0.17999999999999999)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                -0.17999999999999999, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.13, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.17999999999999999, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, -0.14999999999999999, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.0, 0.17999999999999999)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                -0.16, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.17999999999999999, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.11, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, -0.17999999999999999, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.0, 0.17000000000000001)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                -0.17999999999999999, 0.0, 0.0)), LerpPosInterval(
-                            self.moleHead, 0.050000000000000003, Point3(
-                                0.0, 0.0, 0.0))), Sequence(
-                        LerpScaleInterval(
-                            self.moleHead, 0.5, 3.5), LerpScaleInterval(
-                            self.moleHead, 0.5, 1.0))), LerpPosInterval(
-                    self.mole, 0.5, Point3(
-                        0, 0, -2.5)), Func(
-                    self.setHillType, MoleFieldBase.HILL_MOLE))
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.17999999999999999, 0.0, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, -0.13, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.0, 0.17999999999999999)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(-0.14999999999999999, 0.0,
+                                               0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.17999999999999999, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.11, 0.0, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, -0.12, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.0, 0.17999999999999999)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(-0.17999999999999999, 0.0,
+                                               0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.13, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.17999999999999999, 0.0, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, -0.14999999999999999,
+                                               0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.0, 0.17999999999999999)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(-0.16, 0.0, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.17999999999999999, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.11, 0.0, 0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, -0.17999999999999999,
+                                               0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.0, 0.17000000000000001)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(-0.17999999999999999, 0.0,
+                                               0.0)),
+                        LerpPosInterval(self.moleHead, 0.050000000000000003,
+                                        Point3(0.0, 0.0, 0.0))),
+                    Sequence(
+                        LerpScaleInterval(self.moleHead, 0.5, 3.5),
+                        LerpScaleInterval(self.moleHead, 0.5, 1.0))),
+                LerpPosInterval(self.mole, 0.5, Point3(0, 0, -2.5)),
+                Func(self.setHillType, MoleFieldBase.HILL_MOLE))
             self.popIval.start()
 
         self.moleHead.reparentTo(self.mole)
 
-    def doMolePop(
-            self,
-            startTime,
-            timeToMoveUp,
-            timeToStayUp,
-            timeToMoveDown,
-            moleType):
+    def doMolePop(self, startTime, timeToMoveUp, timeToStayUp, timeToMoveDown,
+                  moleType):
         if self.hillType == MoleFieldBase.HILL_WHACKED or self.hillType == MoleFieldBase.HILL_COGWHACKED:
             return None
 
@@ -238,26 +242,20 @@ class MoleHill(NodePath):
         self.popupNum += 1
         if self.hillType == MoleFieldBase.HILL_BOMB:
             self.popIval = Sequence(
-                Func(
-                    self.setHillType, moleType), Func(
-                    self.moleColNodePath.unstash), LerpPosInterval(
-                    self.mole, timeToMoveUp, Point3(
-                        0, 0, 0.0)), Wait(timeToStayUp), LerpPosInterval(
-                        self.mole, timeToMoveDown, Point3(
-                            0, 0, -2.5)), Func(
-                                self.stashMoleCollision), Func(
-                                    self.switchDown))
+                Func(self.setHillType, moleType),
+                Func(self.moleColNodePath.unstash),
+                LerpPosInterval(self.mole, timeToMoveUp, Point3(0, 0, 0.0)),
+                Wait(timeToStayUp),
+                LerpPosInterval(self.mole, timeToMoveDown, Point3(0, 0, -2.5)),
+                Func(self.stashMoleCollision), Func(self.switchDown))
         else:
             self.popIval = Sequence(
-                Func(
-                    self.setHillType, moleType), LerpPosInterval(
-                    self.mole, timeToMoveUp, Point3(
-                        0, 0, 0.0)), Func(
-                    self.moleColNodePath.unstash), Wait(timeToStayUp), Func(
-                        self.stashMoleCollision), LerpPosInterval(
-                            self.mole, timeToMoveDown, Point3(
-                                0, 0, -2.5)), Func(
-                                    self.switchDown))
+                Func(self.setHillType, moleType),
+                LerpPosInterval(self.mole, timeToMoveUp, Point3(0, 0, 0.0)),
+                Func(self.moleColNodePath.unstash), Wait(timeToStayUp),
+                Func(self.stashMoleCollision),
+                LerpPosInterval(self.mole, timeToMoveDown, Point3(0, 0, -2.5)),
+                Func(self.switchDown))
         self.popIval.start()
 
     def setGameStartTime(self, gameStartTime):
@@ -281,8 +279,10 @@ class MoleHill(NodePath):
         if self.downIval:
             self.downIval.pause()
 
-        self.downIval = Sequence(Func(self.stashMoleCollision), LerpPosInterval(
-            self.mole, 1, Point3(0, 0, -2.5)), Func(self.switchDown))
+        self.downIval = Sequence(
+            Func(self.stashMoleCollision),
+            LerpPosInterval(self.mole, 1, Point3(0, 0, -2.5)),
+            Func(self.switchDown))
         self.downIval.start()
 
     def forceMoleDown(self):

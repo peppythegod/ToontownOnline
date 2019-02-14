@@ -18,32 +18,15 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedElevatorFloor')
     defaultTransitions = {
-        'Off': [
-            'Opening',
-            'Closed'],
-        'Opening': [
-            'WaitEmpty',
-            'WaitCountdown',
-            'Opening',
-            'Closing'],
-        'WaitEmpty': [
-            'WaitCountdown',
-            'Closing'],
-        'WaitCountdown': [
-            'WaitEmpty',
-            'AllAboard',
-            'Closing',
-            'WaitCountdown'],
-        'AllAboard': [
-            'WaitEmpty',
-            'Closing'],
-        'Closing': [
-            'Closed',
-            'WaitEmpty',
-            'Closing',
-            'Opening'],
-        'Closed': [
-            'Opening']}
+        'Off': ['Opening', 'Closed'],
+        'Opening': ['WaitEmpty', 'WaitCountdown', 'Opening', 'Closing'],
+        'WaitEmpty': ['WaitCountdown', 'Closing'],
+        'WaitCountdown':
+        ['WaitEmpty', 'AllAboard', 'Closing', 'WaitCountdown'],
+        'AllAboard': ['WaitEmpty', 'Closing'],
+        'Closing': ['Closed', 'WaitEmpty', 'Closing', 'Opening'],
+        'Closed': ['Opening']
+    }
     id = 0
 
     def __init__(self, cr):
@@ -80,7 +63,8 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
             'phase_11/models/lawbotHQ/LB_ElevatorScaled')
         if not self.elevatorModel:
             self.notify.error(
-                'No Elevator Model in DistributedElevatorFloor.setupElevator. Please inform JML. Fool!')
+                'No Elevator Model in DistributedElevatorFloor.setupElevator. Please inform JML. Fool!'
+            )
 
         self.leftDoor = self.elevatorModel.find('**/left-door')
         if self.leftDoor.isEmpty():
@@ -122,8 +106,8 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
     def setLatch(self, markerId):
         self.notify.info('Setting latch')
         marker = self.cr.doId2do.get(markerId)
-        self.latchRequest = self.cr.relatedObjectMgr.requestObjects([
-            markerId], allCallback=self.set2Latch, timeout=5)
+        self.latchRequest = self.cr.relatedObjectMgr.requestObjects(
+            [markerId], allCallback=self.set2Latch, timeout=5)
         self.latch = markerId
 
     def set2Latch(self, taskMgrFooler=None):
@@ -133,10 +117,8 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
                 self.elevatorModel.reparentTo(marker)
                 return None
 
-            taskMgr.doMethodLater(
-                10.0,
-                self._repart2Marker,
-                'elevatorfloor-markerReparent')
+            taskMgr.doMethodLater(10.0, self._repart2Marker,
+                                  'elevatorfloor-markerReparent')
             self.notify.warning(
                 'Using backup, do method later version of latch')
 
@@ -198,19 +180,16 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
             self.sendUpdate('requestBoard', [])
         else:
             self.notify.warning(
-                'Tried to board elevator with hp: %d' %
-                base.localAvatar.hp)
+                'Tried to board elevator with hp: %d' % base.localAvatar.hp)
 
     def enterWaitEmpty(self, ts):
         self.lastState = self.state
         self.elevatorSphereNodePath.unstash()
         self.forceDoorsOpen()
         self.accept(
-            self.uniqueName('enterelevatorSphere'),
-            self.handleEnterSphere)
+            self.uniqueName('enterelevatorSphere'), self.handleEnterSphere)
         self.accept(
-            self.uniqueName('enterElevatorOK'),
-            self.handleEnterElevator)
+            self.uniqueName('enterElevatorOK'), self.handleEnterElevator)
         DistributedElevatorFSM.DistributedElevatorFSM.enterWaitEmpty(self, ts)
 
     def exitWaitEmpty(self):
@@ -226,8 +205,7 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
             self, ts)
         self.forceDoorsOpen()
         self.accept(
-            self.uniqueName('enterElevatorOK'),
-            self.handleEnterElevator)
+            self.uniqueName('enterElevatorOK'), self.handleEnterElevator)
         self.startCountdownClock(self.countdownTime, ts)
 
     def exitWaitCountdown(self):
@@ -248,15 +226,16 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
     def kickToonsOut(self):
         if not self.localToonOnBoard:
             zoneId = self.cr.playGame.hood.hoodId
-            self.cr.playGame.getPlace().fsm.request('teleportOut', [
-                {
+            self.cr.playGame.getPlace().fsm.request(
+                'teleportOut', [{
                     'loader': ZoneUtil.getLoaderName(zoneId),
                     'where': ZoneUtil.getToonWhereName(zoneId),
                     'how': 'teleportIn',
                     'hoodId': zoneId,
                     'zoneId': zoneId,
                     'shardId': None,
-                    'avId': -1}])
+                    'avId': -1
+                }])
 
     def exitClosing(self):
         self.lastState = self.state
@@ -305,11 +284,8 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
     def kickEveryoneOut(self):
         bailFlag = 0
         for (avId, slot) in self.boardedAvIds.items():
-            self.emptySlot(
-                slot,
-                avId,
-                bailFlag,
-                globalClockDelta.getRealNetworkTime())
+            self.emptySlot(slot, avId, bailFlag,
+                           globalClockDelta.getRealNetworkTime())
             if avId == base.localAvatar.doId:
                 continue
 
@@ -367,5 +343,6 @@ class DistributedElevatorFloor(DistributedElevatorFSM.DistributedElevatorFSM):
                 'where': 'factoryInterior',
                 'how': 'teleportIn',
                 'zoneId': zoneId,
-                'hoodId': hoodId}
+                'hoodId': hoodId
+            }
             self.cr.playGame.getPlace().elevator.signalDone(doneStatus)

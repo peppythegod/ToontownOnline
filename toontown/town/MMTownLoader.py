@@ -4,7 +4,6 @@ from toontown.suit import Suit
 
 
 class MMTownLoader(TownLoader.TownLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
         TownLoader.TownLoader.__init__(self, hood, parentFSM, doneEvent)
         self.streetClass = MMStreet.MMStreet

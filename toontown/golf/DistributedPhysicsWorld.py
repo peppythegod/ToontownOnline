@@ -26,21 +26,19 @@ def scalp(vec, scal):
 
 
 def length(vec):
-    return sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2)
+    return sqrt(vec[0]**2 + vec[1]**2 + vec[2]**2)
 
 
-class DistributedPhysicsWorld(
-        DistributedObject.DistributedObject,
-        PhysicsWorldBase.PhysicsWorldBase):
+class DistributedPhysicsWorld(DistributedObject.DistributedObject,
+                              PhysicsWorldBase.PhysicsWorldBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedPhysicsWorld')
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         PhysicsWorldBase.PhysicsWorldBase.__init__(self, 1)
-        self.accept(
-            'ode toggle contacts',
-            self._DistributedPhysicsWorld__handleToggleContacts)
+        self.accept('ode toggle contacts',
+                    self._DistributedPhysicsWorld__handleToggleContacts)
         self.physicsSfxDict = {}
 
     def generate(self):
@@ -60,17 +58,10 @@ class DistributedPhysicsWorld(
 
         self.physicsSfxDict = None
 
-    def clientCommonObject(
-            self,
-            type,
-            commonId,
-            pos,
-            hpr,
-            sizeX,
-            sizeY,
-            moveDistance):
-        data = self.createCommonObject(
-            type, commonId, pos, hpr, sizeX, sizeY, moveDistance)
+    def clientCommonObject(self, type, commonId, pos, hpr, sizeX, sizeY,
+                           moveDistance):
+        data = self.createCommonObject(type, commonId, pos, hpr, sizeX, sizeY,
+                                       moveDistance)
         index = data[1]
         if type == 3:
             cross = self.commonObjectDict[commonId][2]
@@ -89,8 +80,8 @@ class DistributedPhysicsWorld(
                         seamlessLoop=True,
                         volume=0.5)
                     windMillSoundInterval.loop()
-                    self.physicsSfxDict[index] = (
-                        windmillSfx, windMillSoundInterval)
+                    self.physicsSfxDict[index] = (windmillSfx,
+                                                  windMillSoundInterval)
                     break
                     continue
 
@@ -110,15 +101,15 @@ class DistributedPhysicsWorld(
                         seamlessLoop=True,
                         volume=0.5)
                     moverSoundInterval.start()
-                    self.physicsSfxDict[index] = (
-                        moverSfx, moverSoundInterval, index)
+                    self.physicsSfxDict[index] = (moverSfx, moverSoundInterval,
+                                                  index)
                     break
                     continue
 
     def commonObjectEvent(self, key, model, type, force, event):
         self.notify.debug(
-            'commonObjectForceEvent key %s model %s type %s force %s event %s' %
-            (key, model, type, force, event))
+            'commonObjectForceEvent key %s model %s type %s force %s event %s'
+            % (key, model, type, force, event))
         if type == 4:
             if event > 0:
                 self.physicsSfxDict[key][1].start()
@@ -127,8 +118,7 @@ class DistributedPhysicsWorld(
         self.useCommonObjectData(objectData)
 
     def upSendCommonObjects(self):
-        self.sendUpdate('upSetCommonObjects', [
-            self.getCommonObjectData()])
+        self.sendUpdate('upSetCommonObjects', [self.getCommonObjectData()])
 
     def _DistributedPhysicsWorld__handleToggleContacts(self, message=None):
         if self.showContacts:

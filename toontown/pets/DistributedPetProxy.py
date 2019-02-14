@@ -22,8 +22,7 @@ class DistributedPetProxy(DistributedObject.DistributedObject):
 
     def generate(self):
         DistributedObject.DistributedObject.generate(self)
-        self.traitList = [
-            0] * PetTraits.PetTraits.NumTraits
+        self.traitList = [0] * PetTraits.PetTraits.NumTraits
         self.requiredMoodComponents = {}
 
     def getSetterName(self, valueName, prefix='set'):
@@ -111,8 +110,7 @@ class DistributedPetProxy(DistributedObject.DistributedObject):
 
     def updateOfflineMood(self):
         self.mood.driftMood(
-            dt=self.getTimeSinceLastSeen(),
-            curMood=self.lastKnownMood)
+            dt=self.getTimeSinceLastSeen(), curMood=self.lastKnownMood)
 
     def _DistributedPetProxy__handleMoodSet(self, component, value):
         if self.isGenerated():
@@ -146,18 +144,11 @@ class DistributedPetProxy(DistributedObject.DistributedObject):
 
         self.requiredMoodComponents = {}
         DistributedPetProxy.notify.debug(
-            'time since last seen: %s' %
-            self.getTimeSinceLastSeen())
+            'time since last seen: %s' % self.getTimeSinceLastSeen())
         self.style = [
-            self.head,
-            self.ears,
-            self.nose,
-            self.tail,
-            self.bodyTexture,
-            self.color,
-            self.colorScale,
-            self.eyeColor,
-            self.gender]
+            self.head, self.ears, self.nose, self.tail, self.bodyTexture,
+            self.color, self.colorScale, self.eyeColor, self.gender
+        ]
         self.setLastSeenTimestamp(self.lastSeenTimestamp)
         self.updateOfflineMood()
         self.sendGenerateMessage = 1

@@ -28,14 +28,9 @@ class DistributedCrateAI(
     def requestPush(self, side):
         self.notify.debug('requestPush')
         avId = self.air.getAvatarIdFromSender()
-        if side not in [
-                0,
-                1,
-                2,
-                3]:
+        if side not in [0, 1, 2, 3]:
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
+                'suspicious', avId,
                 'DistributedCrateAI.requestPush given invalid side arg')
             return None
 
@@ -47,10 +42,8 @@ class DistributedCrateAI(
                 self._DistributedCrateAI__handleUnexpectedExit,
                 extraArgs=[avId])
             taskMgr.remove(self.taskName('sendPush'))
-            taskMgr.doMethodLater(
-                self.tPowerUp,
-                self.sendPushTask,
-                self.taskName('sendPush'))
+            taskMgr.doMethodLater(self.tPowerUp, self.sendPushTask,
+                                  self.taskName('sendPush'))
         else:
             self.sendUpdateToAvatarId(avId, 'setReject', [])
 
@@ -67,18 +60,11 @@ class DistributedCrateAI(
         if self.grid.doPush(self.entId, self.side):
             newPos = self.grid.getObjPos(self.entId)
             self.sendUpdate('setMoveTo', [
-                self.avId,
-                oldPos[0],
-                oldPos[1],
-                oldPos[2],
-                newPos[0],
-                newPos[1],
-                newPos[2]])
-            taskMgr.doMethodLater(
-                CrateGlobals.T_PUSH +
-                CrateGlobals.T_PAUSE,
-                self.sendPushTask,
-                self.taskName('sendPush'))
+                self.avId, oldPos[0], oldPos[1], oldPos[2], newPos[0],
+                newPos[1], newPos[2]
+            ])
+            taskMgr.doMethodLater(CrateGlobals.T_PUSH + CrateGlobals.T_PAUSE,
+                                  self.sendPushTask, self.taskName('sendPush'))
         else:
             taskMgr.remove(self.taskName('sendPush'))
             self.sendUpdateToAvatarId(self.avId, 'setReject', [])

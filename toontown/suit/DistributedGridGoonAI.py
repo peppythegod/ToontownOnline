@@ -40,20 +40,13 @@ class DistributedGridGoonAI(DistributedGoonAI.DistributedGoonAI):
             ptA = Point3(*self.getPosition())
             self.grid.doMoveDir(self.entId, self.h)
             ptB = Point3(*self.getPosition())
-            self.sendUpdate('setPathPts', [
-                ptA[0],
-                ptA[1],
-                ptA[2],
-                ptB[0],
-                ptB[1],
-                ptB[2]])
+            self.sendUpdate('setPathPts',
+                            [ptA[0], ptA[1], ptA[2], ptB[0], ptB[1], ptB[2]])
             tPathSegment = Vec3(ptA - ptB).length() / self.velocity
         else:
             turn = int(random.randrange(1, 4) * 90)
             self.h = (self.h + turn) % 360
             tPathSegment = 0.10000000000000001
-        taskMgr.doMethodLater(
-            tPathSegment,
-            self.goToNextPoint,
-            self.taskName('walkTask'))
+        taskMgr.doMethodLater(tPathSegment, self.goToNextPoint,
+                              self.taskName('walkTask'))
         return Task.done

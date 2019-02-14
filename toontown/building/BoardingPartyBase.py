@@ -15,7 +15,6 @@ INVITE_ACCEPT_FAIL_GROUP_FULL = -1
 
 
 class BoardingPartyBase:
-
     def __init__(self):
         self.groupListDict = {}
         self.avIdDict = {}

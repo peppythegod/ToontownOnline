@@ -37,15 +37,11 @@ class EstateManager(DistributedObject.DistributedObject):
         if base.localAvatar.doId == avId:
             name = base.cr.userName
 
-        self.sendUpdate('getEstateZone', [
-            avId,
-            name])
+        self.sendUpdate('getEstateZone', [avId, name])
 
     def setEstateZone(self, ownerId, zoneId):
         self.notify.debug('setEstateZone(%s, %s)' % (ownerId, zoneId))
-        messenger.send('setLocalEstateZone', [
-            ownerId,
-            zoneId])
+        messenger.send('setLocalEstateZone', [ownerId, zoneId])
 
     def generate(self):
         self.notify.debug('BASE: generate')
@@ -68,8 +64,7 @@ class EstateManager(DistributedObject.DistributedObject):
 
     def sendAvToPlayground(self, avId, retCode):
         self.notify.debug('sendAvToPlayground: %d' % avId)
-        messenger.send('kickToPlayground', [
-            retCode])
+        messenger.send('kickToPlayground', [retCode])
 
     def leaveEstate(self):
         if self.isDisabled():
@@ -81,11 +76,8 @@ class EstateManager(DistributedObject.DistributedObject):
 
     def removeFriend(self, ownerId, avId):
         self.notify.debug(
-            'removeFriend ownerId = %s, avId = %s' %
-            (ownerId, avId))
-        self.sendUpdate('removeFriend', [
-            ownerId,
-            avId])
+            'removeFriend ownerId = %s, avId = %s' % (ownerId, avId))
+        self.sendUpdate('removeFriend', [ownerId, avId])
 
     def startAprilFools(self):
         if isinstance(base.cr.playGame.getPlace(), Estate.Estate):

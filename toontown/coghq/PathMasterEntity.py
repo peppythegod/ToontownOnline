@@ -15,15 +15,7 @@ class PathMasterEntity(PathEntity.PathEntity):
         self.initPath()
 
     def initPath(self):
-        self.pathTargetList = [
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-            None,
-            None]
+        self.pathTargetList = [None, None, None, None, None, None, None, None]
         if not hasattr(self, 'pathTarget0'):
             self.pathTarget0 = None
         else:
@@ -120,8 +112,8 @@ class PathMasterEntity(PathEntity.PathEntity):
 
     def setPathIndex(self, pathIndex):
         self.pathIndex = pathIndex
-        pathTableId = GoonPathData.taskZoneId2pathId[self.level.getTaskZoneId(
-        )]
+        pathTableId = GoonPathData.taskZoneId2pathId[
+            self.level.getTaskZoneId()]
         if self.pathIndex in GoonPathData.Paths[pathTableId]:
             self.path = GoonPathData.Paths[pathTableId][self.pathIndex]
             if __dev__:
@@ -131,21 +123,19 @@ class PathMasterEntity(PathEntity.PathEntity):
             PathEntity.notify.warning('invalid pathIndex: %s' % pathIndex)
             self.path = None
 
-    def makePathTrack(
-            self,
-            node,
-            velocity,
-            name,
-            turnTime=1,
-            lookAroundNode=None):
+    def makePathTrack(self,
+                      node,
+                      velocity,
+                      name,
+                      turnTime=1,
+                      lookAroundNode=None):
         track = Sequence(name=name)
         self.path = self.getReducedPath()
         if self.path is None or len(self.path) < 1:
             track.append(WaitInterval(1.0))
             return track
 
-        path = self.path + [
-            self.path[0]]
+        path = self.path + [self.path[0]]
         for pointIndex in range(len(path) - 1):
             startPoint = Point3(path[pointIndex]) * self.pathScale
             endPoint = Point3(path[pointIndex + 1]) * self.pathScale
@@ -158,27 +148,23 @@ class PathMasterEntity(PathEntity.PathEntity):
             duration = distance / velocity
             track.append(
                 LerpPosInterval(
-                    node,
-                    duration=duration,
-                    pos=endPoint,
+                    node, duration=duration, pos=endPoint,
                     startPos=startPoint))
 
         return track
 
-    def makePathTrackBak(
-            self,
-            node,
-            velocity,
-            name,
-            turnTime=1,
-            lookAroundNode=None):
+    def makePathTrackBak(self,
+                         node,
+                         velocity,
+                         name,
+                         turnTime=1,
+                         lookAroundNode=None):
         track = Sequence(name=name)
         if self.path is None:
             track.append(WaitInterval(1.0))
             return track
 
-        path = self.path + [
-            self.path[0]]
+        path = self.path + [self.path[0]]
         for pointIndex in range(len(path) - 1):
             startPoint = Point3(path[pointIndex]) * self.pathScale
             endPoint = Point3(path[pointIndex + 1]) * self.pathScale
@@ -191,9 +177,7 @@ class PathMasterEntity(PathEntity.PathEntity):
             duration = distance / velocity
             track.append(
                 LerpPosInterval(
-                    node,
-                    duration=duration,
-                    pos=endPoint,
+                    node, duration=duration, pos=endPoint,
                     startPos=startPoint))
 
         return track

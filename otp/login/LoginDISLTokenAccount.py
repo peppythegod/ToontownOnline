@@ -6,7 +6,6 @@ from direct.distributed.PyDatagram import PyDatagram
 
 
 class LoginDISLTokenAccount(LoginBase.LoginBase):
-
     def __init__(self, cr):
         LoginBase.LoginBase.__init__(self, cr)
 

@@ -9,22 +9,13 @@ import MovieNPCSOS
 from MovieUtil import calcAvgSuitPos
 from direct.showutil import Effects
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieDrop')
-hitSoundFiles = (
-    'AA_drop_flowerpot.mp3',
-    'AA_drop_sandbag.mp3',
-    'AA_drop_anvil.mp3',
-    'AA_drop_bigweight.mp3',
-    'AA_drop_safe.mp3',
-    'AA_drop_piano.mp3',
-    'AA_drop_boat.mp3')
-missSoundFiles = (
-    'AA_drop_flowerpot_miss.mp3',
-    'AA_drop_sandbag_miss.mp3',
-    'AA_drop_anvil_miss.mp3',
-    'AA_drop_bigweight_miss.mp3',
-    'AA_drop_safe_miss.mp3',
-    'AA_drop_piano_miss.mp3',
-    'AA_drop_boat_miss.mp3')
+hitSoundFiles = ('AA_drop_flowerpot.mp3', 'AA_drop_sandbag.mp3',
+                 'AA_drop_anvil.mp3', 'AA_drop_bigweight.mp3',
+                 'AA_drop_safe.mp3', 'AA_drop_piano.mp3', 'AA_drop_boat.mp3')
+missSoundFiles = ('AA_drop_flowerpot_miss.mp3', 'AA_drop_sandbag_miss.mp3',
+                  'AA_drop_anvil_miss.mp3', 'AA_drop_bigweight_miss.mp3',
+                  'AA_drop_safe_miss.mp3', 'AA_drop_piano_miss.mp3',
+                  'AA_drop_boat_miss.mp3')
 tDropShadow = 1.3
 tSuitDodges = 2.4500000000000002 + tDropShadow
 tObjectAppears = 3.0 + tDropShadow
@@ -39,7 +30,8 @@ landFrames = (12, 4, 1, 11, 11, 11, 2)
 shoulderHeights = {
     'a': 13.279999999999999 / 4.0,
     'b': 13.74 / 4.0,
-    'c': 10.02 / 4.0}
+    'c': 10.02 / 4.0
+}
 
 
 def doDrops(drops):
@@ -58,8 +50,7 @@ def doDrops(drops):
             if suitId in suitDropsDict:
                 suitDropsDict[suitId].append((drop, targets[0]))
             else:
-                suitDropsDict[suitId] = [
-                    (drop, targets[0])]
+                suitDropsDict[suitId] = [(drop, targets[0])]
         suitId in suitDropsDict
         if level <= MAX_LEVEL_INDEX and attackAffectsGroup(track, level):
             groupDrops.append(drop)
@@ -78,8 +69,7 @@ def doDrops(drops):
                     suitDropsDict[suitId].append((drop, target))
 
             alreadyInList == 0
-            suitDropsDict[suitId] = [
-                (drop, target)]
+            suitDropsDict[suitId] = [(drop, target)]
 
     suitDrops = suitDropsDict.values()
 
@@ -113,12 +103,8 @@ def doDrops(drops):
 
     enterDuration = npcArrivals.getDuration()
     exitDuration = npcDepartures.getDuration()
-    camTrack = MovieCamera.chooseDropShot(
-        drops,
-        suitDropsDict,
-        camDuration,
-        enterDuration,
-        exitDuration)
+    camTrack = MovieCamera.chooseDropShot(drops, suitDropsDict, camDuration,
+                                          enterDuration, exitDuration)
     return (dropTrack, camTrack)
 
 
@@ -141,15 +127,11 @@ def __getSoundTrack(level, hitSuit, node=None):
         soundTrack.append(Wait(buttonDelay))
         soundTrack.append(
             SoundInterval(
-                buttonSound,
-                duration=0.67000000000000004,
-                node=node))
+                buttonSound, duration=0.67000000000000004, node=node))
         if fallingSound:
             soundTrack.append(
                 SoundInterval(
-                    fallingSound,
-                    duration=fallingDuration,
-                    node=node))
+                    fallingSound, duration=fallingDuration, node=node))
 
         if not level == UBER_GAG_LEVEL_INDEX:
             soundTrack.append(SoundInterval(soundEffect, node=node))
@@ -182,16 +164,9 @@ def __doSuitDrops(dropTargetPairs, npcs, npcDrops):
         level = drop['level']
         objName = objects[level]
         target = dropTargetPair[1]
-        track = __dropObjectForSingle(
-            drop,
-            delay,
-            objName,
-            level,
-            alreadyDodged,
-            alreadyTeased,
-            npcs,
-            target,
-            npcDrops)
+        track = __dropObjectForSingle(drop, delay, objName, level,
+                                      alreadyDodged, alreadyTeased, npcs,
+                                      target, npcDrops)
         if track:
             toonTracks.append(track)
             delay += TOON_DROP_DELAY
@@ -231,12 +206,8 @@ def __doGroupDrops(groupDrops):
                 nearestDistance = distance
                 continue
 
-        track = __dropGroupObject(
-            drop,
-            delay,
-            closestTarget,
-            alreadyDodged,
-            alreadyTeased)
+        track = __dropGroupObject(drop, delay, closestTarget, alreadyDodged,
+                                  alreadyTeased)
         if track:
             toonTracks.append(track)
             delay = delay + TOON_DROP_SUIT_DELAY
@@ -252,38 +223,20 @@ def __doGroupDrops(groupDrops):
     return toonTracks
 
 
-def __dropGroupObject(
-        drop,
-        delay,
-        closestTarget,
-        alreadyDodged,
-        alreadyTeased):
+def __dropGroupObject(drop, delay, closestTarget, alreadyDodged,
+                      alreadyTeased):
     level = drop['level']
     objName = objects[level]
     target = drop['target'][closestTarget]
     suit = drop['target'][closestTarget]['suit']
     npcDrops = {}
     npcs = []
-    returnedParallel = __dropObject(
-        drop,
-        delay,
-        objName,
-        level,
-        alreadyDodged,
-        alreadyTeased,
-        npcs,
-        target,
-        npcDrops)
+    returnedParallel = __dropObject(drop, delay, objName, level, alreadyDodged,
+                                    alreadyTeased, npcs, target, npcDrops)
     for i in range(len(drop['target'])):
         target = drop['target'][i]
-        suitTrack = __createSuitTrack(
-            drop,
-            delay,
-            level,
-            alreadyDodged,
-            alreadyTeased,
-            target,
-            npcs)
+        suitTrack = __createSuitTrack(drop, delay, level, alreadyDodged,
+                                      alreadyTeased, target, npcs)
         if suitTrack:
             returnedParallel.append(suitTrack)
             continue
@@ -291,50 +244,21 @@ def __dropGroupObject(
     return returnedParallel
 
 
-def __dropObjectForSingle(
-        drop,
-        delay,
-        objName,
-        level,
-        alreadyDodged,
-        alreadyTeased,
-        npcs,
-        target,
-        npcDrops):
-    singleDropParallel = __dropObject(
-        drop,
-        delay,
-        objName,
-        level,
-        alreadyDodged,
-        alreadyTeased,
-        npcs,
-        target,
-        npcDrops)
-    suitTrack = __createSuitTrack(
-        drop,
-        delay,
-        level,
-        alreadyDodged,
-        alreadyTeased,
-        target,
-        npcs)
+def __dropObjectForSingle(drop, delay, objName, level, alreadyDodged,
+                          alreadyTeased, npcs, target, npcDrops):
+    singleDropParallel = __dropObject(drop, delay, objName, level,
+                                      alreadyDodged, alreadyTeased, npcs,
+                                      target, npcDrops)
+    suitTrack = __createSuitTrack(drop, delay, level, alreadyDodged,
+                                  alreadyTeased, target, npcs)
     if suitTrack:
         singleDropParallel.append(suitTrack)
 
     return singleDropParallel
 
 
-def __dropObject(
-        drop,
-        delay,
-        objName,
-        level,
-        alreadyDodged,
-        alreadyTeased,
-        npcs,
-        target,
-        npcDrops):
+def __dropObject(drop, delay, objName, level, alreadyDodged, alreadyTeased,
+                 npcs, target, npcDrops):
     toon = drop['toon']
     repeatNPC = 0
     battle = drop['battle']
@@ -361,9 +285,7 @@ def __dropObject(
         button = globalPropPool.getProp('button')
         buttonType = globalPropPool.getPropType('button')
         button2 = MovieUtil.copyProp(button)
-        buttons = [
-            button,
-            button2]
+        buttons = [button, button2]
         hands = toon.getLeftHands()
 
     object = globalPropPool.getProp(objName)
@@ -390,10 +312,15 @@ def __dropObject(
     if repeatNPC == 0:
         buttonShow = Func(MovieUtil.showProps, buttons, hands)
         buttonScaleUp = LerpScaleInterval(
-            button, 1.0, button.getScale(), startScale=Point3(
-                0.01, 0.01, 0.01))
-        buttonScaleDown = LerpScaleInterval(button, 1.0, Point3(
-            0.01, 0.01, 0.01), startScale=button.getScale())
+            button,
+            1.0,
+            button.getScale(),
+            startScale=Point3(0.01, 0.01, 0.01))
+        buttonScaleDown = LerpScaleInterval(
+            button,
+            1.0,
+            Point3(0.01, 0.01, 0.01),
+            startScale=button.getScale())
         buttonHide = Func(MovieUtil.removeProps, buttons)
         buttonTrack.append(Wait(delay))
         buttonTrack.append(buttonShow)
@@ -433,8 +360,11 @@ def __dropObject(
     if hp > 0 and level == 1 or level == 2:
         if hasattr(object, 'getAnimControls'):
             animProp = ActorInterval(object, objName)
-            shrinkProp = LerpScaleInterval(object, dShrink, Point3(
-                0.01, 0.01, 0.01), startScale=object.getScale())
+            shrinkProp = LerpScaleInterval(
+                object,
+                dShrink,
+                Point3(0.01, 0.01, 0.01),
+                startScale=object.getScale())
             objAnimShrink = ParallelEndTogether(animProp, shrinkProp)
             objectTrack.append(objAnimShrink)
         else:
@@ -446,24 +376,16 @@ def __dropObject(
             startHpr = object2.getHpr()
             endHpr = Point3(startHpr[0] + 90, startHpr[1], startHpr[2])
             animProp = LerpPosInterval(
-                object,
-                landFrames[level] / 24.0,
-                endingPos,
-                startPos=startPos)
+                object, landFrames[level] / 24.0, endingPos, startPos=startPos)
             shrinkProp = LerpScaleInterval(
-                object, dShrink, Point3(
-                    0.01, 0.01, 0.01), startScale=startingScale)
+                object,
+                dShrink,
+                Point3(0.01, 0.01, 0.01),
+                startScale=startingScale)
             bounceProp = Effects.createZBounce(object, 2, endingPos, 0.5, 1.5)
             objAnimShrink = Sequence(
-                Func(
-                    object.setScale,
-                    startingScale),
-                Func(
-                    object.setH,
-                    endHpr[0]),
-                animProp,
-                bounceProp,
-                Wait(1.5),
+                Func(object.setScale, startingScale),
+                Func(object.setH, endHpr[0]), animProp, bounceProp, Wait(1.5),
                 shrinkProp)
             objectTrack.append(objAnimShrink)
             MovieUtil.removeProp(object2)
@@ -477,8 +399,10 @@ def __dropObject(
         poseProp = Func(poseProp, object, objName, level)
         wait = Wait(1.0)
         shrinkProp = LerpScaleInterval(
-            object, dShrinkOnMiss, Point3(
-                0.01, 0.01, 0.01), startScale=object.getScale())
+            object,
+            dShrinkOnMiss,
+            Point3(0.01, 0.01, 0.01),
+            startScale=object.getScale())
         objectTrack.append(animProp)
         objectTrack.append(poseProp)
         objectTrack.append(wait)
@@ -492,25 +416,16 @@ def __dropObject(
         startHpr = object2.getHpr()
         endHpr = Point3(startHpr[0] + 90, startHpr[1], startHpr[2])
         animProp = LerpPosInterval(
-            object,
-            landFrames[level] / 24.0,
-            endingPos,
-            startPos=startPos)
+            object, landFrames[level] / 24.0, endingPos, startPos=startPos)
         shrinkProp = LerpScaleInterval(
-            object, dShrinkOnMiss, Point3(
-                0.01, 0.01, 0.01), startScale=startingScale)
+            object,
+            dShrinkOnMiss,
+            Point3(0.01, 0.01, 0.01),
+            startScale=startingScale)
         bounceProp = Effects.createZBounce(object, 2, endingPos, 0.5, 1.5)
         objAnimShrink = Sequence(
-            Func(
-                object.setScale,
-                startingScale),
-            Func(
-                object.setH,
-                endHpr[0]),
-            animProp,
-            bounceProp,
-            Wait(1.5),
-            shrinkProp)
+            Func(object.setScale, startingScale), Func(object.setH, endHpr[0]),
+            animProp, bounceProp, Wait(1.5), shrinkProp)
         objectTrack.append(objAnimShrink)
         MovieUtil.removeProp(object2)
     objectTrack.append(Func(MovieUtil.removeProp, object))
@@ -527,12 +442,11 @@ def __dropObject(
     else:
         dropShadow.setScale(3.6000000000000001)
 
-    def posShadow(
-            dropShadow=dropShadow,
-            suit=suit,
-            battle=battle,
-            hp=hp,
-            level=level):
+    def posShadow(dropShadow=dropShadow,
+                  suit=suit,
+                  battle=battle,
+                  hp=hp,
+                  level=level):
         dropShadow.reparentTo(battle)
         if battle.isSuitLured(suit):
             (suitPos, suitHpr) = battle.getActorPosHpr(suit)
@@ -550,43 +464,21 @@ def __dropObject(
         dropShadow.setZ(dropShadow.getZ() + 0.5)
 
     shadowTrack = Sequence(
-        Wait(
-            delay + tButtonPressed),
-        Func(
-            battle.movie.needRestoreRenderProp,
-            dropShadow),
-        Func(posShadow),
+        Wait(delay + tButtonPressed),
+        Func(battle.movie.needRestoreRenderProp, dropShadow), Func(posShadow),
         LerpScaleInterval(
             dropShadow,
             tObjectAppears - tButtonPressed,
             dropShadow.getScale(),
-            startScale=Point3(
-                0.01,
-                0.01,
-                0.01)),
-        Wait(0.29999999999999999),
-        Func(
-            MovieUtil.removeProp,
-            dropShadow),
-        Func(
-            battle.movie.clearRenderProp,
-            dropShadow))
-    return Parallel(
-        toonTrack,
-        soundTrack,
-        buttonTrack,
-        objectTrack,
-        shadowTrack)
+            startScale=Point3(0.01, 0.01, 0.01)), Wait(0.29999999999999999),
+        Func(MovieUtil.removeProp, dropShadow),
+        Func(battle.movie.clearRenderProp, dropShadow))
+    return Parallel(toonTrack, soundTrack, buttonTrack, objectTrack,
+                    shadowTrack)
 
 
-def __createSuitTrack(
-        drop,
-        delay,
-        level,
-        alreadyDodged,
-        alreadyTeased,
-        target,
-        npcs):
+def __createSuitTrack(drop, delay, level, alreadyDodged, alreadyTeased, target,
+                      npcs):
     toon = drop['toon']
     if 'npc' in drop:
         toon = drop['npc']
@@ -623,19 +515,16 @@ def __createSuitTrack(
         suitTrack.append(suitGettingHit)
         bonusTrack = None
         if hpbonus > 0:
-            bonusTrack = Sequence(Wait(delay +
-                                       tObjectAppears +
-                                       0.75), Func(suit.showHpText, -
-                                                   hpbonus, 1, openEnded=0))
+            bonusTrack = Sequence(
+                Wait(delay + tObjectAppears + 0.75),
+                Func(suit.showHpText, -hpbonus, 1, openEnded=0))
 
         if revived != 0:
             suitTrack.append(
-                MovieUtil.createSuitReviveTrack(
-                    suit, toon, battle, npcs))
+                MovieUtil.createSuitReviveTrack(suit, toon, battle, npcs))
         elif died != 0:
             suitTrack.append(
-                MovieUtil.createSuitDeathTrack(
-                    suit, toon, battle, npcs))
+                MovieUtil.createSuitDeathTrack(suit, toon, battle, npcs))
         else:
             suitTrack.append(Func(suit.loop, 'neutral'))
         if bonusTrack is not None:
@@ -643,15 +532,9 @@ def __createSuitTrack(
 
     elif kbbonus == 0:
         suitTrack = Sequence(
-            Wait(
-                delay + tObjectAppears),
-            Func(
-                MovieUtil.indicateMissed,
-                suit,
-                0.59999999999999998),
-            Func(
-                suit.loop,
-                'neutral'))
+            Wait(delay + tObjectAppears),
+            Func(MovieUtil.indicateMissed, suit, 0.59999999999999998),
+            Func(suit.loop, 'neutral'))
     elif alreadyDodged > 0:
         return None
 

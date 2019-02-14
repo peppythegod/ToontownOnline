@@ -1,5 +1,3 @@
-
-
 from direct.gui.DirectGui import *
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
@@ -23,16 +21,15 @@ class SwingVine(NodePath.NodePath):
     SwingAnimMinimal = 2
     MaxNumberOfFramesInSwingAnim = 144
 
-    def __init__(
-            self,
-            vineIndex,
-            x,
-            y,
-            z,
-            length=20,
-            baseAngle=40,
-            period=4,
-            spiderPeriod=0):
+    def __init__(self,
+                 vineIndex,
+                 x,
+                 y,
+                 z,
+                 length=20,
+                 baseAngle=40,
+                 period=4,
+                 spiderPeriod=0):
         NodePath.__init__(self, 'SwingVine')
         self.cableLength = length
         self.numLinks = 3
@@ -67,8 +64,8 @@ class SwingVine(NodePath.NodePath):
         self.setupCable()
         self.reparentTo(render)
         self.debugTangent = None
-        nearBubble = CollisionSphere(
-            0, 0, -(self.cableLength) / 2.0, self.cableLength / 2.0)
+        nearBubble = CollisionSphere(0, 0, -(self.cableLength) / 2.0,
+                                     self.cableLength / 2.0)
         nearBubble.setTangible(0)
         nearBubbleNode = CollisionNode('SwingVine')
         nearBubbleNode.setCollideMask(GeomNode.getDefaultCollideMask())
@@ -153,26 +150,21 @@ class SwingVine(NodePath.NodePath):
         radius = 0.5
         tubeIndex = 0
         colNode = CollisionNode(
-            'StaticVine-%d-%d' %
-            (self.vineIndex, tubeIndex))
+            'StaticVine-%d-%d' % (self.vineIndex, tubeIndex))
         bz = 0
         az = 58
-        quad = CollisionPolygon(Point3(0.25, radius +
-                                       1, bz), Point3(0.25, radius +
-                                                      1, az), Point3(0.25, -
-                                                                     radius -
-                                                                     1, az), Point3(0.25, -
-                                                                                    radius -
-                                                                                    1, bz))
+        quad = CollisionPolygon(
+            Point3(0.25, radius + 1, bz), Point3(0.25, radius + 1, az),
+            Point3(0.25, -radius - 1, az), Point3(0.25, -radius - 1, bz))
         colNode.addSolid(quad)
         colNode.setCollideMask(ToontownGlobals.PieBitmask)
         colNode.setBounds(BoundingSphere(Point3(0, 0, 0), 10))
         self.staticVine.attachNewNode(colNode)
         colNode2 = CollisionNode(
-            'StaticVine-%d-%d' %
-            (self.vineIndex, tubeIndex))
-        quad2 = CollisionPolygon(Point3(-0.25, -radius - 1, bz), Point3(-0.25, -radius - 1, az),
-                                 Point3(-0.25, +radius + 1, az), Point3(-0.25, +radius + 1, bz))
+            'StaticVine-%d-%d' % (self.vineIndex, tubeIndex))
+        quad2 = CollisionPolygon(
+            Point3(-0.25, -radius - 1, bz), Point3(-0.25, -radius - 1, az),
+            Point3(-0.25, +radius + 1, az), Point3(-0.25, +radius + 1, bz))
         colNode2.addSolid(quad2)
         colNode2.setCollideMask(ToontownGlobals.PieBitmask)
         colNode2.setBounds(BoundingSphere(Point3(0, 0, 0), 10))
@@ -188,23 +180,18 @@ class SwingVine(NodePath.NodePath):
             ct = CollisionTube(0, 0, az, 0, 0, bz, radius)
             ct.setTangible(0)
             colNode = CollisionNode(
-                'SwingVine-%d-%d' %
-                (self.vineIndex, tubeIndex))
-            quad = CollisionPolygon(Point3(0.25, radius +
-                                           1, bz), Point3(0.25, radius +
-                                                          1, az), Point3(0.25, -
-                                                                         radius -
-                                                                         1, az), Point3(0.25, -
-                                                                                        radius -
-                                                                                        1, bz))
+                'SwingVine-%d-%d' % (self.vineIndex, tubeIndex))
+            quad = CollisionPolygon(
+                Point3(0.25, radius + 1, bz), Point3(0.25, radius + 1, az),
+                Point3(0.25, -radius - 1, az), Point3(0.25, -radius - 1, bz))
             colNode.addSolid(quad)
             colNode.setCollideMask(ToontownGlobals.PieBitmask)
             colNode.setBounds(BoundingSphere(Point3(0, 0, 0), 10))
             colNode2 = CollisionNode(
-                'SwingVine-%d-%d' %
-                (self.vineIndex, tubeIndex))
-            quad2 = CollisionPolygon(Point3(-0.25, -radius - 1, bz), Point3(-0.25, -radius - 1, az),
-                                     Point3(-0.25, +radius + 1, az), Point3(-0.25, +radius + 1, bz))
+                'SwingVine-%d-%d' % (self.vineIndex, tubeIndex))
+            quad2 = CollisionPolygon(
+                Point3(-0.25, -radius - 1, bz), Point3(-0.25, -radius - 1, az),
+                Point3(-0.25, +radius + 1, az), Point3(-0.25, +radius + 1, bz))
             colNode2.addSolid(quad2)
             colNode2.setCollideMask(ToontownGlobals.PieBitmask)
             colNode2.setBounds(BoundingSphere(Point3(0, 0, 0), 10))
@@ -347,8 +334,7 @@ class SwingVine(NodePath.NodePath):
 
         else:
             retval = render.attachNewNode(
-                'vineAttachNode-%s-%s' %
-                (self.vineIndex, toonId))
+                'vineAttachNode-%s-%s' % (self.vineIndex, toonId))
         return retval
 
     def calcOffset(self, toonId):
@@ -381,8 +367,7 @@ class SwingVine(NodePath.NodePath):
 
     def attachToon(self, toonId, t, facingRight, setupAnim=True):
         self.notify.debug(
-            'attachToon toonId=%d vineIndex=%d' %
-            (toonId, self.vineIndex))
+            'attachToon toonId=%d vineIndex=%d' % (toonId, self.vineIndex))
         temp = Vec3(self.defaultNormal)
         offset = self.calcOffset(toonId)
         attachNode = self.getAttachNode(toonId)
@@ -391,20 +376,15 @@ class SwingVine(NodePath.NodePath):
         else:
             attachNode.setH(90)
         self.attachedToons[toonId] = [
-            t,
-            temp,
-            Vec3(0, 0, 0),
-            offset,
-            attachNode,
-            facingRight,
-            None]
+            t, temp,
+            Vec3(0, 0, 0), offset, attachNode, facingRight, None
+        ]
         av = base.cr.doId2do.get(toonId)
         if av:
             av.reparentTo(attachNode)
             if offset == Point3.zero():
                 self.notify.warning(
-                    'calculated offset for %d is zero' %
-                    toonId)
+                    'calculated offset for %d is zero' % toonId)
 
             av.setPos(-offset)
             if setupAnim:
@@ -427,8 +407,7 @@ class SwingVine(NodePath.NodePath):
 
         else:
             self.notify.warning(
-                'changeAttachedToonT avId %d was not in the dict' %
-                toonId)
+                'changeAttachedToonT avId %d was not in the dict' % toonId)
             self.attachToon(toonId, t, 1)
 
     def changeAttachedToonFacing(self, toonId, facing):
@@ -444,8 +423,7 @@ class SwingVine(NodePath.NodePath):
 
     def detachToon(self, toonId):
         self.notify.debug(
-            'detachToon toonId=%d vineIndex=%d' %
-            (toonId, self.vineIndex))
+            'detachToon toonId=%d vineIndex=%d' % (toonId, self.vineIndex))
         if toonId in self.attachedToons:
             self.attachedToons[toonId][4].removeNode()
             swingIval = self.attachedToons[toonId][6]
@@ -611,8 +589,8 @@ class SwingVine(NodePath.NodePath):
             duration = 0.001
 
         facingRight = self.attachedToons[avId][5]
-        if (self.swingingForward or facingRight or not (
-                self.swingingForward)) and not facingRight:
+        if (self.swingingForward or facingRight
+                or not (self.swingingForward)) and not facingRight:
             maxLeftFrame = 108
             downFrame1 = 143
             downFrame2 = 0
@@ -696,8 +674,8 @@ class SwingVine(NodePath.NodePath):
         desiredFramesPerSecond = numFrames / duration
         slowedPlayRate = desiredFramesPerSecond / framesPerSecondBase
         facingRight = self.attachedToons[avId][5]
-        if (self.swingingForward or facingRight or not (
-                self.swingingForward)) and not facingRight:
+        if (self.swingingForward or facingRight
+                or not (self.swingingForward)) and not facingRight:
             toonSwing1 = ActorInterval(
                 av,
                 'swing',
@@ -707,10 +685,8 @@ class SwingVine(NodePath.NodePath):
             toonSwing2 = ActorInterval(
                 av,
                 'swing',
-                startFrame=maxLeftFrame +
-                1,
-                endFrame=maxRightFrame -
-                startingLeftFrame,
+                startFrame=maxLeftFrame + 1,
+                endFrame=maxRightFrame - startingLeftFrame,
                 playRate=slowedPlayRate)
             swingInterval.append(toonSwing1)
             swingInterval.append(toonSwing2)
@@ -718,8 +694,7 @@ class SwingVine(NodePath.NodePath):
             toonSwing1 = ActorInterval(
                 av,
                 'swing',
-                startFrame=maxRightFrame -
-                startingLeftFrame,
+                startFrame=maxRightFrame - startingLeftFrame,
                 endFrame=maxRightFrame,
                 playRate=slowedPlayRate)
             toonSwing2 = ActorInterval(

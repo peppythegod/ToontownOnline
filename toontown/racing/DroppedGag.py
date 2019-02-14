@@ -6,7 +6,6 @@ from otp.avatar import ShadowCaster
 
 
 class DroppedGag(NodePath, ShadowCaster.ShadowCaster):
-
     def __init__(self, name, geom):
         NodePath.__init__(self, name)
         ShadowCaster.ShadowCaster.__init__(self, False)

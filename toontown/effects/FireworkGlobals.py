@@ -14,29 +14,13 @@ CIRCLESMALL = 4
 POP = 5
 CIRCLESPRITE = 6
 styleNames = [
-    'CIRCLE',
-    'ROCKET',
-    'RING',
-    'CIRCLELARGE',
-    'CIRCLESMALL',
-    'POP',
-    'CIRCLESPRITE']
-styleNamesShort = [
-    'CIR',
-    'RKT',
-    'RNG',
-    'CLG',
-    'CSM',
-    'POP',
-    'SPR']
+    'CIRCLE', 'ROCKET', 'RING', 'CIRCLELARGE', 'CIRCLESMALL', 'POP',
+    'CIRCLESPRITE'
+]
+styleNamesShort = ['CIR', 'RKT', 'RNG', 'CLG', 'CSM', 'POP', 'SPR']
 Names = [
-    'Pow',
-    'Rocket',
-    'Ring',
-    'Large\nPow',
-    'Small\nPow',
-    'Pop',
-    'Widow\nMaker']
+    'Pow', 'Rocket', 'Ring', 'Large\nPow', 'Small\nPow', 'Pop', 'Widow\nMaker'
+]
 WHITE = 0
 RED = 1
 BLUE = 2
@@ -47,15 +31,9 @@ PURPLE = 6
 CYAN = 7
 PEACH = 8
 ColorNames = [
-    'White',
-    'Red',
-    'Blue',
-    'Yellow',
-    'Green',
-    'Pink',
-    'Purple',
-    'Cyan',
-    'Peach']
+    'White', 'Red', 'Blue', 'Yellow', 'Green', 'Pink', 'Purple', 'Cyan',
+    'Peach'
+]
 SNOWFLAKE = 0
 MUSICNOTE = 1
 FLOWER = 2

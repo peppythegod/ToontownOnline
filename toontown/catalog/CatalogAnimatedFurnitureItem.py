@@ -4,7 +4,6 @@ AnimatedFurnitureItemKeys = (10020, 270, 990, 460, 470, 480, 490, 491, 492)
 
 
 class CatalogAnimatedFurnitureItem(CatalogFurnitureItem):
-
     def loadModel(self):
         model = CatalogFurnitureItem.loadModel(self)
         self.setAnimRate(model, self.getAnimRate())

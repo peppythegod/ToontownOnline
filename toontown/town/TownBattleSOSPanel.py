@@ -24,11 +24,8 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         self.NPCFriends = {}
         self.textRolloverColor = Vec4(1, 1, 0, 1)
         self.textDownColor = Vec4(0.5, 0.90000000000000002, 1, 1)
-        self.textDisabledColor = Vec4(
-            0.40000000000000002,
-            0.80000000000000004,
-            0.40000000000000002,
-            1)
+        self.textDisabledColor = Vec4(0.40000000000000002, 0.80000000000000004,
+                                      0.40000000000000002, 1)
         self.bldg = 0
         self.chosenNPCToons = []
 
@@ -49,20 +46,9 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
             relief=None,
             text=TTLocalizer.TownBattleSOSNoFriends,
             text_scale=0.40000000000000002,
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            pos=(
-                0.0,
-                0.0,
-                1.5))
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            pos=(0.0, 0.0, 1.5))
         self.NPCFriendPanel = NPCFriendPanel.NPCFriendPanel(
             parent=self, doneEvent=self.doneEvent)
         self.NPCFriendPanel.setPos(-0.75, 0, -0.14999999999999999)
@@ -72,83 +58,42 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
             relief=None,
             text=TTLocalizer.TownBattleSOSNPCFriends,
             text_scale=0.29999999999999999,
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            pos=(
-                -0.75,
-                0.0,
-                -2.0))
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
+            pos=(-0.75, 0.0, -2.0))
         self.scrollList = DirectScrolledList(
             parent=self,
             relief=None,
             image=gui.find('**/frame4names'),
-            image_scale=(
-                0.11,
-                1,
-                0.10000000000000001),
+            image_scale=(0.11, 1, 0.10000000000000001),
             text=TTLocalizer.FriendsListPanelOnlineFriends,
             text_scale=0.040000000000000001,
-            text_pos=(
-                -0.02,
-                0.27500000000000002),
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            incButton_image=(
-                scrollGui.find('**/FndsLst_ScrollUp'),
-                scrollGui.find('**/FndsLst_ScrollDN'),
-                scrollGui.find('**/FndsLst_ScrollUp_Rllvr'),
-                scrollGui.find('**/FndsLst_ScrollUp')),
+            text_pos=(-0.02, 0.27500000000000002),
+            text_fg=(0, 0, 0, 1),
+            incButton_image=(scrollGui.find('**/FndsLst_ScrollUp'),
+                             scrollGui.find('**/FndsLst_ScrollDN'),
+                             scrollGui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             scrollGui.find('**/FndsLst_ScrollUp')),
             incButton_relief=None,
-            incButton_pos=(
-                0.0,
-                0.0,
-                -0.29999999999999999),
+            incButton_pos=(0.0, 0.0, -0.29999999999999999),
             incButton_image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
+                0.59999999999999998, 0.59999999999999998, 0.59999999999999998,
                 0.59999999999999998),
-            incButton_scale=(
-                1.0,
-                1.0,
-                -1.0),
-            decButton_image=(
-                scrollGui.find('**/FndsLst_ScrollUp'),
-                scrollGui.find('**/FndsLst_ScrollDN'),
-                scrollGui.find('**/FndsLst_ScrollUp_Rllvr'),
-                scrollGui.find('**/FndsLst_ScrollUp')),
+            incButton_scale=(1.0, 1.0, -1.0),
+            decButton_image=(scrollGui.find('**/FndsLst_ScrollUp'),
+                             scrollGui.find('**/FndsLst_ScrollDN'),
+                             scrollGui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             scrollGui.find('**/FndsLst_ScrollUp')),
             decButton_relief=None,
-            decButton_pos=(
-                0.0,
-                0.0,
-                0.17499999999999999),
+            decButton_pos=(0.0, 0.0, 0.17499999999999999),
             decButton_image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
+                0.59999999999999998, 0.59999999999999998, 0.59999999999999998,
                 0.59999999999999998),
-            itemFrame_pos=(
-                -0.17000000000000001,
-                0.0,
-                0.11),
+            itemFrame_pos=(-0.17000000000000001, 0.0, 0.11),
             itemFrame_relief=None,
             numItemsVisible=9,
             items=[],
-            pos=(
-                2.3999999999999999,
-                0.0,
-                0.025000000000000001),
+            pos=(2.3999999999999999, 0.0, 0.025000000000000001),
             scale=3.5)
         clipper = PlaneNode('clipper')
         clipper.setPlane(
@@ -158,25 +103,15 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         self.close = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                backGui.find('**/PckMn_BackBtn'),
-                backGui.find('**/PckMn_BackBtn_Dn'),
-                backGui.find('**/PckMn_BackBtn_Rlvr')),
-            pos=(
-                2.2999999999999998,
-                0.0,
-                -1.6499999999999999),
+            image=(backGui.find('**/PckMn_BackBtn'),
+                   backGui.find('**/PckMn_BackBtn_Dn'),
+                   backGui.find('**/PckMn_BackBtn_Rlvr')),
+            pos=(2.2999999999999998, 0.0, -1.6499999999999999),
             scale=3,
             text=TTLocalizer.TownBattleSOSBack,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.01,
-                -0.012),
-            text_fg=Vec4(
-                0,
-                0,
-                0.80000000000000004,
-                1),
+            text_pos=(0.01, -0.012),
+            text_fg=Vec4(0, 0, 0.80000000000000004, 1),
             command=self._TownBattleSOSPanel__close)
         gui.removeNode()
         scrollGui.removeNode()
@@ -220,9 +155,7 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
             text2_bg=self.textRolloverColor,
             text3_fg=self.textDisabledColor,
             command=com,
-            extraArgs=[
-                friendId,
-                friendName])
+            extraArgs=[friendId, friendName])
 
     def makeNPCFriendButton(self, NPCFriendId, numCalls):
         if NPCFriendId not in TTLocalizer.NPCToonNames:
@@ -254,20 +187,17 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         self.canLure = canLure
         self.canTrap = canTrap
         self.factoryToonIdList = None
-        messenger.send('SOSPanelEnter', [
-            self])
+        messenger.send('SOSPanelEnter', [self])
         self._TownBattleSOSPanel__updateScrollList()
         self._TownBattleSOSPanel__updateNPCFriendsPanel()
         self._TownBattleSOSPanel__updateTitleText()
         self.show()
         self.accept('friendOnline', self._TownBattleSOSPanel__friendOnline)
         self.accept('friendOffline', self._TownBattleSOSPanel__friendOffline)
-        self.accept(
-            'friendsListChanged',
-            self._TownBattleSOSPanel__friendsListChanged)
-        self.accept(
-            'friendsMapComplete',
-            self._TownBattleSOSPanel__friendsListChanged)
+        self.accept('friendsListChanged',
+                    self._TownBattleSOSPanel__friendsListChanged)
+        self.accept('friendsMapComplete',
+                    self._TownBattleSOSPanel__friendsListChanged)
 
     def exit(self):
         if self.isEntered == 0:
@@ -284,31 +214,27 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
     def _TownBattleSOSPanel__close(self):
         doneStatus = {}
         doneStatus['mode'] = 'Back'
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleSOSPanel__choseFriend(self, friendId, friendName):
         doneStatus = {}
         doneStatus['mode'] = 'Friend'
         doneStatus['friend'] = friendId
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleSOSPanel__chosePet(self, petId, petName):
         doneStatus = {}
         doneStatus['mode'] = 'Pet'
         doneStatus['petId'] = petId
         doneStatus['petName'] = petName
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleSOSPanel__choseNPCFriend(self, friendId):
         doneStatus = {}
         doneStatus['mode'] = 'NPCFriend'
         doneStatus['friend'] = friendId
         self.chosenNPCToons.append(friendId)
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def setFactoryToonIdList(self, toonIdList):
         self.factoryToonIdList = toonIdList[:]
@@ -322,13 +248,15 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         if not (self.bldg) or self.factoryToonIdList is not None:
             for friendPair in base.localAvatar.friendsList:
                 if base.cr.isFriendOnline(friendPair[0]):
-                    if self.factoryToonIdList is None or friendPair[0] in self.factoryToonIdList:
+                    if self.factoryToonIdList is None or friendPair[
+                            0] in self.factoryToonIdList:
                         newFriends.append(friendPair)
 
                 friendPair[0] in self.factoryToonIdList
 
             if hasattr(base.cr, 'playerFriendsManager'):
-                for avatarId in base.cr.playerFriendsManager.getAllOnlinePlayerAvatars():
+                for avatarId in base.cr.playerFriendsManager.getAllOnlinePlayerAvatars(
+                ):
                     if not base.cr.playerFriendsManager.askAvatarKnownElseWhere(
                             avatarId):
                         newFriends.append((avatarId, 0))
@@ -355,8 +283,9 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         self.NPCFriends = {}
         for (friend, count) in base.localAvatar.NPCFriendsDict.items():
             track = NPCToons.getNPCTrack(friend)
-            if (track == ToontownBattleGlobals.LURE_TRACK or self.canLure ==
-                    0 or track == ToontownBattleGlobals.TRAP_TRACK) and self.canTrap == 0:
+            if (track == ToontownBattleGlobals.LURE_TRACK or self.canLure == 0
+                    or track == ToontownBattleGlobals.TRAP_TRACK
+                ) and self.canTrap == 0:
                 self.NPCFriends[friend] = 0
                 continue
             self.NPCFriends[friend] = count
@@ -372,8 +301,8 @@ class TownBattleSOSPanel(DirectFrame, StateData.StateData):
         else:
             self.title['text'] = TTLocalizer.TownBattleSOSWhichFriend
 
-    def _TownBattleSOSPanel__friendOnline(
-            self, doId, commonChatFlags, whitelistChatFlags):
+    def _TownBattleSOSPanel__friendOnline(self, doId, commonChatFlags,
+                                          whitelistChatFlags):
         self._TownBattleSOSPanel__updateScrollList()
         self._TownBattleSOSPanel__updateTitleText()
 

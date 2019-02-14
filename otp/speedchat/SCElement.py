@@ -113,7 +113,6 @@ class SCElement(SCObject, NodePath):
         self.privCancelFinalize()
 
     def privScheduleFinalize(self):
-
         def finalizeElement(task, self=self):
             if self.parentMenu is not None:
                 if self.parentMenu.isDirty():
@@ -149,21 +148,22 @@ class SCElement(SCObject, NodePath):
         args = {
             'text': self.getDisplayText(),
             'frameColor': (0, 0, 0, 0),
-            'rolloverColor': self.getColorScheme().getRolloverColor() + (1,),
-            'pressedColor': self.getColorScheme().getPressedColor() + (1,),
+            'rolloverColor': self.getColorScheme().getRolloverColor() + (1, ),
+            'pressedColor': self.getColorScheme().getPressedColor() + (1, ),
             'text_font': OTPGlobals.getInterfaceFont(),
             'text_align': TextNode.ALeft,
-            'text_fg': self.getColorScheme().getTextColor() + (1,),
+            'text_fg': self.getColorScheme().getTextColor() + (1, ),
             'text_pos': (textX, -0.25 - halfHeight, 0),
             'relief': DGG.FLAT,
-            'pressEffect': 0}
+            'pressEffect': 0
+        }
         args.update(dbArgs)
         rolloverColor = args['rolloverColor']
         pressedColor = args['pressedColor']
         del args['rolloverColor']
         del args['pressedColor']
-        btn = DirectButton(parent=self, frameSize=(
-            0, self.width, -(self.height), 0), **None)
+        btn = DirectButton(
+            parent=self, frameSize=(0, self.width, -(self.height), 0), **None)
         btn.frameStyle[DGG.BUTTON_ROLLOVER_STATE].setColor(*rolloverColor)
         btn.frameStyle[DGG.BUTTON_DEPRESSED_STATE].setColor(*pressedColor)
         btn.updateFrameStyle()

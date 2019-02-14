@@ -33,12 +33,10 @@ class BanManagerAI:
             baseUrlToUse = osBaseUrl
 
         fullUrl = baseUrlToUse + '?' + parameters
-        self.notify.info(
-            'ban request %s dislid=%s comment=%s fullUrl=%s' %
-            (self.curBanRequestNum, dislid, comment, fullUrl))
-        simbase.air.writeServerEvent(
-            'ban_request', avatarId, '%s|%s|%s' %
-            (dislid, comment, fullUrl))
+        self.notify.info('ban request %s dislid=%s comment=%s fullUrl=%s' %
+                         (self.curBanRequestNum, dislid, comment, fullUrl))
+        simbase.air.writeServerEvent('ban_request', avatarId,
+                                     '%s|%s|%s' % (dislid, comment, fullUrl))
         if simbase.config.GetBool('do-actual-ban', True):
             newTaskName = 'ban-task-%d' % self.curBanRequestNum
             newTask = taskMgr.add(self.doBanUrlTask, newTaskName)
@@ -79,7 +77,6 @@ class BanManagerAI:
             result = ramfile.getData()
 
         self.notify.info(
-            'done processing ban request %s, ramFile=%s' %
-            (banReq, result))
+            'done processing ban request %s, ramFile=%s' % (banReq, result))
         self.cleanupBanReq(banReq)
         return task.done

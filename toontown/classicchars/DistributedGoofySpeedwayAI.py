@@ -19,24 +19,17 @@ class DistributedGoofySpeedwayAI(
         DistributedCCharBaseAI.DistributedCCharBaseAI.__init__(
             self, air, TTLocalizer.Goofy)
         self.fsm = ClassicFSM.ClassicFSM('DistributedGoofySpeedwayAI', [
-            State.State('Off', self.enterOff, self.exitOff, [
-                'Lonely',
-                'TransitionToCostume',
-                'Walk']),
-            State.State('Lonely', self.enterLonely, self.exitLonely, [
-                'Chatty',
-                'Walk',
-                'TransitionToCostume']),
-            State.State('Chatty', self.enterChatty, self.exitChatty, [
-                'Lonely',
-                'Walk',
-                'TransitionToCostume']),
-            State.State('Walk', self.enterWalk, self.exitWalk, [
-                'Lonely',
-                'Chatty',
-                'TransitionToCostume']),
-            State.State('TransitionToCostume', self.enterTransitionToCostume, self.exitTransitionToCostume, [
-                'Off'])], 'Off', 'Off')
+            State.State('Off', self.enterOff, self.exitOff,
+                        ['Lonely', 'TransitionToCostume', 'Walk']),
+            State.State('Lonely', self.enterLonely, self.exitLonely,
+                        ['Chatty', 'Walk', 'TransitionToCostume']),
+            State.State('Chatty', self.enterChatty, self.exitChatty,
+                        ['Lonely', 'Walk', 'TransitionToCostume']),
+            State.State('Walk', self.enterWalk, self.exitWalk,
+                        ['Lonely', 'Chatty', 'TransitionToCostume']),
+            State.State('TransitionToCostume', self.enterTransitionToCostume,
+                        self.exitTransitionToCostume, ['Off'])
+        ], 'Off', 'Off')
         self.fsm.enterInitialState()
         self.handleHolidays()
 
@@ -79,12 +72,15 @@ class DistributedGoofySpeedwayAI(
             if simbase.air.holidayManager:
                 if ToontownGlobals.HALLOWEEN_COSTUMES in simbase.air.holidayManager.currentHolidays and simbase.air.holidayManager.currentHolidays[
                         ToontownGlobals.HALLOWEEN_COSTUMES]:
-                    simbase.air.holidayManager.currentHolidays[ToontownGlobals.HALLOWEEN_COSTUMES].triggerSwitch(
-                        curWalkNode, self)
+                    simbase.air.holidayManager.currentHolidays[
+                        ToontownGlobals.HALLOWEEN_COSTUMES].triggerSwitch(
+                            curWalkNode, self)
                     self.fsm.request('TransitionToCostume')
-                elif ToontownGlobals.APRIL_FOOLS_COSTUMES in simbase.air.holidayManager.currentHolidays and simbase.air.holidayManager.currentHolidays[ToontownGlobals.APRIL_FOOLS_COSTUMES]:
-                    simbase.air.holidayManager.currentHolidays[ToontownGlobals.APRIL_FOOLS_COSTUMES].triggerSwitch(
-                        curWalkNode, self)
+                elif ToontownGlobals.APRIL_FOOLS_COSTUMES in simbase.air.holidayManager.currentHolidays and simbase.air.holidayManager.currentHolidays[
+                        ToontownGlobals.APRIL_FOOLS_COSTUMES]:
+                    simbase.air.holidayManager.currentHolidays[
+                        ToontownGlobals.APRIL_FOOLS_COSTUMES].triggerSwitch(
+                            curWalkNode, self)
                     self.fsm.request('TransitionToCostume')
                 else:
                     self.notify.warning(
@@ -111,9 +107,8 @@ class DistributedGoofySpeedwayAI(
 
     def enterLonely(self):
         self.lonely.enter()
-        self.acceptOnce(
-            self.lonelyDoneEvent,
-            self._DistributedGoofySpeedwayAI__decideNextState)
+        self.acceptOnce(self.lonelyDoneEvent,
+                        self._DistributedGoofySpeedwayAI__decideNextState)
 
     def exitLonely(self):
         self.ignore(self.lonelyDoneEvent)
@@ -126,9 +121,8 @@ class DistributedGoofySpeedwayAI(
 
     def enterChatty(self):
         self.chatty.enter()
-        self.acceptOnce(
-            self.chattyDoneEvent,
-            self._DistributedGoofySpeedwayAI__decideNextState)
+        self.acceptOnce(self.chattyDoneEvent,
+                        self._DistributedGoofySpeedwayAI__decideNextState)
 
     def exitChatty(self):
         self.ignore(self.chattyDoneEvent)
@@ -137,9 +131,8 @@ class DistributedGoofySpeedwayAI(
     def enterWalk(self):
         self.notify.debug('going for a walk')
         self.walk.enter()
-        self.acceptOnce(
-            self.walkDoneEvent,
-            self._DistributedGoofySpeedwayAI__decideNextState)
+        self.acceptOnce(self.walkDoneEvent,
+                        self._DistributedGoofySpeedwayAI__decideNextState)
 
     def exitWalk(self):
         self.ignore(self.walkDoneEvent)
@@ -152,8 +145,8 @@ class DistributedGoofySpeedwayAI(
             else:
                 self.notify.debug('avatarEnterNextState: in walk state')
         else:
-            self.notify.debug(
-                'avatarEnterNextState: num avatars: ' + str(len(self.nearbyAvatars)))
+            self.notify.debug('avatarEnterNextState: num avatars: ' +
+                              str(len(self.nearbyAvatars)))
 
     def avatarExitNextState(self):
         if len(self.nearbyAvatars) == 0:
@@ -164,8 +157,11 @@ class DistributedGoofySpeedwayAI(
         DistributedCCharBaseAI.DistributedCCharBaseAI.handleHolidays(self)
         if hasattr(simbase.air, 'holidayManager'):
             if ToontownGlobals.APRIL_FOOLS_COSTUMES in simbase.air.holidayManager.currentHolidays:
-                if simbase.air.holidayManager.currentHolidays[ToontownGlobals.APRIL_FOOLS_COSTUMES] is not None and simbase.air.holidayManager.currentHolidays[
-                        ToontownGlobals.APRIL_FOOLS_COSTUMES].getRunningState():
+                if simbase.air.holidayManager.currentHolidays[
+                        ToontownGlobals.
+                        APRIL_FOOLS_COSTUMES] is not None and simbase.air.holidayManager.currentHolidays[
+                            ToontownGlobals.
+                            APRIL_FOOLS_COSTUMES].getRunningState():
                     self.diffPath = TTLocalizer.Donald
 
     def getCCLocation(self):

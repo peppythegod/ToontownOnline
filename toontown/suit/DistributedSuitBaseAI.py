@@ -7,9 +7,8 @@ from direct.directnotify import DirectNotifyGlobal
 from toontown.battle import SuitBattleGlobals
 
 
-class DistributedSuitBaseAI(
-        DistributedAvatarAI.DistributedAvatarAI,
-        SuitBase.SuitBase):
+class DistributedSuitBaseAI(DistributedAvatarAI.DistributedAvatarAI,
+                            SuitBase.SuitBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedSuitBaseAI')
 
@@ -59,8 +58,7 @@ class DistributedSuitBaseAI(
         return self.getLevel()
 
     def d_setLevelDist(self, level):
-        self.sendUpdate('setLevelDist', [
-            level])
+        self.sendUpdate('setLevelDist', [level])
 
     def setupSuitDNA(self, level, type, track):
         dna = SuitDNA.SuitDNA()
@@ -74,8 +72,7 @@ class DistributedSuitBaseAI(
             return self.dna.makeNetString()
         else:
             self.notify.debug(
-                'No dna has been created for suit %d!' %
-                self.getDoId())
+                'No dna has been created for suit %d!' % self.getDoId())
             return ''
 
     def b_setBrushOff(self, index):
@@ -83,8 +80,7 @@ class DistributedSuitBaseAI(
         self.d_setBrushOff(index)
 
     def d_setBrushOff(self, index):
-        self.sendUpdate('setBrushOff', [
-            index])
+        self.sendUpdate('setBrushOff', [index])
 
     def setBrushOff(self, index):
         pass
@@ -100,8 +96,7 @@ class DistributedSuitBaseAI(
         self.d_setSkeleRevives(self.getSkeleRevives())
 
     def d_setSkeleRevives(self, num):
-        self.sendUpdate('setSkeleRevives', [
-            num])
+        self.sendUpdate('setSkeleRevives', [num])
 
     def getSkeleRevives(self):
         return self.skeleRevives
@@ -144,8 +139,7 @@ class DistributedSuitBaseAI(
         self.d_setHP(hp)
 
     def d_setHP(self, hp):
-        self.sendUpdate('setHP', [
-            hp])
+        self.sendUpdate('setHP', [hp])
 
     def releaseControl(self):
         pass
@@ -170,8 +164,7 @@ class DistributedSuitBaseAI(
         SuitBase.SuitBase.setSkelecog(self, flag)
 
     def d_setSkelecog(self, flag):
-        self.sendUpdate('setSkelecog', [
-            flag])
+        self.sendUpdate('setSkelecog', [flag])
 
     def isForeman(self):
         return 0

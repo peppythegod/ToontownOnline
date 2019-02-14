@@ -3,7 +3,6 @@ import LevelConstants
 
 
 class ZoneEntityBase(Entity.Entity):
-
     def __init__(self, level, entId):
         Entity.Entity.__init__(self, level, entId)
         self.zoneId = None

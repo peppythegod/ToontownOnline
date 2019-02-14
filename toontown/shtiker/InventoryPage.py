@@ -7,7 +7,6 @@ from toontown.toonbase import TTLocalizer
 
 
 class InventoryPage(ShtikerPage.ShtikerPage):
-
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
         self.currentTrackInfo = None
@@ -22,92 +21,62 @@ class InventoryPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.InventoryPageTitle,
             text_scale=0.12,
             textMayChange=1,
-            pos=(
-                0,
-                0,
-                0.62))
+            pos=(0, 0, 0.62))
         self.gagFrame = DirectFrame(
             parent=self,
             relief=None,
-            pos=(
-                0.10000000000000001,
-                0,
-                -0.46999999999999997),
-            scale=(
-                0.34999999999999998,
-                0.34999999999999998,
-                0.34999999999999998),
+            pos=(0.10000000000000001, 0, -0.46999999999999997),
+            scale=(0.34999999999999998, 0.34999999999999998,
+                   0.34999999999999998),
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor)
-        self.trackInfo = DirectFrame(parent=self,
-                                     relief=None,
-                                     pos=(-0.40000000000000002,
-                                          0,
-                                          -0.46999999999999997),
-                                     scale=(0.34999999999999998,
-                                            0.34999999999999998,
-                                            0.34999999999999998),
-                                     geom=DGG.getDefaultDialogGeom(),
-                                     geom_scale=(1.3999999999999999,
-                                                 1,
-                                                 1),
-                                     geom_color=ToontownGlobals.GlobalDialogColor,
-                                     text='',
-                                     text_wordwrap=11,
-                                     text_align=TextNode.ALeft,
-                                     text_scale=0.12,
-                                     text_pos=(-0.65000000000000002,
-                                               0.29999999999999999),
-                                     text_fg=(0.050000000000000003,
-                                              0.14000000000000001,
-                                              0.40000000000000002,
-                                              1))
+        self.trackInfo = DirectFrame(
+            parent=self,
+            relief=None,
+            pos=(-0.40000000000000002, 0, -0.46999999999999997),
+            scale=(0.34999999999999998, 0.34999999999999998,
+                   0.34999999999999998),
+            geom=DGG.getDefaultDialogGeom(),
+            geom_scale=(1.3999999999999999, 1, 1),
+            geom_color=ToontownGlobals.GlobalDialogColor,
+            text='',
+            text_wordwrap=11,
+            text_align=TextNode.ALeft,
+            text_scale=0.12,
+            text_pos=(-0.65000000000000002, 0.29999999999999999),
+            text_fg=(0.050000000000000003, 0.14000000000000001,
+                     0.40000000000000002, 1))
         self.trackProgress = DirectWaitBar(
             parent=self.trackInfo,
-            pos=(
-                0,
-                0,
-                -0.20000000000000001),
+            pos=(0, 0, -0.20000000000000001),
             relief=DGG.SUNKEN,
-            frameSize=(
-                -0.59999999999999998,
-                0.59999999999999998,
-                -0.10000000000000001,
-                0.10000000000000001),
-            borderWidth=(
-                0.025000000000000001,
-                0.025000000000000001),
+            frameSize=(-0.59999999999999998, 0.59999999999999998,
+                       -0.10000000000000001, 0.10000000000000001),
+            borderWidth=(0.025000000000000001, 0.025000000000000001),
             scale=1.1000000000000001,
-            frameColor=(
-                0.40000000000000002,
-                0.59999999999999998,
-                0.40000000000000002,
-                1),
-            barColor=(
-                0.90000000000000002,
-                1,
-                0.69999999999999996,
-                1),
+            frameColor=(0.40000000000000002, 0.59999999999999998,
+                        0.40000000000000002, 1),
+            barColor=(0.90000000000000002, 1, 0.69999999999999996, 1),
             text='0/0',
             text_scale=0.14999999999999999,
-            text_fg=(
-                0.050000000000000003,
-                0.14000000000000001,
-                0.40000000000000002,
-                1),
+            text_fg=(0.050000000000000003, 0.14000000000000001,
+                     0.40000000000000002, 1),
             text_align=TextNode.ACenter,
-            text_pos=(
-                0,
-                -0.22))
+            text_pos=(0, -0.22))
         self.trackProgress.hide()
         jarGui = loader.loadModel('phase_3.5/models/gui/jar_gui')
         self.moneyDisplay = DirectLabel(
-            parent=self, relief=None, pos=(
-                0.55000000000000004, 0, -0.5), scale=0.80000000000000004, text=str(
-                base.localAvatar.getMoney()), text_scale=0.17999999999999999, text_fg=(
-                0.94999999999999996, 0.94999999999999996, 0, 1), text_shadow=(
-                    0, 0, 0, 1), text_pos=(
-                        0, -0.10000000000000001, 0), image=jarGui.find('**/Jar'), text_font=ToontownGlobals.getSignFont())
+            parent=self,
+            relief=None,
+            pos=(0.55000000000000004, 0, -0.5),
+            scale=0.80000000000000004,
+            text=str(base.localAvatar.getMoney()),
+            text_scale=0.17999999999999999,
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_pos=(0, -0.10000000000000001, 0),
+            image=jarGui.find('**/Jar'),
+            text_font=ToontownGlobals.getSignFont())
         jarGui.removeNode()
 
     def unload(self):
@@ -158,15 +127,16 @@ class InventoryPage(ShtikerPage.ShtikerPage):
         self.currentTrackInfo = trackIndex
         trackName = TextEncoder.upper(ToontownBattleGlobals.Tracks[trackIndex])
         if base.localAvatar.hasTrackAccess(trackIndex):
-            (curExp, nextExp) = base.localAvatar.inventory.getCurAndNextExpValues(
-                trackIndex)
+            (curExp, nextExp
+             ) = base.localAvatar.inventory.getCurAndNextExpValues(trackIndex)
             trackText = '%s / %s' % (curExp, nextExp)
             self.trackProgress['range'] = nextExp
             self.trackProgress['value'] = curExp
             if curExp >= ToontownBattleGlobals.regMaxSkill:
                 str = TTLocalizer.InventoryPageTrackFull % trackName
                 trackText = TTLocalizer.InventoryUberTrackExp % {
-                    'nextExp': ToontownBattleGlobals.MaxSkill - curExp}
+                    'nextExp': ToontownBattleGlobals.MaxSkill - curExp
+                }
                 self.trackProgress['range'] = ToontownBattleGlobals.UberSkill
                 uberCurrExp = curExp - ToontownBattleGlobals.regMaxSkill
                 self.trackProgress['value'] = uberCurrExp
@@ -175,11 +145,13 @@ class InventoryPage(ShtikerPage.ShtikerPage):
                 if morePoints == 1:
                     str = TTLocalizer.InventoryPageSinglePoint % {
                         'trackName': trackName,
-                        'numPoints': morePoints}
+                        'numPoints': morePoints
+                    }
                 else:
                     str = TTLocalizer.InventoryPagePluralPoints % {
                         'trackName': trackName,
-                        'numPoints': morePoints}
+                        'numPoints': morePoints
+                    }
             self.trackInfo['text'] = str
             self.trackProgress['text'] = trackText
             self.trackProgress['frameColor'] = (
@@ -188,13 +160,11 @@ class InventoryPage(ShtikerPage.ShtikerPage):
                 ToontownBattleGlobals.TrackColors[trackIndex][1] *
                 0.59999999999999998,
                 ToontownBattleGlobals.TrackColors[trackIndex][2] *
-                0.59999999999999998,
-                1)
+                0.59999999999999998, 1)
             self.trackProgress['barColor'] = (
                 ToontownBattleGlobals.TrackColors[trackIndex][0],
                 ToontownBattleGlobals.TrackColors[trackIndex][1],
-                ToontownBattleGlobals.TrackColors[trackIndex][2],
-                1)
+                ToontownBattleGlobals.TrackColors[trackIndex][2], 1)
             self.trackProgress.show()
         else:
             str = TTLocalizer.InventoryPageNoAccess % trackName
@@ -208,12 +178,10 @@ class InventoryPage(ShtikerPage.ShtikerPage):
             self.currentTrackInfo = None
 
     def acceptOnscreenHooks(self):
-        self.accept(
-            ToontownGlobals.InventoryHotkeyOn,
-            self.showInventoryOnscreen)
-        self.accept(
-            ToontownGlobals.InventoryHotkeyOff,
-            self.hideInventoryOnscreen)
+        self.accept(ToontownGlobals.InventoryHotkeyOn,
+                    self.showInventoryOnscreen)
+        self.accept(ToontownGlobals.InventoryHotkeyOff,
+                    self.hideInventoryOnscreen)
 
     def ignoreOnscreenHooks(self):
         self.ignore(ToontownGlobals.InventoryHotkeyOn)

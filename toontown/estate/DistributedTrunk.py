@@ -36,25 +36,18 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
 
     def printInfo(self):
         print 'avid: %s, gender: %s' % (self.av.doId, self.av.style.gender)
-        print 'current hat = %s, glasses = %s, backpack = %s, shoes = %s' % (self.av.getHat(), self.av.getGlasses(), self.av.getBackpack(), self.av.getShoes())
+        print 'current hat = %s, glasses = %s, backpack = %s, shoes = %s' % (
+            self.av.getHat(), self.av.getGlasses(), self.av.getBackpack(),
+            self.av.getShoes())
         print 'hatList = %s' % self.av.getHatList()
         print 'glassesList = %s' % self.av.getGlassesList()
         print 'backpackList = %s' % self.av.getBackpackList()
         print 'shoesList = %s' % self.av.getShoesList()
 
-    def setState(
-            self,
-            mode,
-            avId,
-            ownerId,
-            gender,
-            hatList,
-            glassesList,
-            backpackList,
-            shoesList):
+    def setState(self, mode, avId, ownerId, gender, hatList, glassesList,
+                 backpackList, shoesList):
         self.notify.debug(
-            'setState, mode=%s, avId=%s, ownerId=%d' %
-            (mode, avId, ownerId))
+            'setState, mode=%s, avId=%s, ownerId=%d' % (mode, avId, ownerId))
         self.isOwner = avId == ownerId
         self.ownerGender = gender
         if mode == ClosetGlobals.CLOSED:
@@ -86,7 +79,8 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
                         self._DistributedTrunk__popupNotOwnerPanel()
                     else:
                         taskMgr.doMethodLater(
-                            0.5, self.popupChangeClothesGUI, self.uniqueName('popupChangeClothesGUI'))
+                            0.5, self.popupChangeClothesGUI,
+                            self.uniqueName('popupChangeClothesGUI'))
 
                 self.fsm.request('open')
 
@@ -109,19 +103,15 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
         self.swapBackpackEvent = self.uniqueName('swapBackpack')
         self.swapShoesEvent = self.uniqueName('swapShoes')
         self.cancelEvent = self.uniqueName('cancel')
-        self.accept(
-            self.purchaseDoneEvent,
-            self._DistributedTrunk__proceedToCheckout)
+        self.accept(self.purchaseDoneEvent,
+                    self._DistributedTrunk__proceedToCheckout)
         self.accept(self.swapHatEvent, self._DistributedTrunk__handleSwapHat)
-        self.accept(
-            self.swapGlassesEvent,
-            self._DistributedTrunk__handleSwapGlasses)
-        self.accept(
-            self.swapBackpackEvent,
-            self._DistributedTrunk__handleSwapBackpack)
-        self.accept(
-            self.swapShoesEvent,
-            self._DistributedTrunk__handleSwapShoes)
+        self.accept(self.swapGlassesEvent,
+                    self._DistributedTrunk__handleSwapGlasses)
+        self.accept(self.swapBackpackEvent,
+                    self._DistributedTrunk__handleSwapBackpack)
+        self.accept(self.swapShoesEvent,
+                    self._DistributedTrunk__handleSwapShoes)
         self.accept(self.cancelEvent, self._handleCancel)
         self.deleteEvent = self.uniqueName('delete')
         if self.isOwner:
@@ -129,17 +119,10 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
 
         if not self.closetGUI:
             self.closetGUI = TrunkGUI.TrunkGUI(
-                self.isOwner,
-                self.purchaseDoneEvent,
-                self.cancelEvent,
-                self.swapHatEvent,
-                self.swapGlassesEvent,
-                self.swapBackpackEvent,
-                self.swapShoesEvent,
-                self.deleteEvent,
-                self.hatList,
-                self.glassesList,
-                self.backpackList,
+                self.isOwner, self.purchaseDoneEvent, self.cancelEvent,
+                self.swapHatEvent, self.swapGlassesEvent,
+                self.swapBackpackEvent, self.swapShoesEvent, self.deleteEvent,
+                self.hatList, self.glassesList, self.backpackList,
                 self.shoesList)
             self.closetGUI.load()
             if self.gender != self.ownerGender:
@@ -155,7 +138,8 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
                 ToonDNA.HAT: oldHat,
                 ToonDNA.GLASSES: oldGlasses,
                 ToonDNA.BACKPACK: oldBackpack,
-                ToonDNA.SHOES: oldShoes}
+                ToonDNA.SHOES: oldShoes
+            }
 
         return Task.done
 
@@ -180,7 +164,8 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             ToonDNA.HAT: oldHat,
             ToonDNA.GLASSES: oldGlasses,
             ToonDNA.BACKPACK: oldBackpack,
-            ToonDNA.SHOES: oldShoes}
+            ToonDNA.SHOES: oldShoes
+        }
         self.hatDeleted = 0
         self.glassesDeleted = 0
         self.backpackDeleted = 0
@@ -193,20 +178,10 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             oldGlasses = self.oldStyle[ToonDNA.GLASSES]
             oldBackpack = self.oldStyle[ToonDNA.BACKPACK]
             oldShoes = self.oldStyle[ToonDNA.SHOES]
-            self.d_setDNA(
-                oldHat[0],
-                oldHat[1],
-                oldHat[2],
-                oldGlasses[0],
-                oldGlasses[1],
-                oldGlasses[2],
-                oldBackpack[0],
-                oldBackpack[1],
-                oldBackpack[2],
-                oldShoes[0],
-                oldShoes[1],
-                oldShoes[2],
-                1)
+            self.d_setDNA(oldHat[0], oldHat[1], oldHat[2], oldGlasses[0],
+                          oldGlasses[1], oldGlasses[2], oldBackpack[0],
+                          oldBackpack[1], oldBackpack[2], oldShoes[0],
+                          oldShoes[1], oldShoes[2], 1)
         else:
             self.notify.info('avoided crash in handleCancel')
             self._handlePurchaseDone()
@@ -219,81 +194,29 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
 
     def _DistributedTrunk__handleSwapHat(self):
         item = self.av.getHat()
-        self.d_setDNA(
-            item[0],
-            item[1],
-            item[2],
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            0,
-            ToonDNA.HAT)
+        self.d_setDNA(item[0], item[1], item[2], N_A, N_A, N_A, N_A, N_A, N_A,
+                      N_A, N_A, N_A, 0, ToonDNA.HAT)
         if self.closetGUI:
             self.closetGUI.updateTrashButtons()
 
     def _DistributedTrunk__handleSwapGlasses(self):
         item = self.av.getGlasses()
-        self.d_setDNA(
-            N_A,
-            N_A,
-            N_A,
-            item[0],
-            item[1],
-            item[2],
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            0,
-            ToonDNA.GLASSES)
+        self.d_setDNA(N_A, N_A, N_A, item[0], item[1], item[2], N_A, N_A, N_A,
+                      N_A, N_A, N_A, 0, ToonDNA.GLASSES)
         if self.closetGUI:
             self.closetGUI.updateTrashButtons()
 
     def _DistributedTrunk__handleSwapBackpack(self):
         item = self.av.getBackpack()
-        self.d_setDNA(
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            item[0],
-            item[1],
-            item[2],
-            N_A,
-            N_A,
-            N_A,
-            0,
-            ToonDNA.BACKPACK)
+        self.d_setDNA(N_A, N_A, N_A, N_A, N_A, N_A, item[0], item[1], item[2],
+                      N_A, N_A, N_A, 0, ToonDNA.BACKPACK)
         if self.closetGUI:
             self.closetGUI.updateTrashButtons()
 
     def _DistributedTrunk__handleSwapShoes(self):
         item = self.av.getShoes()
-        self.d_setDNA(
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            N_A,
-            item[0],
-            item[1],
-            item[2],
-            0,
-            ToonDNA.SHOES)
+        self.d_setDNA(N_A, N_A, N_A, N_A, N_A, N_A, N_A, N_A, N_A, item[0],
+                      item[1], item[2], 0, ToonDNA.SHOES)
         if self.closetGUI:
             self.closetGUI.updateTrashButtons()
 
@@ -328,8 +251,7 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             self.shoesDeleted = self.shoesDeleted | 1
         else:
             self.notify.warning(
-                "we don't know about this item(type = %s)" %
-                which)
+                "we don't know about this item(type = %s)" % which)
             return None
         if len(itemList) > 1:
             if trashIndex == 0:
@@ -337,17 +259,14 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             else:
                 swapFunc(-1)
             removeFunc(trashIndex)
-            self.sendUpdate('removeItem', [
-                trashItem[0],
-                trashItem[1],
-                trashItem[2],
-                which])
+            self.sendUpdate('removeItem',
+                            [trashItem[0], trashItem[1], trashItem[2], which])
             swapFunc(0)
             self.closetGUI.updateTrashButtons()
         else:
             self.notify.warning(
-                "cant delete this item(type = %s), since we don't have a replacement" %
-                which)
+                "cant delete this item(type = %s), since we don't have a replacement"
+                % which)
 
     def resetItemLists(self):
         self.hatList = self.oldHatList[0:]
@@ -375,31 +294,16 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             oldGlasses = self.oldStyle[ToonDNA.GLASSES]
             oldBackpack = self.oldStyle[ToonDNA.BACKPACK]
             oldShoes = self.oldStyle[ToonDNA.SHOES]
-            self.d_setDNA(
-                oldHat[0],
-                oldHat[1],
-                oldHat[2],
-                oldGlasses[0],
-                oldGlasses[1],
-                oldGlasses[2],
-                oldBackpack[0],
-                oldBackpack[1],
-                oldBackpack[2],
-                oldShoes[0],
-                oldShoes[1],
-                oldShoes[2],
-                1)
+            self.d_setDNA(oldHat[0], oldHat[1], oldHat[2], oldGlasses[0],
+                          oldGlasses[1], oldGlasses[2], oldBackpack[0],
+                          oldBackpack[1], oldBackpack[2], oldShoes[0],
+                          oldShoes[1], oldShoes[2], 1)
         else:
             which = 0
-            if hasattr(
-                self.closetGUI,
-                'hatChoice') and hasattr(
-                self.closetGUI,
-                'glassesChoice') and hasattr(
-                self.closetGUI,
-                'backpackChoice') and hasattr(
-                    self.closetGUI,
-                    'shoesChoice'):
+            if hasattr(self.closetGUI, 'hatChoice') and hasattr(
+                    self.closetGUI, 'glassesChoice') and hasattr(
+                        self.closetGUI, 'backpackChoice') and hasattr(
+                            self.closetGUI, 'shoesChoice'):
                 if self.closetGUI.hatChoice != 0 or self.hatDeleted:
                     which = which | ToonDNA.HAT
 
@@ -416,70 +320,36 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             glasses = self.av.getGlasses()
             backpack = self.av.getBackpack()
             shoes = self.av.getShoes()
-            self.d_setDNA(
-                hat[0],
-                hat[1],
-                hat[2],
-                glasses[0],
-                glasses[1],
-                glasses[2],
-                backpack[0],
-                backpack[1],
-                backpack[2],
-                shoes[0],
-                shoes[1],
-                shoes[2],
-                2,
-                which)
+            self.d_setDNA(hat[0], hat[1], hat[2], glasses[0], glasses[1],
+                          glasses[2], backpack[0], backpack[1], backpack[2],
+                          shoes[0], shoes[1], shoes[2], 2, which)
 
-    def d_setDNA(
-            self,
-            hatIdx,
-            hatTexture,
-            hatColor,
-            glassesIdx,
-            glassesTexture,
-            glassesColor,
-            backpackIdx,
-            backpackTexture,
-            backpackColor,
-            shoesIdx,
-            shoesTexture,
-            shoesColor,
-            finished,
-            which=ToonDNA.HAT | ToonDNA.GLASSES | ToonDNA.BACKPACK | ToonDNA.SHOES):
+    def d_setDNA(self,
+                 hatIdx,
+                 hatTexture,
+                 hatColor,
+                 glassesIdx,
+                 glassesTexture,
+                 glassesColor,
+                 backpackIdx,
+                 backpackTexture,
+                 backpackColor,
+                 shoesIdx,
+                 shoesTexture,
+                 shoesColor,
+                 finished,
+                 which=ToonDNA.HAT | ToonDNA.GLASSES | ToonDNA.BACKPACK
+                 | ToonDNA.SHOES):
         self.sendUpdate('setDNA', [
-            hatIdx,
-            hatTexture,
-            hatColor,
-            glassesIdx,
-            glassesTexture,
-            glassesColor,
-            backpackIdx,
-            backpackTexture,
-            backpackColor,
-            shoesIdx,
-            shoesTexture,
-            shoesColor,
-            finished,
-            which])
+            hatIdx, hatTexture, hatColor, glassesIdx, glassesTexture,
+            glassesColor, backpackIdx, backpackTexture, backpackColor,
+            shoesIdx, shoesTexture, shoesColor, finished, which
+        ])
 
-    def setCustomerDNA(
-            self,
-            avId,
-            hatIdx,
-            hatTexture,
-            hatColor,
-            glassesIdx,
-            glassesTexture,
-            glassesColor,
-            backpackIdx,
-            backpackTexture,
-            backpackColor,
-            shoesIdx,
-            shoesTexture,
-            shoesColor,
-            which):
+    def setCustomerDNA(self, avId, hatIdx, hatTexture, hatColor, glassesIdx,
+                       glassesTexture, glassesColor, backpackIdx,
+                       backpackTexture, backpackColor, shoesIdx, shoesTexture,
+                       shoesColor, which):
         if avId and avId != base.localAvatar.doId:
             av = base.cr.doId2do.get(avId, None)
             if av:
@@ -488,12 +358,12 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
                         self.av.setHat(hatIdx, hatTexture, hatColor)
 
                     if which & ToonDNA.GLASSES:
-                        self.av.setGlasses(
-                            glassesIdx, glassesTexture, glassesColor)
+                        self.av.setGlasses(glassesIdx, glassesTexture,
+                                           glassesColor)
 
                     if which & ToonDNA.BACKPACK:
-                        self.av.setBackpack(
-                            backpackIdx, backpackTexture, backpackColor)
+                        self.av.setBackpack(backpackIdx, backpackTexture,
+                                            backpackColor)
 
                     if which & ToonDNA.SHOES:
                         self.av.setShoes(shoesIdx, shoesTexture, shoesColor)
@@ -511,29 +381,24 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
         self.swapBackpackEvent = self.uniqueName('swapBackpack')
         self.swapShoesEvent = self.uniqueName('swapShoes')
         self.cancelEvent = self.uniqueName('cancel')
-        self.accept(
-            self.purchaseDoneEvent,
-            self._DistributedTrunk__proceedToCheckout)
+        self.accept(self.purchaseDoneEvent,
+                    self._DistributedTrunk__proceedToCheckout)
         self.accept(self.swapHatEvent, self._DistributedTrunk__handleSwapHat)
-        self.accept(
-            self.swapGlassesEvent,
-            self._DistributedTrunk__handleSwapGlasses)
-        self.accept(
-            self.swapBackpackEvent,
-            self._DistributedTrunk__handleSwapBackpack)
-        self.accept(
-            self.swapShoesEvent,
-            self._DistributedTrunk__handleSwapShoes)
+        self.accept(self.swapGlassesEvent,
+                    self._DistributedTrunk__handleSwapGlasses)
+        self.accept(self.swapBackpackEvent,
+                    self._DistributedTrunk__handleSwapBackpack)
+        self.accept(self.swapShoesEvent,
+                    self._DistributedTrunk__handleSwapShoes)
         self.accept(self.cancelEvent, self._handleCancel)
         self.deleteEvent = self.uniqueName('delete')
         if self.isOwner:
             self.accept(self.deleteEvent, self._DistributedTrunk__handleDelete)
 
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonImage = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                         buttons.find('**/ChtBx_OKBtn_DN'),
+                         buttons.find('**/ChtBx_OKBtn_Rllvr'))
         if self.isFreePlayer:
             textMsg = TTLocalizer.TrunkNotPaidMessage
         else:
@@ -543,40 +408,23 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             relief=None,
             state='normal',
             text=textMsg,
-            frameSize=(
-                -1,
-                1,
-                -1,
-                1),
+            frameSize=(-1, 1, -1, 1),
             text_wordwrap=10,
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor,
-            geom_scale=(
-                0.88,
-                1,
-                0.55000000000000004),
-            geom_pos=(
-                0,
-                0,
-                -0.080000000000000002),
+            geom_scale=(0.88, 1, 0.55000000000000004),
+            geom_pos=(0, 0, -0.080000000000000002),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                0.059999999999999998))
+            text_pos=(0, 0.059999999999999998))
         DirectButton(
             self.popupInfo,
             image=okButtonImage,
             relief=None,
             text=TTLocalizer.ClosetPopupOK,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             textMayChange=0,
-            pos=(
-                0.0,
-                0.0,
-                -0.20999999999999999),
+            pos=(0.0, 0.0, -0.20999999999999999),
             command=self._handleNotOwnerMessageOK)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)
@@ -587,55 +435,44 @@ class DistributedTrunk(DistributedCloset.DistributedCloset):
             self.popupInfo = None
 
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonImage = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
-        cancelButtonImage = (
-            buttons.find('**/CloseBtn_UP'),
-            buttons.find('**/CloseBtn_DN'),
-            buttons.find('**/CloseBtn_Rllvr'))
+        okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                         buttons.find('**/ChtBx_OKBtn_DN'),
+                         buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                             buttons.find('**/CloseBtn_DN'),
+                             buttons.find('**/CloseBtn_Rllvr'))
         self.popupInfo = DirectFrame(
             parent=hidden,
             relief=None,
             state='normal',
             text=TTLocalizer.TrunkAreYouSureMessage,
-            frameSize=(
-                -1,
-                1,
-                -1,
-                1),
+            frameSize=(-1, 1, -1, 1),
             text_wordwrap=10,
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor,
-            geom_scale=(
-                0.88,
-                1,
-                0.55000000000000004),
-            geom_pos=(
-                0,
-                0,
-                -0.080000000000000002),
+            geom_scale=(0.88, 1, 0.55000000000000004),
+            geom_pos=(0, 0, -0.080000000000000002),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                0.080000000000000002))
-        DirectButton(self.popupInfo, image=okButtonImage, relief=None, text=TTLocalizer.ClosetPopupOK, text_scale=0.050000000000000003, text_pos=(
-            0.0, -0.10000000000000001), textMayChange=0, pos=(-0.10000000000000001, 0.0, -0.20999999999999999), command=self._handleYesImSure)
+            text_pos=(0, 0.080000000000000002))
+        DirectButton(
+            self.popupInfo,
+            image=okButtonImage,
+            relief=None,
+            text=TTLocalizer.ClosetPopupOK,
+            text_scale=0.050000000000000003,
+            text_pos=(0.0, -0.10000000000000001),
+            textMayChange=0,
+            pos=(-0.10000000000000001, 0.0, -0.20999999999999999),
+            command=self._handleYesImSure)
         DirectButton(
             self.popupInfo,
             image=cancelButtonImage,
             relief=None,
             text=TTLocalizer.ClosetPopupCancel,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             textMayChange=0,
-            pos=(
-                0.10000000000000001,
-                0.0,
-                -0.20999999999999999),
+            pos=(0.10000000000000001, 0.0, -0.20999999999999999),
             command=self._handleNotSure)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)

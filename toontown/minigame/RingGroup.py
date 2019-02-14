@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from pandac.PandaModules import NodePath
@@ -10,12 +8,10 @@ import RingGameGlobals
 
 
 class RingGroup(NodePath):
-
     def __init__(self, trackGroup, ringModel, posScale, colorIndices):
         NodePath.__init__(self)
         self.assign(
-            hidden.attachNewNode(
-                base.localAvatar.uniqueName('ring-group')))
+            hidden.attachNewNode(base.localAvatar.uniqueName('ring-group')))
         self._RingGroup__period = trackGroup.period
         self._RingGroup__reverseFlag = trackGroup.reverseFlag
         self._RingGroup__tOffset = trackGroup.tOffset

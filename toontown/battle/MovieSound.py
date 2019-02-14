@@ -10,23 +10,15 @@ import MovieUtil
 import MovieNPCSOS
 from toontown.toonbase import ToontownBattleGlobals
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieSound')
-soundFiles = (
-    'AA_sound_bikehorn.mp3',
-    'AA_sound_whistle.mp3',
-    'AA_sound_bugle.mp3',
-    'AA_sound_aoogah.mp3',
-    'AA_sound_elephant.mp3',
-    'SZ_DD_foghorn.mp3',
-    'AA_sound_Opera_Singer.mp3')
-appearSoundFiles = (
-    'MG_tag_1.mp3',
-    'LB_receive_evidence.mp3',
-    'm_match_trumpet.mp3',
-    'TL_step_on_rake.mp3',
-    'toonbldg_grow.mp3',
-    'mailbox_full_wobble.mp3',
-    'mailbox_full_wobble.mp3')
-hitSoundFiles = ('AA_sound_Opera_Singer_Cog_Glass.mp3',)
+soundFiles = ('AA_sound_bikehorn.mp3', 'AA_sound_whistle.mp3',
+              'AA_sound_bugle.mp3', 'AA_sound_aoogah.mp3',
+              'AA_sound_elephant.mp3', 'SZ_DD_foghorn.mp3',
+              'AA_sound_Opera_Singer.mp3')
+appearSoundFiles = ('MG_tag_1.mp3', 'LB_receive_evidence.mp3',
+                    'm_match_trumpet.mp3', 'TL_step_on_rake.mp3',
+                    'toonbldg_grow.mp3', 'mailbox_full_wobble.mp3',
+                    'mailbox_full_wobble.mp3')
+hitSoundFiles = ('AA_sound_Opera_Singer_Cog_Glass.mp3', )
 tSound = 2.4500000000000002
 tSuitReact = 2.7999999999999998
 DISTANCE_TO_WALK_BACK = MovieUtil.SUIT_LURE_DISTANCE * 0.75
@@ -47,14 +39,7 @@ def doSounds(sounds):
     mtrack = Parallel()
     hitCount = 0
     prevLevel = 0
-    prevSounds = [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []]
+    prevSounds = [[], [], [], [], [], [], []]
     for sound in sounds:
         level = sound['level']
         prevSounds[level].append(sound)
@@ -76,21 +61,13 @@ def doSounds(sounds):
     camDuration = mtrack.getDuration()
     enterDuration = npcArrivals.getDuration()
     exitDuration = npcDepartures.getDuration()
-    camTrack = MovieCamera.chooseSoundShot(
-        sounds, targets, camDuration, enterDuration, exitDuration)
+    camTrack = MovieCamera.chooseSoundShot(sounds, targets, camDuration,
+                                           enterDuration, exitDuration)
     return (soundTrack, camTrack)
 
 
-def __getSuitTrack(
-        sound,
-        lastSoundThatHit,
-        delay,
-        hitCount,
-        targets,
-        totalDamage,
-        hpbonus,
-        toon,
-        npcs):
+def __getSuitTrack(sound, lastSoundThatHit, delay, hitCount, targets,
+                   totalDamage, hpbonus, toon, npcs):
     tracks = Parallel()
     attacks = 0
     uberDelay = 0.0
@@ -122,34 +99,26 @@ def __getSuitTrack(
                 delayTime = random.random()
                 suitTrack.append(Wait(delayTime + 2.0))
                 suitTrack.append(
-                    Func(
-                        setPosFromOther,
-                        breakEffect,
-                        suit,
-                        Point3(
-                            0,
-                            0.0,
-                            suit.getHeight() -
-                            1.0)))
+                    Func(setPosFromOther, breakEffect, suit,
+                         Point3(0, 0.0,
+                                suit.getHeight() - 1.0)))
                 suitTrack.append(
                     Parallel(
-                        showDamage, updateHealthBar, SoundInterval(
-                            soundEffect, node=suit), __getPartTrack(
-                            breakEffect, 0.0, 1.0, [
-                                breakEffect, suit, 0], softStop=-0.5)))
+                        showDamage, updateHealthBar,
+                        SoundInterval(soundEffect, node=suit),
+                        __getPartTrack(
+                            breakEffect,
+                            0.0,
+                            1.0, [breakEffect, suit, 0],
+                            softStop=-0.5)))
             else:
                 suitTrack.append(showDamage)
                 suitTrack.append(updateHealthBar)
             if hitCount == 1:
                 suitTrack.append(
                     Parallel(
-                        ActorInterval(
-                            suit,
-                            'squirt-small-react'),
-                        MovieUtil.createSuitStunInterval(
-                            suit,
-                            0.5,
-                            1.8)))
+                        ActorInterval(suit, 'squirt-small-react'),
+                        MovieUtil.createSuitStunInterval(suit, 0.5, 1.8)))
             else:
                 suitTrack.append(ActorInterval(suit, 'squirt-small-react'))
             if kbbonus == 0:
@@ -158,12 +127,9 @@ def __getSuitTrack(
 
             bonusTrack = None
             if hpbonus > 0:
-                bonusTrack = Sequence(Wait(delay +
-                                           tSuitReact +
-                                           delay +
-                                           0.75 +
-                                           uberDelay), Func(suit.showHpText, -
-                                                            hpbonus, 1, openEnded=0))
+                bonusTrack = Sequence(
+                    Wait(delay + tSuitReact + delay + 0.75 + uberDelay),
+                    Func(suit.showHpText, -hpbonus, 1, openEnded=0))
 
             suitTrack.append(Func(suit.loop, 'neutral'))
             if bonusTrack is None:
@@ -175,10 +141,7 @@ def __getSuitTrack(
             tracks.append(
                 Sequence(
                     Wait(2.8999999999999999),
-                    Func(
-                        MovieUtil.indicateMissed,
-                        suit,
-                        1.0)))
+                    Func(MovieUtil.indicateMissed, suit, 1.0)))
             continue
 
     return tracks
@@ -206,20 +169,12 @@ def __doSoundsLevel(sounds, delay, hitCount, npcs):
         level = sound['level']
         targets = sound['target']
         hpbonus = sound['hpbonus']
-        attackMTrack = soundfn_array[sound['level']](
-            sound, delay, toon, targets, level)
+        attackMTrack = soundfn_array[sound['level']](sound, delay, toon,
+                                                     targets, level)
         tracks.append(Sequence(Wait(delay), attackMTrack))
         tracks.append(
-            __getSuitTrack(
-                sound,
-                lastSoundThatHit,
-                delay,
-                hitCount,
-                targets,
-                totalDamage,
-                hpbonus,
-                toon,
-                npcs))
+            __getSuitTrack(sound, lastSoundThatHit, delay, hitCount, targets,
+                           totalDamage, hpbonus, toon, npcs))
         for target in targets:
             battle = sound['battle']
             suit = target['suit']
@@ -227,13 +182,11 @@ def __doSoundsLevel(sounds, delay, hitCount, npcs):
             revived = target['revived']
             if revived:
                 deathTracks.append(
-                    MovieUtil.createSuitReviveTrack(
-                        suit, toon, battle, npcs))
+                    MovieUtil.createSuitReviveTrack(suit, toon, battle, npcs))
                 continue
             if died:
                 deathTracks.append(
-                    MovieUtil.createSuitDeathTrack(
-                        suit, toon, battle, npcs))
+                    MovieUtil.createSuitDeathTrack(suit, toon, battle, npcs))
                 continue
 
     mainTrack.append(tracks)
@@ -246,10 +199,10 @@ def __createSuitResetPosTrack(suit, battle):
     moveDist = Vec3(suit.getPos(battle) - resetPos).length()
     moveDuration = 0.5
     walkTrack = Sequence(
-        Func(
-            suit.setHpr, battle, resetHpr), ActorInterval(
-            suit, 'walk', startTime=1, duration=moveDuration, endTime=0.0001), Func(
-                suit.loop, 'neutral'))
+        Func(suit.setHpr, battle, resetHpr),
+        ActorInterval(
+            suit, 'walk', startTime=1, duration=moveDuration, endTime=0.0001),
+        Func(suit.loop, 'neutral'))
     moveTrack = LerpPosInterval(suit, moveDuration, resetPos, other=battle)
     return Parallel(walkTrack, moveTrack)
 
@@ -280,11 +233,8 @@ def __createToonInterval(sound, delay, toon, operaInstrument=None):
                     startTime=1,
                     duration=TIME_TO_WALK_BACK,
                     endTime=0.0001),
-                LerpPosInterval(
-                    toon,
-                    TIME_TO_WALK_BACK,
-                    newPos,
-                    other=battle)))
+                LerpPosInterval(toon, TIME_TO_WALK_BACK, newPos,
+                                other=battle)))
 
     if operaInstrument:
         sprayEffect = BattleParticles.createParticleEffect(file='soundWave')
@@ -294,19 +244,13 @@ def __createToonInterval(sound, delay, toon, operaInstrument=None):
         I1 = 2.7999999999999998
         retval.append(
             ActorInterval(
-                toon,
-                'sound',
-                playRate=1.0,
-                startTime=0.0,
-                endTime=I1))
+                toon, 'sound', playRate=1.0, startTime=0.0, endTime=I1))
         retval.append(
-            Func(
-                setPosFromOther, sprayEffect, operaInstrument, Point3(
-                    0, 1.6000000000000001, -0.17999999999999999)))
-        retval.append(__getPartTrack(sprayEffect, 0.0, 6.0, [
-            sprayEffect,
-            toon,
-            0], softStop=-3.5))
+            Func(setPosFromOther, sprayEffect, operaInstrument,
+                 Point3(0, 1.6000000000000001, -0.17999999999999999)))
+        retval.append(
+            __getPartTrack(
+                sprayEffect, 0.0, 6.0, [sprayEffect, toon, 0], softStop=-3.5))
         retval.append(ActorInterval(toon, 'sound', playRate=1.0, startTime=I1))
     else:
         retval.append(ActorInterval(toon, 'sound'))
@@ -319,11 +263,8 @@ def __createToonInterval(sound, delay, toon, operaInstrument=None):
                     startTime=0.0001,
                     duration=TIME_TO_WALK_BACK,
                     endTime=1),
-                LerpPosInterval(
-                    toon,
-                    TIME_TO_WALK_BACK,
-                    oldPos,
-                    other=battle)))
+                LerpPosInterval(toon, TIME_TO_WALK_BACK, oldPos,
+                                other=battle)))
 
     retval.append(Func(toon.loop, 'neutral'))
     return retval
@@ -345,44 +286,37 @@ def __hasLuredSuits(sound):
 def __doBikehorn(sound, delay, toon, targets, level):
     tracks = Parallel()
     instrMin = Vec3(0.001, 0.001, 0.001)
-    instrMax = Vec3(
-        0.65000000000000002,
-        0.65000000000000002,
-        0.65000000000000002)
+    instrMax = Vec3(0.65000000000000002, 0.65000000000000002,
+                    0.65000000000000002)
     instrMax *= INSTRUMENT_SCALE_MODIFIER
-    instrStretch = Vec3(
-        0.59999999999999998,
-        1.1000000000000001,
-        0.59999999999999998)
+    instrStretch = Vec3(0.59999999999999998, 1.1000000000000001,
+                        0.59999999999999998)
     instrStretch *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('bikehorn')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
-        instrument.setPos(-1.1000000000000001, -
-                          1.3999999999999999, 0.10000000000000001)
+        instrument.setPos(-1.1000000000000001, -1.3999999999999999,
+                          0.10000000000000001)
         instrument.setHpr(145, 0, 0)
         instrument.setScale(instrMin)
-        instrument2.setPos(-1.1000000000000001, -
-                           1.3999999999999999, 0.10000000000000001)
+        instrument2.setPos(-1.1000000000000001, -1.3999999999999999,
+                           0.10000000000000001)
         instrument2.setHpr(145, 0, 0)
         instrument2.setScale(instrMin)
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow = getScaleIntervals(
@@ -394,9 +328,7 @@ def __doBikehorn(sound, delay, toon, targets, level):
         grow,
         Sequence(
             Wait(0.14999999999999999),
-            SoundInterval(
-                instrumentAppearSfx,
-                node=toon)))
+            SoundInterval(instrumentAppearSfx, node=toon)))
     stretchInstr = getScaleBlendIntervals(
         instruments,
         duration=0.20000000000000001,
@@ -422,20 +354,14 @@ def __doBikehorn(sound, delay, toon, targets, level):
         endScale=megaphone.getScale(),
         blendType='easeIn')
     attackTrack = Parallel(
-        Sequence(
-            stretchInstr, backInstr), Sequence(
-            stretchMega, backMega))
+        Sequence(stretchInstr, backInstr), Sequence(stretchMega, backMega))
     hasLuredSuits = __hasLuredSuits(sound)
     delayTime = delay
     if hasLuredSuits:
         delayTime += TIME_TO_WALK_BACK
 
     megaphoneTrack = Sequence(
-        Wait(delayTime),
-        megaphoneShow,
-        Wait(1.0),
-        instrumentAppear,
-        Wait(3.0),
+        Wait(delayTime), megaphoneShow, Wait(1.0), instrumentAppear, Wait(3.0),
         megaphoneHide)
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(sound, delay, toon)
@@ -453,13 +379,8 @@ def __doBikehorn(sound, delay, toon, targets, level):
 
         soundTrack = Sequence(
             Wait(delayTime),
-            Parallel(
-                attackTrack,
-                SoundInterval(
-                    soundEffect,
-                    node=toon)),
-            Wait(0.20000000000000001),
-            instrumentshrink)
+            Parallel(attackTrack, SoundInterval(soundEffect, node=toon)),
+            Wait(0.20000000000000001), instrumentshrink)
         tracks.append(soundTrack)
 
     return tracks
@@ -468,23 +389,17 @@ def __doBikehorn(sound, delay, toon, targets, level):
 def __doWhistle(sound, delay, toon, targets, level):
     tracks = Parallel()
     instrMin = Vec3(0.001, 0.001, 0.001)
-    instrMax = Vec3(
-        0.20000000000000001,
-        0.20000000000000001,
-        0.20000000000000001)
+    instrMax = Vec3(0.20000000000000001, 0.20000000000000001,
+                    0.20000000000000001)
     instrMax *= INSTRUMENT_SCALE_MODIFIER
     instrStretch = Vec3(0.25, 0.25, 0.25)
     instrStretch *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('whistle')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
         instrument.setPos(-1.2, -1.3, 0.10000000000000001)
@@ -495,12 +410,13 @@ def __doWhistle(sound, delay, toon, targets, level):
         instrument2.setScale(instrMin)
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow = getScaleIntervals(
@@ -512,9 +428,7 @@ def __doWhistle(sound, delay, toon, targets, level):
         grow,
         Sequence(
             Wait(0.050000000000000003),
-            SoundInterval(
-                instrumentAppearSfx,
-                node=toon)))
+            SoundInterval(instrumentAppearSfx, node=toon)))
     stretchInstr = getScaleBlendIntervals(
         instruments,
         duration=0.20000000000000001,
@@ -534,11 +448,7 @@ def __doWhistle(sound, delay, toon, targets, level):
         delayTime += TIME_TO_WALK_BACK
 
     megaphoneTrack = Sequence(
-        Wait(delayTime),
-        megaphoneShow,
-        Wait(1.0),
-        instrumentAppear,
-        Wait(3.0),
+        Wait(delayTime), megaphoneShow, Wait(1.0), instrumentAppear, Wait(3.0),
         megaphoneHide)
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(sound, delay, toon)
@@ -556,13 +466,8 @@ def __doWhistle(sound, delay, toon, targets, level):
 
         soundTrack = Sequence(
             Wait(delayTime),
-            Parallel(
-                attackTrack,
-                SoundInterval(
-                    soundEffect,
-                    node=toon)),
-            Wait(0.20000000000000001),
-            instrumentshrink)
+            Parallel(attackTrack, SoundInterval(soundEffect, node=toon)),
+            Wait(0.20000000000000001), instrumentshrink)
         tracks.append(soundTrack)
 
     return tracks
@@ -571,23 +476,17 @@ def __doWhistle(sound, delay, toon, targets, level):
 def __doBugle(sound, delay, toon, targets, level):
     tracks = Parallel()
     instrMin = Vec3(0.001, 0.001, 0.001)
-    instrMax = Vec3(
-        0.40000000000000002,
-        0.40000000000000002,
-        0.40000000000000002)
+    instrMax = Vec3(0.40000000000000002, 0.40000000000000002,
+                    0.40000000000000002)
     instrMax *= INSTRUMENT_SCALE_MODIFIER
     instrStretch = Vec3(0.5, 0.5, 0.5)
     instrStretch *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('bugle')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
         instrument.setPos(-1.3, -1.3999999999999999, 0.10000000000000001)
@@ -621,12 +520,13 @@ def __doBugle(sound, delay, toon, targets, level):
         seq.start()
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow = getScaleBlendIntervals(
@@ -648,21 +548,10 @@ def __doBugle(sound, delay, toon, targets, level):
 
     soundEffect = globalBattleSoundCache.getSound(soundFiles[level])
     megaphoneTrack = Parallel(
+        Sequence(Wait(delay + 1.7), SoundInterval(soundEffect, node=toon)),
         Sequence(
-            Wait(
-                delay + 1.7),
-            SoundInterval(
-                soundEffect,
-                node=toon)),
-        Sequence(
-            Wait(delayTime),
-            megaphoneShow,
-            Wait(1.7),
-            instrumentAppear,
-            Wait(1),
-            instrumentshrink,
-            Wait(1.5),
-            megaphoneHide))
+            Wait(delayTime), megaphoneShow, Wait(1.7), instrumentAppear,
+            Wait(1), instrumentshrink, Wait(1.5), megaphoneHide))
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(sound, delay, toon)
     tracks.append(toonTrack)
@@ -682,21 +571,15 @@ def __doAoogah(sound, delay, toon, targets, level):
     instrMin = Vec3(0.001, 0.001, 0.001)
     instrMax = Vec3(0.5, 0.5, 0.5)
     instrMax *= INSTRUMENT_SCALE_MODIFIER
-    instrStretch = Vec3(
-        1.1000000000000001,
-        0.90000000000000002,
-        0.40000000000000002)
+    instrStretch = Vec3(1.1000000000000001, 0.90000000000000002,
+                        0.40000000000000002)
     instrStretch *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('aoogah')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
         instrument.setPos(-1.0, -1.5, 0.20000000000000001)
@@ -707,12 +590,13 @@ def __doAoogah(sound, delay, toon, targets, level):
         instrument2.setScale(instrMin)
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow = getScaleIntervals(
@@ -724,9 +608,7 @@ def __doAoogah(sound, delay, toon, targets, level):
         grow,
         Sequence(
             Wait(0.050000000000000003),
-            SoundInterval(
-                instrumentAppearSfx,
-                node=toon)))
+            SoundInterval(instrumentAppearSfx, node=toon)))
     stretchInstr = getScaleBlendIntervals(
         instruments,
         duration=0.20000000000000001,
@@ -746,11 +628,7 @@ def __doAoogah(sound, delay, toon, targets, level):
         delayTime += TIME_TO_WALK_BACK
 
     megaphoneTrack = Sequence(
-        Wait(delayTime),
-        megaphoneShow,
-        Wait(1.0),
-        instrumentAppear,
-        Wait(3.0),
+        Wait(delayTime), megaphoneShow, Wait(1.0), instrumentAppear, Wait(3.0),
         megaphoneHide)
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(sound, delay, toon)
@@ -767,10 +645,9 @@ def __doAoogah(sound, delay, toon, targets, level):
             delayTime += TIME_TO_WALK_BACK
 
         soundTrack = Sequence(
-            Wait(delayTime), Parallel(
-                attackTrack, SoundInterval(
-                    soundEffect, node=toon), Sequence(
-                    Wait(1.5), instrumentshrink)))
+            Wait(delayTime),
+            Parallel(attackTrack, SoundInterval(soundEffect, node=toon),
+                     Sequence(Wait(1.5), instrumentshrink)))
         tracks.append(soundTrack)
 
     return tracks
@@ -779,51 +656,42 @@ def __doAoogah(sound, delay, toon, targets, level):
 def __doElephant(sound, delay, toon, targets, level):
     tracks = Parallel()
     instrMin = Vec3(0.001, 0.001, 0.001)
-    instrMax1 = Vec3(
-        0.29999999999999999,
-        0.40000000000000002,
-        0.20000000000000001)
+    instrMax1 = Vec3(0.29999999999999999, 0.40000000000000002,
+                     0.20000000000000001)
     instrMax1 *= INSTRUMENT_SCALE_MODIFIER
-    instrMax2 = Vec3(
-        0.29999999999999999,
-        0.29999999999999999,
-        0.29999999999999999)
+    instrMax2 = Vec3(0.29999999999999999, 0.29999999999999999,
+                     0.29999999999999999)
     instrMax2 *= INSTRUMENT_SCALE_MODIFIER
     instrStretch1 = Vec3(0.29999999999999999, 0.5, 0.25)
     instrStretch1 *= INSTRUMENT_SCALE_MODIFIER
-    instrStretch2 = Vec3(
-        0.29999999999999999,
-        0.69999999999999996,
-        0.29999999999999999)
+    instrStretch2 = Vec3(0.29999999999999999, 0.69999999999999996,
+                         0.29999999999999999)
     instrStretch2 *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('elephant')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
-        instrument.setPos(-0.59999999999999998, -
-                          0.90000000000000002, 0.14999999999999999)
+        instrument.setPos(-0.59999999999999998, -0.90000000000000002,
+                          0.14999999999999999)
         instrument.setHpr(145, 0, 85)
         instrument.setScale(instrMin)
-        instrument2.setPos(-0.59999999999999998, -
-                           0.90000000000000002, 0.14999999999999999)
+        instrument2.setPos(-0.59999999999999998, -0.90000000000000002,
+                           0.14999999999999999)
         instrument2.setHpr(145, 0, 85)
         instrument2.setScale(instrMin)
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow1 = getScaleIntervals(
@@ -837,10 +705,10 @@ def __doElephant(sound, delay, toon, targets, level):
         startScale=instrMax1,
         endScale=instrMax2)
     instrumentAppear = Parallel(
+        Sequence(grow1, grow2),
         Sequence(
-            grow1, grow2), Sequence(
-            Wait(0.050000000000000003), SoundInterval(
-                instrumentAppearSfx, node=toon)))
+            Wait(0.050000000000000003),
+            SoundInterval(instrumentAppearSfx, node=toon)))
     stretchInstr1 = getScaleBlendIntervals(
         instruments,
         duration=0.10000000000000001,
@@ -867,11 +735,7 @@ def __doElephant(sound, delay, toon, targets, level):
         delayTime += TIME_TO_WALK_BACK
 
     megaphoneTrack = Sequence(
-        Wait(delayTime),
-        megaphoneShow,
-        Wait(1.0),
-        instrumentAppear,
-        Wait(3.0),
+        Wait(delayTime), megaphoneShow, Wait(1.0), instrumentAppear, Wait(3.0),
         megaphoneHide)
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(sound, delay, toon)
@@ -888,10 +752,9 @@ def __doElephant(sound, delay, toon, targets, level):
             delayTime += TIME_TO_WALK_BACK
 
         soundTrack = Sequence(
-            Wait(delayTime), Parallel(
-                attackTrack, SoundInterval(
-                    soundEffect, node=toon), Sequence(
-                    Wait(1.5), instrumentshrink)))
+            Wait(delayTime),
+            Parallel(attackTrack, SoundInterval(soundEffect, node=toon),
+                     Sequence(Wait(1.5), instrumentshrink)))
         tracks.append(soundTrack)
 
     return tracks
@@ -900,66 +763,54 @@ def __doElephant(sound, delay, toon, targets, level):
 def __doFoghorn(sound, delay, toon, targets, level):
     tracks = Parallel()
     instrMin = Vec3(0.001, 0.001, 0.001)
-    instrMax1 = Vec3(
-        0.10000000000000001,
-        0.10000000000000001,
-        0.10000000000000001)
+    instrMax1 = Vec3(0.10000000000000001, 0.10000000000000001,
+                     0.10000000000000001)
     instrMax1 *= INSTRUMENT_SCALE_MODIFIER
-    instrMax2 = Vec3(
-        0.29999999999999999,
-        0.29999999999999999,
-        0.29999999999999999)
+    instrMax2 = Vec3(0.29999999999999999, 0.29999999999999999,
+                     0.29999999999999999)
     instrMax2 *= INSTRUMENT_SCALE_MODIFIER
-    instrStretch = Vec3(
-        0.40000000000000002,
-        0.40000000000000002,
-        0.40000000000000002)
+    instrStretch = Vec3(0.40000000000000002, 0.40000000000000002,
+                        0.40000000000000002)
     instrStretch *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('fog_horn')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
-        instrument.setPos(-0.80000000000000004, -
-                          0.90000000000000002, 0.20000000000000001)
+        instrument.setPos(-0.80000000000000004, -0.90000000000000002,
+                          0.20000000000000001)
         instrument.setHpr(145, 0, 0)
         instrument.setScale(instrMin)
-        instrument2.setPos(-0.80000000000000004, -
-                           0.90000000000000002, 0.20000000000000001)
+        instrument2.setPos(-0.80000000000000004, -0.90000000000000002,
+                           0.20000000000000001)
         instrument2.setHpr(145, 0, 0)
         instrument2.setScale(instrMin)
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow1 = getScaleIntervals(
-        instruments,
-        duration=1,
-        startScale=instrMin,
-        endScale=instrMax1)
+        instruments, duration=1, startScale=instrMin, endScale=instrMax1)
     grow2 = getScaleIntervals(
         instruments,
         duration=0.10000000000000001,
         startScale=instrMax1,
         endScale=instrMax2)
     instrumentAppear = Parallel(
+        Sequence(grow1, grow2),
         Sequence(
-            grow1, grow2), Sequence(
-            Wait(0.050000000000000003), SoundInterval(
-                instrumentAppearSfx, node=toon)))
+            Wait(0.050000000000000003),
+            SoundInterval(instrumentAppearSfx, node=toon)))
     stretchInstr = getScaleBlendIntervals(
         instruments,
         duration=0.29999999999999999,
@@ -973,29 +824,28 @@ def __doFoghorn(sound, delay, toon, targets, level):
         endScale=instrMin,
         blendType='easeIn')
     spinInstr1 = LerpHprInterval(
-        instrument, duration=1.5, startHpr=Vec3(
-            145, 0, 0), hpr=Vec3(
-            145, 0, 90), blendType='easeInOut')
+        instrument,
+        duration=1.5,
+        startHpr=Vec3(145, 0, 0),
+        hpr=Vec3(145, 0, 90),
+        blendType='easeInOut')
     spinInstr2 = LerpHprInterval(
-        instrument2, duration=1.5, startHpr=Vec3(
-            145, 0, 0), hpr=Vec3(
-            145, 0, 90), blendType='easeInOut')
+        instrument2,
+        duration=1.5,
+        startHpr=Vec3(145, 0, 0),
+        hpr=Vec3(145, 0, 90),
+        blendType='easeInOut')
     spinInstr = Parallel(spinInstr1, spinInstr2)
     attackTrack = Parallel(
-        Sequence(
-            Wait(0.20000000000000001), spinInstr), Sequence(
-            stretchInstr, Wait(0.5), backInstr))
+        Sequence(Wait(0.20000000000000001), spinInstr),
+        Sequence(stretchInstr, Wait(0.5), backInstr))
     hasLuredSuits = __hasLuredSuits(sound)
     delayTime = delay
     if hasLuredSuits:
         delayTime += TIME_TO_WALK_BACK
 
     megaphoneTrack = Sequence(
-        Wait(delayTime),
-        megaphoneShow,
-        Wait(1.0),
-        instrumentAppear,
-        Wait(3.0),
+        Wait(delayTime), megaphoneShow, Wait(1.0), instrumentAppear, Wait(3.0),
         megaphoneHide)
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(sound, delay, toon)
@@ -1007,9 +857,8 @@ def __doFoghorn(sound, delay, toon, targets, level):
             delayTime += TIME_TO_WALK_BACK
 
         soundTrack = Sequence(
-            Wait(delayTime), Parallel(
-                attackTrack, SoundInterval(
-                    soundEffect, node=toon)))
+            Wait(delayTime),
+            Parallel(attackTrack, SoundInterval(soundEffect, node=toon)))
         tracks.append(soundTrack)
 
     return tracks
@@ -1021,33 +870,25 @@ def __doOpera(sound, delay, toon, targets, level):
     instrMin = Vec3(0.001, 0.001, 0.001)
     instrMax1 = Vec3(1.7, 1.7, 1.7)
     instrMax1 *= INSTRUMENT_SCALE_MODIFIER
-    instrMax2 = Vec3(
-        2.2000000000000002,
-        2.2000000000000002,
-        2.2000000000000002)
+    instrMax2 = Vec3(2.2000000000000002, 2.2000000000000002,
+                     2.2000000000000002)
     instrMax2 *= INSTRUMENT_SCALE_MODIFIER
-    instrStretch = Vec3(
-        0.40000000000000002,
-        0.40000000000000002,
-        0.40000000000000002)
+    instrStretch = Vec3(0.40000000000000002, 0.40000000000000002,
+                        0.40000000000000002)
     instrStretch *= INSTRUMENT_SCALE_MODIFIER
     megaphone = globalPropPool.getProp('megaphone')
     megaphone2 = MovieUtil.copyProp(megaphone)
-    megaphones = [
-        megaphone,
-        megaphone2]
+    megaphones = [megaphone, megaphone2]
     instrument = globalPropPool.getProp('singing')
     instrument2 = MovieUtil.copyProp(instrument)
-    instruments = [
-        instrument,
-        instrument2]
+    instruments = [instrument, instrument2]
     head = instrument2.find('**/opera_singer')
     head.setPos(0, 0, 0)
 
     def setInstrumentStats(instrument=instrument, instrument2=instrument2):
         notify.debug('setInstrumentStats')
-        newPos = Vec3(-0.80000000000000004, -
-                      0.90000000000000002, 0.20000000000000001)
+        newPos = Vec3(-0.80000000000000004, -0.90000000000000002,
+                      0.20000000000000001)
         newPos *= 1.3
         instrument.setPos(newPos[0], newPos[1], newPos[2])
         instrument.setHpr(145, 0, 90)
@@ -1057,12 +898,13 @@ def __doOpera(sound, delay, toon, targets, level):
         instrument2.setScale(instrMin)
 
     hands = toon.getRightHands()
-    megaphoneShow = Sequence(Func(MovieUtil.showProps, megaphones, hands), Func(
-        MovieUtil.showProps, instruments, hands), Func(setInstrumentStats))
+    megaphoneShow = Sequence(
+        Func(MovieUtil.showProps, megaphones, hands),
+        Func(MovieUtil.showProps, instruments, hands),
+        Func(setInstrumentStats))
     megaphoneHide = Sequence(
-        Func(
-            MovieUtil.removeProps, megaphones), Func(
-            MovieUtil.removeProps, instruments))
+        Func(MovieUtil.removeProps, megaphones),
+        Func(MovieUtil.removeProps, instruments))
     instrumentAppearSfx = globalBattleSoundCache.getSound(
         appearSoundFiles[level])
     grow1 = getScaleBlendIntervals(
@@ -1083,21 +925,15 @@ def __doOpera(sound, delay, toon, targets, level):
         startScale=instrMax2,
         endScale=instrMin)
     instrumentAppear = Parallel(
-        Sequence(
-            grow1, grow2, Wait(6.0), shrink2), Sequence(
-            Wait(0.0), SoundInterval(
-                instrumentAppearSfx, node=toon)))
+        Sequence(grow1, grow2, Wait(6.0), shrink2),
+        Sequence(Wait(0.0), SoundInterval(instrumentAppearSfx, node=toon)))
     hasLuredSuits = __hasLuredSuits(sound)
     delayTime = delay
     if hasLuredSuits:
         delayTime += TIME_TO_WALK_BACK
 
     megaphoneTrack = Sequence(
-        Wait(delayTime),
-        megaphoneShow,
-        Wait(1.0),
-        instrumentAppear,
-        Wait(2.0),
+        Wait(delayTime), megaphoneShow, Wait(1.0), instrumentAppear, Wait(2.0),
         megaphoneHide)
     tracks.append(megaphoneTrack)
     toonTrack = __createToonInterval(
@@ -1110,8 +946,7 @@ def __doOpera(sound, delay, toon, targets, level):
             delayTime += TIME_TO_WALK_BACK
 
         soundTrack = Sequence(
-            Wait(delayTime), SoundInterval(
-                soundEffect, node=toon))
+            Wait(delayTime), SoundInterval(soundEffect, node=toon))
         tracks.append(Sequence(Wait(0)))
         tracks.append(soundTrack)
 
@@ -1128,11 +963,7 @@ def getScaleIntervals(props, duration, startScale, endScale):
     tracks = Parallel()
     for prop in props:
         tracks.append(
-            LerpScaleInterval(
-                prop,
-                duration,
-                endScale,
-                startScale=startScale))
+            LerpScaleInterval(prop, duration, endScale, startScale=startScale))
 
     return tracks
 
@@ -1151,22 +982,15 @@ def getScaleBlendIntervals(props, duration, startScale, endScale, blendType):
     return tracks
 
 
-soundfn_array = (
-    __doBikehorn,
-    __doWhistle,
-    __doBugle,
-    __doAoogah,
-    __doElephant,
-    __doFoghorn,
-    __doOpera)
+soundfn_array = (__doBikehorn, __doWhistle, __doBugle, __doAoogah,
+                 __doElephant, __doFoghorn, __doOpera)
 
 
-def __getPartTrack(
-        particleEffect,
-        startDelay,
-        durationDelay,
-        partExtraArgs,
-        softStop=0):
+def __getPartTrack(particleEffect,
+                   startDelay,
+                   durationDelay,
+                   partExtraArgs,
+                   softStop=0):
     pEffect = partExtraArgs[0]
     parent = partExtraArgs[1]
     if len(partExtraArgs) == 3:

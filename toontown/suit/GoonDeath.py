@@ -11,12 +11,8 @@ def createExplosionTrack(parent, deathNode, scale):
     explosion.setBillboardPointEye()
     explosion.setPos(0, 0, 2)
     return Sequence(
-        Func(
-            deathNode.reparentTo,
-            parent),
-        Wait(0.59999999999999998),
-        Func(
-            deathNode.detachNode))
+        Func(deathNode.reparentTo, parent), Wait(0.59999999999999998),
+        Func(deathNode.detachNode))
 
 
 def createGoonExplosion(parent, explosionPoint, scale):

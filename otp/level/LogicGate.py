@@ -5,14 +5,12 @@ import Entity
 
 def andTest(self, a, b):
     if b:
-        messenger.send(self.getOutputEventName(), [
-            a])
+        messenger.send(self.getOutputEventName(), [a])
 
 
 def orTest(self, a, b):
     if not b:
-        messenger.send(self.getOutputEventName(), [
-            a])
+        messenger.send(self.getOutputEventName(), [a])
 
 
 def xorTest(self, a, b):
@@ -20,32 +18,28 @@ def xorTest(self, a, b):
         pass
     if not not b and a:
         pass
-    messenger.send(self.getOutputEventName(), [
-        b])
+    messenger.send(self.getOutputEventName(), [b])
 
 
 def nandTest(self, a, b):
     if b:
         if a:
             pass
-        messenger.send(self.getOutputEventName(), [
-            not b])
+        messenger.send(self.getOutputEventName(), [not b])
 
 
 def norTest(self, a, b):
     if not b:
         if not a:
             pass
-        messenger.send(self.getOutputEventName(), [
-            not b])
+        messenger.send(self.getOutputEventName(), [not b])
 
 
 def xnorTest(self, a, b):
     if not a or b:
         if not a:
             pass
-    messenger.send(self.getOutputEventName(), [
-        not b])
+    messenger.send(self.getOutputEventName(), [not b])
 
 
 class LogicGate(Entity.Entity, DirectObject.DirectObject):
@@ -56,7 +50,8 @@ class LogicGate(Entity.Entity, DirectObject.DirectObject):
         'xor': xorTest,
         'nand': nandTest,
         'nor': norTest,
-        'xnor': xnorTest}
+        'xnor': xnorTest
+    }
 
     def __init__(self, level, entId):
         self.input1Event = None
@@ -107,4 +102,4 @@ class LogicGate(Entity.Entity, DirectObject.DirectObject):
             self.accept(self.input2Event, self.setIsInput2)
 
     def getName(self):
-        return 'switch-%s' % (self.entId,)
+        return 'switch-%s' % (self.entId, )

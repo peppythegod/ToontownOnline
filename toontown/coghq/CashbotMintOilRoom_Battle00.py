@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE22a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10001: {
         'type': 'model',
         'name': 'vaultDoor',
@@ -35,7 +38,8 @@ GlobalEntities = {
         'scale': Vec3(1.0, 1.0, 1.0),
         'collisionsOnly': 0,
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/VaultDoorCover.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/VaultDoorCover.bam'
+    },
     10000: {
         'type': 'nodepath',
         'name': 'cogs',
@@ -43,9 +47,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(180.0, 0.0, 0.0),
-        'scale': 1}}
+        'scale': 1
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

@@ -65,29 +65,56 @@ class ChatManager(DirectObject.DirectObject):
             State.State('off', self.enterOff, self.exitOff),
             State.State('mainMenu', self.enterMainMenu, self.exitMainMenu),
             State.State('speedChat', self.enterSpeedChat, self.exitSpeedChat),
-            State.State('normalChat', self.enterNormalChat, self.exitNormalChat),
+            State.State('normalChat', self.enterNormalChat,
+                        self.exitNormalChat),
             State.State('whisper', self.enterWhisper, self.exitWhisper),
-            State.State('whisperChat', self.enterWhisperChat, self.exitWhisperChat),
-            State.State('whisperChatPlayer', self.enterWhisperChatPlayer, self.exitWhisperChatPlayer),
-            State.State('whisperSpeedChat', self.enterWhisperSpeedChat, self.exitWhisperSpeedChat),
-            State.State('whisperSpeedChatPlayer', self.enterWhisperSpeedChatPlayer, self.exitWhisperSpeedChatPlayer),
-            State.State('openChatWarning', self.enterOpenChatWarning, self.exitOpenChatWarning),
-            State.State('leaveToPayDialog', self.enterLeaveToPayDialog, self.exitLeaveToPayDialog),
-            State.State('unpaidChatWarning', self.enterUnpaidChatWarning, self.exitUnpaidChatWarning),
-            State.State('noSecretChatAtAll', self.enterNoSecretChatAtAll, self.exitNoSecretChatAtAll),
-            State.State('noSecretChatAtAllAndNoWhitelist', self.enterNoSecretChatAtAllAndNoWhitelist, self.exitNoSecretChatAtAllAndNoWhitelist),
-            State.State('noSecretChatWarning', self.enterNoSecretChatWarning, self.exitNoSecretChatWarning),
-            State.State('noFriendsWarning', self.enterNoFriendsWarning, self.exitNoFriendsWarning),
-            State.State('otherDialog', self.enterOtherDialog, self.exitOtherDialog),
-            State.State('activateChat', self.enterActivateChat, self.exitActivateChat),
-            State.State('chatMoreInfo', self.enterChatMoreInfo, self.exitChatMoreInfo),
-            State.State('chatPrivacyPolicy', self.enterChatPrivacyPolicy, self.exitChatPrivacyPolicy),
-            State.State('secretChatActivated', self.enterSecretChatActivated, self.exitSecretChatActivated),
-            State.State('problemActivatingChat', self.enterProblemActivatingChat, self.exitProblemActivatingChat),
-            State.State('whiteListOpenChat', self.enterWhiteListOpenChat, self.exitWhiteListOpenChat),
-            State.State('whiteListAvatarChat', self.enterWhiteListAvatarChat, self.exitWhiteListAvatarChat),
-            State.State('whiteListPlayerChat', self.enterWhiteListPlayerChat, self.exitWhiteListPlayerChat),
-            State.State('trueFriendTeaserPanel', self.enterTrueFriendTeaserPanel, self.exitTrueFriendTeaserPanel)], 'off', 'off')
+            State.State('whisperChat', self.enterWhisperChat,
+                        self.exitWhisperChat),
+            State.State('whisperChatPlayer', self.enterWhisperChatPlayer,
+                        self.exitWhisperChatPlayer),
+            State.State('whisperSpeedChat', self.enterWhisperSpeedChat,
+                        self.exitWhisperSpeedChat),
+            State.State('whisperSpeedChatPlayer',
+                        self.enterWhisperSpeedChatPlayer,
+                        self.exitWhisperSpeedChatPlayer),
+            State.State('openChatWarning', self.enterOpenChatWarning,
+                        self.exitOpenChatWarning),
+            State.State('leaveToPayDialog', self.enterLeaveToPayDialog,
+                        self.exitLeaveToPayDialog),
+            State.State('unpaidChatWarning', self.enterUnpaidChatWarning,
+                        self.exitUnpaidChatWarning),
+            State.State('noSecretChatAtAll', self.enterNoSecretChatAtAll,
+                        self.exitNoSecretChatAtAll),
+            State.State('noSecretChatAtAllAndNoWhitelist',
+                        self.enterNoSecretChatAtAllAndNoWhitelist,
+                        self.exitNoSecretChatAtAllAndNoWhitelist),
+            State.State('noSecretChatWarning', self.enterNoSecretChatWarning,
+                        self.exitNoSecretChatWarning),
+            State.State('noFriendsWarning', self.enterNoFriendsWarning,
+                        self.exitNoFriendsWarning),
+            State.State('otherDialog', self.enterOtherDialog,
+                        self.exitOtherDialog),
+            State.State('activateChat', self.enterActivateChat,
+                        self.exitActivateChat),
+            State.State('chatMoreInfo', self.enterChatMoreInfo,
+                        self.exitChatMoreInfo),
+            State.State('chatPrivacyPolicy', self.enterChatPrivacyPolicy,
+                        self.exitChatPrivacyPolicy),
+            State.State('secretChatActivated', self.enterSecretChatActivated,
+                        self.exitSecretChatActivated),
+            State.State('problemActivatingChat',
+                        self.enterProblemActivatingChat,
+                        self.exitProblemActivatingChat),
+            State.State('whiteListOpenChat', self.enterWhiteListOpenChat,
+                        self.exitWhiteListOpenChat),
+            State.State('whiteListAvatarChat', self.enterWhiteListAvatarChat,
+                        self.exitWhiteListAvatarChat),
+            State.State('whiteListPlayerChat', self.enterWhiteListPlayerChat,
+                        self.exitWhiteListPlayerChat),
+            State.State('trueFriendTeaserPanel',
+                        self.enterTrueFriendTeaserPanel,
+                        self.exitTrueFriendTeaserPanel)
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def delete(self):
@@ -159,9 +186,8 @@ class ChatManager(DirectObject.DirectObject):
             self.normalButton.hide()
 
     def isObscured(self):
-        return (
-            self._ChatManager__normalObscured,
-            self._ChatManager__scObscured)
+        return (self._ChatManager__normalObscured,
+                self._ChatManager__scObscured)
 
     def stop(self):
         self.fsm.request('off')
@@ -242,8 +268,8 @@ class ChatManager(DirectObject.DirectObject):
             if self.wantBackgroundFocus:
                 self.chatInputNormal.chatEntry['backgroundFocus'] = 1
 
-            self.acceptOnce('enterNormalChat', self.fsm.request, [
-                'normalChat'])
+            self.acceptOnce('enterNormalChat', self.fsm.request,
+                            ['normalChat'])
 
     def checkObscurred(self):
         if not self._ChatManager__scObscured:
@@ -260,10 +286,7 @@ class ChatManager(DirectObject.DirectObject):
             self.chatInputNormal.chatEntry['backgroundFocus'] = 0
 
     def whisperTo(self, avatarName, avatarId, playerId=None):
-        self.fsm.request('whisper', [
-            avatarName,
-            avatarId,
-            playerId])
+        self.fsm.request('whisper', [avatarName, avatarId, playerId])
 
     def noWhisper(self):
         self.fsm.request('mainMenu')
@@ -302,14 +325,8 @@ class ChatManager(DirectObject.DirectObject):
         pass
 
     def enterWhisper(self, avatarName, avatarId, playerId=None):
-        self.whisperScButton['extraArgs'] = [
-            avatarName,
-            avatarId,
-            playerId]
-        self.whisperButton['extraArgs'] = [
-            avatarName,
-            avatarId,
-            playerId]
+        self.whisperScButton['extraArgs'] = [avatarName, avatarId, playerId]
+        self.whisperButton['extraArgs'] = [avatarName, avatarId, playerId]
         playerName = None
         chatToToon = 1
         online = 0
@@ -347,7 +364,8 @@ class ChatManager(DirectObject.DirectObject):
         else:
             chatName = playerName
         (normalButtonObscured, scButtonObscured) = self.isObscured()
-        if (avatarUnderstandable or playerUnderstandable) and online and not normalButtonObscured:
+        if (avatarUnderstandable or
+                playerUnderstandable) and online and not normalButtonObscured:
             self.whisperButton['state'] = 'normal'
             self.enablewhisperButton()
         else:
@@ -356,13 +374,11 @@ class ChatManager(DirectObject.DirectObject):
         if online:
             self.whisperScButton['state'] = 'normal'
             self.changeFrameText(
-                OTPLocalizer.ChatManagerWhisperToName %
-                chatName)
+                OTPLocalizer.ChatManagerWhisperToName % chatName)
         else:
             self.whisperScButton['state'] = 'inactive'
             self.changeFrameText(
-                OTPLocalizer.ChatManagerWhisperOffline %
-                chatName)
+                OTPLocalizer.ChatManagerWhisperOffline % chatName)
         self.whisperFrame.show()
         self.refreshWhisperFrame()
         if avatarUnderstandable or playerUnderstandable:
@@ -370,20 +386,14 @@ class ChatManager(DirectObject.DirectObject):
                 if self.wantBackgroundFocus:
                     self.chatInputNormal.chatEntry['backgroundFocus'] = 1
 
-                self.acceptOnce('enterNormalChat', self.fsm.request, [
-                    'whisperChatPlayer',
-                    [
-                        avatarName,
-                        playerId]])
+                self.acceptOnce('enterNormalChat', self.fsm.request,
+                                ['whisperChatPlayer', [avatarName, playerId]])
             elif online and chatToToon:
                 if self.wantBackgroundFocus:
                     self.chatInputNormal.chatEntry['backgroundFocus'] = 1
 
-                self.acceptOnce('enterNormalChat', self.fsm.request, [
-                    'whisperChat',
-                    [
-                        avatarName,
-                        avatarId]])
+                self.acceptOnce('enterNormalChat', self.fsm.request,
+                                ['whisperChat', [avatarName, avatarId]])
 
         if base.cr.config.GetBool('force-typed-whisper-enabled', 0):
             self.whisperButton['state'] = 'normal'

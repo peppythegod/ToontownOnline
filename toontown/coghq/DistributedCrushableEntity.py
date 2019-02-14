@@ -4,10 +4,8 @@ from pandac.PandaModules import NodePath
 from otp.level import BasicEntities
 
 
-class DistributedCrushableEntity(
-        DistributedEntity.DistributedEntity,
-        NodePath,
-        BasicEntities.NodePathAttribs):
+class DistributedCrushableEntity(DistributedEntity.DistributedEntity, NodePath,
+                                 BasicEntities.NodePathAttribs):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedCrushableEntity')
 

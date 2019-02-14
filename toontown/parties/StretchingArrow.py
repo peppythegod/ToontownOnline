@@ -63,25 +63,19 @@ class StretchingArrow(DirectFrame):
             result = StretchingArrow.arrowComplete
             self.ratioDrawn = -downTime
 
-        if cmp(
-                oldRatio,
-                0) != cmp(
-                self.ratioDrawn,
-                0) and result != StretchingArrow.arrowComplete:
+        if cmp(oldRatio,
+               0) != cmp(self.ratioDrawn,
+                         0) and result != StretchingArrow.arrowComplete:
             result = StretchingArrow.arrowBegin
 
         if not animate:
             self.ratioDrawn = 1.0
 
-        normal = Point3(
-            actualDifference.getX(),
-            actualDifference.getY(),
-            actualDifference.getZ())
+        normal = Point3(actualDifference.getX(), actualDifference.getY(),
+                        actualDifference.getZ())
         normal.normalize()
         rotation = math.degrees(
-            math.atan2(
-                actualDifference.getY(),
-                actualDifference.getX()))
+            math.atan2(actualDifference.getY(), actualDifference.getX()))
         endPoint = toPoint + normal * self.endOffset
         startPoint = fromPoint - normal * self.startOffset
         newlength = (endPoint - startPoint).length() / arrowlength
@@ -99,12 +93,8 @@ class StretchingArrow(DirectFrame):
         self.body.setPos(startPoint)
         self.body.setH(rotation)
         self.head.setH(rotation - 90)
-        self.body.setScale(
-            newlength -
-            0.012999999999999999 *
-            newScale,
-            newScale,
-            newScale)
+        self.body.setScale(newlength - 0.012999999999999999 * newScale,
+                           newScale, newScale)
         vec = startPoint - endPoint
         vec *= ratio
         self.head.setPos(startPoint - vec)

@@ -12,13 +12,7 @@ class DistributedLawbotCannonAI(DistributedObjectAI.DistributedObjectAI):
     def __init__(self, air, lawbotBoss, index, x, y, z, h, p, r):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.index = index
-        self.posHpr = [
-            x,
-            y,
-            z,
-            h,
-            p,
-            r]
+        self.posHpr = [x, y, z, h, p, r]
         self.boss = lawbotBoss
         self.bossId = lawbotBoss.doId
         self.avId = 0
@@ -58,27 +52,21 @@ class DistributedLawbotCannonAI(DistributedObjectAI.DistributedObjectAI):
             self.avId = avId
             self.boss.toonEnteredCannon(self.avId, self.index)
             cannonBallsLeft = self.boss.getCannonBallsLeft(avId)
-            self.setMovie(
-                CannonGlobals.CANNON_MOVIE_LOAD,
-                self.avId,
-                cannonBallsLeft)
+            self.setMovie(CannonGlobals.CANNON_MOVIE_LOAD, self.avId,
+                          cannonBallsLeft)
             self.acceptOnce(
                 self.air.getAvatarExitEvent(avId),
                 self._DistributedLawbotCannonAI__handleUnexpectedExit,
                 extraArgs=[avId])
         else:
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
+                'suspicious', avId,
                 'DistributedCannonAI.requestEnter cannon already occupied')
             self.notify.warning('requestEnter() - cannon already occupied')
 
     def setMovie(self, mode, avId, extraInfo):
         self.avId = avId
-        self.sendUpdate('setMovie', [
-            mode,
-            avId,
-            extraInfo])
+        self.sendUpdate('setMovie', [mode, avId, extraInfo])
 
     def _DistributedLawbotCannonAI__handleUnexpectedExit(self, avId):
         self.notify.warning('avatar:' + str(avId) + ' has exited unexpectedly')
@@ -94,19 +82,15 @@ class DistributedLawbotCannonAI(DistributedObjectAI.DistributedObjectAI):
             self._DistributedLawbotCannonAI__doExit()
         else:
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
+                'suspicious', avId,
                 'DistributedCannonAI.requestLeave cannon not occupied')
             self.notify.warning('requestLeave() - cannon not occupied')
 
     def setCannonPosition(self, zRot, angle):
         avId = self.air.getAvatarIdFromSender()
-        self.notify.debug('setCannonPosition: ' + str(avId) +
-                          ': zRot=' + str(zRot) + ', angle=' + str(angle))
-        self.sendUpdate('updateCannonPosition', [
-            avId,
-            zRot,
-            angle])
+        self.notify.debug('setCannonPosition: ' + str(avId) + ': zRot=' +
+                          str(zRot) + ', angle=' + str(angle))
+        self.sendUpdate('updateCannonPosition', [avId, zRot, angle])
 
     def setLanded(self):
         self.ignore(self.air.getAvatarExitEvent(self.avId))
@@ -117,25 +101,21 @@ class DistributedLawbotCannonAI(DistributedObjectAI.DistributedObjectAI):
 
     def setCannonLit(self, zRot, angle):
         if not self.boss.state == 'BattleTwo':
-            self.notify.debug(
-                'ignoring setCannonList since boss in state %s' %
-                self.boss.state)
+            self.notify.debug('ignoring setCannonList since boss in state %s' %
+                              self.boss.state)
             return None
 
         avId = self.air.getAvatarIdFromSender()
         if self.boss.getCannonBallsLeft(avId) == 0:
             self.notify.debug(
-                'ignoring setCannonList since no balls left for %s' %
-                avId)
+                'ignoring setCannonList since no balls left for %s' % avId)
             return None
 
-        self.notify.debug('setCannonLit: ' + str(avId) +
-                          ': zRot=' + str(zRot) + ', angle=' + str(angle))
+        self.notify.debug('setCannonLit: ' + str(avId) + ': zRot=' +
+                          str(zRot) + ', angle=' + str(angle))
         fireTime = CannonGameGlobals.FUSE_TIME
         self.sendUpdate('setCannonWillFire', [
-            avId,
-            fireTime,
-            zRot,
-            angle,
-            globalClockDelta.getRealNetworkTime()])
+            avId, fireTime, zRot, angle,
+            globalClockDelta.getRealNetworkTime()
+        ])
         self.boss.decrementCannonBallsLeft(avId)

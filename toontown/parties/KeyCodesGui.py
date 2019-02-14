@@ -5,22 +5,17 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.task import Task
 from toontown.toonbase import ToontownGlobals
 from toontown.parties.KeyCodes import KeyCodes, KEYCODE_TIMEOUT_SECONDS
-KEY_TO_INDEX = {
-    'u': 0,
-    'r': 1,
-    'd': 2,
-    'l': 3}
+KEY_TO_INDEX = {'u': 0, 'r': 1, 'd': 2, 'l': 3}
 
 
 class KeyCodesGui(DirectObject):
     notify = directNotify.newCategory('KeyCodesGui')
     TIMEOUT_TASK = 'KeyCodeGui_TIMEOUT_TASK'
 
-    def __init__(
-            self,
-            keyCodes,
-            yOffset=0.55000000000000004,
-            keyToIndex=KEY_TO_INDEX):
+    def __init__(self,
+                 keyCodes,
+                 yOffset=0.55000000000000004,
+                 keyToIndex=KEY_TO_INDEX):
         self._keyCodes = keyCodes
         self._keyToIndex = keyToIndex
         self._arrowWidth = 0.17999999999999999
@@ -45,17 +40,11 @@ class KeyCodesGui(DirectObject):
         self._danceMoveLabel = OnscreenText(
             parent=aspect2d,
             text='',
-            pos=(
-                0,
-                self._yOffset),
+            pos=(0, self._yOffset),
             scale=0.14999999999999999,
             align=TextNode.ACenter,
             font=ToontownGlobals.getSignFont(),
-            fg=Vec4(
-                1,
-                1,
-                1,
-                1),
+            fg=Vec4(1, 1, 1, 1),
             mayChange=True)
         self._danceMoveLabel.hide()
         self.enable()
@@ -114,8 +103,7 @@ class KeyCodesGui(DirectObject):
     def _KeyCodesGui__startTimeout(self):
         self._KeyCodesGui__stopTimeout()
         self.timeoutTask = taskMgr.doMethodLater(
-            KEYCODE_TIMEOUT_SECONDS,
-            self._KeyCodesGui__handleTimeoutTask,
+            KEYCODE_TIMEOUT_SECONDS, self._KeyCodesGui__handleTimeoutTask,
             KeyCodesGui.TIMEOUT_TASK)
 
     def _KeyCodesGui__stopTimeout(self):

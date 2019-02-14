@@ -18,31 +18,52 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
         self.okayToSubmit = True
         self.receiverId = None
         DirectFrame.__init__(
-            self, parent=aspect2dp, pos=(
-                0, 0, 0.29999999999999999), relief=None, image=DGG.getDefaultDialogGeom(), image_scale=(
-                1.6000000000000001, 1, 1.3999999999999999), image_pos=(
-                0, 0, -0.050000000000000003), image_color=OTPGlobals.GlobalDialogColor, borderWidth=(
-                    0.01, 0.01))
+            self,
+            parent=aspect2dp,
+            pos=(0, 0, 0.29999999999999999),
+            relief=None,
+            image=DGG.getDefaultDialogGeom(),
+            image_scale=(1.6000000000000001, 1, 1.3999999999999999),
+            image_pos=(0, 0, -0.050000000000000003),
+            image_color=OTPGlobals.GlobalDialogColor,
+            borderWidth=(0.01, 0.01))
         optiondefs = {
-            'parent': self,
-            'relief': DGG.SUNKEN,
-            'scale': 0.050000000000000003,
+            'parent':
+            self,
+            'relief':
+            DGG.SUNKEN,
+            'scale':
+            0.050000000000000003,
             'frameSize': (-0.20000000000000001, 25.300000000000001, -0.5, 1.2),
             'borderWidth': (0.10000000000000001, 0.10000000000000001),
-            'frameColor': (0.90000000000000002, 0.90000000000000002, 0.84999999999999998, 0.80000000000000004),
+            'frameColor': (0.90000000000000002, 0.90000000000000002,
+                           0.84999999999999998, 0.80000000000000004),
             'pos': (-0.20000000000000001, 0, 0.11),
-            'entryFont': OTPGlobals.getInterfaceFont(),
-            'width': 8.5999999999999996,
-            'numLines': 3,
-            'cursorKeys': 1,
-            'backgroundFocus': 0,
-            'suppressKeys': 1,
-            'suppressMouse': 1,
-            'command': self.sendChat,
-            'failedCommand': self.sendFailed,
-            'focus': 0,
-            'text': '',
-            'sortOrder': DGG.FOREGROUND_SORT_INDEX}
+            'entryFont':
+            OTPGlobals.getInterfaceFont(),
+            'width':
+            8.5999999999999996,
+            'numLines':
+            3,
+            'cursorKeys':
+            1,
+            'backgroundFocus':
+            0,
+            'suppressKeys':
+            1,
+            'suppressMouse':
+            1,
+            'command':
+            self.sendChat,
+            'failedCommand':
+            self.sendFailed,
+            'focus':
+            0,
+            'text':
+            '',
+            'sortOrder':
+            DGG.FOREGROUND_SORT_INDEX
+        }
         entryOptions['parent'] = self
         self.chatEntry = DirectEntry(**None)
         self.whisperId = None
@@ -51,10 +72,9 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
         if __dev__:
             wantHistory = 1
 
-        self.wantHistory = base.config.GetBool(
-            'want-chat-history', wantHistory)
-        self.history = [
-            '']
+        self.wantHistory = base.config.GetBool('want-chat-history',
+                                               wantHistory)
+        self.history = ['']
         self.historySize = base.config.GetInt('chat-history-size', 10)
         self.historyIndex = 0
         self.promoteWhiteList = 0
@@ -190,9 +210,7 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
         return self.active
 
     def sendChat(self, text, overflow=False):
-        if not len(text) > 0 and text[0] in [
-            '~',
-                '>']:
+        if not len(text) > 0 and text[0] in ['~', '>']:
             if self.prefilter:
                 words = text.split(' ')
                 newwords = []
@@ -266,17 +284,15 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
             self.sendChat(text)
             return None
 
-        self.chatEntry['frameColor'] = (
-            0.90000000000000002, 0.0, 0.0, 0.80000000000000004)
+        self.chatEntry['frameColor'] = (0.90000000000000002, 0.0, 0.0,
+                                        0.80000000000000004)
 
         def resetFrameColor(task=None):
             self.chatEntry['frameColor'] = self.origFrameColor
             return Task.done
 
-        taskMgr.doMethodLater(
-            0.10000000000000001,
-            resetFrameColor,
-            'resetFrameColor')
+        taskMgr.doMethodLater(0.10000000000000001, resetFrameColor,
+                              'resetFrameColor')
         self.applyFilter(keyArgs=None, strict=True)
         self.okayToSubmit = True
         self.chatEntry.guiItem.setAcceptEnabled(True)
@@ -286,8 +302,7 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
         self.sendChat(self.chatEntry.get(plain=True), overflow=True)
 
     def addToHistory(self, text):
-        self.history = [
-            text] + self.history[:self.historySize - 1]
+        self.history = [text] + self.history[:self.historySize - 1]
         self.historyIndex = 0
 
     def getPrevHistory(self):
@@ -306,7 +321,8 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def _ChatInputWhiteListFrame__execMessage(self, message):
         if not ChatInputTyped.ExecNamespace:
             ChatInputTyped.ExecNamespace = {}
-            exec 'from pandac.PandaModules import *' in globals(), self.ExecNamespace
+            exec 'from pandac.PandaModules import *' in globals(
+            ), self.ExecNamespace
             self.importExecNamespace()
 
         try:
@@ -324,6 +340,15 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
 
                 exec message in globals(), ChatInputTyped.ExecNamespace
                 return 'ok'
+            except:
+                exception = sys.exc_info()[0]
+                extraInfo = sys.exc_info()[1]
+                if extraInfo:
+                    return str(extraInfo)
+                else:
+                    return str(exception)
+
+        except:
             exception = sys.exc_info()[0]
             extraInfo = sys.exc_info()[1]
             if extraInfo:
@@ -331,18 +356,9 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
             else:
                 return str(exception)
 
-        exception = sys.exc_info()[0]
-        extraInfo = sys.exc_info()[1]
-        if extraInfo:
-            return str(extraInfo)
-        else:
-            return str(exception)
-
     def applyFilter(self, keyArgs, strict=False):
         text = self.chatEntry.get(plain=True)
-        if len(text) > 0 and text[0] in [
-            '~',
-                '>']:
+        if len(text) > 0 and text[0] in ['~', '>']:
             self.okayToSubmit = True
         else:
             words = text.split(' ')

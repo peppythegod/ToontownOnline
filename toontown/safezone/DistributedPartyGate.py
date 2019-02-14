@@ -36,9 +36,7 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
             else:
                 si = '%d' % i
             self.clockSounds.append(
-                base.loadSfx(
-                    'phase_4/audio/sfx/clock%s.mp3' %
-                    si))
+                base.loadSfx('phase_4/audio/sfx/clock%s.mp3' % si))
 
     def generate(self):
         DistributedObject.DistributedObject.generate(self)
@@ -58,13 +56,14 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
         self._DistributedPartyGate__enableCollisions()
         self.toontownTimeGui = ServerTimeGui(
             partyGate, hourCallback=self.hourChange)
-        self.toontownTimeGui.setPos(partyGate.find(
-            '**/clockText_locator').getPos() + Point3(0.0, 0.0, -0.20000000000000001))
+        self.toontownTimeGui.setPos(
+            partyGate.find('**/clockText_locator').getPos() +
+            Point3(0.0, 0.0, -0.20000000000000001))
         self.toontownTimeGui.setHpr(
             partyGate.find('**/clockText_locator').getHpr())
         self.toontownTimeGui.setScale(12.0, 1.0, 26.0)
-        self.toontownTimeGui.amLabel.setPos(
-            -0.035000000000000003, 0, -0.032000000000000001)
+        self.toontownTimeGui.amLabel.setPos(-0.035000000000000003, 0,
+                                            -0.032000000000000001)
         self.toontownTimeGui.amLabel.setScale(0.5)
         self.toontownTimeGui.updateTime()
         self.setupSignText()
@@ -82,38 +81,26 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
         wordWrap = 8
         leftText = DirectLabel.DirectLabel(
             parent=leftSign,
-            pos=(
-                0,
-                0.0,
-                0.0),
+            pos=(0, 0.0, 0.0),
             relief=None,
             text=TTLocalizer.PartyGateLeftSign,
             text_align=TextNode.ACenter,
             text_font=gateFont,
             text_wordwrap=wordWrap,
-            text_fg=Vec4(
-                0.69999999999999996,
-                0.29999999999999999,
-                0.29999999999999999,
-                1.0),
+            text_fg=Vec4(0.69999999999999996, 0.29999999999999999,
+                         0.29999999999999999, 1.0),
             scale=signScale)
         rightSign = partyGate.find('**/signTextR_locatorFront')
         rightText = DirectLabel.DirectLabel(
             parent=rightSign,
-            pos=(
-                0,
-                0.0,
-                0.0),
+            pos=(0, 0.0, 0.0),
             relief=None,
             text=TTLocalizer.PartyGateRightSign,
             text_align=TextNode.ACenter,
             text_font=gateFont,
             text_wordwrap=wordWrap,
-            text_fg=Vec4(
-                0.69999999999999996,
-                0.29999999999999999,
-                0.29999999999999999,
-                1.0),
+            text_fg=Vec4(0.69999999999999996, 0.29999999999999999,
+                         0.29999999999999999, 1.0),
             scale=signScale)
 
     def announceGenerate(self):
@@ -122,10 +109,14 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
             playground = ToontownGlobals.dnaMap[self.zoneId]
         else:
             playground = ToontownGlobals.dnaMap[2000]
-        self.toontownTimeGui.hourLabel['text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
-        self.toontownTimeGui.colonLabel['text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
-        self.toontownTimeGui.minutesLabel['text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
-        self.toontownTimeGui.amLabel['text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
+        self.toontownTimeGui.hourLabel[
+            'text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
+        self.toontownTimeGui.colonLabel[
+            'text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
+        self.toontownTimeGui.minutesLabel[
+            'text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
+        self.toontownTimeGui.amLabel[
+            'text_fg'] = PartyGlobals.PlayGroundToPartyClockColors[playground]
 
     def disable(self):
         DistributedObject.DistributedObject.disable(self)
@@ -176,10 +167,8 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
             self.freeAvatar()
             return None
 
-        self.sendUpdate('partyChoiceRequest', [
-            base.localAvatar.doId,
-            doneStatus[0],
-            doneStatus[1]])
+        self.sendUpdate('partyChoiceRequest',
+                        [base.localAvatar.doId, doneStatus[0], doneStatus[1]])
 
     def partyRequestDenied(self, reason):
         DistributedPartyGate.notify.debug(
@@ -198,8 +187,8 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
                 'Public Party closed before toon could get to it.')
             return None
 
-        (shardId, zoneId, numberOfGuests, hostName,
-         activityIds, lane) = partyInfoTuple
+        (shardId, zoneId, numberOfGuests, hostName, activityIds,
+         lane) = partyInfoTuple
         if base.localAvatar.defaultShard == shardId:
             shardId = None
 
@@ -210,7 +199,8 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
             'hoodId': ToontownGlobals.PartyHood,
             'zoneId': zoneId,
             'shardId': shardId,
-            'avId': -1})
+            'avId': -1
+        })
 
     def freeAvatar(self):
         base.localAvatar.posCamera(0, 0)
@@ -233,28 +223,18 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
             seq2.append(
                 self.clockFlat.scaleInterval(
                     timeForEachDeformation / 2.0,
-                    Vec3(
-                        0.90000000000000002,
-                        1.0,
-                        1.2),
+                    Vec3(0.90000000000000002, 1.0, 1.2),
                     blendType='easeInOut'))
             seq2.append(
                 self.clockFlat.scaleInterval(
                     timeForEachDeformation / 2.0,
-                    Vec3(
-                        1.2,
-                        1.0,
-                        0.90000000000000002),
+                    Vec3(1.2, 1.0, 0.90000000000000002),
                     blendType='easeInOut'))
 
         seq2.append(
             self.clockFlat.scaleInterval(
-                timeForEachDeformation /
-                2.0,
-                Vec3(
-                    1.0,
-                    1.0,
-                    1.0),
+                timeForEachDeformation / 2.0,
+                Vec3(1.0, 1.0, 1.0),
                 blendType='easeInOut'))
         self.hourSoundInterval.append(seq1)
         self.hourSoundInterval.append(seq2)
@@ -263,16 +243,13 @@ class DistributedPartyGate(DistributedObject.DistributedObject):
     def handleEnterGateSphere(self, collEntry):
         self.notify.debug('Entering steps Sphere....')
         base.cr.playGame.getPlace().fsm.request('stopped')
-        self.sendUpdate('getPartyList', [
-            base.localAvatar.doId])
+        self.sendUpdate('getPartyList', [base.localAvatar.doId])
 
     def listAllPublicParties(self, publicPartyInfo):
         self.notify.debug(
-            'listAllPublicParties : publicPartyInfo = %s' %
-            publicPartyInfo)
-        self.acceptOnce(
-            self.publicPartyChooseGuiDoneEvent,
-            self._DistributedPartyGate__handleAskDone)
+            'listAllPublicParties : publicPartyInfo = %s' % publicPartyInfo)
+        self.acceptOnce(self.publicPartyChooseGuiDoneEvent,
+                        self._DistributedPartyGate__handleAskDone)
         self.publicPartyGui.refresh(publicPartyInfo)
         self.publicPartyGui.unstash()
 

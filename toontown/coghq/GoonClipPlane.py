@@ -4,7 +4,6 @@ from otp.level import BasicEntities
 
 
 class GoonClipPlane(BasicEntities.NodePathEntity):
-
     def __init__(self, level, entId):
         BasicEntities.NodePathEntity.__init__(self, level, entId)
         self.zoneNum = self.getZoneEntity().getZoneNum()
@@ -23,8 +22,7 @@ class GoonClipPlane(BasicEntities.NodePathEntity):
                 clipList.append(self.entId)
 
         else:
-            self.level.goonClipPlanes[self.zoneNum] = [
-                self.entId]
+            self.level.goonClipPlanes[self.zoneNum] = [self.entId]
 
     def unregisterWithFactory(self):
         clipList = self.level.goonClipPlanes.get(self.zoneNum)

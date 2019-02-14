@@ -6,11 +6,13 @@ import random
 
 
 class Firework(NodePath):
-
-    def __init__(
-        self, typeId, velocity=Vec3(
-            0, 0, 500), scale=1.0, color1=Vec4(
-            1, 1, 1, 1), color2=None, burstDelay=1.25):
+    def __init__(self,
+                 typeId,
+                 velocity=Vec3(0, 0, 500),
+                 scale=1.0,
+                 color1=Vec4(1, 1, 1, 1),
+                 color2=None,
+                 burstDelay=1.25):
         NodePath.__init__(self, 'Firework')
         self.typeId = typeId
         self.velocity = velocity
@@ -35,134 +37,91 @@ class Firework(NodePath):
             self.fireworkIval = Sequence()
             if self.typeId == FireworkType.BasicPeony:
                 firework = FireworkEffect(
-                    FireworkBurstType.PeonyShell,
-                    FireworkTrailType.Default,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkBurstType.PeonyShell, FireworkTrailType.Default,
+                    self.velocity, self.scale, self.primaryColor,
+                    self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.AdvancedPeony:
                 firework = FireworkEffect(
                     FireworkBurstType.PeonyParticleShell,
-                    FireworkTrailType.Default,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkTrailType.Default, self.velocity, self.scale,
+                    self.primaryColor, self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.DiademPeony:
                 firework = FireworkEffect(
                     FireworkBurstType.PeonyDiademShell,
-                    FireworkTrailType.Default,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkTrailType.Default, self.velocity, self.scale,
+                    self.primaryColor, self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.Chrysanthemum:
                 firework = FireworkEffect(
                     FireworkBurstType.ChrysanthemumShell,
-                    FireworkTrailType.Glow,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkTrailType.Glow, self.velocity, self.scale,
+                    self.primaryColor, self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.DiademChrysanthemum:
                 firework = FireworkEffect(
                     FireworkBurstType.ChrysanthemumDiademShell,
-                    FireworkTrailType.Glow,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkTrailType.Glow, self.velocity, self.scale,
+                    self.primaryColor, self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.Ring:
                 firework = FireworkEffect(
-                    FireworkBurstType.RingShell,
-                    FireworkTrailType.Default,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkBurstType.RingShell, FireworkTrailType.Default,
+                    self.velocity, self.scale, self.primaryColor,
+                    self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.Saturn:
                 firework = FireworkEffect(
                     FireworkBurstType.SaturnShell,
-                    FireworkTrailType.GlowSparkle,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkTrailType.GlowSparkle, self.velocity, self.scale,
+                    self.primaryColor, self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.Bees:
                 firework = FireworkEffect(
-                    FireworkBurstType.BeeShell,
-                    FireworkTrailType.Polygonal,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkBurstType.BeeShell, FireworkTrailType.Polygonal,
+                    self.velocity, self.scale, self.primaryColor,
+                    self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.TrailBurst:
                 firework = FireworkEffect(
-                    FireworkBurstType.TrailExplosion,
-                    FireworkTrailType.Glow,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                    FireworkBurstType.TrailExplosion, FireworkTrailType.Glow,
+                    self.velocity, self.scale, self.primaryColor,
+                    self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.GlowFlare:
                 firework = FireworkEffect(
-                    None,
-                    FireworkTrailType.LongGlowSparkle,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
+                    None, FireworkTrailType.LongGlowSparkle, self.velocity,
+                    self.scale, self.primaryColor, self.secondaryColor,
                     self.burstDelay)
                 firework.reparentTo(self)
                 firework.gravityMult = 1.0
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())
             elif self.typeId == FireworkType.PalmTree:
-                firework = FireworkEffect(
-                    FireworkBurstType.TrailExplosion,
-                    FireworkTrailType.LongGlowSparkle,
-                    self.velocity,
-                    self.scale,
-                    self.primaryColor,
-                    self.secondaryColor,
-                    self.burstDelay)
+                firework = FireworkEffect(FireworkBurstType.TrailExplosion,
+                                          FireworkTrailType.LongGlowSparkle,
+                                          self.velocity, self.scale,
+                                          self.primaryColor,
+                                          self.secondaryColor, self.burstDelay)
                 firework.reparentTo(self)
                 firework.gravityMult = 1.0
                 self.fireworkEffects.append(firework)
@@ -171,10 +130,7 @@ class Firework(NodePath):
                 head = FireworkEffect(
                     FireworkBurstType.PeonyShell,
                     FireworkTrailType.Glow,
-                    velocity=Vec3(
-                        0,
-                        0,
-                        80 * self.scale),
+                    velocity=Vec3(0, 0, 80 * self.scale),
                     scale=self.scale / 1.2,
                     primaryColor=self.primaryColor,
                     secondaryColor=self.secondaryColor,
@@ -182,10 +138,7 @@ class Firework(NodePath):
                 leftEar = FireworkEffect(
                     FireworkBurstType.PeonyShell,
                     FireworkTrailType.Glow,
-                    velocity=Vec3(
-                        -25 * self.scale,
-                        0,
-                        115 * self.scale),
+                    velocity=Vec3(-25 * self.scale, 0, 115 * self.scale),
                     scale=self.scale / 1.6000000000000001,
                     primaryColor=self.primaryColor,
                     secondaryColor=self.secondaryColor,
@@ -193,10 +146,7 @@ class Firework(NodePath):
                 rightEar = FireworkEffect(
                     FireworkBurstType.PeonyShell,
                     FireworkTrailType.Glow,
-                    velocity=Vec3(
-                        25 * self.scale,
-                        0,
-                        115 * self.scale),
+                    velocity=Vec3(25 * self.scale, 0, 115 * self.scale),
                     scale=self.scale / 1.6000000000000001,
                     primaryColor=self.primaryColor,
                     secondaryColor=self.secondaryColor,
@@ -205,9 +155,8 @@ class Firework(NodePath):
                 leftEar.reparentTo(self)
                 rightEar.reparentTo(self)
                 self.fireworkEffects = self.fireworkEffects + [
-                    head,
-                    leftEar,
-                    rightEar]
+                    head, leftEar, rightEar
+                ]
                 fireworkParallel = Parallel()
                 fireworkParallel.append(head.getFireworkMainIval())
                 fireworkParallel.append(leftEar.getFireworkMainIval())
@@ -217,10 +166,7 @@ class Firework(NodePath):
                 skull = FireworkEffect(
                     FireworkBurstType.SkullBlast,
                     FireworkTrailType.GlowSparkle,
-                    velocity=Vec3(
-                        0,
-                        0,
-                        400 * self.scale),
+                    velocity=Vec3(0, 0, 400 * self.scale),
                     scale=self.scale,
                     primaryColor=self.primaryColor,
                     secondaryColor=self.secondaryColor,
@@ -228,23 +174,19 @@ class Firework(NodePath):
                 leftBone = FireworkEffect(
                     None,
                     FireworkTrailType.LongGlowSparkle,
-                    velocity=Vec3(
-                        220 * self.scale,
-                        0,
-                        250 * self.scale),
+                    velocity=Vec3(220 * self.scale, 0, 250 * self.scale),
                     scale=self.scale * 1.25,
                     primaryColor=self.primaryColor,
                     secondaryColor=self.secondaryColor,
                     burstDelay=2.25)
-                rightBone = FireworkEffect(None,
-                                           FireworkTrailType.LongGlowSparkle,
-                                           velocity=Vec3(-220 * self.scale,
-                                                         0,
-                                                         250 * self.scale),
-                                           scale=self.scale * 1.25,
-                                           primaryColor=self.primaryColor,
-                                           secondaryColor=self.secondaryColor,
-                                           burstDelay=2.25)
+                rightBone = FireworkEffect(
+                    None,
+                    FireworkTrailType.LongGlowSparkle,
+                    velocity=Vec3(-220 * self.scale, 0, 250 * self.scale),
+                    scale=self.scale * 1.25,
+                    primaryColor=self.primaryColor,
+                    secondaryColor=self.secondaryColor,
+                    burstDelay=2.25)
                 skull.reparentTo(self)
                 leftBone.reparentTo(self)
                 leftBone.setPos(-225 * self.scale, 0, 0)
@@ -253,9 +195,8 @@ class Firework(NodePath):
                 rightBone.setPos(225 * self.scale, 0, 0)
                 rightBone.gravityMult = 3.5
                 self.fireworkEffects = self.fireworkEffects + [
-                    skull,
-                    leftBone,
-                    rightBone]
+                    skull, leftBone, rightBone
+                ]
                 fireworkParallel = Parallel()
                 fireworkParallel.append(skull.getFireworkMainIval())
                 fireworkParallel.append(leftBone.getFireworkMainIval())
@@ -263,60 +204,38 @@ class Firework(NodePath):
                 self.fireworkIval.append(fireworkParallel)
             elif self.typeId == FireworkType.AmericanFlag:
                 fireworkParallel = Parallel()
-                colors = [
-                    Vec4(1, 0, 0, 1),
-                    Vec4(1, 1, 1, 1)]
+                colors = [Vec4(1, 0, 0, 1), Vec4(1, 1, 1, 1)]
                 for i in range(4):
-                    firework = FireworkEffect(None,
-                                              FireworkTrailType.LongGlowSparkle,
-                                              velocity=Vec3(-30 * self.scale,
-                                                            0,
-                                                            150 * self.scale - 20 * i),
-                                              scale=self.scale * 3.0,
-                                              primaryColor=colors[i % 2],
-                                              burstDelay=2.5)
+                    firework = FireworkEffect(
+                        None,
+                        FireworkTrailType.LongGlowSparkle,
+                        velocity=Vec3(-30 * self.scale, 0,
+                                      150 * self.scale - 20 * i),
+                        scale=self.scale * 3.0,
+                        primaryColor=colors[i % 2],
+                        burstDelay=2.5)
                     firework.reparentTo(self)
                     firework.setX(-20.0 * self.scale + 10.0 * i * self.scale)
                     self.fireworkEffects.append(firework)
                     fireworkParallel.append(
                         Sequence(
-                            Wait(
-                                0.25 * i),
-                            firework.getFireworkMainIval()))
+                            Wait(0.25 * i), firework.getFireworkMainIval()))
 
                 firework = FireworkEffect(
                     FireworkBurstType.Sparkles,
                     FireworkTrailType.Default,
-                    velocity=Vec3(
-                        20,
-                        0,
-                        90),
-                    scale=self.scale *
-                    1.5)
+                    velocity=Vec3(20, 0, 90),
+                    scale=self.scale * 1.5)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 fireworkParallel.append(
-                    Sequence(
-                        Wait(1.5),
-                        firework.getFireworkMainIval()))
+                    Sequence(Wait(1.5), firework.getFireworkMainIval()))
                 self.fireworkIval.append(fireworkParallel)
             elif self.typeId == FireworkType.IceCream:
                 firework = FireworkEffect(
-                    FireworkBurstType.IceCream,
-                    FireworkTrailType.Default,
-                    self.velocity,
-                    self.scale,
-                    Vec4(
-                        1,
-                        1,
-                        1,
-                        1),
-                    Vec4(
-                        1,
-                        1,
-                        1,
-                        1),
-                    self.burstDelay)
+                    FireworkBurstType.IceCream, FireworkTrailType.Default,
+                    self.velocity, self.scale, Vec4(1, 1, 1, 1),
+                    Vec4(1, 1, 1, 1), self.burstDelay)
                 firework.reparentTo(self)
                 self.fireworkEffects.append(firework)
                 self.fireworkIval.append(firework.getFireworkMainIval())

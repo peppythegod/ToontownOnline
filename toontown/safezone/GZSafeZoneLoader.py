@@ -15,7 +15,6 @@ if __debug__:
 
 
 class GZSafeZoneLoader(SafeZoneLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
         SafeZoneLoader.__init__(self, hood, parentFSM, doneEvent)
         self.musicFile = 'phase_6/audio/bgm/GZ_SZ.mid'
@@ -24,31 +23,26 @@ class GZSafeZoneLoader(SafeZoneLoader):
         self.safeZoneStorageDNAFile = 'phase_6/dna/storage_GZ_sz.dna'
         del self.fsm
         self.fsm = ClassicFSM.ClassicFSM('SafeZoneLoader', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'quietZone',
-                'playground',
-                'toonInterior']),
-            State.State('playground', self.enterPlayground, self.exitPlayground, [
-                'quietZone',
-                'golfcourse']),
-            State.State('toonInterior', self.enterToonInterior, self.exitToonInterior, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'playground',
-                'toonInterior',
-                'golfcourse']),
-            State.State('golfcourse', self.enterGolfCourse, self.exitGolfCourse, [
-                'quietZone',
-                'playground']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+            State.State('start', self.enterStart, self.exitStart,
+                        ['quietZone', 'playground', 'toonInterior']),
+            State.State('playground', self.enterPlayground,
+                        self.exitPlayground, ['quietZone', 'golfcourse']),
+            State.State('toonInterior', self.enterToonInterior,
+                        self.exitToonInterior, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['playground', 'toonInterior', 'golfcourse']),
+            State.State('golfcourse', self.enterGolfCourse,
+                        self.exitGolfCourse, ['quietZone', 'playground']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
 
     def load(self):
         SafeZoneLoader.load(self)
         self.birdSound = map(base.loadSfx, [
             'phase_4/audio/sfx/SZ_TC_bird1.mp3',
             'phase_4/audio/sfx/SZ_TC_bird2.mp3',
-            'phase_4/audio/sfx/SZ_TC_bird3.mp3'])
+            'phase_4/audio/sfx/SZ_TC_bird3.mp3'
+        ])
 
     def unload(self):
         del self.birdSound
@@ -61,8 +55,13 @@ class GZSafeZoneLoader(SafeZoneLoader):
         sign = top.find('**/Sign_5')
         sign.node().setEffect(DecalEffect.make())
         locator = top.find('**/sign_origin')
-        signText = DirectGui.OnscreenText(text=TextEncoder.upper(TTLocalizer.BossbotHQ[-1]), font=ToontownGlobals.getSuitFont(
-        ), scale=TTLocalizer.GZSZLsignText, fg=(0, 0, 0, 1), mayChange=False, parent=sign)
+        signText = DirectGui.OnscreenText(
+            text=TextEncoder.upper(TTLocalizer.BossbotHQ[-1]),
+            font=ToontownGlobals.getSuitFont(),
+            scale=TTLocalizer.GZSZLsignText,
+            fg=(0, 0, 0, 1),
+            mayChange=False,
+            parent=sign)
         signText.setPosHpr(locator, 0, 0, -0.29999999999999999, 0, 0, 0)
         signText.setDepthWrite(0)
 
@@ -76,11 +75,11 @@ class GZSafeZoneLoader(SafeZoneLoader):
         status = self.place.doneStatus
         if self.enteringAGolfCourse(status) and status.get('shardId') is None:
             zoneId = status['zoneId']
-            self.fsm.request('quietZone', [
-                status])
-        elif ZoneUtil.getBranchZone(status['zoneId']) == self.hood.hoodId and status['shardId'] is None:
-            self.fsm.request('quietZone', [
-                status])
+            self.fsm.request('quietZone', [status])
+        elif ZoneUtil.getBranchZone(
+                status['zoneId']
+        ) == self.hood.hoodId and status['shardId'] is None:
+            self.fsm.request('quietZone', [status])
         else:
             self.doneStatus = status
             messenger.send(self.doneEvent)
@@ -125,6 +124,6 @@ class GZSafeZoneLoader(SafeZoneLoader):
             'how': 'teleportIn',
             'zoneId': 17000,
             'hoodId': 17000,
-            'shardId': None}
-        self.fsm.request('quietZone', [
-            req])
+            'shardId': None
+        }
+        self.fsm.request('quietZone', [req])

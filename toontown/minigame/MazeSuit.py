@@ -1,5 +1,3 @@
-
-
 from direct.showbase.DirectObject import DirectObject
 from direct.interval.MetaInterval import Parallel
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
@@ -20,16 +18,8 @@ class MazeSuit(DirectObject):
     DIR_DOWN = 1
     DIR_LEFT = 2
     DIR_RIGHT = 3
-    oppositeDirections = [
-        DIR_DOWN,
-        DIR_UP,
-        DIR_RIGHT,
-        DIR_LEFT]
-    directionHs = [
-        0,
-        180,
-        90,
-        270]
+    oppositeDirections = [DIR_DOWN, DIR_UP, DIR_RIGHT, DIR_LEFT]
+    directionHs = [0, 180, 90, 270]
     DEFAULT_SPEED = 4.0
     SUIT_Z = 0.10000000000000001
 
@@ -64,12 +54,10 @@ class MazeSuit(DirectObject):
         d.newSuit(suitDnaName)
         self.suit.setDNA(d)
         if startTile is None:
-            defaultStartPos = MazeGameGlobals.SUIT_START_POSITIONS[self.serialNum]
-            self.startTile = (
-                defaultStartPos[0] *
-                self.maze.width,
-                defaultStartPos[1] *
-                self.maze.height)
+            defaultStartPos = MazeGameGlobals.SUIT_START_POSITIONS[
+                self.serialNum]
+            self.startTile = (defaultStartPos[0] * self.maze.width,
+                              defaultStartPos[1] * self.maze.height)
         else:
             self.startTile = startTile
         self.ticFreq = ticFreq
@@ -87,8 +75,7 @@ class MazeSuit(DirectObject):
         self.gameStartTime = gameStartTime
         self.initCollisions()
         self.startWalkAnim()
-        self.occupiedTiles = [
-            (self.nextTX, self.nextTY)]
+        self.occupiedTiles = [(self.nextTX, self.nextTY)]
         n = 20
         self.nextThinkTic = self.serialNum * self.ticFreq / n
         self.fromPos = Point3(0, 0, 0)
@@ -112,9 +99,7 @@ class MazeSuit(DirectObject):
         self.collNodePath = self.suit.attachNewNode(self.collNode)
         self.collNodePath.hide()
         self.accept(
-            self.uniqueName(
-                'enter' +
-                self.COLL_SPHERE_NAME),
+            self.uniqueName('enter' + self.COLL_SPHERE_NAME),
             self.handleEnterSphere)
 
     def shutdownCollisions(self):
@@ -125,8 +110,7 @@ class MazeSuit(DirectObject):
         del self.collNode
 
     def handleEnterSphere(self, collEntry):
-        messenger.send(self.COLLISION_EVENT_NAME, [
-            self.serialNum])
+        messenger.send(self.COLLISION_EVENT_NAME, [self.serialNum])
 
     def _MazeSuit__getWorldPos(self, sTX, sTY):
         (wx, wy) = self.maze.tile2world(sTX, sTY)
@@ -205,14 +189,13 @@ class MazeSuit(DirectObject):
                     return oppositeDir
 
         candidateDirs = [
-            self.DIR_UP,
-            self.DIR_DOWN,
-            self.DIR_LEFT,
-            self.DIR_RIGHT]
+            self.DIR_UP, self.DIR_DOWN, self.DIR_LEFT, self.DIR_RIGHT
+        ]
         candidateDirs.remove(self.oppositeDirections[self.direction])
         while len(candidateDirs):
             dir = self.rng.choice(candidateDirs)
-            (newTX, newTY) = self._MazeSuit__applyDirection(dir, self.TX, self.TY)
+            (newTX, newTY) = self._MazeSuit__applyDirection(
+                dir, self.TX, self.TY)
             if self.maze.isWalkable(newTX, newTY, unwalkables):
                 return dir
 
@@ -228,8 +211,7 @@ class MazeSuit(DirectObject):
             return r
 
     def prepareToThink(self):
-        self.occupiedTiles = [
-            (self.nextTX, self.nextTY)]
+        self.occupiedTiles = [(self.nextTX, self.nextTY)]
 
     def think(self, curTic, curT, unwalkables):
         self.TX = self.nextTX
@@ -238,9 +220,7 @@ class MazeSuit(DirectObject):
         self.direction = self._MazeSuit__chooseNewWalkDirection(unwalkables)
         (self.nextTX, self.nextTY) = self._MazeSuit__applyDirection(
             self.direction, self.TX, self.TY)
-        self.occupiedTiles = [
-            (self.TX, self.TY),
-            (self.nextTX, self.nextTY)]
+        self.occupiedTiles = [(self.TX, self.TY), (self.nextTX, self.nextTY)]
         if curTic == self.lastTicBeforeRender:
             fromCoords = self.maze.tile2world(self.TX, self.TY)
             toCoords = self.maze.tile2world(self.nextTX, self.nextTY)
@@ -251,8 +231,7 @@ class MazeSuit(DirectObject):
                 self.cellWalkDuration,
                 self.toPos,
                 startPos=self.fromPos,
-                name=self.uniqueName(
-                    self.MOVE_IVAL_NAME))
+                name=self.uniqueName(self.MOVE_IVAL_NAME))
             if self.direction != self.lastDirection:
                 self.fromH = self.directionHs[self.lastDirection]
                 toH = self.directionHs[self.direction]
@@ -270,8 +249,9 @@ class MazeSuit(DirectObject):
                     startHpr=self.fromHpr,
                     name=self.uniqueName('turnMazeSuit'))
                 self.moveIval = Parallel(
-                    self.moveIval, turnIval, name=self.uniqueName(
-                        self.MOVE_IVAL_NAME))
+                    self.moveIval,
+                    turnIval,
+                    name=self.uniqueName(self.MOVE_IVAL_NAME))
             else:
                 self.suit.setH(self.directionHs[self.direction])
             moveStartT = float(self.nextThinkTic) / float(self.ticFreq)
@@ -285,8 +265,7 @@ class MazeSuit(DirectObject):
         suitUpdates = []
         for i in xrange(len(suitList)):
             updateTics = suitList[i].getThinkTimestampTics(curTic)
-            suitUpdates.extend(zip(updateTics, [
-                i] * len(updateTics)))
+            suitUpdates.extend(zip(updateTics, [i] * len(updateTics)))
 
         suitUpdates.sort(lambda a, b: a[0] - b[0])
         if len(suitUpdates) > 0:

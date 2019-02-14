@@ -3,13 +3,15 @@ from direct.gui.DirectGui import DirectFrame, DirectLabel
 from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import ToontownIntervals
 
+
 class LaffMeter(DirectFrame):
-    deathColor = Vec4(0.58039216000000005, 0.80392156999999997, 0.34117647000000001, 1.0)
-    
+    deathColor = Vec4(0.58039216000000005, 0.80392156999999997,
+                      0.34117647000000001, 1.0)
+
     def __init__(self, avdna, hp, maxHp):
-        DirectFrame.__init__(self, relief = None, sortOrder = 50)
+        DirectFrame.__init__(self, relief=None, sortOrder=50)
         self.initialiseoptions(LaffMeter)
-        self.container = DirectFrame(parent = self, relief = None)
+        self.container = DirectFrame(parent=self, relief=None)
         self.style = avdna
         self.av = None
         self.hp = hp
@@ -21,18 +23,14 @@ class LaffMeter(DirectFrame):
             self.isToon = 0
         self.load()
 
-    
     def obscure(self, obscured):
         self._LaffMeter__obscured = obscured
         if self._LaffMeter__obscured:
             self.hide()
-        
 
-    
     def isObscured(self):
         return self._LaffMeter__obscured
 
-    
     def load(self):
         gui = loader.loadModel('phase_3/models/gui/laff_o_meter')
         if self.isToon:
@@ -62,42 +60,74 @@ class LaffMeter(DirectFrame):
             self.container['image_color'] = self.color
             self.resetFrameSize()
             self.setScale(0.10000000000000001)
-            self.frown = DirectFrame(parent = self.container, relief = None, image = gui.find('**/frown'))
-            self.smile = DirectFrame(parent = self.container, relief = None, image = gui.find('**/smile'))
-            self.eyes = DirectFrame(parent = self.container, relief = None, image = gui.find('**/eyes'))
-            self.openSmile = DirectFrame(parent = self.container, relief = None, image = gui.find('**/open_smile'))
-            self.tooth1 = DirectFrame(parent = self.openSmile, relief = None, image = gui.find('**/tooth_1'))
-            self.tooth2 = DirectFrame(parent = self.openSmile, relief = None, image = gui.find('**/tooth_2'))
-            self.tooth3 = DirectFrame(parent = self.openSmile, relief = None, image = gui.find('**/tooth_3'))
-            self.tooth4 = DirectFrame(parent = self.openSmile, relief = None, image = gui.find('**/tooth_4'))
-            self.tooth5 = DirectFrame(parent = self.openSmile, relief = None, image = gui.find('**/tooth_5'))
-            self.tooth6 = DirectFrame(parent = self.openSmile, relief = None, image = gui.find('**/tooth_6'))
-            self.maxLabel = DirectLabel(parent = self.eyes, relief = None, pos = (0.442, 0, 0.050999999999999997), text = '120', text_scale = 0.40000000000000002, text_font = ToontownGlobals.getInterfaceFont())
-            self.hpLabel = DirectLabel(parent = self.eyes, relief = None, pos = (-0.39800000000000002, 0, 0.050999999999999997), text = '120', text_scale = 0.40000000000000002, text_font = ToontownGlobals.getInterfaceFont())
+            self.frown = DirectFrame(
+                parent=self.container, relief=None, image=gui.find('**/frown'))
+            self.smile = DirectFrame(
+                parent=self.container, relief=None, image=gui.find('**/smile'))
+            self.eyes = DirectFrame(
+                parent=self.container, relief=None, image=gui.find('**/eyes'))
+            self.openSmile = DirectFrame(
+                parent=self.container,
+                relief=None,
+                image=gui.find('**/open_smile'))
+            self.tooth1 = DirectFrame(
+                parent=self.openSmile,
+                relief=None,
+                image=gui.find('**/tooth_1'))
+            self.tooth2 = DirectFrame(
+                parent=self.openSmile,
+                relief=None,
+                image=gui.find('**/tooth_2'))
+            self.tooth3 = DirectFrame(
+                parent=self.openSmile,
+                relief=None,
+                image=gui.find('**/tooth_3'))
+            self.tooth4 = DirectFrame(
+                parent=self.openSmile,
+                relief=None,
+                image=gui.find('**/tooth_4'))
+            self.tooth5 = DirectFrame(
+                parent=self.openSmile,
+                relief=None,
+                image=gui.find('**/tooth_5'))
+            self.tooth6 = DirectFrame(
+                parent=self.openSmile,
+                relief=None,
+                image=gui.find('**/tooth_6'))
+            self.maxLabel = DirectLabel(
+                parent=self.eyes,
+                relief=None,
+                pos=(0.442, 0, 0.050999999999999997),
+                text='120',
+                text_scale=0.40000000000000002,
+                text_font=ToontownGlobals.getInterfaceFont())
+            self.hpLabel = DirectLabel(
+                parent=self.eyes,
+                relief=None,
+                pos=(-0.39800000000000002, 0, 0.050999999999999997),
+                text='120',
+                text_scale=0.40000000000000002,
+                text_font=ToontownGlobals.getInterfaceFont())
             self.teeth = [
-                self.tooth6,
-                self.tooth5,
-                self.tooth4,
-                self.tooth3,
-                self.tooth2,
-                self.tooth1]
+                self.tooth6, self.tooth5, self.tooth4, self.tooth3,
+                self.tooth2, self.tooth1
+            ]
             self.fractions = [
-                0.0,
-                0.16666600000000001,
-                0.33333299999999999,
-                0.5,
-                0.66666599999999998,
-                0.83333299999999999]
-        
+                0.0, 0.16666600000000001, 0.33333299999999999, 0.5,
+                0.66666599999999998, 0.83333299999999999
+            ]
+
         gui.removeNode()
 
-    
     def destroy(self):
         if self.av:
-            ToontownIntervals.cleanup(self.av.uniqueName('laffMeterBoing') + '-' + str(self.this))
-            ToontownIntervals.cleanup(self.av.uniqueName('laffMeterBoing') + '-' + str(self.this) + '-play')
+            ToontownIntervals.cleanup(
+                self.av.uniqueName('laffMeterBoing') + '-' + str(self.this))
+            ToontownIntervals.cleanup(
+                self.av.uniqueName('laffMeterBoing') + '-' + str(self.this) +
+                '-play')
             self.ignore(self.av.uniqueName('hpChange'))
-        
+
         del self.style
         del self.av
         del self.hp
@@ -116,10 +146,9 @@ class LaffMeter(DirectFrame):
             del self.fractions
             del self.maxLabel
             del self.hpLabel
-        
+
         DirectFrame.destroy(self)
 
-    
     def adjustTeeth(self):
         if self.isToon:
             for i in range(len(self.teeth)):
@@ -127,32 +156,28 @@ class LaffMeter(DirectFrame):
                     self.teeth[i].show()
                     continue
                 self.teeth[i].hide()
-            
-        
 
-    
     def adjustText(self):
         if self.isToon:
-            if self.maxLabel['text'] != str(self.maxHp) or self.hpLabel['text'] != str(self.hp):
+            if self.maxLabel['text'] != str(
+                    self.maxHp) or self.hpLabel['text'] != str(self.hp):
                 self.maxLabel['text'] = str(self.maxHp)
                 self.hpLabel['text'] = str(self.hp)
-            
-        
 
-    
     def animatedEffect(self, delta):
         if delta == 0 or self.av == None:
             return None
-        
+
         name = self.av.uniqueName('laffMeterBoing') + '-' + str(self.this)
         ToontownIntervals.cleanup(name)
         if delta > 0:
-            ToontownIntervals.start(ToontownIntervals.getPulseLargerIval(self.container, name))
+            ToontownIntervals.start(
+                ToontownIntervals.getPulseLargerIval(self.container, name))
         else:
-            ToontownIntervals.start(ToontownIntervals.getPulseSmallerIval(self.container, name))
+            ToontownIntervals.start(
+                ToontownIntervals.getPulseSmallerIval(self.container, name))
 
-    
-    def adjustFace(self, hp, maxHp, quietly = 0):
+    def adjustFace(self, hp, maxHp, quietly=0):
         if self.isToon and self.hp != None:
             self.frown.hide()
             self.smile.hide()
@@ -160,7 +185,7 @@ class LaffMeter(DirectFrame):
             self.eyes.hide()
             for tooth in self.teeth:
                 tooth.hide()
-            
+
             delta = hp - self.hp
             self.hp = hp
             self.maxHp = maxHp
@@ -181,39 +206,28 @@ class LaffMeter(DirectFrame):
             self.adjustText()
             if not quietly:
                 self.animatedEffect(delta)
-            
-        
 
-    
     def start(self):
         if self.av:
             self.hp = self.av.hp
             self.maxHp = self.av.maxHp
-        
+
         if self.isToon:
             if not self._LaffMeter__obscured:
                 self.show()
-            
+
             self.adjustFace(self.hp, self.maxHp, 1)
             if self.av:
                 self.accept(self.av.uniqueName('hpChange'), self.adjustFace)
-            
-        
 
-    
     def stop(self):
         if self.isToon:
             self.hide()
             if self.av:
                 self.ignore(self.av.uniqueName('hpChange'))
-            
-        
 
-    
     def setAvatar(self, av):
         if self.av:
             self.ignore(self.av.uniqueName('hpChange'))
-        
+
         self.av = av
-
-

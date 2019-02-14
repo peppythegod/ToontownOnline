@@ -19,10 +19,9 @@ def getCountryClubRoomReadyPostName(doId):
     return 'countryClubRoomReady-%s' % doId
 
 
-class DistributedCountryClubRoom(
-        DistributedLevel.DistributedLevel,
-        CountryClubRoomBase.CountryClubRoomBase,
-        CountryClubRoom.CountryClubRoom):
+class DistributedCountryClubRoom(DistributedLevel.DistributedLevel,
+                                 CountryClubRoomBase.CountryClubRoomBase,
+                                 CountryClubRoom.CountryClubRoom):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedCountryClubRoom')
     EmulateEntrancePoint = False
@@ -164,8 +163,10 @@ class DistributedCountryClubRoom(
             thisZone = self.getZoneNode(LevelConstants.UberZoneEntId)
             pos = base.localAvatar.getPos(thisZone)
             h = base.localAvatar.getH(thisZone)
-            roomName = CountryClubRoomSpecs.BossbotCountryClubRoomId2RoomName[self.roomId]
-            print 'countryClub pos: %s, h: %s, room: %s' % (repr(pos), h, roomName)
+            roomName = CountryClubRoomSpecs.BossbotCountryClubRoomId2RoomName[
+                self.roomId]
+            print 'countryClub pos: %s, h: %s, room: %s' % (repr(pos), h,
+                                                            roomName)
             if self.countryClub is not None:
                 floorNum = self.countryClub.floorNum
             else:
@@ -191,9 +192,8 @@ class DistributedCountryClubRoom(
         if hasattr(self, 'suits'):
             del self.suits
 
-        if hasattr(
-                self,
-                'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
+        if hasattr(self,
+                   'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
             self.cr.relatedObjectMgr.abortRequest(self.relatedObjectMgrRequest)
             del self.relatedObjectMgrRequest
 
@@ -234,8 +234,9 @@ class DistributedCountryClubRoom(
 
     def __str__(self):
         if hasattr(self, 'roomId'):
-            return '%s %s: %s' % (self.__class__.__name__, self.roomId,
-                                  CountryClubRoomSpecs.BossbotCountryClubRoomId2RoomName[self.roomId])
+            return '%s %s: %s' % (
+                self.__class__.__name__, self.roomId, CountryClubRoomSpecs.
+                BossbotCountryClubRoomId2RoomName[self.roomId])
         else:
             return 'DistributedCountryClubRoom'
 

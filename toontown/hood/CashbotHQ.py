@@ -29,21 +29,19 @@ class CashbotHQ(CogHood.CogHood):
     def enter(self, *args):
         CogHood.CogHood.enter(self, *args)
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.CashbotHQCameraNear,
-            ToontownGlobals.CashbotHQCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.CashbotHQCameraNear,
+                                ToontownGlobals.CashbotHQCameraFar)
 
     def exit(self):
         localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            ToontownGlobals.DefaultCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                ToontownGlobals.DefaultCameraFar)
         CogHood.CogHood.exit(self)
 
     def spawnTitleText(self, zoneId, floorNum=None):
         if ZoneUtil.isMintInteriorZone(zoneId):
-            text = '%s\n%s' % (
-                ToontownGlobals.StreetNames[zoneId][-1], TTLocalizer.MintFloorTitle % (floorNum + 1))
+            text = '%s\n%s' % (ToontownGlobals.StreetNames[zoneId][-1],
+                               TTLocalizer.MintFloorTitle % (floorNum + 1))
             self.doSpawnTitleText(text)
         else:
             CogHood.CogHood.spawnTitleText(self, zoneId)

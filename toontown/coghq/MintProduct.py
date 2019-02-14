@@ -6,11 +6,13 @@ class MintProduct(BasicEntities.NodePathEntity):
     Models = {
         CashbotMintIntA: 'phase_10/models/cashbotHQ/MoneyBag',
         CashbotMintIntB: 'phase_10/models/cashbotHQ/MoneyStackPallet',
-        CashbotMintIntC: 'phase_10/models/cashbotHQ/GoldBarStack'}
+        CashbotMintIntC: 'phase_10/models/cashbotHQ/GoldBarStack'
+    }
     Scales = {
         CashbotMintIntA: 0.97999999999999998,
         CashbotMintIntB: 0.38,
-        CashbotMintIntC: 0.59999999999999998}
+        CashbotMintIntC: 0.59999999999999998
+    }
 
     def __init__(self, level, entId):
         BasicEntities.NodePathEntity.__init__(self, level, entId)

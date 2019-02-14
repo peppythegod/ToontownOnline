@@ -41,9 +41,7 @@ class ActiveCellAI(DistributedEntityAI.DistributedEntityAI):
         if not objId:
             objId = 0
 
-        self.sendUpdate('setState', [
-            state,
-            objId])
+        self.sendUpdate('setState', [state, objId])
 
     def setState(self, state, objId=None):
         self.state = state
@@ -55,10 +53,7 @@ class ActiveCellAI(DistributedEntityAI.DistributedEntityAI):
                 self.occupantIds.remove(objId)
             except BaseException:
                 self.notify.warning(
-                    "couldn't remove %s from active cell" %
-                    objId)
+                    "couldn't remove %s from active cell" % objId)
 
     def getRowCol(self):
-        return [
-            self.row,
-            self.col]
+        return [self.row, self.col]

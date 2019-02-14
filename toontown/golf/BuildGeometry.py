@@ -26,40 +26,35 @@ def getCirclePoints(segCount, centerX, centerY, radius, wideX=1.0, wideY=1.0):
             circleY(pi * 2.0 * float(float(seg) / float(segCount)), radius, centerX, centerY)
         returnShape.append((coordX, coordY, 1))
 
-    coordX = wideX * circleX(pi * 2.0 * float(0 / segCount),
-                             radius, centerX, centerY)
-    coordY = wideY * circleY(pi * 2.0 * float(0 / segCount),
-                             radius, centerX, centerY)
+    coordX = wideX * circleX(pi * 2.0 * float(0 / segCount), radius, centerX,
+                             centerY)
+    coordY = wideY * circleY(pi * 2.0 * float(0 / segCount), radius, centerX,
+                             centerY)
     returnShape.append((coordX, coordY, 1))
     return returnShape
 
 
-def addCircle(
-        attachNode,
-        vertexCount,
-        radius,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        layer=0):
+def addCircle(attachNode,
+              vertexCount,
+              radius,
+              color=Vec4(1.0, 1.0, 1.0, 1.0),
+              layer=0):
     targetGN = GeomNode('Circle Geom')
     zFloat = 0.025000000000000001
     targetCircleShape = getCirclePoints(5 + vertexCount, 0.0, 0.0, radius)
     gFormat = GeomVertexFormat.getV3cp()
-    targetCircleVertexData = GeomVertexData(
-        'holds my vertices', gFormat, Geom.UHDynamic)
-    targetCircleVertexWriter = GeomVertexWriter(
-        targetCircleVertexData, 'vertex')
+    targetCircleVertexData = GeomVertexData('holds my vertices', gFormat,
+                                            Geom.UHDynamic)
+    targetCircleVertexWriter = GeomVertexWriter(targetCircleVertexData,
+                                                'vertex')
     targetCircleColorWriter = GeomVertexWriter(targetCircleVertexData, 'color')
     targetCircleVertexWriter.addData3f(0.0, 0.0, zFloat)
     targetCircleColorWriter.addData4f(color[0], color[1], color[2], color[3])
     for vertex in targetCircleShape:
-        targetCircleVertexWriter.addData3f(
-            0.0 + vertex[0], 0.0 + vertex[1], zFloat)
-        targetCircleColorWriter.addData4f(
-            color[0], color[1], color[2], color[3])
+        targetCircleVertexWriter.addData3f(0.0 + vertex[0], 0.0 + vertex[1],
+                                           zFloat)
+        targetCircleColorWriter.addData4f(color[0], color[1], color[2],
+                                          color[3])
 
     targetTris = GeomTrifans(Geom.UHStatic)
     sizeTarget = len(targetCircleShape)
@@ -75,16 +70,11 @@ def addCircle(
     return targetGeom
 
 
-def addCircleGeom(
-        rootNode,
-        vertexCount,
-        radius,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        layer=0):
+def addCircleGeom(rootNode,
+                  vertexCount,
+                  radius,
+                  color=Vec4(1.0, 1.0, 1.0, 1.0),
+                  layer=0):
     global GEO_ID
     GN = GeomNode('Circle %s' % GEO_ID)
     GEO_ID += 1
@@ -93,16 +83,11 @@ def addCircleGeom(
     return (NodePathGeom, GN, geo)
 
 
-def addSquare(
-        attachNode,
-        sizeX,
-        sizeY,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        layer=0):
+def addSquare(attachNode,
+              sizeX,
+              sizeY,
+              color=Vec4(1.0, 1.0, 1.0, 1.0),
+              layer=0):
     targetGN = GeomNode('Square Geom')
     sX = sizeX / 2.0
     sY = sizeY / 2.0
@@ -143,16 +128,11 @@ def addSquare(
     return boxGeom
 
 
-def addSquareGeom(
-        rootNode,
-        sizeX,
-        sizeY,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        layer=0):
+def addSquareGeom(rootNode,
+                  sizeX,
+                  sizeY,
+                  color=Vec4(1.0, 1.0, 1.0, 1.0),
+                  layer=0):
     global GEO_ID
     GN = GeomNode('Square %s' % GEO_ID)
     GEO_ID += 1
@@ -161,17 +141,12 @@ def addSquareGeom(
     return (NodePathGeom, GN, geo)
 
 
-def addBox(
-        attachNode,
-        sizeX,
-        sizeY,
-        sizeZ,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        darken=0):
+def addBox(attachNode,
+           sizeX,
+           sizeY,
+           sizeZ,
+           color=Vec4(1.0, 1.0, 1.0, 1.0),
+           darken=0):
     targetGN = GeomNode('Box Geom')
     sX = sizeX / 2.0
     sY = sizeY / 2.0
@@ -298,17 +273,12 @@ def addBox(
     return boxGeom
 
 
-def addBoxGeom(
-        rootNode,
-        sizeX,
-        sizeY,
-        sizeZ,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        darken=0):
+def addBoxGeom(rootNode,
+               sizeX,
+               sizeY,
+               sizeZ,
+               color=Vec4(1.0, 1.0, 1.0, 1.0),
+               darken=0):
     global GEO_ID
     GN = GeomNode('Box %s' % GEO_ID)
     GEO_ID += 1
@@ -317,16 +287,8 @@ def addBoxGeom(
     return (nodePathGeom, GN, geo)
 
 
-def addArrow(
-        attachNode,
-        sizeX,
-        sizeY,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        layer=0):
+def addArrow(attachNode, sizeX, sizeY, color=Vec4(1.0, 1.0, 1.0, 1.0),
+             layer=0):
     targetGN = GeomNode('Arrow Geom')
     sX = sizeX / 2.0
     sY = sizeY / 2.0
@@ -375,16 +337,11 @@ def addArrow(
     return boxGeom
 
 
-def addArrowGeom(
-        rootNode,
-        sizeX,
-        sizeY,
-        color=Vec4(
-            1.0,
-            1.0,
-            1.0,
-            1.0),
-        layer=0):
+def addArrowGeom(rootNode,
+                 sizeX,
+                 sizeY,
+                 color=Vec4(1.0, 1.0, 1.0, 1.0),
+                 layer=0):
     global GEO_ID
     GN = GeomNode('Arrow %s' % GEO_ID)
     GEO_ID += 1

@@ -5,7 +5,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class ToontownAccess:
-
     def __init__(self):
         self.startupModules = []
 
@@ -26,8 +25,7 @@ class ToontownAccess:
                 newModules.insert(0, module)
                 continue
 
-        self.sendUpdate('setModuleInfo', [
-            newModules])
+        self.sendUpdate('setModuleInfo', [newModules])
         return task.again
 
     def getModuleList(self):
@@ -52,12 +50,10 @@ class ToontownAccess:
 
         allowed = False
         allowedZones = [
-            ToontownGlobals.ToontownCentral,
-            ToontownGlobals.MyEstate,
-            ToontownGlobals.GoofySpeedway,
-            ToontownGlobals.Tutorial]
-        specialZones = [
-            ToontownGlobals.SellbotLobby]
+            ToontownGlobals.ToontownCentral, ToontownGlobals.MyEstate,
+            ToontownGlobals.GoofySpeedway, ToontownGlobals.Tutorial
+        ]
+        specialZones = [ToontownGlobals.SellbotLobby]
         if hasattr(base.cr, 'newsManager') and base.cr.newsManager:
             holidayIds = base.cr.newsManager.getHolidayIdList()
             if ToontownGlobals.SELLBOT_NERF_HOLIDAY in holidayIds:

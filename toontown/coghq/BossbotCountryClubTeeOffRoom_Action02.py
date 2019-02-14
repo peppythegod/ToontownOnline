@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_12/models/bossbotHQ/BossbotTeeOffRoom',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     110100: {
         'type': 'door',
         'name': 'TeeOffExitDoor',
@@ -45,7 +48,8 @@ GlobalEntities = {
         'unlock0Event': 0,
         'unlock1Event': 110102,
         'unlock2Event': 0,
-        'unlock3Event': 0},
+        'unlock3Event': 0
+    },
     110102: {
         'type': 'moleField',
         'name': '<unnamed>',
@@ -60,7 +64,8 @@ GlobalEntities = {
         'spacingY': 10.0,
         'timeToPlay': 60,
         'molesBase': 4,
-        'molesPerPlayer': 3},
+        'molesPerPlayer': 3
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -68,7 +73,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     110001: {
         'type': 'nodepath',
         'name': 'doorParent',
@@ -76,9 +82,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(60.2682, 0.55913999999999997, 0),
         'hpr': Vec3(270, 0, 0),
-        'scale': Vec3(1, 1, 1)}}
+        'scale': Vec3(1, 1, 1)
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

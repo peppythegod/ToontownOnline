@@ -24,5 +24,4 @@ class DistributedKartPad(DistributedObject):
     def addStartingBlock(self, block):
         self.startingBlocks.append(block)
         self.notify.debug(
-            'KartPad %s has added starting block %s' %
-            (self.doId, block.doId))
+            'KartPad %s has added starting block %s' % (self.doId, block.doId))

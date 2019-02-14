@@ -1,6 +1,4 @@
-
 class DecorBase:
-
     def __init__(self, decorId, x, y, h):
         self.decorId = decorId
         self.x = x

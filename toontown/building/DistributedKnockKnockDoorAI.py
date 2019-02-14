@@ -9,7 +9,6 @@ from direct.fsm import State
 
 class DistributedKnockKnockDoorAI(
         DistributedAnimatedPropAI.DistributedAnimatedPropAI):
-
     def __init__(self, air, propId):
         DistributedAnimatedPropAI.DistributedAnimatedPropAI.__init__(
             self, air, propId)

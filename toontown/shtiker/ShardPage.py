@@ -9,16 +9,11 @@ from toontown.hood import ZoneUtil
 from toontown.toonbase import ToontownGlobals
 from toontown.distributed import ToontownDistrictStats
 from toontown.toontowngui import TTDialog
-POP_COLORS_NTT = (
-    Vec4(
-        0.0, 1.0, 0.0, 1.0), Vec4(
-            1.0, 1.0, 0.0, 1.0), Vec4(
-                1.0, 0.0, 0.0, 1.0))
-POP_COLORS = (
-    Vec4(
-        0.40000000000000002, 0.40000000000000002, 1.0, 1.0), Vec4(
-            0.40000000000000002, 1.0, 0.40000000000000002, 1.0), Vec4(
-                1.0, 0.40000000000000002, 0.40000000000000002, 1.0))
+POP_COLORS_NTT = (Vec4(0.0, 1.0, 0.0, 1.0), Vec4(1.0, 1.0, 0.0, 1.0),
+                  Vec4(1.0, 0.0, 0.0, 1.0))
+POP_COLORS = (Vec4(0.40000000000000002, 0.40000000000000002, 1.0, 1.0),
+              Vec4(0.40000000000000002, 1.0, 0.40000000000000002, 1.0),
+              Vec4(1.0, 0.40000000000000002, 0.40000000000000002, 1.0))
 
 
 class ShardPage(ShtikerPage.ShtikerPage):
@@ -31,11 +26,8 @@ class ShardPage(ShtikerPage.ShtikerPage):
         self.scrollList = None
         self.textRolloverColor = Vec4(1, 1, 0, 1)
         self.textDownColor = Vec4(0.5, 0.90000000000000002, 1, 1)
-        self.textDisabledColor = Vec4(
-            0.40000000000000002,
-            0.80000000000000004,
-            0.40000000000000002,
-            1)
+        self.textDisabledColor = Vec4(0.40000000000000002, 0.80000000000000004,
+                                      0.40000000000000002, 1)
         self.ShardInfoUpdateInterval = 5.0
         (self.lowPop, self.midPop, self.highPop) = base.getShardPopLimits()
         self.showPop = config.GetBool('show-total-population', 0)
@@ -50,10 +42,7 @@ class ShardPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.ShardPageTitle,
             text_scale=title_text_scale,
             textMayChange=0,
-            pos=(
-                0,
-                0,
-                0.59999999999999998))
+            pos=(0, 0, 0.59999999999999998))
         helpText_ycoord = 0.40300000000000002
         self.helpText = DirectLabel(
             parent=self,
@@ -63,25 +52,18 @@ class ShardPage(ShtikerPage.ShtikerPage):
             text_wordwrap=12,
             text_align=TextNode.ALeft,
             textMayChange=1,
-            pos=(
-                0.058000000000000003,
-                0,
-                helpText_ycoord))
+            pos=(0.058000000000000003, 0, helpText_ycoord))
         shardPop_ycoord = helpText_ycoord - 0.52300000000000002
         totalPop_ycoord = shardPop_ycoord - 0.26000000000000001
         self.totalPopulationText = DirectLabel(
             parent=self,
             relief=None,
-            text=TTLocalizer.ShardPagePopulationTotal %
-            1,
+            text=TTLocalizer.ShardPagePopulationTotal % 1,
             text_scale=main_text_scale,
             text_wordwrap=8,
             textMayChange=1,
             text_align=TextNode.ACenter,
-            pos=(
-                0.38,
-                0,
-                totalPop_ycoord))
+            pos=(0.38, 0, totalPop_ycoord))
         if self.showPop:
             self.totalPopulationText.show()
         else:
@@ -102,11 +84,7 @@ class ShardPage(ShtikerPage.ShtikerPage):
             text_scale=main_text_scale,
             text_align=TextNode.ACenter,
             relief=None,
-            pos=(
-                self.buttonXstart,
-                0,
-                self.itemFrameZorigin +
-                0.127))
+            pos=(self.buttonXstart, 0, self.itemFrameZorigin + 0.127))
 
     def unload(self):
         self.gui.removeNode()
@@ -130,68 +108,37 @@ class ShardPage(ShtikerPage.ShtikerPage):
         self.scrollList = DirectScrolledList(
             parent=self,
             relief=None,
-            pos=(
-                -0.5,
-                0,
-                0),
-            incButton_image=(
-                self.gui.find('**/FndsLst_ScrollUp'),
-                self.gui.find('**/FndsLst_ScrollDN'),
-                self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                self.gui.find('**/FndsLst_ScrollUp')),
+            pos=(-0.5, 0, 0),
+            incButton_image=(self.gui.find('**/FndsLst_ScrollUp'),
+                             self.gui.find('**/FndsLst_ScrollDN'),
+                             self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             self.gui.find('**/FndsLst_ScrollUp')),
             incButton_relief=None,
-            incButton_scale=(
-                self.arrowButtonScale,
-                self.arrowButtonScale,
-                -(
-                    self.arrowButtonScale)),
-            incButton_pos=(
-                self.buttonXstart,
-                0,
-                self.itemFrameZorigin - 0.999),
-            incButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
-            decButton_image=(
-                self.gui.find('**/FndsLst_ScrollUp'),
-                self.gui.find('**/FndsLst_ScrollDN'),
-                self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                self.gui.find('**/FndsLst_ScrollUp')),
+            incButton_scale=(self.arrowButtonScale, self.arrowButtonScale,
+                             -(self.arrowButtonScale)),
+            incButton_pos=(self.buttonXstart, 0,
+                           self.itemFrameZorigin - 0.999),
+            incButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
+            decButton_image=(self.gui.find('**/FndsLst_ScrollUp'),
+                             self.gui.find('**/FndsLst_ScrollDN'),
+                             self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             self.gui.find('**/FndsLst_ScrollUp')),
             decButton_relief=None,
-            decButton_scale=(
-                self.arrowButtonScale,
-                self.arrowButtonScale,
-                self.arrowButtonScale),
-            decButton_pos=(
-                self.buttonXstart,
-                0,
-                self.itemFrameZorigin + 0.22700000000000001),
-            decButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
-            itemFrame_pos=(
-                self.itemFrameXorigin,
-                0,
-                self.itemFrameZorigin),
+            decButton_scale=(self.arrowButtonScale, self.arrowButtonScale,
+                             self.arrowButtonScale),
+            decButton_pos=(self.buttonXstart, 0,
+                           self.itemFrameZorigin + 0.22700000000000001),
+            decButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
+            itemFrame_pos=(self.itemFrameXorigin, 0, self.itemFrameZorigin),
             itemFrame_scale=1.0,
             itemFrame_relief=DGG.SUNKEN,
-            itemFrame_frameSize=(
-                self.listXorigin,
-                self.listXorigin + self.listFrameSizeX,
-                self.listZorigin,
-                self.listZorigin + self.listFrameSizeZ),
-            itemFrame_frameColor=(
-                0.84999999999999998,
-                0.94999999999999996,
-                1,
-                1),
-            itemFrame_borderWidth=(
-                0.01,
-                0.01),
+            itemFrame_frameSize=(self.listXorigin,
+                                 self.listXorigin + self.listFrameSizeX,
+                                 self.listZorigin,
+                                 self.listZorigin + self.listFrameSizeZ),
+            itemFrame_frameColor=(0.84999999999999998, 0.94999999999999996, 1,
+                                  1),
+            itemFrame_borderWidth=(0.01, 0.01),
             numItemsVisible=15,
             forceHeight=0.065000000000000002,
             items=self.shardButtons)
@@ -199,10 +146,9 @@ class ShardPage(ShtikerPage.ShtikerPage):
 
     def askForShardInfoUpdate(self, task=None):
         ToontownDistrictStats.refresh('shardInfoUpdated')
-        taskMgr.doMethodLater(
-            self.ShardInfoUpdateInterval,
-            self.askForShardInfoUpdate,
-            'ShardPageUpdateTask-doLater')
+        taskMgr.doMethodLater(self.ShardInfoUpdateInterval,
+                              self.askForShardInfoUpdate,
+                              'ShardPageUpdateTask-doLater')
         return Task.done
 
     def makeShardButton(self, shardId, shardName, shardPop):
@@ -234,10 +180,7 @@ class ShardPage(ShtikerPage.ShtikerPage):
                 text2_bg=self.textRolloverColor,
                 text3_fg=self.textDisabledColor,
                 textMayChange=1,
-                pos=(
-                    0.5,
-                    0,
-                    0),
+                pos=(0.5, 0, 0),
                 command=self.choseShard,
                 extraArgs=[shardId])
         else:
@@ -247,45 +190,18 @@ class ShardPage(ShtikerPage.ShtikerPage):
                 parent=shardButtonParent,
                 relief=None,
                 image=button,
-                image_scale=(
-                    0.29999999999999999,
-                    1,
-                    0.29999999999999999),
-                image2_scale=(
-                    0.34999999999999998,
-                    1,
-                    0.34999999999999998),
+                image_scale=(0.29999999999999999, 1, 0.29999999999999999),
+                image2_scale=(0.34999999999999998, 1, 0.34999999999999998),
                 image_color=self.getPopColor(shardPop),
-                pos=(
-                    0.59999999999999998,
-                    0,
-                    0.012500000000000001),
+                pos=(0.59999999999999998, 0, 0.012500000000000001),
                 text=self.getPopText(shardPop),
                 text_scale=0.059999999999999998,
                 text_align=TextNode.ACenter,
-                text_pos=(
-                    -0.012500000000000001,
-                    -0.012500000000000001),
-                text_fg=Vec4(
-                    0,
-                    0,
-                    0,
-                    0),
-                text1_fg=Vec4(
-                    0,
-                    0,
-                    0,
-                    0),
-                text2_fg=Vec4(
-                    0,
-                    0,
-                    0,
-                    1),
-                text3_fg=Vec4(
-                    0,
-                    0,
-                    0,
-                    0),
+                text_pos=(-0.012500000000000001, -0.012500000000000001),
+                text_fg=Vec4(0, 0, 0, 0),
+                text1_fg=Vec4(0, 0, 0, 0),
+                text2_fg=Vec4(0, 0, 0, 1),
+                text3_fg=Vec4(0, 0, 0, 0),
                 command=self.getPopChoiceHandler(shardPop),
                 extraArgs=[shardId])
             del model
@@ -369,8 +285,8 @@ class ShardPage(ShtikerPage.ShtikerPage):
 
         curShardTuples.sort(compareShardTuples)
         if base.cr.welcomeValleyManager:
-            curShardTuples.append(
-                (ToontownGlobals.WelcomeValleyToken, TTLocalizer.WelcomeValley[-1], 0, 0))
+            curShardTuples.append((ToontownGlobals.WelcomeValleyToken,
+                                   TTLocalizer.WelcomeValley[-1], 0, 0))
 
         currentShardId = self.getCurrentShardId()
         actualShardId = base.localAvatar.defaultShard
@@ -434,7 +350,8 @@ class ShardPage(ShtikerPage.ShtikerPage):
         if anyChanges:
             self.regenerateScrollList()
 
-        self.totalPopulationText['text'] = TTLocalizer.ShardPagePopulationTotal % totalPop
+        self.totalPopulationText[
+            'text'] = TTLocalizer.ShardPagePopulationTotal % totalPop
         helpText = TTLocalizer.ShardPageHelpIntro
         if actualShardName:
             if currentShardId == ToontownGlobals.WelcomeValleyToken:
@@ -488,12 +405,11 @@ class ShardPage(ShtikerPage.ShtikerPage):
         elif shardId == ToontownGlobals.WelcomeValleyToken:
             self.doneStatus = {
                 'mode': 'teleport',
-                'hood': ToontownGlobals.WelcomeValleyToken}
+                'hood': ToontownGlobals.WelcomeValleyToken
+            }
             messenger.send(self.doneEvent)
         elif shardId == base.localAvatar.defaultShard:
-            self.doneStatus = {
-                'mode': 'teleport',
-                'hood': canonicalHoodId}
+            self.doneStatus = {'mode': 'teleport', 'hood': canonicalHoodId}
             messenger.send(self.doneEvent)
         else:
 
@@ -503,7 +419,8 @@ class ShardPage(ShtikerPage.ShtikerPage):
 
                 try:
                     place = base.cr.playGame.hood.loader.place
-                place = base.cr.playGame.hood.place
+                except:
+                    place = base.cr.playGame.hood.place
 
-            place.requestTeleport(
-                canonicalHoodId, canonicalHoodId, shardId, -1)
+            place.requestTeleport(canonicalHoodId, canonicalHoodId, shardId,
+                                  -1)

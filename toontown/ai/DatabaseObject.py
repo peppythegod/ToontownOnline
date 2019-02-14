@@ -74,10 +74,8 @@ class DatabaseObject:
         self.air.dbObjContext += 1
         self.air.dbObjMap[context] = self
         dg = PyDatagram()
-        dg.addServerHeader(
-            DBSERVER_ID,
-            self.air.ourChannel,
-            DBSERVER_GET_STORED_VALUES)
+        dg.addServerHeader(DBSERVER_ID, self.air.ourChannel,
+                           DBSERVER_GET_STORED_VALUES)
         dg.addUint32(context)
         dg.addUint32(self.doId)
         dg.addUint16(len(fields))
@@ -101,8 +99,7 @@ class DatabaseObject:
         retCode = di.getUint8()
         if retCode != 0:
             self.notify.warning(
-                'Failed to retrieve data for object %d' %
-                self.doId)
+                'Failed to retrieve data for object %d' % self.doId)
         else:
             values = []
             for i in range(count):
@@ -116,6 +113,8 @@ class DatabaseObject:
 
                     try:
                         del self.values[fields[i]]
+                    except:
+                        pass
 
                     continue
                 self.values[fields[i]] = PyDatagram(values[i])
@@ -126,16 +125,12 @@ class DatabaseObject:
                 self.gotDataHandler = None
 
         if self.doneEvent is not None:
-            messenger.send(self.doneEvent, [
-                self,
-                retCode])
+            messenger.send(self.doneEvent, [self, retCode])
 
     def setFields(self, values):
         dg = PyDatagram()
-        dg.addServerHeader(
-            DBSERVER_ID,
-            self.air.ourChannel,
-            DBSERVER_SET_STORED_VALUES)
+        dg.addServerHeader(DBSERVER_ID, self.air.ourChannel,
+                           DBSERVER_SET_STORED_VALUES)
         dg.addUint32(self.doId)
         dg.addUint16(len(values))
         items = values.items()
@@ -190,10 +185,8 @@ class DatabaseObject:
         self.air.dbObjMap[context] = self
         self.createObjType = objectType
         dg = PyDatagram()
-        dg.addServerHeader(
-            DBSERVER_ID,
-            self.air.ourChannel,
-            DBSERVER_CREATE_STORED_OBJECT)
+        dg.addServerHeader(DBSERVER_ID, self.air.ourChannel,
+                           DBSERVER_CREATE_STORED_OBJECT)
         dg.addUint32(context)
         dg.addString('')
         dg.addUint16(objectType)
@@ -210,23 +203,18 @@ class DatabaseObject:
         retCode = di.getUint8()
         if retCode != 0:
             self.notify.warning(
-                'Database object %s create failed' %
-                self.createObjType)
+                'Database object %s create failed' % self.createObjType)
         else:
             del self.createObjType
             self.doId = di.getUint32()
         if self.doneEvent is not None:
-            messenger.send(self.doneEvent, [
-                self,
-                retCode])
+            messenger.send(self.doneEvent, [self, retCode])
 
     def deleteObject(self):
         self.notify.warning('deleting object %s' % self.doId)
         dg = PyDatagram()
-        dg.addServerHeader(
-            DBSERVER_ID,
-            self.air.ourChannel,
-            DBSERVER_DELETE_STORED_OBJECT)
+        dg.addServerHeader(DBSERVER_ID, self.air.ourChannel,
+                           DBSERVER_DELETE_STORED_OBJECT)
         dg.addUint32(self.doId)
         dg.addUint32(0xDEADBEEFL)
         self.air.send(dg)

@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.interval.IntervalGlobal import *
@@ -22,12 +20,9 @@ class CatchGameToonSD(StateData.StateData):
     EatNeutralAnim = 'catch-eatneutral'
     EatNRunAnim = 'catch-eatnrun'
     animList = [
-        FallBackAnim,
-        FallFwdAnim,
-        CatchNeutralAnim,
-        CatchRunAnim,
-        EatNeutralAnim,
-        EatNRunAnim]
+        FallBackAnim, FallFwdAnim, CatchNeutralAnim, CatchRunAnim,
+        EatNeutralAnim, EatNRunAnim
+    ]
 
     def __init__(self, avId, game):
         self.avId = avId
@@ -37,22 +32,17 @@ class CatchGameToonSD(StateData.StateData):
         self._delayDelete = DelayDelete(self.toon, 'CatchGameToonSD')
         self.unexpectedExit = False
         self.fsm = ClassicFSM.ClassicFSM('CatchGameAnimFSM-%s' % self.avId, [
-            State.State('init', self.enterInit, self.exitInit, [
-                'normal']),
-            State.State('normal', self.enterNormal, self.exitNormal, [
-                'eatFruit',
-                'fallBack',
-                'fallForward']),
-            State.State('eatFruit', self.enterEatFruit, self.exitEatFruit, [
-                'normal',
-                'fallBack',
-                'fallForward',
-                'eatFruit']),
-            State.State('fallBack', self.enterFallBack, self.exitFallBack, [
-                'normal']),
-            State.State('fallForward', self.enterFallForward, self.exitFallForward, [
-                'normal']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'init', 'cleanup')
+            State.State('init', self.enterInit, self.exitInit, ['normal']),
+            State.State('normal', self.enterNormal, self.exitNormal,
+                        ['eatFruit', 'fallBack', 'fallForward']),
+            State.State('eatFruit', self.enterEatFruit, self.exitEatFruit,
+                        ['normal', 'fallBack', 'fallForward', 'eatFruit']),
+            State.State('fallBack', self.enterFallBack, self.exitFallBack,
+                        ['normal']),
+            State.State('fallForward', self.enterFallForward,
+                        self.exitFallForward, ['normal']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'init', 'cleanup')
 
     def load(self):
         self.setAnimState('off', 1.0)
@@ -100,9 +90,7 @@ class CatchGameToonSD(StateData.StateData):
             self.game.orthoWalk.start()
 
         self.toon.lerpLookAt(
-            Vec3.forward() + Vec3.up(),
-            time=0.20000000000000001,
-            blink=0)
+            Vec3.forward() + Vec3.up(), time=0.20000000000000001, blink=0)
 
     def exitNormal(self):
         self.setAnimState('off', 1.0)
@@ -115,9 +103,7 @@ class CatchGameToonSD(StateData.StateData):
         if self.fsm.getCurrentState().getName() == 'eatFruit':
             self.fsm.request('normal')
 
-        self.fsm.request('eatFruit', [
-            fruitModel,
-            handNode])
+        self.fsm.request('eatFruit', [fruitModel, handNode])
 
     def enterEatFruit(self, fruitModel, handNode):
         self.notify.debug('enterEatFruit')
@@ -143,9 +129,7 @@ class CatchGameToonSD(StateData.StateData):
                         fruitModel,
                         duration / 2.0,
                         fruitModel.getScale() * 0.5,
-                        blendType='easeInOut'),
-                    Func(
-                        fruitModel.hide))),
+                        blendType='easeInOut'), Func(fruitModel.hide))),
             Func(finishedEating),
             name=self.toon.uniqueName('eatingIval'))
         self.eatIval.start()
@@ -181,12 +165,9 @@ class CatchGameToonSD(StateData.StateData):
             ActorInterval(
                 self.toon,
                 animName,
-                startTime=startFrame /
-                newRate,
-                endTime=totalFrames /
-                newRate,
-                playRate=playRate),
-            FunctionInterval(resume))
+                startTime=startFrame / newRate,
+                endTime=totalFrames / newRate,
+                playRate=playRate), FunctionInterval(resume))
         self.fallBackIval.start()
 
     def exitFallBack(self):
@@ -214,12 +195,9 @@ class CatchGameToonSD(StateData.StateData):
             ActorInterval(
                 self.toon,
                 animName,
-                startTime=startFrame /
-                newRate,
-                endTime=totalFrames /
-                newRate,
-                playRate=playRate),
-            FunctionInterval(resume))
+                startTime=startFrame / newRate,
+                endTime=totalFrames / newRate,
+                playRate=playRate), FunctionInterval(resume))
         self.fallFwdIval.start()
 
     def exitFallForward(self):

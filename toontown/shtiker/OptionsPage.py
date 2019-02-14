@@ -12,97 +12,39 @@ from otp.speedchat import SCStaticTextTerminal
 from direct.showbase import PythonUtil
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
-speedChatStyles = ((2000, (200 /
-                           255.0, 60 /
-                           255.0, 229 /
-                           255.0), (200 /
-                                    255.0, 135 /
-                                    255.0, 255 /
-                                    255.0), (220 /
-                                             255.0, 195 /
-                                             255.0, 229 /
-                                             255.0)), (2001, (0 /
-                                                              255.0, 0 /
-                                                              255.0, 255 /
-                                                              255.0), (140 /
-                                                                       255.0, 150 /
-                                                                       255.0, 235 /
-                                                                       255.0), (201 /
-                                                                                255.0, 215 /
-                                                                                255.0, 255 /
-                                                                                255.0)), (2002, (90 /
-                                                                                                 255.0, 175 /
-                                                                                                 255.0, 225 /
-                                                                                                 255.0), (120 /
-                                                                                                          255.0, 215 /
-                                                                                                          255.0, 255 /
-                                                                                                          255.0), (208 /
-                                                                                                                   255.0, 230 /
-                                                                                                                   255.0, 250 /
-                                                                                                                   255.0)), (2003, (130 /
-                                                                                                                                    255.0, 235 /
-                                                                                                                                    255.0, 235 /
-                                                                                                                                    255.0), (120 /
-                                                                                                                                             255.0, 225 /
-                                                                                                                                             255.0, 225 /
-                                                                                                                                             255.0), (234 /
-                                                                                                                                                      255.0, 255 /
-                                                                                                                                                      255.0, 255 /
-                                                                                                                                                      255.0)), (2004, (0 /
-                                                                                                                                                                       255.0, 200 /
-                                                                                                                                                                       255.0, 70 /
-                                                                                                                                                                       255.0), (0 /
-                                                                                                                                                                                255.0, 200 /
-                                                                                                                                                                                255.0, 80 /
-                                                                                                                                                                                255.0), (204 /
-                                                                                                                                                                                         255.0, 255 /
-                                                                                                                                                                                         255.0, 204 /
-                                                                                                                                                                                         255.0)), (2005, (235 /
-                                                                                                                                                                                                          255.0, 230 /
-                                                                                                                                                                                                          255.0, 0 /
-                                                                                                                                                                                                          255.0), (255 /
-                                                                                                                                                                                                                   255.0, 250 /
-                                                                                                                                                                                                                   255.0, 100 /
-                                                                                                                                                                                                                   255.0), (255 /
-                                                                                                                                                                                                                            255.0, 250 /
-                                                                                                                                                                                                                            255.0, 204 /
-                                                                                                                                                                                                                            255.0)), (2006, (255 /
-                                                                                                                                                                                                                                             255.0, 153 /
-                                                                                                                                                                                                                                             255.0, 0 /
-                                                                                                                                                                                                                                             255.0), (229 /
-                                                                                                                                                                                                                                                      255.0, 147 /
-                                                                                                                                                                                                                                                      255.0, 0 /
-                                                                                                                                                                                                                                                      255.0), (255 /
-                                                                                                                                                                                                                                                               255.0, 234 /
-                                                                                                                                                                                                                                                               255.0, 204 /
-                                                                                                                                                                                                                                                               255.0)), (2007, (255 /
-                                                                                                                                                                                                                                                                                255.0, 0 /
-                                                                                                                                                                                                                                                                                255.0, 50 /
-                                                                                                                                                                                                                                                                                255.0), (229 /
-                                                                                                                                                                                                                                                                                         255.0, 0 /
-                                                                                                                                                                                                                                                                                         255.0, 50 /
-                                                                                                                                                                                                                                                                                         255.0), (255 /
-                                                                                                                                                                                                                                                                                                  255.0, 204 /
-                                                                                                                                                                                                                                                                                                  255.0, 204 /
-                                                                                                                                                                                                                                                                                                  255.0)), (2008, (255 /
-                                                                                                                                                                                                                                                                                                                   255.0, 153 /
-                                                                                                                                                                                                                                                                                                                   255.0, 193 /
-                                                                                                                                                                                                                                                                                                                   255.0), (240 /
-                                                                                                                                                                                                                                                                                                                            255.0, 157 /
-                                                                                                                                                                                                                                                                                                                            255.0, 192 /
-                                                                                                                                                                                                                                                                                                                            255.0), (255 /
-                                                                                                                                                                                                                                                                                                                                     255.0, 215 /
-                                                                                                                                                                                                                                                                                                                                     255.0, 238 /
-                                                                                                                                                                                                                                                                                                                                     255.0)), (2009, (170 /
-                                                                                                                                                                                                                                                                                                                                                      255.0, 120 /
-                                                                                                                                                                                                                                                                                                                                                      255.0, 20 /
-                                                                                                                                                                                                                                                                                                                                                      255.0), (165 /
-                                                                                                                                                                                                                                                                                                                                                               255.0, 120 /
-                                                                                                                                                                                                                                                                                                                                                               255.0, 50 /
-                                                                                                                                                                                                                                                                                                                                                               255.0), (210 /
-                                                                                                                                                                                                                                                                                                                                                                        255.0, 200 /
-                                                                                                                                                                                                                                                                                                                                                                        255.0, 180 /
-                                                                                                                                                                                                                                                                                                                                                                        255.0)))
+speedChatStyles = ((2000, (200 / 255.0, 60 / 255.0, 229 / 255.0),
+                    (200 / 255.0, 135 / 255.0, 255 / 255.0),
+                    (220 / 255.0, 195 / 255.0,
+                     229 / 255.0)), (2001, (0 / 255.0, 0 / 255.0, 255 / 255.0),
+                                     (140 / 255.0, 150 / 255.0, 235 / 255.0),
+                                     (201 / 255.0, 215 / 255.0, 255 / 255.0)),
+                   (2002, (90 / 255.0, 175 / 255.0, 225 / 255.0),
+                    (120 / 255.0, 215 / 255.0,
+                     255 / 255.0), (208 / 255.0, 230 / 255.0, 250 / 255.0)),
+                   (2003, (130 / 255.0, 235 / 255.0, 235 / 255.0),
+                    (120 / 255.0, 225 / 255.0,
+                     225 / 255.0), (234 / 255.0, 255 / 255.0, 255 / 255.0)),
+                   (2004, (0 / 255.0, 200 / 255.0,
+                           70 / 255.0), (0 / 255.0, 200 / 255.0, 80 / 255.0),
+                    (204 / 255.0, 255 / 255.0,
+                     204 / 255.0)), (2005, (235 / 255.0, 230 / 255.0,
+                                            0 / 255.0),
+                                     (255 / 255.0, 250 / 255.0, 100 / 255.0),
+                                     (255 / 255.0, 250 / 255.0, 204 / 255.0)),
+                   (2006, (255 / 255.0, 153 / 255.0,
+                           0 / 255.0), (229 / 255.0, 147 / 255.0, 0 / 255.0),
+                    (255 / 255.0, 234 / 255.0,
+                     204 / 255.0)), (2007, (255 / 255.0, 0 / 255.0,
+                                            50 / 255.0),
+                                     (229 / 255.0, 0 / 255.0, 50 / 255.0),
+                                     (255 / 255.0, 204 / 255.0, 204 / 255.0)),
+                   (2008, (255 / 255.0, 153 / 255.0, 193 / 255.0),
+                    (240 / 255.0, 157 / 255.0, 192 / 255.0),
+                    (255 / 255.0, 215 / 255.0,
+                     238 / 255.0)), (2009, (170 / 255.0, 120 / 255.0,
+                                            20 / 255.0),
+                                     (165 / 255.0, 120 / 255.0, 50 / 255.0),
+                                     (210 / 255.0, 200 / 255.0, 180 / 255.0)))
 visualEffects = ((2050, 'None'), (2051, 'bw'), (2052, 'sepia'))
 PageMode = PythonUtil.Enum('Options, Codes')
 
@@ -125,10 +67,7 @@ class OptionsPage(ShtikerPage.ShtikerPage):
             relief=None,
             text=TTLocalizer.OptionsPageTitle,
             text_scale=0.12,
-            pos=(
-                0,
-                0,
-                titleHeight))
+            pos=(0, 0, titleHeight))
         normalColor = (1, 1, 1, 1)
         clickColor = (0.80000000000000004, 0.80000000000000004, 0, 1)
         rolloverColor = (0.14999999999999999, 0.81999999999999995, 1.0, 1)
@@ -140,78 +79,40 @@ class OptionsPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.OptionsPageTitle,
             text_scale=TTLocalizer.OPoptionsTab,
             text_align=TextNode.ALeft,
-            text_pos=(
-                0.01,
-                0.0,
-                0.0),
+            text_pos=(0.01, 0.0, 0.0),
             image=gui.find('**/tabs/polySurface1'),
-            image_pos=(
-                0.55000000000000004,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.55000000000000004, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
-            extraArgs=[
-                PageMode.Options],
-            pos=(
-                -0.35999999999999999,
-                0,
-                0.77000000000000002))
+            extraArgs=[PageMode.Options],
+            pos=(-0.35999999999999999, 0, 0.77000000000000002))
         self.codesTab = DirectButton(
             parent=self,
             relief=None,
             text=TTLocalizer.OptionsPageCodesTab,
             text_scale=TTLocalizer.OPoptionsTab,
             text_align=TextNode.ALeft,
-            text_pos=(
-                -0.035000000000000003,
-                0.0,
-                0.0),
+            text_pos=(-0.035000000000000003, 0.0, 0.0),
             image=gui.find('**/tabs/polySurface2'),
-            image_pos=(
-                0.12,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.12, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
-            extraArgs=[
-                PageMode.Codes],
-            pos=(
-                0.11,
-                0,
-                0.77000000000000002))
+            extraArgs=[PageMode.Codes],
+            pos=(0.11, 0, 0.77000000000000002))
 
     def enter(self):
         self.setMode(PageMode.Options, updateAnyways=1)
@@ -262,15 +163,18 @@ class OptionsTabPage(DirectFrame):
     DisplaySettingsApiMap = {
         'OpenGL': Settings.GL,
         'DirectX7': Settings.DX7,
-        'DirectX8': Settings.DX8}
+        'DirectX8': Settings.DX8
+    }
 
     def __init__(self, parent=aspect2d):
         self.parent = parent
         self.currentSizeIndex = None
         DirectFrame.__init__(
-            self, parent=self.parent, relief=None, pos=(
-                0.0, 0.0, 0.0), scale=(
-                1.0, 1.0, 1.0))
+            self,
+            parent=self.parent,
+            relief=None,
+            pos=(0.0, 0.0, 0.0),
+            scale=(1.0, 1.0, 1.0))
         self.load()
 
     def destroy(self):
@@ -306,11 +210,8 @@ class OptionsTabPage(DirectFrame):
         button_image_scale = (0.69999999999999996, 1, 1)
         button_textpos = (0, -0.02)
         options_text_scale = 0.051999999999999998
-        disabled_arrow_color = Vec4(
-            0.59999999999999998,
-            0.59999999999999998,
-            0.59999999999999998,
-            1.0)
+        disabled_arrow_color = Vec4(0.59999999999999998, 0.59999999999999998,
+                                    0.59999999999999998, 1.0)
         self.speed_chat_scale = 0.055
         self.Music_Label = DirectLabel(
             parent=self,
@@ -318,10 +219,7 @@ class OptionsTabPage(DirectFrame):
             text='',
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
-            pos=(
-                leftMargin,
-                0,
-                textStartHeight))
+            pos=(leftMargin, 0, textStartHeight))
         self.SoundFX_Label = DirectLabel(
             parent=self,
             relief=None,
@@ -329,11 +227,7 @@ class OptionsTabPage(DirectFrame):
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
             text_wordwrap=16,
-            pos=(
-                leftMargin,
-                0,
-                textStartHeight -
-                textRowHeight))
+            pos=(leftMargin, 0, textStartHeight - textRowHeight))
         self.Friends_Label = DirectLabel(
             parent=self,
             relief=None,
@@ -341,12 +235,7 @@ class OptionsTabPage(DirectFrame):
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
             text_wordwrap=16,
-            pos=(
-                leftMargin,
-                0,
-                textStartHeight -
-                3 *
-                textRowHeight))
+            pos=(leftMargin, 0, textStartHeight - 3 * textRowHeight))
         self.Whispers_Label = DirectLabel(
             parent=self,
             relief=None,
@@ -354,12 +243,7 @@ class OptionsTabPage(DirectFrame):
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
             text_wordwrap=16,
-            pos=(
-                leftMargin,
-                0,
-                textStartHeight -
-                4 *
-                textRowHeight))
+            pos=(leftMargin, 0, textStartHeight - 4 * textRowHeight))
         self.DisplaySettings_Label = DirectLabel(
             parent=self,
             relief=None,
@@ -367,12 +251,7 @@ class OptionsTabPage(DirectFrame):
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
             text_wordwrap=10,
-            pos=(
-                leftMargin,
-                0,
-                textStartHeight -
-                5 *
-                textRowHeight))
+            pos=(leftMargin, 0, textStartHeight - 5 * textRowHeight))
         self.SpeedChatStyle_Label = DirectLabel(
             parent=self,
             relief=None,
@@ -380,12 +259,7 @@ class OptionsTabPage(DirectFrame):
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
             text_wordwrap=10,
-            pos=(
-                leftMargin,
-                0,
-                textStartHeight -
-                6 *
-                textRowHeight))
+            pos=(leftMargin, 0, textStartHeight - 6 * textRowHeight))
         if wantShaders:
             self.VisualEffect_Label = DirectLabel(
                 parent=self,
@@ -394,12 +268,7 @@ class OptionsTabPage(DirectFrame):
                 text_align=TextNode.ALeft,
                 text_scale=options_text_scale,
                 text_wordwrap=10,
-                pos=(
-                    leftMargin,
-                    0,
-                    textStartHeight -
-                    7 *
-                    textRowHeight))
+                pos=(leftMargin, 0, textStartHeight - 7 * textRowHeight))
 
         self.ToonChatSounds_Label = DirectLabel(
             parent=self,
@@ -408,192 +277,118 @@ class OptionsTabPage(DirectFrame):
             text_align=TextNode.ALeft,
             text_scale=options_text_scale,
             text_wordwrap=15,
-            pos=(
-                leftMargin,
-                0,
-                (textStartHeight - 2 * textRowHeight) + 0.025000000000000001))
+            pos=(leftMargin, 0,
+                 (textStartHeight - 2 * textRowHeight) + 0.025000000000000001))
         self.ToonChatSounds_Label.setScale(0.90000000000000002)
         self.Music_toggleButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=button_image_scale,
             text='',
             text_scale=options_text_scale,
             text_pos=button_textpos,
-            pos=(
-                buttonbase_xcoord,
-                0.0,
-                buttonbase_ycoord),
+            pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord),
             command=self._OptionsTabPage__doToggleMusic)
         self.SoundFX_toggleButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=button_image_scale,
             text='',
             text_scale=options_text_scale,
             text_pos=button_textpos,
-            pos=(
-                buttonbase_xcoord,
-                0.0,
-                buttonbase_ycoord -
-                textRowHeight),
+            pos=(buttonbase_xcoord, 0.0, buttonbase_ycoord - textRowHeight),
             command=self._OptionsTabPage__doToggleSfx)
         self.Friends_toggleButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=button_image_scale,
             text='',
             text_scale=options_text_scale,
             text_pos=button_textpos,
-            pos=(
-                buttonbase_xcoord,
-                0.0,
-                buttonbase_ycoord -
-                textRowHeight *
-                3),
+            pos=(buttonbase_xcoord, 0.0,
+                 buttonbase_ycoord - textRowHeight * 3),
             command=self._OptionsTabPage__doToggleAcceptFriends)
         self.Whispers_toggleButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=button_image_scale,
             text='',
             text_scale=options_text_scale,
             text_pos=button_textpos,
-            pos=(
-                buttonbase_xcoord,
-                0.0,
-                buttonbase_ycoord -
-                textRowHeight *
-                4),
+            pos=(buttonbase_xcoord, 0.0,
+                 buttonbase_ycoord - textRowHeight * 4),
             command=self._OptionsTabPage__doToggleAcceptWhispers)
         self.DisplaySettingsButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
-            image3_color=Vec4(
-                0.5,
-                0.5,
-                0.5,
-                0.5),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
+            image3_color=Vec4(0.5, 0.5, 0.5, 0.5),
             image_scale=button_image_scale,
             text=TTLocalizer.OptionsPageChange,
-            text3_fg=(
-                0.5,
-                0.5,
-                0.5,
-                0.75),
+            text3_fg=(0.5, 0.5, 0.5, 0.75),
             text_scale=options_text_scale,
             text_pos=button_textpos,
-            pos=(
-                buttonbase_xcoord,
-                0.0,
-                buttonbase_ycoord -
-                textRowHeight *
-                5),
+            pos=(buttonbase_xcoord, 0.0,
+                 buttonbase_ycoord - textRowHeight * 5),
             command=self._OptionsTabPage__doDisplaySettings)
         self.speedChatStyleLeftArrow = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                gui.find('**/Horiz_Arrow_UP'),
-                gui.find('**/Horiz_Arrow_DN'),
-                gui.find('**/Horiz_Arrow_Rllvr'),
-                gui.find('**/Horiz_Arrow_UP')),
-            image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.5),
-            scale=(
-                -1.0,
-                1.0,
-                1.0),
-            pos=(
-                0.25,
-                0,
-                buttonbase_ycoord - textRowHeight * 6),
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(1, 1, 1, 0.5),
+            scale=(-1.0, 1.0, 1.0),
+            pos=(0.25, 0, buttonbase_ycoord - textRowHeight * 6),
             command=self._OptionsTabPage__doSpeedChatStyleLeft)
         self.speedChatStyleRightArrow = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                gui.find('**/Horiz_Arrow_UP'),
-                gui.find('**/Horiz_Arrow_DN'),
-                gui.find('**/Horiz_Arrow_Rllvr'),
-                gui.find('**/Horiz_Arrow_UP')),
-            image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.5),
-            pos=(
-                0.65000000000000002,
-                0,
-                buttonbase_ycoord -
-                textRowHeight *
-                6),
+            image=(gui.find('**/Horiz_Arrow_UP'),
+                   gui.find('**/Horiz_Arrow_DN'),
+                   gui.find('**/Horiz_Arrow_Rllvr'),
+                   gui.find('**/Horiz_Arrow_UP')),
+            image3_color=Vec4(1, 1, 1, 0.5),
+            pos=(0.65000000000000002, 0,
+                 buttonbase_ycoord - textRowHeight * 6),
             command=self._OptionsTabPage__doSpeedChatStyleRight)
         if wantShaders:
             self.visualEffectLeftArrow = DirectButton(
                 parent=self,
                 relief=None,
-                image=(
-                    gui.find('**/Horiz_Arrow_UP'),
-                    gui.find('**/Horiz_Arrow_DN'),
-                    gui.find('**/Horiz_Arrow_Rllvr'),
-                    gui.find('**/Horiz_Arrow_UP')),
-                image3_color=Vec4(
-                    1,
-                    1,
-                    1,
-                    0.5),
-                scale=(
-                    -1.0,
-                    1.0,
-                    1.0),
-                pos=(
-                    0.25,
-                    0,
-                    buttonbase_ycoord - textRowHeight * 7),
+                image=(gui.find('**/Horiz_Arrow_UP'),
+                       gui.find('**/Horiz_Arrow_DN'),
+                       gui.find('**/Horiz_Arrow_Rllvr'),
+                       gui.find('**/Horiz_Arrow_UP')),
+                image3_color=Vec4(1, 1, 1, 0.5),
+                scale=(-1.0, 1.0, 1.0),
+                pos=(0.25, 0, buttonbase_ycoord - textRowHeight * 7),
                 command=self._OptionsTabPage__doVisualEffectLeft)
             self.visualEffectRightArrow = DirectButton(
                 parent=self,
                 relief=None,
-                image=(
-                    gui.find('**/Horiz_Arrow_UP'),
-                    gui.find('**/Horiz_Arrow_DN'),
-                    gui.find('**/Horiz_Arrow_Rllvr'),
-                    gui.find('**/Horiz_Arrow_UP')),
-                image3_color=Vec4(
-                    1,
-                    1,
-                    1,
-                    0.5),
-                pos=(
-                    0.65000000000000002,
-                    0,
-                    buttonbase_ycoord -
-                    textRowHeight *
-                    7),
+                image=(gui.find('**/Horiz_Arrow_UP'),
+                       gui.find('**/Horiz_Arrow_DN'),
+                       gui.find('**/Horiz_Arrow_Rllvr'),
+                       gui.find('**/Horiz_Arrow_UP')),
+                image3_color=Vec4(1, 1, 1, 0.5),
+                pos=(0.65000000000000002, 0,
+                     buttonbase_ycoord - textRowHeight * 7),
                 command=self._OptionsTabPage__doVisualEffectRight)
         else:
             self.visualEffectLeftArrow = None
@@ -601,29 +396,19 @@ class OptionsTabPage(DirectFrame):
         self.ToonChatSounds_toggleButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR'),
-                guiButton.find('**/QuitBtn_UP')),
-            image3_color=Vec4(
-                0.5,
-                0.5,
-                0.5,
-                0.5),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR'),
+                   guiButton.find('**/QuitBtn_UP')),
+            image3_color=Vec4(0.5, 0.5, 0.5, 0.5),
             image_scale=button_image_scale,
             text='',
-            text3_fg=(
-                0.5,
-                0.5,
-                0.5,
-                0.75),
+            text3_fg=(0.5, 0.5, 0.5, 0.75),
             text_scale=options_text_scale,
             text_pos=button_textpos,
-            pos=(
-                buttonbase_xcoord,
-                0.0,
-                (buttonbase_ycoord - textRowHeight * 2) + 0.025000000000000001),
+            pos=(buttonbase_xcoord, 0.0,
+                 (buttonbase_ycoord - textRowHeight * 2) +
+                 0.025000000000000001),
             command=self._OptionsTabPage__doToggleToonChatSounds)
         self.ToonChatSounds_toggleButton.setScale(0.80000000000000004)
         self.speedChatStyleText = SpeedChat.SpeedChat(
@@ -633,7 +418,8 @@ class OptionsTabPage(DirectFrame):
             guiModelName='phase_3.5/models/gui/speedChatGui')
         self.speedChatStyleText.setScale(self.speed_chat_scale)
         self.speedChatStyleText.setPos(
-            0.37, 0, (buttonbase_ycoord - textRowHeight * 6) + 0.029999999999999999)
+            0.37, 0,
+            (buttonbase_ycoord - textRowHeight * 6) + 0.029999999999999999)
         self.speedChatStyleText.reparentTo(self, DGG.FOREGROUND_SORT_INDEX)
         if wantShaders:
             self.visualEffectText = SpeedChat.SpeedChat(
@@ -643,26 +429,23 @@ class OptionsTabPage(DirectFrame):
                 guiModelName='phase_3.5/models/gui/speedChatGui')
             self.visualEffectText.setScale(self.speed_chat_scale)
             self.visualEffectText.setPos(
-                0.37, 0, (buttonbase_ycoord - textRowHeight * 7) + 0.029999999999999999)
+                0.37, 0,
+                (buttonbase_ycoord - textRowHeight * 7) + 0.029999999999999999)
             self.visualEffectText.reparentTo(self, DGG.FOREGROUND_SORT_INDEX)
         else:
             self.visualEffectText = None
         self.exitButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
             image_scale=1.1499999999999999,
             text=TTLocalizer.OptionsPageExitToontown,
             text_scale=options_text_scale,
             text_pos=button_textpos,
             textMayChange=0,
-            pos=(
-                0.45000000000000001,
-                0,
-                -0.59999999999999998),
+            pos=(0.45000000000000001, 0, -0.59999999999999998),
             command=self._OptionsTabPage__handleExitShowWithConfirm)
         guiButton.removeNode()
         gui.removeNode()
@@ -700,10 +483,9 @@ class OptionsTabPage(DirectFrame):
             self.visualEffectText.exit()
 
         if self.displaySettingsChanged:
-            taskMgr.doMethodLater(
-                self.DisplaySettingsDelay,
-                self.writeDisplaySettings,
-                self.DisplaySettingsTaskName)
+            taskMgr.doMethodLater(self.DisplaySettingsDelay,
+                                  self.writeDisplaySettings,
+                                  self.DisplaySettingsTaskName)
 
     def unload(self):
         self.writeDisplaySettings()
@@ -799,7 +581,8 @@ class OptionsTabPage(DirectFrame):
     def _OptionsTabPage__setSoundFXButton(self):
         if base.sfxActive:
             self.SoundFX_Label['text'] = TTLocalizer.OptionsPageSFXOnLabel
-            self.SoundFX_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
+            self.SoundFX_toggleButton[
+                'text'] = TTLocalizer.OptionsPageToggleOff
         else:
             self.SoundFX_Label['text'] = TTLocalizer.OptionsPageSFXOffLabel
             self.SoundFX_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
@@ -807,11 +590,15 @@ class OptionsTabPage(DirectFrame):
 
     def _OptionsTabPage__setToonChatSoundsButton(self):
         if base.toonChatSounds:
-            self.ToonChatSounds_Label['text'] = TTLocalizer.OptionsPageToonChatSoundsOnLabel
-            self.ToonChatSounds_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
+            self.ToonChatSounds_Label[
+                'text'] = TTLocalizer.OptionsPageToonChatSoundsOnLabel
+            self.ToonChatSounds_toggleButton[
+                'text'] = TTLocalizer.OptionsPageToggleOff
         else:
-            self.ToonChatSounds_Label['text'] = TTLocalizer.OptionsPageToonChatSoundsOffLabel
-            self.ToonChatSounds_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
+            self.ToonChatSounds_Label[
+                'text'] = TTLocalizer.OptionsPageToonChatSoundsOffLabel
+            self.ToonChatSounds_toggleButton[
+                'text'] = TTLocalizer.OptionsPageToggleOn
         if base.sfxActive:
             self.ToonChatSounds_Label.setColorScale(1.0, 1.0, 1.0, 1.0)
             self.ToonChatSounds_toggleButton['state'] = DGG.NORMAL
@@ -843,39 +630,45 @@ class OptionsTabPage(DirectFrame):
 
     def _OptionsTabPage__setAcceptFriendsButton(self):
         if base.localAvatar.acceptingNewFriends:
-            self.Friends_Label['text'] = TTLocalizer.OptionsPageFriendsEnabledLabel
-            self.Friends_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
+            self.Friends_Label[
+                'text'] = TTLocalizer.OptionsPageFriendsEnabledLabel
+            self.Friends_toggleButton[
+                'text'] = TTLocalizer.OptionsPageToggleOff
         else:
-            self.Friends_Label['text'] = TTLocalizer.OptionsPageFriendsDisabledLabel
+            self.Friends_Label[
+                'text'] = TTLocalizer.OptionsPageFriendsDisabledLabel
             self.Friends_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
 
     def _OptionsTabPage__setAcceptWhispersButton(self):
         if base.localAvatar.acceptingNonFriendWhispers:
-            self.Whispers_Label['text'] = TTLocalizer.OptionsPageWhisperEnabledLabel
-            self.Whispers_toggleButton['text'] = TTLocalizer.OptionsPageToggleOff
+            self.Whispers_Label[
+                'text'] = TTLocalizer.OptionsPageWhisperEnabledLabel
+            self.Whispers_toggleButton[
+                'text'] = TTLocalizer.OptionsPageToggleOff
         else:
-            self.Whispers_Label['text'] = TTLocalizer.OptionsPageWhisperDisabledLabel
-            self.Whispers_toggleButton['text'] = TTLocalizer.OptionsPageToggleOn
+            self.Whispers_Label[
+                'text'] = TTLocalizer.OptionsPageWhisperDisabledLabel
+            self.Whispers_toggleButton[
+                'text'] = TTLocalizer.OptionsPageToggleOn
 
     def _OptionsTabPage__doDisplaySettings(self):
         if self.displaySettings is None:
-            self.displaySettings = DisplaySettingsDialog.DisplaySettingsDialog()
+            self.displaySettings = DisplaySettingsDialog.DisplaySettingsDialog(
+            )
             self.displaySettings.load()
-            self.accept(
-                self.displaySettings.doneEvent,
-                self._OptionsTabPage__doneDisplaySettings)
+            self.accept(self.displaySettings.doneEvent,
+                        self._OptionsTabPage__doneDisplaySettings)
 
-        self.displaySettings.enter(
-            self.ChangeDisplaySettings,
-            self.ChangeDisplayAPI)
+        self.displaySettings.enter(self.ChangeDisplaySettings,
+                                   self.ChangeDisplayAPI)
 
     def _OptionsTabPage__doneDisplaySettings(self, anyChanged, apiChanged):
         if anyChanged:
             self._OptionsTabPage__setDisplaySettings()
             properties = base.win.getProperties()
             self.displaySettingsChanged = 1
-            self.displaySettingsSize = (
-                properties.getXSize(), properties.getYSize())
+            self.displaySettingsSize = (properties.getXSize(),
+                                        properties.getYSize())
             self.displaySettingsFullscreen = properties.getFullscreen()
             self.displaySettingsEmbedded = self.isPropertiesEmbedded(
                 properties)
@@ -892,8 +685,8 @@ class OptionsTabPage(DirectFrame):
     def _OptionsTabPage__setDisplaySettings(self):
         properties = base.win.getProperties()
         if properties.getFullscreen():
-            screensize = '%s x %s' % (
-                properties.getXSize(), properties.getYSize())
+            screensize = '%s x %s' % (properties.getXSize(),
+                                      properties.getYSize())
         else:
             screensize = TTLocalizer.OptionsPageDisplayWindowed
         isEmbedded = self.isPropertiesEmbedded(properties)
@@ -901,9 +694,7 @@ class OptionsTabPage(DirectFrame):
             screensize = TTLocalizer.OptionsPageDisplayEmbedded
 
         api = base.pipe.getInterfaceName()
-        settings = {
-            'screensize': screensize,
-            'api': api}
+        settings = {'screensize': screensize, 'api': api}
         if self.ChangeDisplayAPI:
             OptionsPage.notify.debug('change display settings...')
             text = TTLocalizer.OptionsPageDisplaySettings % settings
@@ -936,7 +727,9 @@ class OptionsTabPage(DirectFrame):
         (nameKey, arrowColor, rolloverColor,
          frameColor) = speedChatStyles[self.speedChatStyleIndex]
         newSCColorScheme = SCColorScheme.SCColorScheme(
-            arrowColor=arrowColor, rolloverColor=rolloverColor, frameColor=frameColor)
+            arrowColor=arrowColor,
+            rolloverColor=rolloverColor,
+            frameColor=frameColor)
         self.speedChatStyleText.setColorScheme(newSCColorScheme)
         self.speedChatStyleText.clearMenu()
         colorName = SCStaticTextTerminal.SCStaticTextTerminal(nameKey)
@@ -944,10 +737,7 @@ class OptionsTabPage(DirectFrame):
         self.speedChatStyleText.finalize()
         self.speedChatStyleText.setPos(
             0.44500000000000001 -
-            self.speedChatStyleText.getWidth() *
-            self.speed_chat_scale /
-            2,
-            0,
+            self.speedChatStyleText.getWidth() * self.speed_chat_scale / 2, 0,
             self.speedChatStyleText.getPos()[2])
         if self.speedChatStyleIndex > 0:
             self.speedChatStyleLeftArrow['state'] = DGG.NORMAL
@@ -967,10 +757,7 @@ class OptionsTabPage(DirectFrame):
         self.visualEffectText.finalize()
         self.visualEffectText.setPos(
             0.44500000000000001 -
-            self.visualEffectText.getWidth() *
-            self.speed_chat_scale /
-            2,
-            0,
+            self.visualEffectText.getWidth() * self.speed_chat_scale / 2, 0,
             self.visualEffectText.getPos()[2])
         if self.visualEffectIndex > 0:
             self.visualEffectLeftArrow['state'] = DGG.NORMAL
@@ -988,22 +775,18 @@ class OptionsTabPage(DirectFrame):
 
         taskMgr.remove(self.DisplaySettingsTaskName)
         self.notify.info(
-            'writing new display settings %s, fullscreen %s, embedded %s, %s to SettingsFile.' %
-            (self.displaySettingsSize,
-             self.displaySettingsFullscreen,
-             self.displaySettingsEmbedded,
-             self.displaySettingsApi))
-        Settings.setResolutionDimensions(
-            self.displaySettingsSize[0],
-            self.displaySettingsSize[1])
+            'writing new display settings %s, fullscreen %s, embedded %s, %s to SettingsFile.'
+            % (self.displaySettingsSize, self.displaySettingsFullscreen,
+               self.displaySettingsEmbedded, self.displaySettingsApi))
+        Settings.setResolutionDimensions(self.displaySettingsSize[0],
+                                         self.displaySettingsSize[1])
         Settings.setWindowedMode(not (self.displaySettingsFullscreen))
         Settings.setEmbeddedMode(self.displaySettingsEmbedded)
         if self.displaySettingsApiChanged:
             api = self.DisplaySettingsApiMap.get(self.displaySettingsApi)
             if api is None:
-                self.notify.warning(
-                    'Cannot save unknown display API: %s' %
-                    self.displaySettingsApi)
+                self.notify.warning('Cannot save unknown display API: %s' %
+                                    self.displaySettingsApi)
             else:
                 Settings.setDisplayDriver(api)
 
@@ -1017,9 +800,7 @@ class OptionsTabPage(DirectFrame):
             message=TTLocalizer.OptionsPageExitConfirm,
             style=TTDialog.TwoChoice)
         self.confirm.show()
-        self.parent.doneStatus = {
-            'mode': 'exit',
-            'exitTo': 'closeShard'}
+        self.parent.doneStatus = {'mode': 'exit', 'exitTo': 'closeShard'}
         self.accept('confirmDone', self._OptionsTabPage__handleConfirm)
 
     def _OptionsTabPage__handleConfirm(self):
@@ -1038,9 +819,11 @@ class CodesTabPage(DirectFrame):
     def __init__(self, parent=aspect2d):
         self.parent = parent
         DirectFrame.__init__(
-            self, parent=self.parent, relief=None, pos=(
-                0.0, 0.0, 0.0), scale=(
-                1.0, 1.0, 1.0))
+            self,
+            parent=self.parent,
+            relief=None,
+            pos=(0.0, 0.0, 0.0),
+            scale=(1.0, 1.0, 1.0))
         self.load()
 
     def destroy(self):
@@ -1073,40 +856,24 @@ class CodesTabPage(DirectFrame):
             text_align=TextNode.ACenter,
             text_scale=TTLocalizer.OPCodesResultPanelTextScale,
             text_wordwrap=TTLocalizer.OPCodesInstructionPanelTextWordWrap,
-            pos=(
-                -0.42899999999999999,
-                0,
-                -0.050000000000000003))
+            pos=(-0.42899999999999999, 0, -0.050000000000000003))
         self.codeBox = DirectFrame(
-            parent=self, relief=None, image=codeBoxGui, pos=(
-                0.433, 0, 0.34999999999999998))
+            parent=self,
+            relief=None,
+            image=codeBoxGui,
+            pos=(0.433, 0, 0.34999999999999998))
         self.flippyFrame = DirectFrame(
-            parent=self, relief=None, image=flippyGui, pos=(
-                0.44, 0, -0.35299999999999998))
+            parent=self,
+            relief=None,
+            image=flippyGui,
+            pos=(0.44, 0, -0.35299999999999998))
         self.codeInput = DirectEntry(
             parent=self.codeBox,
             relief=DGG.GROOVE,
             scale=0.080000000000000002,
-            pos=(
-                -0.33000000000000002,
-                0,
-                -0.0060000000000000001),
-            borderWidth=(
-                0.050000000000000003,
-                0.050000000000000003),
-            frameColor=(
-                (1,
-                 1,
-                 1,
-                 1),
-                (1,
-                 1,
-                 1,
-                 1),
-                (0.5,
-                 0.5,
-                 0.5,
-                 0.5)),
+            pos=(-0.33000000000000002, 0, -0.0060000000000000001),
+            borderWidth=(0.050000000000000003, 0.050000000000000003),
+            frameColor=((1, 1, 1, 1), (1, 1, 1, 1), (0.5, 0.5, 0.5, 0.5)),
             state=DGG.NORMAL,
             text_align=TextNode.ALeft,
             text_scale=TTLocalizer.OPCodesInputTextScale,
@@ -1115,11 +882,7 @@ class CodesTabPage(DirectFrame):
             focus=1,
             backgroundFocus=0,
             cursorKeys=1,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(0, 0, 0, 1),
             suppressMouse=1,
             autoCapitalize=0,
             command=self._CodesTabPage__submitCode)
@@ -1127,32 +890,20 @@ class CodesTabPage(DirectFrame):
         self.submitButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                submitButtonGui.find('**/QuitBtn_UP'),
-                submitButtonGui.find('**/QuitBtn_DN'),
-                submitButtonGui.find('**/QuitBtn_RLVR'),
-                submitButtonGui.find('**/QuitBtn_UP')),
-            image3_color=Vec4(
-                0.5,
-                0.5,
-                0.5,
-                0.5),
+            image=(submitButtonGui.find('**/QuitBtn_UP'),
+                   submitButtonGui.find('**/QuitBtn_DN'),
+                   submitButtonGui.find('**/QuitBtn_RLVR'),
+                   submitButtonGui.find('**/QuitBtn_UP')),
+            image3_color=Vec4(0.5, 0.5, 0.5, 0.5),
             image_scale=1.1499999999999999,
             state=DGG.NORMAL,
             text=TTLocalizer.NameShopSubmitButton,
             text_scale=TTLocalizer.OPCodesSubmitTextScale,
             text_align=TextNode.ACenter,
             text_pos=TTLocalizer.OPCodesSubmitTextPos,
-            text3_fg=(
-                0.5,
-                0.5,
-                0.5,
-                0.75),
+            text3_fg=(0.5, 0.5, 0.5, 0.75),
             textMayChange=0,
-            pos=(
-                0.45000000000000001,
-                0.0,
-                0.089599999999999999),
+            pos=(0.45000000000000001, 0.0, 0.089599999999999999),
             command=self._CodesTabPage__submitCode)
         self.resultPanel = DirectFrame(
             parent=self,
@@ -1163,29 +914,19 @@ class CodesTabPage(DirectFrame):
             text_align=TextNode.ACenter,
             text_scale=TTLocalizer.OPCodesResultPanelTextScale,
             text_wordwrap=TTLocalizer.OPCodesResultPanelTextWordWrap,
-            pos=(
-                -0.41999999999999998,
-                0,
-                -0.0567))
+            pos=(-0.41999999999999998, 0, -0.0567))
         self.resultPanel.hide()
         closeButtonGui = loader.loadModel(
             'phase_3/models/gui/dialog_box_buttons_gui')
         self.closeButton = DirectButton(
             parent=self.resultPanel,
-            pos=(
-                0.29599999999999999,
-                0,
-                -0.46600000000000003),
+            pos=(0.29599999999999999, 0, -0.46600000000000003),
             relief=None,
             state=DGG.NORMAL,
-            image=(
-                closeButtonGui.find('**/CloseBtn_UP'),
-                closeButtonGui.find('**/CloseBtn_DN'),
-                closeButtonGui.find('**/CloseBtn_Rllvr')),
-            image_scale=(
-                1,
-                1,
-                1),
+            image=(closeButtonGui.find('**/CloseBtn_UP'),
+                   closeButtonGui.find('**/CloseBtn_DN'),
+                   closeButtonGui.find('**/CloseBtn_Rllvr')),
+            image_scale=(1, 1, 1),
             command=self._CodesTabPage__hideResultPanel)
         closeButtonGui.removeNode()
         cdrGui.removeNode()
@@ -1259,13 +1000,15 @@ class CodesTabPage(DirectFrame):
             elif awardMgrResult == 3 or awardMgrResult == 4:
                 self.resultPanel['text'] = TTLocalizer.CdrResultMailboxFull
             elif awardMgrResult == 5 or awardMgrResult == 10:
-                self.resultPanel['text'] = TTLocalizer.CdrResultAlreadyInMailbox
+                self.resultPanel[
+                    'text'] = TTLocalizer.CdrResultAlreadyInMailbox
             elif awardMgrResult == 6 and awardMgrResult == 7 or awardMgrResult == 11:
                 self.resultPanel['text'] = TTLocalizer.CdrResultAlreadyInQueue
             elif awardMgrResult == 8:
                 self.resultPanel['text'] = TTLocalizer.CdrResultAlreadyInCloset
             elif awardMgrResult == 9:
-                self.resultPanel['text'] = TTLocalizer.CdrResultAlreadyBeingWorn
+                self.resultPanel[
+                    'text'] = TTLocalizer.CdrResultAlreadyBeingWorn
             elif awardMgrResult == 12 and awardMgrResult == 13 or awardMgrResult == 14:
                 self.resultPanel['text'] = TTLocalizer.CdrResultAlreadyReceived
 

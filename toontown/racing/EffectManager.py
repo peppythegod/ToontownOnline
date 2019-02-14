@@ -7,7 +7,6 @@ from toontown.battle import MovieUtil
 
 
 class EffectManager(DirectObject):
-
     def __init__(self):
         self.effectList = []
 
@@ -15,18 +14,17 @@ class EffectManager(DirectObject):
         for effect in effectList:
             self._EffectManager__removeEffect(effect)
 
-    def addSplatEffect(
-            self,
-            spawner,
-            splatName='splat-creampie',
-            time=1,
-            size=6,
-            parent=render):
+    def addSplatEffect(self,
+                       spawner,
+                       splatName='splat-creampie',
+                       time=1,
+                       size=6,
+                       parent=render):
         splat = globalPropPool.getProp(splatName)
         splatSeq = Sequence()
         splatType = globalPropPool.getPropType(splatName)
-        splatShow = Func(self._EffectManager__showProp, splat,
-                         size, parent, spawner.getPos(parent))
+        splatShow = Func(self._EffectManager__showProp, splat, size, parent,
+                         spawner.getPos(parent))
         splatAnim = ActorInterval(splat, splatName)
         splatHide = Func(MovieUtil.removeProp, splat)
         splatRemove = Func(self._EffectManager__removeEffect, splatSeq)

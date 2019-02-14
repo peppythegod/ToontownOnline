@@ -4,7 +4,6 @@ from toontown.coghq import SellbotCogHQLoader
 
 
 class SellbotHQ(CogHood.CogHood):
-
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
         CogHood.CogHood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
         self.id = ToontownGlobals.SellbotHQ
@@ -26,13 +25,11 @@ class SellbotHQ(CogHood.CogHood):
     def enter(self, *args):
         CogHood.CogHood.enter(self, *args)
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.CogHQCameraNear,
-            ToontownGlobals.CogHQCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.CogHQCameraNear,
+                                ToontownGlobals.CogHQCameraFar)
 
     def exit(self):
         localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            ToontownGlobals.DefaultCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                ToontownGlobals.DefaultCameraFar)
         CogHood.CogHood.exit(self)

@@ -14,9 +14,8 @@ import random
 import math
 
 
-class DistributedCashbotBossAI(
-        DistributedBossCogAI.DistributedBossCogAI,
-        FSM.FSM):
+class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI,
+                               FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedCashbotBossAI')
     maxGoons = 8
@@ -75,9 +74,7 @@ class DistributedCashbotBossAI(
             return cmp(a[1], b[1])
 
         reserveSuits.sort(compareJoinChance)
-        return {
-            'activeSuits': activeSuits,
-            'reserveSuits': reserveSuits}
+        return {'activeSuits': activeSuits, 'reserveSuits': reserveSuits}
 
     def removeToon(self, avId):
         if self.cranes is not None:
@@ -160,8 +157,8 @@ class DistributedCashbotBossAI(
 
                 toonId = self.toonsToAttack.pop(0)
             self.toonsToAttack.append(toonId)
-            self.b_setAttackCode(
-                ToontownGlobals.BossCogSlowDirectedAttack, toonId)
+            self.b_setAttackCode(ToontownGlobals.BossCogSlowDirectedAttack,
+                                 toonId)
 
     def reprieveToon(self, avId):
         if avId in self.toonsToAttack:
@@ -183,21 +180,20 @@ class DistributedCashbotBossAI(
         radius = 10
         dx = radius * math.cos(angle)
         dy = radius * math.sin(angle)
-        fpos = self.scene.getRelativePoint(
-            self, Point3(v[0] + dx, v[1] + dy, 0))
+        fpos = self.scene.getRelativePoint(self, Point3(
+            v[0] + dx, v[1] + dy, 0))
         if goon.strength <= 10:
             style = ToontownGlobals.ToontownCentral
             healAmount = 3
         elif goon.strength <= 15:
             style = random.choice([
-                ToontownGlobals.DonaldsDock,
-                ToontownGlobals.DaisyGardens,
-                ToontownGlobals.MinniesMelodyland])
+                ToontownGlobals.DonaldsDock, ToontownGlobals.DaisyGardens,
+                ToontownGlobals.MinniesMelodyland
+            ])
             healAmount = 10
         else:
-            style = random.choice([
-                ToontownGlobals.TheBrrrgh,
-                ToontownGlobals.DonaldsDreamland])
+            style = random.choice(
+                [ToontownGlobals.TheBrrrgh, ToontownGlobals.DonaldsDreamland])
             healAmount = 12
         if self.recycledTreasures:
             treasure = self.recycledTreasures.pop(0)
@@ -269,9 +265,7 @@ class DistributedCashbotBossAI(
 
     def makeGoon(self, side=None):
         if side is None:
-            side = random.choice([
-                'EmergeA',
-                'EmergeB'])
+            side = random.choice(['EmergeA', 'EmergeB'])
 
         goon = self._DistributedCashbotBossAI__chooseOldGoon()
         if goon is None:
@@ -286,21 +280,15 @@ class DistributedCashbotBossAI(
         if self.getBattleThreeTime() > 1.0:
             goon.STUN_TIME = 4
             goon.b_setupGoon(
-                velocity=8,
-                hFov=90,
-                attackRadius=20,
-                strength=30,
-                scale=1.8)
+                velocity=8, hFov=90, attackRadius=20, strength=30, scale=1.8)
         else:
             goon.STUN_TIME = self.progressValue(30, 8)
             goon.b_setupGoon(
-                velocity=self.progressRandomValue(
-                    3, 7), hFov=self.progressRandomValue(
-                    70, 80), attackRadius=self.progressRandomValue(
-                    6, 15), strength=int(
-                    self.progressRandomValue(
-                        5, 25)), scale=self.progressRandomValue(
-                            0.5, 1.5))
+                velocity=self.progressRandomValue(3, 7),
+                hFov=self.progressRandomValue(70, 80),
+                attackRadius=self.progressRandomValue(6, 15),
+                strength=int(self.progressRandomValue(5, 25)),
+                scale=self.progressRandomValue(0.5, 1.5))
         goon.request(side)
 
     def _DistributedCashbotBossAI__chooseOldGoon(self):
@@ -334,9 +322,7 @@ class DistributedCashbotBossAI(
             taskMgr.remove(taskName)
             delayTime = self.progressValue(45, 15)
             taskMgr.doMethodLater(
-                delayTime,
-                self._DistributedCashbotBossAI__donHelmet,
-                taskName)
+                delayTime, self._DistributedCashbotBossAI__donHelmet, taskName)
             self.waitingForHelmet = 1
 
     def _DistributedCashbotBossAI__donHelmet(self, task):
@@ -386,10 +372,8 @@ class DistributedCashbotBossAI(
 
     def recordHit(self, damage):
         avId = self.air.getAvatarIdFromSender()
-        if not self.validate(
-                avId,
-                avId in self.involvedToons,
-                'recordHit from unknown avatar'):
+        if not self.validate(avId, avId in self.involvedToons,
+                             'recordHit from unknown avatar'):
             return None
 
         if self.state != 'BattleThree':
@@ -416,12 +400,10 @@ class DistributedCashbotBossAI(
         self.bossDamage = bossDamage
 
     def d_setBossDamage(self, bossDamage):
-        self.sendUpdate('setBossDamage', [
-            bossDamage])
+        self.sendUpdate('setBossDamage', [bossDamage])
 
     def d_setRewardId(self, rewardId):
-        self.sendUpdate('setRewardId', [
-            rewardId])
+        self.sendUpdate('setRewardId', [rewardId])
 
     def applyReward(self):
         avId = self.air.getAvatarIdFromSender()
@@ -452,9 +434,7 @@ class DistributedCashbotBossAI(
         self._DistributedCashbotBossAI__makeBattleThreeObjects()
         self._DistributedCashbotBossAI__resetBattleThreeObjects()
         self.barrier = self.beginBarrier(
-            'PrepareBattleThree',
-            self.involvedToons,
-            55,
+            'PrepareBattleThree', self.involvedToons, 55,
             self._DistributedCashbotBossAI__donePrepareBattleThree)
 
     def _DistributedCashbotBossAI__donePrepareBattleThree(self, avIds):
@@ -514,23 +494,18 @@ class DistributedCashbotBossAI(
             'isCFO': 1,
             'isSupervisor': 0,
             'isVirtual': 0,
-            'activeToons': self.involvedToons[:]})
+            'activeToons': self.involvedToons[:]
+        })
         self.barrier = self.beginBarrier(
-            'Victory',
-            self.involvedToons,
-            30,
+            'Victory', self.involvedToons, 30,
             self._DistributedCashbotBossAI__doneVictory)
 
     def _DistributedCashbotBossAI__doneVictory(self, avIds):
         self.d_setBattleExperience()
         self.b_setState('Reward')
         BattleExperienceAI.assignRewards(
-            self.involvedToons,
-            self.toonSkillPtsGained,
-            self.suitsKilled,
-            ToontownGlobals.dept2cogHQ(
-                self.dept),
-            self.helpfulToons)
+            self.involvedToons, self.toonSkillPtsGained, self.suitsKilled,
+            ToontownGlobals.dept2cogHQ(self.dept), self.helpfulToons)
         for toonId in self.involvedToons:
             toon = self.air.doId2do.get(toonId)
             if toon:

@@ -6,7 +6,6 @@ import DistributedBarrelBase
 
 
 class DistributedHealBarrel(DistributedBarrelBase.DistributedBarrelBase):
-
     def __init__(self, cr):
         DistributedBarrelBase.DistributedBarrelBase.__init__(self, cr)
         self.numGags = 0
@@ -26,8 +25,8 @@ class DistributedHealBarrel(DistributedBarrelBase.DistributedBarrelBase):
         self.gagModel.reparentTo(self.gagNode)
         self.gagModel.find('**/p1_2').clearBillboard()
         self.gagModel.setScale(self.gagScale)
-        self.gagModel.setPos(0, -0.10000000000000001, -
-                             0.10000000000000001 - self.gagScale)
+        self.gagModel.setPos(0, -0.10000000000000001,
+                             -0.10000000000000001 - self.gagScale)
 
     def setGrab(self, avId):
         DistributedBarrelBase.DistributedBarrelBase.setGrab(self, avId)

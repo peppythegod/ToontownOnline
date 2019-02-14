@@ -2,9 +2,7 @@ from toontown.uberdog.ScavengerHuntDataStore import *
 from toontown.uberdog.DataStore import *
 SH = 1
 GEN = 2
-TYPES = {
-    SH: (ScavengerHuntDataStore,),
-    GEN: (DataStore,)}
+TYPES = {SH: (ScavengerHuntDataStore, ), GEN: (DataStore, )}
 
 
 def getStoreClass(type):

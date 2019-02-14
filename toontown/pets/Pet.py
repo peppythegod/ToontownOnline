@@ -26,7 +26,8 @@ Component2IconDict = {
     'excitement': 'Surprised',
     'anger': 'Angry',
     'surprise': 'Surprised',
-    'affection': 'Love'}
+    'affection': 'Love'
+}
 
 
 class Pet(Avatar.Avatar):
@@ -37,7 +38,8 @@ class Pet(Avatar.Avatar):
         Interactions.SCRATCH: ('toPet', 'pet', 'fromPet'),
         Interactions.BEG: ('toBeg', 'beg', 'fromBeg'),
         Interactions.EAT: ('eat', 'swallow', 'neutral'),
-        Interactions.NEUTRAL: 'neutral'}
+        Interactions.NEUTRAL: 'neutral'
+    }
 
     def __init__(self, forGui=0):
         Avatar.Avatar.__init__(self)
@@ -49,7 +51,8 @@ class Pet(Avatar.Avatar):
         self.animFSM = ClassicFSM('petAnimFSM', [
             State('off', self.enterOff, self.exitOff),
             State('neutral', self.enterNeutral, self.exitNeutral),
-            State('neutralHappy', self.enterNeutralHappy, self.exitNeutralHappy),
+            State('neutralHappy', self.enterNeutralHappy,
+                  self.exitNeutralHappy),
             State('neutralSad', self.enterNeutralSad, self.exitNeutralSad),
             State('run', self.enterRun, self.exitRun),
             State('swim', self.enterSwim, self.exitSwim),
@@ -57,7 +60,8 @@ class Pet(Avatar.Avatar):
             State('teleportOut', self.enterTeleportOut, self.exitTeleportOut),
             State('walk', self.enterWalk, self.exitWalk),
             State('walkHappy', self.enterWalkHappy, self.exitWalkHappy),
-            State('walkSad', self.enterWalkSad, self.exitWalkSad)], 'off', 'off')
+            State('walkSad', self.enterWalkSad, self.exitWalkSad)
+        ], 'off', 'off')
         self.animFSM.enterInitialState()
         self.forGui = forGui
         self.moodModel = None
@@ -150,7 +154,8 @@ class Pet(Avatar.Avatar):
             'swim': 'phase_5.5/models/char/TT_pets-swim',
             'toBall': 'phase_5.5/models/char/TT_pets-toBall',
             'walk': 'phase_5.5/models/char/TT_pets-walk',
-            'walkHappy': 'phase_5.5/models/char/TT_pets-walkHappy'})
+            'walkHappy': 'phase_5.5/models/char/TT_pets-walkHappy'
+        })
         self.setHeight(2)
         color = None
         colorIndex = self.style[5]
@@ -283,8 +288,8 @@ class Pet(Avatar.Avatar):
     def initializeBodyCollisions(self, collIdStr):
         Avatar.Avatar.initializeBodyCollisions(self, collIdStr)
         if not self.ghostMode:
-            self.collNode.setCollideMask(
-                self.collNode.getIntoCollideMask() | ToontownGlobals.PieBitmask)
+            self.collNode.setCollideMask(self.collNode.getIntoCollideMask()
+                                         | ToontownGlobals.PieBitmask)
 
     def amplifyColor(self, color, scale):
         color = color * scale
@@ -316,8 +321,9 @@ class Pet(Avatar.Avatar):
     def showMood(self, mood):
         if hasattr(base.cr, 'newsManager') and base.cr.newsManager:
             holidayIds = base.cr.newsManager.getHolidayIdList()
-            if (ToontownGlobals.APRIL_FOOLS_COSTUMES in holidayIds or ToontownGlobals.SILLYMETER_EXT_HOLIDAY in holidayIds) and not (
-                    mood == 'confusion'):
+            if (ToontownGlobals.APRIL_FOOLS_COSTUMES in holidayIds
+                    or ToontownGlobals.SILLYMETER_EXT_HOLIDAY in holidayIds
+                ) and not (mood == 'confusion'):
                 self.speakMood(mood)
                 return None
             else:
@@ -349,14 +355,10 @@ class Pet(Avatar.Avatar):
 
         if base.config.GetBool('want-speech-bubble', 1):
             self.nametag.setChat(
-                random.choice(
-                    TTLocalizer.SpokenMoods[mood]),
-                CFSpeech)
+                random.choice(TTLocalizer.SpokenMoods[mood]), CFSpeech)
         else:
             self.nametag.setChat(
-                random.choice(
-                    TTLocalizer.SpokenMoods[mood]),
-                CFThought)
+                random.choice(TTLocalizer.SpokenMoods[mood]), CFThought)
 
     def getGenderString(self):
         if self.style:
@@ -431,9 +433,7 @@ class Pet(Avatar.Avatar):
     def enterBeg(self):
         delay = self.getDuration('toBeg')
         self.track = Sequence(
-            Func(
-                self.play, 'toBeg'), Wait(delay), Func(
-                self.loop, 'beg'))
+            Func(self.play, 'toBeg'), Wait(delay), Func(self.loop, 'beg'))
         self.track.start()
 
     def exitBeg(self):
@@ -490,22 +490,25 @@ class Pet(Avatar.Avatar):
 
     def getTeleportInTrack(self):
         if not self.teleportHole:
-            self.teleportHole = Actor.Actor('phase_3.5/models/props/portal-mod', {
-                'hole': 'phase_3.5/models/props/portal-chan'})
+            self.teleportHole = Actor.Actor(
+                'phase_3.5/models/props/portal-mod',
+                {'hole': 'phase_3.5/models/props/portal-chan'})
 
         track = Sequence(
-            Wait(1.0), Parallel(
-                self.getTeleportInSoundInterval(), Sequence(
-                    Func(
-                        self.showHole), ActorInterval(
-                        self.teleportHole, 'hole', startFrame=81, endFrame=71), ActorInterval(
-                        self, 'reappear'), ActorInterval(
-                            self.teleportHole, 'hole', startFrame=71, endFrame=81), Func(
-                                self.cleanupHole), Func(
-                                    self.loop, 'neutral')), Sequence(
-                                        Func(
-                                            self.dropShadow.hide), Wait(1.0), Func(
-                                                self.dropShadow.show))))
+            Wait(1.0),
+            Parallel(
+                self.getTeleportInSoundInterval(),
+                Sequence(
+                    Func(self.showHole),
+                    ActorInterval(
+                        self.teleportHole, 'hole', startFrame=81, endFrame=71),
+                    ActorInterval(self, 'reappear'),
+                    ActorInterval(
+                        self.teleportHole, 'hole', startFrame=71, endFrame=81),
+                    Func(self.cleanupHole), Func(self.loop, 'neutral')),
+                Sequence(
+                    Func(self.dropShadow.hide), Wait(1.0),
+                    Func(self.dropShadow.show))))
         return track
 
     def enterTeleportIn(self, timestamp):
@@ -517,23 +520,27 @@ class Pet(Avatar.Avatar):
 
     def getTeleportOutTrack(self):
         if not self.teleportHole:
-            self.teleportHole = Actor.Actor('phase_3.5/models/props/portal-mod', {
-                'hole': 'phase_3.5/models/props/portal-chan'})
+            self.teleportHole = Actor.Actor(
+                'phase_3.5/models/props/portal-mod',
+                {'hole': 'phase_3.5/models/props/portal-chan'})
 
         track = Sequence(
-            Wait(1.0), Parallel(
-                self.getTeleportOutSoundInterval(), Sequence(
-                    ActorInterval(
-                        self, 'toDig'), Parallel(
+            Wait(1.0),
+            Parallel(
+                self.getTeleportOutSoundInterval(),
+                Sequence(
+                    ActorInterval(self, 'toDig'),
+                    Parallel(
+                        ActorInterval(self, 'dig'), Func(self.showHole),
                         ActorInterval(
-                            self, 'dig'), Func(
-                            self.showHole), ActorInterval(
-                                self.teleportHole, 'hole', startFrame=81, endFrame=71)), ActorInterval(
-                                    self, 'disappear'), ActorInterval(
-                                        self.teleportHole, 'hole', startFrame=71, endFrame=81), Func(
-                                            self.cleanupHole)), Sequence(
-                                                Wait(1.0), Func(
-                                                    self.dropShadow.hide))))
+                            self.teleportHole,
+                            'hole',
+                            startFrame=81,
+                            endFrame=71)), ActorInterval(self, 'disappear'),
+                    ActorInterval(
+                        self.teleportHole, 'hole', startFrame=71, endFrame=81),
+                    Func(self.cleanupHole)),
+                Sequence(Wait(1.0), Func(self.dropShadow.hide))))
         return track
 
     def enterTeleportOut(self, timestamp):
@@ -595,7 +602,8 @@ class Pet(Avatar.Avatar):
         action = 'neutral'
         if self.isInWater():
             action = 'swim'
-        elif forwardVel > 0.10000000000000001 or abs(rotVel) > 0.10000000000000001:
+        elif forwardVel > 0.10000000000000001 or abs(
+                rotVel) > 0.10000000000000001:
             action = 'walk'
 
         self.setAnimWithMood(action)
@@ -656,10 +664,8 @@ class Pet(Avatar.Avatar):
 
     def _Pet__blinkClosed(self, task):
         self.eyesClose()
-        taskMgr.doMethodLater(
-            0.125,
-            self._Pet__blinkOpen,
-            self._Pet__blinkName)
+        taskMgr.doMethodLater(0.125, self._Pet__blinkOpen,
+                              self._Pet__blinkName)
         return Task.done
 
     def startBlink(self):
@@ -731,12 +737,11 @@ def gridPets():
                 random.choice(range(-1, len(HeadParts))),
                 random.choice(range(-1, len(EarParts))),
                 random.choice(range(-1, len(NoseParts))),
-                random.choice(range(-1, len(TailParts))),
-                body,
-                color,
+                random.choice(range(-1, len(TailParts))), body, color,
                 random.choice(range(-1, len(ColorScales))),
                 random.choice(range(0, len(PetEyeColors))),
-                random.choice(range(0, len(PetGenders)))])
+                random.choice(range(0, len(PetGenders)))
+            ])
             p.setPos(startPos[0] + offsetX, startPos[1] + offsetY, startPos[2])
             p.animFSM.request('neutral')
             p.reparentTo(render)

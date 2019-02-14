@@ -14,12 +14,11 @@ class MovingPlatform(DirectObject.DirectObject, NodePath):
         DirectObject.DirectObject.__init__(self)
         NodePath.__init__(self)
 
-    def setupCopyModel(
-            self,
-            parentToken,
-            model,
-            floorNodeName=None,
-            parentingNode=None):
+    def setupCopyModel(self,
+                       parentToken,
+                       model,
+                       floorNodeName=None,
+                       parentingNode=None):
         if floorNodeName is None:
             floorNodeName = 'floor'
 

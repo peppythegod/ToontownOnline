@@ -2,35 +2,19 @@ from ColorSpace import *
 
 
 class SCColorScheme:
-
-    def __init__(
-            self,
-            arrowColor=(
-                0.5,
-                0.5,
-                1),
-            rolloverColor=(
-                0.53000000000000003,
-                0.90000000000000002,
-                0.53000000000000003),
-        frameColor=None,
-        pressedColor=None,
-        menuHolderActiveColor=None,
-        emoteIconColor=None,
-        textColor=(
-                0,
-                0,
-                0),
-            emoteIconDisabledColor=(
-                0.5,
-                0.5,
-                0.5),
-            textDisabledColor=(
-                0.40000000000000002,
-                0.40000000000000002,
-                0.40000000000000002),
-            alpha=0.94999999999999996):
-
+    def __init__(self,
+                 arrowColor=(0.5, 0.5, 1),
+                 rolloverColor=(0.53000000000000003, 0.90000000000000002,
+                                0.53000000000000003),
+                 frameColor=None,
+                 pressedColor=None,
+                 menuHolderActiveColor=None,
+                 emoteIconColor=None,
+                 textColor=(0, 0, 0),
+                 emoteIconDisabledColor=(0.5, 0.5, 0.5),
+                 textDisabledColor=(0.40000000000000002, 0.40000000000000002,
+                                    0.40000000000000002),
+                 alpha=0.94999999999999996):
         def scaleColor(color, s):
             (y, u, v) = rgb2yuv(*color)
             return yuv2rgb(y * s, u, v)
@@ -52,9 +36,11 @@ class SCColorScheme:
         (h, s, v) = rgb2hsv(*self._SCColorScheme__frameColor)
         self._SCColorScheme__frameColor = hsv2rgb(h, 0.5 * s, v)
         self._SCColorScheme__pressedColor = scaleIfNone(
-            pressedColor, self._SCColorScheme__rolloverColor, 0.92000000000000004)
+            pressedColor, self._SCColorScheme__rolloverColor,
+            0.92000000000000004)
         self._SCColorScheme__menuHolderActiveColor = scaleIfNone(
-            menuHolderActiveColor, self._SCColorScheme__rolloverColor, 0.83999999999999997)
+            menuHolderActiveColor, self._SCColorScheme__rolloverColor,
+            0.83999999999999997)
         self._SCColorScheme__emoteIconColor = emoteIconColor
         if self._SCColorScheme__emoteIconColor is None:
             (h, s, v) = rgb2hsv(*self._SCColorScheme__rolloverColor)
@@ -97,23 +83,13 @@ class SCColorScheme:
         return self._SCColorScheme__alpha
 
     def __str__(self):
-        members = (
-            'arrowColor',
-            'rolloverColor',
-            'frameColor',
-            'pressedColor',
-            'menuHolderActiveColor',
-            'emoteIconColor',
-            'textColor',
-            'emoteIconDisabledColor',
-            'textDisabledColor',
-            'alpha')
+        members = ('arrowColor', 'rolloverColor', 'frameColor', 'pressedColor',
+                   'menuHolderActiveColor', 'emoteIconColor', 'textColor',
+                   'emoteIconDisabledColor', 'textDisabledColor', 'alpha')
         result = ''
         for member in members:
-            result += '%s = %s' % (member,
-                                   self.__dict__[
-                                       '_%s__%s' % (self.__class__.__name__,
-                                                    member)])
+            result += '%s = %s' % (member, self.__dict__[
+                '_%s__%s' % (self.__class__.__name__, member)])
             if member is not members[-1]:
                 result += '\n'
                 continue

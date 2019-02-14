@@ -32,13 +32,24 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
         self.lastCamZone = 0
         self.titleColor = (1, 1, 1, 1)
         self.titleText = OnscreenText.OnscreenText(
-            '', fg=self.titleColor, shadow=(
-                0, 0, 0, 1), font=ToontownGlobals.getSuitFont(), pos=(
-                0, -0.5), scale=0.16, drawOrder=0, mayChange=1)
+            '',
+            fg=self.titleColor,
+            shadow=(0, 0, 0, 1),
+            font=ToontownGlobals.getSuitFont(),
+            pos=(0, -0.5),
+            scale=0.16,
+            drawOrder=0,
+            mayChange=1)
         self.smallTitleText = OnscreenText.OnscreenText(
-            '', fg=self.titleColor, font=ToontownGlobals.getSuitFont(), pos=(
-                0.65000000000000002, 0.90000000000000002), scale=0.080000000000000002, drawOrder=0, mayChange=1, bg=(
-                0.5, 0.5, 0.5, 0.5), align=TextNode.ARight)
+            '',
+            fg=self.titleColor,
+            font=ToontownGlobals.getSuitFont(),
+            pos=(0.65000000000000002, 0.90000000000000002),
+            scale=0.080000000000000002,
+            drawOrder=0,
+            mayChange=1,
+            bg=(0.5, 0.5, 0.5, 0.5),
+            align=TextNode.ARight)
         self.zonesEnteredList = []
         self.fColorZones = 0
         self.scenarioIndex = 0
@@ -84,9 +95,10 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
     def initializeLevel(self, levelSpec):
         if __dev__:
             self.candidateSpec = levelSpec
-            self.sendUpdate('requestCurrentLevelSpec', [
-                levelSpec.stringHash(),
-                levelSpec.entTypeReg.getHashStr()])
+            self.sendUpdate(
+                'requestCurrentLevelSpec',
+                [levelSpec.stringHash(),
+                 levelSpec.entTypeReg.getHashStr()])
         else:
             self.privGotSpec(levelSpec)
 
@@ -94,8 +106,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
 
         def reportModelSpecSyncError(self, msg):
             DistributedLevel.notify.error(
-                '%s\n\nyour spec does not match the level model\nuse SpecUtil.updateSpec, then restart your AI and client' %
-                msg)
+                '%s\n\nyour spec does not match the level model\nuse SpecUtil.updateSpec, then restart your AI and client'
+                % msg)
 
         def setSpecDeny(self, reason):
             DistributedLevel.notify.error(reason)
@@ -123,8 +135,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                 self.acceptOnce(evtName, setSpecBlob)
 
     def privGotSpec(self, levelSpec):
-        Level.Level.initializeLevel(
-            self, self.doId, levelSpec, self.scenarioIndex)
+        Level.Level.initializeLevel(self, self.doId, levelSpec,
+                                    self.scenarioIndex)
         modelZoneNums = self.zoneNums
         specZoneNums = self.zoneNum2zoneId.keys()
         if not sameElements(modelZoneNums, specZoneNums):
@@ -144,10 +156,9 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
         if self.entranceId in self.entranceId2entity:
             epEnt = self.entranceId2entity[self.entranceId]
             if moveLocalAvatar:
-                epEnt.placeToon(
-                    base.localAvatar, self.avIdList.index(
-                        base.localAvatar.doId), len(
-                        self.avIdList))
+                epEnt.placeToon(base.localAvatar,
+                                self.avIdList.index(base.localAvatar.doId),
+                                len(self.avIdList))
 
             initialZoneEnt = self.getEntity(epEnt.getZoneEntId())
         elif self.EmulateEntrancePoint:
@@ -165,7 +176,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                 initialZoneEnt = self.getEntity(zoneEntId)
                 if moveLocalAvatar:
                     base.localAvatar.setPos(
-                        render, initialZoneEnt.getZoneNode().getPos(render))
+                        render,
+                        initialZoneEnt.getZoneNode().getPos(render))
 
             else:
                 initialZoneEnt = self.getEntity(LevelConstants.UberZoneEntId)
@@ -207,8 +219,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                     continue
 
             if len(floorColls) > 0:
-                floorCollName = '%s%s' % (
-                    DistributedLevel.FloorCollPrefix, zoneNum)
+                floorCollName = '%s%s' % (DistributedLevel.FloorCollPrefix,
+                                          zoneNum)
                 others = zoneNode.findAllMatches('**/%s' % floorCollName)
                 for other in others:
                     other.setName('%s_renamed' % floorCollName)
@@ -216,10 +228,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                 for floorColl in floorColls:
                     floorColl.setName(floorCollName)
 
-                def handleZoneEnter(
-                        collisionEntry,
-                        self=self,
-                        zoneNum=zoneNum):
+                def handleZoneEnter(collisionEntry, self=self,
+                                    zoneNum=zoneNum):
                     self.toonEnterZone(zoneNum)
                     floorNode = collisionEntry.getIntoNode()
                     if floorNode.hasTag('ouch'):
@@ -371,8 +381,7 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
 
         taskMgr.add(
             self.visChangeTask,
-            self.uniqueName(
-                DistributedLevel.VisChangeTaskName),
+            self.uniqueName(DistributedLevel.VisChangeTaskName),
             priority=49)
 
     def shutdownVisibility(self):
@@ -383,8 +392,7 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
         if zoneNum != self.lastToonZone:
             self.lastToonZone = zoneNum
             self.notify.debug('toon is standing in zone %s' % zoneNum)
-            messenger.send('factoryZoneChanged', [
-                zoneNum])
+            messenger.send('factoryZoneChanged', [zoneNum])
 
     def camEnterZone(self, zoneNum):
         DistributedLevel.notify.debug('camEnterZone%s' % zoneNum)
@@ -420,8 +428,7 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
 
         if zoneNum not in self.zoneNumDict:
             DistributedLevel.notify.error(
-                'no ZoneEntity for this zone (%s)!!' %
-                zoneNum)
+                'no ZoneEntity for this zone (%s)!!' % zoneNum)
 
         self.updateVisibility(zoneNum)
 
@@ -435,17 +442,15 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             zoneNum = self.lockVizZone
 
         zoneEnt = self.getEntity(zoneNum)
-        visibleZoneNums = list2dict([
-            zoneNum])
+        visibleZoneNums = list2dict([zoneNum])
         visibleZoneNums.update(list2dict(zoneEnt.getVisibleZoneNums()))
         if not __debug__:
             if self.lastToonZone not in visibleZoneNums:
                 if self.lastToonZone is not None:
                     self.notify.warning(
-                        'adding zoneNum %s to visibility list because toon is standing in that zone!' %
-                        self.lastToonZone)
-                    visibleZoneNums.update(list2dict([
-                        self.lastToonZone]))
+                        'adding zoneNum %s to visibility list because toon is standing in that zone!'
+                        % self.lastToonZone)
+                    visibleZoneNums.update(list2dict([self.lastToonZone]))
 
         zoneEntIds = list(self.entType2ids['zone'])
         zoneEntIds.remove(LevelConstants.UberZoneEntId)
@@ -493,10 +498,7 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             vizList.remove(LevelConstants.UberZoneEntId)
 
         uberZone = self.getZoneId(LevelConstants.UberZoneEntId)
-        visibleZoneIds = [
-            OTPGlobals.UberZone,
-            self.levelZone,
-            uberZone]
+        visibleZoneIds = [OTPGlobals.UberZone, self.levelZone, uberZone]
         for vz in vizList:
             if vz is not LevelConstants.UberZoneEntId:
                 visibleZoneIds.append(self.getZoneId(vz))
@@ -534,7 +536,6 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             self.levelSpec.setAttribChange(entId, attribName, value, username)
 
     def spawnTitleText(self):
-
         def getDescription(zoneNum, self=self):
             ent = self.entities.get(zoneNum)
             if ent and hasattr(ent, 'description'):
@@ -551,29 +552,18 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             if self.lastCamZone not in self.zonesEnteredList:
                 self.zonesEnteredList.append(self.lastCamZone)
                 titleSeq = Task.sequence(
-                    Task.Task(
-                        self.hideSmallTitleTextTask),
-                    Task.Task(
-                        self.showTitleTextTask),
-                    Task.pause(0.10000000000000001),
-                    Task.pause(6.0),
+                    Task.Task(self.hideSmallTitleTextTask),
+                    Task.Task(self.showTitleTextTask),
+                    Task.pause(0.10000000000000001), Task.pause(6.0),
                     self.titleText.lerpColor(
-                        Vec4(
-                            self.titleColor[0],
-                            self.titleColor[1],
-                            self.titleColor[2],
-                            self.titleColor[3]),
-                        Vec4(
-                            self.titleColor[0],
-                            self.titleColor[1],
-                            self.titleColor[2],
-                            0.0),
-                        0.5))
+                        Vec4(self.titleColor[0], self.titleColor[1],
+                             self.titleColor[2], self.titleColor[3]),
+                        Vec4(self.titleColor[0], self.titleColor[1],
+                             self.titleColor[2], 0.0), 0.5))
 
             smallTitleSeq = Task.sequence(
-                Task.Task(
-                    self.hideTitleTextTask), Task.Task(
-                    self.showSmallTitleTask))
+                Task.Task(self.hideTitleTextTask),
+                Task.Task(self.showSmallTitleTask))
             if titleSeq:
                 seq = Task.sequence(titleSeq, smallTitleSeq)
             else:
@@ -590,24 +580,14 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             self.titleText.setFg(self.titleColor)
             titleSeq = None
             titleSeq = Task.sequence(
-                Task.Task(
-                    self.hideSmallTitleTextTask),
-                Task.Task(
-                    self.showTitleTextTask),
-                Task.pause(0.10000000000000001),
-                Task.pause(3.0),
+                Task.Task(self.hideSmallTitleTextTask),
+                Task.Task(self.showTitleTextTask),
+                Task.pause(0.10000000000000001), Task.pause(3.0),
                 self.titleText.lerpColor(
-                    Vec4(
-                        self.titleColor[0],
-                        self.titleColor[1],
-                        self.titleColor[2],
-                        self.titleColor[3]),
-                    Vec4(
-                        self.titleColor[0],
-                        self.titleColor[1],
-                        self.titleColor[2],
-                        0.0),
-                    0.5))
+                    Vec4(self.titleColor[0], self.titleColor[1],
+                         self.titleColor[2], self.titleColor[3]),
+                    Vec4(self.titleColor[0], self.titleColor[1],
+                         self.titleColor[2], 0.0), 0.5))
             if titleSeq:
                 seq = Task.sequence(titleSeq)
 
@@ -643,8 +623,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             def doOuch(task, self=self, ouchLevel=ouchLevel, period=period):
                 self.b_setOuch(ouchLevel)
                 self.lastOuchTime = globalClock.getFrameTime()
-                taskMgr.doMethodLater(
-                    period, doOuch, DistributedLevel.OuchTaskName)
+                taskMgr.doMethodLater(period, doOuch,
+                                      DistributedLevel.OuchTaskName)
 
             delay = 0
             if hasattr(self, 'lastOuchTime'):
@@ -654,8 +634,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                     delay = period - timeSinceLastOuch
 
             if delay > 0:
-                taskMgr.doMethodLater(
-                    period, doOuch, DistributedLevel.OuchTaskName)
+                taskMgr.doMethodLater(period, doOuch,
+                                      DistributedLevel.OuchTaskName)
             else:
                 doOuch(None)
             self.doingOuch = 1
@@ -673,8 +653,7 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
             self.setOuch(penalty, anim)
 
     def d_setOuch(self, penalty):
-        self.sendUpdate('setOuch', [
-            penalty])
+        self.sendUpdate('setOuch', [penalty])
 
     def setOuch(self, penalty, anim=None):
         if anim == 'Squish':

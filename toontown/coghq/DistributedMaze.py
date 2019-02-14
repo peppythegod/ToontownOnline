@@ -17,18 +17,13 @@ from direct.gui.DirectGui import DGG, DirectFrame, DirectLabel
 class DistributedMaze(DistributedNodePathEntity):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedMaze')
     ScheduleTaskName = 'mazeScheduler'
-    RemoveBlocksDict = {2: ('HedgeBlock_0_1',
-                            ),
-                        4: (('HedgeBlock_0_1',
-                             'HedgeBlock_1_3',
-                             'HedgeBlock_2_3'),
-                            ('HedgeBlock_0_2',
-                             'HedgeBlock_2_3',
-                             'HedgeBlock_1_3'),
-                            ('HedgeBlock_0_1',
-                             'HedgeBlock_0_2',
-                             'HedgeBlock_1_3',
-                             'HedgeBlock_2_3'))}
+    RemoveBlocksDict = {
+        2: ('HedgeBlock_0_1', ),
+        4: (('HedgeBlock_0_1', 'HedgeBlock_1_3', 'HedgeBlock_2_3'),
+            ('HedgeBlock_0_2', 'HedgeBlock_2_3',
+             'HedgeBlock_1_3'), ('HedgeBlock_0_1', 'HedgeBlock_0_2',
+                                 'HedgeBlock_1_3', 'HedgeBlock_2_3'))
+    }
 
     def __init__(self, cr):
         DistributedNodePathEntity.__init__(self, cr)
@@ -62,25 +57,16 @@ class DistributedMaze(DistributedNodePathEntity):
         self.roomDoId = roomDoId
         room = self.cr.doId2do.get(roomDoId)
         if room:
-            self.gotRoom([
-                room])
+            self.gotRoom([room])
         else:
-            self.roomRequest = self.cr.relatedObjectMgr.requestObjects([
-                roomDoId], allCallback=self.gotRoom, timeout=5)
+            self.roomRequest = self.cr.relatedObjectMgr.requestObjects(
+                [roomDoId], allCallback=self.gotRoom, timeout=5)
 
     def gotRoom(self, rooms):
         self.roomRequest = None
         room = rooms[0]
         self.roomHold = room
-        rotations = [
-            0,
-            0,
-            90,
-            90,
-            180,
-            180,
-            270,
-            270]
+        rotations = [0, 0, 90, 90, 180, 180, 270, 270]
         self.getRng().shuffle(rotations)
         self.numSections = 0
         for i in xrange(0, 4):
@@ -99,40 +85,34 @@ class DistributedMaze(DistributedNodePathEntity):
         for hint in hintList:
             self.actSphere = CollisionSphere(0, 0, 0, 7.0)
             self.actSphereNode = CollisionNode(
-                'mazegame_hint-%s-%s' %
-                (self.level.getLevelId(), self.entId))
+                'mazegame_hint-%s-%s' % (self.level.getLevelId(), self.entId))
             self.actSphereNode.addSolid(self.actSphere)
             self.actSphereNodePath = hint.attachNewNode(self.actSphereNode)
             self.actSphereNode.setCollideMask(WallBitmask)
             self.actSphere.setTangible(0)
             self.enterEvent = 'enter' + self.actSphereNode.getName()
-            self.accept(
-                self.enterEvent,
-                self._DistributedMaze__handleToonEnterHint)
+            self.accept(self.enterEvent,
+                        self._DistributedMaze__handleToonEnterHint)
             self.exitEvent = 'exit' + self.actSphereNode.getName()
-            self.accept(
-                self.exitEvent,
-                self._DistributedMaze__handleToonExitHint)
+            self.accept(self.exitEvent,
+                        self._DistributedMaze__handleToonExitHint)
 
         enterance = room.getGeom().find('**/ENTRANCE')
         self.enterSphere = CollisionSphere(0, 0, 0, 8.0)
         self.enterSphereNode = CollisionNode(
-            'mazegame_enter-%s-%s' %
-            (self.level.getLevelId(), self.entId))
+            'mazegame_enter-%s-%s' % (self.level.getLevelId(), self.entId))
         self.enterSphereNode.addSolid(self.enterSphere)
         self.enterSphereNodePath = enterance.attachNewNode(
             self.enterSphereNode)
         self.enterSphereNode.setCollideMask(WallBitmask)
         self.enterSphere.setTangible(0)
         self.enteranceEvent = 'enter' + self.enterSphereNode.getName()
-        self.accept(
-            self.enteranceEvent,
-            self._DistributedMaze__handleToonEnterance)
+        self.accept(self.enteranceEvent,
+                    self._DistributedMaze__handleToonEnterance)
         finish = room.getGeom().find('**/finish')
         self.finishSphere = CollisionSphere(0, 0, 0, 15.0)
         self.finishSphereNode = CollisionNode(
-            'mazegame_finish-%s-%s' %
-            (self.level.getLevelId(), self.entId))
+            'mazegame_finish-%s-%s' % (self.level.getLevelId(), self.entId))
         self.finishSphereNode.addSolid(self.finishSphere)
         self.finishSphereNodePath = finish.attachNewNode(self.finishSphereNode)
         self.finishSphereNode.setCollideMask(WallBitmask)
@@ -201,9 +181,8 @@ class DistributedMaze(DistributedNodePathEntity):
             self.gameOverTrack = Sequence()
             self.gameOverTrack.append(localAvatar.getTeleportOutTrack())
             self.gameOverTrack.append(
-                Func(
-                    localAvatar.setPos,
-                    self.finishSphereNodePath.getPos(render)))
+                Func(localAvatar.setPos,
+                     self.finishSphereNodePath.getPos(render)))
             self.gameOverTrack.append(Func(localAvatar.play, 'jump'))
             self.gameOverTrack.append(
                 Func(self.level.countryClub.camEnterRoom, roomNum))
@@ -240,26 +219,26 @@ class DistributedMaze(DistributedNodePathEntity):
         self.unloadGui()
 
     def loadGui(self):
-        self.frame2D = DirectFrame(scale=1.0,
-                                   pos=(0.0,
-                                        0,
-                                        0.90000000000000002),
-                                   relief=DGG.FLAT,
-                                   parent=aspect2d,
-                                   frameSize=(-0.29999999999999999,
-                                              0.29999999999999999,
-                                              -0.050000000000000003,
-                                              0.050000000000000003),
-                                   frameColor=(0.73699999999999999,
-                                               0.57299999999999995,
-                                               0.34499999999999997,
-                                               0.29999999999999999))
+        self.frame2D = DirectFrame(
+            scale=1.0,
+            pos=(0.0, 0, 0.90000000000000002),
+            relief=DGG.FLAT,
+            parent=aspect2d,
+            frameSize=(-0.29999999999999999, 0.29999999999999999,
+                       -0.050000000000000003, 0.050000000000000003),
+            frameColor=(0.73699999999999999, 0.57299999999999995,
+                        0.34499999999999997, 0.29999999999999999))
         self.frame2D.hide()
         self.gameLabel = DirectLabel(
-            parent=self.frame2D, relief=None, pos=(
-                0, 0, 0), scale=1.0, text=TTLocalizer.mazeLabel, text_font=ToontownGlobals.getSignFont(), text0_fg=(
-                1, 1, 1, 1), text_scale=0.074999999999999997, text_pos=(
-                0, -0.02))
+            parent=self.frame2D,
+            relief=None,
+            pos=(0, 0, 0),
+            scale=1.0,
+            text=TTLocalizer.mazeLabel,
+            text_font=ToontownGlobals.getSignFont(),
+            text0_fg=(1, 1, 1, 1),
+            text_scale=0.074999999999999997,
+            text_pos=(0, -0.02))
 
     def unloadGui(self):
         if self.frame2D:
@@ -275,8 +254,8 @@ class DistributedMaze(DistributedNodePathEntity):
         toon = base.cr.doId2do.get(avId)
         if toon and not (self.timedOut):
             self.level.countryClub.showInfoText(
-                self.toonFinishedText %
-                (toon.getName(), TTLocalizer.hedgeMazePlaces[place]))
+                self.toonFinishedText % (toon.getName(),
+                                         TTLocalizer.hedgeMazePlaces[place]))
 
         if lastToon:
             self.setGameOver()

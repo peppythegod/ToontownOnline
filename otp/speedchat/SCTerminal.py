@@ -10,7 +10,6 @@ SCWhisperModeChangeEvent = 'SCWhisperModeChange'
 
 
 class SCTerminal(SCElement):
-
     def __init__(self, linkedEmote=None):
         SCElement.__init__(self)
         self.setLinkedEmote(linkedEmote)
@@ -57,8 +56,9 @@ class SCTerminal(SCElement):
     def handleSelect(self):
         messenger.send(self.getEventName(SCTerminalSelectedEvent))
         if self.hasLinkedEmote() and self.linkedEmoteEnabled():
-            messenger.send(self.getEventName(SCTerminalLinkedEmoteEvent), [
-                self.linkedEmote])
+            messenger.send(
+                self.getEventName(SCTerminalLinkedEmoteEvent),
+                [self.linkedEmote])
 
     def isWhisperable(self):
         return True
@@ -113,16 +113,24 @@ class SCTerminal(SCElement):
         if self.hasLinkedEmote():
             self.lastEmoteIconColor = self.getEmoteIconColor()
             self.emotionIcon.setColorScale(*self.lastEmoteIconColor)
-            args.update({'image': self.emotionIcon, 'image_pos': (
-                self.width - 0.59999999999999998, 0, -(self.height) * 0.5)})
+            args.update({
+                'image':
+                self.emotionIcon,
+                'image_pos': (self.width - 0.59999999999999998, 0,
+                              -(self.height) * 0.5)
+            })
 
         if self.isDisabled():
             args.update({
                 'rolloverColor': (0, 0, 0, 0),
                 'pressedColor': (0, 0, 0, 0),
-                'rolloverSound': None,
-                'clickSound': None,
-                'text_fg': self.getColorScheme().getTextDisabledColor() + (1,)})
+                'rolloverSound':
+                None,
+                'clickSound':
+                None,
+                'text_fg':
+                self.getColorScheme().getTextDisabledColor() + (1, )
+            })
 
         args.update(dbArgs)
         SCElement.finalize(self, dbArgs=args)
@@ -166,9 +174,8 @@ class SCTerminal(SCElement):
 
         if self.hasLinkedEmote():
             if Emote.globalEmote:
-                self.accept(
-                    Emote.globalEmote.EmoteEnableStateChanged,
-                    handleEmoteEnableStateChange)
+                self.accept(Emote.globalEmote.EmoteEnableStateChanged,
+                            handleEmoteEnableStateChange)
 
     def exitVisible(self):
         SCElement.exitVisible(self)

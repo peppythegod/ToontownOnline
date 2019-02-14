@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE18a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10000: {
         'type': 'attribModifier',
         'name': '<unnamed>',
@@ -33,7 +36,8 @@ GlobalEntities = {
         'attribName': 'modelPath',
         'recursive': 1,
         'typeName': 'model',
-        'value': ''},
+        'value': ''
+    },
     10001: {
         'type': 'attribModifier',
         'name': '<unnamed>',
@@ -42,7 +46,8 @@ GlobalEntities = {
         'attribName': 'scale',
         'recursive': 1,
         'typeName': 'model',
-        'value': 'Vec3(.955,1,1)'},
+        'value': 'Vec3(.955,1,1)'
+    },
     10019: {
         'type': 'attribModifier',
         'name': '<unnamed>',
@@ -51,7 +56,8 @@ GlobalEntities = {
         'attribName': 'modelPath',
         'recursive': 1,
         'typeName': 'model',
-        'value': ''},
+        'value': ''
+    },
     10006: {
         'type': 'gear',
         'name': '<unnamed>',
@@ -64,7 +70,8 @@ GlobalEntities = {
         'gearScale': 14.193780914463838,
         'modelType': 'mint',
         'orientation': 'horizontal',
-        'phaseShift': 0},
+        'phaseShift': 0
+    },
     10007: {
         'type': 'gear',
         'name': 'copy of <unnamed>',
@@ -77,7 +84,8 @@ GlobalEntities = {
         'gearScale': 14.193780914463838,
         'modelType': 'mint',
         'orientation': 'horizontal',
-        'phaseShift': 0},
+        'phaseShift': 0
+    },
     10009: {
         'type': 'gear',
         'name': 'copy of <unnamed> (2)',
@@ -90,7 +98,8 @@ GlobalEntities = {
         'gearScale': 14.193780914463838,
         'modelType': 'mint',
         'orientation': 'horizontal',
-        'phaseShift': 0.055},
+        'phaseShift': 0.055
+    },
     10014: {
         'type': 'gear',
         'name': 'copy of <unnamed> (3)',
@@ -103,7 +112,8 @@ GlobalEntities = {
         'gearScale': 14.193780914463838,
         'modelType': 'mint',
         'orientation': 'horizontal',
-        'phaseShift': 0.059999999999999998},
+        'phaseShift': 0.059999999999999998
+    },
     10018: {
         'type': 'healBarrel',
         'name': '<unnamed>',
@@ -113,7 +123,8 @@ GlobalEntities = {
         'hpr': Vec3(34.152263641399998, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'rewardPerGrab': 5,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     10002: {
         'type': 'model',
         'name': '<unnamed>',
@@ -125,7 +136,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/RoundShadow.bam'},
+        'modelPath': 'phase_10/models/cogHQ/RoundShadow.bam'
+    },
     10005: {
         'type': 'model',
         'name': 'doorwayCrate',
@@ -137,7 +149,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10008: {
         'type': 'model',
         'name': 'shaft',
@@ -145,11 +158,13 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(0.0, 0.0, 7.2589163780200003),
         'hpr': Vec3(0.0, 0.0, 180.0),
-        'scale': Vec3(5.3584260940600004, 5.3584260940600004, 5.3584260940600004),
+        'scale': Vec3(5.3584260940600004, 5.3584260940600004,
+                      5.3584260940600004),
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModel',
-        'modelPath': 'phase_10/models/cashbotHQ/MintGearPost.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/MintGearPost.bam'
+    },
     10010: {
         'type': 'model',
         'name': 'middle',
@@ -161,7 +176,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10011: {
         'type': 'model',
         'name': 'copy of middle',
@@ -173,7 +189,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10012: {
         'type': 'model',
         'name': 'copy of middle',
@@ -185,7 +202,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10013: {
         'type': 'model',
         'name': 'copy of middle',
@@ -197,7 +215,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10015: {
         'type': 'model',
         'name': 'crateStack',
@@ -209,7 +228,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10016: {
         'type': 'model',
         'name': 'upper',
@@ -221,7 +241,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10017: {
         'type': 'model',
         'name': 'copy of upper',
@@ -233,7 +254,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10021: {
         'type': 'model',
         'name': 'crateStack',
@@ -245,7 +267,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'
+    },
     10003: {
         'type': 'nodepath',
         'name': 'gears',
@@ -253,7 +276,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(-3.18650078773, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10004: {
         'type': 'nodepath',
         'name': 'wall',
@@ -261,7 +285,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(19.546813964799998, 6.3787593841600003, 0.0),
         'hpr': Point3(270.0, 0.0, 0.0),
-        'scale': Vec3(1.95812249184, 1.5, 1.7999999523200001)},
+        'scale': Vec3(1.95812249184, 1.5, 1.7999999523200001)
+    },
     10020: {
         'type': 'nodepath',
         'name': 'props',
@@ -269,9 +294,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1}}
+        'scale': 1
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

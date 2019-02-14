@@ -10,17 +10,13 @@ from direct.fsm import State
 
 
 class GSPlayground(Playground.Playground):
-
     def __init__(self, loader, parentFSM, doneEvent):
         Playground.Playground.__init__(self, loader, parentFSM, doneEvent)
         self.parentFSM = parentFSM
         self.startingBlockDoneEvent = 'startingBlockDone'
         self.fsm.addState(
-            State.State(
-                'startingBlock',
-                self.enterStartingBlock,
-                self.exitStartingBlock,
-                ['walk']))
+            State.State('startingBlock', self.enterStartingBlock,
+                        self.exitStartingBlock, ['walk']))
         state = self.fsm.getStateNamed('walk')
         state.addTransition('startingBlock')
 
@@ -50,18 +46,15 @@ class GSPlayground(Playground.Playground):
         self.rotateBlimp.finish()
 
     def doRequestLeave(self, requestStatus):
-        self.fsm.request('trialerFA', [
-            requestStatus])
+        self.fsm.request('trialerFA', [requestStatus])
 
     def enterDFA(self, requestStatus):
         doneEvent = 'dfaDoneEvent'
-        self.accept(doneEvent, self.enterDFACallback, [
-            requestStatus])
+        self.accept(doneEvent, self.enterDFACallback, [requestStatus])
         self.dfa = DownloadForceAcknowledge.DownloadForceAcknowledge(doneEvent)
         if requestStatus['hoodId'] == ToontownGlobals.MyEstate:
             self.dfa.enter(
-                base.cr.hoodMgr.getPhaseFromHood(
-                    ToontownGlobals.MyEstate))
+                base.cr.hoodMgr.getPhaseFromHood(ToontownGlobals.MyEstate))
         else:
             self.dfa.enter(5)
 
@@ -94,8 +87,7 @@ class GSPlayground(Playground.Playground):
             self.dialog = None
 
         if hasattr(self, 'fsm'):
-            self.fsm.request('walk', [
-                1])
+            self.fsm.request('walk', [1])
 
     def enterStartingBlock(self, distStartingBlock):
         import pdb as pdb
@@ -103,8 +95,7 @@ class GSPlayground(Playground.Playground):
         self.accept(self.startingBlockDoneEvent, self.handleStartingBlockDone)
         self.startingBlock = Elevator.Elevator(
             self.fsm.getStateNamed('startingBlock'),
-            self.startingBlockDoneEvent,
-            distStartingBlock)
+            self.startingBlockDoneEvent, distStartingBlock)
         distStartingBlock.elevatorFSM = self.startingBlock
         self.startingBlock.load()
         self.startingBlock.enter()
@@ -118,8 +109,7 @@ class GSPlayground(Playground.Playground):
     def detectedStartingBlockCollision(self, distStartingBlock):
         import pdb
         pdb.set_trace()
-        self.fsm.request('startingBlock', [
-            distStartingBlock])
+        self.fsm.request('startingBlock', [distStartingBlock])
 
     def handleStartingBlockDone(self, doneStatus):
         self.notify.debug('handling StartingBlock done event')
@@ -133,10 +123,8 @@ class GSPlayground(Playground.Playground):
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleStartingBlockDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleStartingBlockDone')
 
     def showPaths(self):
         CCharPaths = CCharPaths

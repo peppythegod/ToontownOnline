@@ -149,7 +149,8 @@ class SCMenuHolder(SCElement):
         args = {
             'image': self.scArrow,
             'image_pos': (self.width - 0.5, 0, -(self.height) * 0.5),
-            'frameColor': frameColor}
+            'frameColor': frameColor
+        }
         args.update(dbArgs)
         SCElement.finalize(self, dbArgs=args)
 

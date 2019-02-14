@@ -33,7 +33,8 @@ def open(event=None):
 
         _trashObject.acceptOnce(EventName(), _CompleteProc)
         _ToonTownDistrictStatInterest = base.cr.addInterest(
-            OTP_DO_ID_TOONTOWN, OTP_ZONE_ID_DISTRICTS_STATS, EventName(), EventName())
+            OTP_DO_ID_TOONTOWN, OTP_ZONE_ID_DISTRICTS_STATS, EventName(),
+            EventName())
     elif isComplete():
         messenger.send(EventName())
 
@@ -56,10 +57,10 @@ def refresh(event=None):
 
             close()
 
-        _trashObject.acceptOnce(EventName(), _CompleteProc, [
-            event])
+        _trashObject.acceptOnce(EventName(), _CompleteProc, [event])
         _ToonTownDistrictStatInterest = base.cr.addInterest(
-            OTP_DO_ID_TOONTOWN, OTP_ZONE_ID_DISTRICTS_STATS, EventName(), EventName())
+            OTP_DO_ID_TOONTOWN, OTP_ZONE_ID_DISTRICTS_STATS, EventName(),
+            EventName())
 
 
 def close():
@@ -82,11 +83,13 @@ class ToontownDistrictStats(DistributedObject.DistributedObject):
 
     def setAvatarCount(self, avatarCount):
         if self.toontownDistrictId in self.cr.activeDistrictMap:
-            self.cr.activeDistrictMap[self.toontownDistrictId].avatarCount = avatarCount
+            self.cr.activeDistrictMap[
+                self.toontownDistrictId].avatarCount = avatarCount
 
     def setNewAvatarCount(self, newAvatarCount):
         if self.toontownDistrictId in self.cr.activeDistrictMap:
-            self.cr.activeDistrictMap[self.toontownDistrictId].newAvatarCount = newAvatarCount
+            self.cr.activeDistrictMap[
+                self.toontownDistrictId].newAvatarCount = newAvatarCount
 
     def setStats(self, avatarCount, newAvatarCount):
         self.setAvatarCount(avatarCount)

@@ -16,20 +16,19 @@ from toontown.makeatoon import ShuffleButton
 class TrunkGUI(StateData.StateData):
     notify = directNotify.newCategory('TrunkGUI')
 
-    def __init__(
-            self,
-            isOwner,
-            doneEvent,
-            cancelEvent,
-            swapHatEvent,
-            swapGlassesEvent,
-            swapBackpackEvent,
-            swapShoesEvent,
-            deleteEvent,
-            hatList=None,
-            glassesList=None,
-            backpackList=None,
-            shoesList=None):
+    def __init__(self,
+                 isOwner,
+                 doneEvent,
+                 cancelEvent,
+                 swapHatEvent,
+                 swapGlassesEvent,
+                 swapBackpackEvent,
+                 swapShoesEvent,
+                 deleteEvent,
+                 hatList=None,
+                 glassesList=None,
+                 backpackList=None,
+                 shoesList=None):
         StateData.StateData.__init__(self, doneEvent)
         self.toon = None
         self.hatList = hatList
@@ -61,9 +60,9 @@ class TrunkGUI(StateData.StateData):
         shuffleArrowDisabled = self.gui.find(
             '**/tt_t_gui_mat_shuffleArrowDisabled')
         self.parentFrame = DirectFrame(
-            relief=DGG.RAISED, pos=(
-                0.97999999999999998, 0, 0.41599999999999998), frameColor=(
-                1, 0, 0, 0))
+            relief=DGG.RAISED,
+            pos=(0.97999999999999998, 0, 0.41599999999999998),
+            frameColor=(1, 0, 0, 0))
 
         def addFrame(posZ, text):
             return DirectFrame(
@@ -71,93 +70,61 @@ class TrunkGUI(StateData.StateData):
                 image=shuffleFrame,
                 image_scale=halfButtonInvertScale,
                 relief=None,
-                pos=(
-                    0,
-                    0,
-                    posZ),
-                hpr=(
-                    0,
-                    0,
-                    3),
+                pos=(0, 0, posZ),
+                hpr=(0, 0, 3),
                 scale=1.2,
-                frameColor=(
-                    1,
-                    1,
-                    1,
-                    1),
+                frameColor=(1, 1, 1, 1),
                 text=text,
                 text_scale=0.057500000000000002,
-                text_pos=(
-                    -0.001,
-                    -0.014999999999999999),
-                text_fg=(
-                    1,
-                    1,
-                    1,
-                    1))
+                text_pos=(-0.001, -0.014999999999999999),
+                text_fg=(1, 1, 1, 1))
 
         def addButton(parent, scale, hoverScale, posX, command, extraArg):
             return DirectButton(
                 parent=parent,
                 relief=None,
-                image=(
-                    shuffleArrowUp,
-                    shuffleArrowDown,
-                    shuffleArrowRollover,
-                    shuffleArrowDisabled),
+                image=(shuffleArrowUp, shuffleArrowDown, shuffleArrowRollover,
+                       shuffleArrowDisabled),
                 image_scale=scale,
                 image1_scale=hoverScale,
                 image2_scale=hoverScale,
-                pos=(
-                    posX,
-                    0,
-                    0),
+                pos=(posX, 0, 0),
                 command=command,
                 extraArgs=[extraArg])
 
         self.hatFrame = addFrame(0.10000000000000001, TTLocalizer.TrunkHatGUI)
-        self.hatLButton = addButton(
-            self.hatFrame, halfButtonScale, halfButtonHoverScale, -0.20000000000000001, self.swapHat, -1)
-        self.hatRButton = addButton(
-            self.hatFrame,
-            halfButtonInvertScale,
-            halfButtonInvertHoverScale,
-            0.20000000000000001,
-            self.swapHat,
-            1)
+        self.hatLButton = addButton(self.hatFrame, halfButtonScale,
+                                    halfButtonHoverScale, -0.20000000000000001,
+                                    self.swapHat, -1)
+        self.hatRButton = addButton(self.hatFrame, halfButtonInvertScale,
+                                    halfButtonInvertHoverScale,
+                                    0.20000000000000001, self.swapHat, 1)
         self.glassesFrame = addFrame(-0.14999999999999999,
                                      TTLocalizer.TrunkGlassesGUI)
         self.glassesLButton = addButton(
-            self.glassesFrame, halfButtonScale, halfButtonHoverScale, -0.20000000000000001, self.swapGlasses, -1)
+            self.glassesFrame, halfButtonScale, halfButtonHoverScale,
+            -0.20000000000000001, self.swapGlasses, -1)
         self.glassesRButton = addButton(
-            self.glassesFrame,
-            halfButtonInvertScale,
-            halfButtonInvertHoverScale,
-            0.20000000000000001,
-            self.swapGlasses,
+            self.glassesFrame, halfButtonInvertScale,
+            halfButtonInvertHoverScale, 0.20000000000000001, self.swapGlasses,
             1)
         self.backpackFrame = addFrame(-0.40000000000000002,
                                       TTLocalizer.TrunkBackpackGUI)
         self.backpackLButton = addButton(
-            self.backpackFrame, halfButtonScale, halfButtonHoverScale, -0.20000000000000001, self.swapBackpack, -1)
+            self.backpackFrame, halfButtonScale, halfButtonHoverScale,
+            -0.20000000000000001, self.swapBackpack, -1)
         self.backpackRButton = addButton(
-            self.backpackFrame,
-            halfButtonInvertScale,
-            halfButtonInvertHoverScale,
-            0.20000000000000001,
-            self.swapBackpack,
+            self.backpackFrame, halfButtonInvertScale,
+            halfButtonInvertHoverScale, 0.20000000000000001, self.swapBackpack,
             1)
         self.shoesFrame = addFrame(-0.65000000000000002,
                                    TTLocalizer.TrunkShoesGUI)
-        self.shoesLButton = addButton(
-            self.shoesFrame, halfButtonScale, halfButtonHoverScale, -0.20000000000000001, self.swapShoes, -1)
-        self.shoesRButton = addButton(
-            self.shoesFrame,
-            halfButtonInvertScale,
-            halfButtonInvertHoverScale,
-            0.20000000000000001,
-            self.swapShoes,
-            1)
+        self.shoesLButton = addButton(self.shoesFrame, halfButtonScale,
+                                      halfButtonHoverScale,
+                                      -0.20000000000000001, self.swapShoes, -1)
+        self.shoesRButton = addButton(self.shoesFrame, halfButtonInvertScale,
+                                      halfButtonInvertHoverScale,
+                                      0.20000000000000001, self.swapShoes, 1)
         self.parentFrame.hide()
         self.shuffleFetchMsg = 'TrunkShuffle'
         self.shuffleButton = ShuffleButton.ShuffleButton(
@@ -165,149 +132,104 @@ class TrunkGUI(StateData.StateData):
         self.gui = loader.loadModel('phase_3/models/gui/create_a_toon_gui')
         self.cancelButton = DirectButton(
             relief=None,
-            image=(
-                self.gui.find('**/CrtAtoon_Btn2_UP'),
-                self.gui.find('**/CrtAtoon_Btn2_DOWN'),
-                self.gui.find('**/CrtAtoon_Btn2_RLLVR')),
-            pos=(
-                0.14999999999999999,
-                0,
-                -0.84999999999999998),
+            image=(self.gui.find('**/CrtAtoon_Btn2_UP'),
+                   self.gui.find('**/CrtAtoon_Btn2_DOWN'),
+                   self.gui.find('**/CrtAtoon_Btn2_RLLVR')),
+            pos=(0.14999999999999999, 0, -0.84999999999999998),
             command=self._TrunkGUI__handleCancel,
-            text=(
-                '',
-                TTLocalizer.MakeAToonCancel,
-                TTLocalizer.MakeAToonCancel),
+            text=('', TTLocalizer.MakeAToonCancel,
+                  TTLocalizer.MakeAToonCancel),
             text_font=ToontownGlobals.getInterfaceFont(),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                -0.029999999999999999),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_pos=(0, -0.029999999999999999),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.cancelButton.hide()
-        self.rotateL = DirectButton(relief=None,
-                                    pos=(-0.14999999999999999,
-                                         0,
-                                         0.84999999999999998),
-                                    image=(guiArrowRotateUp,
-                                           guiArrowRotateDown,
-                                           guiArrowRotateUp,
-                                           guiArrowRotateDown),
-                                    image_scale=(-0.69999999999999996,
-                                                 0.69999999999999996,
-                                                 0.69999999999999996),
-                                    image1_scale=(-0.80000000000000004,
-                                                  0.80000000000000004,
-                                                  0.80000000000000004),
-                                    image2_scale=(-0.80000000000000004,
-                                                  0.80000000000000004,
-                                                  0.80000000000000004))
+        self.rotateL = DirectButton(
+            relief=None,
+            pos=(-0.14999999999999999, 0, 0.84999999999999998),
+            image=(guiArrowRotateUp, guiArrowRotateDown, guiArrowRotateUp,
+                   guiArrowRotateDown),
+            image_scale=(-0.69999999999999996, 0.69999999999999996,
+                         0.69999999999999996),
+            image1_scale=(-0.80000000000000004, 0.80000000000000004,
+                          0.80000000000000004),
+            image2_scale=(-0.80000000000000004, 0.80000000000000004,
+                          0.80000000000000004))
         self.rotateL.hide()
         self.rotateL.bind(DGG.B1PRESS, self._TrunkGUI__rotateLDown)
         self.rotateL.bind(DGG.B1RELEASE, self._TrunkGUI__rotateLUp)
         self.rotateR = DirectButton(
-            relief=None, pos=(
-                0.14999999999999999, 0, 0.84999999999999998), image=(
-                guiArrowRotateUp, guiArrowRotateDown, guiArrowRotateUp, guiArrowRotateDown), image_scale=(
-                0.69999999999999996, 0.69999999999999996, 0.69999999999999996), image1_scale=(
-                    0.80000000000000004, 0.80000000000000004, 0.80000000000000004), image2_scale=(
-                        0.80000000000000004, 0.80000000000000004, 0.80000000000000004))
+            relief=None,
+            pos=(0.14999999999999999, 0, 0.84999999999999998),
+            image=(guiArrowRotateUp, guiArrowRotateDown, guiArrowRotateUp,
+                   guiArrowRotateDown),
+            image_scale=(0.69999999999999996, 0.69999999999999996,
+                         0.69999999999999996),
+            image1_scale=(0.80000000000000004, 0.80000000000000004,
+                          0.80000000000000004),
+            image2_scale=(0.80000000000000004, 0.80000000000000004,
+                          0.80000000000000004))
         self.rotateR.hide()
         self.rotateR.bind(DGG.B1PRESS, self._TrunkGUI__rotateRDown)
         self.rotateR.bind(DGG.B1RELEASE, self._TrunkGUI__rotateRUp)
         if self.isOwner:
             trashcanGui = loader.loadModel(
                 'phase_3/models/gui/trashcan_gui.bam')
-            trashImage = (
-                trashcanGui.find('**/TrashCan_CLSD'),
-                trashcanGui.find('**/TrashCan_OPEN'),
-                trashcanGui.find('**/TrashCan_RLVR'))
+            trashImage = (trashcanGui.find('**/TrashCan_CLSD'),
+                          trashcanGui.find('**/TrashCan_OPEN'),
+                          trashcanGui.find('**/TrashCan_RLVR'))
             self.trashPanel = DirectFrame(
-                parent=aspect2d, image=DGG.getDefaultDialogGeom(), image_color=(
-                    1, 1, 0.75, 0.80000000000000004), image_scale=(
-                    0.35999999999999999, 0, 1.2), pos=(
-                    -0.85999999999999999, 0, 0.10000000000000001), relief=None)
+                parent=aspect2d,
+                image=DGG.getDefaultDialogGeom(),
+                image_color=(1, 1, 0.75, 0.80000000000000004),
+                image_scale=(0.35999999999999999, 0, 1.2),
+                pos=(-0.85999999999999999, 0, 0.10000000000000001),
+                relief=None)
 
             def addTrashButton(posZ, text, extraArg):
                 return DirectButton(
                     parent=self.trashPanel,
                     image=trashImage,
                     relief=None,
-                    pos=(
-                        -0.089999999999999997,
-                        0,
-                        posZ),
+                    pos=(-0.089999999999999997, 0, posZ),
                     command=self._TrunkGUI__handleDelete,
                     text=text,
                     extraArgs=[extraArg],
-                    scale=(
-                        0.5,
-                        0.5,
-                        0.5),
+                    scale=(0.5, 0.5, 0.5),
                     text_font=ToontownGlobals.getInterfaceFont(),
                     text_scale=0.12,
-                    text_pos=(
-                        0.29999999999999999,
-                        0),
-                    text_fg=(
-                        0.80000000000000004,
-                        0.20000000000000001,
-                        0.20000000000000001,
-                        1),
-                    text_shadow=(
-                        0,
-                        0,
-                        0,
-                        1),
+                    text_pos=(0.29999999999999999, 0),
+                    text_fg=(0.80000000000000004, 0.20000000000000001,
+                             0.20000000000000001, 1),
+                    text_shadow=(0, 0, 0, 1),
                     textMayChange=0)
 
             self.hatTrashButton = addTrashButton(
                 0.5, TTLocalizer.TrunkDeleteHat, ToonDNA.HAT)
             self.glassesTrashButton = addTrashButton(
-                0.20000000000000001, TTLocalizer.TrunkDeleteGlasses, ToonDNA.GLASSES)
+                0.20000000000000001, TTLocalizer.TrunkDeleteGlasses,
+                ToonDNA.GLASSES)
             self.backpackTrashButton = addTrashButton(
-                -0.10000000000000001, TTLocalizer.TrunkDeleteBackpack, ToonDNA.BACKPACK)
+                -0.10000000000000001, TTLocalizer.TrunkDeleteBackpack,
+                ToonDNA.BACKPACK)
             self.shoesTrashButton = addTrashButton(
-                -0.40000000000000002, TTLocalizer.TrunkDeleteShoes, ToonDNA.SHOES)
+                -0.40000000000000002, TTLocalizer.TrunkDeleteShoes,
+                ToonDNA.SHOES)
             self.button = DirectButton(
                 relief=None,
-                image=(
-                    self.gui.find('**/CrtAtoon_Btn1_UP'),
-                    self.gui.find('**/CrtAtoon_Btn1_DOWN'),
-                    self.gui.find('**/CrtAtoon_Btn1_RLLVR')),
-                pos=(
-                    -0.14999999999999999,
-                    0,
-                    -0.84999999999999998),
+                image=(self.gui.find('**/CrtAtoon_Btn1_UP'),
+                       self.gui.find('**/CrtAtoon_Btn1_DOWN'),
+                       self.gui.find('**/CrtAtoon_Btn1_RLLVR')),
+                pos=(-0.14999999999999999, 0, -0.84999999999999998),
                 command=self._TrunkGUI__handleButton,
-                text=(
-                    '',
-                    TTLocalizer.MakeAToonDone,
-                    TTLocalizer.MakeAToonDone),
+                text=('', TTLocalizer.MakeAToonDone,
+                      TTLocalizer.MakeAToonDone),
                 text_font=ToontownGlobals.getInterfaceFont(),
                 text_scale=0.080000000000000002,
-                text_pos=(
-                    0,
-                    -0.029999999999999999),
-                text_fg=(
-                    1,
-                    1,
-                    1,
-                    1),
-                text_shadow=(
-                    0,
-                    0,
-                    0,
-                    1))
+                text_pos=(0, -0.029999999999999999),
+                text_fg=(1, 1, 1, 1),
+                text_shadow=(0, 0, 0, 1))
             trashcanGui.removeNode()
 
     def unload(self):
@@ -409,11 +331,7 @@ class TrunkGUI(StateData.StateData):
         currShoes = self.toon.shoes
         currShoesIdx = self.shoes.index(currShoes)
         self.swapShoes(currShoesIdx - self.shoesChoice)
-        choicePool = [
-            self.hats,
-            self.glasses,
-            self.backpacks,
-            self.shoes]
+        choicePool = [self.hats, self.glasses, self.backpacks, self.shoes]
         self.shuffleButton.setChoicePool(choicePool)
         self.accept(self.shuffleFetchMsg, self.changeAccessories)
         self.acceptOnce('MAT-newToonCreated', self.shuffleButton.cleanHistory)
@@ -453,41 +371,34 @@ class TrunkGUI(StateData.StateData):
         self.glasses = []
         self.backpacks = []
         self.shoes = []
-        self.hats.append(
-            (self.toon.hat[0],
-             self.toon.hat[1],
-             self.toon.hat[2]))
-        self.glasses.append(
-            (self.toon.glasses[0],
-             self.toon.glasses[1],
-             self.toon.glasses[2]))
-        self.backpacks.append(
-            (self.toon.backpack[0],
-             self.toon.backpack[1],
-             self.toon.backpack[2]))
-        self.shoes.append(
-            (self.toon.shoes[0],
-             self.toon.shoes[1],
-             self.toon.shoes[2]))
+        self.hats.append((self.toon.hat[0], self.toon.hat[1],
+                          self.toon.hat[2]))
+        self.glasses.append((self.toon.glasses[0], self.toon.glasses[1],
+                             self.toon.glasses[2]))
+        self.backpacks.append((self.toon.backpack[0], self.toon.backpack[1],
+                               self.toon.backpack[2]))
+        self.shoes.append((self.toon.shoes[0], self.toon.shoes[1],
+                           self.toon.shoes[2]))
         i = 0
         while i < len(self.hatList):
-            self.hats.append(
-                (self.hatList[i], self.hatList[i + 1], self.hatList[i + 2]))
+            self.hats.append((self.hatList[i], self.hatList[i + 1],
+                              self.hatList[i + 2]))
             i = i + 3
         i = 0
         while i < len(self.glassesList):
-            self.glasses.append(
-                (self.glassesList[i], self.glassesList[i + 1], self.glassesList[i + 2]))
+            self.glasses.append((self.glassesList[i], self.glassesList[i + 1],
+                                 self.glassesList[i + 2]))
             i = i + 3
         i = 0
         while i < len(self.backpackList):
             self.backpacks.append(
-                (self.backpackList[i], self.backpackList[i + 1], self.backpackList[i + 2]))
+                (self.backpackList[i], self.backpackList[i + 1],
+                 self.backpackList[i + 2]))
             i = i + 3
         i = 0
         while i < len(self.shoesList):
-            self.shoes.append(
-                (self.shoesList[i], self.shoesList[i + 1], self.shoesList[i + 2]))
+            self.shoes.append((self.shoesList[i], self.shoesList[i + 1],
+                               self.shoesList[i + 2]))
             i = i + 3
         self.hatChoice = 0
         self.glassesChoice = 0
@@ -557,14 +468,10 @@ class TrunkGUI(StateData.StateData):
         if self.hatChoice <= 0:
             self.hatChoice = 0
 
-        self.updateScrollButtons(
-            self.hatChoice,
-            length,
-            0,
-            self.hatLButton,
-            self.hatRButton)
-        if self.hatChoice < 0 and self.hatChoice >= len(
-                self.hats) or len(self.hats[self.hatChoice]) != 3:
+        self.updateScrollButtons(self.hatChoice, length, 0, self.hatLButton,
+                                 self.hatRButton)
+        if self.hatChoice < 0 and self.hatChoice >= len(self.hats) or len(
+                self.hats[self.hatChoice]) != 3:
             self.notify.warning('hatChoice index is out of range!')
             return None
 
@@ -581,12 +488,8 @@ class TrunkGUI(StateData.StateData):
         if self.glassesChoice <= 0:
             self.glassesChoice = 0
 
-        self.updateScrollButtons(
-            self.glassesChoice,
-            length,
-            0,
-            self.glassesLButton,
-            self.glassesRButton)
+        self.updateScrollButtons(self.glassesChoice, length, 0,
+                                 self.glassesLButton, self.glassesRButton)
         if self.glassesChoice < 0 and self.glassesChoice >= len(
                 self.glasses) or len(self.glasses[self.glassesChoice]) != 3:
             self.notify.warning('glassesChoice index is out of range!')
@@ -605,14 +508,11 @@ class TrunkGUI(StateData.StateData):
         if self.backpackChoice <= 0:
             self.backpackChoice = 0
 
-        self.updateScrollButtons(
-            self.backpackChoice,
-            length,
-            0,
-            self.backpackLButton,
-            self.backpackRButton)
+        self.updateScrollButtons(self.backpackChoice, length, 0,
+                                 self.backpackLButton, self.backpackRButton)
         if self.backpackChoice < 0 and self.backpackChoice >= len(
-                self.backpacks) or len(self.backpacks[self.backpackChoice]) != 3:
+                self.backpacks) or len(
+                    self.backpacks[self.backpackChoice]) != 3:
             self.notify.warning('backpackChoice index is out of range!')
             return None
 
@@ -629,14 +529,10 @@ class TrunkGUI(StateData.StateData):
         if self.shoesChoice <= 0:
             self.shoesChoice = 0
 
-        self.updateScrollButtons(
-            self.shoesChoice,
-            length,
-            0,
-            self.shoesLButton,
-            self.shoesRButton)
-        if self.shoesChoice < 0 and self.shoesChoice >= len(
-                self.shoes) or len(self.shoes[self.shoesChoice]) != 3:
+        self.updateScrollButtons(self.shoesChoice, length, 0,
+                                 self.shoesLButton, self.shoesRButton)
+        if self.shoesChoice < 0 and self.shoesChoice >= len(self.shoes) or len(
+                self.shoes[self.shoesChoice]) != 3:
             self.notify.warning('shoesChoice index is out of range!')
             return None
 
@@ -673,10 +569,8 @@ class TrunkGUI(StateData.StateData):
             oldShoes = style[ToonDNA.SHOES]
             self.toon.setHat(oldHat[0], oldHat[1], oldHat[2])
             self.toon.setGlasses(oldGlasses[0], oldGlasses[1], oldGlasses[2])
-            self.toon.setBackpack(
-                oldBackpack[0],
-                oldBackpack[1],
-                oldBackpack[2])
+            self.toon.setBackpack(oldBackpack[0], oldBackpack[1],
+                                  oldBackpack[2])
             self.toon.setShoes(oldShoes[0], oldShoes[1], oldShoes[2])
             self.toon.loop('neutral', 0)
 
@@ -711,10 +605,9 @@ class TrunkGUI(StateData.StateData):
 
     def getCurrToonSetting(self):
         return [
-            self.hats[self.hatChoice],
-            self.glasses[self.glassesChoice],
-            self.backpacks[self.backpackChoice],
-            self.shoes[self.shoesChoice]]
+            self.hats[self.hatChoice], self.glasses[self.glassesChoice],
+            self.backpacks[self.backpackChoice], self.shoes[self.shoesChoice]
+        ]
 
     def removeHat(self, index):
         listLen = len(self.hats)
@@ -788,14 +681,12 @@ class TrunkGUI(StateData.StateData):
         else:
             item = TTLocalizer.TrunkShoes
         self.verify = TTDialog.TTGlobalDialog(
-            doneEvent='verifyDone', message=TTLocalizer.ClosetVerifyDelete %
-            item, style=TTDialog.TwoChoice)
+            doneEvent='verifyDone',
+            message=TTLocalizer.ClosetVerifyDelete % item,
+            style=TTDialog.TwoChoice)
         self.verify.show()
-        self.accept(
-            'verifyDone',
-            Functor(
-                self._TrunkGUI__handleVerifyDelete,
-                which))
+        self.accept('verifyDone',
+                    Functor(self._TrunkGUI__handleVerifyDelete, which))
         messenger.send('wakeup')
 
     def _TrunkGUI__handleVerifyDelete(self, which):
@@ -805,8 +696,7 @@ class TrunkGUI(StateData.StateData):
         del self.verify
         self.verify = None
         if status == 'ok':
-            messenger.send(self.deleteEvent, [
-                which])
+            messenger.send(self.deleteEvent, [which])
 
         messenger.send('wakeup')
 

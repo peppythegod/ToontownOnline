@@ -5,7 +5,6 @@ from toontown.quest import Quests
 
 
 class TTSCToontaskMenu(SCMenu):
-
     def __init__(self):
         SCMenu.__init__(self)
         self.accept('questsChanged', self._TTSCToontaskMenu__tasksChanged)
@@ -38,17 +37,12 @@ class TTSCToontaskMenu(SCMenu):
 
             msgs = q.getSCStrings(toNpcId, toonProgress)
             if not isinstance(msgs, type([])):
-                msgs = [
-                    msgs]
+                msgs = [msgs]
 
             for i in xrange(len(msgs)):
                 addTerminal(
-                    TTSCToontaskTerminal(
-                        msgs[i],
-                        taskId,
-                        toNpcId,
-                        toonProgress,
-                        i))
+                    TTSCToontaskTerminal(msgs[i], taskId, toNpcId,
+                                         toonProgress, i))
 
         needToontask = 1
         if hasattr(lt, 'questCarryLimit'):

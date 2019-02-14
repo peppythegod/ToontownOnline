@@ -5,7 +5,6 @@ from direct.task import Task
 
 
 class DGPlayground(Playground.Playground):
-
     def __init__(self, loader, parentFSM, doneEvent):
         Playground.Playground.__init__(self, loader, parentFSM, doneEvent)
 

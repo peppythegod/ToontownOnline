@@ -19,11 +19,11 @@ WindowViewTypes = {
     100: ('phase_5.5/models/estate/SnowView', 900, None),
     110: ('phase_5.5/models/estate/FarmView', 900, None),
     120: ('phase_5.5/models/estate/IndianView', 900, None),
-    130: ('phase_5.5/models/estate/WesternMainStreetView', 900, None)}
+    130: ('phase_5.5/models/estate/WesternMainStreetView', 900, None)
+}
 
 
 class CatalogWindowItem(CatalogAtticItem.CatalogAtticItem):
-
     def makeNewItem(self, windowType, placement=None):
         self.windowType = windowType
         self.placement = placement
@@ -83,8 +83,8 @@ class CatalogWindowItem(CatalogAtticItem.CatalogAtticItem):
         return (frame, None)
 
     def output(self, store=-1):
-        return 'CatalogWindowItem(%s%s)' % (
-            self.windowType, self.formatOptionalData(store))
+        return 'CatalogWindowItem(%s%s)' % (self.windowType,
+                                            self.formatOptionalData(store))
 
     def getFilename(self):
         type = WindowViewTypes[self.windowType]

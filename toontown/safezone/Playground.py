@@ -29,105 +29,68 @@ class Playground(Place.Place):
         Place.Place.__init__(self, loader, doneEvent)
         self.tfaDoneEvent = 'tfaDoneEvent'
         self.fsm = ClassicFSM.ClassicFSM('Playground', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'walk',
-                'deathAck',
-                'doorIn',
-                'tunnelIn']),
+            State.State('start', self.enterStart, self.exitStart,
+                        ['walk', 'deathAck', 'doorIn', 'tunnelIn']),
             State.State('walk', self.enterWalk, self.exitWalk, [
-                'drive',
-                'sit',
-                'stickerBook',
-                'TFA',
-                'DFA',
-                'trialerFA',
-                'trolley',
-                'final',
-                'doorOut',
-                'options',
-                'quest',
-                'purchase',
-                'stopped',
-                'fishing']),
-            State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, [
-                'walk',
-                'DFA',
-                'TFA',
-                'trolley',
-                'final',
-                'doorOut',
-                'quest',
-                'purchase',
-                'stopped',
-                'fishing',
-                'trialerFA']),
-            State.State('sit', self.enterSit, self.exitSit, [
-                'walk',
-                'DFA',
-                'trialerFA']),
-            State.State('drive', self.enterDrive, self.exitDrive, [
-                'walk',
-                'DFA',
-                'trialerFA']),
-            State.State('trolley', self.enterTrolley, self.exitTrolley, [
-                'walk']),
-            State.State('doorIn', self.enterDoorIn, self.exitDoorIn, [
-                'walk']),
-            State.State('doorOut', self.enterDoorOut, self.exitDoorOut, [
-                'walk']),
-            State.State('TFA', self.enterTFA, self.exitTFA, [
-                'TFAReject',
-                'DFA']),
-            State.State('TFAReject', self.enterTFAReject, self.exitTFAReject, [
-                'walk']),
-            State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA, [
-                'trialerFAReject',
-                'DFA']),
-            State.State('trialerFAReject', self.enterTrialerFAReject, self.exitTrialerFAReject, [
-                'walk']),
-            State.State('DFA', self.enterDFA, self.exitDFA, [
-                'DFAReject',
-                'NPCFA',
-                'HFA']),
-            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, [
-                'walk']),
-            State.State('NPCFA', self.enterNPCFA, self.exitNPCFA, [
-                'NPCFAReject',
-                'HFA']),
-            State.State('NPCFAReject', self.enterNPCFAReject, self.exitNPCFAReject, [
-                'walk']),
-            State.State('HFA', self.enterHFA, self.exitHFA, [
-                'HFAReject',
-                'teleportOut',
-                'tunnelOut']),
-            State.State('HFAReject', self.enterHFAReject, self.exitHFAReject, [
-                'walk']),
-            State.State('deathAck', self.enterDeathAck, self.exitDeathAck, [
-                'teleportIn']),
-            State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
-                'walk',
-                'popup']),
-            State.State('popup', self.enterPopup, self.exitPopup, [
-                'walk']),
-            State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, [
-                'deathAck',
-                'teleportIn']),
-            State.State('died', self.enterDied, self.exitDied, [
-                'final']),
-            State.State('tunnelIn', self.enterTunnelIn, self.exitTunnelIn, [
-                'walk']),
-            State.State('tunnelOut', self.enterTunnelOut, self.exitTunnelOut, [
-                'final']),
-            State.State('quest', self.enterQuest, self.exitQuest, [
-                'walk']),
-            State.State('purchase', self.enterPurchase, self.exitPurchase, [
-                'walk']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk']),
-            State.State('fishing', self.enterFishing, self.exitFishing, [
-                'walk']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+                'drive', 'sit', 'stickerBook', 'TFA', 'DFA', 'trialerFA',
+                'trolley', 'final', 'doorOut', 'options', 'quest', 'purchase',
+                'stopped', 'fishing'
+            ]),
+            State.State(
+                'stickerBook', self.enterStickerBook, self.exitStickerBook, [
+                    'walk', 'DFA', 'TFA', 'trolley', 'final', 'doorOut',
+                    'quest', 'purchase', 'stopped', 'fishing', 'trialerFA'
+                ]),
+            State.State('sit', self.enterSit, self.exitSit,
+                        ['walk', 'DFA', 'trialerFA']),
+            State.State('drive', self.enterDrive, self.exitDrive,
+                        ['walk', 'DFA', 'trialerFA']),
+            State.State('trolley', self.enterTrolley, self.exitTrolley,
+                        ['walk']),
+            State.State('doorIn', self.enterDoorIn, self.exitDoorIn, ['walk']),
+            State.State('doorOut', self.enterDoorOut, self.exitDoorOut,
+                        ['walk']),
+            State.State('TFA', self.enterTFA, self.exitTFA,
+                        ['TFAReject', 'DFA']),
+            State.State('TFAReject', self.enterTFAReject, self.exitTFAReject,
+                        ['walk']),
+            State.State('trialerFA', self.enterTrialerFA, self.exitTrialerFA,
+                        ['trialerFAReject', 'DFA']),
+            State.State('trialerFAReject', self.enterTrialerFAReject,
+                        self.exitTrialerFAReject, ['walk']),
+            State.State('DFA', self.enterDFA, self.exitDFA,
+                        ['DFAReject', 'NPCFA', 'HFA']),
+            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject,
+                        ['walk']),
+            State.State('NPCFA', self.enterNPCFA, self.exitNPCFA,
+                        ['NPCFAReject', 'HFA']),
+            State.State('NPCFAReject', self.enterNPCFAReject,
+                        self.exitNPCFAReject, ['walk']),
+            State.State('HFA', self.enterHFA, self.exitHFA,
+                        ['HFAReject', 'teleportOut', 'tunnelOut']),
+            State.State('HFAReject', self.enterHFAReject, self.exitHFAReject,
+                        ['walk']),
+            State.State('deathAck', self.enterDeathAck, self.exitDeathAck,
+                        ['teleportIn']),
+            State.State('teleportIn', self.enterTeleportIn,
+                        self.exitTeleportIn, ['walk', 'popup']),
+            State.State('popup', self.enterPopup, self.exitPopup, ['walk']),
+            State.State('teleportOut', self.enterTeleportOut,
+                        self.exitTeleportOut, ['deathAck', 'teleportIn']),
+            State.State('died', self.enterDied, self.exitDied, ['final']),
+            State.State('tunnelIn', self.enterTunnelIn, self.exitTunnelIn,
+                        ['walk']),
+            State.State('tunnelOut', self.enterTunnelOut, self.exitTunnelOut,
+                        ['final']),
+            State.State('quest', self.enterQuest, self.exitQuest, ['walk']),
+            State.State('purchase', self.enterPurchase, self.exitPurchase,
+                        ['walk']),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk']),
+            State.State('fishing', self.enterFishing, self.exitFishing,
+                        ['walk']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
         self.parentFSM = parentFSM
         self.tunnelOriginList = []
         self.trolleyDoneEvent = 'trolleyDone'
@@ -142,9 +105,7 @@ class Playground(Place.Place):
         self.accept('doorDoneEvent', self.handleDoorDoneEvent)
         self.accept('DistributedDoor_doorTrigger', self.handleDoorTrigger)
         base.playMusic(
-            self.loader.music,
-            looping=1,
-            volume=0.80000000000000004)
+            self.loader.music, looping=1, volume=0.80000000000000004)
         self.loader.geom.reparentTo(render)
         for i in self.loader.nodeList:
             self.loader.enterAnimatedProps(i)
@@ -165,34 +126,28 @@ class Playground(Place.Place):
         newsManager = base.cr.newsManager
         if newsManager:
             holidayIds = base.cr.newsManager.getDecorationHolidayId()
-            if (ToontownGlobals.HALLOWEEN_COSTUMES in holidayIds or ToontownGlobals.SPOOKY_COSTUMES in holidayIds) and self.loader.hood.spookySkyFile:
+            if (ToontownGlobals.HALLOWEEN_COSTUMES in holidayIds
+                    or ToontownGlobals.SPOOKY_COSTUMES in holidayIds
+                ) and self.loader.hood.spookySkyFile:
                 lightsOff = Sequence(
                     LerpColorScaleInterval(
-                        base.cr.playGame.hood.loader.geom, 0.10000000000000001, Vec4(
-                            0.55000000000000004, 0.55000000000000004, 0.65000000000000002, 1)), Func(
-                        self.loader.hood.startSpookySky), Func(__lightDecorationOn__))
+                        base.cr.playGame.hood.loader.geom, 0.10000000000000001,
+                        Vec4(0.55000000000000004, 0.55000000000000004,
+                             0.65000000000000002, 1)),
+                    Func(self.loader.hood.startSpookySky),
+                    Func(__lightDecorationOn__))
                 lightsOff.start()
             else:
                 self.loader.hood.startSky()
                 lightsOn = LerpColorScaleInterval(
-                    base.cr.playGame.hood.loader.geom,
-                    0.10000000000000001,
-                    Vec4(
-                        1,
-                        1,
-                        1,
-                        1))
+                    base.cr.playGame.hood.loader.geom, 0.10000000000000001,
+                    Vec4(1, 1, 1, 1))
                 lightsOn.start()
         else:
             self.loader.hood.startSky()
             lightsOn = LerpColorScaleInterval(
-                base.cr.playGame.hood.loader.geom,
-                0.10000000000000001,
-                Vec4(
-                    1,
-                    1,
-                    1,
-                    1))
+                base.cr.playGame.hood.loader.geom, 0.10000000000000001,
+                Vec4(1, 1, 1, 1))
             lightsOn.start()
         NametagGlobals.setMasterArrowsOn(1)
         self.zoneId = requestStatus['zoneId']
@@ -202,8 +157,7 @@ class Playground(Place.Place):
         if how == 'teleportIn':
             how = 'deathAck'
 
-        self.fsm.request(how, [
-            requestStatus])
+        self.fsm.request(how, [requestStatus])
 
     def exit(self):
         self.ignoreAll()
@@ -279,8 +233,8 @@ class Playground(Place.Place):
                 fromP = pointDef[0]
                 toP = toDef[0]
                 lines.moveTo(fromP[0], fromP[1], fromP[2] + 2.0)
-                wpList = CCharPaths.getWayPoints(
-                    name, connectTo, paths, waypoints)
+                wpList = CCharPaths.getWayPoints(name, connectTo, paths,
+                                                 waypoints)
                 for wp in wpList:
                     lines.drawTo(wp[0], wp[1], wp[2] + 2.0)
                     self.showDebugPointText('*', wp)
@@ -343,13 +297,12 @@ class Playground(Place.Place):
                 'hoodId': self.loader.hood.id,
                 'zoneId': doneStatus['zoneId'],
                 'shardId': None,
-                'minigameId': doneStatus['minigameId']}
+                'minigameId': doneStatus['minigameId']
+            }
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                mode +
-                ' in handleTrolleyDone')
+            self.notify.error('Unknown mode: ' + mode +
+                              ' in handleTrolleyDone')
 
     def debugStartMinigame(self, zoneId, minigameId):
         self.doneStatus = {
@@ -358,7 +311,8 @@ class Playground(Place.Place):
             'hoodId': self.loader.hood.id,
             'zoneId': zoneId,
             'shardId': None,
-            'minigameId': minigameId}
+            'minigameId': minigameId
+        }
         messenger.send(self.doneEvent)
 
     def enterTFACallback(self, requestStatus, doneStatus):
@@ -377,8 +331,7 @@ class Playground(Place.Place):
         del self.dfa
         ds = doneStatus['mode']
         if ds == 'complete':
-            self.fsm.request('NPCFA', [
-                requestStatus])
+            self.fsm.request('NPCFA', [requestStatus])
         elif ds == 'incomplete':
             self.fsm.request('DFAReject')
         else:
@@ -387,8 +340,8 @@ class Playground(Place.Place):
                 repr(doneStatus))
 
     def enterHFA(self, requestStatus):
-        self.acceptOnce(self.hfaDoneEvent, self.enterHFACallback, [
-            requestStatus])
+        self.acceptOnce(self.hfaDoneEvent, self.enterHFACallback,
+                        [requestStatus])
         self.hfa = HealthForceAcknowledge.HealthForceAcknowledge(
             self.hfaDoneEvent)
         self.hfa.enter(1)
@@ -401,15 +354,14 @@ class Playground(Place.Place):
         del self.hfa
         if doneStatus['mode'] == 'complete':
             if requestStatus.get('partyHat', 0):
-                outHow = {
-                    'teleportIn': 'tunnelOut'}
+                outHow = {'teleportIn': 'tunnelOut'}
             else:
                 outHow = {
                     'teleportIn': 'teleportOut',
                     'tunnelIn': 'tunnelOut',
-                    'doorIn': 'doorOut'}
-            self.fsm.request(outHow[requestStatus['how']], [
-                requestStatus])
+                    'doorIn': 'doorOut'
+                }
+            self.fsm.request(outHow[requestStatus['how']], [requestStatus])
         elif doneStatus['mode'] == 'incomplete':
             self.fsm.request('HFAReject')
         else:
@@ -424,8 +376,8 @@ class Playground(Place.Place):
         pass
 
     def enterNPCFA(self, requestStatus):
-        self.acceptOnce(self.npcfaDoneEvent, self.enterNPCFACallback, [
-            requestStatus])
+        self.acceptOnce(self.npcfaDoneEvent, self.enterNPCFACallback,
+                        [requestStatus])
         self.npcfa = NPCForceAcknowledge.NPCForceAcknowledge(
             self.npcfaDoneEvent)
         self.npcfa.enter()
@@ -437,14 +389,12 @@ class Playground(Place.Place):
         self.npcfa.exit()
         del self.npcfa
         if doneStatus['mode'] == 'complete':
-            self.fsm.request('HFA', [
-                requestStatus])
+            self.fsm.request('HFA', [requestStatus])
         elif doneStatus['mode'] == 'incomplete':
             self.fsm.request('NPCFAReject')
         else:
-            self.notify.error(
-                'Unknown done status for NPCForceAcknowledge: ' +
-                repr(doneStatus))
+            self.notify.error('Unknown done status for NPCForceAcknowledge: ' +
+                              repr(doneStatus))
 
     def enterNPCFAReject(self):
         self.fsm.request('walk')
@@ -462,8 +412,7 @@ class Playground(Place.Place):
 
     def enterDeathAck(self, requestStatus):
         self.deathAckBox = None
-        self.fsm.request('teleportIn', [
-            requestStatus])
+        self.fsm.request('teleportIn', [requestStatus])
 
     def exitDeathAck(self):
         if self.deathAckBox:
@@ -487,13 +436,12 @@ class Playground(Place.Place):
             self.deathAckBox = DeathForceAcknowledge.DeathForceAcknowledge(
                 doneEvent='deathAck')
         elif base.localAvatar.hp > 0:
-            if (
-                Quests.avatarHasTrolleyQuest(
-                    base.localAvatar) and Quests.avatarHasFirstCogQuest(
-                    base.localAvatar) and Quests.avatarHasFriendQuest(
-                    base.localAvatar) or Quests.avatarHasPhoneQuest(
-                    base.localAvatar) or Quests.avatarHasCompletedPhoneQuest(
-                        base.localAvatar)) and self.loader.hood.id == ToontownGlobals.ToontownCentral:
+            if (Quests.avatarHasTrolleyQuest(base.localAvatar)
+                    and Quests.avatarHasFirstCogQuest(base.localAvatar)
+                    and Quests.avatarHasFriendQuest(base.localAvatar)
+                    or Quests.avatarHasPhoneQuest(base.localAvatar)
+                    or Quests.avatarHasCompletedPhoneQuest(base.localAvatar)
+                ) and self.loader.hood.id == ToontownGlobals.ToontownCentral:
                 requestStatus['nextState'] = 'popup'
                 imageModel = loader.loadModel('phase_4/models/gui/tfa_images')
                 if base.localAvatar.quests[0][0] == Quests.TROLLEY_QUEST_ID:
@@ -513,7 +461,8 @@ class Playground(Place.Place):
                         imgNodePath = imageModel.find('**/hq-dialog-image')
                         imgPos = (0, 0, -0.02)
                         imgScale = 0.5
-                elif base.localAvatar.quests[0][0] == Quests.FIRST_COG_QUEST_ID:
+                elif base.localAvatar.quests[0][
+                        0] == Quests.FIRST_COG_QUEST_ID:
                     if not Quests.avatarHasCompletedFirstCogQuest(
                             base.localAvatar):
                         (x, y, z, h, p, r) = base.cr.hoodMgr.getDropPoint(
@@ -583,8 +532,7 @@ class Playground(Place.Place):
             self.dialog = None
 
         if hasattr(self, 'fsm'):
-            self.fsm.request('walk', [
-                1])
+            self.fsm.request('walk', [1])
 
     def _Playground__handleDeathAck(self, requestStatus):
         if self.deathAckBox:
@@ -592,8 +540,7 @@ class Playground(Place.Place):
             self.deathAckBox.cleanup()
             self.deathAckBox = None
 
-        self.fsm.request('walk', [
-            1])
+        self.fsm.request('walk', [1])
 
     def enterPopup(self, teleportIn=0):
         if base.localAvatar.hp < 1:
@@ -618,13 +565,12 @@ class Playground(Place.Place):
         return Task.done
 
     def enterTeleportOut(self, requestStatus):
-        Place.Place.enterTeleportOut(
-            self, requestStatus, self._Playground__teleportOutDone)
+        Place.Place.enterTeleportOut(self, requestStatus,
+                                     self._Playground__teleportOutDone)
 
     def _Playground__teleportOutDone(self, requestStatus):
-        teleportDebug(
-            requestStatus, 'Playground.__teleportOutDone(%s)' %
-            (requestStatus,))
+        teleportDebug(requestStatus,
+                      'Playground.__teleportOutDone(%s)' % (requestStatus, ))
         if hasattr(self, 'activityFsm'):
             self.activityFsm.requestFinalState()
 
@@ -634,8 +580,7 @@ class Playground(Place.Place):
         shardId = requestStatus['shardId']
         if hoodId == self.loader.hood.hoodId and zoneId == self.loader.hood.hoodId and shardId is None:
             teleportDebug(requestStatus, 'same playground')
-            self.fsm.request('deathAck', [
-                requestStatus])
+            self.fsm.request('deathAck', [requestStatus])
         elif hoodId == ToontownGlobals.MyEstate:
             teleportDebug(requestStatus, 'estate')
             self.getEstateZoneAndGoHome(requestStatus)
@@ -686,8 +631,8 @@ class Playground(Place.Place):
             npc.getPath(i).removeNode()
 
     def enterTFA(self, requestStatus):
-        self.acceptOnce(self.tfaDoneEvent, self.enterTFACallback, [
-            requestStatus])
+        self.acceptOnce(self.tfaDoneEvent, self.enterTFACallback,
+                        [requestStatus])
         self.tfa = TutorialForceAcknowledge.TutorialForceAcknowledge(
             self.tfaDoneEvent)
         self.tfa.enter()

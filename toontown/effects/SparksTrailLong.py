@@ -6,7 +6,6 @@ from EffectController import EffectController
 
 
 class SparksTrailLong(PooledEffect, EffectController):
-
     def __init__(self):
         PooledEffect.__init__(self)
         EffectController.__init__(self)
@@ -64,10 +63,9 @@ class SparksTrailLong(PooledEffect, EffectController):
         self.p0.renderer.setAlphaBlendMethod(
             BaseParticleRenderer.PPBLENDLINEAR)
         self.p0.renderer.setAlphaDisable(0)
-        self.p0.renderer.setColorBlendMode(
-            ColorBlendAttrib.MAdd,
-            ColorBlendAttrib.OIncomingAlpha,
-            ColorBlendAttrib.OOne)
+        self.p0.renderer.setColorBlendMode(ColorBlendAttrib.MAdd,
+                                           ColorBlendAttrib.OIncomingAlpha,
+                                           ColorBlendAttrib.OOne)
         self.p0.emitter.setEmissionType(BaseParticleEmitter.ETRADIATE)
         self.p0.emitter.setAmplitudeSpread(0.0)
         self.p0.emitter.setOffsetForce(Vec3(0.0, 0.0, -2.0))
@@ -77,12 +75,13 @@ class SparksTrailLong(PooledEffect, EffectController):
 
     def createTrack(self):
         self.startEffect = Sequence(
-            Func(
-                self.p0.setBirthRate, 0.014999999999999999), Func(
-                self.p0.clearToInitial), Func(
-                self.f.start, self, self.particleDummy))
-        self.endEffect = Sequence(Func(self.p0.setBirthRate, 100.0), Wait(
-            self.lifespan + 0.10000000000000001), Func(self.cleanUpEffect))
+            Func(self.p0.setBirthRate, 0.014999999999999999),
+            Func(self.p0.clearToInitial),
+            Func(self.f.start, self, self.particleDummy))
+        self.endEffect = Sequence(
+            Func(self.p0.setBirthRate, 100.0),
+            Wait(self.lifespan + 0.10000000000000001),
+            Func(self.cleanUpEffect))
         self.track = Sequence(self.startEffect, Wait(1.0), self.endEffect)
 
     def setLifespan(self, duration):

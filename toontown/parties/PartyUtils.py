@@ -24,7 +24,8 @@ def getPartyActivityIcon(activityIconsModel, activityName):
         'PartyValentineDance20': 'tt_t_ara_pty_iconDanceFloorValentine',
         'PartyValentineJukebox': 'tt_t_ara_pty_iconJukeboxValentine',
         'PartyValentineJukebox40': 'tt_t_ara_pty_iconJukeboxValentine',
-        'PartyValentineTrampoline': 'tt_t_ara_pty_iconTrampolineValentine'}
+        'PartyValentineTrampoline': 'tt_t_ara_pty_iconTrampolineValentine'
+    }
     iconName = activityIconsDict.get(activityName)
     if iconName:
         icon = activityIconsModel.find('**/%s' % iconName)
@@ -32,9 +33,8 @@ def getPartyActivityIcon(activityIconsModel, activityName):
         icon = activityIconsModel.find('**/%sIcon' % activityName)
     if icon.isEmpty():
         icon = activityIconsModel.find('**/PartyClockIcon')
-        notify.warning(
-            "Couldn't find %sIcon in %s, using PartyClockIcon" %
-            (activityName, activityIconsModel.getName()))
+        notify.warning("Couldn't find %sIcon in %s, using PartyClockIcon" %
+                       (activityName, activityIconsModel.getName()))
 
     return icon
 
@@ -52,7 +52,7 @@ def arcPosInterval(duration, object, pos, arcHeight, other):
     def setArcPos(t):
         newX = startX + dx * t
         newY = startY + dy * t
-        newZ = startZ + dz * t + arcHeight * (-(2.0 * t - 1.0) ** 2 + 1.0)
+        newZ = startZ + dz * t + arcHeight * (-(2.0 * t - 1.0)**2 + 1.0)
         object.setPos(newX, newY, newZ)
 
     return LerpFunc(setArcPos, duration=duration)
@@ -63,7 +63,8 @@ def formatDate(year, month, day):
     return TTLocalizer.PartyDateFormat % {
         'mm': monthString,
         'dd': day,
-        'yyyy': year}
+        'yyyy': year
+    }
 
 
 def truncateTextOfLabelBasedOnWidth(directGuiObject, textToTruncate, maxWidth):
@@ -80,8 +81,8 @@ def truncateTextOfLabelBasedOnWidth(directGuiObject, textToTruncate, maxWidth):
         directGuiObject['text'] = '%s...' % directGuiObject['text']
 
 
-def truncateTextOfLabelBasedOnMaxLetters(
-        directGuiObject, textToTruncate, maxLetters):
+def truncateTextOfLabelBasedOnMaxLetters(directGuiObject, textToTruncate,
+                                         maxLetters):
     curStr = directGuiObject['text']
     if maxLetters < len(curStr):
         curStr = curStr[:maxLetters]
@@ -136,28 +137,20 @@ def formatDateTime(dateTimeToShow, inLocalTime=False):
         localDifference = getTimeDeltaInSeconds(newTimeDelta)
         dateTimeToShow = dateTimeToShow + \
             datetime.timedelta(seconds=localDifference)
-        return '%s %s' % (formatDate(
-            dateTimeToShow.year,
-            dateTimeToShow.month,
-            dateTimeToShow.day),
-            formatTime(
-            dateTimeToShow.hour,
-            dateTimeToShow.minute))
+        return '%s %s' % (formatDate(dateTimeToShow.year, dateTimeToShow.month,
+                                     dateTimeToShow.day),
+                          formatTime(dateTimeToShow.hour,
+                                     dateTimeToShow.minute))
     else:
-        return '%s %s' % (formatDate(
-            dateTimeToShow.year,
-            dateTimeToShow.month,
-            dateTimeToShow.day),
-            formatTime(
-            dateTimeToShow.hour,
-            dateTimeToShow.minute))
+        return '%s %s' % (formatDate(dateTimeToShow.year, dateTimeToShow.month,
+                                     dateTimeToShow.day),
+                          formatTime(dateTimeToShow.hour,
+                                     dateTimeToShow.minute))
 
 
 def convertDistanceToPartyGrid(d, index):
-    return int(
-        (d -
-         PartyGlobals.PartyGridToPandaOffset[index]) /
-        PartyGlobals.PartyGridUnitLength[index])
+    return int((d - PartyGlobals.PartyGridToPandaOffset[index]) /
+               PartyGlobals.PartyGridUnitLength[index])
 
 
 def convertDistanceFromPartyGrid(d, index):
@@ -205,7 +198,6 @@ def calcVelocity(rotation, angle, initialVelocity=1.0):
 
 
 class LineSegment:
-
     def __init__(self, pt1, pt2):
         self.pt1 = pt1
         self.pt2 = pt2

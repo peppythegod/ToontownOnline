@@ -56,24 +56,23 @@ class CogdoFlyingGuiManager:
 
     def presentProgressGui(self):
         ToontownIntervals.start(
-            ToontownIntervals.getPresentGuiIval(
-                self._progressGui,
-                'present_progress_gui'))
+            ToontownIntervals.getPresentGuiIval(self._progressGui,
+                                                'present_progress_gui'))
 
     def presentRefuelGui(self):
         ToontownIntervals.start(
-            ToontownIntervals.getPresentGuiIval(
-                self._refuelGui, 'present_fuel_gui'))
+            ToontownIntervals.getPresentGuiIval(self._refuelGui,
+                                                'present_fuel_gui'))
 
     def presentTimerGui(self):
         ToontownIntervals.start(
-            ToontownIntervals.getPresentGuiIval(
-                self._timer, 'present_timer_gui'))
+            ToontownIntervals.getPresentGuiIval(self._timer,
+                                                'present_timer_gui'))
 
     def presentMemoGui(self):
         ToontownIntervals.start(
-            ToontownIntervals.getPresentGuiIval(
-                self._memoGui, 'present_memo_gui'))
+            ToontownIntervals.getPresentGuiIval(self._memoGui,
+                                                'present_memo_gui'))
 
     def offstage(self):
         self.root.stash()
@@ -82,16 +81,14 @@ class CogdoFlyingGuiManager:
         self.hideTimer()
 
     def getTimeLeft(self):
-        return Globals.Gameplay.SecondsUntilGameOver - self._timer.getElapsedTime()
+        return Globals.Gameplay.SecondsUntilGameOver - self._timer.getElapsedTime(
+        )
 
     def isTimeRunningOut(self):
         return self.getTimeLeft() < Globals.Gameplay.TimeRunningOutSeconds
 
-    def startTimer(
-            self,
-            duration,
-            timerExpiredCallback=None,
-            keepHidden=False):
+    def startTimer(self, duration, timerExpiredCallback=None,
+                   keepHidden=False):
         if self._timer is None:
             self._initTimer()
 

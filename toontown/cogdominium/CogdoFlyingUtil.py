@@ -20,12 +20,9 @@ def swapAvatarShadowPlacer(avatar, name):
         avatar.shadowPlacer.delete()
         avatar.shadowPlacer = None
 
-    shadowPlacer = CogdoFlyingShadowPlacer(
-        base.shadowTrav,
-        avatar.dropShadow,
-        OTPGlobals.WallBitmask,
-        OTPGlobals.FloorBitmask,
-        name)
+    shadowPlacer = CogdoFlyingShadowPlacer(base.shadowTrav, avatar.dropShadow,
+                                           OTPGlobals.WallBitmask,
+                                           OTPGlobals.FloorBitmask, name)
     avatar.shadowPlacer = shadowPlacer
     avatar.setActiveShadow(0)
     avatar.setActiveShadow(1)

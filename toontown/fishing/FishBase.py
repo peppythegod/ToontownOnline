@@ -51,7 +51,8 @@ class FishBase:
         import direct.actor
         actor = Actor.Actor(prefix + fileInfo[1], {
             'intro': prefix + fileInfo[2],
-            'swim': prefix + fileInfo[3]})
+            'swim': prefix + fileInfo[3]
+        })
         return actor
 
     def getSound(self):
@@ -72,5 +73,5 @@ class FishBase:
         return (sound, loop, delay, playRate)
 
     def __str__(self):
-        return '%s, weight: %s value: %s' % (
-            self.getSpeciesName(), self.weight, self.getValue())
+        return '%s, weight: %s value: %s' % (self.getSpeciesName(),
+                                             self.weight, self.getValue())

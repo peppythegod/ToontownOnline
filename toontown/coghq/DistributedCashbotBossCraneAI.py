@@ -5,10 +5,8 @@ from otp.otpbase import OTPGlobals
 from direct.fsm import FSM
 
 
-class DistributedCashbotBossCraneAI(
-        DistributedObjectAI.DistributedObjectAI,
-        FSM.FSM):
-
+class DistributedCashbotBossCraneAI(DistributedObjectAI.DistributedObjectAI,
+                                    FSM.FSM):
     def __init__(self, air, boss, index):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         FSM.FSM.__init__(self, 'DistributedCashbotBossCraneAI')
@@ -30,9 +28,7 @@ class DistributedCashbotBossCraneAI(
         return self.index
 
     def d_setState(self, state, avId):
-        self.sendUpdate('setState', [
-            state,
-            avId])
+        self.sendUpdate('setState', [state, avId])
 
     def requestControl(self):
         avId = self.air.getAvatarIdFromSender()

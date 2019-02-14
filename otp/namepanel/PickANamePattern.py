@@ -1,6 +1,4 @@
-
 class PickANamePattern:
-
     def __init__(self, nameStr, gender):
         self._nameStr = nameStr
         self._namePattern = self._compute(self._nameStr, gender)
@@ -42,10 +40,8 @@ class PickANamePattern:
             return None
 
         for permutation in self._genWordListSplitPermutations(words[1:]):
-            yield [
-                words[0]] + permutation
-            yield [
-                words[0] + ' ' + permutation[0]] + permutation[1:]
+            yield [words[0]] + permutation
+            yield [words[0] + ' ' + permutation[0]] + permutation[1:]
 
     def _genNameSplitPermutations(self, name):
         for splitName in self._genWordListSplitPermutations(name.split()):
@@ -73,14 +69,13 @@ class PickANamePattern:
 
         if words[wi] in nameParts[nwli]:
             if pattern is None:
-                pattern = [
-                    -1] * len(nameParts)
+                pattern = [-1] * len(nameParts)
 
             word2index = nameParts[nwli]
             newPattern = pattern[:]
             newPattern[nwli] = word2index[words[wi]]
-            result = self._recursiveCompute(
-                words, nameParts, wi + 1, nwli + 1, newPattern)
+            result = self._recursiveCompute(words, nameParts, wi + 1, nwli + 1,
+                                            newPattern)
             if result:
                 return result
 
@@ -88,7 +83,6 @@ class PickANamePattern:
 
 
 class PickANamePatternTwoPartLastName(PickANamePattern):
-
     def getNameString(self, pattern, gender):
         name = PickANamePattern.getNameString(self, pattern, gender)
         if pattern[-2] != -1:

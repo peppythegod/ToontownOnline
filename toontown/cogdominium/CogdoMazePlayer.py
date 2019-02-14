@@ -17,26 +17,16 @@ class CogdoMazePlayer(FSM, CogdoMazeSplattable):
     def __init__(self, id, toon):
         FSM.__init__(self, 'CogdoMazePlayer')
         CogdoMazeSplattable.__init__(
-            self, toon, '%s-%i' %
-            (Globals.PlayerCollisionName, id), 0.5)
+            self, toon, '%s-%i' % (Globals.PlayerCollisionName, id), 0.5)
         self.id = id
         self.toon = toon
         self.defaultTransitions = {
-            'Off': [
-                'Ready'],
-            'Ready': [
-                'Normal',
-                'Off'],
-            'Normal': [
-                'Hit',
-                'Done',
-                'Off'],
-            'Hit': [
-                'Normal',
-                'Done',
-                'Off'],
-            'Done': [
-                'Off']}
+            'Off': ['Ready'],
+            'Ready': ['Normal', 'Off'],
+            'Normal': ['Hit', 'Done', 'Off'],
+            'Hit': ['Normal', 'Done', 'Off'],
+            'Done': ['Off']
+        }
         self.toon.reparentTo(render)
         self.gagModel = CogdoUtil.loadMazeModel('waterBalloon')
         self.equippedGag = None
@@ -109,9 +99,7 @@ class CogdoMazePlayer(FSM, CogdoMazeSplattable):
 
     def handleGameStart(self):
         self.accept(
-            Globals.GagCollisionName +
-            '-into-' +
-            self.gagCollisionName,
+            Globals.GagCollisionName + '-into-' + self.gagCollisionName,
             self.handleGagHit)
 
     def hitByDrop(self):
@@ -123,9 +111,7 @@ class CogdoMazePlayer(FSM, CogdoMazeSplattable):
 
     def handleGagHit(self, collEntry):
         gagNodePath = collEntry.getFromNodePath().getParent()
-        messenger.send(self.GagHitEventName, [
-            self.toon.doId,
-            gagNodePath])
+        messenger.send(self.GagHitEventName, [self.toon.doId, gagNodePath])
 
     def hitByGag(self):
         self.doSplat()
@@ -157,8 +143,7 @@ class CogdoMazePlayer(FSM, CogdoMazeSplattable):
         return throwGag
 
     def removed(self):
-        messenger.send(self.RemovedEventName, [
-            self])
+        messenger.send(self.RemovedEventName, [self])
 
     def showToonThrowingGag(self, heading, pos):
         gag = self.equippedGag
@@ -199,75 +184,41 @@ class CogdoMazePlayer(FSM, CogdoMazeSplattable):
         toss = Track(
             (0,
              Sequence(
-                 Func(
-                     toon.setPosHpr,
-                     x,
-                     y,
-                     z,
-                     h,
-                     p,
-                     r),
-                 Func(
-                     gag.reparentTo,
-                     toon.rightHand),
-                 Func(
-                     gag.setPosHpr,
-                     0,
-                     0,
-                     0,
-                     0,
-                     0,
-                     0),
-                 toonThrowIval1)),
+                 Func(toon.setPosHpr, x, y, z, h, p, r),
+                 Func(gag.reparentTo, toon.rightHand),
+                 Func(gag.setPosHpr, 0, 0, 0, 0, 0, 0), toonThrowIval1)),
             (toonThrowIval1.getDuration(),
              Parallel(
-                Func(
-                    gag.detachNode),
-                Sequence(
-                    ActorInterval(
-                        toon,
-                        'throw',
-                        startFrame=Globals.ThrowEndFrame + 1,
-                        playRate=Globals.ThrowPlayRate,
-                        partName='torso'),
-                    Func(
-                        self.completeThrow)))))
+                 Func(gag.detachNode),
+                 Sequence(
+                     ActorInterval(
+                         toon,
+                         'throw',
+                         startFrame=Globals.ThrowEndFrame + 1,
+                         playRate=Globals.ThrowPlayRate,
+                         partName='torso'), Func(self.completeThrow)))))
 
         def getEndPos(toon=toon):
-            return render.getRelativePoint(
-                toon, Point3(0, Globals.ThrowDistance, 0))
+            return render.getRelativePoint(toon,
+                                           Point3(0, Globals.ThrowDistance, 0))
 
         fly = Track(
-            (0,
-             throwSoundIval),
+            (0, throwSoundIval),
             (toonThrowIval1.getDuration(),
              Sequence(
-                Func(
-                    flyGag.reparentTo,
-                    render),
-                Func(
-                    flyGag.setPosHpr,
-                    toon,
-                    0.52000000000000002,
-                    0.96999999999999997,
-                    2.2400000000000002,
-                    0,
-                    -45,
-                    0),
-                ProjectileInterval(
-                    flyGag,
-                    endPos=getEndPos,
-                    duration=Globals.ThrowDuration),
-                Func(
-                    flyGag.detachNode))))
+                 Func(flyGag.reparentTo, render),
+                 Func(flyGag.setPosHpr, toon, 0.52000000000000002,
+                      0.96999999999999997, 2.2400000000000002, 0, -45, 0),
+                 ProjectileInterval(
+                     flyGag, endPos=getEndPos, duration=Globals.ThrowDuration),
+                 Func(flyGag.detachNode))))
         return (toss, fly, flyGag)
 
-    def _getToonAnimationIval(
-            self,
-            animName,
-            startFrame=0,
-            duration=1,
-            nextState=None):
+    def _getToonAnimationIval(self,
+                              animName,
+                              startFrame=0,
+                              duration=1,
+                              nextState=None):
         totalFrames = self.toon.getNumFrames(animName)
         frames = totalFrames - 1 - startFrame
         frameRate = self.toon.getFrameRate(animName)
@@ -277,10 +228,8 @@ class CogdoMazePlayer(FSM, CogdoMazeSplattable):
             ActorInterval(
                 self.toon,
                 animName,
-                startTime=startFrame /
-                newRate,
-                endTime=totalFrames /
-                newRate,
+                startTime=startFrame / newRate,
+                endTime=totalFrames / newRate,
                 playRate=playRate))
         if nextState is not None:
 

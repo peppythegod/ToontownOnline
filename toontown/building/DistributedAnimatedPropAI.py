@@ -7,16 +7,15 @@ from direct.fsm import State
 
 
 class DistributedAnimatedPropAI(DistributedObjectAI.DistributedObjectAI):
-
     def __init__(self, air, propId):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.fsm = ClassicFSM.ClassicFSM('DistributedAnimatedPropAI', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'playing']),
-            State.State('attract', self.enterAttract, self.exitAttract, [
-                'playing']),
-            State.State('playing', self.enterPlaying, self.exitPlaying, [
-                'attract'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['playing']),
+            State.State('attract', self.enterAttract, self.exitAttract,
+                        ['playing']),
+            State.State('playing', self.enterPlaying, self.exitPlaying,
+                        ['attract'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
         self.propId = propId
         self.avatarId = 0
@@ -35,7 +34,8 @@ class DistributedAnimatedPropAI(DistributedObjectAI.DistributedObjectAI):
     def getInitialState(self):
         return [
             self.fsm.getCurrentState().getName(),
-            globalClockDelta.getRealNetworkTime()]
+            globalClockDelta.getRealNetworkTime()
+        ]
 
     def getOwnerDoId(self):
         return self.ownerDoId
@@ -44,8 +44,7 @@ class DistributedAnimatedPropAI(DistributedObjectAI.DistributedObjectAI):
         avatarId = self.air.getAvatarIdFromSender()
         stateName = self.fsm.getCurrentState().getName()
         if stateName != 'playing':
-            self.sendUpdate('setAvatarInteract', [
-                avatarId])
+            self.sendUpdate('setAvatarInteract', [avatarId])
             self.avatarId = avatarId
             self.fsm.request('playing')
         else:
@@ -56,19 +55,18 @@ class DistributedAnimatedPropAI(DistributedObjectAI.DistributedObjectAI):
         if avatarId == self.avatarId:
             stateName = self.fsm.getCurrentState().getName()
             if stateName == 'playing':
-                self.sendUpdate('avatarExit', [
-                    avatarId])
+                self.sendUpdate('avatarExit', [avatarId])
                 self.fsm.request('attract')
 
     def getState(self):
         return [
             self.fsm.getCurrentState().getName(),
-            globalClockDelta.getRealNetworkTime()]
+            globalClockDelta.getRealNetworkTime()
+        ]
 
     def d_setState(self, state):
-        self.sendUpdate('setState', [
-            state,
-            globalClockDelta.getRealNetworkTime()])
+        self.sendUpdate('setState',
+                        [state, globalClockDelta.getRealNetworkTime()])
 
     def enterOff(self):
         pass

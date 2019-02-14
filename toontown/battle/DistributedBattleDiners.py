@@ -33,9 +33,7 @@ class DistributedBattleDiners(DistributedBattleFinal.DistributedBattleFinal):
         done = Func(callback)
         if self.hasLocalToon():
             camera.reparentTo(self)
-            if random.choice([
-                    0,
-                    1]):
+            if random.choice([0, 1]):
                 camera.setPosHpr(20, -4, 7, 60, 0, 0)
             else:
                 camera.setPosHpr(-20, -4, 7, -60, 0, 0)
@@ -83,13 +81,7 @@ class DistributedBattleDiners(DistributedBattleFinal.DistributedBattleFinal):
                 moveIval = self.createDinerMoveIval(suit, destPos, chairInfo)
 
             suitTrack.append(
-                Track(
-                    (delay,
-                     Sequence(
-                         moveIval,
-                         Func(
-                             suit.loop,
-                             'neutral')))))
+                Track((delay, Sequence(moveIval, Func(suit.loop, 'neutral')))))
             delay += 1
 
         if self.hasLocalToon():
@@ -128,22 +120,13 @@ class DistributedBattleDiners(DistributedBattleFinal.DistributedBattleFinal):
         wayPoint = (chairPos + destPos) / 2.0
         wayPoint.setZ(wayPoint.getZ() + 20)
         moveIval = Sequence(
-            Func(
-                suit.headsUp,
-                self),
-            Func(
-                suit.pose,
-                'landing',
-                0),
+            Func(suit.headsUp, self), Func(suit.pose, 'landing', 0),
             ProjectileInterval(
                 suit,
                 duration=flyingDur,
                 startPos=chairPos,
                 endPos=destPos,
-                gravityMult=0.25),
-            ActorInterval(
-                suit,
-                'landing'))
+                gravityMult=0.25), ActorInterval(suit, 'landing'))
         if suit.prop is None:
             suit.prop = BattleProps.globalPropPool.getProp('propeller')
 
@@ -154,10 +137,7 @@ class DistributedBattleDiners(DistributedBattleFinal.DistributedBattleFinal):
         openTime = (lastSpinFrame + 1) / fr
         suit.attachPropeller()
         propTrack = Parallel(
-            SoundInterval(
-                suit.propInSound,
-                duration=flyingDur,
-                node=suit),
+            SoundInterval(suit.propInSound, duration=flyingDur, node=suit),
             Sequence(
                 ActorInterval(
                     suit.prop,
@@ -170,8 +150,6 @@ class DistributedBattleDiners(DistributedBattleFinal.DistributedBattleFinal):
                     suit.prop,
                     'propeller',
                     duration=landingDur,
-                    startTime=openTime),
-                Func(
-                    suit.detachPropeller)))
+                    startTime=openTime), Func(suit.detachPropeller)))
         result = Parallel(moveIval, propTrack)
         return result

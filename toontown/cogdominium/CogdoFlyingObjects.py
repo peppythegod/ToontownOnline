@@ -12,12 +12,11 @@ from direct.particles import ForceGroup
 
 
 class CogdoFlyingGatherableFactory:
-
     def __init__(self):
         self._serialNum = -1
         self._memoModel = CogdoUtil.loadModel('memo', 'shared').find('**/memo')
-        self._propellerModel = CogdoUtil.loadFlyingModel(
-            'propellers').find('**/mesh')
+        self._propellerModel = CogdoUtil.loadFlyingModel('propellers').find(
+            '**/mesh')
         self._powerUpModels = {}
         for (type, modelName) in Globals.Level.PowerupType2Model.items():
             model = CogdoUtil.loadFlyingModel(modelName).find(
@@ -36,8 +35,8 @@ class CogdoFlyingGatherableFactory:
 
     def createPowerup(self, type):
         self._serialNum += 1
-        return CogdoFlyingPowerup(
-            self._serialNum, type, self._powerUpModels[type])
+        return CogdoFlyingPowerup(self._serialNum, type,
+                                  self._powerUpModels[type])
 
     def createSparkles(self, color1, color2, amp):
         self.f = ParticleEffect.ParticleEffect('particleEffect_sparkles')
@@ -92,7 +91,6 @@ class CogdoFlyingGatherableFactory:
 
 
 class CogdoFlyingGatherableBase:
-
     def __init__(self, type):
         self.type = type
         self.initFlash()
@@ -107,21 +105,14 @@ class CogdoFlyingGatherableBase:
         self.ts = TextureStage('ts')
         self.ts.setMode(TextureStage.MCombine)
         self.ts.setSort(1)
-        self.ts.setCombineRgb(
-            TextureStage.CMInterpolate,
-            TextureStage.CSPrevious,
-            TextureStage.COSrcColor,
-            TextureStage.CSTexture,
-            TextureStage.COSrcColor,
-            TextureStage.CSConstant,
-            TextureStage.COSrcColor)
+        self.ts.setCombineRgb(TextureStage.CMInterpolate,
+                              TextureStage.CSPrevious, TextureStage.COSrcColor,
+                              TextureStage.CSTexture, TextureStage.COSrcColor,
+                              TextureStage.CSConstant, TextureStage.COSrcColor)
         self.ts.setCombineAlpha(
-            TextureStage.CMInterpolate,
-            TextureStage.CSPrevious,
-            TextureStage.COSrcAlpha,
-            TextureStage.CSTexture,
-            TextureStage.COSrcAlpha,
-            TextureStage.CSConstant,
+            TextureStage.CMInterpolate, TextureStage.CSPrevious,
+            TextureStage.COSrcAlpha, TextureStage.CSTexture,
+            TextureStage.COSrcAlpha, TextureStage.CSConstant,
             TextureStage.COSrcAlpha)
         self._model.setTexture(self.ts, tex)
         dur = Globals.Gameplay.GatherableFlashTime
@@ -130,20 +121,16 @@ class CogdoFlyingGatherableBase:
                 self.setTextureAlphaFunc,
                 fromData=1.0,
                 toData=0.25,
-                duration=dur /
-                2.0,
+                duration=dur / 2.0,
                 blendType='easeInOut'),
             LerpFunctionInterval(
                 self.setTextureAlphaFunc,
                 fromData=0.25,
                 toData=1.0,
-                duration=dur /
-                2.0,
+                duration=dur / 2.0,
                 blendType='easeInOut'),
             Wait(1.0),
-            name='%s.flashLoop-%s' %
-            (self.__class__.__name__,
-             self.serialNum))
+            name='%s.flashLoop-%s' % (self.__class__.__name__, self.serialNum))
 
     def show(self):
         self.enableFlash()
@@ -176,20 +163,14 @@ class CogdoFlyingGatherableBase:
 
 
 class CogdoFlyingGatherable(CogdoGameGatherable, CogdoFlyingGatherableBase):
-
-    def __init__(
-            self,
-            type,
-            serialNum,
-            modelToInstance,
-            triggerRadius,
-            animate=True):
+    def __init__(self,
+                 type,
+                 serialNum,
+                 modelToInstance,
+                 triggerRadius,
+                 animate=True):
         CogdoGameGatherable.__init__(
-            self,
-            serialNum,
-            modelToInstance,
-            triggerRadius,
-            animate=animate)
+            self, serialNum, modelToInstance, triggerRadius, animate=animate)
         CogdoFlyingGatherableBase.__init__(self, type)
 
     def enable(self):
@@ -214,7 +195,6 @@ class CogdoFlyingGatherable(CogdoGameGatherable, CogdoFlyingGatherableBase):
 
 
 class CogdoFlyingMemo(CogdoFlyingGatherableBase, CogdoMemo):
-
     def __init__(self, serialNum, model):
         CogdoMemo.__init__(
             self,
@@ -222,8 +202,8 @@ class CogdoFlyingMemo(CogdoFlyingGatherableBase, CogdoMemo):
             triggerRadius=Globals.Gameplay.MemoCollisionRadius,
             spinRate=Globals.Gameplay.MemoSpinRate,
             model=model)
-        CogdoFlyingGatherableBase.__init__(
-            self, Globals.Level.GatherableTypes.Memo)
+        CogdoFlyingGatherableBase.__init__(self,
+                                           Globals.Level.GatherableTypes.Memo)
         self.floatTimer = 0.0
         self.floatSpeed = 1.0
         self.floatDuration = 2.0
@@ -260,21 +240,16 @@ class CogdoFlyingMemo(CogdoFlyingGatherableBase, CogdoMemo):
         else:
             self.floatTimer = 0.0
             self.floatSpeed = random.uniform(0.5, 1.0)
-            self.floatDuration = random.uniform(
-                1.8999999999999999, 2.1000000000000001)
+            self.floatDuration = random.uniform(1.8999999999999999,
+                                                2.1000000000000001)
 
 
 class CogdoFlyingPowerup(CogdoFlyingGatherable):
-
     def __init__(self, serialNum, powerupType, model):
         self._pickedUpList = []
         self._isToonLocal = False
-        CogdoFlyingGatherable.__init__(
-            self,
-            powerupType,
-            serialNum,
-            model,
-            Globals.Gameplay.MemoCollisionRadius)
+        CogdoFlyingGatherable.__init__(self, powerupType, serialNum, model,
+                                       Globals.Gameplay.MemoCollisionRadius)
         self.initInterval()
 
     def initInterval(self):
@@ -292,22 +267,15 @@ class CogdoFlyingPowerup(CogdoFlyingGatherable):
             self._model,
             0.25,
             scale,
-            startScale=scale *
-            bouncePercent,
+            startScale=scale * bouncePercent,
             blendType='easeInOut')
         self.pickUpSeq = Sequence(
-            Func(
-                self.updateLerpStartScale,
-                shrinkPowerupLerp,
-                self._model),
+            Func(self.updateLerpStartScale, shrinkPowerupLerp, self._model),
             shrinkPowerupLerp,
-            Func(
-                self.ghostPowerup),
+            Func(self.ghostPowerup),
             growPowerupLerp,
             bouncePowerupLerp,
-            name='%s.pickUpSeq-%s' %
-            (self.__class__.__name__,
-             self.serialNum))
+            name='%s.pickUpSeq-%s' % (self.__class__.__name__, self.serialNum))
 
     def isPowerUp(self):
         return True
@@ -347,14 +315,11 @@ class CogdoFlyingPowerup(CogdoFlyingGatherable):
         CogdoFlyingGatherable.destroy(self)
 
     def update(self, dt):
-        self._model.setH(
-            self._model.getH() +
-            Globals.Gameplay.MemoSpinRate *
-            dt)
+        self._model.setH(self._model.getH() +
+                         Globals.Gameplay.MemoSpinRate * dt)
 
 
 class CogdoFlyingPropeller(CogdoFlyingGatherable):
-
     def __init__(self, serialNum, model):
         CogdoFlyingGatherable.__init__(
             self,
@@ -378,9 +343,10 @@ class CogdoFlyingPropeller(CogdoFlyingGatherable):
         for propeller in self.activePropellers:
             self.animatedPropellerIval.append(
                 LerpHprInterval(
-                    propeller, duration=Globals.Level.PropellerSpinDuration, startHpr=Vec3(
-                        0.0, 0.0, 0.0), hpr=Vec3(
-                        360.0, 0.0, 0.0)))
+                    propeller,
+                    duration=Globals.Level.PropellerSpinDuration,
+                    startHpr=Vec3(0.0, 0.0, 0.0),
+                    hpr=Vec3(360.0, 0.0, 0.0)))
 
     def show(self):
         self.animatedPropellerIval.loop()
@@ -402,11 +368,9 @@ class CogdoFlyingPropeller(CogdoFlyingGatherable):
             respawnTime = Globals.Gameplay.PropellerRespawnTime
             if elapsedSeconds < respawnTime:
                 taskMgr.doMethodLater(
-                    respawnTime -
-                    elapsedSeconds,
+                    respawnTime - elapsedSeconds,
                     self.addPropeller,
-                    'propeller-respawn-%i' %
-                    self.serialNum,
+                    'propeller-respawn-%i' % self.serialNum,
                     extraArgs=[prop])
             else:
                 self.addPropeller(prop)
@@ -441,7 +405,6 @@ class CogdoFlyingPropeller(CogdoFlyingGatherable):
 
 
 class CogdoFlyingLevelFog:
-
     def __init__(self, level, color=Globals.Level.FogColor):
         self._level = level
         self.color = color
@@ -450,9 +413,7 @@ class CogdoFlyingLevelFog:
         self.fog = Fog('RenderFog')
         self.fog.setColor(self.color)
         self.fog.setLinearRange(
-            fogDistance *
-            Globals.Level.RenderFogStartFactor,
-            fogDistance)
+            fogDistance * Globals.Level.RenderFogStartFactor, fogDistance)
         self._visible = False
         self._clearColor = Vec4(base.win.getClearColor())
         self._clearColor.setW(1.0)
@@ -479,11 +440,10 @@ class CogdoFlyingPlatform:
     CeilingCollName = 'col_ceiling'
     FloorCollName = 'col_floor'
 
-    def __init__(
-            self,
-            model,
-            type=Globals.Level.PlatformTypes.Platform,
-            parent=None):
+    def __init__(self,
+                 model,
+                 type=Globals.Level.PlatformTypes.Platform,
+                 parent=None):
         self._model = model
         self._type = type
         if parent is not None:
@@ -492,8 +452,8 @@ class CogdoFlyingPlatform:
         self._initCollisions()
 
     def __str__(self):
-        return '<%s model=%s, type=%s>' % (
-            self.__class__.__name__, self._model, self._type)
+        return '<%s model=%s, type=%s>' % (self.__class__.__name__,
+                                           self._model, self._type)
 
     def destroy(self):
         self._floorColl.clearPythonTag('platform')
@@ -519,7 +479,8 @@ class CogdoFlyingPlatform:
         self._ceilingColl = self._model.find(
             '**/*%s' % CogdoFlyingPlatform.CeilingCollName)
         self._ceilingColl.setName(CogdoFlyingPlatform.CeilingCollName)
-        self._ceilingColl.node().setIntoCollideMask(ToontownGlobals.CeilingBitmask)
+        self._ceilingColl.node().setIntoCollideMask(
+            ToontownGlobals.CeilingBitmask)
 
     def getType(self):
         return self._type

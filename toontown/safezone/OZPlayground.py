@@ -22,11 +22,8 @@ class OZPlayground(Playground.Playground):
         self.cameraSubmerged = -1
         self.toonSubmerged = -1
         self.fsm.addState(
-            State.State(
-                'picnicBasketBlock',
-                self.enterPicnicBasketBlock,
-                self.exitPicnicBasketBlock,
-                ['walk']))
+            State.State('picnicBasketBlock', self.enterPicnicBasketBlock,
+                        self.exitPicnicBasketBlock, ['walk']))
         state = self.fsm.getStateNamed('walk')
         state.addTransition('picnicBasketBlock')
         self.picnicBasketDoneEvent = 'picnicBasketDone'
@@ -47,30 +44,25 @@ class OZPlayground(Playground.Playground):
         self.loader.hood.setNoFog()
 
     def doRequestLeave(self, requestStatus):
-        self.fsm.request('trialerFA', [
-            requestStatus])
+        self.fsm.request('trialerFA', [requestStatus])
 
     def enterDFA(self, requestStatus):
         doneEvent = 'dfaDoneEvent'
-        self.accept(doneEvent, self.enterDFACallback, [
-            requestStatus])
+        self.accept(doneEvent, self.enterDFACallback, [requestStatus])
         self.dfa = DownloadForceAcknowledge.DownloadForceAcknowledge(doneEvent)
         if requestStatus['hoodId'] == ToontownGlobals.MyEstate:
             self.dfa.enter(
-                base.cr.hoodMgr.getPhaseFromHood(
-                    ToontownGlobals.MyEstate))
+                base.cr.hoodMgr.getPhaseFromHood(ToontownGlobals.MyEstate))
         else:
             self.dfa.enter(5)
 
     def enterStart(self):
         self.cameraSubmerged = 0
         self.toonSubmerged = 0
-        taskMgr.add(
-            self._OZPlayground__checkToonUnderwater,
-            'oz-check-toon-underwater')
-        taskMgr.add(
-            self._OZPlayground__checkCameraUnderwater,
-            'oz-check-cam-underwater')
+        taskMgr.add(self._OZPlayground__checkToonUnderwater,
+                    'oz-check-toon-underwater')
+        taskMgr.add(self._OZPlayground__checkCameraUnderwater,
+                    'oz-check-cam-underwater')
 
     def _OZPlayground__checkCameraUnderwater(self, task):
         if camera.getZ(render) < self.waterLevel:
@@ -92,9 +84,7 @@ class OZPlayground(Playground.Playground):
 
         self.loader.hood.setUnderwaterFog()
         base.playSfx(
-            self.loader.underwaterSound,
-            looping=1,
-            volume=0.80000000000000004)
+            self.loader.underwaterSound, looping=1, volume=0.80000000000000004)
         self.cameraSubmerged = 1
         self.walkStateData.setSwimSoundAudible(1)
 
@@ -115,8 +105,7 @@ class OZPlayground(Playground.Playground):
         if base.config.GetBool('disable-flying-glitch') == 0:
             self.fsm.request('walk')
 
-        self.walkStateData.fsm.request('swimming', [
-            self.loader.swimSound])
+        self.walkStateData.fsm.request('swimming', [self.loader.swimSound])
         pos = base.localAvatar.getPos(render)
         base.localAvatar.d_playSplashEffect(pos[0], pos[1], self.waterLevel)
         self.toonSubmerged = 1
@@ -155,9 +144,8 @@ class OZPlayground(Playground.Playground):
 
     def teleportInDone(self):
         self.toonSubmerged = -1
-        taskMgr.add(
-            self._OZPlayground__checkToonUnderwater,
-            'oz-check-toon-underwater')
+        taskMgr.add(self._OZPlayground__checkToonUnderwater,
+                    'oz-check-toon-underwater')
         Playground.Playground.teleportInDone(self)
 
     def _OZPlayground__cleanupDialog(self, value):
@@ -166,20 +154,17 @@ class OZPlayground(Playground.Playground):
             self.dialog = None
 
         if hasattr(self, 'fsm'):
-            self.fsm.request('walk', [
-                1])
+            self.fsm.request('walk', [1])
 
     def enterPicnicBasketBlock(self, picnicBasket):
         base.localAvatar.laffMeter.start()
         base.localAvatar.b_setAnimState('off', 1)
         base.localAvatar.cantLeaveGame = 1
         self.accept(self.picnicBasketDoneEvent, self.handlePicnicBasketDone)
-        self.trolley = PicnicBasket.PicnicBasket(
-            self,
-            self.fsm,
-            self.picnicBasketDoneEvent,
-            picnicBasket.getDoId(),
-            picnicBasket.seatNumber)
+        self.trolley = PicnicBasket.PicnicBasket(self, self.fsm,
+                                                 self.picnicBasketDoneEvent,
+                                                 picnicBasket.getDoId(),
+                                                 picnicBasket.seatNumber)
         self.trolley.load()
         self.trolley.enter()
 
@@ -192,8 +177,7 @@ class OZPlayground(Playground.Playground):
         del self.trolley
 
     def detectedPicnicTableSphereCollision(self, picnicBasket):
-        self.fsm.request('picnicBasketBlock', [
-            picnicBasket])
+        self.fsm.request('picnicBasketBlock', [picnicBasket])
 
     def handleStartingBlockDone(self, doneStatus):
         self.notify.debug('handling StartingBlock done event')
@@ -206,10 +190,8 @@ class OZPlayground(Playground.Playground):
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleStartingBlockDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleStartingBlockDone')
 
     def handlePicnicBasketDone(self, doneStatus):
         self.notify.debug('handling picnic basket done event')
@@ -219,10 +201,8 @@ class OZPlayground(Playground.Playground):
         elif mode == 'exit':
             self.fsm.request('walk')
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                mode +
-                ' in handlePicnicBasketDone')
+            self.notify.error('Unknown mode: ' + mode +
+                              ' in handlePicnicBasketDone')
 
     def showPaths(self):
         CCharPaths = CCharPaths

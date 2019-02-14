@@ -4,10 +4,9 @@ import DGPlayground
 
 
 class DGSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
-        SafeZoneLoader.SafeZoneLoader.__init__(
-            self, hood, parentFSM, doneEvent)
+        SafeZoneLoader.SafeZoneLoader.__init__(self, hood, parentFSM,
+                                               doneEvent)
         self.playgroundClass = DGPlayground.DGPlayground
         self.musicFile = 'phase_8/audio/bgm/DG_nbrhood.mid'
         self.activityMusicFile = 'phase_8/audio/bgm/DG_SZ.mid'

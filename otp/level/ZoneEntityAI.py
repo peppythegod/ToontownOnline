@@ -2,7 +2,6 @@ import ZoneEntityBase
 
 
 class ZoneEntityAI(ZoneEntityBase.ZoneEntityBase):
-
     def __init__(self, level, entId):
         ZoneEntityBase.ZoneEntityBase.__init__(self, level, entId)
         self.setZoneId(self.level.air.allocateZone())

@@ -13,11 +13,8 @@ import random
 import time
 
 
-class DistributedGolfGreenGameAI(
-        BattleBlockerAI.BattleBlockerAI,
-        NodePath,
-        BasicEntities.NodePathAttribs):
-
+class DistributedGolfGreenGameAI(BattleBlockerAI.BattleBlockerAI, NodePath,
+                                 BasicEntities.NodePathAttribs):
     def __init__(self, level, entId):
         BattleBlockerAI.BattleBlockerAI.__init__(self, level, entId)
         random.seed(time.time() * entId)
@@ -74,11 +71,7 @@ class DistributedGolfGreenGameAI(
 
             self.preData.append(gameBoards[choice])
             boardSelect.remove(choice)
-            self.boardList.append([
-                [],
-                index,
-                index,
-                None])
+            self.boardList.append([[], index, index, None])
 
         self.boardData = []
         self.attackPatterns = []
@@ -92,14 +85,8 @@ class DistributedGolfGreenGameAI(
                     color = self.translateData.get(
                         board[rowIndex][columnIndex])
                     if color is not None:
-                        x.append(
-                            (len(
-                                board[rowIndex]) -
-                                columnIndex +
-                                1,
-                                rowIndex -
-                                1,
-                                color))
+                        x.append((len(board[rowIndex]) - columnIndex + 1,
+                                  rowIndex - 1, color))
                         continue
 
             self.boardData.append(x)
@@ -120,18 +107,14 @@ class DistributedGolfGreenGameAI(
 
     def startTimer(self):
         self.startTime = globalClockDelta.getFrameNetworkTime()
-        taskMgr.doMethodLater(
-            self.totalTime,
-            self._DistributedGolfGreenGameAI__handleTimeOut,
-            self.taskName('GolfGreenGameTimeout'))
-        self.sendUpdate('setTimerStart', [
-            self.totalTime,
-            self.startTime])
+        taskMgr.doMethodLater(self.totalTime,
+                              self._DistributedGolfGreenGameAI__handleTimeOut,
+                              self.taskName('GolfGreenGameTimeout'))
+        self.sendUpdate('setTimerStart', [self.totalTime, self.startTime])
 
     def _DistributedGolfGreenGameAI__printTime(self, task):
         print 'Time Left %s' % self.getTimeLeft()
-        taskMgr.doMethodLater(1.0,
-                              self._DistributedGolfGreenGameAI__printTime,
+        taskMgr.doMethodLater(1.0, self._DistributedGolfGreenGameAI__printTime,
                               self.taskName('GolfGreenGameTimeout Print'))
         return task.done
 
@@ -158,11 +141,10 @@ class DistributedGolfGreenGameAI(
                 continue
             if boardToAssign is None or len(
                     self.boardList[boardIndex][0]) < len(
-                    self.boardList[boardToAssign][0]):
+                        self.boardList[boardToAssign][0]):
                 boardToAssign = boardIndex
                 continue
-            if len(
-                    self.boardList[boardIndex][0]) == len(
+            if len(self.boardList[boardIndex][0]) == len(
                     self.boardList[boardToAssign][0]):
                 choice = random.choice(range(2))
                 if choice:
@@ -186,10 +168,8 @@ class DistributedGolfGreenGameAI(
         senderId = self.air.getAvatarIdFromSender()
         if senderId in self.joinedToons:
             self.joinedToons.remove(senderId)
-            self.sendUpdate('acceptJoin', [
-                self.totalTime,
-                self.startTime,
-                self.joinedToons])
+            self.sendUpdate('acceptJoin',
+                            [self.totalTime, self.startTime, self.joinedToons])
 
         for boardDatum in self.boardList:
             if boardDatum[0] == 'closed':
@@ -200,11 +180,7 @@ class DistributedGolfGreenGameAI(
 
     def requestJoin(self):
         if self.allBoardsClear:
-            self.sendUpdate('acceptJoin', [
-                0.0,
-                0.0,
-                [
-                    0]])
+            self.sendUpdate('acceptJoin', [0.0, 0.0, [0]])
             return None
 
         senderId = self.air.getAvatarIdFromSender()
@@ -216,10 +192,8 @@ class DistributedGolfGreenGameAI(
             if senderId not in self.everJoinedToons:
                 self.everJoinedToons.append(senderId)
 
-            self.sendUpdate('acceptJoin', [
-                self.totalTime,
-                self.startTime,
-                self.joinedToons])
+            self.sendUpdate('acceptJoin',
+                            [self.totalTime, self.startTime, self.joinedToons])
             self.sendScoreData()
 
     def requestBoard(self, boardVerify):
@@ -233,13 +207,12 @@ class DistributedGolfGreenGameAI(
                 toon = simbase.air.doId2do.get(senderId)
                 if toon:
                     self.addGag(senderId)
-                    self.sendUpdate('helpOthers', [
-                        senderId])
+                    self.sendUpdate('helpOthers', [senderId])
 
                 for avId in self.boardList[assigned][0]:
                     if avId != senderId:
-                        self.sendUpdateToAvatarId(avId, 'boardCleared', [
-                            senderId])
+                        self.sendUpdateToAvatarId(avId, 'boardCleared',
+                                                  [senderId])
                         continue
 
                 self.boardList[assigned][0] = 'closed'
@@ -255,7 +228,8 @@ class DistributedGolfGreenGameAI(
             self.boardList[boardIndex][0].append(senderId)
             self.sendUpdateToAvatarId(senderId, 'startBoard', [
                 self.boardData[self.boardList[boardIndex][1]],
-                self.attackPatterns[self.boardList[boardIndex][2]]])
+                self.attackPatterns[self.boardList[boardIndex][2]]
+            ])
 
     def addGag(self, avId):
         av = simbase.air.doId2do.get(avId)
@@ -264,8 +238,7 @@ class DistributedGolfGreenGameAI(
             track = int(random.random() * ToontownBattleGlobals.NUM_GAG_TRACKS)
             while not av.hasTrackAccess(track):
                 track = int(
-                    random.random() *
-                    ToontownBattleGlobals.NUM_GAG_TRACKS)
+                    random.random() * ToontownBattleGlobals.NUM_GAG_TRACKS)
             maxGags = av.getMaxCarry()
             av.inventory.calcTotalProps()
             numGags = av.inventory.totalProps
@@ -276,15 +249,12 @@ class DistributedGolfGreenGameAI(
                     level -= 1
                     continue
                 numReward -= 1
-                self.sendUpdateToAvatarId(avId, 'informGag', [
-                    track,
-                    level])
+                self.sendUpdateToAvatarId(avId, 'informGag', [track, level])
             av.d_setInventory(av.inventory.makeNetString())
 
     def _DistributedGolfGreenGameAI__handleFinsihed(self, success):
         self.allBoardsClear = 1
-        self.sendUpdate('signalDone', [
-            success])
+        self.sendUpdate('signalDone', [success])
         self.switchFire()
         taskMgr.remove(self.taskName('GolfGreenGameTimeout'))
         if success:
@@ -305,8 +275,7 @@ class DistributedGolfGreenGameAI(
                     av = simbase.air.doId2do.get(avId)
                     if av:
                         av.takeDamage(self.DamageOnFailure, quietly=0)
-                        room.sendUpdate('forceOuch', [
-                            self.DamageOnFailure])
+                        room.sendUpdate('forceOuch', [self.DamageOnFailure])
                         continue
 
         if not self.challengeDefeated:
@@ -317,8 +286,7 @@ class DistributedGolfGreenGameAI(
                 self.challengeDefeated = True
                 room.challengeDefeated()
                 eventName = self.getOutputEventName()
-                messenger.send(eventName, [
-                    1])
+                messenger.send(eventName, [1])
 
     def switchFire(self):
         if self.switchId != 0:
@@ -330,15 +298,11 @@ class DistributedGolfGreenGameAI(
         BattleBlockerAI.BattleBlockerAI.generate(self)
         if self.switchId != 0:
             self.accept(
-                self.getOutputEventName(
-                    self.switchId),
-                self.reactToSwitch)
+                self.getOutputEventName(self.switchId), self.reactToSwitch)
 
         self.detectName = 'golfGreenGame %s' % self.doId
-        taskMgr.doMethodLater(
-            1.0,
-            self._DistributedGolfGreenGameAI__detect,
-            self.detectName)
+        taskMgr.doMethodLater(1.0, self._DistributedGolfGreenGameAI__detect,
+                              self.detectName)
         self.setPos(self.pos)
         self.setHpr(self.hpr)
 
@@ -368,8 +332,9 @@ class DistributedGolfGreenGameAI(
                     continue
 
             if isThereAnyToons:
-                taskMgr.doMethodLater(
-                    1.0, self._DistributedGolfGreenGameAI__detect, self.detectName)
+                taskMgr.doMethodLater(1.0,
+                                      self._DistributedGolfGreenGameAI__detect,
+                                      self.detectName)
                 self._DistributedGolfGreenGameAI__run()
 
         return Task.done
@@ -382,8 +347,7 @@ class DistributedGolfGreenGameAI(
 
     def setBattleFinished(self):
         BattleBlockerAI.BattleBlockerAI.setBattleFinished(self)
-        messenger.send(self.getOutputEventName(), [
-            1])
+        messenger.send(self.getOutputEventName(), [1])
         self.switchFire()
 
     def sendScoreData(self):
@@ -402,11 +366,6 @@ class DistributedGolfGreenGameAI(
         outList = []
         for key in scoreDict:
             score = scoreDict[key]
-            outList.append([
-                key,
-                score])
+            outList.append([key, score])
 
-        self.sendUpdate('scoreData', [
-            total,
-            closed,
-            outList])
+        self.sendUpdate('scoreData', [total, closed, outList])

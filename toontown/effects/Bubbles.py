@@ -7,7 +7,6 @@ import random
 
 
 class Bubbles(NodePath):
-
     def __init__(self, parent, renderParent):
         NodePath.__init__(self)
         self.renderParent = renderParent.attachNewNode('bubbleRenderParent')

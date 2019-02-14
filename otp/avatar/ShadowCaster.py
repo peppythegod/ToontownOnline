@@ -37,13 +37,10 @@ class ShadowCaster:
         self.wantsActive = 1
         self.storedActiveState = 0
         if hasattr(base, 'wantDynamicShadows') and base.wantDynamicShadows:
+            messenger.accept('globalDropShadowFlagChanged', self,
+                             self._ShadowCaster__globalDropShadowFlagChanged)
             messenger.accept(
-                'globalDropShadowFlagChanged',
-                self,
-                self._ShadowCaster__globalDropShadowFlagChanged)
-            messenger.accept(
-                'globalDropShadowGrayLevelChanged',
-                self,
+                'globalDropShadowGrayLevelChanged', self,
                 self._ShadowCaster__globalDropShadowGrayLevelChanged)
 
     def delete(self):
@@ -64,11 +61,9 @@ class ShadowCaster:
         dropShadow.flattenMedium()
         dropShadow.setBillboardAxis(2)
         dropShadow.setColor(0.0, 0.0, 0.0, globalDropShadowGrayLevel, 1)
-        self.shadowPlacer = ShadowPlacer(
-            base.shadowTrav,
-            dropShadow,
-            OTPGlobals.WallBitmask,
-            OTPGlobals.FloorBitmask)
+        self.shadowPlacer = ShadowPlacer(base.shadowTrav, dropShadow,
+                                         OTPGlobals.WallBitmask,
+                                         OTPGlobals.FloorBitmask)
         self.dropShadow = dropShadow
         if not globalDropShadowFlag:
             self.dropShadow.hide()
@@ -149,5 +144,5 @@ class ShadowCaster:
 
     def _ShadowCaster__globalDropShadowGrayLevelChanged(self):
         if self.dropShadow is not None:
-            self.dropShadow.setColor(
-                0.0, 0.0, 0.0, globalDropShadowGrayLevel, 1)
+            self.dropShadow.setColor(0.0, 0.0, 0.0, globalDropShadowGrayLevel,
+                                     1)

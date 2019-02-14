@@ -1,5 +1,3 @@
-
-
 from direct.showbase import PythonUtil
 from toontown.toonbase import ToontownGlobals
 from toontown.hood import ZoneUtil
@@ -18,12 +16,10 @@ def QuantizeDifficultyOverride(diffOverride):
 NoDifficultyOverride = 2147483647
 NoTrolleyZoneOverride = -1
 SafeZones = [
-    ToontownGlobals.ToontownCentral,
-    ToontownGlobals.DonaldsDock,
-    ToontownGlobals.DaisyGardens,
-    ToontownGlobals.MinniesMelodyland,
-    ToontownGlobals.TheBrrrgh,
-    ToontownGlobals.DonaldsDreamland]
+    ToontownGlobals.ToontownCentral, ToontownGlobals.DonaldsDock,
+    ToontownGlobals.DaisyGardens, ToontownGlobals.MinniesMelodyland,
+    ToontownGlobals.TheBrrrgh, ToontownGlobals.DonaldsDreamland
+]
 
 
 def getDifficulty(trolleyZone):
@@ -37,6 +33,7 @@ def getSafezoneId(trolleyZone):
 
 def getScoreMult(trolleyZone):
     szId = getSafezoneId(trolleyZone)
-    multiplier = PythonUtil.lerp(1.0, 1.5, float(
-        SafeZones.index(szId)) / (len(SafeZones) - 1))
+    multiplier = PythonUtil.lerp(
+        1.0, 1.5,
+        float(SafeZones.index(szId)) / (len(SafeZones) - 1))
     return multiplier

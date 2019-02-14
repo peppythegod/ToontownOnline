@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
@@ -65,8 +63,8 @@ class TwoDSectionMgr(DirectObject):
             blockIndex = int(fileName[-1])
             blockType = self.game.assetMgr.blockTypes[blockIndex]
             sectionizedId = 'start-' + str(index)
-            newBlock = TwoDBlock.TwoDBlock(
-                blockType, sectionizedId, blockAttribs)
+            newBlock = TwoDBlock.TwoDBlock(blockType, sectionizedId,
+                                           blockAttribs)
             newBlock.model.reparentTo(self.startSectionNP)
 
     def setupEndSection(self, index):
@@ -90,27 +88,22 @@ class TwoDSectionMgr(DirectObject):
         elevatorSignSF = 15
         sideDoor = self.exitElevator.find('**/doorway2')
         sdSign = cogSign.copyTo(sideDoor)
-        sdSign.setPosHprScale(
-            0,
-            1.8999999999999999,
-            15,
-            0,
-            0,
-            0,
-            elevatorSignSF,
-            elevatorSignSF,
-            elevatorSignSF *
-            aspectSF)
+        sdSign.setPosHprScale(0, 1.8999999999999999, 15, 0, 0, 0,
+                              elevatorSignSF, elevatorSignSF,
+                              elevatorSignSF * aspectSF)
         sdSign.node().setEffect(DecalEffect.make())
         sdText = DirectGui.OnscreenText(
-            text=TTLocalizer.TwoDGameElevatorExit, font=ToontownGlobals.getSuitFont(), pos=(
-                0, -0.34000000000000002), scale=0.14999999999999999, mayChange=False, parent=sdSign)
+            text=TTLocalizer.TwoDGameElevatorExit,
+            font=ToontownGlobals.getSuitFont(),
+            pos=(0, -0.34000000000000002),
+            scale=0.14999999999999999,
+            mayChange=False,
+            parent=sdSign)
         sdText.setDepthWrite(0)
         self.sectionNPList.append(self.endSectionNP)
-        endSectionInfo = ('end', [], [], [
-            0], [])
-        endSection = TwoDSection.TwoDSection(
-            index, endSectionInfo, self.endSectionNP, self)
+        endSectionInfo = ('end', [], [], [0], [])
+        endSection = TwoDSection.TwoDSection(index, endSectionInfo,
+                                             self.endSectionNP, self)
         self.sections.append(endSection)
         self.incrementX += endSection.length
 
@@ -121,8 +114,8 @@ class TwoDSectionMgr(DirectObject):
             sectionNP.reparentTo(self.game.assetMgr.world)
             sectionNP.setX(self.incrementX)
             self.sectionNPList.append(sectionNP)
-            section = TwoDSection.TwoDSection(
-                index, sectionsSelected[index], sectionNP, self)
+            section = TwoDSection.TwoDSection(index, sectionsSelected[index],
+                                              sectionNP, self)
             self.sections.append(section)
             self.incrementX += section.length
 

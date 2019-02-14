@@ -7,13 +7,8 @@ class DistributedBattleDinersAI(
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBattleDinersAI')
 
-    def __init__(
-            self,
-            air,
-            bossCog,
-            roundCallback,
-            finishCallback,
-            battleSide):
+    def __init__(self, air, bossCog, roundCallback, finishCallback,
+                 battleSide):
         DistributedBattleFinalAI.DistributedBattleFinalAI.__init__(
             self, air, bossCog, roundCallback, finishCallback, battleSide)
 

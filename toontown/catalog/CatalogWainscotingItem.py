@@ -3,30 +3,17 @@ WSTTextureName = 0
 WSTColor = 1
 WSTBasePrice = 2
 WainscotingTypes = {
-    1000: (
-        'phase_3.5/maps/wall_paper_b3.jpg',
-        CTFlatColorDark,
-        200),
-    1010: (
-        'phase_5.5/maps/wall_paper_b4_greyscale.jpg',
-        CTBasicWoodColorOnWhite,
-        200),
-    1020: (
-        'phase_5.5/maps/wainscotings_neutral.jpg',
-        CTBasicWoodColorOnWhite,
-        200),
-    1030: (
-        'phase_3.5/maps/wall_paper_b3.jpg',
-        CTValentinesColors,
-        200),
-    1040: (
-        'phase_3.5/maps/wall_paper_b3.jpg',
-        CTUnderwaterColors,
-        200)}
+    1000: ('phase_3.5/maps/wall_paper_b3.jpg', CTFlatColorDark, 200),
+    1010: ('phase_5.5/maps/wall_paper_b4_greyscale.jpg',
+           CTBasicWoodColorOnWhite, 200),
+    1020: ('phase_5.5/maps/wainscotings_neutral.jpg', CTBasicWoodColorOnWhite,
+           200),
+    1030: ('phase_3.5/maps/wall_paper_b3.jpg', CTValentinesColors, 200),
+    1040: ('phase_3.5/maps/wall_paper_b3.jpg', CTUnderwaterColors, 200)
+}
 
 
 class CatalogWainscotingItem(CatalogSurfaceItem):
-
     def makeNewItem(self, patternIndex, colorIndex):
         self.patternIndex = patternIndex
         self.colorIndex = colorIndex
@@ -141,10 +128,8 @@ def getAllWainscotings(*indexList):
 
 def getWainscotingRange(fromIndex, toIndex, *otherRanges):
     list = []
-    froms = [
-        fromIndex]
-    tos = [
-        toIndex]
+    froms = [fromIndex]
+    tos = [toIndex]
     i = 0
     while i < len(otherRanges):
         froms.append(otherRanges[i])

@@ -11,9 +11,8 @@ from direct.task import Task
 import HouseGlobals
 
 
-class DistributedFurnitureItem(
-        DistributedHouseItem.DistributedHouseItem,
-        DistributedSmoothNode.DistributedSmoothNode):
+class DistributedFurnitureItem(DistributedHouseItem.DistributedHouseItem,
+                               DistributedSmoothNode.DistributedSmoothNode):
     notify = directNotify.newCategory('DistributedFurnitureItem')
 
     def __init__(self, cr):
@@ -83,7 +82,8 @@ class DistributedFurnitureItem(
     def _DistributedFurnitureItem__posHprBroadcast(self, task):
         posHpr = self._DistributedFurnitureItem__getPosHpr()
         if not self._DistributedFurnitureItem__comparePosHpr(
-                posHpr, self._DistributedFurnitureItem__oldPosHpr, 0.10000000000000001):
+                posHpr, self._DistributedFurnitureItem__oldPosHpr,
+                0.10000000000000001):
             pass
         1
         self._DistributedFurnitureItem__oldPosHpr = posHpr
@@ -121,8 +121,7 @@ class DistributedFurnitureItem(
             pass
         else:
             self.notify.warning(
-                'setMode: unknown mode: %s avId: %s' %
-                (mode, avId))
+                'setMode: unknown mode: %s avId: %s' % (mode, avId))
 
     def _DistributedFurnitureItem__getPosHpr(self):
         if self.transmitRelativeTo is None:

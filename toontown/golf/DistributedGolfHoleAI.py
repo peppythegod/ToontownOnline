@@ -11,30 +11,15 @@ from toontown.golf import GolfHoleBase
 
 
 class DistributedGolfHoleAI(
-        DistributedPhysicsWorldAI.DistributedPhysicsWorldAI,
-        FSM,
+        DistributedPhysicsWorldAI.DistributedPhysicsWorldAI, FSM,
         GolfHoleBase.GolfHoleBase):
     defaultTransitions = {
-        'Off': [
-            'Cleanup',
-            'WaitTee'],
-        'WaitTee': [
-            'WaitSwing',
-            'Cleanup',
-            'WaitTee',
-            'WaitPlayback'],
-        'WaitSwing': [
-            'WaitPlayback',
-            'Cleanup',
-            'WaitSwing',
-            'WaitTee'],
-        'WaitPlayback': [
-            'WaitSwing',
-            'Cleanup',
-            'WaitTee',
-            'WaitPlayback'],
-        'Cleanup': [
-            'Off']}
+        'Off': ['Cleanup', 'WaitTee'],
+        'WaitTee': ['WaitSwing', 'Cleanup', 'WaitTee', 'WaitPlayback'],
+        'WaitSwing': ['WaitPlayback', 'Cleanup', 'WaitSwing', 'WaitTee'],
+        'WaitPlayback': ['WaitSwing', 'Cleanup', 'WaitTee', 'WaitPlayback'],
+        'Cleanup': ['Off']
+    }
     id = 0
     notify = directNotify.newCategory('DistributedGolfHoleAI')
 
@@ -47,11 +32,7 @@ class DistributedGolfHoleAI(
         self.golfCourse = golfCourse
         self.holeId = holeId
         self.avIdList = golfCourse.avIdList[:]
-        self.watched = [
-            0,
-            0,
-            0,
-            0]
+        self.watched = [0, 0, 0, 0]
         self.barrierPlayback = None
         self.trustedPlayerId = None
         self.activeGolferIndex = None
@@ -141,12 +122,10 @@ class DistributedGolfHoleAI(
         if safety != 50:
             golferId = self.golfCourse.getGolferIds()[self.activeGolferIndex]
             if self.teeChosen[golferId] == -1:
-                self.sendUpdate('golferChooseTee', [
-                    golferId])
+                self.sendUpdate('golferChooseTee', [golferId])
                 self.request('WaitTee')
             else:
-                self.sendUpdate('golfersTurn', [
-                    golferId])
+                self.sendUpdate('golfersTurn', [golferId])
                 self.request('WaitSwing')
         else:
             self.notify.debug('safety')
@@ -155,11 +134,7 @@ class DistributedGolfHoleAI(
             (self.activeGolferIndex, self.activeGolferId))
 
     def clearWatched(self):
-        self.watched = [
-            1,
-            1,
-            1,
-            1]
+        self.watched = [1, 1, 1, 1]
         for index in range(len(self.golfCourse.getGolferIds())):
             self.watched[index] = 0
 
@@ -217,10 +192,8 @@ class DistributedGolfHoleAI(
             teePos = self.teeNodePath.getPos()
             teePos.setZ(teePos.getZ() + GolfGlobals.GOLF_BALL_RADIUS)
             self.notify.debug(
-                'teeNodePath heading = %s' %
-                self.teeNodePath.getH())
-        self.teePositions = [
-            teePos]
+                'teeNodePath heading = %s' % self.teeNodePath.getH())
+        self.teePositions = [teePos]
         teeIndex = 1
         teeNode = self.terrainModel.find('**/tee%d' % teeIndex)
         while not teeNode.isEmpty():
@@ -257,12 +230,9 @@ class DistributedGolfHoleAI(
         self.hardSurfaceNodePath.flattenStrong()
 
     def createBall(self):
-        golfBallGeom = self.createSphere(
-            self.world,
-            self.space,
-            GolfGlobals.GOLF_BALL_DENSITY,
-            GolfGlobals.GOLF_BALL_RADIUS,
-            1)[1]
+        golfBallGeom = self.createSphere(self.world, self.space,
+                                         GolfGlobals.GOLF_BALL_DENSITY,
+                                         GolfGlobals.GOLF_BALL_RADIUS, 1)[1]
         return golfBallGeom
 
     def preStep(self):
@@ -273,55 +243,23 @@ class DistributedGolfHoleAI(
 
     def postSwing(self, cycleTime, power, x, y, z, dirX, dirY):
         avId = self.air.getAvatarIdFromSender()
-        self.storeAction = [
-            avId,
-            cycleTime,
-            power,
-            x,
-            y,
-            z,
-            dirX,
-            dirY]
+        self.storeAction = [avId, cycleTime, power, x, y, z, dirX, dirY]
         if self.commonHoldData:
             self.doAction()
 
-    def postSwingState(
-            self,
-            cycleTime,
-            power,
-            x,
-            y,
-            z,
-            dirX,
-            dirY,
-            curAimTime,
-            commonObjectData):
+    def postSwingState(self, cycleTime, power, x, y, z, dirX, dirY, curAimTime,
+                       commonObjectData):
         self.notify.debug('postSwingState')
         if not self.golfCourse.getStillPlayingAvIds():
             return None
 
         avId = self.air.getAvatarIdFromSender()
-        self.storeAction = [
-            avId,
-            cycleTime,
-            power,
-            x,
-            y,
-            z,
-            dirX,
-            dirY]
+        self.storeAction = [avId, cycleTime, power, x, y, z, dirX, dirY]
         self.commonHoldData = commonObjectData
         self.trustedPlayerId = self.choosePlayerToSimulate()
-        self.sendUpdateToAvatarId(self.trustedPlayerId, 'assignRecordSwing', [
-            avId,
-            cycleTime,
-            power,
-            x,
-            y,
-            z,
-            dirX,
-            dirY,
-            commonObjectData])
+        self.sendUpdateToAvatarId(
+            self.trustedPlayerId, 'assignRecordSwing',
+            [avId, cycleTime, power, x, y, z, dirX, dirY, commonObjectData])
         self.golfCourse.addAimTime(avId, curAimTime)
 
     def choosePlayerToSimulate(self):
@@ -335,16 +273,9 @@ class DistributedGolfHoleAI(
             playerId = random.choice(stillPlaying)
         return playerId
 
-    def ballMovie2AI(
-            self,
-            cycleTime,
-            avId,
-            movie,
-            spinMovie,
-            ballInFrame,
-            ballTouchedHoleFrame,
-            ballFirstTouchedHoleFrame,
-            commonObjectData):
+    def ballMovie2AI(self, cycleTime, avId, movie, spinMovie, ballInFrame,
+                     ballTouchedHoleFrame, ballFirstTouchedHoleFrame,
+                     commonObjectData):
         sentFromId = self.air.getAvatarIdFromSender()
         if sentFromId == self.trustedPlayerId:
             lastFrameNum = len(movie) - 2
@@ -358,14 +289,10 @@ class DistributedGolfHoleAI(
             for id in self.golfCourse.getStillPlayingAvIds():
                 if not id == sentFromId:
                     self.sendUpdateToAvatarId(id, 'ballMovie2Client', [
-                        cycleTime,
-                        avId,
-                        movie,
-                        spinMovie,
-                        ballInFrame,
-                        ballTouchedHoleFrame,
-                        ballFirstTouchedHoleFrame,
-                        commonObjectData])
+                        cycleTime, avId, movie, spinMovie, ballInFrame,
+                        ballTouchedHoleFrame, ballFirstTouchedHoleFrame,
+                        commonObjectData
+                    ])
                     continue
 
             if self.state == 'WaitPlayback' or self.state == 'WaitTee':
@@ -385,31 +312,24 @@ class DistributedGolfHoleAI(
         if self.state == 'WaitPlayback':
             self.notify.debugStateCall(self)
             self.notify.debug(
-                'ignoring the postSwing for avId=%d since we are in WaitPlayback' %
-                avId)
+                'ignoring the postSwing for avId=%d since we are in WaitPlayback'
+                % avId)
             return None
 
         if avId == self.activeGolferId:
             self.golfCourse.incrementScore(self.activeGolferId)
         else:
-            self.notify.warning(
-                'activGolferId %d not equal to sender avId %d' %
-                (self.activeGolferId, avId))
+            self.notify.warning('activGolferId %d not equal to sender avId %d'
+                                % (self.activeGolferId, avId))
         if avId not in self.golfCourse.drivingToons:
             position = self.ballPos[avId]
         else:
-            position = Vec3(
-                self.storeAction[3],
-                self.storeAction[4],
-                self.storeAction[5])
+            position = Vec3(self.storeAction[3], self.storeAction[4],
+                            self.storeAction[5])
         self.useCommonObjectData(self.commonHoldData)
         newPos = self.trackRecordBodyFlight(
-            self.ball,
-            self.storeAction[1],
-            self.storeAction[2],
-            position,
-            self.storeAction[6],
-            self.storeAction[7])
+            self.ball, self.storeAction[1], self.storeAction[2], position,
+            self.storeAction[6], self.storeAction[7])
         if self.state == 'WaitPlayback' or self.state == 'WaitTee':
             self.notify.warning(
                 'performReadyAction requesting from %s to WaitPlayback' %
@@ -417,26 +337,16 @@ class DistributedGolfHoleAI(
 
         self.request('WaitPlayback')
         self.sendUpdate('ballMovie2Client', [
-            self.storeAction[1],
-            avId,
-            self.recording,
-            self.aVRecording,
-            self.ballInHoleFrame,
-            self.ballTouchedHoleFrame,
-            self.ballFirstTouchedHoleFrame,
-            self.commonHoldData])
+            self.storeAction[1], avId, self.recording, self.aVRecording,
+            self.ballInHoleFrame, self.ballTouchedHoleFrame,
+            self.ballFirstTouchedHoleFrame, self.commonHoldData
+        ])
         self.ballPos[avId] = newPos
         self.trustedPlayerId = None
 
-    def postResult(
-            self,
-            cycleTime,
-            avId,
-            recording,
-            aVRecording,
-            ballInHoleFrame,
-            ballTouchedHoleFrame,
-            ballFirstTouchedHoleFrame):
+    def postResult(self, cycleTime, avId, recording, aVRecording,
+                   ballInHoleFrame, ballTouchedHoleFrame,
+                   ballFirstTouchedHoleFrame):
         pass
 
     def enterWaitSwing(self):
@@ -455,11 +365,8 @@ class DistributedGolfHoleAI(
         self.notify.debug('enterWaitPlayback')
         stillPlayingList = self.golfCourse.getStillPlayingAvIds()
         self.barrierPlayback = ToonBarrier(
-            'waitClientsPlayback',
-            self.uniqueName('waitClientsPlayback'),
-            stillPlayingList,
-            120,
-            self.handleWaitPlaybackDone,
+            'waitClientsPlayback', self.uniqueName('waitClientsPlayback'),
+            stillPlayingList, 120, self.handleWaitPlaybackDone,
             self.handlePlaybackTimeout)
 
     def hasCurGolferReachedMaxSwing(self):
@@ -517,56 +424,30 @@ class DistributedGolfHoleAI(
 
     def avatarDropped(self, avId):
         self.notify.warning(
-            'avId %d dropped, self.state=%s' %
-            (avId, self.state))
+            'avId %d dropped, self.state=%s' % (avId, self.state))
         if self.barrierPlayback:
             self.barrierPlayback.clear(avId)
         elif avId == self.trustedPlayerId:
             self.doAction()
 
-        if avId == self.activeGolferId and not self.golfCourse.haveAllGolfersExited():
+        if avId == self.activeGolferId and not self.golfCourse.haveAllGolfersExited(
+        ):
             self.selectNextGolfer()
 
     def setAvatarTee(self, chosenTee):
         golferId = self.air.getAvatarIdFromSender()
         self.teeChosen[golferId] = chosenTee
         self.ballPos[golferId] = self.teePositions[chosenTee]
-        self.sendUpdate('setAvatarFinalTee', [
-            golferId,
-            chosenTee])
-        self.sendUpdate('golfersTurn', [
-            golferId])
+        self.sendUpdate('setAvatarFinalTee', [golferId, chosenTee])
+        self.sendUpdate('golfersTurn', [golferId])
         self.request('WaitSwing')
 
-    def setBox(
-            self,
-            pos0,
-            pos1,
-            pos2,
-            quat0,
-            quat1,
-            quat2,
-            quat3,
-            anV0,
-            anV1,
-            anV2,
-            lnV0,
-            lnV1,
-            lnV2):
+    def setBox(self, pos0, pos1, pos2, quat0, quat1, quat2, quat3, anV0, anV1,
+               anV2, lnV0, lnV1, lnV2):
         self.sendUpdate('sendBox', [
-            pos0,
-            pos1,
-            pos2,
-            quat0,
-            quat1,
-            quat2,
-            quat3,
-            anV0,
-            anV1,
-            anV2,
-            lnV0,
-            lnV1,
-            lnV2])
+            pos0, pos1, pos2, quat0, quat1, quat2, quat3, anV0, anV1, anV2,
+            lnV0, lnV1, lnV2
+        ])
 
     def parseLocators(self, objectCollection, optional=0):
         if optional and objectCollection.getNumPaths():
@@ -616,7 +497,7 @@ class DistributedGolfHoleAI(
                 continue
 
         if type == 4 and move and sizeX and sizeY:
-            self.createCommonObject(
-                4, path.getPos(), path.getHpr(), sizeX, sizeY, move)
+            self.createCommonObject(4, path.getPos(), path.getHpr(), sizeX,
+                                    sizeY, move)
         elif type == 3:
             self.createCommonObject(3, path.getPos(), path.getHpr())

@@ -9,8 +9,8 @@ class CashbotHQBossBattle(CogHQBossBattle.CogHQBossBattle):
     notify = DirectNotifyGlobal.directNotify.newCategory('CashbotHQBossBattle')
 
     def __init__(self, loader, parentFSM, doneEvent):
-        CogHQBossBattle.CogHQBossBattle.__init__(
-            self, loader, parentFSM, doneEvent)
+        CogHQBossBattle.CogHQBossBattle.__init__(self, loader, parentFSM,
+                                                 doneEvent)
         self.teleportInPosHpr = (88, -214, 0, 210, 0, 0)
 
     def load(self):

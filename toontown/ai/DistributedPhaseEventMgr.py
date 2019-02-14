@@ -32,10 +32,6 @@ class DistributedPhaseEventMgr(DistributedObject.DistributedObject):
     def setDates(self, holidayDates):
         for holidayDate in holidayDates:
             self.holidayDates.append(
-                datetime.datetime(
-                    holidayDate[0],
-                    holidayDate[1],
-                    holidayDate[2],
-                    holidayDate[3],
-                    holidayDate[4],
-                    holidayDate[5]))
+                datetime.datetime(holidayDate[0], holidayDate[1],
+                                  holidayDate[2], holidayDate[3],
+                                  holidayDate[4], holidayDate[5]))

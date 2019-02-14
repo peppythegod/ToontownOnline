@@ -6,7 +6,6 @@ from TTSCResistanceTerminal import TTSCResistanceTerminal
 
 
 class TTSCResistanceMenu(SCMenu):
-
     def __init__(self):
         SCMenu.__init__(self)
         self.accept('resistanceMessagesChanged',

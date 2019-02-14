@@ -29,23 +29,27 @@ if checkLanguage:
     foreignModule = __import__(_languageModule, g, l)
     for (key, val) in englishModule.__dict__.items():
         if key not in foreignModule.__dict__:
-            print 'WARNING: Foreign module: %s missing key: %s' % (_languageModule, key)
+            print 'WARNING: Foreign module: %s missing key: %s' % (
+                _languageModule, key)
             locals()[key] = val
             continue
         if isinstance(val, types.DictType):
             fval = foreignModule.__dict__.get(key)
             for (dkey, dval) in val.items():
                 if dkey not in fval:
-                    print 'WARNING: Foreign module: %s missing key: %s.%s' % (_languageModule, key, dkey)
+                    print 'WARNING: Foreign module: %s missing key: %s.%s' % (
+                        _languageModule, key, dkey)
                     fval[dkey] = dval
                     continue
 
             for dkey in fval.keys():
                 if dkey not in val:
-                    print 'WARNING: Foreign module: %s extra key: %s.%s' % (_languageModule, key, dkey)
+                    print 'WARNING: Foreign module: %s extra key: %s.%s' % (
+                        _languageModule, key, dkey)
                     continue
 
     for key in foreignModule.__dict__.keys():
         if key not in englishModule.__dict__:
-            print 'WARNING: Foreign module: %s extra key: %s' % (_languageModule, key)
+            print 'WARNING: Foreign module: %s extra key: %s' % (
+                _languageModule, key)
             continue

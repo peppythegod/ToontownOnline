@@ -59,8 +59,8 @@ class CatalogBeanItem(CatalogItem.CatalogItem):
         return (frame, None)
 
     def output(self, store=-1):
-        return 'CatalogBeanItem(%s%s)' % (
-            self.beanAmount, self.formatOptionalData(store))
+        return 'CatalogBeanItem(%s%s)' % (self.beanAmount,
+                                          self.formatOptionalData(store))
 
     def compareTo(self, other):
         return self.beanAmount - other.beanAmount

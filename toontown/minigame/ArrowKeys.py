@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import ModifierButtons
 from direct.showbase.DirectObject import DirectObject
 
@@ -53,11 +51,9 @@ class ArrowKeys(DirectObject):
     def destroy(self):
         base.buttonThrowers[0].node().setModifierButtons(self.origMb)
         events = [
-            self.UP_KEY,
-            self.DOWN_KEY,
-            self.LEFT_KEY,
-            self.RIGHT_KEY,
-            self.JUMP_KEY]
+            self.UP_KEY, self.DOWN_KEY, self.LEFT_KEY, self.RIGHT_KEY,
+            self.JUMP_KEY
+        ]
         for event in events:
             self.ignore(event)
             self.ignore(event + '-up')

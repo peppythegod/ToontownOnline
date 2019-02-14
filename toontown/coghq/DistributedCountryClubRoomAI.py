@@ -9,24 +9,15 @@ from toontown.coghq import DistributedCountryClubBattleAI
 from toontown.suit import DistributedMintSuitAI
 
 
-class DistributedCountryClubRoomAI(
-        DistributedLevelAI.DistributedLevelAI,
-        CountryClubRoomBase.CountryClubRoomBase):
+class DistributedCountryClubRoomAI(DistributedLevelAI.DistributedLevelAI,
+                                   CountryClubRoomBase.CountryClubRoomBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedCountryClubRoomAI')
 
-    def __init__(
-            self,
-            air,
-            countryClubId,
-            countryClubDoId,
-            zoneId,
-            roomId,
-            roomNum,
-            avIds,
-            battleExpAggreg):
-        DistributedLevelAI.DistributedLevelAI.__init__(
-            self, air, zoneId, 0, avIds)
+    def __init__(self, air, countryClubId, countryClubDoId, zoneId, roomId,
+                 roomNum, avIds, battleExpAggreg):
+        DistributedLevelAI.DistributedLevelAI.__init__(self, air, zoneId, 0,
+                                                       avIds)
         CountryClubRoomBase.CountryClubRoomBase.__init__(self)
         self.setCountryClubId(countryClubId)
         self.countryClubId = countryClubId
@@ -72,8 +63,7 @@ class DistributedCountryClubRoomAI(
         self.reserveSuits = suitHandles['reserveSuits']
         self.d_setSuits()
         self.notify.debug(
-            'finish mint room %s %s creation' %
-            (self.roomId, self.doId))
+            'finish mint room %s %s creation' % (self.roomId, self.doId))
 
     def delete(self):
         self.notify.debug('delete: %s' % self.doId)
@@ -105,9 +95,7 @@ class DistributedCountryClubRoomAI(
         return self.cogLevel
 
     def d_setSuits(self):
-        self.sendUpdate('setSuits', [
-            self.getSuits(),
-            self.getReserveSuits()])
+        self.sendUpdate('setSuits', [self.getSuits(), self.getReserveSuits()])
 
     def getSuits(self):
         suitIds = []
@@ -126,12 +114,10 @@ class DistributedCountryClubRoomAI(
     def d_setBossConfronted(self, toonId):
         if toonId not in self.avIdList:
             self.notify.warning(
-                'd_setBossConfronted: %s not in list of participants' %
-                toonId)
+                'd_setBossConfronted: %s not in list of participants' % toonId)
             return None
 
-        self.sendUpdate('setBossConfronted', [
-            toonId])
+        self.sendUpdate('setBossConfronted', [toonId])
 
     def setVictors(self, victorIds):
         activeVictors = []
@@ -166,8 +152,7 @@ class DistributedCountryClubRoomAI(
                 mint.allToonsGone()
             else:
                 self.notify.warning(
-                    'no mint %s in allToonsGone' %
-                    self.countryClubDoId)
+                    'no mint %s in allToonsGone' % self.countryClubDoId)
 
     def challengeDefeated(self):
         countryClub = simbase.air.doId2do.get(self.countryClubDoId)

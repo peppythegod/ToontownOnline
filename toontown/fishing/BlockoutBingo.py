@@ -6,11 +6,10 @@ from toontown.fishing import BingoCardBase
 class BlockoutBingo(BingoCardBase.BingoCardBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('BlockoutBingo')
 
-    def __init__(
-            self,
-            cardSize=BingoGlobals.CARD_SIZE,
-            rowSize=BingoGlobals.CARD_ROWS,
-            colSize=BingoGlobals.CARD_COLS):
+    def __init__(self,
+                 cardSize=BingoGlobals.CARD_SIZE,
+                 rowSize=BingoGlobals.CARD_ROWS,
+                 colSize=BingoGlobals.CARD_COLS):
         BingoCardBase.BingoCardBase.__init__(self, cardSize, rowSize, colSize)
         self.gameType = BingoGlobals.BLOCKOUT_CARD
 

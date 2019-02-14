@@ -10,7 +10,6 @@ ChangeDirectionTime = 1.0
 
 
 class DistributedMMPiano(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.spinStartTime = 0.0
@@ -26,15 +25,14 @@ class DistributedMMPiano(DistributedObject.DistributedObject):
 
     def generate(self):
         self.piano = base.cr.playGame.hood.loader.piano
-        base.cr.parentMgr.registerParent(
-            ToontownGlobals.SPMinniesPiano, self.piano)
+        base.cr.parentMgr.registerParent(ToontownGlobals.SPMinniesPiano,
+                                         self.piano)
         self.accept('enterlarge_round_keyboard_collisions',
                     self._DistributedMMPiano__handleOnFloor)
         self.accept('exitlarge_round_keyboard_collisions',
                     self._DistributedMMPiano__handleOffFloor)
-        self.accept(
-            'entero7',
-            self._DistributedMMPiano__handleChangeDirectionButton)
+        self.accept('entero7',
+                    self._DistributedMMPiano__handleChangeDirectionButton)
         self.speedUpSound = base.loadSfx('phase_6/audio/sfx/SZ_MM_gliss.mp3')
         self.changeDirectionSound = base.loadSfx(
             'phase_6/audio/sfx/SZ_MM_cymbal.mp3')
@@ -42,9 +40,8 @@ class DistributedMMPiano(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.generate(self)
 
     def _DistributedMMPiano__setupSpin(self):
-        taskMgr.add(
-            self._DistributedMMPiano__updateSpin,
-            self.taskName('pianoSpinTask'))
+        taskMgr.add(self._DistributedMMPiano__updateSpin,
+                    self.taskName('pianoSpinTask'))
 
     def _DistributedMMPiano__stopSpin(self):
         taskMgr.remove(self.taskName('pianoSpinTask'))

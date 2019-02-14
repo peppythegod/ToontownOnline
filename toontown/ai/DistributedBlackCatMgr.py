@@ -12,10 +12,9 @@ def getDustCloudIval(toon):
     dustCloud.createTrack()
     toon.laffMeter.color = toon.style.getBlackColor()
     return Sequence(
-        Wait(0.5), Func(
-            dustCloud.reparentTo, toon), dustCloud.track, Func(
-            dustCloud.detachNode), Func(
-                toon.laffMeter.adjustFace, toon.hp, toon.maxHp))
+        Wait(0.5), Func(dustCloud.reparentTo, toon), dustCloud.track,
+        Func(dustCloud.detachNode),
+        Func(toon.laffMeter.adjustFace, toon.hp, toon.maxHp))
 
 
 class DistributedBlackCatMgr(DistributedObject.DistributedObject):
@@ -32,9 +31,8 @@ class DistributedBlackCatMgr(DistributedObject.DistributedObject):
     def announceGenerate(self):
         DistributedBlackCatMgr.notify.debug('announceGenerate')
         DistributedObject.DistributedObject.announceGenerate(self)
-        self.acceptOnce(
-            DistributedBlackCatMgr.ActivateEvent,
-            self.doBlackCatTransformation)
+        self.acceptOnce(DistributedBlackCatMgr.ActivateEvent,
+                        self.doBlackCatTransformation)
         self.dustCloudIval = None
 
     def delete(self):

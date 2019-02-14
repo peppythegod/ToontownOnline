@@ -10,8 +10,7 @@ class DistCogdoCraneGameAI(DistCogdoLevelGameAI, CogdoCraneGameBase):
 
     def __init__(self, air, interior):
         DistCogdoLevelGameAI.__init__(self, air, interior)
-        self._cranes = [
-            None] * self.MaxPlayers
+        self._cranes = [None] * self.MaxPlayers
 
     def enterLoaded(self):
         DistCogdoLevelGameAI.enterLoaded(self)
@@ -41,7 +40,8 @@ class DistCogdoCraneGameAI(DistCogdoLevelGameAI, CogdoCraneGameBase):
         ) - globalClock.getRealTime() - self.getStartTime()
         if timeLeft > 0:
             self._gameDoneEvent = taskMgr.doMethodLater(
-                timeLeft, self._gameDoneDL, self.uniqueName('boardroomGameDone'))
+                timeLeft, self._gameDoneDL,
+                self.uniqueName('boardroomGameDone'))
         else:
             self._gameDoneDL()
 
@@ -69,8 +69,7 @@ class DistCogdoCraneGameAI(DistCogdoLevelGameAI, CogdoCraneGameBase):
     if __dev__:
 
         def _handleGameDurationChanged(self, gameDuration):
-            if hasattr(
-                    self,
-                    '_gameDoneEvent') and self._gameDoneEvent is not None:
+            if hasattr(self,
+                       '_gameDoneEvent') and self._gameDoneEvent is not None:
                 taskMgr.remove(self._gameDoneEvent)
                 self._scheduleGameDone()

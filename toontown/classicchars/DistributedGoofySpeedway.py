@@ -22,12 +22,11 @@ class DistributedGoofySpeedway(DistributedCCharBase.DistributedCCharBase):
             DistributedCCharBase.DistributedCCharBase.__init__(
                 self, cr, TTLocalizer.Goofy, 'g')
             self.fsm = ClassicFSM.ClassicFSM(self.getName(), [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral, [
-                    'Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, [
-                    'Neutral'])], 'Off', 'Off')
+                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+                State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                            ['Walk']),
+                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+            ], 'Off', 'Off')
             self.fsm.enterInitialState()
 
         self.handleHolidays()
@@ -54,14 +53,14 @@ class DistributedGoofySpeedway(DistributedCCharBase.DistributedCCharBase):
         DistributedCCharBase.DistributedCCharBase.generate(self, self.diffPath)
         name = self.getName()
         self.neutralDoneEvent = self.taskName(name + '-neutral-done')
-        self.neutral = CharStateDatas.CharNeutralState(
-            self.neutralDoneEvent, self)
+        self.neutral = CharStateDatas.CharNeutralState(self.neutralDoneEvent,
+                                                       self)
         self.walkDoneEvent = self.taskName(name + '-walk-done')
         if self.diffPath is None:
             self.walk = CharStateDatas.CharWalkState(self.walkDoneEvent, self)
         else:
-            self.walk = CharStateDatas.CharWalkState(
-                self.walkDoneEvent, self, self.diffPath)
+            self.walk = CharStateDatas.CharWalkState(self.walkDoneEvent, self,
+                                                     self.diffPath)
         self.fsm.request('Neutral')
 
     def enterOff(self):
@@ -81,9 +80,8 @@ class DistributedGoofySpeedway(DistributedCCharBase.DistributedCCharBase):
 
     def enterWalk(self):
         self.walk.enter()
-        self.acceptOnce(
-            self.walkDoneEvent,
-            self._DistributedGoofySpeedway__decideNextState)
+        self.acceptOnce(self.walkDoneEvent,
+                        self._DistributedGoofySpeedway__decideNextState)
 
     def exitWalk(self):
         self.ignore(self.walkDoneEvent)

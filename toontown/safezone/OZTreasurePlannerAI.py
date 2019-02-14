@@ -4,16 +4,11 @@ import DistributedOZTreasureAI
 
 
 class OZTreasurePlannerAI(RegenTreasurePlannerAI.RegenTreasurePlannerAI):
-
     def __init__(self, zoneId):
         self.healAmount = 3
         RegenTreasurePlannerAI.RegenTreasurePlannerAI.__init__(
-            self,
-            zoneId,
-            DistributedOZTreasureAI.DistributedOZTreasureAI,
-            'OZTreasurePlanner',
-            20,
-            5)
+            self, zoneId, DistributedOZTreasureAI.DistributedOZTreasureAI,
+            'OZTreasurePlanner', 20, 5)
 
     def initSpawnPoints(self):
         self.spawnPoints = [
@@ -31,5 +26,6 @@ class OZTreasurePlannerAI(RegenTreasurePlannerAI.RegenTreasurePlannerAI):
             (18.0, 58.5, 5.9189999999999996),
             (91.400000000000006, 127.8, 0.025000000000000001),
             (-86.5, -75.900000000000006, 0.025000000000000001),
-            (-48.750999999999998, -32.299999999999997, 1.143)]
+            (-48.750999999999998, -32.299999999999997, 1.143)
+        ]
         return self.spawnPoints

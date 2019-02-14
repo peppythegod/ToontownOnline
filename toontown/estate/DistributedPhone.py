@@ -53,49 +53,85 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         self.accept(self.phoneSphereEnterEvent,
                     self._DistributedPhone__handleEnterSphere)
         self.load()
-        taskMgr.doMethodLater(
-            6,
-            self.ringIfHasPhoneQuest,
-            self.uniqueName('ringDoLater'))
+        taskMgr.doMethodLater(6, self.ringIfHasPhoneQuest,
+                              self.uniqueName('ringDoLater'))
 
     def loadModel(self):
-        self.model = Actor.Actor('phase_5.5/models/estate/prop_phone-mod', {
-            'SS_phoneOut': 'phase_5.5/models/estate/prop_phone-SS_phoneOut',
-            'SS_takePhone': 'phase_5.5/models/estate/prop_phone-SS_takePhone',
-            'SS_phoneNeutral': 'phase_5.5/models/estate/prop_phone-SS_phoneNeutral',
-            'SS_phoneBack': 'phase_5.5/models/estate/prop_phone-SS_phoneBack',
-            'SM_phoneOut': 'phase_5.5/models/estate/prop_phone-SM_phoneOut',
-            'SM_takePhone': 'phase_5.5/models/estate/prop_phone-SM_takePhone',
-            'SM_phoneNeutral': 'phase_5.5/models/estate/prop_phone-SM_phoneNeutral',
-            'SM_phoneBack': 'phase_5.5/models/estate/prop_phone-SM_phoneBack',
-            'SL_phoneOut': 'phase_5.5/models/estate/prop_phone-SL_phoneOut',
-            'SL_takePhone': 'phase_5.5/models/estate/prop_phone-SL_takePhone',
-            'SL_phoneNeutral': 'phase_5.5/models/estate/prop_phone-SL_phoneNeutral',
-            'SL_phoneBack': 'phase_5.5/models/estate/prop_phone-SL_phoneBack',
-            'MS_phoneOut': 'phase_5.5/models/estate/prop_phone-MS_phoneOut',
-            'MS_takePhone': 'phase_5.5/models/estate/prop_phone-MS_takePhone',
-            'MS_phoneNeutral': 'phase_5.5/models/estate/prop_phone-MS_phoneNeutral',
-            'MS_phoneBack': 'phase_5.5/models/estate/prop_phone-MS_phoneBack',
-            'MM_phoneOut': 'phase_5.5/models/estate/prop_phone-MM_phoneOut',
-            'MM_takePhone': 'phase_5.5/models/estate/prop_phone-MM_takePhone',
-            'MM_phoneNeutral': 'phase_5.5/models/estate/prop_phone-MM_phoneNeutral',
-            'MM_phoneBack': 'phase_5.5/models/estate/prop_phone-MM_phoneBack',
-            'ML_phoneOut': 'phase_5.5/models/estate/prop_phone-ML_phoneOut',
-            'ML_takePhone': 'phase_5.5/models/estate/prop_phone-ML_takePhone',
-            'ML_phoneNeutral': 'phase_5.5/models/estate/prop_phone-ML_phoneNeutral',
-            'ML_phoneBack': 'phase_5.5/models/estate/prop_phone-ML_phoneBack',
-            'LS_phoneOut': 'phase_5.5/models/estate/prop_phone-LS_phoneOut',
-            'LS_takePhone': 'phase_5.5/models/estate/prop_phone-LS_takePhone',
-            'LS_phoneNeutral': 'phase_5.5/models/estate/prop_phone-LS_phoneNeutral',
-            'LS_phoneBack': 'phase_5.5/models/estate/prop_phone-LS_phoneBack',
-            'LM_phoneOut': 'phase_5.5/models/estate/prop_phone-LM_phoneOut',
-            'LM_takePhone': 'phase_5.5/models/estate/prop_phone-LM_takePhone',
-            'LM_phoneNeutral': 'phase_5.5/models/estate/prop_phone-LM_phoneNeutral',
-            'LM_phoneBack': 'phase_5.5/models/estate/prop_phone-LM_phoneBack',
-            'LL_phoneOut': 'phase_5.5/models/estate/prop_phone-LL_phoneOut',
-            'LL_takePhone': 'phase_5.5/models/estate/prop_phone-LL_takePhone',
-            'LL_phoneNeutral': 'phase_5.5/models/estate/prop_phone-LL_phoneNeutral',
-            'LL_phoneBack': 'phase_5.5/models/estate/prop_phone-LL_phoneBack'})
+        self.model = Actor.Actor(
+            'phase_5.5/models/estate/prop_phone-mod', {
+                'SS_phoneOut':
+                'phase_5.5/models/estate/prop_phone-SS_phoneOut',
+                'SS_takePhone':
+                'phase_5.5/models/estate/prop_phone-SS_takePhone',
+                'SS_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-SS_phoneNeutral',
+                'SS_phoneBack':
+                'phase_5.5/models/estate/prop_phone-SS_phoneBack',
+                'SM_phoneOut':
+                'phase_5.5/models/estate/prop_phone-SM_phoneOut',
+                'SM_takePhone':
+                'phase_5.5/models/estate/prop_phone-SM_takePhone',
+                'SM_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-SM_phoneNeutral',
+                'SM_phoneBack':
+                'phase_5.5/models/estate/prop_phone-SM_phoneBack',
+                'SL_phoneOut':
+                'phase_5.5/models/estate/prop_phone-SL_phoneOut',
+                'SL_takePhone':
+                'phase_5.5/models/estate/prop_phone-SL_takePhone',
+                'SL_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-SL_phoneNeutral',
+                'SL_phoneBack':
+                'phase_5.5/models/estate/prop_phone-SL_phoneBack',
+                'MS_phoneOut':
+                'phase_5.5/models/estate/prop_phone-MS_phoneOut',
+                'MS_takePhone':
+                'phase_5.5/models/estate/prop_phone-MS_takePhone',
+                'MS_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-MS_phoneNeutral',
+                'MS_phoneBack':
+                'phase_5.5/models/estate/prop_phone-MS_phoneBack',
+                'MM_phoneOut':
+                'phase_5.5/models/estate/prop_phone-MM_phoneOut',
+                'MM_takePhone':
+                'phase_5.5/models/estate/prop_phone-MM_takePhone',
+                'MM_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-MM_phoneNeutral',
+                'MM_phoneBack':
+                'phase_5.5/models/estate/prop_phone-MM_phoneBack',
+                'ML_phoneOut':
+                'phase_5.5/models/estate/prop_phone-ML_phoneOut',
+                'ML_takePhone':
+                'phase_5.5/models/estate/prop_phone-ML_takePhone',
+                'ML_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-ML_phoneNeutral',
+                'ML_phoneBack':
+                'phase_5.5/models/estate/prop_phone-ML_phoneBack',
+                'LS_phoneOut':
+                'phase_5.5/models/estate/prop_phone-LS_phoneOut',
+                'LS_takePhone':
+                'phase_5.5/models/estate/prop_phone-LS_takePhone',
+                'LS_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-LS_phoneNeutral',
+                'LS_phoneBack':
+                'phase_5.5/models/estate/prop_phone-LS_phoneBack',
+                'LM_phoneOut':
+                'phase_5.5/models/estate/prop_phone-LM_phoneOut',
+                'LM_takePhone':
+                'phase_5.5/models/estate/prop_phone-LM_takePhone',
+                'LM_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-LM_phoneNeutral',
+                'LM_phoneBack':
+                'phase_5.5/models/estate/prop_phone-LM_phoneBack',
+                'LL_phoneOut':
+                'phase_5.5/models/estate/prop_phone-LL_phoneOut',
+                'LL_takePhone':
+                'phase_5.5/models/estate/prop_phone-LL_takePhone',
+                'LL_phoneNeutral':
+                'phase_5.5/models/estate/prop_phone-LL_phoneNeutral',
+                'LL_phoneBack':
+                'phase_5.5/models/estate/prop_phone-LL_phoneBack'
+            })
         self.model.pose('SS_phoneOut', 0)
         self.receiverJoint = self.model.find('**/joint_receiver')
         self.receiverGeom = self.receiverJoint.getChild(0)
@@ -113,8 +149,8 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
             mount.setScale(*self.initialScale)
             self.usedInitialScale = 1
 
-        phoneSphere = CollisionSphere(
-            0, -0.66000000000000003, 0, 0.20000000000000001)
+        phoneSphere = CollisionSphere(0, -0.66000000000000003, 0,
+                                      0.20000000000000001)
         phoneSphere.setTangible(0)
         phoneSphereNode = CollisionNode(self.phoneSphereEvent)
         phoneSphereNode.setIntoCollideMask(ToontownGlobals.WallBitmask)
@@ -128,8 +164,17 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
     def setupCamera(self, mode):
         camera.wrtReparentTo(render)
         if mode == PhoneGlobals.PHONE_MOVIE_PICKUP:
-            camera.lerpPosHpr(4, -4, base.localAvatar.getHeight() - 0.5, 35, -8, 0, 1,
-                              other=base.localAvatar, blendType='easeOut', task=self.uniqueName('lerpCamera'))
+            camera.lerpPosHpr(
+                4,
+                -4,
+                base.localAvatar.getHeight() - 0.5,
+                35,
+                -8,
+                0,
+                1,
+                other=base.localAvatar,
+                blendType='easeOut',
+                task=self.uniqueName('lerpCamera'))
 
     def setupCord(self):
         if self.cord:
@@ -141,40 +186,17 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         self.cord.setup(
             4,
             ((self.receiverGeom,
-              (0,
-               0,
-               0)),
-                (self.model.find('**/joint_curveNode1'),
-                 (0,
-                  0,
-                  0)),
-                (self.model.find('**/joint_curveNode2'),
-                 (0,
-                  0,
-                  0)),
-                (self.model.find('**/joint_curveNode3'),
-                 (0,
-                  0,
-                  0)),
-                (self.model.find('**/joint_curveNode4'),
-                 (0,
-                  0,
-                  0)),
-                (self.model.find('**/joint_curveNode5'),
-                 (0,
-                  0,
-                  0)),
-                (self.model.find('**/joint_curveNode6'),
-                 (0,
-                  0,
-                  0)),
-                (self.model.find('**/CurveNode7'),
-                 (0,
-                  0,
-                  0))))
+              (0, 0, 0)), (self.model.find('**/joint_curveNode1'), (0, 0, 0)),
+             (self.model.find('**/joint_curveNode2'),
+              (0, 0, 0)), (self.model.find('**/joint_curveNode3'), (0, 0, 0)),
+             (self.model.find('**/joint_curveNode4'),
+              (0, 0, 0)), (self.model.find('**/joint_curveNode5'), (0, 0, 0)),
+             (self.model.find('**/joint_curveNode6'),
+              (0, 0, 0)), (self.model.find('**/CurveNode7'), (0, 0, 0))))
         self.cord.reparentTo(self.model)
-        self.cord.node().setBounds(BoundingSphere(
-            Point3(-1.0, -3.2000000000000002, 2.6000000000000001), 2.0))
+        self.cord.node().setBounds(
+            BoundingSphere(
+                Point3(-1.0, -3.2000000000000002, 2.6000000000000001), 2.0))
 
     def disable(self):
         self.notify.debug('disable')
@@ -289,9 +311,8 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
                 if isLocalToon:
                     self.setupCamera(mode)
                     interval.setDoneEvent(self.pickupMovieDoneEvent)
-                    self.acceptOnce(
-                        self.pickupMovieDoneEvent,
-                        self._DistributedPhone__showPhoneGui)
+                    self.acceptOnce(self.pickupMovieDoneEvent,
+                                    self._DistributedPhone__showPhoneGui)
 
                 self.playInterval(interval, elapsed, avatar)
                 self.phoneInUse = 1
@@ -309,10 +330,9 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
 
     def _DistributedPhone__showPhoneGui(self):
         if self.toonScale:
-            self.sendUpdate('setNewScale', [
-                self.toonScale[0],
-                self.toonScale[1],
-                self.toonScale[2]])
+            self.sendUpdate(
+                'setNewScale',
+                [self.toonScale[0], self.toonScale[1], self.toonScale[2]])
 
         self.phoneGui = CatalogScreen.CatalogScreen(
             phone=self, doneEvent=self.phoneGuiDoneEvent)
@@ -330,31 +350,21 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
 
     def requestPurchase(self, item, callback, optional=-1):
         blob = item.getBlob(store=CatalogItem.Customization)
-        context = self.getCallbackContext(callback, [
-            item])
-        self.sendUpdate('requestPurchaseMessage', [
-            context,
-            blob,
-            optional])
+        context = self.getCallbackContext(callback, [item])
+        self.sendUpdate('requestPurchaseMessage', [context, blob, optional])
 
     def requestGiftPurchase(self, item, targetDoID, callback, optional=-1):
         print 'in the client phone'
         blob = item.getBlob(store=CatalogItem.Customization)
-        context = self.getCallbackContext(callback, [
-            item])
-        self.sendUpdate('requestGiftPurchaseMessage', [
-            context,
-            targetDoID,
-            blob,
-            optional])
+        context = self.getCallbackContext(callback, [item])
+        self.sendUpdate('requestGiftPurchaseMessage',
+                        [context, targetDoID, blob, optional])
 
     def requestPurchaseResponse(self, context, retcode):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def requestGiftPurchaseResponse(self, context, retcode):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def _DistributedPhone__clearDialog(self, event):
         self.phoneDialog.cleanup()
@@ -367,7 +377,8 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         phoneOutAnim = '%s%s_phoneOut' % (torso, legs)
         takePhoneAnim = '%s%s_takePhone' % (torso, legs)
         phoneNeutralAnim = '%s%s_phoneNeutral' % (torso, legs)
-        self.toonScale = toon.getGeomNode().getChild(0).getScale(self.getParent())
+        self.toonScale = toon.getGeomNode().getChild(0).getScale(
+            self.getParent())
         walkTime = 1.0
         scaleTime = 1.0
         origScale = self.getScale()
@@ -379,37 +390,31 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         destToonPos = toon.getPos()
         destToonHpr = toon.getHpr()
         destToonHpr = VBase3(
-            PythonUtil.fitSrcAngle2Dest(
-                destToonHpr[0],
-                origToonHpr[0]),
-            destToonHpr[1],
-            destToonHpr[2])
+            PythonUtil.fitSrcAngle2Dest(destToonHpr[0], origToonHpr[0]),
+            destToonHpr[1], destToonHpr[2])
         self.setScale(origScale)
         toon.setPos(origToonPos)
         toon.setHpr(origToonHpr)
         walkToPhone = Sequence(
-            Func(
-                toon.stopSmooth), Func(
-                toon.loop, 'walk'), Func(
-                base.playSfx, base.localAvatar.soundWalk), toon.posHprInterval(
-                    walkTime, destToonPos, destToonHpr, blendType='easeInOut'), Func(
-                        toon.loop, 'neutral'), Func(
-                            toon.startSmooth))
+            Func(toon.stopSmooth), Func(toon.loop, 'walk'),
+            Func(base.playSfx, base.localAvatar.soundWalk),
+            toon.posHprInterval(
+                walkTime, destToonPos, destToonHpr, blendType='easeInOut'),
+            Func(toon.loop, 'neutral'), Func(toon.startSmooth))
         interval = Sequence(
             Parallel(
-                walkToPhone, ActorInterval(
-                    self.model, phoneOutAnim), self.scaleInterval(
-                    scaleTime, self.toonScale, blendType='easeInOut')), Parallel(
-                ActorInterval(
-                    self.model, takePhoneAnim), ActorInterval(
-                    toon, 'takePhone'), Sequence(
-                    Wait(0.625), Func(
-                        base.playSfx, self.pickUpSfx), Func(
-                        self._DistributedPhone__receiverToHand, toon), Wait(1), Func(
-                        base.playSfx, self.handleSfx))), Func(
-                self.model.loop, phoneNeutralAnim), Func(
-                toon.loop, 'phoneNeutral'), Func(
-                base.playSfx, self.ringSfx))
+                walkToPhone, ActorInterval(self.model, phoneOutAnim),
+                self.scaleInterval(
+                    scaleTime, self.toonScale, blendType='easeInOut')),
+            Parallel(
+                ActorInterval(self.model, takePhoneAnim),
+                ActorInterval(toon, 'takePhone'),
+                Sequence(
+                    Wait(0.625), Func(base.playSfx, self.pickUpSfx),
+                    Func(self._DistributedPhone__receiverToHand, toon),
+                    Wait(1), Func(base.playSfx, self.handleSfx))),
+            Func(self.model.loop, phoneNeutralAnim),
+            Func(toon.loop, 'phoneNeutral'), Func(base.playSfx, self.ringSfx))
         return interval
 
     def replacePhoneInterval(self, toon):
@@ -419,14 +424,15 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         scaleTime = 1.0
         interval = Sequence(
             Parallel(
-                ActorInterval(
-                    self.model, phoneBackAnim), ActorInterval(
-                    toon, 'phoneBack'), Sequence(
-                    Wait(1.0), Func(
-                        self._DistributedPhone__receiverToPhone), Func(
-                            base.playSfx, self.hangUpSfx))), self.scaleInterval(
-                                scaleTime, localAvatar.getGeomNode().getScale()[2], blendType='easeInOut'), Func(
-                                    toon.loop, 'neutral'))
+                ActorInterval(self.model, phoneBackAnim),
+                ActorInterval(toon, 'phoneBack'),
+                Sequence(
+                    Wait(1.0), Func(self._DistributedPhone__receiverToPhone),
+                    Func(base.playSfx, self.hangUpSfx))),
+            self.scaleInterval(
+                scaleTime,
+                localAvatar.getGeomNode().getScale()[2],
+                blendType='easeInOut'), Func(toon.loop, 'neutral'))
         if self.origToonHpr:
             interval.append(Func(toon.setHpr, self.origToonHpr))
             self.origToonHpr = None
@@ -438,13 +444,9 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
 
     def _DistributedPhone__receiverToHand(self, toon):
         self.receiverGeom.reparentTo(toon.leftHand)
-        self.receiverGeom.setPosHpr(
-            0.090681300000000006,
-            0.38037500000000002,
-            0.10000000000000001,
-            32.409999999999997,
-            70.680000000000007,
-            137.03999999999999)
+        self.receiverGeom.setPosHpr(0.090681300000000006, 0.38037500000000002,
+                                    0.10000000000000001, 32.409999999999997,
+                                    70.680000000000007, 137.03999999999999)
 
     def _DistributedPhone__receiverToPhone(self):
         self.receiverGeom.reparentTo(self.receiverJoint)
@@ -482,7 +484,7 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
     def ringIfHasPhoneQuest(self, task):
         if Quests.avatarHasPhoneQuest(
                 base.localAvatar) and not Quests.avatarHasCompletedPhoneQuest(
-                base.localAvatar):
+                    base.localAvatar):
             self.ring()
 
         return Task.done
@@ -495,15 +497,11 @@ class DistributedPhone(DistributedFurnitureItem.DistributedFurnitureItem):
         r = 2.0
         w = 0.050000000000000003
         shakeOnce = Sequence(
-            Func(
-                phone.setR, r), Wait(w), Func(
-                phone.setR, -r), Wait(w))
+            Func(phone.setR, r), Wait(w), Func(phone.setR, -r), Wait(w))
         shakeSeq = Sequence()
         for i in range(16):
             shakeSeq.append(shakeOnce)
 
         ringIval = Parallel(
-            Func(
-                base.playSfx, self.ringSfx), shakeSeq, Func(
-                phone.setR, 0))
+            Func(base.playSfx, self.ringSfx), shakeSeq, Func(phone.setR, 0))
         self.playInterval(ringIval, 0.0, None)

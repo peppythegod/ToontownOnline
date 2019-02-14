@@ -6,8 +6,8 @@ class MakeClothesGUI(ClothesGUI.ClothesGUI):
     notify = directNotify.newCategory('MakeClothesGUI')
 
     def __init__(self, doneEvent):
-        ClothesGUI.ClothesGUI.__init__(
-            self, ClothesGUI.CLOTHES_MAKETOON, doneEvent)
+        ClothesGUI.ClothesGUI.__init__(self, ClothesGUI.CLOTHES_MAKETOON,
+                                       doneEvent)
 
     def setupScrollInterface(self):
         self.dna = self.toon.getStyle()

@@ -1,3 +1,1 @@
-
-
 DURATION = 60

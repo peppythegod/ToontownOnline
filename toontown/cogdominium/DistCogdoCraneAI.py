@@ -6,7 +6,6 @@ from direct.fsm import FSM
 
 
 class DistCogdoCraneAI(DistributedObjectAI.DistributedObjectAI, FSM.FSM):
-
     def __init__(self, air, craneGame, index):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         FSM.FSM.__init__(self, 'DistCogdoCraneAI')
@@ -26,9 +25,7 @@ class DistCogdoCraneAI(DistributedObjectAI.DistributedObjectAI, FSM.FSM):
         self.request('Free')
 
     def d_setState(self, state, avId):
-        self.sendUpdate('setState', [
-            state,
-            avId])
+        self.sendUpdate('setState', [state, avId])
 
     def enterOff(self):
         pass

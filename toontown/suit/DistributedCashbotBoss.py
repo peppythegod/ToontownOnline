@@ -48,7 +48,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.setName(TTLocalizer.CashbotBossName)
         nameInfo = TTLocalizer.BossCogNameWithDept % {
             'name': self.name,
-            'dept': SuitDNA.getDeptFullname(self.style.dept)}
+            'dept': SuitDNA.getDeptFullname(self.style.dept)
+        }
         self.setDisplayName(nameInfo)
         target = CollisionSphere(2, 0, 0, 3)
         targetNode = CollisionNode('headTarget')
@@ -180,8 +181,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.eyes = loader.loadModel(
             'phase_10/models/cogHQ/CashBotBossEyes.bam')
         self.cableTex = self.craneArm.findTexture('MagnetControl')
-        self.eyes.setPosHprScale(
-            4.5, 0, -2.5, 90, 90, 0, 0.40000000000000002, 0.40000000000000002, 0.40000000000000002)
+        self.eyes.setPosHprScale(4.5, 0, -2.5, 90, 90, 0, 0.40000000000000002,
+                                 0.40000000000000002, 0.40000000000000002)
         self.eyes.reparentTo(self.neck)
         self.eyes.hide()
         self.midVault.setPos(0, -222, -70.700000000000003)
@@ -193,8 +194,9 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.endVault.findAllMatches('**/Safes').detach()
         self.endVault.findAllMatches('**/MagnetControlsAll').detach()
         cn = self.endVault.find('**/wallsCollision').node()
-        cn.setIntoCollideMask(
-            OTPGlobals.WallBitmask | ToontownGlobals.PieBitmask | BitMask32.lowerOn(3) << 21)
+        cn.setIntoCollideMask(OTPGlobals.WallBitmask
+                              | ToontownGlobals.PieBitmask
+                              | BitMask32.lowerOn(3) << 21)
         self.door1 = self.midVault.find('**/SlidingDoor1/')
         self.door2 = self.midVault.find('**/SlidingDoor/')
         self.door3 = self.endVault.find('**/SlidingDoor/')
@@ -207,8 +209,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         rightDoor = elevatorModel.find('**/right_door')
         rightDoor.setName('right-door')
         self.setupElevator(elevatorOrigin)
-        ElevatorUtils.closeDoors(
-            leftDoor, rightDoor, ElevatorConstants.ELEVATOR_CFO)
+        ElevatorUtils.closeDoors(leftDoor, rightDoor,
+                                 ElevatorConstants.ELEVATOR_CFO)
         walls = self.endVault.find('**/RollUpFrameCillison')
         walls.detachNode()
         self.evWalls = self.replaceCollisionPolysWithPlanes(walls)
@@ -236,8 +238,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         planes = []
         collList = model.findAllMatches('**/+CollisionNode')
         if not collList:
-            collList = [
-                model]
+            collList = [model]
 
         for cnp in collList:
             cn = cnp.node()
@@ -253,8 +254,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                     planes.append(plane)
                     continue
                 self.notify.warning(
-                    'Unexpected collision solid: %s' %
-                    repr(solid))
+                    'Unexpected collision solid: %s' % repr(solid))
                 newCollisionNode.addSolid(plane)
 
         newCollisionNode.setIntoCollideMask(newCollideMask)
@@ -275,68 +275,43 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         goon = self.fakeGoons[0]
         goonTrack.append(
             Sequence(
-                goon.posHprInterval(
-                    0, Point3(
-                        111, -287, 0), VBase3(
-                        165, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        101, -323, 0), VBase3(
-                        165, 0, 0)), goon.hprInterval(
-                    1, VBase3(
-                        345, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        111, -287, 0), VBase3(
-                        345, 0, 0)), goon.hprInterval(
-                    1, VBase3(
-                        165, 0, 0)), goon.posHprInterval(
-                    9.5, Point3(
-                        104, -316, 0), VBase3(
-                        165, 0, 0)), Func(
-                    goon.request, 'Stunned'), Wait(1)))
+                goon.posHprInterval(0, Point3(11, -287, 0), VBase3(165, 0, 0)),
+                goon.posHprInterval(9, Point3(101, -323, 0), VBase3(165, 0,
+                                                                    0)),
+                goon.hprInterval(1, VBase3(345, 0, 0)),
+                goon.posHprInterval(9, Point3(111, -287, 0), VBase3(345, 0,
+                                                                    0)),
+                goon.hprInterval(1, VBase3(165, 0, 0)),
+                goon.posHprInterval(9.5, Point3(104, -316, 0), VBase3(
+                    165, 0, 0)), Func(goon.request, 'Stunned'), Wait(1)))
         goon = self.fakeGoons[1]
         goonTrack.append(
             Sequence(
-                goon.posHprInterval(
-                    0, Point3(
-                        119, -315, 0), VBase3(
-                        357, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        121, -280, 0), VBase3(
-                        357, 0, 0)), goon.hprInterval(
-                    1, VBase3(
-                        177, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        119, -315, 0), VBase3(
-                        177, 0, 0)), goon.hprInterval(
-                    1, VBase3(
-                        357, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        121, -280, 0), VBase3(
-                        357, 0, 0))))
+                goon.posHprInterval(0, Point3(119, -315, 0), VBase3(357, 0,
+                                                                    0)),
+                goon.posHprInterval(9, Point3(121, -280, 0), VBase3(357, 0,
+                                                                    0)),
+                goon.hprInterval(1, VBase3(177, 0, 0)),
+                goon.posHprInterval(9, Point3(119, -315, 0), VBase3(177, 0,
+                                                                    0)),
+                goon.hprInterval(1, VBase3(357, 0, 0)),
+                goon.posHprInterval(9, Point3(121, -280, 0), VBase3(357, 0,
+                                                                    0))))
         goon = self.fakeGoons[2]
         goonTrack.append(
             Sequence(
-                goon.posHprInterval(
-                    0, Point3(
-                        102, -320, 0), VBase3(
-                        231, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        127, -337, 0), VBase3(
-                        231, 0, 0)), goon.hprInterval(
-                    1, VBase3(
-                        51, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        102, -320, 0), VBase3(
-                        51, 0, 0)), goon.hprInterval(
-                    1, VBase3(
-                        231, 0, 0)), goon.posHprInterval(
-                    9, Point3(
-                        127, -337, 0), VBase3(
-                        231, 0, 0))))
+                goon.posHprInterval(0, Point3(102, -320, 0), VBase3(231, 0,
+                                                                    0)),
+                goon.posHprInterval(9, Point3(127, -337, 0), VBase3(231, 0,
+                                                                    0)),
+                goon.hprInterval(1, VBase3(51, 0, 0)),
+                goon.posHprInterval(9, Point3(102, -320, 0), VBase3(51, 0, 0)),
+                goon.hprInterval(1, VBase3(231, 0, 0)),
+                goon.posHprInterval(9, Point3(127, -337, 0), VBase3(231, 0,
+                                                                    0))))
         return Sequence(
-            Func(
-                self._DistributedCashbotBoss__showFakeGoons, 'Walk'), goonTrack, Func(
-                self._DistributedCashbotBoss__hideFakeGoons))
+            Func(self._DistributedCashbotBoss__showFakeGoons, 'Walk'),
+            goonTrack, Func(self._DistributedCashbotBoss__hideFakeGoons))
 
     def makeIntroductionMovie(self, delayDeletes):
         for toonId in self.involvedToons:
@@ -348,18 +323,15 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 continue
 
         rtTrack = Sequence()
-        startPos = Point3(
-            ToontownGlobals.CashbotBossOffstagePosHpr[0],
-            ToontownGlobals.CashbotBossOffstagePosHpr[1],
-            ToontownGlobals.CashbotBossOffstagePosHpr[2])
-        battlePos = Point3(
-            ToontownGlobals.CashbotBossBattleOnePosHpr[0],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[1],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[2])
-        battleHpr = VBase3(
-            ToontownGlobals.CashbotBossBattleOnePosHpr[3],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[4],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[5])
+        startPos = Point3(ToontownGlobals.CashbotBossOffstagePosHpr[0],
+                          ToontownGlobals.CashbotBossOffstagePosHpr[1],
+                          ToontownGlobals.CashbotBossOffstagePosHpr[2])
+        battlePos = Point3(ToontownGlobals.CashbotBossBattleOnePosHpr[0],
+                           ToontownGlobals.CashbotBossBattleOnePosHpr[1],
+                           ToontownGlobals.CashbotBossBattleOnePosHpr[2])
+        battleHpr = VBase3(ToontownGlobals.CashbotBossBattleOnePosHpr[3],
+                           ToontownGlobals.CashbotBossBattleOnePosHpr[4],
+                           ToontownGlobals.CashbotBossBattleOnePosHpr[5])
         bossTrack = Sequence()
         bossTrack.append(Func(self.reparentTo, render))
         bossTrack.append(Func(self.getGeomNode().setH, 180))
@@ -367,8 +339,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         bossTrack.append(Func(self.loop, 'Ff_neutral'))
         (track, hpr) = self.rollBossToPoint(startPos, None, battlePos, None, 0)
         bossTrack.append(track)
-        (track, hpr) = self.rollBossToPoint(
-            battlePos, hpr, battlePos, battleHpr, 0)
+        (track, hpr) = self.rollBossToPoint(battlePos, hpr, battlePos,
+                                            battleHpr, 0)
         bossTrack.append(track)
         bossTrack.append(Func(self.getGeomNode().setH, 0))
         bossTrack.append(Func(self.pelvis.setHpr, self.pelvisReversedHpr))
@@ -377,90 +349,88 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         rToon = self.resistanceToon
         rToon.setPosHpr(*ToontownGlobals.CashbotRTBattleOneStartPosHpr)
         track = Sequence(
-            Func(
-                camera.setPosHpr, 82, -219, 5, 267, 0, 0), Func(
-                rToon.setChatAbsolute, TTL.ResistanceToonWelcome, CFSpeech), Wait(3), Sequence(
-                goonTrack, duration=0), Parallel(
-                    camera.posHprInterval(
-                        4, Point3(
-                            108, -244, 4), VBase3(
-                                211.5, 0, 0)), Sequence(
-                                    Func(
-                                        rToon.suit.setPlayRate, 1.3999999999999999, 'walk'), Func(
-                                            rToon.suit.loop, 'walk'), Parallel(
-                                                rToon.hprInterval(
-                                                    1, VBase3(
-                                                        180, 0, 0)), rToon.posInterval(
-                                                            3, VBase3(
-                                                                120, -255, 0)), Sequence(
-                                                                    Wait(2), Func(
-                                                                        rToon.clearChat))), Func(
-                                                                            rToon.suit.loop, 'neutral'), self.door2.posInterval(
-                                                                                3, VBase3(
-                                                                                    0, 0, 30)))), Func(
-                                                                                        rToon.setHpr, 0, 0, 0), Func(
-                                                                                            rToon.setChatAbsolute, TTL.ResistanceToonTooLate, CFSpeech), Func(
-                                                                                                camera.reparentTo, render), Func(
-                                                                                                    camera.setPosHpr, 61.100000000000001, -228.80000000000001, 10.199999999999999, -90, 0, 0), self.door1.posInterval(
-                                                                                                        2, VBase3(
-                                                                                                            0, 0, 30)), Parallel(
-                                                                                                                bossTrack, Sequence(
-                                                                                                                    Wait(3), Func(
-                                                                                                                        rToon.clearChat), self.door1.posInterval(
-                                                                                                                            3, VBase3(
-                                                                                                                                0, 0, 0)))), Func(
-                                                                                                                                    self.setChatAbsolute, TTL.CashbotBossDiscoverToons1, CFSpeech), camera.posHprInterval(
-                                                                                                                                        1.5, Point3(
-                                                                                                                                            93.299999999999997, -230, 0.69999999999999996), VBase3(
-                                                                                                                                                -92.900000000000006, 39.700000000000003, 8.3000000000000007)), Func(
-                                                                                                                                                    self.setChatAbsolute, TTL.CashbotBossDiscoverToons2, CFSpeech), Wait(4), Func(
-                                                                                                                                                        self.clearChat), self.loseCogSuits(
-                                                                                                                                                            self.toonsA + self.toonsB, render, (113, -228, 10, 90, 0, 0)), Wait(1), Func(
-                                                                                                                                                                rToon.setHpr, 0, 0, 0), self.loseCogSuits(
-                                                                                                                                                                    [rToon], render, (133, -243, 5, 143, 0, 0), True), Func(
-                                                                                                                                                                        rToon.setChatAbsolute, TTL.ResistanceToonKeepHimBusy, CFSpeech), Wait(1), Func(
-                                                                                                                                                                            self._DistributedCashbotBoss__showResistanceToon, False), Sequence(
-                                                                                                                                                                                Func(
-                                                                                                                                                                                    rToon.animFSM.request, 'run'), rToon.hprInterval(
-                                                                                                                                                                                        1, VBase3(
-                                                                                                                                                                                            180, 0, 0)), Parallel(
-                                                                                                                                                                                                Sequence(
-                                                                                                                                                                                                    rToon.posInterval(
-                                                                                                                                                                                                        1.5, VBase3(
-                                                                                                                                                                                                            109, -294, 0)), Parallel(
-                                                                                                                                                                                                                Func(
-                                                                                                                                                                                                                    rToon.animFSM.request, 'jump')), rToon.posInterval(
-                                                                                                                                                                                                                        1.5, VBase3(
-                                                                                                                                                                                                                            93.935000000000002, -341.065, 2))), self.door2.posInterval(
-                                                                                                                                                                                                                                3, VBase3(
-                                                                                                                                                                                                                                    0, 0, 0))), Func(
-                                                                                                                                                                                                                                        rToon.animFSM.request, 'neutral')), self.toonNormalEyes(
-                                                                                                                                                                                                                                            self.involvedToons), self.toonNormalEyes(
-                                                                                                                                                                                                                                                [
-                                                                                                                                                                                                                                                    self.resistanceToon], True), Func(
-                                                                                                                                                                                                                                                        rToon.clearChat), Func(
-                                                                                                                                                                                                                                                            camera.setPosHpr, 93.299999999999997, -230, 0.69999999999999996, -92.900000000000006, 39.700000000000003, 8.3000000000000007), Func(
-                                                                                                                                                                                                                                                                self.setChatAbsolute, attackToons, CFSpeech), Wait(2), Func(
-                                                                                                                                                                                                                                                                    self.clearChat))
+            Func(camera.setPosHpr, 82, -219, 5, 267, 0, 0),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonWelcome, CFSpeech),
+            Wait(3), Sequence(goonTrack, duration=0),
+            Parallel(
+                camera.posHprInterval(4, Point3(108, -244, 4),
+                                      VBase3(211.5, 0, 0)),
+                Sequence(
+                    Func(rToon.suit.setPlayRate, 1.3999999999999999, 'walk'),
+                    Func(rToon.suit.loop, 'walk'),
+                    Parallel(
+                        rToon.hprInterval(1, VBase3(180, 0, 0)),
+                        rToon.posInterval(3, VBase3(120, -255, 0)),
+                        Sequence(Wait(2), Func(rToon.clearChat))),
+                    Func(rToon.suit.loop, 'neutral'),
+                    self.door2.posInterval(3, VBase3(0, 0, 30)))),
+            Func(rToon.setHpr, 0, 0, 0),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonTooLate, CFSpeech),
+            Func(camera.reparentTo, render),
+            Func(camera.setPosHpr, 61.100000000000001, -228.80000000000001,
+                 10.199999999999999, -90, 0, 0),
+            self.door1.posInterval(2, VBase3(0, 0, 30)),
+            Parallel(
+                bossTrack,
+                Sequence(
+                    Wait(3), Func(rToon.clearChat),
+                    self.door1.posInterval(3, VBase3(0, 0, 0)))),
+            Func(self.setChatAbsolute, TTL.CashbotBossDiscoverToons1,
+                 CFSpeech),
+            camera.posHprInterval(
+                1.5, Point3(93.299999999999997, -230, 0.69999999999999996),
+                VBase3(-92.900000000000006, 39.700000000000003,
+                       8.3000000000000007)),
+            Func(self.setChatAbsolute, TTL.CashbotBossDiscoverToons2,
+                 CFSpeech), Wait(4), Func(self.clearChat),
+            self.loseCogSuits(self.toonsA + self.toonsB, render,
+                              (113, -228, 10, 90, 0, 0)), Wait(1),
+            Func(rToon.setHpr, 0, 0, 0),
+            self.loseCogSuits([rToon], render, (133, -243, 5, 143, 0, 0),
+                              True),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonKeepHimBusy,
+                 CFSpeech), Wait(1),
+            Func(self._DistributedCashbotBoss__showResistanceToon, False),
+            Sequence(
+                Func(rToon.animFSM.request, 'run'),
+                rToon.hprInterval(1, VBase3(180, 0, 0)),
+                Parallel(
+                    Sequence(
+                        rToon.posInterval1(.5, VBase3(109, -294, 0)),
+                        Parallel(Func(rToon.animFSM.request, 'jump')),
+                        rToon.posInterval(
+                            1.5, VBase3(93.935000000000002, -341.065, 2))),
+                    self.door2.posInterval(3, VBase3(0, 0, 0))),
+                Func(rToon.animFSM.request, 'neutral')),
+            self.toonNormalEyes(self.involvedToons),
+            self.toonNormalEyes([self.resistanceToon], True),
+            Func(rToon.clearChat),
+            Func(camera.setPosHpr, 93.299999999999997, -230,
+                 0.69999999999999996, -92.900000000000006, 39.700000000000003,
+                 8.3000000000000007),
+            Func(self.setChatAbsolute, attackToons, CFSpeech), Wait(2),
+            Func(self.clearChat))
         return Sequence(Func(camera.reparentTo, render), track)
 
     def _DistributedCashbotBoss__makeGoonMovieForBattleThree(self):
-        goonPosHprs = [
-            [
-                Point3(111, -287, 0),
-                VBase3(165, 0, 0),
-                Point3(101, -323, 0),
-                VBase3(165, 0, 0)],
-            [
-                Point3(119, -315, 0),
-                VBase3(357, 0, 0),
-                Point3(121, -280, 0),
-                VBase3(357, 0, 0)],
-            [
-                Point3(102, -320, 0),
-                VBase3(231, 0, 0),
-                Point3(127, -337, 0),
-                VBase3(231, 0, 0)]]
+        goonPosHprs = [[
+            Point3(111, -287, 0),
+            VBase3(165, 0, 0),
+            Point3(101, -323, 0),
+            VBase3(165, 0, 0)
+        ],
+                       [
+                           Point3(119, -315, 0),
+                           VBase3(357, 0, 0),
+                           Point3(121, -280, 0),
+                           VBase3(357, 0, 0)
+                       ],
+                       [
+                           Point3(102, -320, 0),
+                           VBase3(231, 0, 0),
+                           Point3(127, -337, 0),
+                           VBase3(231, 0, 0)
+                       ]]
         mainGoon = self.fakeGoons[0]
         goonLoop = Parallel()
         print self.fakeGoons
@@ -468,20 +438,14 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             goon = self.fakeGoons[i]
             goonLoop.append(
                 Sequence(
-                    goon.posHprInterval(
-                        8,
-                        goonPosHprs[i][0],
-                        goonPosHprs[i][1]),
-                    goon.posHprInterval(
-                        8,
-                        goonPosHprs[i][2],
-                        goonPosHprs[i][3])))
+                    goon.posHprInterval(8, goonPosHprs[i][0],
+                                        goonPosHprs[i][1]),
+                    goon.posHprInterval(8, goonPosHprs[i][2],
+                                        goonPosHprs[i][3])))
 
         goonTrack = Sequence(
-            Func(
-                self._DistributedCashbotBoss__showFakeGoons, 'Walk'), Func(
-                mainGoon.request, 'Stunned'), Func(
-                goonLoop.loop), Wait(20))
+            Func(self._DistributedCashbotBoss__showFakeGoons, 'Walk'),
+            Func(mainGoon.request, 'Stunned'), Func(goonLoop.loop), Wait(20))
         return goonTrack
 
     def makePrepareBattleThreeMovie(self, delayDeletes, crane, safe):
@@ -493,99 +457,98 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                         toon, 'CashbotBoss.makePrepareBattleThreeMovie'))
                 continue
 
-        startPos = Point3(
-            ToontownGlobals.CashbotBossBattleOnePosHpr[0],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[1],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[2])
-        battlePos = Point3(
-            ToontownGlobals.CashbotBossBattleThreePosHpr[0],
-            ToontownGlobals.CashbotBossBattleThreePosHpr[1],
-            ToontownGlobals.CashbotBossBattleThreePosHpr[2])
-        startHpr = Point3(
-            ToontownGlobals.CashbotBossBattleOnePosHpr[3],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[4],
-            ToontownGlobals.CashbotBossBattleOnePosHpr[5])
-        battleHpr = VBase3(
-            ToontownGlobals.CashbotBossBattleThreePosHpr[3],
-            ToontownGlobals.CashbotBossBattleThreePosHpr[4],
-            ToontownGlobals.CashbotBossBattleThreePosHpr[5])
+        startPos = Point3(ToontownGlobals.CashbotBossBattleOnePosHpr[0],
+                          ToontownGlobals.CashbotBossBattleOnePosHpr[1],
+                          ToontownGlobals.CashbotBossBattleOnePosHpr[2])
+        battlePos = Point3(ToontownGlobals.CashbotBossBattleThreePosHpr[0],
+                           ToontownGlobals.CashbotBossBattleThreePosHpr[1],
+                           ToontownGlobals.CashbotBossBattleThreePosHpr[2])
+        startHpr = Point3(ToontownGlobals.CashbotBossBattleOnePosHpr[3],
+                          ToontownGlobals.CashbotBossBattleOnePosHpr[4],
+                          ToontownGlobals.CashbotBossBattleOnePosHpr[5])
+        battleHpr = VBase3(ToontownGlobals.CashbotBossBattleThreePosHpr[3],
+                           ToontownGlobals.CashbotBossBattleThreePosHpr[4],
+                           ToontownGlobals.CashbotBossBattleThreePosHpr[5])
         finalHpr = VBase3(135, 0, 0)
         bossTrack = Sequence()
         bossTrack.append(Func(self.reparentTo, render))
         bossTrack.append(Func(self.getGeomNode().setH, 180))
         bossTrack.append(Func(self.pelvis.setHpr, self.pelvisForwardHpr))
         bossTrack.append(Func(self.loop, 'Ff_neutral'))
-        (track, hpr) = self.rollBossToPoint(
-            startPos, startHpr, startPos, battleHpr, 0)
+        (track, hpr) = self.rollBossToPoint(startPos, startHpr, startPos,
+                                            battleHpr, 0)
         bossTrack.append(track)
         (track, hpr) = self.rollBossToPoint(startPos, None, battlePos, None, 0)
         bossTrack.append(track)
-        (track, hpr) = self.rollBossToPoint(
-            battlePos, battleHpr, battlePos, finalHpr, 0)
+        (track, hpr) = self.rollBossToPoint(battlePos, battleHpr, battlePos,
+                                            finalHpr, 0)
         bossTrack.append(track)
         rToon = self.resistanceToon
         rToon.setPosHpr(93.935000000000002, -341.065, 0, -45, 0, 0)
         goon = self.fakeGoons[0]
         crane = self.cranes[0]
         track = Sequence(
-            Func(
-                self._DistributedCashbotBoss__hideToons), Func(
-                crane.request, 'Movie'), Func(
-                crane.accomodateToon, rToon), Func(
-                    goon.request, 'Stunned'), Func(
-                        goon.setPosHpr, 104, -316, 0, 165, 0, 0), Parallel(
-                            self.door2.posInterval(
-                                4.5, VBase3(
-                                    0, 0, 30)), self.door3.posInterval(
-                                        4.5, VBase3(
-                                            0, 0, 30)), bossTrack), Func(
-                                                rToon.loop, 'leverNeutral'), Func(
-                                                    camera.reparentTo, self.geom), Func(
-                                                        camera.setPosHpr, 105, -326, 5, 136.30000000000001, 0, 0), Func(
-                                                            rToon.setChatAbsolute, TTL.ResistanceToonWatchThis, CFSpeech), Wait(2), Func(
-                                                                rToon.clearChat), Func(
-                                                                    camera.setPosHpr, 105, -326, 20, -45.299999999999997, 11, 0), Func(
-                                                                        self.setChatAbsolute, TTL.CashbotBossGetAwayFromThat, CFSpeech), Wait(2), Func(
-                                                                            self.clearChat), camera.posHprInterval(
-                                                                                1.5, Point3(
-                                                                                    105, -326, 5), Point3(
-                                                                                        136.30000000000001, 0, 0), blendType='easeInOut'), Func(
-                                                                                            rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions1, CFSpeech), Wait(4), Func(
-                                                                                                rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions2, CFSpeech), Wait(4), Func(
-                                                                                                    rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions3, CFSpeech), Wait(4), Func(
-                                                                                                        rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions4, CFSpeech), Wait(4), Func(
-                                                                                                            rToon.clearChat), Func(
-                                                                                                                camera.setPosHpr, 102, -323.60000000000002, 0.90000000000000002, -10.6, 14, 0), Func(
-                                                                                                                    goon.request, 'Recovery'), Wait(2), Func(
-                                                                                                                        camera.setPosHpr, 95.400000000000006, -332.60000000000002, 4.2000000000000002, 167.09999999999999, -13.199999999999999, 0), Func(
-                                                                                                                            rToon.setChatAbsolute, TTL.ResistanceToonGetaway, CFSpeech), Func(
-                                                                                                                                rToon.animFSM.request, 'jump'), Wait(1.8), Func(
-                                                                                                                                    rToon.clearChat), Func(
-                                                                                                                                        camera.setPosHpr, 109.09999999999999, -300.69999999999999, 13.9, -15.6, -13.6, 0), Func(
-                                                                                                                                            rToon.animFSM.request, 'run'), Func(
-                                                                                                                                                goon.request, 'Walk'), Parallel(
-                                                                                                                                                    self.door3.posInterval(
-                                                                                                                                                        3, VBase3(
-                                                                                                                                                            0, 0, 0)), rToon.posHprInterval(
-                                                                                                                                                                3, Point3(
-                                                                                                                                                                    136, -212.90000000000001, 0), VBase3(
-                                                                                                                                                                        -14, 0, 0), startPos=Point3(
-                                                                                                                                                                            110.8, -292.69999999999999, 0), startHpr=VBase3(
-                                                                                                                                                                                -14, 0, 0)), goon.posHprInterval(
-                                                                                                                                                                                    3, Point3(
-                                                                                                                                                                                        125.2, -243.5, 0), VBase3(
-                                                                                                                                                                                            -14, 0, 0), startPos=Point3(
-                                                                                                                                                                                                104.8, -309.5, 0), startHpr=VBase3(
-                                                                                                                                                                                                    -14, 0, 0))), Func(
-                                                                                                                                                                                                        self._DistributedCashbotBoss__hideFakeGoons), Func(
-                                                                                                                                                                                                            crane.request, 'Free'), Func(
-                                                                                                                                                                                                                self.getGeomNode().setH, 0), self.moveToonsToBattleThreePos(
-                                                                                                                                                                                                                    self.involvedToons), Func(
-                                                                                                                                                                                                                        self._DistributedCashbotBoss__showToons))
+            Func(self._DistributedCashbotBoss__hideToons),
+            Func(crane.request, 'Movie'), Func(crane.accomodateToon, rToon),
+            Func(goon.request, 'Stunned'),
+            Func(goon.setPosHpr, 104, -316, 0, 165, 0, 0),
+            Parallel(
+                self.door2.posInterval(4.5, VBase3(0, 0, 30)),
+                self.door3.posInterval(4.5, VBase3(0, 0, 30)), bossTrack),
+            Func(rToon.loop, 'leverNeutral'), Func(camera.reparentTo,
+                                                   self.geom),
+            Func(camera.setPosHpr, 105, -326, 5, 136.30000000000001, 0, 0),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonWatchThis, CFSpeech),
+            Wait(2), Func(rToon.clearChat),
+            Func(camera.setPosHpr, 105, -326, 20, -45.299999999999997, 11, 0),
+            Func(self.setChatAbsolute, TTL.CashbotBossGetAwayFromThat,
+                 CFSpeech), Wait(2), Func(self.clearChat),
+            camera.posHprInterval(
+                1.5,
+                Point3(105, -326, 5),
+                Point3(136.30000000000001, 0, 0),
+                blendType='easeInOut'),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions1,
+                 CFSpeech), Wait(4),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions2,
+                 CFSpeech), Wait(4),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions3,
+                 CFSpeech), Wait(4),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonCraneInstructions4,
+                 CFSpeech), Wait(4), Func(rToon.clearChat),
+            Func(camera.setPosHpr, 102, -323.60000000000002,
+                 0.90000000000000002, -10.6, 14, 0),
+            Func(goon.request, 'Recovery'), Wait(2),
+            Func(camera.setPosHpr, 95.400000000000006, -332.60000000000002,
+                 4.2000000000000002, 167.09999999999999, -13.199999999999999,
+                 0),
+            Func(rToon.setChatAbsolute, TTL.ResistanceToonGetaway, CFSpeech),
+            Func(rToon.animFSM.request, 'jump'), Wait(1.8),
+            Func(rToon.clearChat),
+            Func(camera.setPosHpr, 109.09999999999999, -300.69999999999999,
+                 13.9, -15.6, -13.6, 0), Func(rToon.animFSM.request, 'run'),
+            Func(goon.request, 'Walk'),
+            Parallel(
+                self.door3.posInterval(3, VBase3(0, 0, 0)),
+                rToon.posHprInterval(
+                    3,
+                    Point3(136, -212.90000000000001, 0),
+                    VBase3(-14, 0, 0),
+                    startPos=Point3(110.8, -292.69999999999999, 0),
+                    startHpr=VBase3(-14, 0, 0)),
+                goon.posHprInterval(
+                    3,
+                    Point3(125.2, -243.5, 0),
+                    VBase3(-14, 0, 0),
+                    startPos=Point3(104.8, -309.5, 0),
+                    startHpr=VBase3(-14, 0, 0))),
+            Func(self._DistributedCashbotBoss__hideFakeGoons),
+            Func(crane.request, 'Free'), Func(self.getGeomNode().setH, 0),
+            self.moveToonsToBattleThreePos(self.involvedToons),
+            Func(self._DistributedCashbotBoss__showToons))
         return Sequence(
-            Func(
-                camera.reparentTo, self), Func(
-                camera.setPosHpr, 0, -27, 25, 0, -18, 0), track)
+            Func(camera.reparentTo, self),
+            Func(camera.setPosHpr, 0, -27, 25, 0, -18, 0), track)
 
     def moveToonsToBattleThreePos(self, toons):
         track = Parallel()
@@ -596,8 +559,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 pos = Point3(*posHpr[0:3])
                 hpr = VBase3(*posHpr[3:6])
                 track.append(
-                    toon.posHprInterval(
-                        0.20000000000000001, pos, hpr))
+                    toon.posHprInterval(0.20000000000000001, pos, hpr))
                 continue
 
         return track
@@ -611,93 +573,95 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         trainPassingSfx = base.loadSfx(
             'phase_10/audio/sfx/CBHQ_TRAIN_pass.mp3')
         boomSfx = loader.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.mp3')
-        rollThroughDoor = self.rollBossToPoint(fromPos=Point3(
-            120, -280, 0), fromHpr=None, toPos=Point3(120, -250, 0), toHpr=None, reverse=0)
+        rollThroughDoor = self.rollBossToPoint(
+            fromPos=Point3(120, -280, 0),
+            fromHpr=None,
+            toPos=Point3(120, -250, 0),
+            toHpr=None,
+            reverse=0)
         rollTrack = Sequence(
-            Func(
-                self.getGeomNode().setH, 180), rollThroughDoor[0], Func(
-                self.getGeomNode().setH, 0))
+            Func(self.getGeomNode().setH, 180), rollThroughDoor[0],
+            Func(self.getGeomNode().setH, 0))
         g = 80.0 / 300.0
-        trainTrack = Track((0 *
-                            g, loco.posInterval(0.5, Point3(0, -
-                                                            242, 0), startPos=Point3(150, -
-                                                                                     242, 0))), (1 *
-                                                                                                 g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                 242, 0), startPos=Point3(150, -
-                                                                                                                                                          242, 0))), (2 *
-                                                                                                                                                                      g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                      242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                               242, 0))), (3 *
-                                                                                                                                                                                                                                           g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                           242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                    242, 0))), (4 *
-                                                                                                                                                                                                                                                                                                                g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                         242, 0))), (5 *
-                                                                                                                                                                                                                                                                                                                                                                                     g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                     242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                              242, 0))), (6 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                          g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   242, 0))), (7 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        242, 0))), (8 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             242, 0))), (9 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  242, 0))), (10 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       242, 0))), (11 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            242, 0))), (12 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 242, 0))), (13 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             g, car2.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      242, 0))), (14 *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  g, car1.posInterval(0.5, Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  242, 0), startPos=Point3(150, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           242, 0))))
+        trainTrack = Track(
+            (0 * g,
+             loco.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (1 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (2 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (3 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (4 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (5 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (6 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (7 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (8 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (9 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (10 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (11 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (12 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (13 * g,
+             car2.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))),
+            (14 * g,
+             car1.posInterval(
+                 0.5, Point3(0, -242, 0), startPos=Point3(150, -242, 0))))
         bossTrack = Track(
-            (0.0, Sequence(
-                Func(
-                    camera.reparentTo, render), Func(
-                    camera.setPosHpr, 105, -280, 20, -158, -3, 0), Func(
-                    self.reparentTo, render), Func(
-                        self.show), Func(
-                            self.clearChat), Func(
-                                self.setPosHpr, *ToontownGlobals.CashbotBossBattleThreePosHpr), Func(
-                                    self.reverseHead), ActorInterval(
-                                        self, 'Fb_firstHit'), ActorInterval(
-                                            self, 'Fb_down2Up'))), (1.0, Func(
-                                                self.setChatAbsolute, hadEnough, CFSpeech)), (5.5, Parallel(
-                                                    Func(
-                                                        camera.setPosHpr, 100, -315, 16, -20, 0, 0), Func(
-                                                            self.hideBattleThreeObjects), Func(
-                                                                self.forwardHead), Func(
-                                                                    self.loop, 'Ff_neutral'), rollTrack, self.door3.posInterval(
-                                                                        2.5, Point3(
-                                                                            0, 0, 25), startPos=Point3(
-                                                                                0, 0, 18)))), (5.5, Func(
-                                                                                    self.setChatAbsolute, outtaHere, CFSpeech)), (5.5, SoundInterval(trainPassingSfx)), (8.0999999999999996, Func(
-                                                                                        self.clearChat)), (9.4000000000000004, Sequence(
-                                                                                            Func(
-                                                                                                loco.reparentTo, render), Func(
-                                                                                                    car1.reparentTo, render), Func(
-                                                                                                        car2.reparentTo, render), trainTrack, Func(
-                                                                                                            loco.detachNode), Func(
-                                                                                                                car1.detachNode), Func(
-                                                                                                                    car2.detachNode), Wait(2))), (9.5, SoundInterval(boomSfx)), (9.5, Sequence(
-                                                                                                                        self.posInterval(
-                                                                                                                            0.40000000000000002, Point3(
-                                                                                                                                0, -250, 0)), Func(
-                                                                                                                                    self.stash))))
+            (0.0,
+             Sequence(
+                 Func(camera.reparentTo, render),
+                 Func(camera.setPosHpr, 105, -280, 20, -158, -3, 0),
+                 Func(self.reparentTo, render), Func(self.show),
+                 Func(self.clearChat),
+                 Func(self.setPosHpr,
+                      *ToontownGlobals.CashbotBossBattleThreePosHpr),
+                 Func(self.reverseHead), ActorInterval(self, 'Fb_firstHit'),
+                 ActorInterval(self, 'Fb_down2Up'))),
+            (1.0, Func(self.setChatAbsolute, hadEnough, CFSpeech)),
+            (5.5,
+             Parallel(
+                 Func(camera.setPosHpr, 100, -315, 16, -20, 0, 0),
+                 Func(self.hideBattleThreeObjects), Func(self.forwardHead),
+                 Func(self.loop, 'Ff_neutral'), rollTrack,
+                 self.door3.posInterval(
+                     2.5, Point3(0, 0, 25), startPos=Point3(0, 0, 18)))),
+            (5.5, Func(self.setChatAbsolute, outtaHere, CFSpeech)),
+            (5.5, SoundInterval(trainPassingSfx)),
+            (8.0999999999999996, Func(self.clearChat)),
+            (9.4000000000000004,
+             Sequence(
+                 Func(loco.reparentTo, render), Func(car1.reparentTo, render),
+                 Func(car2.reparentTo, render), trainTrack,
+                 Func(loco.detachNode), Func(car1.detachNode),
+                 Func(car2.detachNode), Wait(2))),
+            (9.5, SoundInterval(boomSfx)),
+            (9.5,
+             Sequence(
+                 self.posInterval(0.40000000000000002, Point3(0, -250, 0)),
+                 Func(self.stash))))
         return bossTrack
 
     def grabObject(self, obj):
@@ -708,24 +672,13 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             obj.lerpInterval.finish()
 
         obj.lerpInterval = Parallel(
-            obj.posInterval(
-                ToontownGlobals.CashbotBossToMagnetTime,
-                Point3(
-                    -1,
-                    0,
-                    0.20000000000000001)),
-            obj.quatInterval(
-                ToontownGlobals.CashbotBossToMagnetTime,
-                VBase3(
-                    0,
-                    -90,
-                    90)),
+            obj.posInterval(ToontownGlobals.CashbotBossToMagnetTime,
+                            Point3(-1, 0, 0.20000000000000001)),
+            obj.quatInterval(ToontownGlobals.CashbotBossToMagnetTime,
+                             VBase3(0, -90, 90)),
             Sequence(
-                Wait(
-                    ToontownGlobals.CashbotBossToMagnetTime),
-                ShowInterval(
-                    self.eyes)),
-            obj.toMagnetSoundInterval)
+                Wait(ToontownGlobals.CashbotBossToMagnetTime),
+                ShowInterval(self.eyes)), obj.toMagnetSoundInterval)
         obj.lerpInterval.start()
         self.heldObject = obj
 
@@ -762,8 +715,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         for goon in self.goons:
             if goon.state == 'Walk' or goon.state == 'Battle':
                 goon.demand('Stunned')
-                goon.sendUpdate('requestStunned', [
-                    0])
+                goon.sendUpdate('requestStunned', [0])
                 continue
 
     def destroyAllGoons(self):
@@ -825,8 +777,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
     def _DistributedCashbotBoss__talkAboutPromotion(self, speech):
         if self.prevCogSuitLevel < ToontownGlobals.MaxCogSuitLevel:
             newCogSuitLevel = localAvatar.getCogLevels()[
-                CogDisguiseGlobals.dept2deptIndex(
-                    self.style.dept)]
+                CogDisguiseGlobals.dept2deptIndex(self.style.dept)]
             if newCogSuitLevel == ToontownGlobals.MaxCogSuitLevel:
                 speech += TTLocalizer.ResistanceToonLastPromotion % (
                     ToontownGlobals.MaxCogSuitLevel + 1)
@@ -904,9 +855,10 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.movieSafe = self.safes[1]
         self.movieCrane.request('Movie')
         seq = Sequence(
-            self.makePrepareBattleThreeMovie(
-                delayDeletes, self.movieCrane, self.movieSafe), Func(
-                self._DistributedCashbotBoss__beginBattleThree), name=intervalName)
+            self.makePrepareBattleThreeMovie(delayDeletes, self.movieCrane,
+                                             self.movieSafe),
+            Func(self._DistributedCashbotBoss__beginBattleThree),
+            name=intervalName)
         seq.delayDeletes = delayDeletes
         seq.start()
         self.storeInterval(seq, intervalName)
@@ -914,8 +866,10 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.evWalls.stash()
         self.midVault.unstash()
         self._DistributedCashbotBoss__showResistanceToon(False)
-        taskMgr.add(self._DistributedCashbotBoss__doPhysics,
-                    self.uniqueName('physics'), priority=25)
+        taskMgr.add(
+            self._DistributedCashbotBoss__doPhysics,
+            self.uniqueName('physics'),
+            priority=25)
 
     def _DistributedCashbotBoss__beginBattleThree(self):
         intervalName = 'PrepareBattleThreeMovie'
@@ -932,10 +886,8 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             self.movieSafe.request('Initial')
 
         NametagGlobals.setMasterArrowsOn(1)
-        ElevatorUtils.closeDoors(
-            self.leftDoor,
-            self.rightDoor,
-            ElevatorConstants.ELEVATOR_CFO)
+        ElevatorUtils.closeDoors(self.leftDoor, self.rightDoor,
+                                 ElevatorConstants.ELEVATOR_CFO)
         taskMgr.remove(self.uniqueName('physics'))
 
     def enterBattleThree(self):
@@ -956,11 +908,11 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.generateHealthBar()
         self.updateHealthBar()
         base.playMusic(
-            self.battleThreeMusic,
-            looping=1,
-            volume=0.90000000000000002)
-        taskMgr.add(self._DistributedCashbotBoss__doPhysics,
-                    self.uniqueName('physics'), priority=25)
+            self.battleThreeMusic, looping=1, volume=0.90000000000000002)
+        taskMgr.add(
+            self._DistributedCashbotBoss__doPhysics,
+            self.uniqueName('physics'),
+            priority=25)
 
     def exitBattleThree(self):
         DistributedBossCog.DistributedBossCog.exitBattleThree(self)
@@ -999,16 +951,13 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         intervalName = 'VictoryMovie'
         seq = Sequence(
             self.makeBossFleeMovie(),
-            Func(
-                self._DistributedCashbotBoss__continueVictory),
+            Func(self._DistributedCashbotBoss__continueVictory),
             name=intervalName)
         seq.start()
         self.storeInterval(seq, intervalName)
         if self.oldState != 'BattleThree':
             base.playMusic(
-                self.battleThreeMusic,
-                looping=1,
-                volume=0.90000000000000002)
+                self.battleThreeMusic, looping=1, volume=0.90000000000000002)
 
     def _DistributedCashbotBoss__continueVictory(self):
         self.doneBarrier('Victory')
@@ -1033,29 +982,26 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.controlToons()
         panelName = self.uniqueName('reward')
         self.rewardPanel = RewardPanel.RewardPanel(panelName)
-        (victory,
-         camVictory,
-         skipper) = MovieToonVictory.doToonVictory(1,
-                                                   self.involvedToons,
-                                                   self.toonRewardIds,
-                                                   self.toonRewardDicts,
-                                                   self.deathList,
-                                                   self.rewardPanel,
-                                                   allowGroupShot=0,
-                                                   uberList=self.uberList,
-                                                   noSkip=True)
+        (victory, camVictory, skipper) = MovieToonVictory.doToonVictory(
+            1,
+            self.involvedToons,
+            self.toonRewardIds,
+            self.toonRewardDicts,
+            self.deathList,
+            self.rewardPanel,
+            allowGroupShot=0,
+            uberList=self.uberList,
+            noSkip=True)
         ival = Sequence(
-            Parallel(
-                victory, camVictory), Func(
-                self._DistributedCashbotBoss__doneReward))
+            Parallel(victory, camVictory),
+            Func(self._DistributedCashbotBoss__doneReward))
         intervalName = 'RewardMovie'
         delayDeletes = []
         for toonId in self.involvedToons:
             toon = self.cr.doId2do.get(toonId)
             if toon:
                 delayDeletes.append(
-                    DelayDelete.DelayDelete(
-                        toon, 'CashbotBoss.enterReward'))
+                    DelayDelete.DelayDelete(toon, 'CashbotBoss.enterReward'))
                 continue
 
         ival.delayDeletes = delayDeletes
@@ -1063,9 +1009,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.storeInterval(ival, intervalName)
         if self.oldState != 'Victory':
             base.playMusic(
-                self.battleThreeMusic,
-                looping=1,
-                volume=0.90000000000000002)
+                self.battleThreeMusic, looping=1, volume=0.90000000000000002)
 
     def _DistributedCashbotBoss__doneReward(self):
         self.doneBarrier('Reward')
@@ -1118,20 +1062,16 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 trackName = TTLocalizer.BattleGlobalTracks[value]
                 instructions = TTLocalizer.ResistanceToonRestockInstructions % trackName
 
-        speech = TTLocalizer.ResistanceToonCongratulations % (
-            text, instructions)
+        speech = TTLocalizer.ResistanceToonCongratulations % (text,
+                                                              instructions)
         speech = self._DistributedCashbotBoss__talkAboutPromotion(speech)
         self.resistanceToon.setLocalPageChat(speech, 0)
-        self.accept(
-            'nextChatPage',
-            self._DistributedCashbotBoss__epilogueChatNext)
-        self.accept(
-            'doneChatPage',
-            self._DistributedCashbotBoss__epilogueChatDone)
+        self.accept('nextChatPage',
+                    self._DistributedCashbotBoss__epilogueChatNext)
+        self.accept('doneChatPage',
+                    self._DistributedCashbotBoss__epilogueChatDone)
         base.playMusic(
-            self.epilogueMusic,
-            looping=1,
-            volume=0.90000000000000002)
+            self.epilogueMusic, looping=1, volume=0.90000000000000002)
 
     def _DistributedCashbotBoss__epilogueChatNext(self, pageNumber, elapsed):
         if pageNumber == 1:
@@ -1139,33 +1079,37 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             playRate = 0.75
             track = Sequence(
                 ActorInterval(
-                    toon, 'victory', playRate=playRate, startFrame=0, endFrame=9), ActorInterval(
-                    toon, 'victory', playRate=playRate, startFrame=9, endFrame=0), Func(
-                    self.resistanceToon.loop, 'neutral'))
+                    toon,
+                    'victory',
+                    playRate=playRate,
+                    startFrame=0,
+                    endFrame=9),
+                ActorInterval(
+                    toon,
+                    'victory',
+                    playRate=playRate,
+                    startFrame=9,
+                    endFrame=0), Func(self.resistanceToon.loop, 'neutral'))
             intervalName = 'EpilogueMovieToonAnim'
             self.storeInterval(track, intervalName)
             track.start()
         elif pageNumber == 3:
             self.d_applyReward()
-            ResistanceChat.doEffect(
-                self.rewardId,
-                self.resistanceToon,
-                self.involvedToons)
+            ResistanceChat.doEffect(self.rewardId, self.resistanceToon,
+                                    self.involvedToons)
 
     def _DistributedCashbotBoss__epilogueChatDone(self, elapsed):
-        self.resistanceToon.setChatAbsolute(
-            TTLocalizer.CagedToonGoodbye, CFSpeech)
+        self.resistanceToon.setChatAbsolute(TTLocalizer.CagedToonGoodbye,
+                                            CFSpeech)
         self.ignore('nextChatPage')
         self.ignore('doneChatPage')
         intervalName = 'EpilogueMovieToonAnim'
         self.clearInterval(intervalName)
         track = Parallel(
             Sequence(
-                ActorInterval(
-                    self.resistanceToon, 'wave'), Func(
-                    self.resistanceToon.loop, 'neutral')), Sequence(
-                Wait(0.5), Func(
-                    self.localToonToSafeZone)))
+                ActorInterval(self.resistanceToon, 'wave'),
+                Func(self.resistanceToon.loop, 'neutral')),
+            Sequence(Wait(0.5), Func(self.localToonToSafeZone)))
         self.storeInterval(track, intervalName)
         track.start()
 

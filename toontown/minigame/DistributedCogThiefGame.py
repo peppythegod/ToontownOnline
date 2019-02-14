@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import Point3, CollisionSphere, CollisionNode, CollisionHandlerEvent, NodePath, TextNode
 from direct.distributed.ClockDelta import globalClockDelta
 from direct.interval.IntervalGlobal import Wait, LerpFunctionInterval, LerpHprInterval, Sequence, Parallel, Func, SoundInterval, ActorInterval, ProjectileInterval, Track, LerpScaleInterval, WaitInterval, LerpPosHprInterval
@@ -36,12 +34,11 @@ class DistributedCogThiefGame(DistributedMinigame):
 
     def __init__(self, cr):
         DistributedMinigame.__init__(self, cr)
-        self.gameFSM = ClassicFSM.ClassicFSM(
-            'DistributedCogThiefGame', [
-                State.State(
-                    'off', self.enterOff, self.exitOff, ['play']), State.State(
-                    'play', self.enterPlay, self.exitPlay, ['cleanup']), State.State(
-                    'cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedCogThiefGame', [
+            State.State('off', self.enterOff, self.exitOff, ['play']),
+            State.State('play', self.enterPlay, self.exitPlay, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
         self.cameraTopView = (0, 0, 55, 0, -90.0, 0)
         self.barrels = []
@@ -145,42 +142,22 @@ class DistributedCogThiefGame(DistributedMinigame):
         self.rewardPanel = DirectLabel(
             parent=hidden,
             relief=None,
-            pos=(
-                1.1599999999999999,
-                0.0,
-                0.45000000000000001),
+            pos=(1.1599999999999999, 0.0, 0.45000000000000001),
             scale=0.65000000000000002,
             text='',
             text_scale=0.20000000000000001,
-            text_fg=(
-                0.94999999999999996,
-                0.94999999999999996,
-                0,
-                1),
-            text_pos=(
-                0,
-                -0.13),
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_pos=(0, -0.13),
             text_font=ToontownGlobals.getSignFont(),
             image=self.jarImage)
         self.rewardPanelTitle = DirectLabel(
             parent=self.rewardPanel,
             relief=None,
-            pos=(
-                0,
-                0,
-                0.059999999999999998),
+            pos=(0, 0, 0.059999999999999998),
             scale=0.080000000000000002,
             text=TTLocalizer.CannonGameReward,
-            text_fg=(
-                0.94999999999999996,
-                0.94999999999999996,
-                0,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1))
 
     def unload(self):
         self.notify.debug('unload')
@@ -234,10 +211,9 @@ class DistributedCogThiefGame(DistributedMinigame):
             self.toonRNGs.append(RandomNumGen.RandomNumGen(self.randomNumGen))
 
         self.sndTable = {
-            'hitBySuit': [
-                None] * self.numPlayers,
-            'falling': [
-                None] * self.numPlayers}
+            'hitBySuit': [None] * self.numPlayers,
+            'falling': [None] * self.numPlayers
+        }
         for i in xrange(self.numPlayers):
             self.sndTable['hitBySuit'][i] = base.loadSfx(
                 'phase_4/audio/sfx/MG_Tag_C.mp3')
@@ -310,8 +286,7 @@ class DistributedCogThiefGame(DistributedMinigame):
         if not base.config.GetBool('cog-thief-endless', 0):
             self.timer.show()
             self.timer.countdown(
-                CTGG.GameTime,
-                self._DistributedCogThiefGame__gameTimerExpired)
+                CTGG.GameTime, self._DistributedCogThiefGame__gameTimerExpired)
 
         self.clockStopTime = None
         self.rewardPanel.reparentTo(aspect2d)
@@ -383,11 +358,8 @@ class DistributedCogThiefGame(DistributedMinigame):
         camera.reparentTo(render)
         p = self.cameraTopView
         camera.setPosHpr(p[0], p[1], p[2], p[3], p[4], p[5])
-        camera.setZ(
-            camera.getZ() +
-            base.config.GetFloat(
-                'cog-thief-z-camera-adjust',
-                0.0))
+        camera.setZ(camera.getZ() +
+                    base.config.GetFloat('cog-thief-z-camera-adjust', 0.0))
 
     def destroyGameWalk(self):
         self.notify.debug('destroyOrthoWalk')
@@ -402,10 +374,10 @@ class DistributedCogThiefGame(DistributedMinigame):
         if self.useOrthoWalk:
 
             def doCollisions(oldPos, newPos, self=self):
-                x = bound(newPos[0], CTGG.StageHalfWidth, -
-                          (CTGG.StageHalfWidth))
-                y = bound(newPos[1], CTGG.StageHalfHeight, -
-                          (CTGG.StageHalfHeight))
+                x = bound(newPos[0], CTGG.StageHalfWidth,
+                          -(CTGG.StageHalfWidth))
+                y = bound(newPos[1], CTGG.StageHalfHeight,
+                          -(CTGG.StageHalfHeight))
                 newPos.setX(x)
                 newPos.setY(y)
                 return newPos
@@ -430,14 +402,11 @@ class DistributedCogThiefGame(DistributedMinigame):
                 'pos': Point3(CTGG.CogStartingPositions[cogIndex]),
                 'goal': CTGG.NoGoal,
                 'goalId': CTGG.InvalidGoalId,
-                'suit': None}
+                'suit': None
+            }
 
     def loadCogs(self):
-        suitTypes = [
-            'ds',
-            'ac',
-            'bc',
-            'ms']
+        suitTypes = ['ds', 'ac', 'bc', 'ms']
         for suitIndex in xrange(self.getNumCogs()):
             st = self.randomNumGen.choice(suitTypes)
             suit = CogThief.CogThief(suitIndex, st, self, self.getCogSpeed())
@@ -451,8 +420,9 @@ class DistributedCogThiefGame(DistributedMinigame):
         fromName = colEntry.getFromNodePath().getName()
         debugInto = intoName.split('/')
         debugFrom = fromName.split('/')
-        self.notify.debug('handleEnterSphere gametime=%s %s into %s' % (
-            self.getCurrentGameTime(), debugFrom[-1], debugInto[-1]))
+        self.notify.debug(
+            'handleEnterSphere gametime=%s %s into %s' %
+            (self.getCurrentGameTime(), debugFrom[-1], debugInto[-1]))
         intoName = colEntry.getIntoNodePath().getName()
         if 'CogThiefSphere' in intoName:
             parts = intoName.split('-')
@@ -464,13 +434,9 @@ class DistributedCogThiefGame(DistributedMinigame):
         timestamp = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime(), bits=32)
         pos = self.cogInfo[suitNum]['suit'].suit.getPos()
-        self.sendUpdate('hitBySuit', [
-            self.localAvId,
-            timestamp,
-            suitNum,
-            pos[0],
-            pos[1],
-            pos[2]])
+        self.sendUpdate(
+            'hitBySuit',
+            [self.localAvId, timestamp, suitNum, pos[0], pos[1], pos[2]])
         self.showToonHitBySuit(self.localAvId, timestamp)
         self.makeSuitRespondToToonHit(timestamp, suitNum)
 
@@ -478,8 +444,7 @@ class DistributedCogThiefGame(DistributedMinigame):
         if not self.hasLocalToon:
             return None
 
-        if self.gameFSM.getCurrentState().getName() not in [
-                'play']:
+        if self.gameFSM.getCurrentState().getName() not in ['play']:
             self.notify.warning('ignoring msg: av %s hit by suit' % avId)
             return None
 
@@ -512,26 +477,21 @@ class DistributedCogThiefGame(DistributedMinigame):
         dropShadow = toon.dropShadow.copyTo(parentNode)
         dropShadow.setScale(toon.dropShadow.getScale(render))
         trajectory = Trajectory.Trajectory(
-            0, Point3(
-                0, 0, 0), Point3(
-                0, 0, 50), gravMult=1.0)
+            0, Point3(0, 0, 0), Point3(0, 0, 50), gravMult=1.0)
         oldFlyDur = trajectory.calcTimeOfImpactOnPlane(0.0)
         trajectory = Trajectory.Trajectory(
-            0, Point3(
-                0, 0, 0), Point3(
-                0, 0, 50), gravMult=0.55000000000000004)
+            0, Point3(0, 0, 0), Point3(0, 0, 50), gravMult=0.55000000000000004)
         flyDur = trajectory.calcTimeOfImpactOnPlane(0.0)
         avIndex = self.avIdList.index(avId)
         endPos = CTGG.ToonStartingPositions[avIndex]
 
-        def flyFunc(
-                t,
-                trajectory,
-                startPos=startPos,
-                endPos=endPos,
-                dur=flyDur,
-                moveNode=parentNode,
-                flyNode=toon):
+        def flyFunc(t,
+                    trajectory,
+                    startPos=startPos,
+                    endPos=endPos,
+                    dur=flyDur,
+                    moveNode=parentNode,
+                    flyNode=toon):
             u = t / dur
             moveNode.setX(startPos[0] + u * (endPos[0] - startPos[0]))
             moveNode.setY(startPos[1] + u * (endPos[1] - startPos[1]))
@@ -549,21 +509,13 @@ class DistributedCogThiefGame(DistributedMinigame):
         startHpr = geomNode.getHpr()
         destHpr = Point3(startHpr)
         hRot = rng.randrange(1, 8)
-        if rng.choice([
-                0,
-                1]):
+        if rng.choice([0, 1]):
             hRot = -hRot
 
         destHpr.setX(destHpr[0] + hRot * 360)
         spinHTrack = Sequence(
-            LerpHprInterval(
-                geomNode,
-                flyDur,
-                destHpr,
-                startHpr=startHpr),
-            Func(
-                geomNode.setHpr,
-                startHpr),
+            LerpHprInterval(geomNode, flyDur, destHpr, startHpr=startHpr),
+            Func(geomNode.setHpr, startHpr),
             name=toon.uniqueName('hitBySuit-spinH'))
         parent = geomNode.getParent()
         rotNode = parent.attachNewNode('rotNode')
@@ -574,23 +526,21 @@ class DistributedCogThiefGame(DistributedMinigame):
         startHpr = rotNode.getHpr()
         destHpr = Point3(startHpr)
         pRot = rng.randrange(1, 3)
-        if rng.choice([
-                0,
-                1]):
+        if rng.choice([0, 1]):
             pRot = -pRot
 
         destHpr.setY(destHpr[1] + pRot * 360)
         spinPTrack = Sequence(
-            LerpHprInterval(
-                rotNode, flyDur, destHpr, startHpr=startHpr), Func(
-                rotNode.setHpr, startHpr), name=toon.uniqueName('hitBySuit-spinP'))
+            LerpHprInterval(rotNode, flyDur, destHpr, startHpr=startHpr),
+            Func(rotNode.setHpr, startHpr),
+            name=toon.uniqueName('hitBySuit-spinP'))
         i = self.avIdList.index(avId)
-        soundTrack = Sequence(Func(base.playSfx,
-                                   self.sndTable['hitBySuit'][i]),
-                              Wait(flyDur * (2.0 / 3.0)),
-                              SoundInterval(self.sndTable['falling'][i],
-                                            duration=flyDur * (1.0 / 3.0)),
-                              name=toon.uniqueName('hitBySuit-soundTrack'))
+        soundTrack = Sequence(
+            Func(base.playSfx, self.sndTable['hitBySuit'][i]),
+            Wait(flyDur * (2.0 / 3.0)),
+            SoundInterval(
+                self.sndTable['falling'][i], duration=flyDur * (1.0 / 3.0)),
+            name=toon.uniqueName('hitBySuit-soundTrack'))
 
         def preFunc(self=self, avId=avId, toon=toon, dropShadow=dropShadow):
             forwardSpeed = toon.forwardSpeed
@@ -604,12 +554,11 @@ class DistributedCogThiefGame(DistributedMinigame):
 
             toon.dropShadow.hide()
 
-        def postFunc(
-                self=self,
-                avId=avId,
-                oldGeomNodeZ=oldGeomNodeZ,
-                dropShadow=dropShadow,
-                parentNode=parentNode):
+        def postFunc(self=self,
+                     avId=avId,
+                     oldGeomNodeZ=oldGeomNodeZ,
+                     dropShadow=dropShadow,
+                     parentNode=parentNode):
             if avId == self.localAvId:
                 base.localAvatar.setPos(endPos)
                 if hasattr(self, 'gameWalk'):
@@ -643,27 +592,14 @@ class DistributedCogThiefGame(DistributedMinigame):
         preFunc()
         slipBack = Parallel(
             Sequence(
-                ActorInterval(
-                    toon,
-                    'slip-backward',
-                    endFrame=24),
-                Wait(
-                    CTGG.LyingDownDuration -
-                    flyDur -
-                    oldFlyDur),
-                ActorInterval(
-                    toon,
-                    'slip-backward',
-                    startFrame=24)))
+                ActorInterval(toon, 'slip-backward', endFrame=24),
+                Wait(CTGG.LyingDownDuration - flyDur - oldFlyDur),
+                ActorInterval(toon, 'slip-backward', startFrame=24)))
         if toon.doId == self.localAvId:
             slipBack.append(SoundInterval(self.sndOof))
 
         hitTrack = Sequence(
-            Parallel(
-                flyTrack,
-                spinHTrack,
-                spinPTrack,
-                soundTrack),
+            Parallel(flyTrack, spinHTrack, spinPTrack, soundTrack),
             slipBack,
             Func(postFunc),
             name=toon.uniqueName('hitBySuit'))
@@ -671,34 +607,23 @@ class DistributedCogThiefGame(DistributedMinigame):
         self.toonHitTracks[avId] = hitTrack
         hitTrack.start(globalClockDelta.localElapsedTime(timestamp))
 
-    def updateSuitGoal(
-            self,
-            timestamp,
-            inResponseToClientStamp,
-            suitNum,
-            goalType,
-            goalId,
-            x,
-            y,
-            z):
+    def updateSuitGoal(self, timestamp, inResponseToClientStamp, suitNum,
+                       goalType, goalId, x, y, z):
         if not self.hasLocalToon:
             return None
 
         self.notify.debug(
-            'updateSuitGoal gameTime=%s timeStamp=%s cog=%s goal=%s goalId=%s (%.1f, %.1f,%.1f)' %
-            (self.getCurrentGameTime(), timestamp, suitNum, CTGG.GoalStr[goalType], goalId, x, y, z))
+            'updateSuitGoal gameTime=%s timeStamp=%s cog=%s goal=%s goalId=%s (%.1f, %.1f,%.1f)'
+            % (self.getCurrentGameTime(), timestamp, suitNum,
+               CTGG.GoalStr[goalType], goalId, x, y, z))
         cog = self.cogInfo[suitNum]
         cog['goal'] = goalType
         cog['goalId'] = goalId
         newPos = Point3(x, y, z)
         cog['pos'] = newPos
         suit = cog['suit']
-        suit.updateGoal(
-            timestamp,
-            inResponseToClientStamp,
-            goalType,
-            goalId,
-            newPos)
+        suit.updateGoal(timestamp, inResponseToClientStamp, goalType, goalId,
+                        newPos)
 
     def spawnUpdateSuitsTask(self):
         self.notify.debug('spawnUpdateSuitsTask')
@@ -734,8 +659,9 @@ class DistributedCogThiefGame(DistributedMinigame):
         fromName = colEntry.getFromNodePath().getName()
         debugInto = intoName.split('/')
         debugFrom = fromName.split('/')
-        self.notify.debug('handleEnterBarrel gameTime=%s %s into %s' % (
-            self.getCurrentGameTime(), debugFrom[-1], debugInto[-1]))
+        self.notify.debug(
+            'handleEnterBarrel gameTime=%s %s into %s' %
+            (self.getCurrentGameTime(), debugFrom[-1], debugInto[-1]))
         if 'CogThiefSphere' in intoName:
             parts = intoName.split('-')
             cogIndex = int(parts[1])
@@ -754,22 +680,12 @@ class DistributedCogThiefGame(DistributedMinigame):
                         pdb.set_trace()
 
                     self.sendUpdate('cogHitBarrel', [
-                        timestamp,
-                        cogIndex,
-                        barrelIndex,
-                        cogPos[0],
-                        cogPos[1],
-                        cogPos[2]])
+                        timestamp, cogIndex, barrelIndex, cogPos[0], cogPos[1],
+                        cogPos[2]
+                    ])
 
-    def makeCogCarryBarrel(
-            self,
-            timestamp,
-            inResponseToClientStamp,
-            cogIndex,
-            barrelIndex,
-            x,
-            y,
-            z):
+    def makeCogCarryBarrel(self, timestamp, inResponseToClientStamp, cogIndex,
+                           barrelIndex, x, y, z):
         if not self.hasLocalToon:
             return None
 
@@ -777,44 +693,31 @@ class DistributedCogThiefGame(DistributedMinigame):
             return None
 
         self.notify.debug(
-            'makeCogCarryBarrel gameTime=%s timeStamp=%s cog=%s barrel=%s (%.1f, %.1f,%.1f)' %
-            (self.getCurrentGameTime(), timestamp, cogIndex, barrelIndex, x, y, z))
+            'makeCogCarryBarrel gameTime=%s timeStamp=%s cog=%s barrel=%s (%.1f, %.1f,%.1f)'
+            % (self.getCurrentGameTime(), timestamp, cogIndex, barrelIndex, x,
+               y, z))
         barrel = self.barrels[barrelIndex]
         self.notify.debug('barrelPos= %s' % barrel.getPos())
         cog = self.cogInfo[cogIndex]['suit']
         cogPos = Point3(x, y, z)
-        cog.makeCogCarryBarrel(
-            timestamp,
-            inResponseToClientStamp,
-            barrel,
-            barrelIndex,
-            cogPos)
+        cog.makeCogCarryBarrel(timestamp, inResponseToClientStamp, barrel,
+                               barrelIndex, cogPos)
 
-    def makeCogDropBarrel(
-            self,
-            timestamp,
-            inResponseToClientStamp,
-            cogIndex,
-            barrelIndex,
-            x,
-            y,
-            z):
+    def makeCogDropBarrel(self, timestamp, inResponseToClientStamp, cogIndex,
+                          barrelIndex, x, y, z):
         if not self.hasLocalToon:
             return None
 
         self.notify.debug(
-            'makeCogDropBarrel gameTime=%s timeStamp=%s cog=%s barrel=%s (%.1f, %.1f,%.1f)' %
-            (self.getCurrentGameTime(), timestamp, cogIndex, barrelIndex, x, y, z))
+            'makeCogDropBarrel gameTime=%s timeStamp=%s cog=%s barrel=%s (%.1f, %.1f,%.1f)'
+            % (self.getCurrentGameTime(), timestamp, cogIndex, barrelIndex, x,
+               y, z))
         barrel = self.barrels[barrelIndex]
         self.notify.debug('barrelPos= %s' % barrel.getPos())
         cog = self.cogInfo[cogIndex]['suit']
         cogPos = Point3(x, y, z)
-        cog.makeCogDropBarrel(
-            timestamp,
-            inResponseToClientStamp,
-            barrel,
-            barrelIndex,
-            cogPos)
+        cog.makeCogDropBarrel(timestamp, inResponseToClientStamp, barrel,
+                              barrelIndex, cogPos)
 
     def controlKeyPressed(self):
         if self.isToonPlayingHitTrack(self.localAvId):
@@ -823,7 +726,8 @@ class DistributedCogThiefGame(DistributedMinigame):
         if self.gameIsEnding:
             return None
 
-        if self.getCurrentGameTime() - self.lastTimeControlPressed > self.ControlKeyLimitTime:
+        if self.getCurrentGameTime(
+        ) - self.lastTimeControlPressed > self.ControlKeyLimitTime:
             self.lastTimeControlPressed = self.getCurrentGameTime()
             self.notify.debug('controlKeyPressed')
             toonSD = self.toonSDs[self.localAvId]
@@ -833,21 +737,16 @@ class DistributedCogThiefGame(DistributedMinigame):
                 globalClock.getFrameTime(), bits=32)
             pos = toon.getPos()
             heading = toon.getH()
-            self.sendUpdate('throwingPie', [
-                self.localAvId,
-                timestamp,
-                heading,
-                pos[0],
-                pos[1],
-                pos[2]])
+            self.sendUpdate(
+                'throwingPie',
+                [self.localAvId, timestamp, heading, pos[0], pos[1], pos[2]])
             self.showToonThrowingPie(self.localAvId, timestamp, heading, pos)
 
     def throwingPie(self, avId, timestamp, heading, x, y, z):
         if not self.hasLocalToon:
             return None
 
-        if self.gameFSM.getCurrentState().getName() not in [
-                'play']:
+        if self.gameFSM.getCurrentState().getName() not in ['play']:
             self.notify.warning('ignoring msg: av %s hit by suit' % avId)
             return None
 
@@ -894,17 +793,16 @@ class DistributedCogThiefGame(DistributedMinigame):
             pieTrack.start(elapsedTime)
             self.toonPieTracks[avId] = pieTrack
 
-    def getTossPieInterval(
-            self,
-            toon,
-            x,
-            y,
-            z,
-            h,
-            p,
-            r,
-            power,
-            beginFlyIval=Sequence()):
+    def getTossPieInterval(self,
+                           toon,
+                           x,
+                           y,
+                           z,
+                           h,
+                           p,
+                           r,
+                           power,
+                           beginFlyIval=Sequence()):
         ToontownBattleGlobals = ToontownBattleGlobals
         import toontown.toonbase
         BattleProps = BattleProps
@@ -923,50 +821,36 @@ class DistributedCogThiefGame(DistributedMinigame):
         dist = 100 - 70 * t
         time = 1 + 0.5 * t
         proj = ProjectileInterval(
-            None, startPos=Point3(
-                0, 0, 0), endPos=Point3(
-                0, dist, 0), duration=time)
+            None,
+            startPos=Point3(0, 0, 0),
+            endPos=Point3(0, dist, 0),
+            duration=time)
         relVel = proj.startVel
 
         def getVelocity(toon=toon, relVel=relVel):
             return render.getRelativeVector(toon, relVel) * 0.59999999999999998
 
         toss = Track(
-            (0, Sequence(
-                Func(
-                    toon.setPosHpr, x, y, z, h, p, r), Func(
-                    pie.reparentTo, toon.rightHand), Func(
-                    pie.setPosHpr, 0, 0, 0, 0, 0, 0), Parallel(
-                        ActorInterval(
-                            toon, 'throw', startFrame=48, partName='torso'), animPie), Func(
-                                toon.loop, 'neutral'))), (16.0 / 24.0, Func(
-                                    pie.detachNode)))
+            (0,
+             Sequence(
+                 Func(toon.setPosHpr, x, y, z, h, p, r),
+                 Func(pie.reparentTo, toon.rightHand),
+                 Func(pie.setPosHpr, 0, 0, 0, 0, 0, 0),
+                 Parallel(
+                     ActorInterval(
+                         toon, 'throw', startFrame=48, partName='torso'),
+                     animPie), Func(toon.loop, 'neutral'))),
+            (16.0 / 24.0, Func(pie.detachNode)))
         fly = Track(
-            (14.0 / 24.0,
-             SoundInterval(
-                 sound,
-                 node=toon)),
+            (14.0 / 24.0, SoundInterval(sound, node=toon)),
             (16.0 / 24.0,
              Sequence(
-                 Func(
-                     flyPie.reparentTo,
-                     render),
-                 Func(
-                     flyPie.setPosHpr,
-                     toon,
-                     0.52000000000000002,
-                     0.96999999999999997,
-                     2.2400000000000002,
-                     0,
-                     -45,
-                     0),
+                 Func(flyPie.reparentTo, render),
+                 Func(flyPie.setPosHpr, toon, 0.52000000000000002,
+                      0.96999999999999997, 2.2400000000000002, 0, -45, 0),
                  beginFlyIval,
-                 ProjectileInterval(
-                     flyPie,
-                     startVel=getVelocity,
-                     duration=6),
-                 Func(
-                     flyPie.detachNode))))
+                 ProjectileInterval(flyPie, startVel=getVelocity, duration=6),
+                 Func(flyPie.detachNode))))
         return (toss, fly, flyPie)
 
     def handlePieHitting(self, colEntry):
@@ -983,24 +867,18 @@ class DistributedCogThiefGame(DistributedMinigame):
             pos = self.cogInfo[suitNum]['suit'].suit.getPos()
             if pos in CTGG.CogStartingPositions:
                 self.notify.debug(
-                    'Cog %d hit at starting pos %s, ignoring' %
-                    (suitNum, pos))
+                    'Cog %d hit at starting pos %s, ignoring' % (suitNum, pos))
             else:
                 self.sendUpdate('pieHitSuit', [
-                    self.localAvId,
-                    timestamp,
-                    suitNum,
-                    pos[0],
-                    pos[1],
-                    pos[2]])
+                    self.localAvId, timestamp, suitNum, pos[0], pos[1], pos[2]
+                ])
                 self.makeSuitRespondToPieHit(timestamp, suitNum)
 
     def pieHitSuit(self, avId, timestamp, suitNum, x, y, z):
         if not self.hasLocalToon:
             return None
 
-        if self.gameFSM.getCurrentState().getName() not in [
-                'play']:
+        if self.gameFSM.getCurrentState().getName() not in ['play']:
             self.notify.warning('ignoring msg: av %s hit by suit' % avId)
             return None
 
@@ -1018,16 +896,10 @@ class DistributedCogThiefGame(DistributedMinigame):
     def sendCogAtReturnPos(self, cogIndex, barrelIndex):
         timestamp = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime(), bits=32)
-        self.sendUpdate('cogAtReturnPos', [
-            timestamp,
-            cogIndex,
-            barrelIndex])
+        self.sendUpdate('cogAtReturnPos', [timestamp, cogIndex, barrelIndex])
 
-    def markBarrelStolen(
-            self,
-            timestamp,
-            inResponseToClientStamp,
-            barrelIndex):
+    def markBarrelStolen(self, timestamp, inResponseToClientStamp,
+                         barrelIndex):
         if not self.hasLocalToon:
             return None
 
@@ -1044,8 +916,8 @@ class DistributedCogThiefGame(DistributedMinigame):
                     gameTime = self.local2GameTime(localStamp)
                     self.clockStopTime = gameTime
                     self.notify.debug('clockStopTime = %s' % gameTime)
-                    score = int(
-                        self.scoreMult * CTGG.calcScore(gameTime) + 0.5)
+                    score = int(self.scoreMult * CTGG.calcScore(gameTime) +
+                                0.5)
                     self.rewardPanel['text'] = str(score)
                     self.showResults()
 
@@ -1055,9 +927,8 @@ class DistributedCogThiefGame(DistributedMinigame):
 
     def _DistributedCogThiefGame__startRewardCountdown(self):
         taskMgr.remove(self.REWARD_COUNTDOWN_TASK)
-        taskMgr.add(
-            self._DistributedCogThiefGame__updateRewardCountdown,
-            self.REWARD_COUNTDOWN_TASK)
+        taskMgr.add(self._DistributedCogThiefGame__updateRewardCountdown,
+                    self.REWARD_COUNTDOWN_TASK)
 
     def _DistributedCogThiefGame__killRewardCountdown(self):
         taskMgr.remove(self.REWARD_COUNTDOWN_TASK)
@@ -1066,9 +937,8 @@ class DistributedCogThiefGame(DistributedMinigame):
         curTime = self.getCurrentGameTime()
         if self.clockStopTime is not None:
             if self.clockStopTime < curTime:
-                self.notify.debug(
-                    'self.clockStopTime < curTime %s %s' %
-                    (self.clockStopTime, curTime))
+                self.notify.debug('self.clockStopTime < curTime %s %s' %
+                                  (self.clockStopTime, curTime))
                 self._DistributedCogThiefGame__killRewardCountdown()
                 curTime = self.clockStopTime
 
@@ -1094,11 +964,8 @@ class DistributedCogThiefGame(DistributedMinigame):
                             s * 3.0 / 4.0,
                             blendType='easeOut'),
                         self.rewardPanel.scaleInterval(
-                            0.14999999999999999,
-                            s,
-                            blendType='easeIn')),
-                    SoundInterval(
-                        self.sndRewardTick),
+                            0.14999999999999999, s, blendType='easeIn')),
+                    SoundInterval(self.sndRewardTick),
                     name='cogThiefGameRewardJarThrob')
                 self.jarIval.start()
 
@@ -1164,10 +1031,12 @@ class DistributedCogThiefGame(DistributedMinigame):
                 resultStr = TTLocalizer.CogThiefPerfect
             elif numBarrelsSaved > 1:
                 resultStr = TTLocalizer.CogThiefBarrelsSaved % {
-                    'num': numBarrelsSaved}
+                    'num': numBarrelsSaved
+                }
             elif numBarrelsSaved == 1:
                 resultStr = TTLocalizer.CogThiefBarrelSaved % {
-                    'num': numBarrelsSaved}
+                    'num': numBarrelsSaved
+                }
             else:
                 resultStr = TTLocalizer.CogThiefNoBarrelsSaved
             perfectTextSubnode = hidden.attachNewNode(
@@ -1177,8 +1046,8 @@ class DistributedCogThiefGame(DistributedMinigame):
             frame = self._DistributedCogThiefGame__textGen.getCardActual()
             offsetY = -abs(frame[2] + frame[3]) / 2.0
             perfectTextSubnode.setPos(0, 0, offsetY)
-            perfectText.setColor(
-                1, 0.10000000000000001, 0.10000000000000001, 1)
+            perfectText.setColor(1, 0.10000000000000001, 0.10000000000000001,
+                                 1)
 
             def fadeFunc(t, text=perfectText):
                 text.setColorScale(1, 1, 1, t)
@@ -1191,9 +1060,7 @@ class DistributedCogThiefGame(DistributedMinigame):
                     self.gameOver()
 
             textTrack = Sequence(
-                Func(
-                    perfectText.reparentTo,
-                    aspect2d),
+                Func(perfectText.reparentTo, aspect2d),
                 Parallel(
                     LerpScaleInterval(
                         perfectText,
@@ -1201,25 +1068,17 @@ class DistributedCogThiefGame(DistributedMinigame):
                         scale=0.29999999999999999,
                         startScale=0.0),
                     LerpFunctionInterval(
-                        fadeFunc,
-                        fromData=0.0,
-                        toData=1.0,
-                        duration=0.5)),
+                        fadeFunc, fromData=0.0, toData=1.0, duration=0.5)),
                 Wait(2.0),
                 Parallel(
-                    LerpScaleInterval(
-                        perfectText,
-                        duration=0.5,
-                        scale=1.0),
+                    LerpScaleInterval(perfectText, duration=0.5, scale=1.0),
                     LerpFunctionInterval(
                         fadeFunc,
                         fromData=1.0,
                         toData=0.0,
                         duration=0.5,
-                        blendType='easeIn')),
-                Func(destroyText),
-                WaitInterval(0.5),
-                Func(safeGameOver))
+                        blendType='easeIn')), Func(destroyText),
+                WaitInterval(0.5), Func(safeGameOver))
             if numBarrelsSaved == len(self.barrels):
                 soundTrack = SoundInterval(self.sndPerfect)
             else:
@@ -1238,13 +1097,9 @@ class DistributedCogThiefGame(DistributedMinigame):
             LerpPosHprInterval(
                 base.camera,
                 13,
-                Point3(
-                    self.cameraTopView[0],
-                    self.cameraTopView[1],
-                    self.cameraTopView[2]),
-                Point3(
-                    self.cameraTopView[3],
-                    self.cameraTopView[4],
-                    self.cameraTopView[5]),
+                Point3(self.cameraTopView[0], self.cameraTopView[1],
+                       self.cameraTopView[2]),
+                Point3(self.cameraTopView[3], self.cameraTopView[4],
+                       self.cameraTopView[5]),
                 blendType='easeIn'))
         return result

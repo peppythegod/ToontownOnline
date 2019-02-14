@@ -4,7 +4,6 @@ import string
 
 
 class PetBase:
-
     def getSetterName(self, valueName, prefix='set'):
         return '%s%s%s' % (prefix, string.upper(valueName[0]), valueName[1:])
 

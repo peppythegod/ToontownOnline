@@ -32,8 +32,8 @@ class DistributedPolarPlaceEffectMgr(DistributedObject.DistributedObject):
         av = base.localAvatar
         self.sendUpdate('addPolarPlaceEffect', [])
         msgTrack = Sequence(
-            Func(
-                av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect1), Wait(2), Func(
-                av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect2), Wait(4), Func(
-                av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect3))
+            Func(av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect1),
+            Wait(2), Func(av.setSystemMessage, 0,
+                          TTLocalizer.PolarPlaceEffect2), Wait(4),
+            Func(av.setSystemMessage, 0, TTLocalizer.PolarPlaceEffect3))
         msgTrack.start()

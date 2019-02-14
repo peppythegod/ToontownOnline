@@ -11,13 +11,12 @@ from toontown.minigame import MinigameGlobals
 class CogdoGameRulesPanel(StateData.StateData):
     hiddenNode = NodePath('hiddenNode')
 
-    def __init__(
-            self,
-            panelName,
-            gameTitle,
-            instructions,
-            doneEvent,
-            timeout=MinigameGlobals.rulesDuration):
+    def __init__(self,
+                 panelName,
+                 gameTitle,
+                 instructions,
+                 doneEvent,
+                 timeout=MinigameGlobals.rulesDuration):
         StateData.StateData.__init__(self, doneEvent)
         self.gameTitle = gameTitle
         self.instructions = instructions
@@ -35,19 +34,16 @@ class CogdoGameRulesPanel(StateData.StateData):
         self.bg.reparentTo(aspect2d)
         self.chatBubble.reparentTo(aspect2d)
         self.frame = DirectFrame(
-            geom=self.bg, relief=None, pos=(
-                0.20000000000000001, 0, -0.66669999999999996))
+            geom=self.bg,
+            relief=None,
+            pos=(0.20000000000000001, 0, -0.66669999999999996))
         self.gameTitleText = DirectLabel(
             parent=self.frame,
             text=self.gameTitle,
             scale=TTLocalizer.CRPgameTitleText,
             text_align=TextNode.ACenter,
             text_font=getSignFont(),
-            text_fg=(
-                1.0,
-                0.33000000000000002,
-                0.33000000000000002,
-                1.0),
+            text_fg=(1.0, 0.33000000000000002, 0.33000000000000002, 1.0),
             pos=TTLocalizer.CRPgameTitleTextPos,
             relief=None)
         self.instructionsText = DirectLabel(
@@ -61,18 +57,11 @@ class CogdoGameRulesPanel(StateData.StateData):
         self.playButton = DirectButton(
             parent=self.frame,
             relief=None,
-            geom=(
-                minigameGui.find('**/buttonUp'),
-                minigameGui.find('**/buttonDown'),
-                minigameGui.find('**/buttonHover')),
-            pos=(
-                0.73999999999999999,
-                0,
-                0.10000000000000001),
-            scale=(
-                4.2000000000000002,
-                5,
-                5),
+            geom=(minigameGui.find('**/buttonUp'),
+                  minigameGui.find('**/buttonDown'),
+                  minigameGui.find('**/buttonHover')),
+            pos=(0.73999999999999999, 0, 0.10000000000000001),
+            scale=(4.2000000000000002, 5, 5),
             command=self.playCallback)
         minigameGui.removeNode()
         self.timer = ToontownTimer.ToontownTimer()

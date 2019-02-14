@@ -10,14 +10,13 @@ class RegenTreasurePlannerAI(TreasurePlannerAI.TreasurePlannerAI):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'RegenTreasurePlannerAI')
 
-    def __init__(
-            self,
-            zoneId,
-            treasureConstructor,
-            taskName,
-            spawnInterval,
-            maxTreasures,
-            callback=None):
+    def __init__(self,
+                 zoneId,
+                 treasureConstructor,
+                 taskName,
+                 spawnInterval,
+                 maxTreasures,
+                 callback=None):
         TreasurePlannerAI.TreasurePlannerAI.__init__(
             self, zoneId, treasureConstructor, callback)
         self.taskName = '%s-%s' % (taskName, zoneId)
@@ -36,19 +35,15 @@ class RegenTreasurePlannerAI(TreasurePlannerAI.TreasurePlannerAI):
 
     def startSpawning(self):
         self.stopSpawning()
-        taskMgr.doMethodLater(
-            self.spawnInterval,
-            self.upkeepTreasurePopulation,
-            self.taskName)
+        taskMgr.doMethodLater(self.spawnInterval,
+                              self.upkeepTreasurePopulation, self.taskName)
 
     def upkeepTreasurePopulation(self, task):
         if self.numTreasures() < self.maxTreasures:
             self.placeRandomTreasure()
 
-        taskMgr.doMethodLater(
-            self.spawnInterval,
-            self.upkeepTreasurePopulation,
-            self.taskName)
+        taskMgr.doMethodLater(self.spawnInterval,
+                              self.upkeepTreasurePopulation, self.taskName)
         return Task.done
 
     def placeRandomTreasure(self):

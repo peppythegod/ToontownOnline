@@ -33,15 +33,13 @@ class DistributedPartyManager(DistributedObject):
     def generate(self):
         self.notify.debug('BASE: generate')
         DistributedObject.generate(self)
-        self.accept(
-            'deallocateZoneIdFromPlannedParty',
-            self.deallocateZoneIdFromPlannedParty)
+        self.accept('deallocateZoneIdFromPlannedParty',
+                    self.deallocateZoneIdFromPlannedParty)
         self.announceGenerateName = self.uniqueName('generate')
 
     def deallocateZoneIdFromPlannedParty(self, zoneId):
-        self.sendUpdate('freeZoneIdFromPlannedParty', [
-            base.localAvatar.doId,
-            zoneId])
+        self.sendUpdate('freeZoneIdFromPlannedParty',
+                        [base.localAvatar.doId, zoneId])
 
     def allowUnreleasedClient(self):
         return self.allowUnreleased
@@ -53,36 +51,22 @@ class DistributedPartyManager(DistributedObject):
         self.allowUnreleased = not (self.allowUnreleased)
         return self.allowUnreleased
 
-    def sendAddParty(
-            self,
-            hostId,
-            startTime,
-            endTime,
-            isPrivate,
-            inviteTheme,
-            activities,
-            decorations,
-            inviteeIds):
+    def sendAddParty(self, hostId, startTime, endTime, isPrivate, inviteTheme,
+                     activities, decorations, inviteeIds):
         self.sendUpdate('addPartyRequest', [
-            hostId,
-            startTime,
-            endTime,
-            isPrivate,
-            inviteTheme,
-            activities,
-            decorations,
-            inviteeIds])
+            hostId, startTime, endTime, isPrivate, inviteTheme, activities,
+            decorations, inviteeIds
+        ])
 
     def addPartyResponse(self, hostId, errorCode):
-        messenger.send('addPartyResponseReceived', [
-            hostId,
-            errorCode])
+        messenger.send('addPartyResponseReceived', [hostId, errorCode])
         if hasattr(base.localAvatar, 'creatingNewPartyWithMagicWord'):
             if base.localAvatar.creatingNewPartyWithMagicWord:
                 base.localAvatar.creatingNewPartyWithMagicWord = False
                 if errorCode == PartyGlobals.AddPartyErrorCode.AllOk:
                     base.localAvatar.setChatAbsolute(
-                        'New party entered into database successfully.', CFSpeech | CFTimeout)
+                        'New party entered into database successfully.',
+                        CFSpeech | CFTimeout)
                 else:
                     base.localAvatar.setChatAbsolute(
                         'New party creation failed : %s' %
@@ -96,16 +80,10 @@ class DistributedPartyManager(DistributedObject):
         self.acceptOnce('requestPartyZoneComplete', callback)
         if hasattr(base.localAvatar, 'aboutToPlanParty'):
             if base.localAvatar.aboutToPlanParty:
-                self.sendUpdate('getPartyZone', [
-                    avId,
-                    zoneId,
-                    True])
+                self.sendUpdate('getPartyZone', [avId, zoneId, True])
                 return None
 
-        self.sendUpdate('getPartyZone', [
-            avId,
-            zoneId,
-            False])
+        self.sendUpdate('getPartyZone', [avId, zoneId, False])
 
     def receivePartyZone(self, hostId, partyId, zoneId):
         if partyId != 0 and zoneId != 0:
@@ -115,15 +93,10 @@ class DistributedPartyManager(DistributedObject):
                         partyInfo.status == PartyGlobals.PartyStatus.Started
                         continue
 
-        messenger.send('requestPartyZoneComplete', [
-            hostId,
-            partyId,
-            zoneId])
+        messenger.send('requestPartyZoneComplete', [hostId, partyId, zoneId])
 
     def sendChangePrivateRequest(self, partyId, newPrivateStatus):
-        self.sendUpdate('changePrivateRequest', [
-            partyId,
-            newPrivateStatus])
+        self.sendUpdate('changePrivateRequest', [partyId, newPrivateStatus])
 
     def changePrivateResponse(self, partyId, newPrivateStatus, errorCode):
         if errorCode == PartyGlobals.ChangePartyFieldErrorCode.AllOk:
@@ -133,41 +106,28 @@ class DistributedPartyManager(DistributedObject):
                     partyInfo.isPrivate = newPrivateStatus
                     continue
 
-            messenger.send('changePartyPrivateResponseReceived', [
-                partyId,
-                newPrivateStatus,
-                errorCode])
+            messenger.send('changePartyPrivateResponseReceived',
+                           [partyId, newPrivateStatus, errorCode])
         else:
-            messenger.send('changePartyPrivateResponseReceived', [
-                partyId,
-                newPrivateStatus,
-                errorCode])
+            messenger.send('changePartyPrivateResponseReceived',
+                           [partyId, newPrivateStatus, errorCode])
             self.notify.info('FAILED changing private field for the party')
 
     def sendChangePartyStatusRequest(self, partyId, newPartyStatus):
-        self.sendUpdate('changePartyStatusRequest', [
-            partyId,
-            newPartyStatus])
+        self.sendUpdate('changePartyStatusRequest', [partyId, newPartyStatus])
 
-    def changePartyStatusResponse(
-            self,
-            partyId,
-            newPartyStatus,
-            errorCode,
-            beansRefunded):
+    def changePartyStatusResponse(self, partyId, newPartyStatus, errorCode,
+                                  beansRefunded):
         self.notify.debug(
-            'changePartyStatusResponse : partyId=%s newPartyStatus=%s errorCode=%s' %
-            (partyId, newPartyStatus, errorCode))
+            'changePartyStatusResponse : partyId=%s newPartyStatus=%s errorCode=%s'
+            % (partyId, newPartyStatus, errorCode))
         for partyInfo in localAvatar.hostedParties:
             if partyInfo.partyId == partyId:
                 partyInfo.status = newPartyStatus
                 continue
 
-        messenger.send(self.PartyStatusChangedEvent, [
-            partyId,
-            newPartyStatus,
-            errorCode,
-            beansRefunded])
+        messenger.send(self.PartyStatusChangedEvent,
+                       [partyId, newPartyStatus, errorCode, beansRefunded])
 
     def setNeverStartedPartyRefunded(self, partyId, newStatus, refund):
         partyInfo = None
@@ -179,15 +139,11 @@ class DistributedPartyManager(DistributedObject):
 
         if partyInfo:
             partyInfo.status = newStatus
-            messenger.send(self.PartyStatusChangedEvent, [
-                partyId,
-                newStatus,
-                0,
-                refund])
+            messenger.send(self.PartyStatusChangedEvent,
+                           [partyId, newStatus, 0, refund])
 
     def sendAvToPlayground(self, avId, retCode):
-        messenger.send(PartyGlobals.KICK_TO_PLAYGROUND_EVENT, [
-            retCode])
+        messenger.send(PartyGlobals.KICK_TO_PLAYGROUND_EVENT, [retCode])
         self.notify.debug('sendAvToPlayground: %d' % avId)
 
     def leaveParty(self):
@@ -196,16 +152,12 @@ class DistributedPartyManager(DistributedObject):
                 'DistributedPartyManager disabled; unable to leave party.')
             return None
 
-        self.sendUpdate('exitParty', [
-            localAvatar.zoneId])
+        self.sendUpdate('exitParty', [localAvatar.zoneId])
 
     def removeGuest(self, ownerId, avId):
         self.notify.debug(
-            'removeGuest ownerId = %s, avId = %s' %
-            (ownerId, avId))
-        self.sendUpdate('removeGuest', [
-            ownerId,
-            avId])
+            'removeGuest ownerId = %s, avId = %s' % (ownerId, avId))
+        self.sendUpdate('removeGuest', [ownerId, avId])
 
     def isToonAllowedAtParty(self, avId, partyId):
         return PartyGlobals.GoToPartyStatus.AllowedToGo
@@ -216,13 +168,12 @@ class DistributedPartyManager(DistributedObject):
     def sendAvatarToParty(self, hostId):
         DistributedPartyManager.notify.debug(
             'sendAvatarToParty hostId = %s' % hostId)
-        self.sendUpdate('requestShardIdZoneIdForHostId', [
-            hostId])
+        self.sendUpdate('requestShardIdZoneIdForHostId', [hostId])
 
     def sendShardIdZoneIdToAvatar(self, shardId, zoneId):
         DistributedPartyManager.notify.debug(
-            'sendShardIdZoneIdToAvatar shardId = %s  zoneId = %s' %
-            (shardId, zoneId))
+            'sendShardIdZoneIdToAvatar shardId = %s  zoneId = %s' % (shardId,
+                                                                     zoneId))
         if shardId == 0 or zoneId == 0:
             base.cr.playGame.getPlace().handleBookClose()
             return None
@@ -238,7 +189,8 @@ class DistributedPartyManager(DistributedObject):
             'hoodId': hoodId,
             'zoneId': zoneId,
             'shardId': shardId,
-            'avId': -1})
+            'avId': -1
+        })
 
     def setPartyPlannerStyle(self, dna):
         self.partyPlannerStyle = dna

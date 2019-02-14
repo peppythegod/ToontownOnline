@@ -21,12 +21,12 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
         self.moveSnd = base.loadSfx(
             'phase_9/audio/sfx/CHQ_FACT_elevator_up_down.mp3')
         self.fsm = ClassicFSM.ClassicFSM('DistributedLift', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'moving']),
-            State.State('moving', self.enterMoving, self.exitMoving, [
-                'waiting']),
-            State.State('waiting', self.enterWaiting, self.exitWaiting, [
-                'moving'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['moving']),
+            State.State('moving', self.enterMoving, self.exitMoving,
+                        ['waiting']),
+            State.State('waiting', self.enterWaiting, self.exitWaiting,
+                        ['moving'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
@@ -41,10 +41,7 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             self.initialFromState = fromState
             self.initialStateTimestamp = arrivalTimestamp
         else:
-            self.fsm.request('moving', [
-                toState,
-                fromState,
-                arrivalTimestamp])
+            self.fsm.request('moving', [toState, fromState, arrivalTimestamp])
 
     def announceGenerate(self):
         self.notify.debug('announceGenerate')
@@ -52,9 +49,9 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
         self.initPlatform()
         self.state = None
         self.fsm.request('moving', [
-            self.initialState,
-            self.initialFromState,
-            self.initialStateTimestamp])
+            self.initialState, self.initialFromState,
+            self.initialStateTimestamp
+        ])
         del self.initialState
         del self.initialStateTimestamp
 
@@ -83,8 +80,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             return None
 
         self.platformModel = MovingPlatform.MovingPlatform()
-        self.platformModel.setupCopyModel(
-            self.getParentToken(), model, self.floorName)
+        self.platformModel.setupCopyModel(self.getParentToken(), model,
+                                          self.floorName)
         self.accept(self.platformModel.getEnterEvent(), self.localToonEntered)
         self.accept(self.platformModel.getExitEvent(), self.localToonLeft)
         self.startGuard = None
@@ -100,7 +97,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             'front': '**/wall_front',
             'back': '**/wall_back',
             'left': '**/wall_left',
-            'right': '**/wall_right'}
+            'right': '**/wall_right'
+        }
         for side in side2srch.values():
             np = self.platformModel.find(side)
             if not np.isEmpty():
@@ -196,11 +194,10 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
             self.soundIval = SoundInterval(self.moveSnd, node=self.platform)
             self.soundIval.loop()
 
-        def doneMoving(
-                self=self,
-                guard=endGuard,
-                boardColl=endBoardColl,
-                newState=toState):
+        def doneMoving(self=self,
+                       guard=endGuard,
+                       boardColl=endBoardColl,
+                       newState=toState):
             self.state = newState
             if hasattr(self, 'soundIval'):
                 self.soundIval.pause()
@@ -220,10 +217,8 @@ class DistributedLift(BasicEntities.DistributedNodePathEntity):
                 endPos,
                 startPos=startPos,
                 blendType='easeInOut',
-                name='lift-%s-move' %
-                self.entId,
-                fluid=1),
-            Func(doneMoving))
+                name='lift-%s-move' % self.entId,
+                fluid=1), Func(doneMoving))
         ivalStartT = globalClockDelta.networkToLocalTime(
             arrivalTimestamp, bits=32) - self.moveIval.getDuration()
         self.moveIval.start(globalClock.getFrameTime() - ivalStartT)

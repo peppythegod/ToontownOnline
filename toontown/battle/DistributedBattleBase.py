@@ -37,8 +37,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         DistributedNode.DistributedNode.__init__(self, cr)
         NodePath.__init__(self)
         self.assign(
-            render.attachNewNode(
-                self.uniqueBattleName('distributed-battle')))
+            render.attachNewNode(self.uniqueBattleName('distributed-battle')))
         BattleBase.__init__(self)
         self.bossBattle = 0
         self.townBattle = townBattle
@@ -61,51 +60,44 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         self.streetBattle = 1
         self.levelBattle = 0
         self.localToonFsm = ClassicFSM.ClassicFSM('LocalToon', [
-            State.State('HasLocalToon', self.enterHasLocalToon, self.exitHasLocalToon, [
-                'NoLocalToon',
-                'WaitForServer']),
-            State.State('NoLocalToon', self.enterNoLocalToon, self.exitNoLocalToon, [
-                'HasLocalToon',
-                'WaitForServer']),
-            State.State('WaitForServer', self.enterWaitForServer, self.exitWaitForServer, [
-                'HasLocalToon',
-                'NoLocalToon'])], 'WaitForServer', 'WaitForServer')
+            State.State('HasLocalToon', self.enterHasLocalToon,
+                        self.exitHasLocalToon,
+                        ['NoLocalToon', 'WaitForServer']),
+            State.State('NoLocalToon', self.enterNoLocalToon,
+                        self.exitNoLocalToon,
+                        ['HasLocalToon', 'WaitForServer']),
+            State.State('WaitForServer', self.enterWaitForServer,
+                        self.exitWaitForServer,
+                        ['HasLocalToon', 'NoLocalToon'])
+        ], 'WaitForServer', 'WaitForServer')
         self.localToonFsm.enterInitialState()
         self.fsm = ClassicFSM.ClassicFSM('DistributedBattle', [
             State.State('Off', self.enterOff, self.exitOff, [
-                'FaceOff',
-                'WaitForInput',
-                'WaitForJoin',
-                'MakeMovie',
-                'PlayMovie',
-                'Reward',
-                'Resume']),
-            State.State('FaceOff', self.enterFaceOff, self.exitFaceOff, [
-                'WaitForInput']),
-            State.State('WaitForJoin', self.enterWaitForJoin, self.exitWaitForJoin, [
-                'WaitForInput',
-                'Resume']),
-            State.State('WaitForInput', self.enterWaitForInput, self.exitWaitForInput, [
-                'WaitForInput',
-                'PlayMovie',
-                'Resume']),
-            State.State('MakeMovie', self.enterMakeMovie, self.exitMakeMovie, [
-                'PlayMovie',
-                'Resume']),
-            State.State('PlayMovie', self.enterPlayMovie, self.exitPlayMovie, [
-                'WaitForInput',
-                'WaitForJoin',
-                'Reward',
-                'Resume']),
-            State.State('Reward', self.enterReward, self.exitReward, [
-                'Resume']),
-            State.State('Resume', self.enterResume, self.exitResume, [])], 'Off', 'Off')
+                'FaceOff', 'WaitForInput', 'WaitForJoin', 'MakeMovie',
+                'PlayMovie', 'Reward', 'Resume'
+            ]),
+            State.State('FaceOff', self.enterFaceOff, self.exitFaceOff,
+                        ['WaitForInput']),
+            State.State('WaitForJoin', self.enterWaitForJoin,
+                        self.exitWaitForJoin, ['WaitForInput', 'Resume']),
+            State.State('WaitForInput', self.enterWaitForInput,
+                        self.exitWaitForInput,
+                        ['WaitForInput', 'PlayMovie', 'Resume']),
+            State.State('MakeMovie', self.enterMakeMovie, self.exitMakeMovie,
+                        ['PlayMovie', 'Resume']),
+            State.State('PlayMovie', self.enterPlayMovie, self.exitPlayMovie,
+                        ['WaitForInput', 'WaitForJoin', 'Reward', 'Resume']),
+            State.State('Reward', self.enterReward, self.exitReward,
+                        ['Resume']),
+            State.State('Resume', self.enterResume, self.exitResume, [])
+        ], 'Off', 'Off')
         self.fsm.enterInitialState()
         self.adjustFsm = ClassicFSM.ClassicFSM('Adjust', [
-            State.State('Adjusting', self.enterAdjusting, self.exitAdjusting, [
-                'NotAdjusting']),
-            State.State('NotAdjusting', self.enterNotAdjusting, self.exitNotAdjusting, [
-                'Adjusting'])], 'NotAdjusting', 'NotAdjusting')
+            State.State('Adjusting', self.enterAdjusting, self.exitAdjusting,
+                        ['NotAdjusting']),
+            State.State('NotAdjusting', self.enterNotAdjusting,
+                        self.exitNotAdjusting, ['Adjusting'])
+        ], 'NotAdjusting', 'NotAdjusting')
         self.adjustFsm.enterInitialState()
         self.interactiveProp = None
 
@@ -180,8 +172,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         for suit in self.suits:
             if suit.battleTrap != NO_TRAP:
                 self.notify.debug(
-                    '250 calling self.removeTrap, suit=%d' %
-                    suit.doId)
+                    '250 calling self.removeTrap, suit=%d' % suit.doId)
                 self.removeTrap(suit)
 
             suit.battleTrap = NO_TRAP
@@ -253,13 +244,12 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             trap.pose(trapName, frame)
 
     def removeTrap(self, suit, removeTrainTrack=False):
-        self.notify.debug(
-            'removeTrap() from suit: %d, removeTrainTrack=%s' %
-            (suit.doId, removeTrainTrack))
+        self.notify.debug('removeTrap() from suit: %d, removeTrainTrack=%s' %
+                          (suit.doId, removeTrainTrack))
         if suit.battleTrapProp is None:
             self.notify.debug(
-                'suit.battleTrapProp == None, suit.battleTrap=%s setting to NO_TRAP, returning' %
-                suit.battleTrap)
+                'suit.battleTrapProp == None, suit.battleTrap=%s setting to NO_TRAP, returning'
+                % suit.battleTrap)
             suit.battleTrap = NO_TRAP
             return None
 
@@ -271,8 +261,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     if not otherSuit == suit:
                         otherSuit.battleTrapProp = None
                         self.notify.debug(
-                            '351 otherSuit=%d otherSuit.battleTrapProp = None' %
-                            otherSuit.doId)
+                            '351 otherSuit=%d otherSuit.battleTrapProp = None'
+                            % otherSuit.doId)
                         otherSuit.battleTrap = NO_TRAP
                         otherSuit.battleTrapIsFresh = 0
                         continue
@@ -383,39 +373,19 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             return None
 
         self.notify.debug('setState(%s)' % state)
-        self.fsm.request(state, [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
-    def setMembers(
-            self,
-            suits,
-            suitsJoining,
-            suitsPending,
-            suitsActive,
-            suitsLured,
-            suitTraps,
-            toons,
-            toonsJoining,
-            toonsPending,
-            toonsActive,
-            toonsRunning,
-            timestamp):
+    def setMembers(self, suits, suitsJoining, suitsPending, suitsActive,
+                   suitsLured, suitTraps, toons, toonsJoining, toonsPending,
+                   toonsActive, toonsRunning, timestamp):
         if self._DistributedBattleBase__battleCleanedUp:
             return None
 
         self.notify.debug(
-            'setMembers() - suits: %s suitsJoining: %s suitsPending: %s suitsActive: %s suitsLured: %s suitTraps: %s toons: %s toonsJoining: %s toonsPending: %s toonsActive: %s toonsRunning: %s' %
-            (suits,
-             suitsJoining,
-             suitsPending,
-             suitsActive,
-             suitsLured,
-             suitTraps,
-             toons,
-             toonsJoining,
-             toonsPending,
-             toonsActive,
-             toonsRunning))
+            'setMembers() - suits: %s suitsJoining: %s suitsPending: %s suitsActive: %s suitsLured: %s suitTraps: %s toons: %s toonsJoining: %s toonsPending: %s toonsActive: %s toonsRunning: %s'
+            % (suits, suitsJoining, suitsPending, suitsActive, suitsLured,
+               suitTraps, toons, toonsJoining, toonsPending, toonsActive,
+               toonsRunning))
         ts = globalClockDelta.localElapsedTime(timestamp)
         oldsuits = self.suits
         self.suits = []
@@ -426,9 +396,14 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 suit.setState('Battle')
                 self.suits.append(suit)
                 suit.interactivePropTrackBonus = self.interactivePropTrackBonus
-
                 try:
-                    pass
+                    suit.battleTrap
+                except:
+                    suit.battleTrap = NO_TRAP
+                    suit.battleTrapProp = None
+                    self.notify.debug('496 suit.battleTrapProp = None')
+                    suit.battleTrapIsFresh = 0
+
                 suit.battleTrap = NO_TRAP
                 suit.battleTrapProp = None
                 self.notify.debug('496 suit.battleTrapProp = None')
@@ -444,9 +419,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             if self.suits.count(s) == 0:
                 self._DistributedBattleBase__removeSuit(s)
                 numSuitsThatDied += 1
-                self.notify.debug(
-                    'suit %d dies, numSuitsThatDied=%d' %
-                    (s.doId, numSuitsThatDied))
+                self.notify.debug('suit %d dies, numSuitsThatDied=%d' %
+                                  (s.doId, numSuitsThatDied))
                 continue
 
         if numSuitsThatDied == 4:
@@ -502,11 +476,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             suit = self.suits[index]
             index += 1
             if suit is not None:
-                if (trapid == NO_TRAP or trapid !=
-                        suit.battleTrap) and suit.battleTrapProp is not None:
+                if (trapid == NO_TRAP or trapid != suit.battleTrap
+                    ) and suit.battleTrapProp is not None:
                     self.notify.debug(
-                        '569 calling self.removeTrap, suit=%d' %
-                        suit.doId)
+                        '569 calling self.removeTrap, suit=%d' % suit.doId)
                     self.removeTrap(suit)
 
                 if trapid != NO_TRAP and suit.battleTrapProp is None:
@@ -519,8 +492,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             self.needAdjustTownBattle = 1
         else:
             for i in range(len(oldSuitTraps)):
-                if (oldSuitTraps[i] == '9' or self.suitTraps[i] !=
-                        '9' or oldSuitTraps[i] != '9') and self.suitTraps[i] == '9':
+                if (oldSuitTraps[i] == '9' or self.suitTraps[i] != '9' or
+                        oldSuitTraps[i] != '9') and self.suitTraps[i] == '9':
                     self.needAdjustTownBattle = 1
                     break
                     continue
@@ -599,8 +572,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 continue
 
         if len(activeSuits) > 0 or len(activeToons) > 0:
-            self._DistributedBattleBase__makeAvsActive(
-                activeSuits, activeToons)
+            self._DistributedBattleBase__makeAvsActive(activeSuits,
+                                                       activeToons)
 
         if toonGone == 1:
             validToons = []
@@ -640,85 +613,18 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         if self._DistributedBattleBase__battleCleanedUp:
             return None
 
-        self.notify.debug(
-            'adjust(%f) from server' %
-            globalClockDelta.localElapsedTime(timestamp))
-        self.adjustFsm.request('Adjusting', [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.notify.debug('adjust(%f) from server' %
+                          globalClockDelta.localElapsedTime(timestamp))
+        self.adjustFsm.request('Adjusting',
+                               [globalClockDelta.localElapsedTime(timestamp)])
 
-    def setMovie(
-            self,
-            active,
-            toons,
-            suits,
-            id0,
-            tr0,
-            le0,
-            tg0,
-            hp0,
-            ac0,
-            hpb0,
-            kbb0,
-            died0,
-            revive0,
-            id1,
-            tr1,
-            le1,
-            tg1,
-            hp1,
-            ac1,
-            hpb1,
-            kbb1,
-            died1,
-            revive1,
-            id2,
-            tr2,
-            le2,
-            tg2,
-            hp2,
-            ac2,
-            hpb2,
-            kbb2,
-            died2,
-            revive2,
-            id3,
-            tr3,
-            le3,
-            tg3,
-            hp3,
-            ac3,
-            hpb3,
-            kbb3,
-            died3,
-            revive3,
-            sid0,
-            at0,
-            stg0,
-            dm0,
-            sd0,
-            sb0,
-            st0,
-            sid1,
-            at1,
-            stg1,
-            dm1,
-            sd1,
-            sb1,
-            st1,
-            sid2,
-            at2,
-            stg2,
-            dm2,
-            sd2,
-            sb2,
-            st2,
-            sid3,
-            at3,
-            stg3,
-            dm3,
-            sd3,
-            sb3,
-            st3):
+    def setMovie(self, active, toons, suits, id0, tr0, le0, tg0, hp0, ac0,
+                 hpb0, kbb0, died0, revive0, id1, tr1, le1, tg1, hp1, ac1,
+                 hpb1, kbb1, died1, revive1, id2, tr2, le2, tg2, hp2, ac2,
+                 hpb2, kbb2, died2, revive2, id3, tr3, le3, tg3, hp3, ac3,
+                 hpb3, kbb3, died3, revive3, sid0, at0, stg0, dm0, sd0, sb0,
+                 st0, sid1, at1, stg1, dm1, sd1, sb1, st1, sid2, at2, stg2,
+                 dm2, sd2, sb2, st2, sid3, at3, stg3, dm3, sd3, sb3, st3):
         if self._DistributedBattleBase__battleCleanedUp:
             return None
 
@@ -726,84 +632,20 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         if int(active) == 1:
             self.notify.debug('setMovie() - movie is active')
             self.movie.genAttackDicts(
-                toons,
-                suits,
-                id0,
-                tr0,
-                le0,
-                tg0,
-                hp0,
-                ac0,
-                hpb0,
-                kbb0,
-                died0,
-                revive0,
-                id1,
-                tr1,
-                le1,
-                tg1,
-                hp1,
-                ac1,
-                hpb1,
-                kbb1,
-                died1,
-                revive1,
-                id2,
-                tr2,
-                le2,
-                tg2,
-                hp2,
-                ac2,
-                hpb2,
-                kbb2,
-                died2,
-                revive2,
-                id3,
-                tr3,
-                le3,
-                tg3,
-                hp3,
-                ac3,
-                hpb3,
-                kbb3,
-                died3,
-                revive3,
-                sid0,
-                at0,
-                stg0,
-                dm0,
-                sd0,
-                sb0,
-                st0,
-                sid1,
-                at1,
-                stg1,
-                dm1,
-                sd1,
-                sb1,
-                st1,
-                sid2,
-                at2,
-                stg2,
-                dm2,
-                sd2,
-                sb2,
-                st2,
-                sid3,
-                at3,
-                stg3,
-                dm3,
-                sd3,
-                sb3,
-                st3)
+                toons, suits, id0, tr0, le0, tg0, hp0, ac0, hpb0, kbb0, died0,
+                revive0, id1, tr1, le1, tg1, hp1, ac1, hpb1, kbb1, died1,
+                revive1, id2, tr2, le2, tg2, hp2, ac2, hpb2, kbb2, died2,
+                revive2, id3, tr3, le3, tg3, hp3, ac3, hpb3, kbb3, died3,
+                revive3, sid0, at0, stg0, dm0, sd0, sb0, st0, sid1, at1, stg1,
+                dm1, sd1, sb1, st1, sid2, at2, stg2, dm2, sd2, sb2, st2, sid3,
+                at3, stg3, dm3, sd3, sb3, st3)
 
     def setChosenToonAttacks(self, ids, tracks, levels, targets):
         if self._DistributedBattleBase__battleCleanedUp:
             return None
 
-        self.notify.debug(
-            'setChosenToonAttacks() - (%s), (%s), (%s), (%s)' %
-            (ids, tracks, levels, targets))
+        self.notify.debug('setChosenToonAttacks() - (%s), (%s), (%s), (%s)' %
+                          (ids, tracks, levels, targets))
         toonIndices = []
         targetIndices = []
         unAttack = 0
@@ -814,8 +656,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             toon = self.findToon(ids[i])
             if toon is None or self.activeToons.count(toon) == 0:
                 self.notify.warning(
-                    'setChosenToonAttacks() - toon gone or not in battle: %d!' %
-                    ids[i])
+                    'setChosenToonAttacks() - toon gone or not in battle: %d!'
+                    % ids[i])
                 toonIndices.append(-1)
                 tracks.append(-1)
                 levels.append(-1)
@@ -868,100 +710,34 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
         self.townBattleAttacks = (toonIndices, tracks, levels, targetIndices)
         if self.localToonActive() and localToonInList == 1:
-            if unAttack == 1 and self.fsm.getCurrentState().getName() == 'WaitForInput':
+            if unAttack == 1 and self.fsm.getCurrentState().getName(
+            ) == 'WaitForInput':
                 if self.townBattle.fsm.getCurrentState().getName() != 'Attack':
                     self.townBattle.setState('Attack')
 
             self.townBattle.updateChosenAttacks(
-                self.townBattleAttacks[0],
-                self.townBattleAttacks[1],
-                self.townBattleAttacks[2],
-                self.townBattleAttacks[3])
+                self.townBattleAttacks[0], self.townBattleAttacks[1],
+                self.townBattleAttacks[2], self.townBattleAttacks[3])
 
     def setBattleExperience(
-            self,
-            id0,
-            origExp0,
-            earnedExp0,
-            origQuests0,
-            items0,
-            missedItems0,
-            origMerits0,
-            merits0,
-            parts0,
-            id1,
-            origExp1,
-            earnedExp1,
-            origQuests1,
-            items1,
-            missedItems1,
-            origMerits1,
-            merits1,
-            parts1,
-            id2,
-            origExp2,
-            earnedExp2,
-            origQuests2,
-            items2,
-            missedItems2,
-            origMerits2,
-            merits2,
-            parts2,
-            id3,
-            origExp3,
-            earnedExp3,
-            origQuests3,
-            items3,
-            missedItems3,
-            origMerits3,
-            merits3,
-            parts3,
-            deathList,
-            uberList,
-            helpfulToonsList):
+            self, id0, origExp0, earnedExp0, origQuests0, items0, missedItems0,
+            origMerits0, merits0, parts0, id1, origExp1, earnedExp1,
+            origQuests1, items1, missedItems1, origMerits1, merits1, parts1,
+            id2, origExp2, earnedExp2, origQuests2, items2, missedItems2,
+            origMerits2, merits2, parts2, id3, origExp3, earnedExp3,
+            origQuests3, items3, missedItems3, origMerits3, merits3, parts3,
+            deathList, uberList, helpfulToonsList):
         if self._DistributedBattleBase__battleCleanedUp:
             return None
 
         self.movie.genRewardDicts(
-            id0,
-            origExp0,
-            earnedExp0,
-            origQuests0,
-            items0,
-            missedItems0,
-            origMerits0,
-            merits0,
-            parts0,
-            id1,
-            origExp1,
-            earnedExp1,
-            origQuests1,
-            items1,
-            missedItems1,
-            origMerits1,
-            merits1,
-            parts1,
-            id2,
-            origExp2,
-            earnedExp2,
-            origQuests2,
-            items2,
-            missedItems2,
-            origMerits2,
-            merits2,
-            parts2,
-            id3,
-            origExp3,
-            earnedExp3,
-            origQuests3,
-            items3,
-            missedItems3,
-            origMerits3,
-            merits3,
-            parts3,
-            deathList,
-            uberList,
-            helpfulToonsList)
+            id0, origExp0, earnedExp0, origQuests0, items0, missedItems0,
+            origMerits0, merits0, parts0, id1, origExp1, earnedExp1,
+            origQuests1, items1, missedItems1, origMerits1, merits1, parts1,
+            id2, origExp2, earnedExp2, origQuests2, items2, missedItems2,
+            origMerits2, merits2, parts2, id3, origExp3, earnedExp3,
+            origQuests3, items3, missedItems3, origMerits3, merits3, parts3,
+            deathList, uberList, helpfulToonsList)
 
     def _DistributedBattleBase__listenForUnexpectedExit(self, toon):
         self.accept(
@@ -987,13 +763,11 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         membersKeep = []
         for t in self.toons:
             membersKeep.append(
-                DelayDelete.DelayDelete(
-                    t, 'delayDeleteMembers'))
+                DelayDelete.DelayDelete(t, 'delayDeleteMembers'))
 
         for s in self.suits:
             membersKeep.append(
-                DelayDelete.DelayDelete(
-                    s, 'delayDeleteMembers'))
+                DelayDelete.DelayDelete(s, 'delayDeleteMembers'))
 
         self._removeMembersKeep()
         self.membersKeep = membersKeep
@@ -1022,8 +796,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         self.suitGone = 1
         if suit.battleTrap != NO_TRAP:
             self.notify.debug(
-                '882 calling self.removeTrap, suit=%d' %
-                suit.doId)
+                '882 calling self.removeTrap, suit=%d' % suit.doId)
             self.removeTrap(suit)
 
         suit.battleTrap = NO_TRAP
@@ -1050,9 +823,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
         if self.runningToons.count(toon) != 0:
             self.clearInterval(
-                self.taskName(
-                    'running-%d' %
-                    toon.doId), finish=1)
+                self.taskName('running-%d' % toon.doId), finish=1)
             if toon in self.runningToons:
                 self.runningToons.remove(toon)
 
@@ -1084,9 +855,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
         if self.joiningToons.count(toon) != 0:
             self.clearInterval(
-                self.taskName(
-                    'to-pending-toon-%d' %
-                    toon.doId), finish=1)
+                self.taskName('to-pending-toon-%d' % toon.doId), finish=1)
             if toon in self.joiningToons:
                 self.joiningToons.remove(toon)
 
@@ -1098,14 +867,18 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         base.cr.playGame.getPlace().setState('walk')
         self.localToonFsm.request('WaitForServer')
 
-    def _DistributedBattleBase__createJoinInterval(
-            self, av, destPos, destHpr, name, ts, callback, toon=0):
+    def _DistributedBattleBase__createJoinInterval(self,
+                                                   av,
+                                                   destPos,
+                                                   destHpr,
+                                                   name,
+                                                   ts,
+                                                   callback,
+                                                   toon=0):
         joinTrack = Sequence()
         joinTrack.append(
-            Func(
-                Emote.globalEmote.disableAll,
-                av,
-                'dbattlebase, createJoinInterval'))
+            Func(Emote.globalEmote.disableAll, av,
+                 'dbattlebase, createJoinInterval'))
         avPos = av.getPos(self)
         avPos = Point3(avPos[0], avPos[1], 0.0)
         av.setShadowHeight(0)
@@ -1120,11 +893,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 joinTrack.append(Func(av.loop, 'run'))
             if timeToDest > BATTLE_SMALL_VALUE:
                 joinTrack.append(
-                    LerpPosInterval(
-                        av,
-                        timeToDest,
-                        destPos,
-                        other=self))
+                    LerpPosInterval(av, timeToDest, destPos, other=self))
                 totalTime = timeToDest
             else:
                 totalTime = 0
@@ -1142,8 +911,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 (len(plist) - 1) * timePerSegment + timeToDest
             if totalTime > MAX_JOIN_T:
                 self.notify.warning(
-                    '__createJoinInterval() - time: %f' %
-                    totalTime)
+                    '__createJoinInterval() - time: %f' % totalTime)
 
             joinTrack.append(Func(av.headsUp, self, plist[0]))
             if toon == 0:
@@ -1151,27 +919,15 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             else:
                 joinTrack.append(Func(av.loop, 'run'))
             joinTrack.append(
-                LerpPosInterval(
-                    av,
-                    timeToPerimeter,
-                    plist[0],
-                    other=self))
+                LerpPosInterval(av, timeToPerimeter, plist[0], other=self))
             for p in plist[1:]:
                 joinTrack.append(Func(av.headsUp, self, p))
                 joinTrack.append(
-                    LerpPosInterval(
-                        av,
-                        timePerSegment,
-                        p,
-                        other=self))
+                    LerpPosInterval(av, timePerSegment, p, other=self))
 
             joinTrack.append(Func(av.headsUp, self, destPos))
             joinTrack.append(
-                LerpPosInterval(
-                    av,
-                    timeToDest,
-                    destPos,
-                    other=self))
+                LerpPosInterval(av, timeToDest, destPos, other=self))
         joinTrack.append(Func(av.loop, 'neutral'))
         joinTrack.append(Func(av.headsUp, self, Point3(0, 0, 0)))
         tval = totalTime - ts
@@ -1179,10 +935,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             tval = totalTime
 
         joinTrack.append(
-            Func(
-                Emote.globalEmote.releaseAll,
-                av,
-                'dbattlebase, createJoinInterval'))
+            Func(Emote.globalEmote.releaseAll, av,
+                 'dbattlebase, createJoinInterval'))
         joinTrack.append(Func(callback, av, tval))
         if av == base.localAvatar:
             camTrack = Sequence()
@@ -1208,7 +962,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         hpr = VBase3(openSpot[1], 0.0, 0.0)
         trackName = self.taskName('to-pending-suit-%d' % suit.doId)
         track = self._DistributedBattleBase__createJoinInterval(
-            suit, pos, hpr, trackName, ts, self._DistributedBattleBase__handleSuitJoinDone)
+            suit, pos, hpr, trackName, ts,
+            self._DistributedBattleBase__handleSuitJoinDone)
         track.start(ts)
         track.delayDelete = DelayDelete.DelayDelete(suit, 'makeSuitJoin')
         self.storeInterval(track, trackName)
@@ -1223,9 +978,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def _DistributedBattleBase__makeSuitPending(self, suit):
         self.notify.debug('__makeSuitPending(%d)' % suit.doId)
         self.clearInterval(
-            self.taskName(
-                'to-pending-suit-%d' %
-                suit.doId), finish=1)
+            self.taskName('to-pending-suit-%d' % suit.doId), finish=1)
         if self.joiningSuits.count(suit):
             self.joiningSuits.remove(suit)
 
@@ -1238,8 +991,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             target_sz = ZoneUtil.getSafeZoneId(self.zoneId)
         else:
             target_sz = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
-        base.cr.playGame.getPlace().fsm.request('teleportOut', [
-            {
+        base.cr.playGame.getPlace().fsm.request(
+            'teleportOut', [{
                 'loader': ZoneUtil.getLoaderName(target_sz),
                 'where': ZoneUtil.getWhereName(target_sz, 1),
                 'how': 'teleportIn',
@@ -1247,7 +1000,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 'zoneId': target_sz,
                 'shardId': None,
                 'avId': -1,
-                'battle': 1}])
+                'battle': 1
+            }])
 
     def _DistributedBattleBase__makeToonJoin(self, toon, pendingToons, ts):
         self.notify.debug('__makeToonJoin(%d)' % toon.doId)
@@ -1280,9 +1034,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def _DistributedBattleBase__makeToonPending(self, toon, ts):
         self.notify.debug('__makeToonPending(%d)' % toon.doId)
         self.clearInterval(
-            self.taskName(
-                'to-pending-toon-%d' %
-                toon.doId), finish=1)
+            self.taskName('to-pending-toon-%d' % toon.doId), finish=1)
         if self.joiningToons.count(toon):
             self.joiningToons.remove(toon)
 
@@ -1316,19 +1068,16 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 if self.isSuitLured(suit) == 0:
                     suit.setPosHpr(self, suitPos, suitHpr)
                 else:
-                    spos = Point3(
-                        suitPos[0],
-                        suitPos[1] -
-                        MovieUtil.SUIT_LURE_DISTANCE,
-                        suitPos[2])
+                    spos = Point3(suitPos[0],
+                                  suitPos[1] - MovieUtil.SUIT_LURE_DISTANCE,
+                                  suitPos[2])
                     suit.setPosHpr(self, spos, suitHpr)
                 suit.loop('neutral')
 
         for toon in toons:
             if self.joiningToons.count(toon):
                 self.notify.warning(
-                    'toon: %d was in joining list!' %
-                    toon.doId)
+                    'toon: %d was in joining list!' % toon.doId)
                 self.joiningToons.remove(toon)
 
             if self.pendingToons.count(toon):
@@ -1339,8 +1088,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 self.activeToons.append(toon)
                 continue
             self.notify.warning(
-                'makeAvsActive() - toon: %d is active!' %
-                toon.doId)
+                'makeAvsActive() - toon: %d is active!' % toon.doId)
 
         if len(self.activeToons) >= 1:
             for toon in self.activeToons:
@@ -1349,7 +1097,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 toon.loop('neutral')
 
         if self.fsm.getCurrentState().getName(
-        ) == 'WaitForInput' and self.localToonActive() and self.localToonJustJoined == 1:
+        ) == 'WaitForInput' and self.localToonActive(
+        ) and self.localToonJustJoined == 1:
             self.notify.debug('makeAvsActive() - local toon just joined')
             self._DistributedBattleBase__enterLocalToonWaitForInput()
             self.localToonJustJoined = 0
@@ -1378,16 +1127,12 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             return self.cr.doId2do[toonId]
         else:
             self.notify.warning(
-                'getToon() - toon: %d not in repository!' %
-                toonId)
+                'getToon() - toon: %d not in repository!' % toonId)
             return None
 
     def d_toonRequestJoin(self, toonId, pos):
         self.notify.debug('network:toonRequestJoin()')
-        self.sendUpdate('toonRequestJoin', [
-            pos[0],
-            pos[1],
-            pos[2]])
+        self.sendUpdate('toonRequestJoin', [pos[0], pos[1], pos[2]])
 
     def d_toonRequestRun(self, toonId):
         self.notify.debug('network:toonRequestRun()')
@@ -1419,22 +1164,16 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
 
     def d_joinDone(self, toonId, avId):
         self.notify.debug('network:joinDone(%d)' % avId)
-        self.sendUpdate('joinDone', [
-            avId])
+        self.sendUpdate('joinDone', [avId])
 
     def d_requestAttack(self, toonId, track, level, av):
         self.notify.debug(
-            'network:requestAttack(%d, %d, %d)' %
-            (track, level, av))
-        self.sendUpdate('requestAttack', [
-            track,
-            level,
-            av])
+            'network:requestAttack(%d, %d, %d)' % (track, level, av))
+        self.sendUpdate('requestAttack', [track, level, av])
 
     def d_requestPetProxy(self, toonId, av):
         self.notify.debug('network:requestPetProxy(%s)' % av)
-        self.sendUpdate('requestPetProxy', [
-            av])
+        self.sendUpdate('requestPetProxy', [av])
 
     def enterOff(self, ts=0):
         self.localToonFsm.requestFinalState()
@@ -1466,18 +1205,15 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def startTimer(self, ts=0):
         self.notify.debug('startTimer()')
         if ts >= CLIENT_INPUT_TIMEOUT:
-            self.notify.warning(
-                'startTimer() - ts: %f timeout: %f' %
-                (ts, CLIENT_INPUT_TIMEOUT))
+            self.notify.warning('startTimer() - ts: %f timeout: %f' %
+                                (ts, CLIENT_INPUT_TIMEOUT))
             self._DistributedBattleBase__timedOut()
             return None
 
-        self.timer.startCallback(
-            CLIENT_INPUT_TIMEOUT - ts,
-            self._DistributedBattleBase__timedOut)
+        self.timer.startCallback(CLIENT_INPUT_TIMEOUT - ts,
+                                 self._DistributedBattleBase__timedOut)
         timeTask = Task.loop(
-            Task(
-                self._DistributedBattleBase__countdown),
+            Task(self._DistributedBattleBase__countdown),
             Task.pause(0.20000000000000001))
         taskMgr.add(timeTask, self.timerCountdownTaskName)
 
@@ -1491,7 +1227,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             self.townBattle.updateTimer(int(self.timer.getT()))
         else:
             self.notify.warning(
-                '__countdown has tried to update a timer that has been deleted. Stopping timer')
+                '__countdown has tried to update a timer that has been deleted. Stopping timer'
+            )
             self._DistributedBattleBase__stopTimer()
         return Task.done
 
@@ -1544,23 +1281,20 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     target = -1
 
             if len(self.luredSuits) > 0:
-                if (track == TRAP or track ==
-                        LURE) and not levelAffectsGroup(LURE, level):
+                if (track == TRAP or
+                        track == LURE) and not levelAffectsGroup(LURE, level):
                     if target != -1:
                         suit = self.findSuit(targetId)
                         if self.luredSuits.count(suit) != 0:
                             self.notify.warning(
-                                'Suit: %d was lured!' %
-                                targetId)
+                                'Suit: %d was lured!' % targetId)
                             track = -1
                             level = -1
                             targetId = -1
 
                 elif track == LURE:
-                    if levelAffectsGroup(
-                            LURE, level) and len(
-                            self.activeSuits) == len(
-                            self.luredSuits):
+                    if levelAffectsGroup(LURE, level) and len(
+                            self.activeSuits) == len(self.luredSuits):
                         self.notify.warning('All suits are lured!')
                         track = -1
                         level = -1
@@ -1595,15 +1329,14 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             targetId = response['id']
             trickId = response['trickId']
             self.notify.debug('got an PETSOS for pet: %d' % targetId)
-            self.d_requestAttack(
-                base.localAvatar.doId, PETSOS, trickId, targetId)
+            self.d_requestAttack(base.localAvatar.doId, PETSOS, trickId,
+                                 targetId)
         elif mode == 'PETSOSINFO':
             petProxyId = response['id']
             self.notify.debug('got a PETSOSINFO for pet: %d' % petProxyId)
             if base.cr.doId2do.has_key(petProxyId):
                 self.notify.debug(
-                    'pet: %d was already in the repository' %
-                    petProxyId)
+                    'pet: %d was already in the repository' % petProxyId)
                 proxyGenerateMessage = 'petProxy-%d-generated' % petProxyId
                 messenger.send(proxyGenerateMessage)
             else:
@@ -1666,23 +1399,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         self.notify.debug('exitPlayMovie()')
         self.movie.reset(finish=1)
         self._removeMembersKeep()
-        self.townBattleAttacks = ([
-            -1,
-            -1,
-            -1,
-            -1], [
-            -1,
-            -1,
-            -1,
-            -1], [
-            -1,
-            -1,
-            -1,
-            -1], [
-            0,
-            0,
-            0,
-            0])
+        self.townBattleAttacks = ([-1, -1, -1, -1], [-1, -1, -1, -1],
+                                  [-1, -1, -1, -1], [0, 0, 0, 0])
 
     def hasLocalToon(self):
         return self.toons.count(base.localAvatar) > 0
@@ -1706,10 +1424,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def enterHasLocalToon(self):
         self.notify.debug('enterHasLocalToon()')
         if base.cr.playGame.getPlace() is not None:
-            base.cr.playGame.getPlace().setState('battle', self.localToonBattleEvent)
-            if localAvatar and hasattr(
-                    localAvatar,
-                    'inventory') and localAvatar.inventory:
+            base.cr.playGame.getPlace().setState('battle',
+                                                 self.localToonBattleEvent)
+            if localAvatar and hasattr(localAvatar,
+                                       'inventory') and localAvatar.inventory:
                 localAvatar.inventory.setInteractivePropTrackBonus(
                     self.interactivePropTrackBonus)
 
@@ -1731,15 +1449,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         if stateName == 'died':
             self.movie.reset()
             camera.reparentTo(render)
-            camera.setPosHpr(
-                localAvatar,
-                5.2000000000000002,
-                5.4500000000000002,
-                localAvatar.getHeight() *
-                0.66000000000000003,
-                131.5,
-                3.6000000000000001,
-                0)
+            camera.setPosHpr(localAvatar, 5.2000000000000002,
+                             5.4500000000000002,
+                             localAvatar.getHeight() * 0.66000000000000003,
+                             131.5, 3.6000000000000001, 0)
         else:
             camera.wrtReparentTo(base.localAvatar)
             messenger.send('localToonLeftBattle')
@@ -1773,11 +1486,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             adjustTrack.append(Func(av.loop, 'walk'))
         adjustTrack.append(Func(av.headsUp, self, destPos))
         adjustTrack.append(
-            LerpPosInterval(
-                av,
-                adjustTime,
-                destPos,
-                other=self))
+            LerpPosInterval(av, adjustTime, destPos, other=self))
         adjustTrack.append(Func(av.setHpr, self, destHpr))
         adjustTrack.append(Func(av.loop, 'neutral'))
         return adjustTrack
@@ -1794,17 +1503,14 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 pos = suit.getPos(self)
                 destPos = point[0]
                 if self.isSuitLured(suit) == 1:
-                    destPos = Point3(
-                        destPos[0],
-                        destPos[1] -
-                        MovieUtil.SUIT_LURE_DISTANCE,
-                        destPos[2])
+                    destPos = Point3(destPos[0],
+                                     destPos[1] - MovieUtil.SUIT_LURE_DISTANCE,
+                                     destPos[2])
 
                 if pos != destPos:
                     destHpr = VBase3(point[1], 0.0, 0.0)
                     adjustTrack.append(
-                        self.createAdjustInterval(
-                            suit, destPos, destHpr))
+                        self.createAdjustInterval(suit, destPos, destHpr))
 
                 index += 1
 
@@ -1813,8 +1519,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 destPos = point[0]
                 destHpr = VBase3(point[1], 0.0, 0.0)
                 adjustTrack.append(
-                    self.createAdjustInterval(
-                        suit, destPos, destHpr))
+                    self.createAdjustInterval(suit, destPos, destHpr))
                 index += 1
 
         if len(self.pendingToons) > 0 or self.toonGone == 1:
@@ -1828,8 +1533,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 if pos != destPos:
                     destHpr = VBase3(point[1], 0.0, 0.0)
                     adjustTrack.append(
-                        self.createAdjustInterval(
-                            toon, destPos, destHpr))
+                        self.createAdjustInterval(toon, destPos, destHpr))
 
                 index += 1
 
@@ -1838,8 +1542,7 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 destPos = point[0]
                 destHpr = VBase3(point[1], 0.0, 0.0)
                 adjustTrack.append(
-                    self.createAdjustInterval(
-                        toon, destPos, destHpr))
+                    self.createAdjustInterval(toon, destPos, destHpr))
                 index += 1
 
         if len(adjustTrack) > 0:
@@ -1867,9 +1570,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             self.adjustFsm.request('NotAdjusting')
 
     def _DistributedBattleBase__requestAdjustTownBattle(self):
-        self.notify.debug(
-            '__requestAdjustTownBattle() curstate = %s' %
-            self.fsm.getCurrentState().getName())
+        self.notify.debug('__requestAdjustTownBattle() curstate = %s' %
+                          self.fsm.getCurrentState().getName())
         if self.fsm.getCurrentState().getName() == 'WaitForInput':
             self._DistributedBattleBase__adjustTownBattle()
         else:
@@ -1892,14 +1594,12 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     trappedSuits.append(self.activeSuits.index(suit))
                     continue
 
-            self.townBattle.adjustCogsAndToons(
-                self.activeSuits, luredSuits, trappedSuits, self.activeToons)
+            self.townBattle.adjustCogsAndToons(self.activeSuits, luredSuits,
+                                               trappedSuits, self.activeToons)
             if hasattr(self, 'townBattleAttacks'):
                 self.townBattle.updateChosenAttacks(
-                    self.townBattleAttacks[0],
-                    self.townBattleAttacks[1],
-                    self.townBattleAttacks[2],
-                    self.townBattleAttacks[3])
+                    self.townBattleAttacks[0], self.townBattleAttacks[1],
+                    self.townBattleAttacks[2], self.townBattleAttacks[3])
 
         self.needAdjustTownBattle = 0
 

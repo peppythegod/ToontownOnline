@@ -1,5 +1,3 @@
-
-
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
@@ -20,9 +18,8 @@ class MazeTreasure(DirectObject):
         self.collNode.addSolid(self.collSphere)
         self.collNodePath = self.nodePath.attachNewNode(self.collNode)
         self.collNodePath.hide()
-        self.accept(
-            'enter' + self.sphereName,
-            self._MazeTreasure__handleEnterSphere)
+        self.accept('enter' + self.sphereName,
+                    self._MazeTreasure__handleEnterSphere)
         self.nodePath.flattenLight()
 
     def destroy(self):
@@ -36,8 +33,7 @@ class MazeTreasure(DirectObject):
 
     def _MazeTreasure__handleEnterSphere(self, collEntry):
         self.ignoreAll()
-        messenger.send('MazeTreasureGrabbed', [
-            self.serialNum])
+        messenger.send('MazeTreasureGrabbed', [self.serialNum])
 
     def showGrab(self):
         self.nodePath.reparentTo(hidden)

@@ -19,12 +19,12 @@ class PetGoal(FSM.FSM):
         self.serialNum = PetGoal.SerialNum
         PetGoal.SerialNum += 1
         self.fsm = ClassicFSM.ClassicFSM('PetGoalFSM', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'background']),
-            State.State('background', self.enterBackground, self.exitBackground, [
-                'foreground']),
-            State.State('foreground', self.enterForeground, self.exitForeground, [
-                'background'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['background']),
+            State.State('background', self.enterBackground,
+                        self.exitBackground, ['foreground']),
+            State.State('foreground', self.enterForeground,
+                        self.exitForeground, ['background'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def destroy(self):
@@ -118,36 +118,32 @@ class InteractWithAvatar(PetGoal):
                 self.request('Interact')
                 return Task.done
 
-            taskMgr.doMethodLater(
-                0.0001, goToInteract, self.transitionDoLaterName)
+            taskMgr.doMethodLater(0.0001, goToInteract,
+                                  self.transitionDoLaterName)
         else:
             self.accept(
-                self.brain.getObserveEventAttendingAvStart(
-                    self.avatar.doId), Functor(
-                    self.request, 'Interact'))
+                self.brain.getObserveEventAttendingAvStart(self.avatar.doId),
+                Functor(self.request, 'Interact'))
             self.brain._chase(self.avatar)
 
     def exitChase(self):
         self.ignore(
-            self.brain.getObserveEventAttendingAvStart(
-                self.avatar.doId))
+            self.brain.getObserveEventAttendingAvStart(self.avatar.doId))
         taskMgr.remove(self.transitionDoLaterName)
 
     def enterInteract(self):
         PetGoal.notify.debug('enterInteract')
         if self._chaseAvInInteractMode():
             self.accept(
-                self.brain.getObserveEventAttendingAvStop(
-                    self.avatar.doId), Functor(
-                    self.request, 'Chase'))
+                self.brain.getObserveEventAttendingAvStop(self.avatar.doId),
+                Functor(self.request, 'Chase'))
 
         self.startInteract()
 
     def exitInteract(self):
         self.stopInteract()
         self.ignore(
-            self.brain.getObserveEventAttendingAvStop(
-                self.avatar.doId))
+            self.brain.getObserveEventAttendingAvStop(self.avatar.doId))
 
     def startInteract(self):
         pass
@@ -159,23 +155,21 @@ class InteractWithAvatar(PetGoal):
         return True
 
     def __str__(self):
-        return '%s-%s: %s' % (self.__class__.__name__,
-                              self.avatar.doId, self.getPriority())
+        return '%s-%s: %s' % (self.__class__.__name__, self.avatar.doId,
+                              self.getPriority())
 
 
 class Wander(PetGoal):
-
     def enterForeground(self):
         self.brain._wander()
 
 
 class ChaseAvatar(PetGoal):
-
     def __init__(self, avatar):
         PetGoal.__init__(self)
         self.avatar = avatar
-        self.isToon = isinstance(
-            self.avatar, DistributedToonAI.DistributedToonAI)
+        self.isToon = isinstance(self.avatar,
+                                 DistributedToonAI.DistributedToonAI)
 
     def destroy(self):
         PetGoal.destroy(self)
@@ -203,12 +197,11 @@ class ChaseAvatar(PetGoal):
         self.brain._chase(self.avatar)
 
     def __str__(self):
-        return '%s-%s: %s' % (self.__class__.__name__,
-                              self.avatar.doId, self.getPriority())
+        return '%s-%s: %s' % (self.__class__.__name__, self.avatar.doId,
+                              self.getPriority())
 
 
 class ChaseAvatarLeash(PetGoal):
-
     def __init__(self, avId):
         PetGoal.__init__(self)
         self.avId = avId
@@ -224,12 +217,11 @@ class ChaseAvatarLeash(PetGoal):
             self._removeSelf()
 
     def __str__(self):
-        return '%s-%s: %s' % (self.__class__.__name__,
-                              self.avatar.doId, self.getPriority())
+        return '%s-%s: %s' % (self.__class__.__name__, self.avatar.doId,
+                              self.getPriority())
 
 
 class FleeFromAvatar(PetGoal):
-
     def __init__(self, avatar):
         PetGoal.__init__(self)
         self.avatar = avatar
@@ -250,12 +242,11 @@ class FleeFromAvatar(PetGoal):
         self.brain._chase(self.avatar)
 
     def __str__(self):
-        return '%s-%s: %s' % (self.__class__.__name__,
-                              self.avatar.doId, self.getPriority())
+        return '%s-%s: %s' % (self.__class__.__name__, self.avatar.doId,
+                              self.getPriority())
 
 
 class DoTrick(InteractWithAvatar):
-
     def __init__(self, avatar, trickId):
         InteractWithAvatar.__init__(self, avatar)
         self.trickId = trickId
@@ -285,7 +276,5 @@ class DoTrick(InteractWithAvatar):
         del self.trickDoneEvent
 
     def __str__(self):
-        return '%s-%s-%s: %s' % (self.__class__.__name__,
-                                 self.avatar.doId,
-                                 self.trickId,
-                                 self.getPriority())
+        return '%s-%s-%s: %s' % (self.__class__.__name__, self.avatar.doId,
+                                 self.trickId, self.getPriority())

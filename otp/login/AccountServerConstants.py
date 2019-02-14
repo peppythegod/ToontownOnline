@@ -11,21 +11,18 @@ class AccountServerConstants(RemoteValueSet):
 
     def __init__(self, cr):
         self.expectedConstants = [
-            'minNameLength',
-            'minPwLength',
-            'allowNewAccounts',
-            'freeTrialPeriodInDays',
-            'priceFirstMonth',
-            'pricePerMonth',
-            'customerServicePhoneNumber',
-            'creditCardUpFront']
+            'minNameLength', 'minPwLength', 'allowNewAccounts',
+            'freeTrialPeriodInDays', 'priceFirstMonth', 'pricePerMonth',
+            'customerServicePhoneNumber', 'creditCardUpFront'
+        ]
         self.defaults = {
             'minNameLength': '1',
             'minPwLength': '1',
             'allowNewAccounts': '1',
             'creditCardUpFront': '0',
             'priceFirstMonth': '9.95',
-            'pricePerMonth': '9.95'}
+            'pricePerMonth': '9.95'
+        }
         noquery = 1
         if cr.productName == 'DisneyOnline-US':
             if base.config.GetBool('tt-specific-login', 0):
@@ -33,8 +30,8 @@ class AccountServerConstants(RemoteValueSet):
             else:
                 noquery = 0
 
-        if cr.accountOldAuth or base.config.GetBool(
-                'default-server-constants', noquery):
+        if cr.accountOldAuth or base.config.GetBool('default-server-constants',
+                                                    noquery):
             self.notify.debug(
                 'setting defaults, not using account server constants')
             self.dict = {}
@@ -47,8 +44,7 @@ class AccountServerConstants(RemoteValueSet):
         url = URLSpec(AccountServerConstants.getServer())
         url.setPath('/constants.php')
         self.notify.debug(
-            'grabbing account server constants from %s' %
-            url.cStr())
+            'grabbing account server constants from %s' % url.cStr())
         RemoteValueSet.__init__(
             self,
             url,
@@ -75,8 +71,8 @@ class AccountServerConstants(RemoteValueSet):
     def _AccountServerConstants__getConstant(self, constantName, accessor):
         if constantName not in self.expectedConstants:
             self.notify.warning(
-                "requested constant '%s' not in expected constant list; if it's a new constant, add it to the list" %
-                constantName)
+                "requested constant '%s' not in expected constant list; if it's a new constant, add it to the list"
+                % constantName)
 
         return accessor(self, constantName)
 

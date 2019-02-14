@@ -7,7 +7,8 @@ import random
 CountryClubId2Layouts = {
     ToontownGlobals.BossbotCountryClubIntA: (0, 1, 2),
     ToontownGlobals.BossbotCountryClubIntB: (3, 4, 5),
-    ToontownGlobals.BossbotCountryClubIntC: (6, 7, 8)}
+    ToontownGlobals.BossbotCountryClubIntC: (6, 7, 8)
+}
 
 
 class CountryClubManagerAI(DirectObject.DirectObject):
@@ -51,16 +52,18 @@ class CountryClubManagerAI(DirectObject.DirectObject):
                         continue
                 else:
                     CountryClubRoomSpecs = CountryClubRoomSpecs
-                    roomName = CountryClubRoomSpecs.BossbotCountryClubRoomId2RoomName[roomId]
+                    roomName = CountryClubRoomSpecs.BossbotCountryClubRoomId2RoomName[
+                        roomId]
                     CountryClubManagerAI.notify.warning(
-                        'room %s (%s) not found in any floor of countryClub %s' %
-                        (roomId, roomName, countryClubId))
+                        'room %s (%s) not found in any floor of countryClub %s'
+                        % (roomId, roomName, countryClubId))
 
         countryClubZone = self.air.allocateZone()
         if layoutIndex is None:
             layoutIndex = random.choice(CountryClubId2Layouts[countryClubId])
 
         countryClub = DistributedCountryClubAI.DistributedCountryClubAI(
-            self.air, countryClubId, countryClubZone, floor, players, layoutIndex)
+            self.air, countryClubId, countryClubZone, floor, players,
+            layoutIndex)
         countryClub.generateWithRequired(countryClubZone)
         return countryClubZone

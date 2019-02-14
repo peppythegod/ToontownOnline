@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import Point3, CollisionSphere, CollisionNode, BitMask32
 from direct.interval.IntervalGlobal import Sequence, LerpScaleInterval, Parallel, Func, SoundInterval
 from direct.directnotify import DirectNotifyGlobal
@@ -18,27 +16,23 @@ class IceTreasure(DirectObject):
         center = model.getBounds().getCenter()
         center = Point3(0, 0, 0)
         self.nodePath = model.copyTo(render)
-        self.nodePath.setPos(
-            pos[0] - center[0],
-            pos[1] - center[1],
-            pos[2] - center[2])
+        self.nodePath.setPos(pos[0] - center[0], pos[1] - center[1],
+                             pos[2] - center[2])
         self.nodePath.setZ(0)
         self.notify.debug('newPos = %s' % self.nodePath.getPos())
         if self.penalty:
             self.sphereName = 'penaltySphere-%s-%s' % (gameId, self.serialNum)
         else:
             self.sphereName = 'treasureSphere-%s-%s' % (gameId, self.serialNum)
-        self.collSphere = CollisionSphere(
-            center[0], center[1], center[2], self.RADIUS)
+        self.collSphere = CollisionSphere(center[0], center[1], center[2],
+                                          self.RADIUS)
         self.collSphere.setTangible(0)
         self.collNode = CollisionNode(self.sphereName)
         self.collNode.setIntoCollideMask(ToontownGlobals.PieBitmask)
         self.collNode.addSolid(self.collSphere)
         self.collNodePath = render.attachNewNode(self.collNode)
-        self.collNodePath.setPos(
-            pos[0] - center[0],
-            pos[1] - center[1],
-            pos[2] - center[2])
+        self.collNodePath.setPos(pos[0] - center[0], pos[1] - center[1],
+                                 pos[2] - center[2])
         self.collNodePath.hide()
         self.track = None
         if self.penalty:
@@ -77,11 +71,12 @@ class IceTreasure(DirectObject):
         self.collNode.setIntoCollideMask(BitMask32(0))
         if self.penalty:
             self.track = Parallel(
-                SoundInterval(
-                    self.penaltyGrabSound), Sequence(
-                    Func(
-                        self.kaboom.showThrough), LerpScaleInterval(
-                        self.kaboom, duration=0.5, scale=Point3(
-                            10, 10, 10), blendType='easeOut'), Func(
-                            self.kaboom.hide)))
+                SoundInterval(self.penaltyGrabSound),
+                Sequence(
+                    Func(self.kaboom.showThrough),
+                    LerpScaleInterval(
+                        self.kaboom,
+                        duration=0.5,
+                        scale=Point3(10, 10, 10),
+                        blendType='easeOut'), Func(self.kaboom.hide)))
             self.track.start()

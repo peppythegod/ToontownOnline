@@ -1,5 +1,3 @@
-
-
 from direct.task import Task
 from direct.fsm import StateData
 from toontown.toonbase.ToontownGlobals import *
@@ -11,14 +9,12 @@ import MinigameGlobals
 
 
 class MinigameRulesPanel(StateData.StateData):
-
-    def __init__(
-            self,
-            panelName,
-            gameTitle,
-            instructions,
-            doneEvent,
-            timeout=MinigameGlobals.rulesDuration):
+    def __init__(self,
+                 panelName,
+                 gameTitle,
+                 instructions,
+                 doneEvent,
+                 timeout=MinigameGlobals.rulesDuration):
         StateData.StateData.__init__(self, doneEvent)
         self.gameTitle = gameTitle
         self.instructions = instructions
@@ -27,19 +23,17 @@ class MinigameRulesPanel(StateData.StateData):
     def load(self):
         minigameGui = loader.loadModel('phase_4/models/gui/minigame_rules_gui')
         buttonGui = loader.loadModel('phase_3.5/models/gui/inventory_gui')
-        self.frame = DirectFrame(image=minigameGui.find(
-            '**/minigame-rules-panel'), relief=None, pos=(0.13750000000000001, 0, -0.66669999999999996))
+        self.frame = DirectFrame(
+            image=minigameGui.find('**/minigame-rules-panel'),
+            relief=None,
+            pos=(0.13750000000000001, 0, -0.66669999999999996))
         self.gameTitleText = DirectLabel(
             parent=self.frame,
             text=self.gameTitle,
             scale=TTLocalizer.MRPgameTitleText,
             text_align=TextNode.ACenter,
             text_font=getSignFont(),
-            text_fg=(
-                1.0,
-                0.33000000000000002,
-                0.33000000000000002,
-                1.0),
+            text_fg=(1.0, 0.33000000000000002, 0.33000000000000002, 1.0),
             pos=TTLocalizer.MRgameTitleTextPos,
             relief=None)
         self.instructionsText = DirectLabel(
@@ -53,30 +47,15 @@ class MinigameRulesPanel(StateData.StateData):
         self.playButton = DirectButton(
             parent=self.frame,
             relief=None,
-            image=(
-                buttonGui.find('**/InventoryButtonUp'),
-                buttonGui.find('**/InventoryButtonDown'),
-                buttonGui.find('**/InventoryButtonRollover')),
-            image_color=Vec4(
-                0,
-                0.90000000000000002,
-                0.10000000000000001,
-                1),
+            image=(buttonGui.find('**/InventoryButtonUp'),
+                   buttonGui.find('**/InventoryButtonDown'),
+                   buttonGui.find('**/InventoryButtonRollover')),
+            image_color=Vec4(0, 0.90000000000000002, 0.10000000000000001, 1),
             text=TTLocalizer.MinigameRulesPanelPlay,
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_pos=(
-                0,
-                -0.02,
-                0),
+            text_fg=(1, 1, 1, 1),
+            text_pos=(0, -0.02, 0),
             text_scale=TTLocalizer.MRPplayButton,
-            pos=(
-                1.0024999999999999,
-                0,
-                -0.20300000000000001),
+            pos=(1.0024999999999999, 0, -0.20300000000000001),
             scale=1.05,
             command=self.playCallback)
         minigameGui.removeNode()

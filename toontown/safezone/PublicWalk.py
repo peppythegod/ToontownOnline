@@ -21,12 +21,10 @@ class PublicWalk(Walk.Walk):
     def enter(self, slowWalk=0):
         Walk.Walk.enter(self, slowWalk)
         base.localAvatar.book.showButton()
-        self.accept(
-            StickerBookHotkey,
-            self._PublicWalk__handleStickerBookEntry)
-        self.accept(
-            'enterStickerBook',
-            self._PublicWalk__handleStickerBookEntry)
+        self.accept(StickerBookHotkey,
+                    self._PublicWalk__handleStickerBookEntry)
+        self.accept('enterStickerBook',
+                    self._PublicWalk__handleStickerBookEntry)
         self.accept(OptionsPageHotkey, self._PublicWalk__handleOptionsEntry)
         base.localAvatar.laffMeter.start()
         base.localAvatar.beginAllowPies()
@@ -50,8 +48,7 @@ class PublicWalk(Walk.Walk):
         else:
             doneStatus = {}
             doneStatus['mode'] = 'StickerBook'
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            messenger.send(self.doneEvent, [doneStatus])
             return None
 
     def _PublicWalk__handleOptionsEntry(self):
@@ -64,6 +61,5 @@ class PublicWalk(Walk.Walk):
         else:
             doneStatus = {}
             doneStatus['mode'] = 'Options'
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            messenger.send(self.doneEvent, [doneStatus])
             return None

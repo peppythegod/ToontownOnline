@@ -56,8 +56,7 @@ class DistributedCrushableEntityAI(DistributedEntityAI.DistributedEntityAI):
             self.crushCell = self.level.entities.get(self.crushCellId, None)
             if self.crushCell is None:
                 self.accept(
-                    self.level.getEntityCreateEvent(
-                        self.crushCellId),
+                    self.level.getEntityCreateEvent(self.crushCellId),
                     self.setActiveCrushCell)
             else:
                 self.isCrushable = 1
@@ -68,10 +67,7 @@ class DistributedCrushableEntityAI(DistributedEntityAI.DistributedEntityAI):
         self.setPosition(pos)
 
     def d_setPosition(self, pos):
-        self.sendUpdate('setPosition', [
-            pos[0],
-            pos[1],
-            pos[2]])
+        self.sendUpdate('setPosition', [pos[0], pos[1], pos[2]])
 
     def setPosition(self, pos):
         self.pos = pos

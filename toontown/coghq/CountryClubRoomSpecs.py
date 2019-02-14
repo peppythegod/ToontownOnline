@@ -36,12 +36,13 @@ BossbotCountryClubRoomId2RoomName = {
     22: 'BossbotCountryClubTeeOffRoom_Action01',
     32: 'BossbotCountryClubTeeOffRoom_Action02',
     29: 'BossbotCountryClubGreenRoom_Action01',
-    39: 'BossbotCountryClubGreenRoom_Action02'}
+    39: 'BossbotCountryClubGreenRoom_Action02'
+}
 BossbotCountryClubRoomName2RoomId = invertDict(
     BossbotCountryClubRoomId2RoomName)
-BossbotCountryClubEntranceIDs = (0,)
+BossbotCountryClubEntranceIDs = (0, )
 BossbotCountryClubMiddleRoomIDs = (2, 5, 6)
-BossbotCountryClubFinalRoomIDs = (18,)
+BossbotCountryClubFinalRoomIDs = (18, )
 BossbotCountryClubConnectorRooms = (
     'phase_12/models/bossbotHQ/Connector_Tunnel_A',
     'phase_12/models/bossbotHQ/Connector_Tunnel_B')
@@ -55,12 +56,19 @@ for (roomName, roomId) in BossbotCountryClubRoomName2RoomId.items():
     CashbotMintSpecModules[roomId] = eval(roomName)
 
 CogSpecModules = {
-    'BossbotCountryClubFairwayRoom_Battle00': BossbotCountryClubFairwayRoom_Battle00_Cogs,
-    'BossbotCountryClubMazeRoom_Battle00': BossbotCountryClubMazeRoom_Battle00_Cogs,
-    'BossbotCountryClubMazeRoom_Battle01': BossbotCountryClubMazeRoom_Battle01_Cogs,
-    'BossbotCountryClubMazeRoom_Battle02': BossbotCountryClubMazeRoom_Battle02_Cogs,
-    'BossbotCountryClubKartRoom_Battle00': BossbotCountryClubKartRoom_Battle00_Cogs,
-    'BossbotCountryClubPresidentRoom_Battle00': BossbotCountryClubPresidentRoom_Battle00_Cogs}
+    'BossbotCountryClubFairwayRoom_Battle00':
+    BossbotCountryClubFairwayRoom_Battle00_Cogs,
+    'BossbotCountryClubMazeRoom_Battle00':
+    BossbotCountryClubMazeRoom_Battle00_Cogs,
+    'BossbotCountryClubMazeRoom_Battle01':
+    BossbotCountryClubMazeRoom_Battle01_Cogs,
+    'BossbotCountryClubMazeRoom_Battle02':
+    BossbotCountryClubMazeRoom_Battle02_Cogs,
+    'BossbotCountryClubKartRoom_Battle00':
+    BossbotCountryClubKartRoom_Battle00_Cogs,
+    'BossbotCountryClubPresidentRoom_Battle00':
+    BossbotCountryClubPresidentRoom_Battle00_Cogs
+}
 roomId2numBattles = {}
 for (roomName, roomId) in BossbotCountryClubRoomName2RoomId.items():
     if roomName not in CogSpecModules:

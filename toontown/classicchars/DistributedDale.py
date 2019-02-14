@@ -20,12 +20,11 @@ class DistributedDale(DistributedCCharBase.DistributedCCharBase):
             DistributedCCharBase.DistributedCCharBase.__init__(
                 self, cr, TTLocalizer.Dale, 'da')
             self.fsm = ClassicFSM.ClassicFSM(self.getName(), [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral, [
-                    'Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, [
-                    'Neutral'])], 'Off', 'Off')
+                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+                State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                            ['Walk']),
+                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+            ], 'Off', 'Off')
             self.fsm.enterInitialState()
             self.handleHolidays()
 
@@ -55,15 +54,15 @@ class DistributedDale(DistributedCCharBase.DistributedCCharBase):
         self.setX(self.getX() + ToontownGlobals.DaleOrbitDistance)
         name = self.getName()
         self.neutralDoneEvent = self.taskName(name + '-neutral-done')
-        self.neutral = CharStateDatas.CharNeutralState(
-            self.neutralDoneEvent, self)
+        self.neutral = CharStateDatas.CharNeutralState(self.neutralDoneEvent,
+                                                       self)
         self.walkDoneEvent = self.taskName(name + '-walk-done')
         self.fsm.request('Neutral')
 
     def announceGenerate(self):
         DistributedCCharBase.DistributedCCharBase.announceGenerate(self)
-        self.walk = CharStateDatas.CharFollowChipState(
-            self.walkDoneEvent, self, self.chipId)
+        self.walk = CharStateDatas.CharFollowChipState(self.walkDoneEvent,
+                                                       self, self.chipId)
 
     def enterOff(self):
         pass
@@ -73,9 +72,8 @@ class DistributedDale(DistributedCCharBase.DistributedCCharBase):
 
     def enterNeutral(self):
         self.neutral.enter()
-        self.acceptOnce(
-            self.neutralDoneEvent,
-            self._DistributedDale__decideNextState)
+        self.acceptOnce(self.neutralDoneEvent,
+                        self._DistributedDale__decideNextState)
 
     def exitNeutral(self):
         self.ignore(self.neutralDoneEvent)
@@ -83,9 +81,8 @@ class DistributedDale(DistributedCCharBase.DistributedCCharBase):
 
     def enterWalk(self):
         self.walk.enter()
-        self.acceptOnce(
-            self.walkDoneEvent,
-            self._DistributedDale__decideNextState)
+        self.acceptOnce(self.walkDoneEvent,
+                        self._DistributedDale__decideNextState)
 
     def exitWalk(self):
         self.ignore(self.walkDoneEvent)

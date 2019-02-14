@@ -20,25 +20,19 @@ class CogHQLoader(StateData.StateData):
         self.placeDoneEvent = 'cogHQLoaderPlaceDone'
         self.townBattleDoneEvent = 'town-battle-done'
         self.fsm = ClassicFSM.ClassicFSM('CogHQLoader', [
-            State.State('start', None, None, [
-                'quietZone',
-                'cogHQExterior',
-                'cogHQBossBattle']),
-            State.State('cogHQExterior', self.enterCogHQExterior, self.exitCogHQExterior, [
-                'quietZone',
-                'cogHQLobby']),
-            State.State('cogHQLobby', self.enterCogHQLobby, self.exitCogHQLobby, [
-                'quietZone',
-                'cogHQExterior',
-                'cogHQBossBattle']),
-            State.State('cogHQBossBattle', self.enterCogHQBossBattle, self.exitCogHQBossBattle, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'cogHQExterior',
-                'cogHQLobby',
-                'cogHQBossBattle']),
-            State.State('final', None, None, [
-                'start'])], 'start', 'final')
+            State.State('start', None, None,
+                        ['quietZone', 'cogHQExterior', 'cogHQBossBattle']),
+            State.State('cogHQExterior', self.enterCogHQExterior,
+                        self.exitCogHQExterior, ['quietZone', 'cogHQLobby']),
+            State.State('cogHQLobby', self.enterCogHQLobby,
+                        self.exitCogHQLobby,
+                        ['quietZone', 'cogHQExterior', 'cogHQBossBattle']),
+            State.State('cogHQBossBattle', self.enterCogHQBossBattle,
+                        self.exitCogHQBossBattle, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['cogHQExterior', 'cogHQLobby', 'cogHQBossBattle']),
+            State.State('final', None, None, ['start'])
+        ], 'start', 'final')
 
     def load(self, zoneId):
         self.parentFSMState.addChild(self.fsm)
@@ -73,8 +67,7 @@ class CogHQLoader(StateData.StateData):
 
     def enter(self, requestStatus):
         self.fsm.enterInitialState()
-        self.fsm.request(requestStatus['where'], [
-            requestStatus])
+        self.fsm.request(requestStatus['where'], [requestStatus])
 
     def exit(self):
         self.ignoreAll()
@@ -96,8 +89,7 @@ class CogHQLoader(StateData.StateData):
 
     def handleQuietZoneDone(self):
         status = self.quietZoneStateData.getRequestStatus()
-        self.fsm.request(status['where'], [
-            status])
+        self.fsm.request(status['where'], [status])
 
     def enterPlace(self, requestStatus):
         self.acceptOnce(self.placeDoneEvent, self.placeDone)
@@ -120,8 +112,7 @@ class CogHQLoader(StateData.StateData):
             self.unloadPlaceGeom()
             zoneId = status['zoneId']
             self.loadPlaceGeom(zoneId)
-            self.fsm.request('quietZone', [
-                status])
+            self.fsm.request('quietZone', [status])
         else:
             self.doneStatus = status
             messenger.send(self.doneEvent)

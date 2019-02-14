@@ -16,7 +16,6 @@ notify = directNotify.newCategory('UserFunnel')
 
 
 class UserFunnel:
-
     def __init__(self):
         self.hitboxAcct = 'DM53030620EW'
         self.language = 'en-us'
@@ -31,14 +30,14 @@ class UserFunnel:
             0: 'Internal Disney PHP Collector Site',
             1: 'ehg-dig.hitbox.com/HG?',
             2: 'ehg-dig.hitbox.com/HG?',
-            3: 'build64.online.disney.com:5020/index.php?'}
+            3: 'build64.online.disney.com:5020/index.php?'
+        }
         self.CurrentHost = ''
         self.URLtoSend = ''
         self.gameName = 'ToonTown'
         self.browserName = 'Panda3D%20(' + \
             self.gameName + ';%20' + sys.platform + ')'
-        self.HTTPUserHeader = [
-            ('User-agent', 'Panda3D')]
+        self.HTTPUserHeader = [('User-agent', 'Panda3D')]
         self.osMajorver = ''
         self.osMinorver = ''
         self.osRevver = ''
@@ -49,7 +48,8 @@ class UserFunnel:
             0: 'Win32s on Windows 3.1',
             1: 'Windows 95/98/ME',
             2: 'Windows NT/2000/XP',
-            3: 'Windows CE'}
+            3: 'Windows CE'
+        }
         self.milestoneDict = {
             0: 'New User',
             1: 'Create Account',
@@ -71,13 +71,15 @@ class UserFunnel:
             17: 'Access Cannon',
             18: 'Cutscene Four Starts',
             19: 'Cutscene Four Ends',
-            20: 'Dock - Start Game'}
+            20: 'Dock - Start Game'
+        }
         self.macTypeDict = {
             2: 'Jaguar',
             1: 'Puma',
             3: 'Panther',
             4: 'Tiger',
-            5: 'Lepard'}
+            5: 'Lepard'
+        }
         self.milestone = ''
         self.pandaHTTPClientVarWSS = []
         self.pandaHTTPClientVarCTG = []
@@ -118,8 +120,8 @@ class UserFunnel:
                 self.osMinorver = parseLine[versionStringStart + 3]
                 self.osRevver = parseLine[versionStringStart +
                                           5:versionStringStart + 7].strip(' ')
-                self.osBuild = parseLine[int(
-                    parseLine.find('(')) + 1:parseLine.find(')')]
+                self.osBuild = parseLine[int(parseLine.find('(')) +
+                                         1:parseLine.find(')')]
             except BaseException:
                 notify.info(
                     "couldn't parse the system_profiler output, using zeros")
@@ -141,15 +143,15 @@ class UserFunnel:
                     parseLine = pl['ProductVersion']
                     numbers = parseLine.split('.')
                     notify.info(
-                        'parseline =%s numbers =%s' %
-                        (parseLine, numbers))
+                        'parseline =%s numbers =%s' % (parseLine, numbers))
                     self.osMinorver = numbers[1]
                     self.osRevver = numbers[2]
                     self.osBuild = pl['ProductBuildVersion']
-                notify.info('tried plist but still got exception')
-                self.osMinorver = '0'
-                self.osRevver = '0'
-                self.osBuild = '0000'
+                except:
+                    notify.info('tried plist but still got exception')
+                    self.osMinorver = '0'
+                    self.osRevver = '0'
+                    self.osBuild = '0000'
 
             return None
 
@@ -169,15 +171,16 @@ class UserFunnel:
         self.CurrentHost = hostID
 
     def getFunnelURL(self):
-        if patcherVer() == [
-                'OFFLINE']:
+        if patcherVer() == ['OFFLINE']:
             return None
 
         if patcherVer() == []:
             patcherHTTP = HTTPClient()
             if checkParamFile() is None:
                 patcherDoc = patcherHTTP.getDocument(
-                    URLSpec('http://download.toontown.com/english/currentVersion/content/patcher.ver'))
+                    URLSpec(
+                        'http://download.toontown.com/english/currentVersion/content/patcher.ver'
+                    ))
                 vconGroup('w', self.cgRelease)
             else:
                 patcherDoc = patcherHTTP.getDocument(URLSpec(checkParamFile()))
@@ -196,7 +199,8 @@ class UserFunnel:
             while self.patcherURL:
                 self.confLine = self.patcherURL.pop()
                 if self.confLine.find(
-                        'FUNNEL_LOG=') != -1 and self.confLine.find('#FUNNEL_LOG=') == -1:
+                        'FUNNEL_LOG=') != -1 and self.confLine.find(
+                            '#FUNNEL_LOG=') == -1:
                     self.dynamicVRFunnel = self.confLine[11:].strip('\n')
                     patcherVer('w', self.confLine[11:].strip('\n'))
                     continue
@@ -217,17 +221,39 @@ class UserFunnel:
         else:
             hitboxOSType = 'c4'
         if self.CurrentHost == 1:
-            self.URLtoSend = 'http://' + self.hostDict[self.CurrentHost] + 'hb=' + str(self.hitboxAcct) + '&n=' + str(self.milestone) + '&ln=' + self.language + '&gp=STARTGAME&fnl=TOONTOWN_FUNNEL&vcon=/' + self.cgRoot + '/' + self.cgLocation + '/' + str(
-                vconGroup()) + '&c1=' + str(sys.platform) + '&' + str(hitboxOSType) + '=' + str(self.osMajorver) + '_' + str(self.osMinorver) + '_' + str(self.osRevver) + '_' + str(self.osBuild)
+            self.URLtoSend = 'http://' + self.hostDict[self.CurrentHost] + 'hb=' + str(
+                self.hitboxAcct
+            ) + '&n=' + str(
+                self.milestone
+            ) + '&ln=' + self.language + '&gp=STARTGAME&fnl=TOONTOWN_FUNNEL&vcon=/' + self.cgRoot + '/' + self.cgLocation + '/' + str(
+                vconGroup()) + '&c1=' + str(
+                    sys.platform) + '&' + str(hitboxOSType) + '=' + str(
+                        self.osMajorver) + '_' + str(
+                            self.osMinorver) + '_' + str(
+                                self.osRevver) + '_' + str(self.osBuild)
 
         if self.CurrentHost == 2:
-            self.URLtoSend = 'http://' + self.hostDict[self.CurrentHost] + 'hb=' + str(self.hitboxAcct) + '&n=' + str(self.milestone) + '&ln=' + self.language + '&vcon=/' + self.cgRoot + '/' + self.cgLocation + '/' + str(
-                vconGroup()) + '&c1=' + str(sys.platform) + '&' + str(hitboxOSType) + '=' + str(self.osMajorver) + '_' + str(self.osMinorver) + '_' + str(self.osRevver) + '_' + str(self.osBuild)
+            self.URLtoSend = 'http://' + self.hostDict[self.CurrentHost] + 'hb=' + str(
+                self.hitboxAcct
+            ) + '&n=' + str(
+                self.milestone
+            ) + '&ln=' + self.language + '&vcon=/' + self.cgRoot + '/' + self.cgLocation + '/' + str(
+                vconGroup()) + '&c1=' + str(
+                    sys.platform) + '&' + str(hitboxOSType) + '=' + str(
+                        self.osMajorver) + '_' + str(
+                            self.osMinorver) + '_' + str(
+                                self.osRevver) + '_' + str(self.osBuild)
 
         if self.CurrentHost == 0:
             localMAC = str(getMAC())
-            self.URLtoSend = str(self.dynamicVRFunnel) + '?funnel=' + str(self.milestone) + '&platform=' + str(sys.platform) + '&sysver=' + str(self.osMajorver) + '_' + str(
-                self.osMinorver) + '_' + str(self.osRevver) + '_' + str(self.osBuild) + '&mac=' + localMAC + '&username=' + str(loggingSubID()) + '&id=' + str(loggingAvID())
+            self.URLtoSend = str(self.dynamicVRFunnel) + '?funnel=' + str(
+                self.milestone
+            ) + '&platform=' + str(sys.platform) + '&sysver=' + str(
+                self.osMajorver) + '_' + str(self.osMinorver) + '_' + str(
+                    self.osRevver) + '_' + str(
+                        self.osBuild
+                    ) + '&mac=' + localMAC + '&username=' + str(
+                        loggingSubID()) + '&id=' + str(loggingAvID())
 
     def readInPandaCookie(self):
         thefile = open(self.cfCookieFile, 'r')
@@ -248,27 +274,15 @@ class UserFunnel:
                 variable = temp[2]
                 value = temp[3]
                 if variable == 'CTG':
-                    self.pandaHTTPClientVarCTG = [
-                        domain,
-                        loc,
-                        variable,
-                        value]
+                    self.pandaHTTPClientVarCTG = [domain, loc, variable, value]
                     self.setTheHTTPCookie(self.pandaHTTPClientVarCTG)
 
                 if variable == self.hitboxAcct + 'V6':
-                    self.pandaHTTPClientVarDM = [
-                        domain,
-                        loc,
-                        variable,
-                        value]
+                    self.pandaHTTPClientVarDM = [domain, loc, variable, value]
                     self.setTheHTTPCookie(self.pandaHTTPClientVarDM)
 
                 if variable == 'WSS_GW':
-                    self.pandaHTTPClientVarWSS = [
-                        domain,
-                        loc,
-                        variable,
-                        value]
+                    self.pandaHTTPClientVarWSS = [domain, loc, variable, value]
                     self.setTheHTTPCookie(self.pandaHTTPClientVarWSS)
                     continue
         except IndexError:
@@ -281,30 +295,24 @@ class UserFunnel:
             HTTPCookie('WSS_GW', '/', '.hitbox.com'))
         if a.getName():
             self.pandaHTTPClientVarWSS = [
-                '.hitbox.com',
-                '/',
-                'WSS_GW',
-                a.getValue()]
+                '.hitbox.com', '/', 'WSS_GW',
+                a.getValue()
+            ]
 
         b = self.httpSession.getCookie(HTTPCookie('CTG', '/', '.hitbox.com'))
         if b.getName():
             self.pandaHTTPClientVarCTG = [
-                '.hitbox.com',
-                '/',
-                'CTG',
-                b.getValue()]
+                '.hitbox.com', '/', 'CTG',
+                b.getValue()
+            ]
 
         c = self.httpSession.getCookie(
-            HTTPCookie(
-                self.hitboxAcct + 'V6',
-                '/',
-                'ehg-dig.hitbox.com'))
+            HTTPCookie(self.hitboxAcct + 'V6', '/', 'ehg-dig.hitbox.com'))
         if c.getName():
             self.pandaHTTPClientVarDM = [
-                'ehg-dig.hitbox.com',
-                '/',
-                self.hitboxAcct + 'V6',
-                c.getValue()]
+                'ehg-dig.hitbox.com', '/', self.hitboxAcct + 'V6',
+                c.getValue()
+            ]
 
         del a
         del b
@@ -320,37 +328,22 @@ class UserFunnel:
         try:
             thefile = open(self.cfCookieFile, 'w')
             if len(self.pandaHTTPClientVarWSS) == 4:
-                thefile.write(
-                    self.pandaHTTPClientVarWSS[0] +
-                    '\t' +
-                    self.pandaHTTPClientVarWSS[1] +
-                    '\t' +
-                    self.pandaHTTPClientVarWSS[2] +
-                    '\t' +
-                    self.pandaHTTPClientVarWSS[3] +
-                    '\n')
+                thefile.write(self.pandaHTTPClientVarWSS[0] + '\t' +
+                              self.pandaHTTPClientVarWSS[1] + '\t' +
+                              self.pandaHTTPClientVarWSS[2] + '\t' +
+                              self.pandaHTTPClientVarWSS[3] + '\n')
 
             if len(self.pandaHTTPClientVarCTG) == 4:
-                thefile.write(
-                    self.pandaHTTPClientVarCTG[0] +
-                    '\t' +
-                    self.pandaHTTPClientVarCTG[1] +
-                    '\t' +
-                    self.pandaHTTPClientVarCTG[2] +
-                    '\t' +
-                    self.pandaHTTPClientVarCTG[3] +
-                    '\n')
+                thefile.write(self.pandaHTTPClientVarCTG[0] + '\t' +
+                              self.pandaHTTPClientVarCTG[1] + '\t' +
+                              self.pandaHTTPClientVarCTG[2] + '\t' +
+                              self.pandaHTTPClientVarCTG[3] + '\n')
 
             if len(self.pandaHTTPClientVarDM) == 4:
-                thefile.write(
-                    self.pandaHTTPClientVarDM[0] +
-                    '\t' +
-                    self.pandaHTTPClientVarDM[1] +
-                    '\t' +
-                    self.pandaHTTPClientVarDM[2] +
-                    '\t' +
-                    self.pandaHTTPClientVarDM[3] +
-                    '\n')
+                thefile.write(self.pandaHTTPClientVarDM[0] + '\t' +
+                              self.pandaHTTPClientVarDM[1] + '\t' +
+                              self.pandaHTTPClientVarDM[2] + '\t' +
+                              self.pandaHTTPClientVarDM[3] + '\n')
 
             thefile.close()
         except IOError:
@@ -364,8 +357,7 @@ class UserFunnel:
                 self.readInPandaCookie()
 
     def run(self):
-        if self.CurrentHost == 0 and patcherVer() == [
-                'OFFLINE']:
+        if self.CurrentHost == 0 and patcherVer() == ['OFFLINE']:
             return None
 
         self.nonBlock = self.httpSession.makeChannel(False)
@@ -410,7 +402,6 @@ def getVRSFunnelURL():
 
 
 class HitBoxCookie:
-
     def __init__(self):
         self.ieCookieDir = os.getenv('USERPROFILE') + '\\Cookies'
         self.pythonCookieFile = 'cf.txt'
@@ -466,13 +457,15 @@ class HitBoxCookie:
         return [
             filestreamListElement.split('\n')[2],
             filestreamListElement.split('\n')[0],
-            filestreamListElement.split('\n')[1]]
+            filestreamListElement.split('\n')[1]
+        ]
 
     def sortPythonCookie(self, filestreamListElement):
         return [
             filestreamListElement.split('\t')[0],
             filestreamListElement.split('\t')[5],
-            filestreamListElement.split('\t')[6]]
+            filestreamListElement.split('\t')[6]
+        ]
 
     def writeIEHitBoxCookies(self):
         if self.ctg is None and self.wss_gw is None or self.dmAcct is None:
@@ -504,13 +497,8 @@ class HitBoxCookie:
         if tempDMBUFFER[0].find('.') == 0:
             tempDMBUFFER = tempDMBUFFER[1:]
 
-        iecWrite.write(
-            self.dmAcct[1] +
-            '\n' +
-            self.dmAcct[2] +
-            '\n' +
-            tempDMBUFFER +
-            '/\n*\n')
+        iecWrite.write(self.dmAcct[1] + '\n' + self.dmAcct[2] + '\n' +
+                       tempDMBUFFER + '/\n*\n')
         iecWrite.close()
         del iecData
         del iecWrite
@@ -523,20 +511,10 @@ class HitBoxCookie:
         if iecBuffer.find('/') == -1:
             iecBuffer = iecBuffer + '/'
 
-        iecWrite.write(
-            self.ctg[1] +
-            '\n' +
-            self.ctg[2] +
-            '\n' +
-            iecBuffer +
-            '\n*\n')
-        iecWrite.write(
-            self.wss_gw[1] +
-            '\n' +
-            self.wss_gw[2] +
-            '\n' +
-            iecBuffer +
-            '\n*\n')
+        iecWrite.write(self.ctg[1] + '\n' + self.ctg[2] + '\n' + iecBuffer +
+                       '\n*\n')
+        iecWrite.write(self.wss_gw[1] + '\n' + self.wss_gw[2] + '\n' +
+                       iecBuffer + '\n*\n')
         iecWrite.close()
 
     def OLDwritePythonHitBoxCookies(self, filename='cf.txt'):
@@ -545,30 +523,15 @@ class HitBoxCookie:
 
         outputfile = open(filename, 'w')
         outputfile.write(self.pythonCookieHeader)
-        outputfile.write(
-            '.' +
-            self.dmAcct[0].strip('/') +
-            '\tTRUE\t/\tFALSE\t9999999999\t' +
-            self.dmAcct[1] +
-            '\t' +
-            self.dmAcct[2] +
-            '\n')
-        outputfile.write(
-            '.' +
-            self.ctg[0].strip('/') +
-            '\tTRUE\t/\tFALSE\t9999999999\t' +
-            self.ctg[1] +
-            '\t' +
-            self.ctg[2] +
-            '\n')
-        outputfile.write(
-            '.' +
-            self.wss_gw[0].strip('/') +
-            '\tTRUE\t/\tFALSE\t9999999999\t' +
-            self.wss_gw[1] +
-            '\t' +
-            self.wss_gw[2] +
-            '\n')
+        outputfile.write('.' + self.dmAcct[0].strip('/') +
+                         '\tTRUE\t/\tFALSE\t9999999999\t' + self.dmAcct[1] +
+                         '\t' + self.dmAcct[2] + '\n')
+        outputfile.write('.' + self.ctg[0].strip('/') +
+                         '\tTRUE\t/\tFALSE\t9999999999\t' + self.ctg[1] +
+                         '\t' + self.ctg[2] + '\n')
+        outputfile.write('.' + self.wss_gw[0].strip('/') +
+                         '\tTRUE\t/\tFALSE\t9999999999\t' + self.wss_gw[1] +
+                         '\t' + self.wss_gw[2] + '\n')
         outputfile.close()
 
     def writePythonHitBoxCookies(self, filename='cf.txt'):
@@ -576,30 +539,12 @@ class HitBoxCookie:
             return None
 
         outputfile = open(filename, 'w')
-        outputfile.write(
-            '.' +
-            self.dmAcct[0].strip('/') +
-            '\t/\t' +
-            self.dmAcct[1] +
-            '\t' +
-            self.dmAcct[2] +
-            '\n')
-        outputfile.write(
-            '.' +
-            self.ctg[0].strip('/') +
-            '\t/\t' +
-            self.ctg[1] +
-            '\t' +
-            self.ctg[2] +
-            '\n')
-        outputfile.write(
-            '.' +
-            self.wss_gw[0].strip('/') +
-            '\t/\t' +
-            self.wss_gw[1] +
-            '\t' +
-            self.wss_gw[2] +
-            '\n')
+        outputfile.write('.' + self.dmAcct[0].strip('/') + '\t/\t' +
+                         self.dmAcct[1] + '\t' + self.dmAcct[2] + '\n')
+        outputfile.write('.' + self.ctg[0].strip('/') + '\t/\t' + self.ctg[1] +
+                         '\t' + self.ctg[2] + '\n')
+        outputfile.write('.' + self.wss_gw[0].strip('/') + '\t/\t' +
+                         self.wss_gw[1] + '\t' + self.wss_gw[2] + '\n')
         outputfile.close()
 
     def loadPythonHitBoxCookies(self):
@@ -721,8 +666,7 @@ def getreg(regVar):
     return data[regVarStart + 1:regVarEnd]
 
 
-def getMAC(staticMAC=[
-        None]):
+def getMAC(staticMAC=[None]):
     if staticMAC[0] is None:
         if sys.platform == 'win32':
             correctSection = 0
@@ -747,12 +691,14 @@ def getMAC(staticMAC=[
 
         if sys.platform == 'darwin':
             macconfdata = os.popen(
-                '/usr/sbin/system_profiler SPNetworkDataType |/usr/bin/grep MAC').readlines()
+                '/usr/sbin/system_profiler SPNetworkDataType |/usr/bin/grep MAC'
+            ).readlines()
             result = '-1'
             if macconfdata:
                 if macconfdata[0].find('MAC Address') != -1:
-                    pa = macconfdata[0][macconfdata[0].find(
-                        ':') + 2:macconfdata[0].find(':') + 22].strip('\n')
+                    pa = macconfdata[0][macconfdata[0].find(':') +
+                                        2:macconfdata[0].find(':') +
+                                        22].strip('\n')
                     staticMAC[0] = pa.replace(':', '-')
                     result = staticMAC[0]
 
@@ -766,8 +712,7 @@ def getMAC(staticMAC=[
         return staticMAC[0]
 
 
-def firstRun(operation='read', newPlayer=None, newPlayerBool=[
-        False]):
+def firstRun(operation='read', newPlayer=None, newPlayerBool=[False]):
     if operation != 'read':
         if len(newPlayerBool) != 0:
             newPlayerBool.pop()
@@ -787,16 +732,14 @@ def patcherVer(operation='read', url=None, patchfile=[]):
     return patchfile
 
 
-def loggingAvID(operation='read', newId=None, localAvId=[
-        None]):
+def loggingAvID(operation='read', newId=None, localAvId=[None]):
     if operation == 'write':
         localAvId[0] = newId
     else:
         return localAvId[0]
 
 
-def loggingSubID(operation='read', newId=None, localSubId=[
-        None]):
+def loggingSubID(operation='read', newId=None, localSubId=[None]):
     if operation == 'write':
         localSubId[0] = newId
     else:
@@ -847,14 +790,12 @@ def reportMemoryLeaks():
 
         try:
             uncompressedReport += str(s) + '&'
-        continue
+            continue
         except TypeError:
             continue
 
     reportdata = bz2.compress(uncompressedReport, 9)
-    headers = {
-        'Content-type': 'application/x-bzip2',
-        'Accept': 'text/plain'}
+    headers = {'Content-type': 'application/x-bzip2', 'Accept': 'text/plain'}
 
     try:
         baseURL = patcherVer()[0].split('/lo')[0]

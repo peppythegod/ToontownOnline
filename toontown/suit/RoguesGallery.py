@@ -7,7 +7,6 @@ import random
 
 
 class RoguesGallery(StateData.StateData):
-
     def __init__(self, rognamestr=None):
         StateData.StateData.__init__(self, 'roguesDone')
         self.rognamestr = rognamestr
@@ -55,10 +54,8 @@ class RoguesGallery(StateData.StateData):
             self.gallery.reparentTo(render2d)
             self.gallery.setMat(base.aspect2d.getMat())
             self.gallery.setPos(0.0, 10.0, 0.0)
-            base.setBackgroundColor(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998)
+            base.setBackgroundColor(0.59999999999999998, 0.59999999999999998,
+                                    0.59999999999999998)
 
     def exit(self):
         if StateData.StateData.exit(self):
@@ -73,9 +70,9 @@ class RoguesGallery(StateData.StateData):
     def animate(self):
         self.load()
         for suit in self.actors:
-            suit.pose(
-                'neutral', random.randint(
-                    0, suit.getNumFrames('neutral') - 1))
+            suit.pose('neutral',
+                      random.randint(0,
+                                     suit.getNumFrames('neutral') - 1))
             suit.loop('neutral', 0)
 
     def stop(self):
@@ -180,6 +177,6 @@ class RoguesGallery(StateData.StateData):
                 x += self.xSpaceBetweenDifferentSuits + extraSpacePerSuit
                 self.text.setText(suit.getName())
                 name = self.gallery.attachNewNode(self.text.generate())
-                name.setPos((right + left) / 2.0, 0.0, y +
-                            (suit.height + self.labelScale * 0.5) * scale)
+                name.setPos((right + left) / 2.0, 0.0,
+                            y + (suit.height + self.labelScale * 0.5) * scale)
                 name.setScale(self.labelScale * scale)

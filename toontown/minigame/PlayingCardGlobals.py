@@ -1,5 +1,3 @@
-
-
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownBattleGlobals
 from pandac.PandaModules import Vec4
@@ -11,11 +9,7 @@ Hearts = 0
 Diamonds = 1
 Clubs = 2
 Spades = 3
-Suits = [
-    Hearts,
-    Diamonds,
-    Clubs,
-    Spades]
+Suits = [Hearts, Diamonds, Clubs, Spades]
 Unknown = 255
 UpColor = Vec4(1, 1, 1, 1)
 RolloverColor = Vec4(1, 1, 0.5, 1)
@@ -33,8 +27,7 @@ def getCardName(value):
         return TTLocalizer.getPlayingCardName(suit, rank)
 
 
-Styles = [
-    'standard']
+Styles = ['standard']
 CardImages = {}
 _cardImagesInitialized = 0
 _modelPathBase = 'phase_3.5/models/gui/inventory_icons'
@@ -56,20 +49,8 @@ def convertRankToGagTrackAndLevel(rank):
 def initCardImages():
     global _cardImagesInitialized
     suitCodes = ('h', 'd', 'c', 's')
-    rankCodes = (
-        '02',
-        '03',
-        '04',
-        '05',
-        '06',
-        '07',
-        '08',
-        '09',
-        '10',
-        '11',
-        '12',
-        '13',
-        '01')
+    rankCodes = ('02', '03', '04', '05', '06', '07', '08', '09', '10', '11',
+                 '12', '13', '01')
     for style in Styles:
         modelPath = _modelPathBase
         cardModel = loader.loadModel(modelPath)
@@ -84,7 +65,8 @@ def initCardImages():
                 CardImages[style][suitIndex][rankIndex] = cardNode
 
         propName = ToontownBattleGlobals.AvPropsNew[
-            ToontownBattleGlobals.MAX_TRACK_INDEX][ToontownBattleGlobals.MAX_LEVEL_INDEX]
+            ToontownBattleGlobals.MAX_TRACK_INDEX][
+                ToontownBattleGlobals.MAX_LEVEL_INDEX]
         CardImages[style]['back'] = cardModel.find(propName)
 
     _cardImagesInitialized = 1

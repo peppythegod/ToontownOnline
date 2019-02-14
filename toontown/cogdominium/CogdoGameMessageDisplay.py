@@ -9,8 +9,13 @@ import CogdoGameConsts
 class CogdoGameMessageDisplay:
     UpdateMessageTaskName = 'MessageDisplay.updateMessage'
 
-    def __init__(self, name, parent, pos=(0.0, 0.0, -0.5),
-                 scale=0.089999999999999997, color=(1.0, 1.0, 0, 1), sfx=None):
+    def __init__(self,
+                 name,
+                 parent,
+                 pos=(0.0, 0.0, -0.5),
+                 scale=0.089999999999999997,
+                 color=(1.0, 1.0, 0, 1),
+                 sfx=None):
         self.color = color
         self._displaySfx = sfx
         textNode = TextNode('messageLabel.' + name)
@@ -26,8 +31,7 @@ class CogdoGameMessageDisplay:
         self.messageLabel.setScale(self.scale)
         self.messageLabel.stash()
         self.transitionInterval = Sequence(
-            name='%s.transitionInterval' %
-            self.__class__.__name__)
+            name='%s.transitionInterval' % self.__class__.__name__)
 
     def destroy(self):
         taskMgr.remove(CogdoGameMessageDisplay.UpdateMessageTaskName)

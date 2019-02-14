@@ -15,7 +15,12 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
 
     def __init__(self, air, bldg, numSeats=4, antiShuffle=0, minLaff=0):
         DistributedElevatorAI.DistributedElevatorAI.__init__(
-            self, air, bldg, numSeats, antiShuffle=antiShuffle, minLaff=minLaff)
+            self,
+            air,
+            bldg,
+            numSeats,
+            antiShuffle=antiShuffle,
+            minLaff=minLaff)
         self.anyToonsBailed = 0
         self.boardingParty = None
 
@@ -30,8 +35,7 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
         DistributedElevatorAI.DistributedElevatorAI.delete(self)
 
     def d_setFloor(self, floorNumber):
-        self.sendUpdate('setFloor', [
-            floorNumber])
+        self.sendUpdate('setFloor', [floorNumber])
 
     def acceptBoarder(self, avId, seatIndex, wantBoardingShow=0):
         DistributedElevatorAI.DistributedElevatorAI.acceptBoarder(
@@ -43,10 +47,8 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
         self.fsm.request('waitCountdown')
 
     def _DistributedElevatorExtAI__handleUnexpectedExit(self, avId):
-        self.notify.warning(
-            'Avatar: ' +
-            str(avId) +
-            ' has exited unexpectedly')
+        self.notify.warning('Avatar: ' + str(avId) +
+                            ' has exited unexpectedly')
         seatIndex = self.findAvatar(avId)
         if seatIndex is None:
             pass
@@ -73,45 +75,37 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
             timeToSet = min(timeLeft + 10.0, self.countdownTime)
             self.setCountdown(timeToSet)
             timeToSend = timeToSet
-            self.sendUpdate('emptySlot' + str(seatIndex), [
-                avId,
-                1,
-                globalClockDelta.getRealNetworkTime(),
-                timeToSend])
+            self.sendUpdate(
+                'emptySlot' + str(seatIndex),
+                [avId, 1,
+                 globalClockDelta.getRealNetworkTime(), timeToSend])
         elif self.anyToonsBailed == 0:
             bailFlag = 1
             self.resetCountdown()
             self.anyToonsBailed = 1
             self.sendUpdate('emptySlot' + str(seatIndex), [
-                avId,
-                bailFlag,
-                globalClockDelta.getRealNetworkTime(),
-                timeToSend])
+                avId, bailFlag,
+                globalClockDelta.getRealNetworkTime(), timeToSend
+            ])
         else:
             self.sendUpdate('emptySlot' + str(seatIndex), [
-                avId,
-                bailFlag,
-                globalClockDelta.getRealNetworkTime(),
-                timeToSend])
+                avId, bailFlag,
+                globalClockDelta.getRealNetworkTime(), timeToSend
+            ])
         if self.countFullSeats() == 0:
             self.fsm.request('waitEmpty')
 
         taskMgr.doMethodLater(
             TOON_EXIT_ELEVATOR_TIME,
             self.clearEmptyNow,
-            self.uniqueName(
-                'clearEmpty-%s' %
-                seatIndex),
-            extraArgs=(
-                seatIndex,
-            ))
+            self.uniqueName('clearEmpty-%s' % seatIndex),
+            extraArgs=(seatIndex, ))
 
     def enterOpening(self):
         DistributedElevatorAI.DistributedElevatorAI.enterOpening(self)
-        taskMgr.doMethodLater(
-            ElevatorData[ELEVATOR_NORMAL]['openTime'],
-            self.waitEmptyTask,
-            self.uniqueName('opening-timer'))
+        taskMgr.doMethodLater(ElevatorData[ELEVATOR_NORMAL]['openTime'],
+                              self.waitEmptyTask,
+                              self.uniqueName('opening-timer'))
 
     def waitEmptyTask(self, task):
         self.fsm.request('waitEmpty')
@@ -123,10 +117,8 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
 
     def enterWaitCountdown(self):
         DistributedElevatorAI.DistributedElevatorAI.enterWaitCountdown(self)
-        taskMgr.doMethodLater(
-            self.countdownTime,
-            self.timeToGoTask,
-            self.uniqueName('countdown-timer'))
+        taskMgr.doMethodLater(self.countdownTime, self.timeToGoTask,
+                              self.uniqueName('countdown-timer'))
 
     def timeToGoTask(self, task):
         if self.countFullSeats() > 0:
@@ -137,17 +129,13 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
 
     def resetCountdown(self):
         taskMgr.remove(self.uniqueName('countdown-timer'))
-        taskMgr.doMethodLater(
-            self.countdownTime,
-            self.timeToGoTask,
-            self.uniqueName('countdown-timer'))
+        taskMgr.doMethodLater(self.countdownTime, self.timeToGoTask,
+                              self.uniqueName('countdown-timer'))
 
     def setCountdown(self, timeToSet):
         taskMgr.remove(self.uniqueName('countdown-timer'))
-        taskMgr.doMethodLater(
-            timeToSet,
-            self.timeToGoTask,
-            self.uniqueName('countdown-timer'))
+        taskMgr.doMethodLater(timeToSet, self.timeToGoTask,
+                              self.uniqueName('countdown-timer'))
 
     def enterAllAboard(self):
         DistributedElevatorAI.DistributedElevatorAI.enterAllAboard(self)
@@ -156,10 +144,8 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
         self.notify.debug('elapsed time: ' + str(elapsedTime))
         waitTime = max(TOON_BOARD_ELEVATOR_TIME - elapsedTime, 0)
         waitTime += self.getBoardingShowTimeLeft()
-        taskMgr.doMethodLater(
-            waitTime,
-            self.closeTask,
-            self.uniqueName('waitForAllAboard'))
+        taskMgr.doMethodLater(waitTime, self.closeTask,
+                              self.uniqueName('waitForAllAboard'))
 
     def getBoardingShowTimeLeft(self):
         currentTime = globalClock.getRealTime()
@@ -181,10 +167,9 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
 
     def enterClosing(self):
         DistributedElevatorAI.DistributedElevatorAI.enterClosing(self)
-        taskMgr.doMethodLater(
-            ElevatorData[ELEVATOR_NORMAL]['closeTime'],
-            self.elevatorClosedTask,
-            self.uniqueName('closing-timer'))
+        taskMgr.doMethodLater(ElevatorData[ELEVATOR_NORMAL]['closeTime'],
+                              self.elevatorClosedTask,
+                              self.uniqueName('closing-timer'))
 
     def elevatorClosedTask(self, task):
         self.elevatorClosed()
@@ -226,7 +211,7 @@ class DistributedElevatorExtAI(DistributedElevatorAI.DistributedElevatorAI):
             else:
                 self.rejectingExitersHandler(avId)
         elif av:
-            newArgs = (avId,) + args
+            newArgs = (avId, ) + args
             if self.accepting:
                 self.acceptingExitersHandler(*newArgs)
             else:

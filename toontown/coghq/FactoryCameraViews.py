@@ -11,24 +11,31 @@ class FactoryCameraViews:
         self.factory = factory
         av = base.localAvatar
         self.currentCamPos = None
-        self.views = [['signatureRoomView', (Point3(0.0, -
-                                                    14.8419799805, 13.212685584999999), Point3(0.0, -
-                                                                                               13.956348419199999, 12.749215125999999), Point3(0.0, 1.5, 15.75), Point3(0.0, 1.5, -
-                                                                                                                                                                        3.9375), 1), ['localToonLeftBattle']], ['lookoutTrigger', (Point3(0, -
-                                                                                                                                                                                                                                          17.699999999999999, 28.800000000000001), Point3(0, 10, 0), Point3(0.0, 1.5, 15.75), Point3(0.0, 1.5, -
-                                                                                                                                                                                                                                                                                                                                     3.9375), 1), []], ['moleFieldView', (Point3(0, -
-                                                                                                                                                                                                                                                                                                                                                                                 17.699999999999999, 28.800000000000001), Point3(0, 10, 0), Point3(0.0, 1.5, 15.75), Point3(0.0, 1.5, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            3.9375), 1), []]]
+        self.views = [[
+            'signatureRoomView',
+            (Point3(0.0, -14.8419799805, 13.212685584999999),
+             Point3(0.0, -13.956348419199999, 12.749215125999999),
+             Point3(0.0, 1.5, 15.75), Point3(0.0, 1.5, -3.9375), 1),
+            ['localToonLeftBattle']
+        ],
+                      [
+                          'lookoutTrigger',
+                          (Point3(0, -17.699999999999999, 28.800000000000001),
+                           Point3(0, 10, 0), Point3(0.0, 1.5, 15.75),
+                           Point3(0.0, 1.5, -3.9375), 1), []
+                      ],
+                      [
+                          'moleFieldView',
+                          (Point3(0, -17.699999999999999, 28.800000000000001),
+                           Point3(0, 10, 0), Point3(0.0, 1.5, 15.75),
+                           Point3(0.0, 1.5, -3.9375), 1), []
+                      ]]
         camHeight = av.getClampedAvatarHeight()
         for i in range(len(self.views)):
             camPos = self.views[i][1]
             av.auxCameraPositions.append(camPos)
-            factory.accept(
-                'enter' +
-                self.views[i][0],
-                Functor(
-                    self.switchCamPos,
-                    i))
+            factory.accept('enter' + self.views[i][0],
+                           Functor(self.switchCamPos, i))
             for msg in self.views[i][2]:
                 factory.accept(msg, self.checkCamPos)
 
@@ -47,12 +54,8 @@ class FactoryCameraViews:
         av = base.localAvatar
         prevView = av.cameraIndex
         self.currentCamPos = viewIndex
-        av.accept(
-            'exit' +
-            self.views[viewIndex][0],
-            Functor(
-                self.prevCamPos,
-                prevView))
+        av.accept('exit' + self.views[viewIndex][0],
+                  Functor(self.prevCamPos, prevView))
         self.notify.info('auto-switching to camera position %s' % viewIndex)
         av.setCameraSettings(self.views[viewIndex][1])
 

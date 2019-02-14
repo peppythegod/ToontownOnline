@@ -6,7 +6,6 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 
 
 class CatalogItemList:
-
     def __init__(self, source=None, store=0):
         self.store = store
         self._CatalogItemList__blob = None
@@ -76,10 +75,8 @@ class CatalogItemList:
                 continue
             afterTime.append(item)
 
-        return (
-            CatalogItemList(
-                beforeTime, store=self.store), CatalogItemList(
-                afterTime, store=self.store))
+        return (CatalogItemList(beforeTime, store=self.store),
+                CatalogItemList(afterTime, store=self.store))
 
     def extractOldestItems(self, count):
         return (self[0:count], self[count:])

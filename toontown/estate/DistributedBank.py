@@ -86,9 +86,8 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
             self.freeAvatar()
 
         self.notify.debug('Entering Bank Sphere....')
-        self.acceptOnce(
-            self.bankSphereExitEvent,
-            self._DistributedBank__handleExitSphere)
+        self.acceptOnce(self.bankSphereExitEvent,
+                        self._DistributedBank__handleExitSphere)
         self.ignore(self.bankSphereEnterEvent)
         self.cr.playGame.getPlace().fsm.request('banking')
         self.hasLocalAvatar = 1
@@ -108,10 +107,8 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
 
     def _DistributedBank__handleBankDone(self, transactionAmount):
         self.notify.debug(
-            '__handleBankDone(transactionAmount=%s' %
-            (transactionAmount,))
-        self.sendUpdate('transferMoney', [
-            transactionAmount])
+            '__handleBankDone(transactionAmount=%s' % (transactionAmount, ))
+        self.sendUpdate('transferMoney', [transactionAmount])
         self.ignore(self.bankGuiDoneEvent)
         self.ignore(self.bankSphereExitEvent)
         if self.bankGui is not None:
@@ -135,14 +132,12 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
             self.bankGui.destroy()
 
         self.bankGui = BankGUI.BankGui(self.bankGuiDoneEvent)
-        self.accept(
-            self.bankGuiDoneEvent,
-            self._DistributedBank__handleBankDone)
+        self.accept(self.bankGuiDoneEvent,
+                    self._DistributedBank__handleBankDone)
 
     def setMovie(self, mode, avId, timestamp):
-        self.notify.debug(
-            'setMovie(mode=%s, avId=%s, timestamp=%s)' %
-            (mode, avId, timestamp))
+        self.notify.debug('setMovie(mode=%s, avId=%s, timestamp=%s)' %
+                          (mode, avId, timestamp))
         timeStamp = globalClockDelta.localElapsedTime(timestamp)
         isLocalToon = avId == base.localAvatar.doId
         self.notify.info(
@@ -195,7 +190,7 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
             self.notify.warning('unknown mode in setMovie: %s' % mode)
 
     def _DistributedBank__clearDialog(self, event):
-        self.notify.debug('__clearDialog(event=%s)' % (event,))
+        self.notify.debug('__clearDialog(event=%s)' % (event, ))
         if self.bankDialog is not None:
             self.bankDialog.cleanup()
             self.bankDialog = None
@@ -214,7 +209,7 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
         self.jarLods = []
 
     def _DistributedBank__takeOutToonJar(self, avId):
-        self.notify.debug('__takeOutToonJar(avId=%s)' % (avId,))
+        self.notify.debug('__takeOutToonJar(avId=%s)' % (avId, ))
         toon = base.cr.doId2do.get(avId)
         if toon is None:
             return None
@@ -223,23 +218,22 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
         index = self.item.furnitureType
         scale = FurnitureTypes[index][FTScale]
         walkToBank = Sequence(
-            Func(
-                toon.stopSmooth), Func(
-                toon.loop, 'walk'), toon.posHprInterval(
-                0.5, Point3(
-                    0, -3.125 * (
-                        scale + 0.20000000000000001), 0), Point3(
-                            0, 0, 0), other=self, blendType='easeInOut'), Func(
-                                toon.loop, 'neutral'), Func(
-                                    toon.startSmooth))
+            Func(toon.stopSmooth), Func(toon.loop, 'walk'),
+            toon.posHprInterval(
+                0.5,
+                Point3(0, -3.125 * (scale + 0.20000000000000001), 0),
+                Point3(0, 0, 0),
+                other=self,
+                blendType='easeInOut'), Func(toon.loop, 'neutral'),
+            Func(toon.startSmooth))
         track.append(walkToBank)
         if not toon.jar:
             toon.getJar()
 
         self._DistributedBank__attachToonJar(toon)
         jarAndBank = Parallel(
-            LerpScaleInterval(
-                toon.jar, 1.5, 1.0, blendType='easeOut'), ActorInterval(
+            LerpScaleInterval(toon.jar, 1.5, 1.0, blendType='easeOut'),
+            ActorInterval(
                 base.cr.doId2do[avId], 'bank', endTime=3.7999999999999998))
         track.append(jarAndBank)
         track.append(
@@ -252,7 +246,7 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
         self.hasJarOut = 1
 
     def _DistributedBank__putAwayToonJar(self, avId):
-        self.notify.debug('__putAwayToonJar(avId=%s)' % (avId,))
+        self.notify.debug('__putAwayToonJar(avId=%s)' % (avId, ))
         toon = base.cr.doId2do.get(avId)
         if toon is None:
             return None
@@ -267,15 +261,8 @@ class DistributedBank(DistributedFurnitureItem.DistributedFurnitureItem):
         track = Sequence()
         jarAndBank = Parallel(
             ActorInterval(
-                base.cr.doId2do[avId],
-                'bank',
-                startTime=2.0,
-                endTime=0.0),
-            LerpScaleInterval(
-                toon.jar,
-                2.0,
-                0.0,
-                blendType='easeIn'))
+                base.cr.doId2do[avId], 'bank', startTime=2.0, endTime=0.0),
+            LerpScaleInterval(toon.jar, 2.0, 0.0, blendType='easeIn'))
         track.append(jarAndBank)
         track.append(Func(self._DistributedBank__removeToonJar))
         track.append(Func(toon.removeJar))

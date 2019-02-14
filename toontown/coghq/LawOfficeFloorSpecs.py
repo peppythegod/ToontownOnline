@@ -20,7 +20,8 @@ def getNumBattles(floorId):
 
 LawbotOfficeFloorId2FloorName = {
     0: 'LabotOfficeFloor_01_a',
-    1: 'LabotOfficeFloor_01_b'}
+    1: 'LabotOfficeFloor_01_b'
+}
 LawbotOfficeFloorName2FloorId = invertDict(LawbotOfficeFloorId2FloorName)
 LawbotOfficeEntranceIDs = (0, 1)
 LawbotOfficeFloorIDs = (0, 1)
@@ -30,7 +31,8 @@ for roomName, roomId in LawbotOfficeFloorName2FloorId.items():
 
 CogSpecModules = {
     'CashbotMintBoilerRoom_Battle00': LabotOfficeFloor_01a_Cogs,
-    'CashbotMintBoilerRoom_Battle01': LabotOfficeFloor_01b_Cogs}
+    'CashbotMintBoilerRoom_Battle01': LabotOfficeFloor_01b_Cogs
+}
 floorId2numBattles = {}
 for (roomName, roomId) in LawbotOfficeFloorName2FloorId.items():
     if roomName not in CogSpecModules:

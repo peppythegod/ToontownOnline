@@ -3,7 +3,6 @@ import FishGlobals
 
 
 class FishTank:
-
     def __init__(self):
         self.fishList = []
 
@@ -15,13 +14,8 @@ class FishTank:
 
     def makeFromNetLists(self, genusList, speciesList, weightList):
         self.fishList = []
-        for (
-                genus,
-                species,
-                weight) in zip(
-                genusList,
-                speciesList,
-                weightList):
+        for (genus, species, weight) in zip(genusList, speciesList,
+                                            weightList):
             self.fishList.append(FishBase.FishBase(genus, species, weight))
 
     def getNetLists(self):
@@ -33,10 +27,7 @@ class FishTank:
             speciesList.append(fish.getSpecies())
             weightList.append(fish.getWeight())
 
-        return [
-            genusList,
-            speciesList,
-            weightList]
+        return [genusList, speciesList, weightList]
 
     def hasFish(self, genus, species):
         for fish in self.fishList:

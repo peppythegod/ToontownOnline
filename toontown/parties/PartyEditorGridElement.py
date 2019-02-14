@@ -14,13 +14,8 @@ from toontown.parties import PartyUtils
 class PartyEditorGridElement(DirectButton):
     notify = directNotify.newCategory('PartyEditorGridElement')
 
-    def __init__(
-            self,
-            partyEditor,
-            id,
-            isDecoration,
-            checkSoldOutAndPaidStatusAndAffordability,
-            **kw):
+    def __init__(self, partyEditor, id, isDecoration,
+                 checkSoldOutAndPaidStatusAndAffordability, **kw):
         self.partyEditor = partyEditor
         self.id = id
         self.isDecoration = isDecoration
@@ -30,35 +25,21 @@ class PartyEditorGridElement(DirectButton):
             colorList = ((1.0, 1.0, 1.0, 1.0), (0.0, 0.0, 1.0, 1.0),
                          (0.0, 1.0, 1.0, 1.0), (0.5, 0.5, 0.5, 1.0))
             self.geom = self.partyEditor.partyPlanner.gui.find(
-                '**/%s' % PartyGlobals.DecorationInformationDict[self.id]['gridAsset'])
+                '**/%s' %
+                PartyGlobals.DecorationInformationDict[self.id]['gridAsset'])
         else:
             self.name = TTLocalizer.PartyActivityNameDict[self.id]['editor']
             colorList = ((1.0, 1.0, 1.0, 1.0), (0.0, 1.0, 0.0, 1.0),
                          (1.0, 1.0, 0.0, 1.0), (0.5, 0.5, 0.5, 1.0))
             self.geom = self.partyEditor.partyPlanner.gui.find(
-                '**/%s' % PartyGlobals.ActivityInformationDict[self.id]['gridAsset'])
-        optiondefs = (
-            ('geom',
-             self.geom,
-             None),
-            ('geom_scale',
-             1.0,
-             None),
-            ('geom_color',
-             colorList[0],
-             None),
-            ('geom1_color',
-             colorList[0],
-             None),
-            ('geom2_color',
-             colorList[0],
-             None),
-            ('geom3_color',
-             colorList[0],
-             None),
-            ('relief',
-             None,
-             None))
+                '**/%s' %
+                PartyGlobals.ActivityInformationDict[self.id]['gridAsset'])
+        optiondefs = (('geom', self.geom, None), ('geom_scale', 1.0, None),
+                      ('geom_color', colorList[0],
+                       None), ('geom1_color', colorList[0],
+                               None), ('geom2_color', colorList[0],
+                                       None), ('geom3_color', colorList[0],
+                                               None), ('relief', None, None))
         self.defineoptions(kw, optiondefs)
         DirectButton.__init__(self, self.partyEditor.parent)
         self.initialiseoptions(PartyEditorGridElement)
@@ -71,19 +52,19 @@ class PartyEditorGridElement(DirectButton):
         self.uprightNodePath.reparentTo(self)
         rollOverZOffset = self.getGridSize()[1] / 30.0
         self.rolloverTitle = DirectLabel(
-            relief=None, parent=self.uprightNodePath, pos=Point3(
-                0.0, 0.0, rollOverZOffset), text=self.name, text_fg=(
-                1.0, 1.0, 1.0, 1.0), text_shadow=(
-                0.0, 0.0, 0.0, 1.0), text_scale=0.074999999999999997)
+            relief=None,
+            parent=self.uprightNodePath,
+            pos=Point3(0.0, 0.0, rollOverZOffset),
+            text=self.name,
+            text_fg=(1.0, 1.0, 1.0, 1.0),
+            text_shadow=(0.0, 0.0, 0.0, 1.0),
+            text_scale=0.074999999999999997)
         self.rolloverTitle.stash()
         self.stash()
         self.overValidSquare = False
         self.lastValidPosition = None
-        self.setColorScale(
-            0.90000000000000002,
-            0.90000000000000002,
-            0.90000000000000002,
-            0.69999999999999996)
+        self.setColorScale(0.90000000000000002, 0.90000000000000002,
+                           0.90000000000000002, 0.69999999999999996)
         self.setTransparency(True)
         self.mouseOverTrash = False
         self.centerGridSquare = None
@@ -102,20 +83,14 @@ class PartyEditorGridElement(DirectButton):
 
     def getDecorationTuple(self, x, y):
         return (
-            self.id,
-            self.centerGridSquare.x,
-            PartyGlobals.PartyEditorGridSize[1] -
-            1 -
-            self.centerGridSquare.y,
+            self.id, self.centerGridSquare.x,
+            PartyGlobals.PartyEditorGridSize[1] - 1 - self.centerGridSquare.y,
             self.getCorrectRotation())
 
     def getActivityTuple(self, x, y):
         return (
-            self.id,
-            self.centerGridSquare.x,
-            PartyGlobals.PartyEditorGridSize[1] -
-            1 -
-            self.centerGridSquare.y,
+            self.id, self.centerGridSquare.x,
+            PartyGlobals.PartyEditorGridSize[1] - 1 - self.centerGridSquare.y,
             self.getCorrectRotation())
 
     def attach(self, mouseEvent):
@@ -123,10 +98,8 @@ class PartyEditorGridElement(DirectButton):
             'attached grid element %s' % self.name)
         taskMgr.remove('gridElementDragTask%s' % self.name)
         vWidget2render2d = self.getPos(render2d)
-        vMouse2render2d = Point3(
-            mouseEvent.getMouse()[0],
-            0,
-            mouseEvent.getMouse()[1])
+        vMouse2render2d = Point3(mouseEvent.getMouse()[0], 0,
+                                 mouseEvent.getMouse()[1])
         taskMgr.add(self.elementDragTask, 'gridElementDragTask%s' % self.name)
         self.unstash()
         self.rolloverTitle.unstash()
@@ -138,8 +111,11 @@ class PartyEditorGridElement(DirectButton):
         if mwn.hasMouse():
             vMouse2render2d = Point3(mwn.getMouse()[0], 0, mwn.getMouse()[1])
             newPos = vMouse2render2d
-            if newPos[0] > PartyGlobals.PartyEditorGridBounds[0][0] and newPos[0] < PartyGlobals.PartyEditorGridBounds[1][
-                    0] and newPos[2] < PartyGlobals.PartyEditorGridBounds[0][1] and newPos[2] > PartyGlobals.PartyEditorGridBounds[1][1]:
+            if newPos[0] > PartyGlobals.PartyEditorGridBounds[0][0] and newPos[
+                    0] < PartyGlobals.PartyEditorGridBounds[1][0] and newPos[
+                        2] < PartyGlobals.PartyEditorGridBounds[0][
+                            1] and newPos[
+                                2] > PartyGlobals.PartyEditorGridBounds[1][1]:
                 centerGridSquare = self.snapToGrid(newPos)
                 if centerGridSquare is not None:
                     self.centerGridSquare = centerGridSquare
@@ -151,8 +127,14 @@ class PartyEditorGridElement(DirectButton):
 
                     return Task.cont
 
-            if self.id != PartyGlobals.ActivityIds.PartyClock and newPos[0] > PartyGlobals.PartyEditorTrashBounds[0][0] and newPos[0] < PartyGlobals.PartyEditorTrashBounds[
-                    1][0] and newPos[2] < PartyGlobals.PartyEditorTrashBounds[0][1] and newPos[2] > PartyGlobals.PartyEditorTrashBounds[1][1]:
+            if self.id != PartyGlobals.ActivityIds.PartyClock and newPos[
+                    0] > PartyGlobals.PartyEditorTrashBounds[0][0] and newPos[
+                        0] < PartyGlobals.PartyEditorTrashBounds[1][
+                            0] and newPos[
+                                2] < PartyGlobals.PartyEditorTrashBounds[0][
+                                    1] and newPos[
+                                        2] > PartyGlobals.PartyEditorTrashBounds[
+                                            1][1]:
                 if not self.mouseOverTrash:
                     self.setOverTrash(True)
 
@@ -168,26 +150,21 @@ class PartyEditorGridElement(DirectButton):
     def setOverTrash(self, value):
         self.mouseOverTrash = value
         if value:
-            self.partyEditor.trashCanButton['state'] = DirectGuiGlobals.DISABLED
+            self.partyEditor.trashCanButton[
+                'state'] = DirectGuiGlobals.DISABLED
             self.setColorScale(1.0, 0.0, 0.0, 1.0)
         else:
             self.partyEditor.trashCanButton['state'] = DirectGuiGlobals.NORMAL
-            self.setColorScale(
-                0.90000000000000002,
-                0.90000000000000002,
-                0.90000000000000002,
-                0.69999999999999996)
+            self.setColorScale(0.90000000000000002, 0.90000000000000002,
+                               0.90000000000000002, 0.69999999999999996)
 
     def setOverValidSquare(self, value):
         self.overValidSquare = value
         if value:
             self.setColorScale(1.0, 1.0, 1.0, 1.0)
         else:
-            self.setColorScale(
-                0.90000000000000002,
-                0.90000000000000002,
-                0.90000000000000002,
-                0.69999999999999996)
+            self.setColorScale(0.90000000000000002, 0.90000000000000002,
+                               0.90000000000000002, 0.69999999999999996)
 
     def removeFromGrid(self):
         if self.centerGridSquare is not None:
@@ -204,7 +181,8 @@ class PartyEditorGridElement(DirectButton):
             self.setPosHprToDefault()
             self.setPos(render2d, newPos)
             return None
-        elif not self.partyEditor.partyEditorGrid.checkGridSquareForAvailability(gridSquare, self.getGridSize()):
+        elif not self.partyEditor.partyEditorGrid.checkGridSquareForAvailability(
+                gridSquare, self.getGridSize()):
             self.setPos(render2d, newPos)
             return None
 
@@ -224,26 +202,24 @@ class PartyEditorGridElement(DirectButton):
     def setPosHprBasedOnGridSquare(self, gridSquare):
         gridPos = gridSquare.getPos()
         if self.getGridSize()[0] % 2 == 0:
-            gridPos.setX(
-                gridPos[0] +
-                PartyGlobals.PartyEditorGridSquareSize[0] /
-                2.0)
+            gridPos.setX(gridPos[0] +
+                         PartyGlobals.PartyEditorGridSquareSize[0] / 2.0)
 
         if self.getGridSize()[1] % 2 == 0:
-            gridPos.setZ(
-                gridPos[2] +
-                PartyGlobals.PartyEditorGridSquareSize[1] /
-                2.0)
+            gridPos.setZ(gridPos[2] +
+                         PartyGlobals.PartyEditorGridSquareSize[1] / 2.0)
 
         if self.id != PartyGlobals.ActivityIds.PartyFireworks:
             if gridPos[0] > PartyGlobals.PartyEditorGridCenter[0] + \
                     PartyGlobals.PartyEditorGridRotateThreshold:
                 self.setR(90.0)
                 self.uprightNodePath.setR(-90.0)
-            elif gridPos[0] < PartyGlobals.PartyEditorGridCenter[0] - PartyGlobals.PartyEditorGridRotateThreshold:
+            elif gridPos[0] < PartyGlobals.PartyEditorGridCenter[
+                    0] - PartyGlobals.PartyEditorGridRotateThreshold:
                 self.setR(270.0)
                 self.uprightNodePath.setR(-270.0)
-            elif gridPos[2] < PartyGlobals.PartyEditorGridCenter[1] - PartyGlobals.PartyEditorGridRotateThreshold:
+            elif gridPos[2] < PartyGlobals.PartyEditorGridCenter[
+                    1] - PartyGlobals.PartyEditorGridRotateThreshold:
                 self.setR(180.0)
                 self.uprightNodePath.setR(-180.0)
             else:
@@ -273,7 +249,8 @@ class PartyEditorGridElement(DirectButton):
             self.partyEditor.handleMutuallyExclusiveActivities()
         elif self.lastValidPosition is not None:
             if self.mouseOverTrash:
-                self.partyEditor.trashCanButton['state'] = DirectGuiGlobals.NORMAL
+                self.partyEditor.trashCanButton[
+                    'state'] = DirectGuiGlobals.NORMAL
                 self.lastValidPosition = None
                 self.partyEditor.updateCostsAndBank()
                 self.stash()

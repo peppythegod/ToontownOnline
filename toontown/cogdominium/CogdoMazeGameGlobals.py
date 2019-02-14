@@ -1,11 +1,7 @@
 from direct.showbase import PythonUtil
 from pandac.PandaModules import VBase4
-GameActions = PythonUtil.Enum(
-    ('EnterDoor',
-     'RevealDoor',
-     'OpenDoor',
-     'Countdown',
-     'TimeAlert'))
+GameActions = PythonUtil.Enum(('EnterDoor', 'RevealDoor', 'OpenDoor',
+                               'Countdown', 'TimeAlert'))
 SecondsUntilTimeout = 4.0 * 60.0
 SecondsUntilGameEnds = 60.0
 SecondsForTimeAlert = 60.0
@@ -22,63 +18,31 @@ FrameWallThickness = 1
 QuadrantUnitGap = 3
 TotalBarriers = 12
 NumBarriers = 3
-MazeBarriers = ([
-    (7, 34),
-    (8, 34),
-    (9, 34),
-    (10, 34)], [
-    (24, 34),
-    (25, 34),
-    (26, 34),
-    (27, 34)], [
-    (41, 34),
-    (42, 34),
-    (43, 34),
-    (44, 34)], [
-    (7, 17),
-    (8, 17),
-    (9, 17),
-    (10, 17)], [
-    (24, 17),
-    (25, 17),
-    (26, 17),
-    (27, 17)], [
-    (41, 17),
-    (42, 17),
-    (43, 17),
-    (44, 17)], [
-    (17, 41),
-    (17, 42),
-    (17, 43),
-    (17, 44)], [
-    (17, 24),
-    (17, 25),
-    (17, 26),
-    (17, 27)], [
-    (17, 7),
-    (17, 8),
-    (17, 9),
-    (17, 10)], [
-    (34, 41),
-    (34, 42),
-    (34, 43),
-    (34, 44)], [
-    (34, 24),
-    (34, 25),
-    (34, 26),
-    (34, 27)], [
-    (34, 7),
-    (34, 8),
-    (34, 9),
-    (34, 10)])
+MazeBarriers = ([(7, 34), (8, 34), (9, 34), (10, 34)], [(24, 34), (25, 34),
+                                                        (26, 34),
+                                                        (27, 34)], [(41, 34),
+                                                                    (42, 34),
+                                                                    (43, 34),
+                                                                    (44, 34)],
+                [(7, 17), (8, 17), (9, 17), (10, 17)], [(24, 17), (25, 17),
+                                                        (26, 17), (27, 17)],
+                [(41, 17), (42, 17), (43, 17),
+                 (44, 17)], [(17, 41), (17, 42), (17, 43),
+                             (17, 44)], [(17, 24), (17, 25), (17, 26),
+                                         (17, 27)], [(17, 7), (17, 8), (17, 9),
+                                                     (17, 10)], [(34, 41),
+                                                                 (34, 42),
+                                                                 (34, 43),
+                                                                 (34, 44)],
+                [(34, 24), (34, 25), (34, 26), (34, 27)], [(34, 7), (34, 8),
+                                                           (34, 9), (34, 10)])
 ToonRunSpeed = 11.199999999999999
 CameraAngle = 60
 CameraRemoteToonRadius = 6
 CameraMinDistance = 40
 CameraMaxDistance = 61
 CamCutoffFactor = 1.3400000000000001
-ToonAnimationInfo = {
-    'hit': ('slip-backward', 2.25, 12)}
+ToonAnimationInfo = {'hit': ('slip-backward', 2.25, 12)}
 NumPickups = 256
 PickupsUntilDoorOpens = int(NumPickups * 0.59999999999999998)
 SuitCollisionName = 'CogdoMazeSuit_Collision'
@@ -92,21 +56,24 @@ SuitData[SuitTypes.Boss] = {
     'toonDamage': 3.0,
     'scale': 2.5,
     'hp': 2,
-    'memos': 0}
+    'memos': 0
+}
 SuitData[SuitTypes.FastMinion] = {
     'dnaName': 'nd',
     'cellWalkPeriod': 64,
     'toonDamage': 1.0,
     'scale': 1.3,
     'hp': 1,
-    'memos': 3}
+    'memos': 3
+}
 SuitData[SuitTypes.SlowMinion] = {
     'dnaName': 'cc',
     'cellWalkPeriod': 160,
     'toonDamage': 2.0,
     'scale': 1.3300000000000001,
     'hp': 1,
-    'memos': 2}
+    'memos': 2
+}
 NumSuits = (4, 5, 5)
 BossSpinTime = 1.0
 BossSpinCount = 2
@@ -150,27 +117,10 @@ ThrowPlayRate = 1.5
 GagPickupScale = 2.0
 GagPickupCollisionRadius = 1.0
 GagPickupCollisionName = 'PickUpCollision'
-GagColors = (
-    (1.0,
-     0.27000000000000002,
-     0.27000000000000002,
-     1.0),
-    (1.0,
-     0.66000000000000003,
-     0.14999999999999999,
-     1.0),
-    (0.31,
-     1.0,
-     0.28999999999999998,
-     1.0),
-    (0.31,
-     0.62,
-     1.0,
-     1.0),
-    (0.91000000000000003,
-     0.32000000000000001,
-     1.0,
-     1.0))
+GagColors = ((1.0, 0.27000000000000002, 0.27000000000000002,
+              1.0), (1.0, 0.66000000000000003, 0.14999999999999999, 1.0),
+             (0.31, 1.0, 0.28999999999999998, 1.0), (0.31, 0.62, 1.0, 1.0),
+             (0.91000000000000003, 0.32000000000000001, 1.0, 1.0))
 GagCollisionName = 'Gag_Collision'
 WaterCoolerTriggerRadius = 2.5
 WaterCoolerTriggerOffset = (0, -1.5, 0)
@@ -180,7 +130,8 @@ WaterCoolerHideEventName = 'CogdoMazeWaterCooler_Hide'
 AudioCutoff = 75.0
 MusicFiles = {
     'normal': 'phase_9/audio/bgm/CHQ_FACT_bg.mid',
-    'timeRunningOut': 'phase_7/audio/bgm/encntr_suit_winning_indoor.mid'}
+    'timeRunningOut': 'phase_7/audio/bgm/encntr_suit_winning_indoor.mid'
+}
 SfxFiles = {
     'toonHitByDrop': 'phase_5/audio/sfx/tt_s_ara_cmg_toonHit.mp3',
     'toonHit': 'phase_4/audio/sfx/MG_cannon_hit_dirt.mp3',
@@ -197,7 +148,8 @@ SfxFiles = {
     'lose': 'phase_4/audio/sfx/MG_lose.mp3',
     'win': 'phase_4/audio/sfx/MG_win.mp3',
     'cogDialogue': 'phase_3.5/audio/dial/COG_VO_statement.mp3',
-    'toonDialogue': 'phase_3.5/audio/dial/AV_dog_long.mp3'}
+    'toonDialogue': 'phase_3.5/audio/dial/AV_dog_long.mp3'
+}
 MessageLabelPos = (0.0, 0.0, -0.40000000000000002)
 MemoGuiPos = (-0.84999999999999998, 0, -0.90000000000000002)
 MemoGuiTextScale = 0.10000000000000001

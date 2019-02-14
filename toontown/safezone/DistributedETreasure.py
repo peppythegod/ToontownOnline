@@ -2,7 +2,6 @@ import DistributedSZTreasure
 
 
 class DistributedETreasure(DistributedSZTreasure.DistributedSZTreasure):
-
     def __init__(self, cr):
         DistributedSZTreasure.DistributedSZTreasure.__init__(self, cr)
         self.modelPath = 'phase_4/models/props/icecream'

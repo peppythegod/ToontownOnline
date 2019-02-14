@@ -16,13 +16,11 @@ class DistributedTrashcanZeroMgr(
     def announceGenerate(self):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.announceGenerate(
             self)
-        messenger.send('trashcanZeroIsRunning', [
-            self.isRunning])
+        messenger.send('trashcanZeroIsRunning', [self.isRunning])
 
     def delete(self):
         self.notify.debug('deleting trashcanzeromgr')
-        messenger.send('trashcanZeroIsRunning', [
-            False])
+        messenger.send('trashcanZeroIsRunning', [False])
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.delete(self)
         if hasattr(self.cr, 'trashcanZeroMgr'):
             del self.cr.trashcanZeroMgr
@@ -30,11 +28,9 @@ class DistributedTrashcanZeroMgr(
     def setCurPhase(self, newPhase):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.setCurPhase(
             self, newPhase)
-        messenger.send('trashcanZeroPhase', [
-            newPhase])
+        messenger.send('trashcanZeroPhase', [newPhase])
 
     def setIsRunning(self, isRunning):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.setIsRunning(
             self, isRunning)
-        messenger.send('trashcanZeroIsRunning', [
-            isRunning])
+        messenger.send('trashcanZeroIsRunning', [isRunning])

@@ -22,13 +22,12 @@ class DistributedSinkingPlatform(BasicEntities.DistributedNodePathEntity):
         self.notify.debug('generateInit')
         BasicEntities.DistributedNodePathEntity.generateInit(self)
         self.fsm = ClassicFSM.ClassicFSM('DistributedSinkingPlatform', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'sinking']),
-            State.State('sinking', self.enterSinking, self.exitSinking, [
-                'rising']),
-            State.State('rising', self.enterRising, self.exitRising, [
-                'sinking',
-                'off'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['sinking']),
+            State.State('sinking', self.enterSinking, self.exitSinking,
+                        ['rising']),
+            State.State('rising', self.enterRising, self.exitRising,
+                        ['sinking', 'off'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
@@ -63,24 +62,20 @@ class DistributedSinkingPlatform(BasicEntities.DistributedNodePathEntity):
         self.notify.debug('loadModel')
         model = loader.loadModel('phase_9/models/cogHQ/platform1')
         self.platform = MovingPlatform.MovingPlatform()
-        self.platform.setupCopyModel(
-            self.getParentToken(), model, 'platformcollision')
+        self.platform.setupCopyModel(self.getParentToken(), model,
+                                     'platformcollision')
         self.platform.reparentTo(self)
         self.platform.setPos(0, 0, 0)
 
     def localToonEntered(self):
         ts = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime(), bits=32)
-        self.sendUpdate('setOnOff', [
-            1,
-            ts])
+        self.sendUpdate('setOnOff', [1, ts])
 
     def localToonLeft(self):
         ts = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime(), bits=32)
-        self.sendUpdate('setOnOff', [
-            0,
-            ts])
+        self.sendUpdate('setOnOff', [0, ts])
 
     def enterOff(self):
         self.notify.debug('enterOff')
@@ -115,11 +110,9 @@ class DistributedSinkingPlatform(BasicEntities.DistributedNodePathEntity):
         if mode == SinkingPlatformGlobals.OFF:
             self.fsm.requestInitialState()
         elif mode == SinkingPlatformGlobals.RISING:
-            self.fsm.request('rising', [
-                ts])
+            self.fsm.request('rising', [ts])
         elif mode == SinkingPlatformGlobals.SINKING:
-            self.fsm.request('sinking', [
-                ts])
+            self.fsm.request('sinking', [ts])
 
     def startMoving(self, direction, ts):
         if direction == SinkingPlatformGlobals.RISING:
@@ -152,7 +145,6 @@ class DistributedSinkingPlatform(BasicEntities.DistributedNodePathEntity):
                 endPos,
                 startPos=moveNode.getPos(),
                 blendType='easeInOut',
-                name='%s-move' %
-                self.platform.name,
+                name='%s-move' % self.platform.name,
                 fluid=1))
         self.moveIval.start()

@@ -2,7 +2,6 @@ import Street
 
 
 class BRStreet(Street.Street):
-
     def __init__(self, loader, parentFSM, doneEvent):
         Street.Street.__init__(self, loader, parentFSM, doneEvent)
 

@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase import TTLocalizer
 from toontown.toonbase import ToontownGlobals
@@ -11,23 +9,22 @@ MAX_FIELD_SPAN = 135
 CollisionRadius = 1.5
 CollideMask = ToontownGlobals.CatchGameBitmask
 TARGET_RADIUS = (MAX_TOONXZ / 3.0) * 0.90000000000000002
-targetColors = (
-    (TTLocalizer.ColorRed, VBase4(
-        1.0, 0.40000000000000002, 0.20000000000000001, 1.0)), (TTLocalizer.ColorGreen, VBase4(
-            0.0, 0.90000000000000002, 0.20000000000000001, 1.0)), (TTLocalizer.ColorOrange, VBase4(
-                1.0, 0.5, 0.25, 1.0)), (TTLocalizer.ColorPurple, VBase4(
-                    1.0, 0.0, 1.0, 1.0)), (TTLocalizer.ColorWhite, VBase4(
-                        1.0, 1.0, 1.0, 1.0)), (TTLocalizer.ColorBlack, VBase4(
-                            0.0, 0.0, 0.0, 1.0)), (TTLocalizer.ColorYellow, VBase4(
-                                1.0, 1.0, 0.20000000000000001, 1.0)))
+targetColors = ((TTLocalizer.ColorRed,
+                 VBase4(1.0, 0.40000000000000002, 0.20000000000000001, 1.0)),
+                (TTLocalizer.ColorGreen,
+                 VBase4(0.0, 0.90000000000000002, 0.20000000000000001,
+                        1.0)), (TTLocalizer.ColorOrange,
+                                VBase4(1.0, 0.5, 0.25,
+                                       1.0)), (TTLocalizer.ColorPurple,
+                                               VBase4(1.0, 0.0, 1.0, 1.0)),
+                (TTLocalizer.ColorWhite,
+                 VBase4(1.0, 1.0, 1.0, 1.0)), (TTLocalizer.ColorBlack,
+                                               VBase4(0.0, 0.0, 0.0, 1.0)),
+                (TTLocalizer.ColorYellow,
+                 VBase4(1.0, 1.0, 0.20000000000000001, 1.0)))
 ENVIRON_LENGTH = 300
 ENVIRON_WIDTH = 150.0
-ringColorSelection = [
-    (0, 1, 2),
-    3,
-    4,
-    5,
-    6]
+ringColorSelection = [(0, 1, 2), 3, 4, 5, 6]
 colorRed = {}
 colorRed['Red'] = 1.0
 colorRed['Green'] = 0.0
@@ -69,171 +66,28 @@ colorWhite['Green'] = 1.0
 colorWhite['Blue'] = 1.0
 colorWhite['Alpha'] = 1.0
 difficultyPatterns = {
-    ToontownGlobals.ToontownCentral: [
-        [
-            8,
-            4,
-            2,
-            0],
-        [
-            10,
-            16,
-            21,
-            28],
-        [
-            31,
-            15,
-            7,
-            3.5],
-        [
-            colorRed,
-            colorGreen,
-            colorBlue,
-            colorYellow],
-        [
-            2,
-            2,
-            2,
-            1],
-        10,
-        2],
-    ToontownGlobals.DonaldsDock: [
-        [
-            7,
-            4,
-            2,
-            0],
-        [
-            11,
-            17,
-            23,
-            32],
-        [
-            29,
-            13,
-            6.5,
-            3.2000000000000002],
-        [
-            colorRed,
-            colorGreen,
-            colorBlue,
-            colorYellow],
-        [
-            2,
-            2,
-            2,
-            1],
-        9,
-        2],
-    ToontownGlobals.DaisyGardens: [
-        [
-            6,
-            4,
-            2,
-            0],
-        [
-            11,
-            18,
-            25,
-            34],
-        [
-            29,
-            13,
-            6.5,
-            3.1000000000000001],
-        [
-            colorRed,
-            colorGreen,
-            colorBlue,
-            colorYellow],
-        [
-            2,
-            2,
-            2,
-            1],
-        8,
-        2],
-    ToontownGlobals.MinniesMelodyland: [
-        [
-            6,
-            4,
-            2,
-            0],
-        [
-            12,
-            19,
-            27,
-            37],
-        [
-            28,
-            12,
-            6,
-            3.0],
-        [
-            colorGreen,
-            colorBlue,
-            colorYellow,
-            colorPurple],
-        [
-            2,
-            2,
-            2,
-            1],
-        8,
-        2],
-    ToontownGlobals.TheBrrrgh: [
-        [
-            5,
-            4,
-            2,
-            0],
-        [
-            12,
-            20,
-            29,
-            40],
-        [
-            25,
-            12,
-            5.5,
-            2.5],
-        [
-            colorGreen,
-            colorBlue,
-            colorYellow,
-            colorPurple],
-        [
-            2,
-            2,
-            2,
-            1],
-        7,
-        2],
-    ToontownGlobals.DonaldsDreamland: [
-        [
-            4,
-            3,
-            1,
-            0],
-        [
-            12,
-            21,
-            31,
-            42],
-        [
-            20,
-            10,
-            4.5,
-            2.0],
-        [
-            colorBlue,
-            colorYellow,
-            colorPurple,
-            colorOrange],
-        [
-            2,
-            2,
-            2,
-            1],
-        7,
-        2]}
+    ToontownGlobals.ToontownCentral:
+    [[8, 4, 2, 0], [10, 16, 21, 28], [31, 15, 7, 3.5],
+     [colorRed, colorGreen, colorBlue, colorYellow], [2, 2, 2, 1], 10, 2],
+    ToontownGlobals.DonaldsDock:
+    [[7, 4, 2, 0], [11, 17, 23, 32], [29, 13, 6.5, 3.2000000000000002],
+     [colorRed, colorGreen, colorBlue, colorYellow], [2, 2, 2, 1], 9, 2],
+    ToontownGlobals.DaisyGardens:
+    [[6, 4, 2, 0], [11, 18, 25, 34], [29, 13, 6.5, 3.1000000000000001],
+     [colorRed, colorGreen, colorBlue, colorYellow], [2, 2, 2, 1], 8, 2],
+    ToontownGlobals.MinniesMelodyland:
+    [[6, 4, 2, 0], [12, 19, 27, 37], [28, 12, 6, 3.0],
+     [colorGreen, colorBlue, colorYellow, colorPurple], [2, 2, 2, 1], 8, 2],
+    ToontownGlobals.TheBrrrgh: [[5, 4, 2, 0], [12, 20, 29, 40],
+                                [25, 12, 5.5, 2.5],
+                                [
+                                    colorGreen, colorBlue, colorYellow,
+                                    colorPurple
+                                ], [2, 2, 2, 1], 7, 2],
+    ToontownGlobals.DonaldsDreamland: [[4, 3, 1, 0], [12, 21, 31, 42],
+                                       [20, 10, 4.5, 2.0],
+                                       [
+                                           colorBlue, colorYellow, colorPurple,
+                                           colorOrange
+                                       ], [2, 2, 2, 1], 7, 2]
+}

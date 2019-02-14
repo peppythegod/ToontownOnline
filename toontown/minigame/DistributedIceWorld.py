@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import Vec4, BitMask32, Quat, Point3, NodePath
 from pandac.PandaModules import OdePlaneGeom, OdeBody, OdeSphereGeom, OdeMass, OdeUtil, OdeBoxGeom
 from direct.directnotify import DirectNotifyGlobal
@@ -20,11 +18,7 @@ class DistributedIceWorld(
     wallMask = BitMask32(wallCollideId)
     obstacleCollideId = 1 << 2
     obstacleMask = BitMask32(obstacleCollideId)
-    tireCollideIds = [
-        1 << 8,
-        1 << 9,
-        1 << 10,
-        1 << 11]
+    tireCollideIds = [1 << 8, 1 << 9, 1 << 10, 1 << 11]
     tire0Mask = BitMask32(tireCollideIds[0])
     tire1Mask = BitMask32(tireCollideIds[1])
     tire2Mask = BitMask32(tireCollideIds[2])
@@ -56,41 +50,19 @@ class DistributedIceWorld(
         self.world.setAutoDisableSteps(10)
         self.world.setCfm(1.0000000000000001e-005 * MetersToFeet)
         self.world.initSurfaceTable(3)
-        self.world.setSurfaceEntry(
-            0,
-            1,
-            0.20000000000000001,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0.10000000000000001)
-        self.world.setSurfaceEntry(
-            0,
-            0,
-            0.10000000000000001,
-            0.90000000000000002,
-            0.10000000000000001,
-            0,
-            0,
-            0,
-            0)
-        self.world.setSurfaceEntry(
-            0,
-            2,
-            0.90000000000000002,
-            0.90000000000000002,
-            0.10000000000000001,
-            0,
-            0,
-            0,
-            0)
+        self.world.setSurfaceEntry(0, 1, 0.20000000000000001, 0, 0, 0, 0, 0,
+                                   0.10000000000000001)
+        self.world.setSurfaceEntry(0, 0, 0.10000000000000001,
+                                   0.90000000000000002, 0.10000000000000001, 0,
+                                   0, 0, 0)
+        self.world.setSurfaceEntry(0, 2, 0.90000000000000002,
+                                   0.90000000000000002, 0.10000000000000001, 0,
+                                   0, 0, 0)
         self.floor = OdePlaneGeom(self.space, Vec4(0.0, 0.0, 1.0, -20.0))
         self.floor.setCollideBits(self.allTiresMask)
         self.floor.setCategoryBits(self.floorMask)
-        self.westWall = OdePlaneGeom(self.space, Vec4(
-            1.0, 0.0, 0.0, IceGameGlobals.MinWall[0]))
+        self.westWall = OdePlaneGeom(
+            self.space, Vec4(1.0, 0.0, 0.0, IceGameGlobals.MinWall[0]))
         self.westWall.setCollideBits(self.allTiresMask)
         self.westWall.setCategoryBits(self.wallMask)
         self.space.setSurfaceType(self.westWall, self.fenceSurfaceType)
@@ -101,14 +73,14 @@ class DistributedIceWorld(
         self.eastWall.setCategoryBits(self.wallMask)
         self.space.setSurfaceType(self.eastWall, self.fenceSurfaceType)
         self.space.setCollideId(self.eastWall, self.wallCollideId)
-        self.southWall = OdePlaneGeom(self.space, Vec4(
-            0.0, 1.0, 0.0, IceGameGlobals.MinWall[1]))
+        self.southWall = OdePlaneGeom(
+            self.space, Vec4(0.0, 1.0, 0.0, IceGameGlobals.MinWall[1]))
         self.southWall.setCollideBits(self.allTiresMask)
         self.southWall.setCategoryBits(self.wallMask)
         self.space.setSurfaceType(self.southWall, self.fenceSurfaceType)
         self.space.setCollideId(self.southWall, self.wallCollideId)
-        self.northWall = OdePlaneGeom(self.space, Vec4(
-            0.0, -1.0, 0.0, -IceGameGlobals.MaxWall[1]))
+        self.northWall = OdePlaneGeom(
+            self.space, Vec4(0.0, -1.0, 0.0, -IceGameGlobals.MaxWall[1]))
         self.northWall.setCollideBits(self.allTiresMask)
         self.northWall.setCategoryBits(self.wallMask)
         self.space.setSurfaceType(self.northWall, self.fenceSurfaceType)
@@ -132,18 +104,17 @@ class DistributedIceWorld(
         mass = OdeMass()
         mass.setSphere(self.tireDensity, IceGameGlobals.TireRadius)
         body.setMass(mass)
-        body.setPosition(
-            IceGameGlobals.StartingPositions[tireIndex][0],
-            IceGameGlobals.StartingPositions[tireIndex][1],
-            IceGameGlobals.StartingPositions[tireIndex][2])
+        body.setPosition(IceGameGlobals.StartingPositions[tireIndex][0],
+                         IceGameGlobals.StartingPositions[tireIndex][1],
+                         IceGameGlobals.StartingPositions[tireIndex][2])
         body.setAutoDisableDefaults()
         geom = OdeSphereGeom(self.space, IceGameGlobals.TireRadius)
         self.space.setSurfaceType(geom, self.tireSurfaceType)
         self.space.setCollideId(geom, self.tireCollideIds[tireIndex])
         self.massList.append(mass)
         self.geomList.append(geom)
-        geom.setCollideBits(self.allTiresMask | self.wallMask |
-                            self.floorMask | self.obstacleMask)
+        geom.setCollideBits(self.allTiresMask | self.wallMask | self.floorMask
+                            | self.obstacleMask)
         geom.setCategoryBits(self.tireMasks[tireIndex])
         geom.setBody(body)
         if self.notify.getDebug():
@@ -179,11 +150,10 @@ class DistributedIceWorld(
             if pandaNodePathGeom:
                 pandaNodePathGeom.setPos(odeBody.getPosition())
                 pandaNodePathGeom.setQuat(
-                    Quat(
-                        odeBody.getQuaternion()[0],
-                        odeBody.getQuaternion()[1],
-                        odeBody.getQuaternion()[2],
-                        odeBody.getQuaternion()[3]))
+                    Quat(odeBody.getQuaternion()[0],
+                         odeBody.getQuaternion()[1],
+                         odeBody.getQuaternion()[2],
+                         odeBody.getQuaternion()[3]))
                 pandaNodePathGeom.setP(0)
                 pandaNodePathGeom.setR(0)
                 newQuat = pandaNodePathGeom.getQuat()

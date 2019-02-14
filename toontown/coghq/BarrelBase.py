@@ -2,7 +2,6 @@ import random
 
 
 class BarrelBase:
-
     def getRng(self):
         return random.Random(self.entId * self.level.doId)
 
@@ -19,7 +18,8 @@ class BarrelBase:
     def getGagLevel(self):
         if not hasattr(self, '_gagLevel'):
             if self.gagLevelMax > self.gagLevel:
-                self._gagLevel = self.getRng().randrange(self.gagLevel, self.gagLevelMax + 1)
+                self._gagLevel = self.getRng().randrange(
+                    self.gagLevel, self.gagLevelMax + 1)
             else:
                 self._gagLevel = self.gagLevel
 

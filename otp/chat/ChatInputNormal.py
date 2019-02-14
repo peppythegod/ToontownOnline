@@ -20,10 +20,9 @@ class ChatInputNormal(DirectObject.DirectObject):
         if __dev__:
             wantHistory = 1
 
-        self.wantHistory = base.config.GetBool(
-            'want-chat-history', wantHistory)
-        self.history = [
-            '']
+        self.wantHistory = base.config.GetBool('want-chat-history',
+                                               wantHistory)
+        self.history = ['']
         self.historySize = base.config.GetInt('chat-history-size', 10)
         self.historyIndex = 0
 
@@ -48,7 +47,8 @@ class ChatInputNormal(DirectObject.DirectObject):
             self.whisperAvatarId, self.toPlayer)
         if self.whisperAvatarId:
             self.chatFrame.setPos(self.whisperPos)
-            self.whisperLabel['text'] = OTPLocalizer.ChatInputWhisperLabel % self.whisperAvatarName
+            self.whisperLabel[
+                'text'] = OTPLocalizer.ChatInputWhisperLabel % self.whisperAvatarName
             self.whisperLabel.show()
         else:
             self.chatFrame.setPos(self.normalPos)
@@ -92,8 +92,8 @@ class ChatInputNormal(DirectObject.DirectObject):
             elif self.chatMgr.execChat:
                 if text[0] == '>':
                     text = self._ChatInputNormal__execMessage(text[1:])
-                    base.localAvatar.setChatAbsolute(
-                        text, CFSpeech | CFTimeout)
+                    base.localAvatar.setChatAbsolute(text,
+                                                     CFSpeech | CFTimeout)
                     return None
 
             base.talkAssistant.sendOpenTalk(text)
@@ -106,7 +106,8 @@ class ChatInputNormal(DirectObject.DirectObject):
     def _ChatInputNormal__execMessage(self, message):
         if not ChatInputNormal.ExecNamespace:
             ChatInputNormal.ExecNamespace = {}
-            exec 'from pandac.PandaModules import *' in globals(), self.ExecNamespace
+            exec 'from pandac.PandaModules import *' in globals(
+            ), self.ExecNamespace
             self.importExecNamespace()
 
         try:
@@ -124,19 +125,21 @@ class ChatInputNormal(DirectObject.DirectObject):
 
                 exec message in globals(), ChatInputNormal.ExecNamespace
                 return 'ok'
+            except:
+                exception = sys.exc_info()[0]
+                extraInfo = sys.exc_info()[1]
+                if extraInfo:
+                    return str(extraInfo)
+                else:
+                    return str(exception)
+
+        except:
             exception = sys.exc_info()[0]
             extraInfo = sys.exc_info()[1]
             if extraInfo:
                 return str(extraInfo)
             else:
                 return str(exception)
-
-        exception = sys.exc_info()[0]
-        extraInfo = sys.exc_info()[1]
-        if extraInfo:
-            return str(extraInfo)
-        else:
-            return str(exception)
 
     def cancelButtonPressed(self):
         self.chatEntry.set('')
@@ -149,8 +152,7 @@ class ChatInputNormal(DirectObject.DirectObject):
         pass
 
     def addToHistory(self, text):
-        self.history = [
-            text] + self.history[:self.historySize - 1]
+        self.history = [text] + self.history[:self.historySize - 1]
         self.historyIndex = 0
 
     def getPrevHistory(self):

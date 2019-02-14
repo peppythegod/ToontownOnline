@@ -6,7 +6,6 @@ import os
 
 
 class Sparks(NodePath):
-
     def __init__(self, parent, renderParent):
         NodePath.__init__(self)
         notify = DirectNotifyGlobal.directNotify.newCategory('SparkParticles')
@@ -23,8 +22,7 @@ class Sparks(NodePath):
             pass
         basePath = './toontown'
         particleSearchPath.appendDirectory(
-            Filename.fromOsSpecific(
-                basePath + '/src/effects'))
+            Filename.fromOsSpecific(basePath + '/src/effects'))
         particleSearchPath.appendDirectory(Filename('phase_3.5/etc'))
         particleSearchPath.appendDirectory(Filename('phase_4/etc'))
         particleSearchPath.appendDirectory(Filename('phase_5/etc'))

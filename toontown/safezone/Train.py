@@ -22,7 +22,8 @@ class Train(DirectObject):
     CarFiles = [
         'phase_10/models/cogHQ/CashBotBoxCar',
         'phase_10/models/cogHQ/CashBotTankCar',
-        'phase_10/models/cogHQ/CashBotFlatCar']
+        'phase_10/models/cogHQ/CashBotFlatCar'
+    ]
     CarLength = 88
     MarkDelta = 15
 
@@ -128,19 +129,15 @@ class Train(DirectObject):
             nextRun.append(
                 Parallel(
                     Sequence(
-                        Wait(
-                            totalTime - sfxStopTime),
-                        SoundInterval(
-                            self.trainStopStartSfx,
-                            volume=0.5)),
+                        Wait(totalTime - sfxStopTime),
+                        SoundInterval(self.trainStopStartSfx, volume=0.5)),
                     Sequence(
                         LerpPosInterval(
                             self.locomotive,
                             totalTime,
                             halfway,
                             self.trackStartPos,
-                            blendType='easeInOut'),
-                        WaitInterval(waitTime),
+                            blendType='easeInOut'), WaitInterval(waitTime),
                         LerpPosInterval(
                             self.locomotive,
                             totalTime,
@@ -159,14 +156,9 @@ class Train(DirectObject):
                 Parallel(
                     Sequence(
                         Wait(sfxStartTime),
-                        SoundInterval(
-                            self.trainPassingSfx,
-                            volume=0.5)),
-                    LerpPosInterval(
-                        self.locomotive,
-                        totalTime,
-                        self.trackEndPos,
-                        self.trackStartPos)))
+                        SoundInterval(self.trainPassingSfx, volume=0.5)),
+                    LerpPosInterval(self.locomotive, totalTime,
+                                    self.trackEndPos, self.trackStartPos)))
         nextRun.append(Func(self.doNextRun))
         return nextRun
 
@@ -193,9 +185,8 @@ class Train(DirectObject):
             collNode.setName(self.collNodeName)
             collNode.setCollideMask(ToontownGlobals.WallBitmask)
 
-        self.accept(
-            'enter' + self.collNodeName,
-            self._Train__handleCollisionSphereEnter)
+        self.accept('enter' + self.collNodeName,
+                    self._Train__handleCollisionSphereEnter)
 
     def _Train__disableCollisions(self):
         self.ignore('enter' + self.collNodeName)

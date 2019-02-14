@@ -15,9 +15,8 @@ from direct.interval.IntervalGlobal import *
 import BoardingGroupShow
 
 
-class DistributedBoardingParty(
-        DistributedObject.DistributedObject,
-        BoardingPartyBase.BoardingPartyBase):
+class DistributedBoardingParty(DistributedObject.DistributedObject,
+                               BoardingPartyBase.BoardingPartyBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBoardingParty')
     InvitationFailedTimeout = 60.0
@@ -27,7 +26,8 @@ class DistributedBoardingParty(
         BoardingPartyBase.BoardingPartyBase.__init__(self)
         self.groupInviteePanel = None
         self.groupPanel = None
-        self.inviterPanels = BoardingGroupInviterPanels.BoardingGroupInviterPanels()
+        self.inviterPanels = BoardingGroupInviterPanels.BoardingGroupInviterPanels(
+        )
         self.lastInvitationFailedMessage = {}
         self.goToPreShowTrack = None
         self.goToShowTrack = None
@@ -81,15 +81,9 @@ class DistributedBoardingParty(
         if leaderId in self.groupListDict:
             oldGroupEntry = self.groupListDict[leaderId]
         else:
-            oldGroupEntry = [
-                [],
-                [],
-                []]
+            oldGroupEntry = [[], [], []]
         oldMemberList = oldGroupEntry[0]
-        newGroupEntry = [
-            memberList,
-            inviteeList,
-            kickedList]
+        newGroupEntry = [memberList, inviteeList, kickedList]
         self.groupListDict[leaderId] = newGroupEntry
         if not len(oldMemberList) == len(memberList):
             for oldMember in oldMemberList:
@@ -111,8 +105,7 @@ class DistributedBoardingParty(
                 isMyGroup = 1
                 continue
 
-        if newGroupEntry[0] == [
-                0] or not newGroupEntry[0]:
+        if newGroupEntry[0] == [0] or not newGroupEntry[0]:
             dgroup = self.groupListDict.pop(leaderId)
             for memberId in dgroup[0]:
                 if memberId in self.avIdDict:
@@ -162,17 +155,14 @@ class DistributedBoardingParty(
                     self.groupInviteePanel = None
 
     def postKick(self, leaderId):
-        self.notify.debug(
-            '%s was kicked out of the Boarding Group by %s' %
-            (localAvatar.doId, leaderId))
-        localAvatar.setSystemMessage(0,
-                                     TTLocalizer.BoardingMessageKickedOut,
+        self.notify.debug('%s was kicked out of the Boarding Group by %s' %
+                          (localAvatar.doId, leaderId))
+        localAvatar.setSystemMessage(0, TTLocalizer.BoardingMessageKickedOut,
                                      WhisperPopup.WTToontownBoardingGroup)
 
     def postSizeReject(self, leaderId, inviterId, inviteeId):
         self.notify.debug(
-            '%s was not invited because the group is full' %
-            inviteeId)
+            '%s was not invited because the group is full' % inviteeId)
 
     def postKickReject(self, leaderId, inviterId, inviteeId):
         self.notify.debug(
@@ -180,17 +170,15 @@ class DistributedBoardingParty(
             (inviteeId, leaderId))
 
     def postInviteDelcined(self, inviteeId):
-        self.notify.debug(
-            "%s delinced %s's Boarding Group invitation." %
-            (inviteeId, localAvatar.doId))
+        self.notify.debug("%s delinced %s's Boarding Group invitation." %
+                          (inviteeId, localAvatar.doId))
         invitee = base.cr.doId2do.get(inviteeId)
         if invitee:
             self.inviterPanels.createInvitationRejectedPanel(self, inviteeId)
 
     def postInviteAccepted(self, inviteeId):
-        self.notify.debug(
-            "%s accepted %s's Boarding Group invitation." %
-            (inviteeId, localAvatar.doId))
+        self.notify.debug("%s accepted %s's Boarding Group invitation." %
+                          (inviteeId, localAvatar.doId))
         if self.inviterPanels.isInvitingPanelIdCorrect(inviteeId):
             self.inviterPanels.destroyInvitingPanel()
 
@@ -259,30 +247,16 @@ class DistributedBoardingParty(
     def postSomethingMissing(self):
         self.showMe(TTLocalizer.BoardcodeMissing)
 
-    def postRejectBoard(
-            self,
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle):
-        self.showRejectMessage(
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle)
+    def postRejectBoard(self, elevatorId, reason, avatarsFailingRequirements,
+                        avatarsInBattle):
+        self.showRejectMessage(elevatorId, reason, avatarsFailingRequirements,
+                               avatarsInBattle)
         self.enableGoButton()
 
-    def postRejectGoto(
-            self,
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle):
-        self.showRejectMessage(
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle)
+    def postRejectGoto(self, elevatorId, reason, avatarsFailingRequirements,
+                       avatarsInBattle):
+        self.showRejectMessage(elevatorId, reason, avatarsFailingRequirements,
+                               avatarsInBattle)
 
     def postMessageInvited(self, inviteeId, inviterId):
         inviterName = ''
@@ -295,10 +269,10 @@ class DistributedBoardingParty(
         if invitee:
             inviteeName = invitee.name
 
-        messageText = TTLocalizer.BoardingMessageInvited % (
-            inviterName, inviteeName)
-        localAvatar.setSystemMessage(
-            0, messageText, WhisperPopup.WTToontownBoardingGroup)
+        messageText = TTLocalizer.BoardingMessageInvited % (inviterName,
+                                                            inviteeName)
+        localAvatar.setSystemMessage(0, messageText,
+                                     WhisperPopup.WTToontownBoardingGroup)
 
     def postMessageInvitationFailed(self, inviterId):
         inviterName = ''
@@ -308,8 +282,8 @@ class DistributedBoardingParty(
 
         if self.invitationFailedMessageOk(inviterId):
             messageText = TTLocalizer.BoardingMessageInvitationFailed % inviterName
-            localAvatar.setSystemMessage(
-                0, messageText, WhisperPopup.WTToontownBoardingGroup)
+            localAvatar.setSystemMessage(0, messageText,
+                                         WhisperPopup.WTToontownBoardingGroup)
 
     def postMessageAcceptanceFailed(self, inviteeId, reason):
         inviteeName = ''
@@ -321,8 +295,8 @@ class DistributedBoardingParty(
         if reason == BoardingPartyBase.INVITE_ACCEPT_FAIL_GROUP_FULL:
             messageText = TTLocalizer.BoardingMessageGroupFull % inviteeName
 
-        localAvatar.setSystemMessage(
-            0, messageText, WhisperPopup.WTToontownBoardingGroup)
+        localAvatar.setSystemMessage(0, messageText,
+                                     WhisperPopup.WTToontownBoardingGroup)
         if self.inviterPanels.isInvitingPanelIdCorrect(inviteeId):
             self.inviterPanels.destroyInvitingPanel()
 
@@ -337,12 +311,8 @@ class DistributedBoardingParty(
         self.lastInvitationFailedMessage[inviterId] = now
         return True
 
-    def showRejectMessage(
-            self,
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle):
+    def showRejectMessage(self, elevatorId, reason, avatarsFailingRequirements,
+                          avatarsInBattle):
         leaderId = localAvatar.doId
         rejectText = ''
 
@@ -369,8 +339,8 @@ class DistributedBoardingParty(
 
         if reason == BoardingPartyBase.BOARDCODE_MINLAFF:
             self.notify.debug(
-                "%s 's group cannot board because it does not have enough laff points." %
-                leaderId)
+                "%s 's group cannot board because it does not have enough laff points."
+                % leaderId)
             elevator = base.cr.doId2do.get(elevatorId)
             if elevator:
                 minLaffPoints = elevator.minLaff
@@ -388,8 +358,8 @@ class DistributedBoardingParty(
                         avatarNameText, minLaffPoints)
         elif reason == BoardingPartyBase.BOARDCODE_PROMOTION:
             self.notify.debug(
-                "%s 's group cannot board because it does not have enough promotion merits." %
-                leaderId)
+                "%s 's group cannot board because it does not have enough promotion merits."
+                % leaderId)
             if leaderId in avatarsFailingRequirements:
                 rejectText = TTLocalizer.BoardcodePromotionLeader
             else:
@@ -457,8 +427,7 @@ class DistributedBoardingParty(
                 if leaderId == quitterId:
                     if not localAvatar.doId == leaderId:
                         localAvatar.setSystemMessage(
-                            0,
-                            TTLocalizer.BoardingMessageGroupDissolved,
+                            0, TTLocalizer.BoardingMessageGroupDissolved,
                             WhisperPopup.WTToontownBoardingGroup)
 
                 elif not kick:
@@ -468,11 +437,13 @@ class DistributedBoardingParty(
                             quitterName = quitter.name
                             messageText = TTLocalizer.BoardingMessageLeftGroup % quitterName
                             localAvatar.setSystemMessage(
-                                0, messageText, WhisperPopup.WTToontownBoardingGroup)
+                                0, messageText,
+                                WhisperPopup.WTToontownBoardingGroup)
                         else:
                             messageText = TTLocalizer.BoardingMessageGroupDisbandedGeneric
                             localAvatar.setSystemMessage(
-                                0, messageText, WhisperPopup.WTToontownBoardingGroup)
+                                0, messageText,
+                                WhisperPopup.WTToontownBoardingGroup)
 
     def requestInvite(self, inviteeId):
         self.notify.debug('requestInvite %s' % inviteeId)
@@ -492,16 +463,15 @@ class DistributedBoardingParty(
 
                 if self.inviterPanels.isInvitingPanelUp():
                     self.showMe(
-                        TTLocalizer.BoardingPendingInvite, pos=(
-                            0, 0, 0))
-                elif len(self.getGroupMemberList(localAvatar.doId)) >= self.maxSize:
+                        TTLocalizer.BoardingPendingInvite, pos=(0, 0, 0))
+                elif len(self.getGroupMemberList(
+                        localAvatar.doId)) >= self.maxSize:
                     self.showMe(TTLocalizer.BoardingInviteGroupFull)
                 else:
                     invitee = base.cr.doId2do.get(inviteeId)
                     if invitee:
                         self.inviterPanels.createInvitingPanel(self, inviteeId)
-                        self.sendUpdate('requestInvite', [
-                            inviteeId])
+                        self.sendUpdate('requestInvite', [inviteeId])
 
             else:
                 place = base.cr.playGame.getPlace()
@@ -519,23 +489,17 @@ class DistributedBoardingParty(
             place.fsm.request('walk')
 
     def requestCancelInvite(self, inviteeId):
-        self.sendUpdate('requestCancelInvite', [
-            inviteeId])
+        self.sendUpdate('requestCancelInvite', [inviteeId])
 
     def requestAcceptInvite(self, leaderId, inviterId):
         self.notify.debug('requestAcceptInvite %s %s' % (leaderId, inviterId))
-        self.sendUpdate('requestAcceptInvite', [
-            leaderId,
-            inviterId])
+        self.sendUpdate('requestAcceptInvite', [leaderId, inviterId])
 
     def requestRejectInvite(self, leaderId, inviterId):
-        self.sendUpdate('requestRejectInvite', [
-            leaderId,
-            inviterId])
+        self.sendUpdate('requestRejectInvite', [leaderId, inviterId])
 
     def requestKick(self, kickId):
-        self.sendUpdate('requestKick', [
-            kickId])
+        self.sendUpdate('requestKick', [kickId])
 
     def requestLeave(self):
         if self.goToShowTrack and self.goToShowTrack.isPlaying():
@@ -546,15 +510,13 @@ class DistributedBoardingParty(
             if not place.getState() == 'elevator':
                 if localAvatar.doId in self.avIdDict:
                     leaderId = self.avIdDict[localAvatar.doId]
-                    self.sendUpdate('requestLeave', [
-                        leaderId])
+                    self.sendUpdate('requestLeave', [leaderId])
 
     def handleEnterElevator(self, elevator):
         if self.getGroupLeader(localAvatar.doId) == localAvatar.doId:
             if base.localAvatar.hp > 0:
                 self.cr.playGame.getPlace().detectedElevatorCollision(elevator)
-                self.sendUpdate('requestBoard', [
-                    elevator.doId])
+                self.sendUpdate('requestBoard', [elevator.doId])
                 elevatorId = elevator.doId
                 if elevatorId in self.elevatorIdList:
                     offset = self.elevatorIdList.index(elevatorId)
@@ -566,8 +528,7 @@ class DistributedBoardingParty(
                 self.disableGoButton()
 
     def informDestChange(self, offset):
-        self.sendUpdate('informDestinationInfo', [
-            offset])
+        self.sendUpdate('informDestinationInfo', [offset])
 
     def postDestinationInfo(self, offset):
         if self.groupPanel:
@@ -595,8 +556,7 @@ class DistributedBoardingParty(
     def requestGoToFirstTime(self, elevatorId):
         self.waitingForFirstResponse = True
         self.firstRequestAccepted = False
-        self.sendUpdate('requestGoToFirstTime', [
-            elevatorId])
+        self.sendUpdate('requestGoToFirstTime', [elevatorId])
         self.startGoToPreShow(elevatorId)
 
     def acceptGoToFirstTime(self, elevatorId):
@@ -608,31 +568,23 @@ class DistributedBoardingParty(
             if self.firstRequestAccepted:
                 self.firstRequestAccepted = False
                 self.disableGoButton()
-                self.sendUpdate('requestGoToSecondTime', [
-                    elevatorId])
+                self.sendUpdate('requestGoToSecondTime', [elevatorId])
 
         else:
-            self.postRejectGoto(
-                elevatorId, BoardingPartyBase.BOARDCODE_MISSING, [], [])
+            self.postRejectGoto(elevatorId,
+                                BoardingPartyBase.BOARDCODE_MISSING, [], [])
             self.cancelGoToElvatorDest()
 
     def acceptGoToSecondTime(self, elevatorId):
         self.startGoToShow(elevatorId)
 
-    def rejectGoToRequest(
-            self,
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle):
+    def rejectGoToRequest(self, elevatorId, reason, avatarsFailingRequirements,
+                          avatarsInBattle):
         self.firstRequestAccepted = False
         self.waitingForFirstResponse = False
         self.cancelGoToElvatorDest()
-        self.postRejectGoto(
-            elevatorId,
-            reason,
-            avatarsFailingRequirements,
-            avatarsInBattle)
+        self.postRejectGoto(elevatorId, reason, avatarsFailingRequirements,
+                            avatarsInBattle)
 
     def startGoToPreShow(self, elevatorId):
         self.notify.debug('Starting Go Pre Show.')

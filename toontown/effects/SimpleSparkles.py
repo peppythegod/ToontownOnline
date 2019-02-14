@@ -7,7 +7,6 @@ import random
 
 
 class SimpleSparkles(PooledEffect, EffectController):
-
     def __init__(self):
         PooledEffect.__init__(self)
         EffectController.__init__(self)
@@ -53,10 +52,9 @@ class SimpleSparkles(PooledEffect, EffectController):
         self.p0.factory.setAngularVelocitySpread(10.0)
         self.p0.renderer.setAlphaMode(BaseParticleRenderer.PRALPHAOUT)
         self.p0.renderer.setUserAlpha(1.0)
-        self.p0.renderer.setColorBlendMode(
-            ColorBlendAttrib.MAdd,
-            ColorBlendAttrib.OIncomingAlpha,
-            ColorBlendAttrib.OOne)
+        self.p0.renderer.setColorBlendMode(ColorBlendAttrib.MAdd,
+                                           ColorBlendAttrib.OIncomingAlpha,
+                                           ColorBlendAttrib.OOne)
         self.p0.renderer.setFromNode(self.card)
         self.p0.renderer.setColor(Vec4(1.0, 1.0, 1.0, 1.0))
         self.p0.renderer.setXScaleFlag(1)
@@ -77,12 +75,10 @@ class SimpleSparkles(PooledEffect, EffectController):
 
     def createTrack(self):
         self.track = Sequence(
-            Func(
-                self.p0.setBirthRate, 0.029999999999999999), Func(
-                self.p0.clearToInitial), Func(
-                self.f.start, self, self), Wait(1.0), Func(
-                    self.p0.setBirthRate, 100.0), Wait(2.5), Func(
-                        self.cleanUpEffect))
+            Func(self.p0.setBirthRate, 0.029999999999999999),
+            Func(self.p0.clearToInitial), Func(self.f.start, self, self),
+            Wait(1.0), Func(self.p0.setBirthRate, 100.0), Wait(2.5),
+            Func(self.cleanUpEffect))
 
     def setEffectScale(self, scale):
         self.effectScale = scale

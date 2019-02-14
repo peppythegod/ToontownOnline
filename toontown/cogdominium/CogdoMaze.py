@@ -9,7 +9,6 @@ import CogdoUtil
 
 
 class CogdoMaze(MazeBase, DirectObject):
-
     def __init__(self, model, data, cellWidth):
         MazeBase.__init__(self, model, data, cellWidth)
         self._initWaterCoolers()
@@ -29,10 +28,8 @@ class CogdoMaze(MazeBase, DirectObject):
         models = []
         for model in self.maze.findAllMatches('**/*waterCooler'):
             model.wrtReparentTo(render)
-            models.append(
-                (model.getPos(
-                    self.maze), model.getHpr(
-                    self.maze), model))
+            models.append((model.getPos(self.maze), model.getHpr(self.maze),
+                           model))
 
         models.sort()
         i = 0
@@ -84,14 +81,12 @@ BARRIER_DATA_TOP = 1
 
 
 class CogdoMazeFactory:
-
-    def __init__(
-            self,
-            randomNumGen,
-            width,
-            height,
-            frameWallThickness=Globals.FrameWallThickness,
-            cogdoMazeData=CogdoMazeData):
+    def __init__(self,
+                 randomNumGen,
+                 width,
+                 height,
+                 frameWallThickness=Globals.FrameWallThickness,
+                 cogdoMazeData=CogdoMazeData):
         self._rng = RandomNumGen(randomNumGen)
         self.width = width
         self.height = height
@@ -128,7 +123,8 @@ class CogdoMazeFactory:
                 key = quadrantKeys[i]
                 collTable = self._cogdoMazeData.QuadrantCollisions[key]
                 angle = self._cogdoMazeData.QuadrantAngles[self._rng.randint(
-                    0, len(self._cogdoMazeData.QuadrantAngles) - 1)]
+                    0,
+                    len(self._cogdoMazeData.QuadrantAngles) - 1)]
                 self.quadrantData.append((key, collTable[angle], angle))
                 i += 1
                 if x * y >= self._cogdoMazeData.NumQuadrants:
@@ -148,9 +144,7 @@ class CogdoMazeFactory:
                     ay = -1
                 else:
                     ay = 1
-                data[y].append([
-                    ax,
-                    ay])
+                data[y].append([ax, ay])
 
         dirUp = 0
         dirDown = 1
@@ -230,9 +224,11 @@ class CogdoMazeFactory:
 
         self._data = {}
         self._data['width'] = (
-            self.width + 1) * self.frameWallThickness + self.width * self.quadrantSize
+            self.width +
+            1) * self.frameWallThickness + self.width * self.quadrantSize
         self._data['height'] = (
-            self.height + 1) * self.frameWallThickness + self.height * self.quadrantSize
+            self.height +
+            1) * self.frameWallThickness + self.height * self.quadrantSize
         self._data['originX'] = int(self._data['width'] / 2)
         self._data['originY'] = int(self._data['height'] / 2)
         collisionTable = []
@@ -241,8 +237,7 @@ class CogdoMazeFactory:
         collisionTable.append(horizontalWall)
         for i in range(0, len(self.quadrantData), self.width):
             for y in range(self.quadrantSize):
-                row = [
-                    1]
+                row = [1]
                 for x in range(i, i + self.width):
                     if x == 1 and y < self.quadrantSize / 2 - 2:
                         newData = []
@@ -252,12 +247,10 @@ class CogdoMazeFactory:
                                 continue
                             newData.append(j + 0)
 
-                        row += newData + [
-                            1]
+                        row += newData + [1]
                         continue
                     []
-                    row += self.quadrantData[x][1][y] + [
-                        1]
+                    row += self.quadrantData[x][1][y] + [1]
 
                 collisionTable.append(row)
 
@@ -310,8 +303,8 @@ class CogdoMazeFactory:
                 i += 1
 
         quadrantHalfUnitSize = quadrantUnitSize * 0.5
-        barrierModel = CogdoUtil.loadMazeModel(
-            'grouping_blockerDivider').find('**/divider')
+        barrierModel = CogdoUtil.loadMazeModel('grouping_blockerDivider').find(
+            '**/divider')
         y = 3
         for x in range(self.width):
             if x == (self.width - 1) / 2:
@@ -328,8 +321,8 @@ class CogdoMazeFactory:
         offset = self.cellWidth - 0.5
         for x in (0, 3):
             for y in range(self.height):
-                ax = ((x - halfWidth) * size -
-                      quadrantHalfUnitSize - frameActualSize) + offset
+                ax = ((x - halfWidth) * size - quadrantHalfUnitSize -
+                      frameActualSize) + offset
                 ay = (y - halfHeight) * size
                 b = NodePath('barrier')
                 barrierModel.instanceTo(b)

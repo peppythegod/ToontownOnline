@@ -34,8 +34,7 @@ class DistributedCrusherEntityAI(DistributedEntityAI.DistributedEntityAI):
             self.crushCell = self.level.entities.get(self.crushCellId, None)
             if self.crushCell is None:
                 self.accept(
-                    self.level.getEntityCreateEvent(
-                        self.crushCellId),
+                    self.level.getEntityCreateEvent(self.crushCellId),
                     self.setActiveCrushCell)
             else:
                 self.isCrusher = 1
@@ -43,9 +42,7 @@ class DistributedCrusherEntityAI(DistributedEntityAI.DistributedEntityAI):
 
     def sendCrushMsg(self, axis=0):
         if self.isCrusher:
-            messenger.send(self.crushMsg, [
-                self.entId,
-                axis])
+            messenger.send(self.crushMsg, [self.entId, axis])
 
     def getPosition(self):
         if hasattr(self, 'pos'):

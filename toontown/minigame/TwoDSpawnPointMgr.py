@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
@@ -69,8 +67,7 @@ class TwoDSpawnPointMgr(DirectObject):
         self.collNPList.append(collNodePath)
         self.collDict[collNodePath.getName()] = index
         self.accept(
-            self.game.uniqueName(
-                'enter' + collSphereName),
+            self.game.uniqueName('enter' + collSphereName),
             self.handleSavePointCollision)
 
     def handleSavePointCollision(self, cevent):
@@ -83,15 +80,14 @@ class TwoDSpawnPointMgr(DirectObject):
             point = self.loadPoints[self.lastSavePoint]
             return Point3(point[0], point[1], point[2])
         else:
-            return Point3(
-                ToonBlitzGlobals.ToonStartingPosition[0],
-                ToonBlitzGlobals.ToonStartingPosition[1],
-                ToonBlitzGlobals.ToonStartingPosition[2])
+            return Point3(ToonBlitzGlobals.ToonStartingPosition[0],
+                          ToonBlitzGlobals.ToonStartingPosition[1],
+                          ToonBlitzGlobals.ToonStartingPosition[2])
 
     def setupLastSavePointHandle(self):
         if len(self.collNPList) > 0:
-            self.accept(
-                'enter' + self.collNPList[-1].getName(), self.handleLastSavePointCollision)
+            self.accept('enter' + self.collNPList[-1].getName(),
+                        self.handleLastSavePointCollision)
             self.gameEndX = self.collNPList[-1].getX(render)
 
     def handleLastSavePointCollision(self, cevent):

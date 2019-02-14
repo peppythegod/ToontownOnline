@@ -1,5 +1,3 @@
-
-
 from PlayingCard import PlayingCardNodePath
 import PlayingCardGlobals
 from pandac.PandaModules import NodePath, Vec3
@@ -20,7 +18,8 @@ class PairingGameCard(PlayingCardNodePath):
         (0.24218799999999999, 0.74218799999999996, 0.515625, 1.0),
         (0.96875, 0.69140599999999997, 0.69921900000000003, 1.0),
         (0.99609400000000003, 0.95703099999999997, 0.59765599999999997, 1.0),
-        (0.99218799999999996, 0.48046899999999998, 0.16796900000000001, 1.0)]
+        (0.99218799999999996, 0.48046899999999998, 0.16796900000000001, 1.0)
+    ]
 
     def __init__(self, value):
         style = PlayingCardGlobals.Styles[0]
@@ -32,8 +31,8 @@ class PairingGameCard(PlayingCardNodePath):
         oneCard = loader.loadModel(
             'phase_4/models/minigames/garden_sign_memory')
         prop = self.attachNewNode('prop')
-        PlayingCardGlobals.getImage(
-            self.style, self.suit, self.rank).copyTo(prop)
+        PlayingCardGlobals.getImage(self.style, self.suit,
+                                    self.rank).copyTo(prop)
         prop.setScale(7)
         oneCard.find('**/glow').removeNode()
         cs = oneCard.find('**/collision')
@@ -81,10 +80,12 @@ class PairingGameCard(PlayingCardNodePath):
         if doInterval:
             self.clearFlipIval()
             self.flipIval = Parallel(
-                LerpHprInterval(
-                    self, self.FlipTime, Vec3(
-                        0, 0, 0)), SoundInterval(
-                    self.turnUpSound, node=self, listenerNode=base.localAvatar, cutOff=240))
+                LerpHprInterval(self, self.FlipTime, Vec3(0, 0, 0)),
+                SoundInterval(
+                    self.turnUpSound,
+                    node=self,
+                    listenerNode=base.localAvatar,
+                    cutOff=240))
             self.flipIval.start()
         else:
             self.setR(0)
@@ -99,10 +100,12 @@ class PairingGameCard(PlayingCardNodePath):
         if doInterval:
             self.clearFlipIval()
             self.flipIval = Parallel(
-                LerpHprInterval(
-                    self, self.FlipTime, Vec3(
-                        0, 0, 180)), SoundInterval(
-                    self.turnDownSound, node=self, listenerNode=base.localAvatar, cutOff=240))
+                LerpHprInterval(self, self.FlipTime, Vec3(0, 0, 180)),
+                SoundInterval(
+                    self.turnDownSound,
+                    node=self,
+                    listenerNode=base.localAvatar,
+                    cutOff=240))
             self.flipIval.start()
         else:
             self.setR(180)

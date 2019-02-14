@@ -14,7 +14,8 @@ class ClsendTracker:
             if simbase.air.getTrackClsends():
                 if ClsendTracker.NumTrackersLoggingOverflow < ClsendTracker.MaxTrackersLoggingOverflow:
                     self._logClsendOverflow = random.random(
-                    ) < 1.0 / config.GetFloat('clsend-log-one-av-in-every', choice(__dev__, 4, 50))
+                    ) < 1.0 / config.GetFloat('clsend-log-one-av-in-every',
+                                              choice(__dev__, 4, 50))
 
         if self._logClsendOverflow:
             ClsendTracker.NumTrackersLoggingOverflow += 1
@@ -53,8 +54,8 @@ class ClsendTracker:
         PyDatagram(dataStr).dumpHex(sstream)
         hexDump = sstream.getData()
         self.clsendNotify.info(
-            '%s [%s]: %s%s' %
-            (self.doId, self._clsendCounter, readableStr, hexDump))
+            '%s [%s]: %s%s' % (self.doId, self._clsendCounter, readableStr,
+                               hexDump))
 
     def dumpClientSentMsgs(self):
         for msg in self._clsendMsgs:

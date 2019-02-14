@@ -20,11 +20,8 @@ class DistributedBattleFactory(DistributedLevelBattle.DistributedLevelBattle):
     def __init__(self, cr):
         DistributedLevelBattle.DistributedLevelBattle.__init__(self, cr)
         self.fsm.addState(
-            State.State(
-                'FactoryReward',
-                self.enterFactoryReward,
-                self.exitFactoryReward,
-                ['Resume']))
+            State.State('FactoryReward', self.enterFactoryReward,
+                        self.exitFactoryReward, ['Resume']))
         offState = self.fsm.getStateNamed('Off')
         offState.addTransition('FactoryReward')
         playMovieState = self.fsm.getStateNamed('PlayMovie')
@@ -40,8 +37,7 @@ class DistributedBattleFactory(DistributedLevelBattle.DistributedLevelBattle):
                 messenger.send('localToonConfrontedForeman')
 
         self.movie.playReward(
-            ts,
-            self.uniqueName('building-reward'),
+            ts, self.uniqueName('building-reward'),
             self._DistributedBattleFactory__handleFactoryRewardDone)
 
     def _DistributedBattleFactory__handleFactoryRewardDone(self):

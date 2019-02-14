@@ -24,8 +24,8 @@ class DistributedStatuary(DistributedLawnDecor.DistributedLawnDecor):
         self.model = loader.loadModel(self.modelPath)
         colNode = self.model.find('**/+CollisionNode')
         if not colNode.isEmpty():
-            (score,
-             multiplier) = ToontownGlobals.PinballScoring[ToontownGlobals.PinballStatuary]
+            (score, multiplier) = ToontownGlobals.PinballScoring[
+                ToontownGlobals.PinballStatuary]
             if self.pinballScore:
                 score = self.pinballScore[0]
                 multiplier = self.pinballScore[1]
@@ -47,11 +47,13 @@ class DistributedStatuary(DistributedLawnDecor.DistributedLawnDecor):
         self.modelPath = GardenGlobals.PlantAttributes[typeIndex]['model']
         self.pinballScore = None
         if 'pinballScore' in GardenGlobals.PlantAttributes[typeIndex]:
-            self.pinballScore = GardenGlobals.PlantAttributes[typeIndex]['pinballScore']
+            self.pinballScore = GardenGlobals.PlantAttributes[typeIndex][
+                'pinballScore']
 
         self.worldScale = 1.0
         if 'worldScale' in GardenGlobals.PlantAttributes[typeIndex]:
-            self.worldScale = GardenGlobals.PlantAttributes[typeIndex]['worldScale']
+            self.worldScale = GardenGlobals.PlantAttributes[typeIndex][
+                'worldScale']
 
     def getTypeIndex(self):
         return self.typeIndex
@@ -76,11 +78,10 @@ class DistributedStatuary(DistributedLawnDecor.DistributedLawnDecor):
         self.notify.debug('max=%s min=%s' % (maxPt, minPt))
         xDiff = maxPt[0] - minPt[0]
         yDiff = maxPt[1] - minPt[1]
-        radius = (xDiff * xDiff + yDiff * yDiff) ** 0.5
+        radius = (xDiff * xDiff + yDiff * yDiff)**0.5
         radius /= 3
         self.notify.debug(
-            'xDiff=%s yDiff=%s radius = %s' %
-            (xDiff, yDiff, radius))
+            'xDiff=%s yDiff=%s radius = %s' % (xDiff, yDiff, radius))
         self.colSphereNode.setScale(radius)
 
     def getShovelCommand(self):
@@ -102,8 +103,7 @@ class DistributedStatuary(DistributedLawnDecor.DistributedLawnDecor):
         messenger.send('wakeup')
         self.confirmDialog = TTDialog.TTDialog(
             style=TTDialog.YesNo,
-            text=TTLocalizer.ConfirmRemoveStatuary % {
-                'item': fullName},
+            text=TTLocalizer.ConfirmRemoveStatuary % {'item': fullName},
             command=self.confirmCallback)
         self.confirmDialog.show()
         base.cr.playGame.getPlace().detectedGardenPlotUse()

@@ -47,8 +47,7 @@ tempLoader = PandaLoader()
 backgroundNode = tempLoader.loadSync(
     Filename('phase_3/models/gui/loading-background'))
 print 'ToontownStart: setting default font'
-DirectGuiGlobals.setDefaultFontFunc(
-    ToontownGlobals.getInterfaceFont)
+DirectGuiGlobals.setDefaultFontFunc(ToontownGlobals.getInterfaceFont)
 launcher.setPandaErrorCode(7)
 ToonBase.ToonBase()
 if base.win is None:
@@ -67,8 +66,8 @@ backgroundNodePath.find('**/bg').setBin('fixed', 10)
 base.graphicsEngine.renderFrame()
 DirectGuiGlobals.setDefaultRolloverSound(
     base.loadSfx('phase_3/audio/sfx/GUI_rollover.mp3'))
-DirectGuiGlobals.setDefaultClickSound(base.loadSfx(
-    'phase_3/audio/sfx/GUI_create_toon_fwd.mp3'))
+DirectGuiGlobals.setDefaultClickSound(
+    base.loadSfx('phase_3/audio/sfx/GUI_create_toon_fwd.mp3'))
 DirectGuiGlobals.setDefaultDialogGeom(
     loader.loadModel('phase_3/models/gui/dialog_box_gui'))
 OTPGlobals.setDefaultProductPrefix(TTLocalizer.ProductPrefix)
@@ -80,29 +79,22 @@ if base.musicManagerIsValid:
         music.play()
 
     print 'ToontownStart: Loading default gui sounds'
-    DirectGuiGlobals.setDefaultRolloverSound(base.loadSfx(
-        'phase_3/audio/sfx/GUI_rollover.mp3'))
-    DirectGuiGlobals.setDefaultClickSound(base.loadSfx(
-        'phase_3/audio/sfx/GUI_create_toon_fwd.mp3'))
+    DirectGuiGlobals.setDefaultRolloverSound(
+        base.loadSfx('phase_3/audio/sfx/GUI_rollover.mp3'))
+    DirectGuiGlobals.setDefaultClickSound(
+        base.loadSfx('phase_3/audio/sfx/GUI_create_toon_fwd.mp3'))
 else:
     music = None
 serverVersion = base.config.GetString('server-version', 'no_version_set')
 print 'ToontownStart: serverVersion: ', serverVersion
-version = OnscreenText(serverVersion,
-                       pos=(-1.3,
-                            -0.97499999999999998),
-                       scale=0.059999999999999998,
-                       fg=Vec4(0,
-                               0,
-                               1,
-                               0.59999999999999998),
-                       align=TextNode.ALeft)
-loader.beginBulkLoad(
-    'init',
-    TTLocalizer.LoaderLabel,
-    138,
-    0,
-    TTLocalizer.TIP_NONE)
+version = OnscreenText(
+    serverVersion,
+    pos=(-1.3, -0.97499999999999998),
+    scale=0.059999999999999998,
+    fg=Vec4(0, 0, 1, 0.59999999999999998),
+    align=TextNode.ALeft)
+loader.beginBulkLoad('init', TTLocalizer.LoaderLabel, 138, 0,
+                     TTLocalizer.TIP_NONE)
 cr = ToontownClientRepository.ToontownClientRepository(serverVersion, launcher)
 cr.music = music
 del music

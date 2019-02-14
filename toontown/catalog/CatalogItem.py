@@ -207,7 +207,8 @@ class CatalogItem:
         else:
             return TTLocalizer.CatalogPurchaseGiftGeneralError % {
                 'friend': '%s',
-                'error': retcode}
+                'error': retcode
+            }
 
     def acceptItem(self, mailbox, index, callback):
         mailbox.acceptItem(self, index, callback)
@@ -360,8 +361,8 @@ class CatalogItem:
     def makeFrame(self):
         DirectFrame = DirectFrame
         import direct.gui.DirectGui
-        frame = DirectFrame(parent=hidden, frameSize=(-1.0,
-                                                      1.0, -1.0, 1.0), relief=None)
+        frame = DirectFrame(
+            parent=hidden, frameSize=(-1.0, 1.0, -1.0, 1.0), relief=None)
         return frame
 
     def makeFrameModel(self, model, spin=1):
@@ -459,8 +460,7 @@ def decodeCatalogItem(di, versionNumber, store):
     except Exception:
         e = None
         CatalogItem.notify.warning(
-            'Invalid catalog item in stream: %s, %s' %
-            (sys.exc_info()[0], e))
+            'Invalid catalog item in stream: %s, %s' % (sys.exc_info()[0], e))
         d = Datagram(di.getDatagram().getMessage()[startIndex:])
         d.dumpHex(Notify.out())
         import CatalogInvalidItem as CatalogInvalidItem
@@ -484,8 +484,7 @@ def getItem(blob, store=0):
     except Exception:
         e = None
         CatalogItem.notify.warning(
-            'Invalid catalog item: %s, %s' %
-            (sys.exc_info()[0], e))
+            'Invalid catalog item: %s, %s' % (sys.exc_info()[0], e))
         dg.dumpHex(Notify.out())
         import CatalogInvalidItem
         return CatalogInvalidItem.CatalogInvalidItem()

@@ -27,11 +27,8 @@ class DistributedCashbotBossSafeAI(
 
     def hitBoss(self, impact):
         avId = self.air.getAvatarIdFromSender()
-        self.validate(
-            avId,
-            impact <= 1.0,
-            'invalid hitBoss impact %s' %
-            impact)
+        self.validate(avId, impact <= 1.0,
+                      'invalid hitBoss impact %s' % impact)
         if avId not in self.boss.involvedToons:
             return None
 

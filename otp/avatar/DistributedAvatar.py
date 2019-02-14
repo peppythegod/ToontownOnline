@@ -67,12 +67,10 @@ class DistributedAvatar(DistributedActor, Avatar):
 
         self.setParent(OTPGlobals.SPHidden)
         self.setTag('avatarDoId', str(self.doId))
-        self.accept(
-            'nameTagShowAvId',
-            self._DistributedAvatar__nameTagShowAvId)
-        self.accept(
-            'nameTagShowName',
-            self._DistributedAvatar__nameTagShowName)
+        self.accept('nameTagShowAvId',
+                    self._DistributedAvatar__nameTagShowAvId)
+        self.accept('nameTagShowName',
+                    self._DistributedAvatar__nameTagShowName)
 
     def announceGenerate(self):
 
@@ -82,8 +80,8 @@ class DistributedAvatar(DistributedActor, Avatar):
             self.DistributedAvatar_announced = 1
 
         if not self.isLocal():
-            self.initializeBodyCollisions(
-                'distAvatarCollNode-' + str(self.doId))
+            self.initializeBodyCollisions('distAvatarCollNode-' +
+                                          str(self.doId))
 
         DistributedActor.announceGenerate(self)
 
@@ -144,10 +142,9 @@ class DistributedAvatar(DistributedActor, Avatar):
     def hpChange(self, quietly=0):
         if hasattr(self, 'doId'):
             if self.hp is not None and self.maxHp is not None:
-                messenger.send(self.uniqueName('hpChange'), [
-                    self.hp,
-                    self.maxHp,
-                    quietly])
+                messenger.send(
+                    self.uniqueName('hpChange'),
+                    [self.hp, self.maxHp, quietly])
 
             if self.hp is not None and self.hp > 0:
                 messenger.send(self.uniqueName('positiveHP'))
@@ -220,34 +217,18 @@ class DistributedAvatar(DistributedActor, Avatar):
                 self.hpText.setPos(0, 0, self.height / 2)
                 seq = Task.sequence(
                     self.hpText.lerpPos(
-                        Point3(
-                            0,
-                            0,
-                            self.height + 1.5),
+                        Point3(0, 0, self.height + 1.5),
                         1.0,
-                        blendType='easeOut'),
-                    Task.pause(0.84999999999999998),
+                        blendType='easeOut'), Task.pause(0.84999999999999998),
                     self.hpText.lerpColor(
-                        Vec4(
-                            r,
-                            g,
-                            b,
-                            a),
-                        Vec4(
-                            r,
-                            g,
-                            b,
-                            0),
-                        0.10000000000000001),
-                    Task.Task(
-                        self.hideHpTextTask))
+                        Vec4(r, g, b, a), Vec4(r, g, b, 0),
+                        0.10000000000000001), Task.Task(self.hideHpTextTask))
                 taskMgr.add(seq, self.uniqueName('hpText'))
 
-    def showHpString(
-            self,
-            text,
-            duration=0.84999999999999998,
-            scale=0.69999999999999996):
+    def showHpString(self,
+                     text,
+                     duration=0.84999999999999998,
+                     scale=0.69999999999999996):
         if self.HpTextEnabled and not (self.ghostMode):
             if text != '':
                 if self.hpText:
@@ -269,27 +250,12 @@ class DistributedAvatar(DistributedActor, Avatar):
                 self.hpText.setPos(0, 0, self.height / 2)
                 seq = Task.sequence(
                     self.hpText.lerpPos(
-                        Point3(
-                            0,
-                            0,
-                            self.height + 1.5),
+                        Point3(0, 0, self.height + 1.5),
                         1.0,
-                        blendType='easeOut'),
-                    Task.pause(duration),
+                        blendType='easeOut'), Task.pause(duration),
                     self.hpText.lerpColor(
-                        Vec4(
-                            r,
-                            g,
-                            b,
-                            a),
-                        Vec4(
-                            r,
-                            g,
-                            b,
-                            0),
-                        0.10000000000000001),
-                    Task.Task(
-                        self.hideHpTextTask))
+                        Vec4(r, g, b, a), Vec4(r, g, b, 0),
+                        0.10000000000000001), Task.Task(self.hideHpTextTask))
                 taskMgr.add(seq, self.uniqueName('hpText'))
 
     def hideHpTextTask(self, task):
@@ -316,15 +282,12 @@ class DistributedAvatar(DistributedActor, Avatar):
 
     def askAvOnShard(self, avId):
         if base.cr.doId2do.get(avId):
-            messenger.send('AvOnShard%s' % avId, [
-                True])
+            messenger.send('AvOnShard%s' % avId, [True])
         else:
-            self.sendUpdate('checkAvOnShard', [
-                avId])
+            self.sendUpdate('checkAvOnShard', [avId])
 
     def confirmAvOnShard(self, avId, onShard=True):
-        messenger.send('AvOnShard%s' % avId, [
-            onShard])
+        messenger.send('AvOnShard%s' % avId, [onShard])
 
     def getDialogueArray(self):
         pass

@@ -19,13 +19,12 @@ from direct.particles import ForceGroup
 
 
 class CogdoFlyingObtacleFactory:
-
     def __init__(self):
         self._index = -1
-        self._whirlwindModel = CogdoUtil.loadFlyingModel(
-            'whirlwind').find('**/whirlwind')
-        self._fanModel = CogdoUtil.loadFlyingModel(
-            'streamer').find('**/streamer')
+        self._whirlwindModel = CogdoUtil.loadFlyingModel('whirlwind').find(
+            '**/whirlwind')
+        self._fanModel = CogdoUtil.loadFlyingModel('streamer').find(
+            '**/streamer')
 
     def destroy(self):
         self._whirlwindModel.removeNode()
@@ -51,9 +50,7 @@ class CogdoFlyingObtacleFactory:
     def createWhirlwind(self, motionPath=None):
         self._index += 1
         return CogdoFlyingWhirlwind(
-            self._index,
-            self._whirlwindModel,
-            motionPath=motionPath)
+            self._index, self._whirlwindModel, motionPath=motionPath)
 
     def createStreamerParticles(self, color1, color2, amp):
         self.f = ParticleEffect.ParticleEffect('streamer_particles')
@@ -99,16 +96,15 @@ class CogdoFlyingObstacle(DirectObject):
     ExitEventName = 'CogdoFlyingObstacle_Exit'
     MotionTypes = PythonUtil.Enum(('BackForth', 'Loop'))
 
-    def __init__(
-            self,
-            type,
-            index,
-            model,
-            collSolid,
-            motionPath=None,
-            motionPattern=None,
-            blendMotion=True,
-            instanceModel=True):
+    def __init__(self,
+                 type,
+                 index,
+                 model,
+                 collSolid,
+                 motionPath=None,
+                 motionPattern=None,
+                 blendMotion=True,
+                 instanceModel=True):
         self.type = type
         self.index = index
         name = 'CogdoFlyingObstacle-%s-%i' % (self.type, self.index)
@@ -180,8 +176,7 @@ class CogdoFlyingObstacle(DirectObject):
         if self.motionSequence is not None:
             self.motionSequence.loop()
             self.motionSequence.setT(
-                elapsedTime %
-                self.motionSequence.getDuration())
+                elapsedTime % self.motionSequence.getDuration())
 
     def stopMoving(self):
         if self.motionSequence is not None:
@@ -210,26 +205,16 @@ class CogdoFlyingObstacle(DirectObject):
         self.collNode.setIntoCollideMask(BitMask32(0))
 
     def _handleEnterCollision(self, collEntry):
-        messenger.send(CogdoFlyingObstacle.EnterEventName, [
-            self,
-            collEntry])
+        messenger.send(CogdoFlyingObstacle.EnterEventName, [self, collEntry])
 
     def _handleExitCollision(self, collEntry):
-        messenger.send(CogdoFlyingObstacle.ExitEventName, [
-            self,
-            collEntry])
+        messenger.send(CogdoFlyingObstacle.ExitEventName, [self, collEntry])
 
 
 class CogdoFlyingWhirlwind(CogdoFlyingObstacle):
-
     def __init__(self, index, model, motionPath=None):
         collSolid = CollisionTube(
-            0,
-            0,
-            0,
-            0,
-            0,
-            Globals.Gameplay.WhirlwindCollisionTubeHeight,
+            0, 0, 0, 0, 0, Globals.Gameplay.WhirlwindCollisionTubeHeight,
             Globals.Gameplay.WhirlwindCollisionTubeRadius)
         CogdoFlyingObstacle.__init__(
             self,
@@ -271,7 +256,6 @@ class CogdoFlyingWhirlwind(CogdoFlyingObstacle):
 
 
 class CogdoFlyingMinion(CogdoFlyingObstacle):
-
     def __init__(self, index, collSolid, motionPath=None):
         self.prop = None
         self.suit = Suit.Suit()
@@ -333,7 +317,6 @@ class CogdoFlyingMinion(CogdoFlyingObstacle):
 
 
 class CogdoFlyingMinionFlying(CogdoFlyingMinion):
-
     def __init__(self, index, motionPath=None):
         radius = Globals.Gameplay.FlyingMinionCollisionRadius
         offset = Globals.Gameplay.FlyingMinionCollisionHeightOffset
@@ -341,11 +324,7 @@ class CogdoFlyingMinionFlying(CogdoFlyingMinion):
         CogdoFlyingMinion.__init__(self, index, collSolid, motionPath)
         self.attachPropeller()
         self.propTrack = Sequence(
-            ActorInterval(
-                self.prop,
-                'propeller',
-                startFrame=0,
-                endFrame=14))
+            ActorInterval(self.prop, 'propeller', startFrame=0, endFrame=14))
         dur = Globals.Gameplay.FlyingMinionFloatTime
         offset = Globals.Gameplay.FlyingMinionFloatOffset
         suitPos = self.suit.getPos()
@@ -354,28 +333,23 @@ class CogdoFlyingMinionFlying(CogdoFlyingMinion):
         self.floatSequence = Sequence(
             LerpPosInterval(
                 self.suit,
-                dur /
-                4.0,
+                dur / 4.0,
                 startPos=suitPos,
                 pos=upperPos,
                 blendType='easeInOut'),
             LerpPosInterval(
                 self.suit,
-                dur /
-                2.0,
+                dur / 2.0,
                 startPos=upperPos,
                 pos=lowerPos,
                 blendType='easeInOut'),
             LerpPosInterval(
                 self.suit,
-                dur /
-                4.0,
+                dur / 4.0,
                 startPos=lowerPos,
                 pos=suitPos,
                 blendType='easeInOut'),
-            name='%s.floatSequence%i' %
-            (self.__class__.__name__,
-                 self.index))
+            name='%s.floatSequence%i' % (self.__class__.__name__, self.index))
 
     def startMoving(self, elapsedTime):
         CogdoFlyingMinion.startMoving(self, elapsedTime)
@@ -397,7 +371,6 @@ class CogdoFlyingMinionFlying(CogdoFlyingMinion):
 
 
 class CogdoFlyingMinionWalking(CogdoFlyingMinion):
-
     def __init__(self, index, motionPath=None):
         radius = Globals.Gameplay.WalkingMinionCollisionRadius
         offset = Globals.Gameplay.WalkingMinionCollisionHeightOffset
@@ -414,22 +387,12 @@ class CogdoFlyingMinionWalking(CogdoFlyingMinion):
 
 
 class CogdoFlyingFan(CogdoFlyingObstacle):
-
     def __init__(self, index, model, motionPath=None):
-        collSolid = CollisionTube(
-            0,
-            0,
-            0,
-            0,
-            0,
-            Globals.Gameplay.FanCollisionTubeHeight,
-            Globals.Gameplay.FanCollisionTubeRadius)
-        CogdoFlyingObstacle.__init__(
-            self,
-            Globals.Level.ObstacleTypes.Fan,
-            index,
-            model,
-            collSolid)
+        collSolid = CollisionTube(0, 0, 0, 0, 0,
+                                  Globals.Gameplay.FanCollisionTubeHeight,
+                                  Globals.Gameplay.FanCollisionTubeRadius)
+        CogdoFlyingObstacle.__init__(self, Globals.Level.ObstacleTypes.Fan,
+                                     index, model, collSolid)
         self.streamers = self.model.findAllMatches('**/streamer*')
         self._initIntervals()
 
@@ -444,10 +407,8 @@ class CogdoFlyingFan(CogdoFlyingObstacle):
                 fromData=0.0,
                 toData=360.0,
                 duration=dur,
-                name='%s.streamerLerp%i-%s' %
-                (self.__class__.__name__,
-                 self.index,
-                 streamer.getName()))
+                name='%s.streamerLerp%i-%s' % (self.__class__.__name__,
+                                               self.index, streamer.getName()))
             self.streamerIvals.append(streamerLerp)
 
     def startMoving(self, elapsedTime=0.0):
@@ -455,16 +416,15 @@ class CogdoFlyingFan(CogdoFlyingObstacle):
         timeDelay = 0.0
         maxDur = Globals.Gameplay.FanStreamerMaxDuration
         for ival in self.streamerIvals:
-            taskName = 'delayedStreamerSpinTask-fan-%i-%s' % (
-                self.index, ival.getName())
+            taskName = 'delayedStreamerSpinTask-fan-%i-%s' % (self.index,
+                                                              ival.getName())
             taskMgr.doMethodLater(timeDelay, ival.loop, taskName, extraArgs=[])
             timeDelay += maxDur / (len(self.streamers) - 1)
 
     def stopMoving(self):
         CogdoFlyingObstacle.stopMoving(self)
         taskMgr.removeTasksMatching(
-            'delayedStreamerSpinTask-fan-%i*' %
-            self.index)
+            'delayedStreamerSpinTask-fan-%i*' % self.index)
         for streamerLerp in self.streamerIvals:
             streamerLerp.pause()
 
@@ -482,8 +442,7 @@ class CogdoFlyingFan(CogdoFlyingObstacle):
 
     def destroy(self):
         taskMgr.removeTasksMatching(
-            'delayedStreamerSpinTask-fan-%i*' %
-            self.index)
+            'delayedStreamerSpinTask-fan-%i*' % self.index)
         for streamerLerp in self.streamerIvals:
             streamerLerp.clearToInitial()
 

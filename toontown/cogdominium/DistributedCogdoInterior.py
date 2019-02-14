@@ -25,14 +25,13 @@ PAINTING_DICT = {
     's': 'tt_m_ara_crg_paintingMoverShaker',
     'l': 'tt_m_ara_crg_paintingLegalEagle',
     'm': 'tt_m_ara_crg_paintingMoverShaker',
-    'c': 'tt_m_ara_crg_paintingMoverShaker'}
+    'c': 'tt_m_ara_crg_paintingMoverShaker'
+}
 
 
 class DistributedCogdoInterior(DistributedObject.DistributedObject):
     id = 0
-    cageHeights = [
-        11.359999999999999,
-        0.01]
+    cageHeights = [11.359999999999999, 0.01]
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
@@ -55,37 +54,26 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
             Point3(0, 15, 0),
             Point3(10, 20, 0),
             Point3(-7, 24, 0),
-            Point3(-10, 0, 0)]
-        self.BottomFloor_SuitHs = [
-            75,
-            170,
-            -91,
-            -44]
+            Point3(-10, 0, 0)
+        ]
+        self.BottomFloor_SuitHs = [75, 170, -91, -44]
         self.Cubicle_SuitPositions = [
             Point3(0, 18, 0),
             Point3(10, 12, 0),
             Point3(-9, 11, 0),
-            Point3(-3, 13, 0)]
-        self.Cubicle_SuitHs = [
-            170,
-            56,
-            -52,
-            10]
+            Point3(-3, 13, 0)
+        ]
+        self.Cubicle_SuitHs = [170, 56, -52, 10]
         self.BossOffice_SuitPositions = [
             Point3(0, 15, 0),
             Point3(10, 20, 0),
             Point3(-10, 6, 0),
-            Point3(-17, 30, 0)]
-        self.BossOffice_SuitHs = [
-            170,
-            120,
-            12,
-            38]
+            Point3(-17, 30, 0)
+        ]
+        self.BossOffice_SuitHs = [170, 120, 12, 38]
         self._wantBarrelRoom = config.GetBool('cogdo-want-barrel-room', 0)
         self.barrelRoom = CogdoBarrelRoom.CogdoBarrelRoom()
-        self.brResults = [
-            [],
-            []]
+        self.brResults = [[], []]
         self.barrelRoomIntroTrack = None
         self.penthouseOutroTrack = None
         self.penthouseOutroChatDoneTrack = None
@@ -95,51 +83,39 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         self.elevatorMusic = base.loadMusic(
             'phase_7/audio/bgm/tt_elevator.mid')
         self.fsm = ClassicFSM.ClassicFSM('DistributedCogdoInterior', [
-            State.State('WaitForAllToonsInside', self.enterWaitForAllToonsInside, self.exitWaitForAllToonsInside, [
-                'Elevator']),
-            State.State('Elevator', self.enterElevator, self.exitElevator, [
-                'Game']),
-            State.State('Game', self.enterGame, self.exitGame, [
-                'Resting',
-                'Failed',
-                'BattleIntro']),
-            State.State('BarrelRoomIntro', self.enterBarrelRoomIntro, self.exitBarrelRoomIntro, [
-                'CollectBarrels',
-                'Off']),
-            State.State('CollectBarrels', self.enterCollectBarrels, self.exitCollectBarrels, [
-                'BarrelRoomReward',
-                'Off']),
-            State.State('BarrelRoomReward', self.enterBarrelRoomReward, self.exitBarrelRoomReward, [
-                'Battle',
-                'ReservesJoining',
-                'BattleIntro',
-                'Off']),
-            State.State('BattleIntro', self.enterBattleIntro, self.exitBattleIntro, [
-                'Battle',
-                'ReservesJoining',
-                'Off']),
-            State.State('Battle', self.enterBattle, self.exitBattle, [
-                'Resting',
-                'Reward',
-                'ReservesJoining']),
-            State.State('ReservesJoining', self.enterReservesJoining, self.exitReservesJoining, [
-                'Battle']),
-            State.State('Resting', self.enterResting, self.exitResting, [
-                'Elevator']),
-            State.State('Reward', self.enterReward, self.exitReward, [
-                'Off']),
-            State.State('Failed', self.enterFailed, self.exitFailed, [
-                'Off']),
-            State.State('Off', self.enterOff, self.exitOff, [
-                'Elevator',
-                'WaitForAllToonsInside',
-                'Battle'])], 'Off', 'Off')
+            State.State('WaitForAllToonsInside',
+                        self.enterWaitForAllToonsInside,
+                        self.exitWaitForAllToonsInside, ['Elevator']),
+            State.State('Elevator', self.enterElevator, self.exitElevator,
+                        ['Game']),
+            State.State('Game', self.enterGame, self.exitGame,
+                        ['Resting', 'Failed', 'BattleIntro']),
+            State.State('BarrelRoomIntro', self.enterBarrelRoomIntro,
+                        self.exitBarrelRoomIntro, ['CollectBarrels', 'Off']),
+            State.State('CollectBarrels', self.enterCollectBarrels,
+                        self.exitCollectBarrels, ['BarrelRoomReward', 'Off']),
+            State.State('BarrelRoomReward', self.enterBarrelRoomReward,
+                        self.exitBarrelRoomReward,
+                        ['Battle', 'ReservesJoining', 'BattleIntro', 'Off']),
+            State.State('BattleIntro', self.enterBattleIntro,
+                        self.exitBattleIntro,
+                        ['Battle', 'ReservesJoining', 'Off']),
+            State.State('Battle', self.enterBattle, self.exitBattle,
+                        ['Resting', 'Reward', 'ReservesJoining']),
+            State.State('ReservesJoining', self.enterReservesJoining,
+                        self.exitReservesJoining, ['Battle']),
+            State.State('Resting', self.enterResting, self.exitResting,
+                        ['Elevator']),
+            State.State('Reward', self.enterReward, self.exitReward, ['Off']),
+            State.State('Failed', self.enterFailed, self.exitFailed, ['Off']),
+            State.State('Off', self.enterOff, self.exitOff,
+                        ['Elevator', 'WaitForAllToonsInside', 'Battle'])
+        ], 'Off', 'Off')
         self.fsm.enterInitialState()
         self._haveEntranceElevator = StateVar(False)
         self._stashEntranceElevator = StateVar(False)
         self._stashEntranceElevatorFC = FunctionCall(
-            self._doStashEntranceElevator,
-            self._haveEntranceElevator,
+            self._doStashEntranceElevator, self._haveEntranceElevator,
             self._stashEntranceElevator)
         self._entranceElevCallbacks = []
         self._doEntranceElevCallbacksFC = FunctionCall(
@@ -184,7 +160,8 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         self.shopOwnerNpc = NPCToons.createLocalNPC(self.shopOwnerNpcId)
         if not self.shopOwnerNpc:
             self.notify.warning(
-                'No shopkeeper in this cogdominium, using FunnyFarm Sellbot FO NPCToons')
+                'No shopkeeper in this cogdominium, using FunnyFarm Sellbot FO NPCToons'
+            )
             random.seed(self.doId)
             shopkeeper = random.randint(7001, 7009)
             self.shopOwnerNpc = NPCToons.createLocalNPC(shopkeeper)
@@ -212,20 +189,11 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
 
     def startAlertElevatorLightIval(self, elevatorModel):
         light = elevatorModel.find(
-            '**/floor_light_%s' %
-            (self.currentFloor + 1))
+            '**/floor_light_%s' % (self.currentFloor + 1))
         track = Sequence(
-            Func(
-                light.setColor,
-                Vec4(
-                    1.0,
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    1.0)),
-            Wait(0.90000000000000002),
-            Func(
-                light.setColor,
-                LIGHT_ON_COLOR),
+            Func(light.setColor,
+                 Vec4(1.0, 0.59999999999999998, 0.59999999999999998, 1.0)),
+            Wait(0.90000000000000002), Func(light.setColor, LIGHT_ON_COLOR),
             Wait(0.90000000000000002))
         self.activeIntervals['alertElevatorLight'] = track
         track.loop()
@@ -421,8 +389,7 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
             self.fsm.request('ReservesJoining')
 
     def setState(self, state, timestamp):
-        self.fsm.request(state, [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
     def stashElevatorIn(self, stash=True):
         self._stashEntranceElevator.set(stash)
@@ -455,8 +422,7 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         self.sendUpdate('reserveJoinDone', [])
 
     def enterOff(self, ts=0):
-        messenger.send('sellbotFieldOfficeChanged', [
-            False])
+        messenger.send('sellbotFieldOfficeChanged', [False])
 
     def exitOff(self):
         pass
@@ -563,10 +529,8 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         for toon in self.toons:
             toon.reparentTo(self.elevatorModelIn)
             index = self.toonIds.index(toon.doId)
-            toon.setPos(
-                ElevatorPoints[index][0],
-                ElevatorPoints[index][1],
-                ElevatorPoints[index][2])
+            toon.setPos(ElevatorPoints[index][0], ElevatorPoints[index][1],
+                        ElevatorPoints[index][2])
             toon.setHpr(180, 0, 0)
             toon.loop('neutral')
 
@@ -578,12 +542,9 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         camera.setP(0)
         camera.setPos(0, 14, 4)
         base.playMusic(
-            self.elevatorMusic,
-            looping=1,
-            volume=0.80000000000000004)
+            self.elevatorMusic, looping=1, volume=0.80000000000000004)
         track = Sequence(
-            Func(
-                base.transitions.noTransitions),
+            Func(base.transitions.noTransitions),
             ElevatorUtils.getRideElevatorInterval(ELEVATOR_NORMAL),
             ElevatorUtils.getOpenInterval(
                 self,
@@ -591,10 +552,7 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
                 self.rightDoorIn,
                 self.openSfx,
                 None,
-                type=ELEVATOR_NORMAL),
-            Func(
-                camera.wrtReparentTo,
-                render))
+                type=ELEVATOR_NORMAL), Func(camera.wrtReparentTo, render))
         for toon in self.toons:
             track.append(Func(toon.wrtReparentTo, render))
 
@@ -611,14 +569,14 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         self.setElevatorLights(self.elevatorModelOut)
         if not self.isBossFloor(self.currentFloor):
             self.elevatorModelOut.detachNode()
-            messenger.send('sellbotFieldOfficeChanged', [
-                True])
+            messenger.send('sellbotFieldOfficeChanged', [True])
         else:
             self._movie = CogdoElevatorMovie()
             self._movie.load()
             self._movie.play()
         self._DistributedCogdoInterior__playElevator(
-            ts, self.elevatorName, self._DistributedCogdoInterior__handleElevatorDone)
+            ts, self.elevatorName,
+            self._DistributedCogdoInterior__handleElevatorDone)
         mult = ToontownBattleGlobals.getCreditMultiplier(self.currentFloor)
         base.localAvatar.inventory.setBattleCreditMultiplier(mult)
 
@@ -651,9 +609,8 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
                 (self.barrelRoomIntroTrack,
                  trackName) = self.barrelRoom.getIntroInterval()
                 self.barrelRoomIntroDoneEvent = trackName
-                self.accept(
-                    self.barrelRoomIntroDoneEvent,
-                    self.barrelRoomIntroDone)
+                self.accept(self.barrelRoomIntroDoneEvent,
+                            self.barrelRoomIntroDone)
                 self.activeIntervals[trackName] = self.barrelRoomIntroTrack
                 self.barrelRoomIntroTrack.start(ts)
             else:
@@ -676,13 +633,11 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         if not self.isBossFloor(self.currentFloor):
             if self._wantBarrelRoom:
                 self.acceptOnce(
-                    'localToonLeft',
-                    self._DistributedCogdoInterior__handleLocalToonLeftBarrelRoom)
+                    'localToonLeft', self.
+                    _DistributedCogdoInterior__handleLocalToonLeftBarrelRoom)
                 self.barrelRoom.activate()
                 base.playMusic(
-                    self.waitMusic,
-                    looping=1,
-                    volume=0.69999999999999996)
+                    self.waitMusic, looping=1, volume=0.69999999999999996)
 
     def exitCollectBarrels(self):
         if self._wantBarrelRoom and not self.isBossFloor(self.currentFloor):
@@ -695,9 +650,7 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         self.sendUpdate('toonBarrelRoomRewardDone', [])
 
     def setBarrelRoomReward(self, avIds, laffs):
-        self.brResults = [
-            avIds,
-            laffs]
+        self.brResults = [avIds, laffs]
         self.barrelRoom.setRewardResults(self.brResults)
 
     def enterBarrelRoomReward(self, ts=0):
@@ -705,7 +658,8 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
             base.cr.playGame.getPlace().fsm.request('stopped')
             self.startAlertElevatorLightIval(self.elevatorModelOut)
             (track, trackName) = self.barrelRoom.showRewardUi(
-                self.brResults, callback=self._DistributedCogdoInterior__brRewardDone)
+                self.brResults,
+                callback=self._DistributedCogdoInterior__brRewardDone)
             self.activeIntervals[trackName] = track
             track.start()
             self.barrelRoom.placeToonsNearBattle(self.toons)
@@ -727,28 +681,20 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
 
     def _DistributedCogdoInterior__playCloseElevatorOut(self, name, delay=0):
         track = Sequence(
-            Wait(
-                delay + SUIT_LEAVE_ELEVATOR_TIME),
+            Wait(delay + SUIT_LEAVE_ELEVATOR_TIME),
             Parallel(
-                SoundInterval(
-                    self.closeSfx),
+                SoundInterval(self.closeSfx),
                 LerpPosInterval(
                     self.leftDoorOut,
                     ElevatorData[ELEVATOR_NORMAL]['closeTime'],
                     ElevatorUtils.getLeftClosePoint(ELEVATOR_NORMAL),
-                    startPos=Point3(
-                        0,
-                        0,
-                        0),
+                    startPos=Point3(0, 0, 0),
                     blendType='easeOut'),
                 LerpPosInterval(
                     self.rightDoorOut,
                     ElevatorData[ELEVATOR_NORMAL]['closeTime'],
                     ElevatorUtils.getRightClosePoint(ELEVATOR_NORMAL),
-                    startPos=Point3(
-                        0,
-                        0,
-                        0),
+                    startPos=Point3(0, 0, 0),
                     blendType='easeOut')))
         track.start()
         self.activeIntervals[name] = track
@@ -776,65 +722,53 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
                 self.uniqueName('close-out-elevator'))
             self.elevatorOutOpen = 0
 
-    def _DistributedCogdoInterior__playReservesJoining(
-            self, ts, name, callback):
+    def _DistributedCogdoInterior__playReservesJoining(self, ts, name,
+                                                       callback):
         index = 0
         for suit in self.joiningReserves:
             suit.reparentTo(render)
             suit.setPos(
                 self.elevatorModelOut,
-                Point3(
-                    ElevatorPoints[index][0],
-                    ElevatorPoints[index][1],
-                    ElevatorPoints[index][2]))
+                Point3(ElevatorPoints[index][0], ElevatorPoints[index][1],
+                       ElevatorPoints[index][2]))
             index += 1
             suit.setH(180)
             suit.loop('neutral')
 
         if len(self.suits) == len(self.joiningReserves):
             camSequence = Sequence(
-                Func(
-                    camera.wrtReparentTo, localAvatar), Func(
-                    camera.setPos, Point3(
-                        0, 5, 5)), Func(
-                    camera.headsUp, self.elevatorModelOut))
+                Func(camera.wrtReparentTo, localAvatar),
+                Func(camera.setPos, Point3(0, 5, 5)),
+                Func(camera.headsUp, self.elevatorModelOut))
         else:
-            camSequence = Sequence(Func(camera.wrtReparentTo, self.elevatorModelOut), Func(
-                camera.setPos, Point3(0, -8, 2)), Func(camera.setHpr, Vec3(0, 10, 0)))
+            camSequence = Sequence(
+                Func(camera.wrtReparentTo, self.elevatorModelOut),
+                Func(camera.setPos, Point3(0, -8, 2)),
+                Func(camera.setHpr, Vec3(0, 10, 0)))
         track = Sequence(
             camSequence,
             Parallel(
-                SoundInterval(
-                    self.openSfx),
+                SoundInterval(self.openSfx),
                 LerpPosInterval(
                     self.leftDoorOut,
                     ElevatorData[ELEVATOR_NORMAL]['closeTime'],
-                    Point3(
-                        0,
-                        0,
-                        0),
+                    Point3(0, 0, 0),
                     startPos=ElevatorUtils.getLeftClosePoint(ELEVATOR_NORMAL),
                     blendType='easeOut'),
                 LerpPosInterval(
                     self.rightDoorOut,
                     ElevatorData[ELEVATOR_NORMAL]['closeTime'],
-                    Point3(
-                        0,
-                        0,
-                        0),
+                    Point3(0, 0, 0),
                     startPos=ElevatorUtils.getRightClosePoint(ELEVATOR_NORMAL),
-                    blendType='easeOut')),
-            Wait(SUIT_HOLD_ELEVATOR_TIME),
-            Func(
-                camera.wrtReparentTo,
-                render),
-            Func(callback))
+                    blendType='easeOut')), Wait(SUIT_HOLD_ELEVATOR_TIME),
+            Func(camera.wrtReparentTo, render), Func(callback))
         track.start(ts)
         self.activeIntervals[name] = track
 
     def enterReservesJoining(self, ts=0):
-        self._DistributedCogdoInterior__playReservesJoining(ts, self.uniqueName(
-            'reserves-joining'), self._DistributedCogdoInterior__handleReserveJoinDone)
+        self._DistributedCogdoInterior__playReservesJoining(
+            ts, self.uniqueName('reserves-joining'),
+            self._DistributedCogdoInterior__handleReserveJoinDone)
 
     def _DistributedCogdoInterior__handleReserveJoinDone(self):
         self.joiningReserves = []
@@ -867,7 +801,8 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
 
     def enterReward(self, ts=0):
         if self.isBossFloor(self.currentFloor):
-            self.penthouseOutroTrack = self._DistributedCogdoInterior__outroPenthouse()
+            self.penthouseOutroTrack = self._DistributedCogdoInterior__outroPenthouse(
+            )
             self.penthouseOutroTrack.start(ts)
         else:
             self.exitCogdoBuilding()
@@ -906,9 +841,9 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
             'zoneId': self.extZoneId,
             'shardId': None,
             'avId': -1,
-            'bldgDoId': self.distBldgDoId}
-        messenger.send('DSIDoneEvent', [
-            request])
+            'bldgDoId': self.distBldgDoId
+        }
+        messenger.send('DSIDoneEvent', [request])
 
     def displayBadges(self):
         numFloors = self.layout.getNumGameFloors()
@@ -926,8 +861,8 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
                 silverBadge = loader.loadModel(
                     'phase_5/models/cogdominium/tt_m_ara_crg_silverTrophy.bam')
                 silverBadge.setScale(1.2)
-                silverNode = render.find(
-                    '**/silver_0' + str(floor * 4 + player + 1))
+                silverNode = render.find('**/silver_0' +
+                                         str(floor * 4 + player + 1))
                 silverBadge.reparentTo(silverNode)
 
     def _DistributedCogdoInterior__outroPenthouse(self):
@@ -938,40 +873,35 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         speech = TTLocalizer.CogdoExecutiveSuiteToonThankYou % self.SOSToonName
         track.append(
             Sequence(
-                Func(
-                    camera.wrtReparentTo, localAvatar), Func(
-                    camera.setPos, 0, -9, 9), Func(
-                    camera.lookAt, Point3(
-                        5, 15, 0)), Parallel(
-                            self.cage.posInterval(
-                                0.75, self.cagePos[1], blendType='easeOut'), SoundInterval(
-                                    self.cageLowerSfx, duration=0.5)), Parallel(
-                                        self.cageDoor.hprInterval(
-                                            0.5, VBase3(
-                                                0, 90, 0), blendType='easeOut'), Sequence(
-                                                    SoundInterval(
-                                                        self.cageDoorSfx), duration=0)), Wait(0.25), Func(
-                                                            self.shopOwnerNpc.wrtReparentTo, render), Func(
-                                                                self.shopOwnerNpc.setScale, 1), Func(
-                                                                    self.shopOwnerNpc.loop, 'walk'), Func(
-                                                                        self.shopOwnerNpc.headsUp, Point3(
-                                                                            0, 10, 0)), ParallelEndTogether(
-                                                                                self.shopOwnerNpc.posInterval(
-                                                                                    1.5, Point3(
-                                                                                        0, 10, 0)), self.shopOwnerNpc.hprInterval(
-                                                                                            0.5, VBase3(
-                                                                                                180, 0, 0), blendType='easeInOut')), Func(
-                                                                                                    self.shopOwnerNpc.setChatAbsolute, TTLocalizer.CagedToonYippee, CFSpeech), ActorInterval(
-                                                                                                        self.shopOwnerNpc, 'jump'), Func(
-                                                                                                            self.shopOwnerNpc.loop, 'neutral'), Func(
-                                                                                                                self.shopOwnerNpc.headsUp, localAvatar), Func(
-                                                                                                                    self.shopOwnerNpc.setLocalPageChat, speech, 0), Func(
-                                                                                                                        camera.lookAt, self.shopOwnerNpc, Point3(
-                                                                                                                            0, 0, 2))))
+                Func(camera.wrtReparentTo, localAvatar),
+                Func(camera.setPos, 0, -9, 9),
+                Func(camera.lookAt, Point3(5, 15, 0)),
+                Parallel(
+                    self.cage.posInterval(
+                        0.75, self.cagePos[1], blendType='easeOut'),
+                    SoundInterval(self.cageLowerSfx, duration=0.5)),
+                Parallel(
+                    self.cageDoor.hprInterval(
+                        0.5, VBase3(0, 90, 0), blendType='easeOut'),
+                    Sequence(SoundInterval(self.cageDoorSfx), duration=0)),
+                Wait(0.25), Func(self.shopOwnerNpc.wrtReparentTo, render),
+                Func(self.shopOwnerNpc.setScale, 1),
+                Func(self.shopOwnerNpc.loop, 'walk'),
+                Func(self.shopOwnerNpc.headsUp, Point3(0, 10, 0)),
+                ParallelEndTogether(
+                    self.shopOwnerNpc.posInterval(1.5, Point3(0, 10, 0)),
+                    self.shopOwnerNpc.hprInterval(
+                        0.5, VBase3(180, 0, 0), blendType='easeInOut')),
+                Func(self.shopOwnerNpc.setChatAbsolute,
+                     TTLocalizer.CagedToonYippee, CFSpeech),
+                ActorInterval(self.shopOwnerNpc, 'jump'),
+                Func(self.shopOwnerNpc.loop, 'neutral'),
+                Func(self.shopOwnerNpc.headsUp, localAvatar),
+                Func(self.shopOwnerNpc.setLocalPageChat, speech, 0),
+                Func(camera.lookAt, self.shopOwnerNpc, Point3(0, 0, 2))))
         self.activeIntervals[trackName] = track
-        self.accept(
-            'doneChatPage',
-            self._DistributedCogdoInterior__outroPenthouseChatDone)
+        self.accept('doneChatPage',
+                    self._DistributedCogdoInterior__outroPenthouseChatDone)
         return track
 
     def _DistributedCogdoInterior__outroPenthouseChatDone(self, elapsed=None):
@@ -980,11 +910,10 @@ class DistributedCogdoInterior(DistributedObject.DistributedObject):
         self.ignore('doneChatPage')
         track = Parallel(
             Sequence(
-                ActorInterval(
-                    self.shopOwnerNpc, 'wave'), Func(
-                    self.shopOwnerNpc.loop, 'neutral')), Sequence(
-                Wait(2.0), Func(
-                    self.exitCogdoBuilding), Func(
-                    base.camLens.setFov, ToontownGlobals.DefaultCameraFov)))
+                ActorInterval(self.shopOwnerNpc, 'wave'),
+                Func(self.shopOwnerNpc.loop, 'neutral')),
+            Sequence(
+                Wait(2.0), Func(self.exitCogdoBuilding),
+                Func(base.camLens.setFov, ToontownGlobals.DefaultCameraFov)))
         track.start()
         self.penthouseOutroChatDoneTrack = track

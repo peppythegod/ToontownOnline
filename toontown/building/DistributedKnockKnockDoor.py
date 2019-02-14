@@ -13,7 +13,6 @@ from toontown.hood import ZoneUtil
 
 class DistributedKnockKnockDoor(
         DistributedAnimatedProp.DistributedAnimatedProp):
-
     def __init__(self, cr):
         DistributedAnimatedProp.DistributedAnimatedProp.__init__(self, cr)
         self.fsm.setName('DistributedKnockKnockDoor')
@@ -27,8 +26,8 @@ class DistributedKnockKnockDoor(
 
     def announceGenerate(self):
         DistributedAnimatedProp.DistributedAnimatedProp.announceGenerate(self)
-        self.accept('exitKnockKnockDoorSphere_' +
-                    str(self.propId), self.exitTrigger)
+        self.accept('exitKnockKnockDoorSphere_' + str(self.propId),
+                    self.exitTrigger)
         self.acceptAvatar()
 
     def disable(self):
@@ -45,8 +44,8 @@ class DistributedKnockKnockDoor(
             self.knockSfx = None
 
     def acceptAvatar(self):
-        self.acceptOnce('enterKnockKnockDoorSphere_' +
-                        str(self.propId), self.enterTrigger)
+        self.acceptOnce('enterKnockKnockDoorSphere_' + str(self.propId),
+                        self.enterTrigger)
 
     def setAvatarInteract(self, avatarId):
         DistributedAnimatedProp.DistributedAnimatedProp.setAvatarInteract(
@@ -76,27 +75,29 @@ class DistributedKnockKnockDoor(
                     joke = KnockKnockContestJokes[ToontownGlobals.SillyStreet]
 
             elif branch == ToontownGlobals.LoopyLane:
-                if self.propId in KnockKnockContestJokes[ToontownGlobals.LoopyLane].keys(
-                ):
-                    joke = KnockKnockContestJokes[ToontownGlobals.LoopyLane][self.propId]
+                if self.propId in KnockKnockContestJokes[
+                        ToontownGlobals.LoopyLane].keys():
+                    joke = KnockKnockContestJokes[ToontownGlobals.LoopyLane][
+                        self.propId]
 
             elif branch == ToontownGlobals.PunchlinePlace:
                 if self.propId == 1:
-                    joke = KnockKnockContestJokes[ToontownGlobals.PunchlinePlace]
+                    joke = KnockKnockContestJokes[
+                        ToontownGlobals.PunchlinePlace]
 
             elif branch == ToontownGlobals.PolarPlace:
-                if self.propId in KnockKnockContestJokes[ToontownGlobals.PolarPlace].keys(
-                ):
-                    joke = KnockKnockContestJokes[ToontownGlobals.PolarPlace][self.propId]
+                if self.propId in KnockKnockContestJokes[
+                        ToontownGlobals.PolarPlace].keys():
+                    joke = KnockKnockContestJokes[ToontownGlobals.PolarPlace][
+                        self.propId]
 
         self.nametag = None
         self.nametagNP = None
-        doorNP = render.find('**/KnockKnockDoorSphere_' +
-                             str(self.propId) + ';+s')
+        doorNP = render.find('**/KnockKnockDoorSphere_' + str(self.propId) +
+                             ';+s')
         if doorNP.isEmpty():
             self.notify.warning(
-                'Could not find KnockKnockDoorSphere_%s' %
-                self.propId)
+                'Could not find KnockKnockDoorSphere_%s' % self.propId)
             return None
 
         self.nametag = NametagGroup()
@@ -114,45 +115,23 @@ class DistributedKnockKnockDoor(
         d = duration * 0.125
         track = Sequence(
             Parallel(
-                Sequence(
-                    Wait(
-                        d * 0.5),
-                    SoundInterval(
-                        self.knockSfx)),
-                Func(
-                    self.nametag.setChat,
-                    TTLocalizer.DoorKnockKnock,
-                    CFSpeech),
-                Wait(d)),
+                Sequence(Wait(d * 0.5), SoundInterval(self.knockSfx)),
+                Func(self.nametag.setChat, TTLocalizer.DoorKnockKnock,
+                     CFSpeech), Wait(d)),
             Func(
                 avatar.setChatAbsolute,
                 TTLocalizer.DoorWhosThere,
                 CFSpeech | CFTimeout,
-                openEnded=0),
-            Wait(d),
-            Func(
-                self.nametag.setChat,
-                joke[0],
-                CFSpeech),
-            Wait(d),
+                openEnded=0), Wait(d),
+            Func(self.nametag.setChat, joke[0], CFSpeech), Wait(d),
             Func(
                 avatar.setChatAbsolute,
                 joke[0] + TTLocalizer.DoorWhoAppendix,
                 CFSpeech | CFTimeout,
-                openEnded=0),
-            Wait(d),
-            Func(
-                self.nametag.setChat,
-                joke[1],
-                CFSpeech),
-            Parallel(
-                SoundInterval(
-                    self.rimshot,
-                    startTime=2.0),
-                Wait(
-                    d * 4)),
-            Func(
-                self.cleanupTrack))
+                openEnded=0), Wait(d),
+            Func(self.nametag.setChat, joke[1], CFSpeech),
+            Parallel(SoundInterval(self.rimshot, startTime=2.0), Wait(d * 4)),
+            Func(self.cleanupTrack))
         track.delayDelete = DelayDelete.DelayDelete(avatar, 'knockKnockTrack')
         return track
 

@@ -28,13 +28,10 @@ class TTCodeRedemptionMgr(DistributedObject):
         context = self._contextGen.next()
         self._context2callback[context] = callback
         self.notify.debug('redeemCode(%s, %s)' % (context, code))
-        self.sendUpdate('redeemCode', [
-            context,
-            code])
+        self.sendUpdate('redeemCode', [context, code])
 
     def redeemCodeResult(self, context, result, awardMgrResult):
         self.notify.debug(
-            'redeemCodeResult(%s, %s, %s)' %
-            (context, result, awardMgrResult))
+            'redeemCodeResult(%s, %s, %s)' % (context, result, awardMgrResult))
         callback = self._context2callback.pop(context)
         callback(result, awardMgrResult)

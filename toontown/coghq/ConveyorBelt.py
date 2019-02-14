@@ -26,9 +26,7 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
             mp = MovingPlatform.MovingPlatform()
             mp.parentingNode = render.attachNewNode('parentTarget')
             mp.setupCopyModel(
-                'conv%s-%s' %
-                (self.getParentToken(),
-                 i),
+                'conv%s-%s' % (self.getParentToken(), i),
                 treadModel,
                 self.floorName,
                 parentingNode=mp.parentingNode)
@@ -62,20 +60,10 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
                 ival.append(
                     LerpPosInterval(
                         self.treads[i],
-                        duration=treadPeriod *
-                        periodsToEnd,
+                        duration=treadPeriod * periodsToEnd,
                         pos=Point3(
-                            0,
-                            startY +
-                            self.numTreads *
-                            self.treadLength,
-                            0),
-                        startPos=Point3(
-                            0,
-                            startY +
-                            i *
-                            self.treadLength,
-                            0),
+                            0, startY + self.numTreads * self.treadLength, 0),
+                        startPos=Point3(0, startY + i * self.treadLength, 0),
                         fluid=1))
 
             def dumpContents(tread=self.treads[i]):
@@ -86,36 +74,21 @@ class ConveyorBelt(BasicEntities.NodePathEntity):
                     Func(dumpContents),
                     Func(
                         self.treads[i].setPos,
-                        Point3(
-                            0,
-                            startY +
-                            self.numTreads *
-                            self.treadLength,
-                            0))))
+                        Point3(0, startY + self.numTreads * self.treadLength,
+                               0))))
             if periodsFromStart != 0:
                 ival.append(
                     LerpPosInterval(
                         self.treads[i],
-                        duration=treadPeriod *
-                        periodsFromStart,
-                        pos=Point3(
-                            0,
-                            startY +
-                            i *
-                            self.treadLength,
-                            0),
-                        startPos=Point3(
-                            0,
-                            startY,
-                            0),
+                        duration=treadPeriod * periodsFromStart,
+                        pos=Point3(0, startY + i * self.treadLength, 0),
+                        startPos=Point3(0, startY, 0),
                         fluid=1))
 
             treadsIval.append(ival)
 
         self.beltIval = Sequence(
-            treadsIval,
-            name='ConveyorBelt-%s' %
-            self.entId)
+            treadsIval, name='ConveyorBelt-%s' % self.entId)
         playRate = 1.0
         startT = 0.0
         endT = self.beltIval.getDuration()

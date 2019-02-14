@@ -3,7 +3,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class DistributedToonHallInteriorAI(DistributedToonInteriorAI):
-
     def __init__(self, block, air, zoneId, building):
         DistributedToonInteriorAI.__init__(self, block, air, zoneId, building)
         self.accept('ToonEnteredZone', self.logToonEntered)
@@ -29,7 +28,9 @@ class DistributedToonHallInteriorAI(DistributedToonInteriorAI):
         result = -1
         enoughInfoToRun = False
         if ToontownGlobals.SILLYMETER_HOLIDAY in simbase.air.holidayManager.currentHolidays and simbase.air.holidayManager.currentHolidays[
-                ToontownGlobals.SILLYMETER_HOLIDAY] is not None and simbase.air.holidayManager.currentHolidays[ToontownGlobals.SILLYMETER_HOLIDAY].getRunningState():
+                ToontownGlobals.
+                SILLYMETER_HOLIDAY] is not None and simbase.air.holidayManager.currentHolidays[
+                    ToontownGlobals.SILLYMETER_HOLIDAY].getRunningState():
             if hasattr(simbase.air, 'SillyMeterMgr'):
                 enoughInfoToRun = True
             else:

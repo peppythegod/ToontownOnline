@@ -1,13 +1,10 @@
-
 class SingleReply:
-
     def __init__(self, inviteeId, status):
         self.inviteeId = inviteeId
         self.status = status
 
 
 class PartyReplyInfoBase:
-
     def __init__(self, partyId, partyReplies):
         self.partyId = partyId
         self.replies = []

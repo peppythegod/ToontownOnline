@@ -44,15 +44,9 @@ PET_MOVIE_CALL = 5
 FEED_TIME = 10.0
 SCRATCH_TIME = 8.0419999999999998
 CALL_TIME = 8.0 / 3
-FEED_DIST = {
-    'long': 4.0,
-    'medium': 4.0,
-    'short': 4.0}
+FEED_DIST = {'long': 4.0, 'medium': 4.0, 'short': 4.0}
 FEED_AMOUNT = 1
-SCRATCH_DIST = {
-    'long': 2.0,
-    'medium': 1.5,
-    'short': 1.0}
+SCRATCH_DIST = {'long': 2.0, 'medium': 1.5, 'short': 1.0}
 TELEPORT_IN_DURATION = 2.3399999999999999
 TELEPORT_OUT_DURATION = 4.5
 ZoneToCostRange = {
@@ -61,4 +55,5 @@ ZoneToCostRange = {
     ToontownGlobals.DaisyGardens: (1000, 2500),
     ToontownGlobals.MinniesMelodyland: (1500, 3000),
     ToontownGlobals.TheBrrrgh: (2500, 4000),
-    ToontownGlobals.DonaldsDreamland: (3000, 5000)}
+    ToontownGlobals.DonaldsDreamland: (3000, 5000)
+}

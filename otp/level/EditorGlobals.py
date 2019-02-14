@@ -12,7 +12,8 @@ username2entIdBase = {
     'pappy': 8 * EntIdRange,
     'patricia': 9 * EntIdRange,
     'jloehrle': 10 * EntIdRange,
-    'rurbino': 11 * EntIdRange}
+    'rurbino': 11 * EntIdRange
+}
 usernameConfigVar = 'level-edit-username'
 undefinedUsername = 'UNDEFINED_USERNAME'
 editUsername = config.GetString(usernameConfigVar, undefinedUsername)
@@ -20,12 +21,12 @@ editUsername = config.GetString(usernameConfigVar, undefinedUsername)
 
 def checkNotReadyToEdit():
     if editUsername == undefinedUsername:
-        return "you must config '%s'; see %s.py" % (
-            usernameConfigVar, __name__)
+        return "you must config '%s'; see %s.py" % (usernameConfigVar,
+                                                    __name__)
 
     if editUsername not in username2entIdBase:
-        return "unknown editor username '%s'; see %s.py" % (
-            editUsername, __name__)
+        return "unknown editor username '%s'; see %s.py" % (editUsername,
+                                                            __name__)
 
 
 def assertReadyToEdit():
@@ -41,6 +42,4 @@ def getEditUsername():
 
 def getEntIdAllocRange():
     baseId = username2entIdBase[editUsername]
-    return [
-        baseId,
-        baseId + EntIdRange]
+    return [baseId, baseId + EntIdRange]

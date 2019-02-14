@@ -15,12 +15,7 @@ class FlowerSpeciesPanel(DirectFrame):
         flowerGui = loader.loadModel('phase_3.5/models/gui/fishingBook')
         albumGui = flowerGui.find('**/photo_frame1')
         pictureGroup = albumGui.attachNewNode('PictureGroup')
-        hideList = [
-            'corner_backs',
-            'shadow',
-            'bg',
-            'corners',
-            'picture']
+        hideList = ['corner_backs', 'shadow', 'bg', 'corners', 'picture']
         for name in hideList:
             temp = flowerGui.find('**/%s' % name)
             if not temp.isEmpty():
@@ -29,51 +24,22 @@ class FlowerSpeciesPanel(DirectFrame):
 
         pictureGroup.setPos(0, 0, 1.0)
         albumGui.find('**/arrows').removeNode()
-        optiondefs = (
-            ('relief',
-             None,
-             None),
-            ('state',
-             DGG.NORMAL,
-             None),
-            ('image',
-             albumGui,
-             None),
-            ('image_scale',
-             (0.025000000000000001,
-              0.025000000000000001,
-              0.025000000000000001),
-                None),
-            ('image_pos',
-             (0,
-              1,
-              0),
-                None),
-            ('text',
-             TTLocalizer.FlowerUnknown,
-             None),
-            ('text_scale',
-             0.065000000000000002,
-             None),
-            ('text_fg',
-             (0.20000000000000001,
-              0.10000000000000001,
-              0.0,
-              1),
-                None),
-            ('text_pos',
-             (-0.5,
-              -0.34000000000000002),
-                None),
-            ('text_font',
-             ToontownGlobals.getInterfaceFont(),
-             None),
-            ('text_wordwrap',
-             13.5,
-             None),
-            ('text_align',
-             TextNode.ALeft,
-             None))
+        optiondefs = (('relief', None, None), ('state', DGG.NORMAL, None),
+                      ('image', albumGui,
+                       None), ('image_scale',
+                               (0.025000000000000001, 0.025000000000000001,
+                                0.025000000000000001),
+                               None), ('image_pos', (0, 1, 0), None),
+                      ('text', TTLocalizer.FlowerUnknown,
+                       None), ('text_scale', 0.065000000000000002, None),
+                      ('text_fg', (0.20000000000000001, 0.10000000000000001,
+                                   0.0, 1),
+                       None), ('text_pos', (-0.5, -0.34000000000000002),
+                               None), ('text_font',
+                                       ToontownGlobals.getInterfaceFont(),
+                                       None), ('text_wordwrap', 13.5,
+                                               None), ('text_align',
+                                                       TextNode.ALeft, None))
         self.defineoptions({}, optiondefs)
         DirectFrame.__init__(self)
         self.initialiseoptions(FlowerSpeciesPanel)
@@ -114,10 +80,11 @@ class FlowerSpeciesPanel(DirectFrame):
                 species=self.species, variety=varietyToUse, parent=self)
             zAdj = 0.013100000000000001
             xAdj = -0.002
-            self.flowerPanel.setPos(-0.22900000000000001 +
-                                    xAdj, 1, -0.01 + zAdj)
-            self.flowerPanel.setSwimBounds(-0.24610000000000001, 0.23669999999999999, -
-                                           0.20699999999999999 + zAdj, 0.26640000000000003 + zAdj)
+            self.flowerPanel.setPos(-0.22900000000000001 + xAdj, 1,
+                                    -0.01 + zAdj)
+            self.flowerPanel.setSwimBounds(
+                -0.24610000000000001, 0.23669999999999999,
+                -0.20699999999999999 + zAdj, 0.26640000000000003 + zAdj)
             self.flowerPanel.setSwimColor(0.75, 0.75, 0.75, 1.0)
             varietyList = GardenGlobals.getFlowerVarieties(self.species)
             self.speciesLabels = []
@@ -129,46 +96,23 @@ class FlowerSpeciesPanel(DirectFrame):
             for variety in range(len(varietyList)):
                 label = DirectButton(
                     parent=self,
-                    frameSize=(
-                        0,
-                        0.44500000000000001,
-                        -0.02,
-                        0.040000000000000001),
+                    frameSize=(0, 0.44500000000000001, -0.02,
+                               0.040000000000000001),
                     relief=None,
                     state=DGG.DISABLED,
-                    pos=(
-                        0.059999999999999998,
-                        0,
-                        startPos - variety * offset),
+                    pos=(0.059999999999999998, 0, startPos - variety * offset),
                     text=TTLocalizer.FlowerUnknown,
-                    text_fg=(
-                        0.20000000000000001,
-                        0.10000000000000001,
-                        0.0,
-                        1),
-                    text_scale=(
-                        0.044999999999999998,
-                        0.044999999999999998,
-                        0.45000000000000001),
+                    text_fg=(0.20000000000000001, 0.10000000000000001, 0.0, 1),
+                    text_scale=(0.044999999999999998, 0.044999999999999998,
+                                0.45000000000000001),
                     text_align=TextNode.ALeft,
                     text_font=ToontownGlobals.getInterfaceFont(),
                     command=self.changeVariety,
                     extraArgs=[variety],
-                    text1_bg=Vec4(
-                        1,
-                        1,
-                        0,
-                        1),
-                    text2_bg=Vec4(
-                        0.5,
-                        0.90000000000000002,
-                        1,
-                        1),
-                    text3_fg=Vec4(
-                        0.40000000000000002,
-                        0.80000000000000004,
-                        0.40000000000000002,
-                        1))
+                    text1_bg=Vec4(1, 1, 0, 1),
+                    text2_bg=Vec4(0.5, 0.90000000000000002, 1, 1),
+                    text3_fg=Vec4(0.40000000000000002, 0.80000000000000004,
+                                  0.40000000000000002, 1))
                 self.speciesLabels.append(label)
 
     def show(self):
@@ -191,7 +135,8 @@ class FlowerSpeciesPanel(DirectFrame):
                     self.species, self.variety):
                 name = GardenGlobals.getFlowerVarietyName(
                     self.species, self.variety)
-                recipeKey = GardenGlobals.PlantAttributes[self.species]['varieties'][self.variety][0]
+                recipeKey = GardenGlobals.PlantAttributes[
+                    self.species]['varieties'][self.variety][0]
                 self['text'] = name
                 self.createBeanRecipeGui(
                     GardenGlobals.Recipes[recipeKey]['beans'])
@@ -233,8 +178,12 @@ class FlowerSpeciesPanel(DirectFrame):
         pos3 = (-0.46000000000000002, 0, -0.29999999999999999)
         pos4 = (-0.59999999999999998, 0, -0.27000000000000002)
         self.beanRecipeGui = BeanRecipeGui.BeanRecipeGui(
-            aspect2dp, recipe, pos=pos4, scale=1.3, frameColor=(
-                0.80000000000000004, 0.80000000000000004, 0.80000000000000004, 1.0))
+            aspect2dp,
+            recipe,
+            pos=pos4,
+            scale=1.3,
+            frameColor=(0.80000000000000004, 0.80000000000000004,
+                        0.80000000000000004, 1.0))
 
     def cleanupBeanRecipeGui(self):
         if self.beanRecipeGui:

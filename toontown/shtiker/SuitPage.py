@@ -12,59 +12,67 @@ from CogPageGlobals import *
 SCALE_FACTOR = 1.5
 RADAR_DELAY = 0.20000000000000001
 BUILDING_RADAR_POS = (0.375, 0.065000000000000002, -0.22500000000000001, -0.5)
-PANEL_COLORS = (
-    Vec4(
-        0.80000000000000004, 0.78000000000000003, 0.77000000000000002, 1), Vec4(
-            0.75, 0.78000000000000003, 0.80000000000000004, 1), Vec4(
-                0.75, 0.81999999999999995, 0.79000000000000004, 1), Vec4(
-                    0.82499999999999996, 0.76000000000000001, 0.77000000000000002, 1))
-PANEL_COLORS_COMPLETE1 = (
-    Vec4(
-        0.69999999999999996, 0.72499999999999998, 0.54500000000000004, 1), Vec4(
-            0.625, 0.72499999999999998, 0.65000000000000002, 1), Vec4(
-                0.59999999999999998, 0.75, 0.52500000000000002, 1), Vec4(
-                    0.67500000000000004, 0.67500000000000004, 0.55000000000000004, 1))
-PANEL_COLORS_COMPLETE2 = (
-    Vec4(
-        0.90000000000000002, 0.72499999999999998, 0.32000000000000001, 1), Vec4(
-            0.82499999999999996, 0.72499999999999998, 0.45000000000000001, 1), Vec4(
-                0.80000000000000004, 0.75, 0.32500000000000001, 1), Vec4(
-                    0.875, 0.67500000000000004, 0.34999999999999998, 1))
-SHADOW_SCALE_POS = ((1.2250000000000001, 0, 10, -
-                     0.029999999999999999), (0.90000000000000002, 0, 10, 0), (1.125, 0, 10, -
-                                                                              0.014999999999999999), (1.0, 0, 10, -
-                                                                                                      0.02), (1.0, -
-                                                                                                              0.02, 10, -
-                                                                                                              0.01), (1.05, 0, 10, -
-                                                                                                                      0.042500000000000003), (1.0, 0, 10, -
-                                                                                                                                              0.050000000000000003), (0.90000000000000002, -
-                                                                                                                                                                      0.022499999999999999, 10, -
-                                                                                                                                                                      0.025000000000000001), (1.25, 0, 10, -
-                                                                                                                                                                                              0.029999999999999999), (1.0, 0, 10, -
-                                                                                                                                                                                                                      0.01), (1.0, 0.0050000000000000001, 10, -
-                                                                                                                                                                                                                              0.01), (1.0, 0, 10, -
-                                                                                                                                                                                                                                      0.01), (0.90000000000000002, 0.0050000000000000001, 10, -
-                                                                                                                                                                                                                                              0.01), (0.94999999999999996, 0, 10, -
-                                                                                                                                                                                                                                                      0.01), (1.125, 0.0050000000000000001, 10, -
-                                                                                                                                                                                                                                                              0.035000000000000003), (0.84999999999999998, -
-                                                                                                                                                                                                                                                                                      0.0050000000000000001, 10, -
-                                                                                                                                                                                                                                                                                      0.035000000000000003), (1.2, 0, 10, -
-                                                                                                                                                                                                                                                                                                              0.01), (1.05, 0, 10, 0), (1.1000000000000001, 0, 10, -
-                                                                                                                                                                                                                                                                                                                                        0.040000000000000001), (1.0, 0, 10, 0), (0.94999999999999996, 0.017500000000000002, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                 0.014999999999999999), (1.0, 0, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                         0.059999999999999998), (0.94999999999999996, 0.02, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                 0.017500000000000002), (0.90000000000000002, 0, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                         0.029999999999999999), (1.1499999999999999, 0, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 0.01), (1.0, 0, 10, 0), (1.0, 0, 10, 0), (1.1000000000000001, 0, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           0.040000000000000001), (0.93000000000000005, 0.0050000000000000001, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   0.01), (0.94999999999999996, 0.0050000000000000001, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           0.01), (1.0, 0, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   0.02), (0.90000000000000002, 0.0025000000000000001, 10, -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           0.029999999999999999))
+PANEL_COLORS = (Vec4(0.80000000000000004, 0.78000000000000003,
+                     0.77000000000000002, 1),
+                Vec4(0.75, 0.78000000000000003, 0.80000000000000004, 1),
+                Vec4(0.75, 0.81999999999999995, 0.79000000000000004, 1),
+                Vec4(0.82499999999999996, 0.76000000000000001,
+                     0.77000000000000002, 1))
+PANEL_COLORS_COMPLETE1 = (Vec4(0.69999999999999996, 0.72499999999999998,
+                               0.54500000000000004, 1),
+                          Vec4(0.625, 0.72499999999999998, 0.65000000000000002,
+                               1),
+                          Vec4(0.59999999999999998, 0.75, 0.52500000000000002,
+                               1),
+                          Vec4(0.67500000000000004, 0.67500000000000004,
+                               0.55000000000000004, 1))
+PANEL_COLORS_COMPLETE2 = (Vec4(0.90000000000000002, 0.72499999999999998,
+                               0.32000000000000001, 1),
+                          Vec4(0.82499999999999996, 0.72499999999999998,
+                               0.45000000000000001, 1),
+                          Vec4(0.80000000000000004, 0.75, 0.32500000000000001,
+                               1),
+                          Vec4(0.875, 0.67500000000000004, 0.34999999999999998,
+                               1))
+SHADOW_SCALE_POS = ((1.2250000000000001, 0, 10,
+                     -0.029999999999999999), (0.90000000000000002, 0, 10, 0),
+                    (1.125, 0, 10, -0.014999999999999999), (1.0, 0, 10, -0.02),
+                    (1.0, -0.02, 10,
+                     -0.01), (1.05, 0, 10,
+                              -0.042500000000000003), (1.0, 0, 10,
+                                                       -0.050000000000000003),
+                    (0.90000000000000002, -0.022499999999999999, 10,
+                     -0.025000000000000001), (1.25, 0, 10,
+                                              -0.029999999999999999),
+                    (1.0, 0, 10, -0.01), (1.0, 0.0050000000000000001, 10,
+                                          -0.01), (1.0, 0, 10, -0.01),
+                    (0.90000000000000002, 0.0050000000000000001, 10,
+                     -0.01), (0.94999999999999996, 0, 10,
+                              -0.01), (1.125, 0.0050000000000000001, 10,
+                                       -0.035000000000000003),
+                    (0.84999999999999998, -0.0050000000000000001, 10,
+                     -0.035000000000000003), (1.2, 0, 10, -0.01),
+                    (1.05, 0, 10, 0), (1.1000000000000001, 0, 10,
+                                       -0.040000000000000001), (1.0, 0, 10, 0),
+                    (0.94999999999999996, 0.017500000000000002, 10,
+                     -0.014999999999999999), (1.0, 0, 10,
+                                              -0.059999999999999998),
+                    (0.94999999999999996, 0.02, 10,
+                     -0.017500000000000002), (0.90000000000000002, 0, 10,
+                                              -0.029999999999999999),
+                    (1.1499999999999999, 0, 10,
+                     -0.01), (1.0, 0, 10, 0), (1.0, 0, 10,
+                                               0), (1.1000000000000001, 0, 10,
+                                                    -0.040000000000000001),
+                    (0.93000000000000005, 0.0050000000000000001, 10,
+                     -0.01), (0.94999999999999996, 0.0050000000000000001, 10,
+                              -0.01), (1.0, 0, 10,
+                                       -0.02), (0.90000000000000002,
+                                                0.0025000000000000001, 10,
+                                                -0.029999999999999999))
 
 
 class SuitPage(ShtikerPage.ShtikerPage):
-
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
 
@@ -94,40 +102,56 @@ class SuitPage(ShtikerPage.ShtikerPage):
             relief=None,
             text=TTLocalizer.SuitPageTitle,
             text_scale=0.10000000000000001,
-            text_pos=(
-                0.040000000000000001,
-                0),
+            text_pos=(0.040000000000000001, 0),
             textMayChange=0)
         self.radarButtons = []
         icon = icons.find('**/corp_icon')
         self.corpRadarButton = DirectButton(
-            parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(
-                0.033750000000000002, 1, 0.044999999999999998), image2_color=Vec4(
-                1.0, 1.0, 1.0, 0.75), pos=(
-                -0.20000000000000001, 10, -0.57499999999999996), command=self.toggleRadar, extraArgs=[0])
+            parent=self.iconNode,
+            relief=None,
+            state=DGG.DISABLED,
+            image=icon,
+            image_scale=(0.033750000000000002, 1, 0.044999999999999998),
+            image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
+            pos=(-0.20000000000000001, 10, -0.57499999999999996),
+            command=self.toggleRadar,
+            extraArgs=[0])
         self.radarButtons.append(self.corpRadarButton)
         icon = icons.find('**/legal_icon')
         self.legalRadarButton = DirectButton(
-            parent=self.iconNode, relief=None, state=DGG.DISABLED, image=icon, image_scale=(
-                0.033750000000000002, 1, 0.044999999999999998), image2_color=Vec4(
-                1.0, 1.0, 1.0, 0.75), pos=(
-                -0.20000000000000001, 10, -0.57499999999999996), command=self.toggleRadar, extraArgs=[1])
+            parent=self.iconNode,
+            relief=None,
+            state=DGG.DISABLED,
+            image=icon,
+            image_scale=(0.033750000000000002, 1, 0.044999999999999998),
+            image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
+            pos=(-0.20000000000000001, 10, -0.57499999999999996),
+            command=self.toggleRadar,
+            extraArgs=[1])
         self.radarButtons.append(self.legalRadarButton)
         icon = icons.find('**/money_icon')
         self.moneyRadarButton = DirectButton(
-            parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(
-                icon, icon, icon), image_scale=(
-                0.033750000000000002, 1, 0.044999999999999998), image2_color=Vec4(
-                1.0, 1.0, 1.0, 0.75), pos=(
-                    -0.20000000000000001, 10, -0.57499999999999996), command=self.toggleRadar, extraArgs=[2])
+            parent=self.iconNode,
+            relief=None,
+            state=DGG.DISABLED,
+            image=(icon, icon, icon),
+            image_scale=(0.033750000000000002, 1, 0.044999999999999998),
+            image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
+            pos=(-0.20000000000000001, 10, -0.57499999999999996),
+            command=self.toggleRadar,
+            extraArgs=[2])
         self.radarButtons.append(self.moneyRadarButton)
         icon = icons.find('**/sales_icon')
         self.salesRadarButton = DirectButton(
-            parent=self.iconNode, relief=None, state=DGG.DISABLED, image=(
-                icon, icon, icon), image_scale=(
-                0.033750000000000002, 1, 0.044999999999999998), image2_color=Vec4(
-                1.0, 1.0, 1.0, 0.75), pos=(
-                    -0.20000000000000001, 10, -0.57499999999999996), command=self.toggleRadar, extraArgs=[3])
+            parent=self.iconNode,
+            relief=None,
+            state=DGG.DISABLED,
+            image=(icon, icon, icon),
+            image_scale=(0.033750000000000002, 1, 0.044999999999999998),
+            image2_color=Vec4(1.0, 1.0, 1.0, 0.75),
+            pos=(-0.20000000000000001, 10, -0.57499999999999996),
+            command=self.toggleRadar,
+            extraArgs=[3])
         self.radarButtons.append(self.salesRadarButton)
         for radarButton in self.radarButtons:
             radarButton.building = 0
@@ -141,58 +165,36 @@ class SuitPage(ShtikerPage.ShtikerPage):
 
         del gui
         self.makePanels()
-        self.radarOn = [
-            0,
-            0,
-            0,
-            0]
+        self.radarOn = [0, 0, 0, 0]
         priceScale = 0.10000000000000001
         emblemIcon = loader.loadModel(
             'phase_3.5/models/gui/tt_m_gui_gen_emblemIcons')
         silverModel = emblemIcon.find('**/tt_t_gui_gen_emblemSilver')
         goldModel = emblemIcon.find('**/tt_t_gui_gen_emblemGold')
-        self.silverLabel = DirectLabel(parent=self,
-                                       relief=None,
-                                       pos=(-0.25,
-                                            0,
-                                            -0.68999999999999995),
-                                       scale=priceScale,
-                                       image=silverModel,
-                                       image_pos=(-0.40000000000000002,
-                                                  0,
-                                                  0.40000000000000002),
-                                       text=str(localAvatar.emblems[ToontownGlobals.EmblemTypes.Silver]),
-                                       text_fg=(0.94999999999999996,
-                                                0.94999999999999996,
-                                                0,
-                                                1),
-                                       text_shadow=(0,
-                                                    0,
-                                                    0,
-                                                    1),
-                                       text_font=ToontownGlobals.getSignFont(),
-                                       text_align=TextNode.ALeft)
-        self.goldLabel = DirectLabel(parent=self,
-                                     relief=None,
-                                     pos=(0.25,
-                                          0,
-                                          -0.68999999999999995),
-                                     scale=priceScale,
-                                     image=goldModel,
-                                     image_pos=(-0.40000000000000002,
-                                                0,
-                                                0.40000000000000002),
-                                     text=str(localAvatar.emblems[ToontownGlobals.EmblemTypes.Gold]),
-                                     text_fg=(0.94999999999999996,
-                                              0.94999999999999996,
-                                              0,
-                                              1),
-                                     text_shadow=(0,
-                                                  0,
-                                                  0,
-                                                  1),
-                                     text_font=ToontownGlobals.getSignFont(),
-                                     text_align=TextNode.ALeft)
+        self.silverLabel = DirectLabel(
+            parent=self,
+            relief=None,
+            pos=(-0.25, 0, -0.68999999999999995),
+            scale=priceScale,
+            image=silverModel,
+            image_pos=(-0.40000000000000002, 0, 0.40000000000000002),
+            text=str(localAvatar.emblems[ToontownGlobals.EmblemTypes.Silver]),
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_font=ToontownGlobals.getSignFont(),
+            text_align=TextNode.ALeft)
+        self.goldLabel = DirectLabel(
+            parent=self,
+            relief=None,
+            pos=(0.25, 0, -0.68999999999999995),
+            scale=priceScale,
+            image=goldModel,
+            image_pos=(-0.40000000000000002, 0, 0.40000000000000002),
+            text=str(localAvatar.emblems[ToontownGlobals.EmblemTypes.Gold]),
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_font=ToontownGlobals.getSignFont(),
+            text_align=TextNode.ALeft)
         if not base.cr.wantEmblems:
             self.silverLabel.hide()
             self.goldLabel.hide()
@@ -281,8 +283,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
         else:
             self.radarOn[deptNum] = 1
         deptSize = SuitDNA.suitsPerDept
-        panels = self.panels[deptSize *
-                             deptNum:SuitDNA.suitsPerDept * (deptNum + 1)]
+        panels = self.panels[deptSize * deptNum:SuitDNA.suitsPerDept *
+                             (deptNum + 1)]
         if self.radarOn[deptNum]:
             if hasattr(base.cr, 'currSuitPlanner'):
                 if base.cr.currSuitPlanner is not None:
@@ -290,16 +292,12 @@ class SuitPage(ShtikerPage.ShtikerPage):
                     self.acceptOnce(
                         'suitListResponse',
                         self.updateCogRadar,
-                        extraArgs=[
-                            deptNum,
-                            panels])
+                        extraArgs=[deptNum, panels])
                     taskMgr.doMethodLater(
                         1.0,
                         self.suitListResponseTimeout,
                         'suitListResponseTimeout-later',
-                        extraArgs=(
-                            deptNum,
-                            panels))
+                        extraArgs=(deptNum, panels))
                     if self.radarButtons[deptNum].building:
                         base.cr.currSuitPlanner.d_buildingListQuery()
                         self.acceptOnce(
@@ -310,9 +308,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
                             1.0,
                             self.buildingListResponseTimeout,
                             'buildingListResponseTimeout-later',
-                            extraArgs=(
-                                deptNum,
-                            ))
+                            extraArgs=(deptNum, ))
 
                 else:
                     self.updateCogRadar(deptNum, panels)
@@ -344,29 +340,17 @@ class SuitPage(ShtikerPage.ShtikerPage):
             for type in range(0, SuitDNA.suitsPerDept):
                 panel = DirectLabel(
                     parent=self.panelNode,
-                    pos=(
-                        xStart + type * xOffset,
-                        0.0,
-                        yStart - dept * yOffset),
+                    pos=(xStart + type * xOffset, 0.0,
+                         yStart - dept * yOffset),
                     relief=None,
                     state=DGG.NORMAL,
                     image=self.panelModel,
-                    image_scale=(
-                        1,
-                        1,
-                        1),
+                    image_scale=(1, 1, 1),
                     image_color=color,
                     text=TTLocalizer.SuitPageMystery,
                     text_scale=0.044999999999999998,
-                    text_fg=(
-                        0,
-                        0,
-                        0,
-                        1),
-                    text_pos=(
-                        0,
-                        0.185,
-                        0),
+                    text_fg=(0, 0, 0, 1),
+                    text_pos=(0, 0.185, 0),
                     text_font=ToontownGlobals.getSuitFont(),
                     text_wordwrap=7)
                 panel.scale = 0.59999999999999998
@@ -388,10 +372,14 @@ class SuitPage(ShtikerPage.ShtikerPage):
         else:
             quota = str(COG_QUOTAS[1][index % SuitDNA.suitsPerDept])
         quotaLabel = DirectLabel(
-            parent=panel, pos=(
-                0.0, 0.0, -0.215), relief=None, state=DGG.DISABLED, text=TTLocalizer.SuitPageQuota %
-            (count, quota), text_scale=0.044999999999999998, text_fg=(
-                0, 0, 0, 1), text_font=ToontownGlobals.getSuitFont())
+            parent=panel,
+            pos=(0.0, 0.0, -0.215),
+            relief=None,
+            state=DGG.DISABLED,
+            text=TTLocalizer.SuitPageQuota % (count, quota),
+            text_scale=0.044999999999999998,
+            text_fg=(0, 0, 0, 1),
+            text_font=ToontownGlobals.getSuitFont())
         panel.quotaLabel = quotaLabel
 
     def addSuitHead(self, panel, suitName):
@@ -408,58 +396,45 @@ class SuitPage(ShtikerPage.ShtikerPage):
     def addCogRadarLabel(self, panel):
         cogRadarLabel = DirectLabel(
             parent=panel,
-            pos=(
-                0.0,
-                0.0,
-                -0.215),
+            pos=(0.0, 0.0, -0.215),
             relief=None,
             state=DGG.DISABLED,
             text='',
             text_scale=0.050000000000000003,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
+            text_fg=(0, 0, 0, 1),
             text_font=ToontownGlobals.getSuitFont())
         panel.cogRadarLabel = cogRadarLabel
 
     def addSummonButton(self, panel):
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonList = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        okButtonList = (buttons.find('**/ChtBx_OKBtn_UP'),
+                        buttons.find('**/ChtBx_OKBtn_DN'),
+                        buttons.find('**/ChtBx_OKBtn_Rllvr'))
         gui = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
         iconGeom = gui.find('**/summons')
-        summonButton = DirectButton(parent=panel,
-                                    pos=(0.10000000000000001,
-                                         0.0,
-                                         -0.13),
-                                    scale=0.10000000000000001,
-                                    relief=None,
-                                    state=DGG.NORMAL,
-                                    image=okButtonList,
-                                    image_scale=13.0,
-                                    geom=iconGeom,
-                                    geom_scale=0.69999999999999996,
-                                    text=('',
-                                          TTLocalizer.IssueSummons,
-                                          TTLocalizer.IssueSummons,
-                                          ''),
-                                    text_scale=0.40000000000000002,
-                                    text_pos=(-1.1000000000000001,
-                                              -0.40000000000000002),
-                                    command=self.summonButtonPressed,
-                                    extraArgs=[panel])
+        summonButton = DirectButton(
+            parent=panel,
+            pos=(0.10000000000000001, 0.0, -0.13),
+            scale=0.10000000000000001,
+            relief=None,
+            state=DGG.NORMAL,
+            image=okButtonList,
+            image_scale=13.0,
+            geom=iconGeom,
+            geom_scale=0.69999999999999996,
+            text=('', TTLocalizer.IssueSummons, TTLocalizer.IssueSummons, ''),
+            text_scale=0.40000000000000002,
+            text_pos=(-1.1000000000000001, -0.40000000000000002),
+            command=self.summonButtonPressed,
+            extraArgs=[panel])
         panel.summonButton = summonButton
 
     def summonButtonPressed(self, panel):
         panelIndex = self.panels.index(panel)
         self.summonDialog = SummonCogDialog.SummonCogDialog(panelIndex)
         self.summonDialog.load()
-        self.accept(self.summonDialog.doneEvent, self.summonDone, extraArgs=[
-            panel])
+        self.accept(
+            self.summonDialog.doneEvent, self.summonDone, extraArgs=[panel])
         self.summonDialog.enter()
 
     def summonDone(self, panel):
@@ -477,32 +452,15 @@ class SuitPage(ShtikerPage.ShtikerPage):
         buildingRadarLabel = DirectLabel(
             parent=button,
             relief=None,
-            pos=(
-                0.22500000000000001,
-                0.0,
-                zPos),
+            pos=(0.22500000000000001, 0.0, zPos),
             state=DGG.DISABLED,
             image=gui.find('**/avatar_panel'),
-            image_hpr=(
-                0,
-                0,
-                90),
-            image_scale=(
-                0.050000000000000003,
-                1,
-                0.10000000000000001),
-            image_pos=(
-                0,
-                0,
-                0.014999999999999999),
-            text=TTLocalizer.SuitPageBuildingRadarP %
-            '0',
+            image_hpr=(0, 0, 90),
+            image_scale=(0.050000000000000003, 1, 0.10000000000000001),
+            image_pos=(0, 0, 0.014999999999999999),
+            text=TTLocalizer.SuitPageBuildingRadarP % '0',
             text_scale=0.050000000000000003,
-            text_fg=(
-                1,
-                0,
-                0,
-                1),
+            text_fg=(1, 0, 0, 1),
             text_font=ToontownGlobals.getSuitFont())
         gui.removeNode()
         button.buildingRadarLabel = buildingRadarLabel
@@ -561,8 +519,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
                 quota = str(COG_QUOTAS[0][index % SuitDNA.suitsPerDept])
             else:
                 quota = str(COG_QUOTAS[1][index % SuitDNA.suitsPerDept])
-            panel.quotaLabel['text'] = TTLocalizer.SuitPageQuota % (
-                count, quota)
+            panel.quotaLabel['text'] = TTLocalizer.SuitPageQuota % (count,
+                                                                    quota)
         elif status == COG_COMPLETE1:
             panel['image_color'] = PANEL_COLORS_COMPLETE1[index /
                                                           SuitDNA.suitsPerDept]
@@ -634,7 +592,8 @@ class SuitPage(ShtikerPage.ShtikerPage):
             self.panels[cog].count += 1
 
         for panel in panels:
-            panel.cogRadarLabel['text'] = TTLocalizer.SuitPageCogRadar % panel.count
+            panel.cogRadarLabel[
+                'text'] = TTLocalizer.SuitPageCogRadar % panel.count
             if self.radarOn[deptNum]:
                 panel.quotaLabel.hide()
 
@@ -642,23 +601,19 @@ class SuitPage(ShtikerPage.ShtikerPage):
                     label.show()
 
                 taskMgr.doMethodLater(
-                    RADAR_DELAY *
-                    panels.index(panel),
+                    RADAR_DELAY * panels.index(panel),
                     showLabel,
                     'showCogRadarLater',
-                    extraArgs=(
-                        panel.cogRadarLabel,
-                    ))
+                    extraArgs=(panel.cogRadarLabel, ))
 
                 def activateButton(s=self, index=deptNum):
                     self.radarButtons[index]['state'] = DGG.NORMAL
                     return Task.done
 
                 if not self.radarButtons[deptNum].building:
-                    taskMgr.doMethodLater(
-                        RADAR_DELAY * len(panels),
-                        activateButton,
-                        'activateButtonLater')
+                    taskMgr.doMethodLater(RADAR_DELAY * len(panels),
+                                          activateButton,
+                                          'activateButtonLater')
 
             panel.cogRadarLabel.hide()
             panel.quotaLabel.show()
@@ -676,11 +631,7 @@ class SuitPage(ShtikerPage.ShtikerPage):
                 'currSuitPlanner') and base.cr.currSuitPlanner is not None:
             buildingList = base.cr.currSuitPlanner.buildingList
         else:
-            buildingList = [
-                0,
-                0,
-                0,
-                0]
+            buildingList = [0, 0, 0, 0]
         button = self.radarButtons[deptNum]
         if button.building:
             if not button.buildingRadarLabel:
@@ -689,21 +640,20 @@ class SuitPage(ShtikerPage.ShtikerPage):
             if self.radarOn[deptNum]:
                 num = buildingList[deptNum]
                 if num == 1:
-                    button.buildingRadarLabel['text'] = TTLocalizer.SuitPageBuildingRadarS % num
+                    button.buildingRadarLabel[
+                        'text'] = TTLocalizer.SuitPageBuildingRadarS % num
                 else:
-                    button.buildingRadarLabel['text'] = TTLocalizer.SuitPageBuildingRadarP % num
+                    button.buildingRadarLabel[
+                        'text'] = TTLocalizer.SuitPageBuildingRadarP % num
 
                 def showLabel(button):
                     button.buildingRadarLabel.show()
                     button['state'] = DGG.NORMAL
 
                 taskMgr.doMethodLater(
-                    RADAR_DELAY *
-                    SuitDNA.suitsPerDept,
+                    RADAR_DELAY * SuitDNA.suitsPerDept,
                     showLabel,
                     'showBuildingRadarLater',
-                    extraArgs=(
-                        button,
-                    ))
+                    extraArgs=(button, ))
             else:
                 button.buildingRadarLabel.hide()

@@ -5,7 +5,6 @@ from toontown.hood import ZoneUtil
 
 
 class BossbotHQ(CogHood.CogHood):
-
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
         CogHood.CogHood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
         self.id = ToontownGlobals.BossbotHQ
@@ -27,21 +26,19 @@ class BossbotHQ(CogHood.CogHood):
     def enter(self, *args):
         CogHood.CogHood.enter(self, *args)
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.BossbotHQCameraNear,
-            ToontownGlobals.BossbotHQCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.BossbotHQCameraNear,
+                                ToontownGlobals.BossbotHQCameraFar)
 
     def exit(self):
         localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            ToontownGlobals.DefaultCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                ToontownGlobals.DefaultCameraFar)
         CogHood.CogHood.exit(self)
 
     def spawnTitleText(self, zoneId, floorNum=None):
         if ZoneUtil.isMintInteriorZone(zoneId):
-            text = '%s\n%s' % (
-                ToontownGlobals.StreetNames[zoneId][-1], TTLocalizer.MintFloorTitle % (floorNum + 1))
+            text = '%s\n%s' % (ToontownGlobals.StreetNames[zoneId][-1],
+                               TTLocalizer.MintFloorTitle % (floorNum + 1))
             self.doSpawnTitleText(text)
         else:
             CogHood.CogHood.spawnTitleText(self, zoneId)

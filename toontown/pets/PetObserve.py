@@ -12,21 +12,21 @@ def getEventName(zoneId):
 def send(zoneIds, petObserve):
     if petObserve.isValid():
         if type(zoneIds) not in (types.ListType, types.TupleType):
-            zoneIds = [
-                zoneIds]
+            zoneIds = [zoneIds]
 
         for zoneId in zoneIds:
-            messenger.send(getEventName(zoneId), [
-                petObserve])
+            messenger.send(getEventName(zoneId), [petObserve])
 
 
-Phrases = Enum('HI, BYE, YES, NO, SOOTHE, PRAISE, CRITICISM, HAPPY,SAD, ANGRY, HURRY, QUESTION, FRIENDLY, LETS_PLAY,COME, FOLLOW_ME, STAY, NEED_LAFF, NEED_GAGS, NEED_JB,GO_AWAY, DO_TRICK,')
+Phrases = Enum(
+    'HI, BYE, YES, NO, SOOTHE, PRAISE, CRITICISM, HAPPY,SAD, ANGRY, HURRY, QUESTION, FRIENDLY, LETS_PLAY,COME, FOLLOW_ME, STAY, NEED_LAFF, NEED_GAGS, NEED_JB,GO_AWAY, DO_TRICK,'
+)
 Actions = Enum(
-    'FEED, SCRATCH,ATTENDED_START, ATTENDED_STOP,ATTENDING_START, ATTENDING_STOP,CHANGE_ZONE, LOGOUT,GARDEN')
+    'FEED, SCRATCH,ATTENDED_START, ATTENDED_STOP,ATTENDING_START, ATTENDING_STOP,CHANGE_ZONE, LOGOUT,GARDEN'
+)
 
 
 class PetObserve:
-
     def isValid(self):
         return 1
 
@@ -41,7 +41,6 @@ class PetObserve:
 
 
 class PetActionObserve(PetObserve):
-
     def __init__(self, action, avId, data=None):
         self.action = action
         self.avId = avId
@@ -65,7 +64,6 @@ class PetActionObserve(PetObserve):
 
 
 class PetPhraseObserve(PetObserve):
-
     def __init__(self, petPhrase, avId):
         self.petPhrase = petPhrase
         self.avId = avId
@@ -88,7 +86,6 @@ class PetPhraseObserve(PetObserve):
 
 
 class SCObserve(PetPhraseObserve):
-
     def __init__(self, msgId, petPhrase, avId):
         self.msgId = msgId
         PetPhraseObserve.__init__(self, petPhrase, avId)
@@ -98,7 +95,6 @@ class SCObserve(PetPhraseObserve):
 
 
 class TrickRequestObserve(PetPhraseObserve):
-
     def __init__(self, trickId, avId):
         self.trickId = trickId
         PetPhraseObserve.__init__(self, Phrases.DO_TRICK, avId)
@@ -198,7 +194,8 @@ _scPhrase2petPhrase = {
     21002: OP.STAY,
     21003: OP.PRAISE,
     21004: OP.PRAISE,
-    21005: OP.PRAISE}
+    21005: OP.PRAISE
+}
 for scId in PetTricks.ScId2trickId:
     _scPhrase2petPhrase[scId] = OP.DO_TRICK
 

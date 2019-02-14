@@ -6,13 +6,13 @@ from toontown.parties import WinterPartyCatchActivityToonSD
 
 
 class DistributedPartyWinterCatchActivity(DistributedPartyCatchActivity):
-
     def __init__(self, cr):
         DistributedPartyCatchActivity.__init__(self, cr)
 
     def getInstructions(self):
         return TTLocalizer.WinterPartyCatchActivityInstructions % {
-            'badThing': self.DropObjectPlurals['anvil']}
+            'badThing': self.DropObjectPlurals['anvil']
+        }
 
     def load(self):
         DistributedPartyCatchActivity.load(
@@ -39,8 +39,7 @@ class DistributedPartyWinterCatchActivity(DistributedPartyCatchActivity):
             toonSD.load()
 
         self.notify.debug(
-            'handleToonJoined : currentState = %s' %
-            self.activityFSM.state)
+            'handleToonJoined : currentState = %s' % self.activityFSM.state)
         self.cr.doId2do[toonId].useLOD(500)
         if self.activityFSM.state == 'Active':
             if toonId in self.toonSDs:

@@ -9,7 +9,6 @@ import CogdoGameConsts
 
 
 class CogdoGameExit(NodePath):
-
     def __init__(self, openSfx=None, closeSfx=None):
         NodePath.__init__(self, 'CogdoGameExit')
         self._model = CogdoUtil.loadModel('exitDoor')
@@ -61,14 +60,21 @@ class CogdoGameExit(NodePath):
             self._finishIval()
             self._ival = Sequence(
                 Parallel(
-                    SoundInterval(
-                        self._closeSfx), self._leftDoor.posInterval(
-                        self.getOpenCloseDuration(), ElevatorUtils.getLeftOpenPoint(
-                            ElevatorConstants.ELEVATOR_NORMAL), startPos=ElevatorUtils.getLeftClosePoint(
-                            ElevatorConstants.ELEVATOR_NORMAL), blendType='easeInOut'), self._rightDoor.posInterval(
-                            self.getOpenCloseDuration(), ElevatorUtils.getRightOpenPoint(
-                                ElevatorConstants.ELEVATOR_NORMAL), startPos=ElevatorUtils.getRightClosePoint(
-                                    ElevatorConstants.ELEVATOR_NORMAL), blendType='easeInOut')))
+                    SoundInterval(self._closeSfx),
+                    self._leftDoor.posInterval(
+                        self.getOpenCloseDuration(),
+                        ElevatorUtils.getLeftOpenPoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        startPos=ElevatorUtils.getLeftClosePoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        blendType='easeInOut'),
+                    self._rightDoor.posInterval(
+                        self.getOpenCloseDuration(),
+                        ElevatorUtils.getRightOpenPoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        startPos=ElevatorUtils.getRightClosePoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        blendType='easeInOut')))
             self._ival.start()
         else:
             ElevatorUtils.openDoors(
@@ -88,14 +94,21 @@ class CogdoGameExit(NodePath):
             self._finishIval()
             self._ival = Sequence(
                 Parallel(
-                    SoundInterval(
-                        self._closeSfx), self._leftDoor.posInterval(
-                        self.getOpenCloseDuration(), ElevatorUtils.getLeftClosePoint(
-                            ElevatorConstants.ELEVATOR_NORMAL), startPos=ElevatorUtils.getLeftOpenPoint(
-                            ElevatorConstants.ELEVATOR_NORMAL), blendType='easeIn'), self._rightDoor.posInterval(
-                            self.getOpenCloseDuration(), ElevatorUtils.getRightClosePoint(
-                                ElevatorConstants.ELEVATOR_NORMAL), startPos=ElevatorUtils.getRightOpenPoint(
-                                    ElevatorConstants.ELEVATOR_NORMAL), blendType='easeIn')))
+                    SoundInterval(self._closeSfx),
+                    self._leftDoor.posInterval(
+                        self.getOpenCloseDuration(),
+                        ElevatorUtils.getLeftClosePoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        startPos=ElevatorUtils.getLeftOpenPoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        blendType='easeIn'),
+                    self._rightDoor.posInterval(
+                        self.getOpenCloseDuration(),
+                        ElevatorUtils.getRightClosePoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        startPos=ElevatorUtils.getRightOpenPoint(
+                            ElevatorConstants.ELEVATOR_NORMAL),
+                        blendType='easeIn')))
             self._ival.start()
         else:
             ElevatorUtils.closeDoors(
@@ -130,27 +143,17 @@ class CogdoGameExit(NodePath):
 
         runInsideDistance = 20
         track = Sequence(
-            Func(
-                toon.stopSmooth),
-            Func(
-                toon.loop,
-                anim,
-                1.0),
+            Func(toon.stopSmooth),
+            Func(toon.loop, anim, 1.0),
             Parallel(
                 toon.hprInterval(
                     hDiff / 360.0,
-                    Point3(
-                        lookAtH,
-                        0,
-                        0),
+                    Point3(lookAtH, 0, 0),
                     other=self._model,
                     blendType='easeIn'),
                 toon.posInterval(
                     distanceFromElev / moveSpeed,
-                    Point3(
-                        self._elevatorPoints[slot],
-                        0,
-                        0),
+                    Point3(self._elevatorPoints[slot], 0, 0),
                     other=self._model,
                     blendType='easeIn')),
             name=toon.uniqueName('runThroughExit'),
@@ -160,18 +163,13 @@ class CogdoGameExit(NodePath):
                 Parallel(
                     toon.hprInterval(
                         lookAtH / 360.0,
-                        Point3(
-                            0,
-                            0,
-                            0),
+                        Point3(0, 0, 0),
                         other=self._model,
                         blendType='easeOut'),
                     toon.posInterval(
                         runInsideDistance / moveSpeed,
-                        Point3(
-                            self._elevatorPoints[slot],
-                            runInsideDistance,
-                            0),
+                        Point3(self._elevatorPoints[slot], runInsideDistance,
+                               0),
                         other=self._model,
                         blendType='easeOut')))
 

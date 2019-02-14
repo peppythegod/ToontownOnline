@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE13a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     100001: {
         'type': 'goon',
         'name': '<unnamed>',
@@ -39,7 +42,8 @@ GlobalEntities = {
         'gridId': None,
         'hFov': 70,
         'strength': 15,
-        'velocity': 4},
+        'velocity': 4
+    },
     100002: {
         'type': 'nodepath',
         'name': 'pathmasta1',
@@ -47,7 +51,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(32.052500000000002, 0.204516, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100003: {
         'type': 'nodepath',
         'name': 'copy of pathmasta1',
@@ -55,7 +60,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(-28.249199999999998, 5.5658899999999996, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100004: {
         'type': 'nodepath',
         'name': 'copy of pathmasta1',
@@ -63,7 +69,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(-10.8179, 14.648099999999999, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100005: {
         'type': 'nodepath',
         'name': 'pathmastachild',
@@ -71,7 +78,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(-59.498699999999999, 29.1448, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100000: {
         'type': 'pathMaster',
         'name': '<unnamed>',
@@ -89,9 +97,8 @@ GlobalEntities = {
         'pathTarget4': 0,
         'pathTarget5': 0,
         'pathTarget6': 0,
-        'pathTarget7': 0}}
+        'pathTarget7': 0
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

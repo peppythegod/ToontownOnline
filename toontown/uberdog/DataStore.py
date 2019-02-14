@@ -34,9 +34,8 @@ class DataStore:
         self.className = self.__class__.__name__
         if self.wantAnyDbm:
             self.filepath += '-anydbm'
-            self.notify.debug(
-                'anydbm default module used: %s ' %
-                anydbm._defaultmod.__name__)
+            self.notify.debug('anydbm default module used: %s ' %
+                              anydbm._defaultmod.__name__)
 
         self.open()
 
@@ -48,22 +47,19 @@ class DataStore:
                     self.data = anydbm.open(self.filepath, 'w')
                     self.notify.debug(
                         'Opening existing anydbm database at: %s.' %
-                        (self.filepath,))
+                        (self.filepath, ))
                 else:
                     self.data = anydbm.open(self.filepath, 'c')
-                    self.notify.debug(
-                        'Creating new anydbm database at: %s.' %
-                        (self.filepath,))
+                    self.notify.debug('Creating new anydbm database at: %s.' %
+                                      (self.filepath, ))
             except anydbm.error:
                 self.notify.warning(
-                    'Cannot open anydbm database at: %s.' %
-                    (self.filepath,))
+                    'Cannot open anydbm database at: %s.' % (self.filepath, ))
 
         try:
             file = open(self.filepath + '.bu', 'r')
-            self.notify.debug(
-                'Opening backup pickle data file at %s.' %
-                (self.filepath + '.bu',))
+            self.notify.debug('Opening backup pickle data file at %s.' %
+                              (self.filepath + '.bu', ))
             if os.path.exists(self.filepath):
                 os.remove(self.filepath)
         except IOError:
@@ -71,13 +67,11 @@ class DataStore:
             try:
                 file = open(self.filepath, 'r')
                 self.notify.debug(
-                    'Opening old pickle data file at %s..' %
-                    (self.filepath,))
+                    'Opening old pickle data file at %s..' % (self.filepath, ))
             except IOError:
                 file = None
-                self.notify.debug(
-                    'New pickle data file will be written to %s.' %
-                    (self.filepath,))
+                self.notify.debug('New pickle data file will be written to %s.'
+                                  % (self.filepath, ))
 
         if file:
             data = cPickle.load(file)
@@ -89,8 +83,7 @@ class DataStore:
     def writeDataToFile(self):
         if self.data is not None:
             self.notify.debug(
-                'Data is now synced with disk at %s' %
-                self.filepath)
+                'Data is now synced with disk at %s' % self.filepath)
             if self.wantAnyDbm:
                 self.data.sync()
             else:
@@ -138,15 +131,15 @@ class DataStore:
             if self.wantAnyDbm:
                 self.data.close()
 
-            taskMgr.remove('%s-syncTask' % (self.className,))
+            taskMgr.remove('%s-syncTask' % (self.className, ))
             self.data = None
 
     def open(self):
         self.close()
         self.readDataFromFile()
         self.resetWriteCount()
-        taskMgr.remove('%s-syncTask' % (self.className,))
-        t = taskMgr.add(self.syncTask, '%s-syncTask' % (self.className,))
+        taskMgr.remove('%s-syncTask' % (self.className, ))
+        t = taskMgr.add(self.syncTask, '%s-syncTask' % (self.className, ))
         t.timeElapsed = 0.0
 
     def reset(self):
@@ -166,13 +159,13 @@ class DataStore:
                 try:
                     os.rename(tail, newFileName)
                     uber.air.writeServerEvent(
-                        'Uberdog data store Info', 0, 'Creating backup of file: %s saving as: %s' %
+                        'Uberdog data store Info', 0,
+                        'Creating backup of file: %s saving as: %s' %
                         (tail, newFileName))
-                uber.air.writeServerEvent(
-                    'Uberdog data store Info',
-                    0,
-                    'Unable to create backup of file: %s ' %
-                    tail)
+                except:
+                    uber.air.writeServerEvent(
+                        'Uberdog data store Info', 0,
+                        'Unable to create backup of file: %s ' % tail)
 
             else:
                 files = os.listdir(head)
@@ -183,14 +176,14 @@ class DataStore:
                         try:
                             os.rename(file, newFileName + ext)
                             uber.air.writeServerEvent(
-                                'Uberdog data store Info', 0, 'Creating backup of file: %s saving as: %s' %
+                                'Uberdog data store Info', 0,
+                                'Creating backup of file: %s saving as: %s' %
                                 (file, newFileName + ext))
-                        uber.air.writeServerEvent(
-                            'Uberdog data store Info',
-                            0,
-                            'Unable to create backup of file: %s ' %
-                            newFileName +
-                            ext)
+                        except:
+                            uber.air.writeServerEvent(
+                                'Uberdog data store Info', 0,
+                                'Unable to create backup of file: %s ' %
+                                newFileName + ext)
 
                         continue
 

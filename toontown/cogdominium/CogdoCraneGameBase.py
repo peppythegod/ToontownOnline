@@ -3,7 +3,6 @@ from toontown.cogdominium import CogdoCraneGameConsts as Consts
 
 
 class CogdoCraneGameBase:
-
     def getConsts(self):
         return Consts
 

@@ -15,8 +15,8 @@ class NonRepeatableRandomSourceAI(DistributedObjectAI):
         DistributedObjectAI.announceGenerate(self)
         self._contextGen = SerialMaskedGen((0x1 << 32) - 1)
         self._requests = {}
-        self._sampleTask = self.doMethodLater(
-            3 * 60, self._sampleRandomTask, self.uniqueName('sampleRandom'))
+        self._sampleTask = self.doMethodLater(3 * 60, self._sampleRandomTask,
+                                              self.uniqueName('sampleRandom'))
         self._sampleRandom()
 
     def delete(self):
@@ -29,11 +29,10 @@ class NonRepeatableRandomSourceAI(DistributedObjectAI):
         return Task.again
 
     def _sampleRandom(self):
-        self.air.sendUpdateToDoId('NonRepeatableRandomSource',
-                                  'randomSample',
-                                  OtpDoGlobals.OTP_DO_ID_TOONTOWN_NON_REPEATABLE_RANDOM_SOURCE,
-                                  [self.doId,
-                                   int(random.randrange(0x1 << 32))])
+        self.air.sendUpdateToDoId(
+            'NonRepeatableRandomSource', 'randomSample',
+            OtpDoGlobals.OTP_DO_ID_TOONTOWN_NON_REPEATABLE_RANDOM_SOURCE,
+            [self.doId, int(random.randrange(0x1 << 32))])
 
     def randomSampleAck(self):
         self._sampleRandom()
@@ -43,17 +42,12 @@ class NonRepeatableRandomSourceAI(DistributedObjectAI):
             num = 1
 
         context = self._contextGen.next()
-        self._requests[context] = (callback,)
+        self._requests[context] = (callback, )
         self.air.sendUpdateToDoId(
-            'NonRepeatableRandomSource',
-            'getRandomSamples',
+            'NonRepeatableRandomSource', 'getRandomSamples',
             OtpDoGlobals.OTP_DO_ID_TOONTOWN_NON_REPEATABLE_RANDOM_SOURCE,
-            [
-                self.doId,
-                'NonRepeatableRandomSource',
-                context,
-                num])
+            [self.doId, 'NonRepeatableRandomSource', context, num])
 
     def getRandomSamplesReply(self, context, samples):
-        (callback,) = self._requests.pop(context)
+        (callback, ) = self._requests.pop(context)
         callback(samples)

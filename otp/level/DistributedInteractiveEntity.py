@@ -12,13 +12,13 @@ class DistributedInteractiveEntity(DistributedEntity.DistributedEntity):
     def __init__(self, cr):
         DistributedEntity.DistributedEntity.__init__(self, cr)
         self.fsm = ClassicFSM.ClassicFSM('DistributedInteractiveEntity', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'playing',
-                'attract']),
-            State.State('attract', self.enterAttract, self.exitAttract, [
-                'playing']),
-            State.State('playing', self.enterPlaying, self.exitPlaying, [
-                'attract'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['playing', 'attract']),
+            State.State('attract', self.enterAttract, self.exitAttract,
+                        ['playing']),
+            State.State('playing', self.enterPlaying, self.exitPlaying,
+                        ['attract'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
@@ -40,8 +40,8 @@ class DistributedInteractiveEntity(DistributedEntity.DistributedEntity):
 
     def setState(self, state, timestamp):
         if self.isGenerated():
-            self.fsm.request(state, [
-                globalClockDelta.localElapsedTime(timestamp)])
+            self.fsm.request(state,
+                             [globalClockDelta.localElapsedTime(timestamp)])
         else:
             self.initialState = state
             self.initialStateTimestamp = timestamp

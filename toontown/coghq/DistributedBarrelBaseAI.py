@@ -4,9 +4,8 @@ from direct.task import Task
 from toontown.coghq import BarrelBase
 
 
-class DistributedBarrelBaseAI(
-        DistributedEntityAI.DistributedEntityAI,
-        BarrelBase.BarrelBase):
+class DistributedBarrelBaseAI(DistributedEntityAI.DistributedEntityAI,
+                              BarrelBase.BarrelBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBarrelBaseAI')
 
@@ -31,5 +30,4 @@ class DistributedBarrelBaseAI(
             self.sendUpdate('setReject')
 
     def d_setGrab(self, avId):
-        self.sendUpdate('setGrab', [
-            avId])
+        self.sendUpdate('setGrab', [avId])

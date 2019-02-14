@@ -14,7 +14,6 @@ from toontown.toontowngui import TeaserPanel
 
 
 class DistributedElevatorExt(DistributedElevator.DistributedElevator):
-
     def __init__(self, cr):
         DistributedElevator.DistributedElevator.__init__(self, cr)
         self.nametag = None
@@ -66,9 +65,8 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
         self.bldgRequest = None
         self.bldg = buildingList[0]
         if not self.bldg:
-            self.notify.error(
-                'setBldgDoId: elevator %d cannot find bldg %d!' %
-                (self.doId, self.bldgDoId))
+            self.notify.error('setBldgDoId: elevator %d cannot find bldg %d!' %
+                              (self.doId, self.bldgDoId))
             return None
 
         if self.getBldgDoorOrigin():
@@ -76,8 +74,8 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
             self.setupElevator()
         else:
             self.notify.warning(
-                'setBldgDoId: elevator %d cannot find suitDoorOrigin for bldg %d!' %
-                (self.doId, bldgDoId))
+                'setBldgDoId: elevator %d cannot find suitDoorOrigin for bldg %d!'
+                % (self.doId, bldgDoId))
 
     def setFloor(self, floorNumber):
         if self.currentFloor >= 0:
@@ -94,10 +92,10 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
     def handleEnterSphere(self, collEntry):
         self.notify.debug('Entering Elevator Sphere....')
         if hasattr(
-            localAvatar,
-            'boardingParty') and localAvatar.boardingParty and localAvatar.boardingParty.getGroupLeader(
-            localAvatar.doId) and localAvatar.boardingParty.getGroupLeader(
-                localAvatar.doId) != localAvatar.doId:
+                localAvatar, 'boardingParty'
+        ) and localAvatar.boardingParty and localAvatar.boardingParty.getGroupLeader(
+                localAvatar.doId) and localAvatar.boardingParty.getGroupLeader(
+                    localAvatar.doId) != localAvatar.doId:
             base.localAvatar.elevatorNotifier.showMe(
                 TTLocalizer.ElevatorGroupMember)
         elif self.allowedToEnter(self.zoneId):
@@ -112,8 +110,8 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
 
     def handleEnterElevator(self):
         if hasattr(
-                localAvatar,
-                'boardingParty') and localAvatar.boardingParty and localAvatar.boardingParty.getGroupLeader(
+                localAvatar, 'boardingParty'
+        ) and localAvatar.boardingParty and localAvatar.boardingParty.getGroupLeader(
                 localAvatar.doId):
             if localAvatar.boardingParty.getGroupLeader(
                     localAvatar.doId) == localAvatar.doId:
@@ -126,18 +124,15 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
             self.sendUpdate('requestBoard', [])
         else:
             self.notify.warning(
-                'Tried to board elevator with hp: %d' %
-                base.localAvatar.hp)
+                'Tried to board elevator with hp: %d' % base.localAvatar.hp)
 
     def enterWaitEmpty(self, ts):
         self.elevatorSphereNodePath.unstash()
         self.forceDoorsOpen()
         self.accept(
-            self.uniqueName('enterelevatorSphere'),
-            self.handleEnterSphere)
+            self.uniqueName('enterelevatorSphere'), self.handleEnterSphere)
         self.accept(
-            self.uniqueName('enterElevatorOK'),
-            self.handleEnterElevator)
+            self.uniqueName('enterElevatorOK'), self.handleEnterElevator)
         DistributedElevator.DistributedElevator.enterWaitEmpty(self, ts)
 
     def exitWaitEmpty(self):
@@ -150,8 +145,7 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
         DistributedElevator.DistributedElevator.enterWaitCountdown(self, ts)
         self.forceDoorsOpen()
         self.accept(
-            self.uniqueName('enterElevatorOK'),
-            self.handleEnterElevator)
+            self.uniqueName('enterElevatorOK'), self.handleEnterElevator)
         self.startCountdownClock(self.countdownTime, ts)
 
     def exitWaitCountdown(self):

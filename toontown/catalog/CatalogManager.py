@@ -15,9 +15,8 @@ class CatalogManager(DistributedObject.DistributedObject):
 
         base.cr.catalogManager = self
         DistributedObject.DistributedObject.generate(self)
-        if hasattr(
-                base.localAvatar,
-                'catalogScheduleNextTime') and base.localAvatar.catalogScheduleNextTime == 0:
+        if hasattr(base.localAvatar, 'catalogScheduleNextTime'
+                   ) and base.localAvatar.catalogScheduleNextTime == 0:
             self.d_startCatalog()
 
     def disable(self):

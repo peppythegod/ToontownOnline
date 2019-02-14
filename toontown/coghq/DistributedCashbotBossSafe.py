@@ -31,13 +31,8 @@ class DistributedCashbotBossSafe(
                 duration=ToontownGlobals.CashbotBossToMagnetTime,
                 node=self),
             Sequence(
-                Wait(
-                    ToontownGlobals.CashbotBossToMagnetTime -
-                    0.02),
-                SoundInterval(
-                    self.hitMagnetSfx,
-                    duration=1.0,
-                    node=self)))
+                Wait(ToontownGlobals.CashbotBossToMagnetTime - 0.02),
+                SoundInterval(self.hitMagnetSfx, duration=1.0, node=self)))
         self.hitFloorSfx = loader.loadSfx(
             'phase_5/audio/sfx/AA_drop_bigweight_miss.mp3')
         self.hitFloorSoundInterval = SoundInterval(self.hitFloorSfx, node=self)
@@ -53,8 +48,8 @@ class DistributedCashbotBossSafe(
         cs = CollisionSphere(0, 0, 4, 4)
         self.collisionNode.addSolid(cs)
         if self.index == 0:
-            self.collisionNode.setIntoCollideMask(
-                ToontownGlobals.PieBitmask | OTPGlobals.WallBitmask)
+            self.collisionNode.setIntoCollideMask(ToontownGlobals.PieBitmask
+                                                  | OTPGlobals.WallBitmask)
             self.collisionNode.setFromCollideMask(ToontownGlobals.PieBitmask)
 
         self.boss.safes[self.index] = self

@@ -49,9 +49,8 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
             if base.cr.playGame.hood:
                 self.calcInteractiveProp()
             else:
-                self.acceptOnce(
-                    self.PlayGameSetPlaceEvent,
-                    self.calcInteractiveProp)
+                self.acceptOnce(self.PlayGameSetPlaceEvent,
+                                self.calcInteractiveProp)
 
     def calcInteractiveProp(self):
         if base.cr.playGame.hood:
@@ -59,45 +58,24 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
             if hasattr(loader, 'getInteractiveProp'):
                 self.interactiveProp = loader.getInteractiveProp(self.zoneId)
                 self.notify.debug(
-                    'self.interactiveProp = %s' %
-                    self.interactiveProp)
+                    'self.interactiveProp = %s' % self.interactiveProp)
             else:
                 self.notify.warning(
-                    'no loader.getInteractiveProp self.interactiveProp is None')
+                    'no loader.getInteractiveProp self.interactiveProp is None'
+                )
         else:
             self.notify.warning('no hood  self.interactiveProp is None')
 
-    def setMembers(
-            self,
-            suits,
-            suitsJoining,
-            suitsPending,
-            suitsActive,
-            suitsLured,
-            suitTraps,
-            toons,
-            toonsJoining,
-            toonsPending,
-            toonsActive,
-            toonsRunning,
-            timestamp):
+    def setMembers(self, suits, suitsJoining, suitsPending, suitsActive,
+                   suitsLured, suitTraps, toons, toonsJoining, toonsPending,
+                   toonsActive, toonsRunning, timestamp):
         if self.battleCleanedUp():
             return None
 
         oldtoons = DistributedBattleBase.DistributedBattleBase.setMembers(
-            self,
-            suits,
-            suitsJoining,
-            suitsPending,
-            suitsActive,
-            suitsLured,
-            suitTraps,
-            toons,
-            toonsJoining,
-            toonsPending,
-            toonsActive,
-            toonsRunning,
-            timestamp)
+            self, suits, suitsJoining, suitsPending, suitsActive, suitsLured,
+            suitTraps, toons, toonsJoining, toonsPending, toonsActive,
+            toonsRunning, timestamp)
         if len(self.toons) == 4 and len(oldtoons) < 4:
             self.notify.debug('setMembers() - battle is now full of toons')
             self.closeBattleCollision()
@@ -129,13 +107,10 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         toonTrack = Sequence()
         suitTrack.append(Func(suit.loop, 'neutral'))
         suitTrack.append(Func(suit.headsUp, toon))
-        taunt = SuitBattleGlobals.getFaceoffTaunt(
-            suit.getStyleName(), suit.doId)
+        taunt = SuitBattleGlobals.getFaceoffTaunt(suit.getStyleName(),
+                                                  suit.doId)
         suitTrack.append(
-            Func(
-                suit.setChatAbsolute,
-                taunt,
-                CFSpeech | CFTimeout))
+            Func(suit.setChatAbsolute, taunt, CFSpeech | CFTimeout))
         toonTrack.append(Func(toon.loop, 'neutral'))
         toonTrack.append(Func(toon.headsUp, suit))
         suitHeight = suit.getHeight()
@@ -156,11 +131,7 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
             camTrack.append(Func(camera.wrtReparentTo, suit))
             camTrack.append(Func(base.camLens.setFov, self.camFOFov))
             camTrack.append(
-                Func(
-                    camera.setPos,
-                    TauntCamX,
-                    TauntCamY,
-                    TauntCamHeight))
+                Func(camera.setPos, TauntCamX, TauntCamY, TauntCamHeight))
             camTrack.append(Func(camera.lookAt, suit, suitOffsetPnt))
             camTrack.append(Wait(delay))
             camTrack.append(Func(base.camLens.setFov, self.camFov))
@@ -170,9 +141,8 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
             camTrack.append(Wait(faceoffTime))
             if self.interactiveProp:
                 camTrack.append(
-                    Func(
-                        camera.lookAt,
-                        self.interactiveProp.node.getPos(self)))
+                    Func(camera.lookAt,
+                         self.interactiveProp.node.getPos(self)))
                 camTrack.append(Wait(FACEOFF_LOOK_AT_PROP_T))
 
         suitTrack.append(Wait(delay))
@@ -182,20 +152,12 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         toonTrack.append(Func(toon.headsUp, self, toonPos))
         suitTrack.append(Func(suit.loop, 'walk'))
         suitTrack.append(
-            LerpPosInterval(
-                suit,
-                faceoffTime,
-                suitPos,
-                other=self))
+            LerpPosInterval(suit, faceoffTime, suitPos, other=self))
         suitTrack.append(Func(suit.loop, 'neutral'))
         suitTrack.append(Func(suit.setHpr, self, suitHpr))
         toonTrack.append(Func(toon.loop, 'run'))
         toonTrack.append(
-            LerpPosInterval(
-                toon,
-                faceoffTime,
-                toonPos,
-                other=self))
+            LerpPosInterval(toon, faceoffTime, toonPos, other=self))
         toonTrack.append(Func(toon.loop, 'neutral'))
         toonTrack.append(Func(toon.setHpr, self, toonHpr))
         if base.localAvatar == toon:
@@ -217,7 +179,8 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         track = Sequence(mtrack, done, name=name)
         track.delayDeletes = [
             DelayDelete.DelayDelete(toon, '__faceOff'),
-            DelayDelete.DelayDelete(suit, '__faceOff')]
+            DelayDelete.DelayDelete(suit, '__faceOff')
+        ]
         track.start(ts)
         self.storeInterval(track, name)
 
@@ -225,8 +188,8 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         self.notify.debug('enterFaceOff()')
         self.delayDeleteMembers()
         if len(self.toons) > 0 and base.localAvatar == self.toons[0]:
-            Emote.globalEmote.disableAll(
-                self.toons[0], 'dbattle, enterFaceOff')
+            Emote.globalEmote.disableAll(self.toons[0],
+                                         'dbattle, enterFaceOff')
 
         self._DistributedBattle__faceOff(
             ts, self.faceOffName, self._DistributedBattle__handleFaceOffDone)
@@ -267,10 +230,8 @@ class DistributedBattle(DistributedBattleBase.DistributedBattleBase):
         self.playReward(ts)
 
     def playReward(self, ts):
-        self.movie.playReward(
-            ts,
-            self.uniqueName('reward'),
-            self.handleRewardDone)
+        self.movie.playReward(ts, self.uniqueName('reward'),
+                              self.handleRewardDone)
 
     def handleRewardDone(self):
         self.notify.debug('Reward done')

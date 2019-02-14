@@ -5,7 +5,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
-
     def __init__(self, cr):
         DistributedTreasure.DistributedTreasure.__init__(self, cr)
         self.fadeTrack = None
@@ -61,24 +60,26 @@ class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
 
         def getFadeOutTrack():
             fadeOutTrack = LerpColorScaleInterval(
-                self.nodePath, 0.80000000000000004, colorScale=VBase4(
-                    0, 0, 0, 0), startColorScale=VBase4(
-                    1, 1, 1, 1), blendType='easeIn')
+                self.nodePath,
+                0.80000000000000004,
+                colorScale=VBase4(0, 0, 0, 0),
+                startColorScale=VBase4(1, 1, 1, 1),
+                blendType='easeIn')
             return fadeOutTrack
 
         def getFadeInTrack():
             fadeInTrack = LerpColorScaleInterval(
-                self.nodePath, 0.5, colorScale=VBase4(
-                    1, 1, 1, 1), startColorScale=VBase4(
-                    0, 0, 0, 0), blendType='easeOut')
+                self.nodePath,
+                0.5,
+                colorScale=VBase4(1, 1, 1, 1),
+                startColorScale=VBase4(0, 0, 0, 0),
+                blendType='easeOut')
             return fadeInTrack
 
         base.playSfx(self.rejectSound, node=self.nodePath)
         self.fadeTrack = Sequence(
             getFadeOutTrack(),
-            Func(
-                replaceTreasureFunc,
-                newModelPath),
+            Func(replaceTreasureFunc, newModelPath),
             getFadeInTrack(),
             name=self.uniqueName('treasureFadeTrack'))
         self.fadeTrack.start()
@@ -87,10 +88,8 @@ class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
         holidayIds = base.cr.newsManager.getHolidayIdList()
         if ToontownGlobals.VALENTINES_DAY in holidayIds:
             originalScale = self.nodePath.getScale()
-            throbScale = VBase3(
-                0.84999999999999998,
-                0.84999999999999998,
-                0.84999999999999998)
+            throbScale = VBase3(0.84999999999999998, 0.84999999999999998,
+                                0.84999999999999998)
             throbInIval = LerpScaleInterval(
                 self.nodePath,
                 0.29999999999999999,
@@ -103,8 +102,8 @@ class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
                 scale=originalScale,
                 startScale=throbScale,
                 blendType='easeOut')
-            self.heartThrobIval = Sequence(
-                throbInIval, throbOutIval, Wait(0.75))
+            self.heartThrobIval = Sequence(throbInIval, throbOutIval,
+                                           Wait(0.75))
             self.heartThrobIval.loop()
 
     def stopAnimation(self):

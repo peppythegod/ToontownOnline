@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_12/models/bossbotHQ/BossbotFairwayRoom_A',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -19,8 +20,10 @@ GlobalEntities = {
             'entType': 'door',
             'username': 'rurbino',
             'parentEntId': 110001,
-            'entId': 110002},
-        'requestSave': None},
+            'entId': 110002
+        },
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -28,7 +31,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     110200: {
         'type': 'battleBlocker',
         'name': '<unnamed>',
@@ -38,7 +42,8 @@ GlobalEntities = {
         'hpr': Point3(270, 0, 0),
         'scale': Vec3(1, 1, 1),
         'cellId': 0,
-        'radius': 10},
+        'radius': 10
+    },
     110202: {
         'type': 'door',
         'name': '<unnamed>',
@@ -59,7 +64,8 @@ GlobalEntities = {
         'unlock0Event': 0,
         'unlock1Event': 110200,
         'unlock2Event': 0,
-        'unlock3Event': 0},
+        'unlock3Event': 0
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -67,7 +73,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     110001: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -75,9 +82,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(101.06999999999999, 0, 0),
         'hpr': Point3(270, 0, 0),
-        'scale': Vec3(1, 1, 1)}}
+        'scale': Vec3(1, 1, 1)
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

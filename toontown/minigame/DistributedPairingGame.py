@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from DistributedMinigame import *
@@ -30,17 +28,16 @@ class DistributedPairingGame(DistributedMinigame):
 
     def __init__(self, cr):
         DistributedMinigame.__init__(self, cr)
-        self.gameFSM = ClassicFSM.ClassicFSM(
-            'DistributedPairingGame', [
-                State.State(
-                    'off', self.enterOff, self.exitOff, ['play']), State.State(
-                    'play', self.enterPlay, self.exitPlay, ['cleanup']), State.State(
-                    'cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedPairingGame', [
+            State.State('off', self.enterOff, self.exitOff, ['play']),
+            State.State('play', self.enterPlay, self.exitPlay, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
-        self.cameraTopView = (
-            17.600000000000001, 6.1875600000000004, 43.995600000000003, 0, -89, 0)
-        self.cameraThreeQuarterView = (
-            14.0, -8.9335199999999997, 33.4497, 0, -62.890000000000001, 0)
+        self.cameraTopView = (17.600000000000001, 6.1875600000000004,
+                              43.995600000000003, 0, -89, 0)
+        self.cameraThreeQuarterView = (14.0, -8.9335199999999997, 33.4497, 0,
+                                       -62.890000000000001, 0)
         self.deckSeed = 0
         self.faceUpList = []
         self.localFaceUpList = []
@@ -52,13 +49,14 @@ class DistributedPairingGame(DistributedMinigame):
         self.yCardInc = 4
         self.startingPositions = [
             (0, 0, 0, -45),
-            ((self.cardsPerRow - 1) * self.xCardInc, (self.cardsPerCol - 1) * self.yCardInc, 0, 135),
+            ((self.cardsPerRow - 1) * self.xCardInc,
+             (self.cardsPerCol - 1) * self.yCardInc, 0, 135),
             ((self.cardsPerRow - 1) * self.xCardInc, 0, 0, 45),
-            (0, (self.cardsPerCol - 1) * self.yCardInc, 0, -135)]
+            (0, (self.cardsPerCol - 1) * self.yCardInc, 0, -135)
+        ]
         self.stageMin = Point2(0, 0)
-        self.stageMax = Point2(
-            (self.cardsPerRow - 1) * self.xCardInc,
-            (self.cardsPerCol - 1) * self.yCardInc)
+        self.stageMax = Point2((self.cardsPerRow - 1) * self.xCardInc,
+                               (self.cardsPerCol - 1) * self.yCardInc)
         self.gameDuration = PairingGameGlobals.EasiestGameDuration
 
     def moveCameraToTop(self):
@@ -87,8 +85,8 @@ class DistributedPairingGame(DistributedMinigame):
             'phase_4/models/minigames/memory_room')
         self.gameBoard.setPosHpr(0.5, 0, 0, 0, 0, 0)
         self.gameBoard.setScale(1.0)
-        self.deck = PairingGameGlobals.createDeck(
-            self.deckSeed, self.numPlayers)
+        self.deck = PairingGameGlobals.createDeck(self.deckSeed,
+                                                  self.numPlayers)
         self.notify.debug('%s' % self.deck.cards)
         testCard = self.getDeckOrderIndex(self.cardsPerCol - 1, 0)
         if not testCard > -1:
@@ -103,12 +101,10 @@ class DistributedPairingGame(DistributedMinigame):
             oneCard.setPos(xPos, yPos, 0)
             oneCard.reparentTo(render)
             self.notify.debug('%s' % oneCard.getPos())
-            self.notify.debug(
-                'suit %s rank %s value %s' %
-                (oneCard.suit, oneCard.rank, oneCard.value))
-            self.accept(
-                'entercardCollision-%d' %
-                oneCard.value, self.enterCard)
+            self.notify.debug('suit %s rank %s value %s' %
+                              (oneCard.suit, oneCard.rank, oneCard.value))
+            self.accept('entercardCollision-%d' % oneCard.value,
+                        self.enterCard)
             self.accept('exitcardCollision-%d' % oneCard.value, self.exitCard)
             oneCard.turnDown(doInterval=False)
             self.cards.append(oneCard)
@@ -122,46 +118,44 @@ class DistributedPairingGame(DistributedMinigame):
         sign.setPos(0, 0, 0.050000000000000003)
         sign.reparentTo(self.bonusGlow)
         self.bonusGlow.setScale(2.5)
-        self.pointsFrame = DirectFrame(relief=None,
-                                       geom=DGG.getDefaultDialogGeom(),
-                                       geom_color=GlobalDialogColor,
-                                       geom_scale=(4,
-                                                   1,
-                                                   1),
-                                       pos=(-0.33000000000000002,
-                                            0,
-                                            0.90000000000000002),
-                                       scale=0.10000000000000001,
-                                       text=TTLocalizer.PairingGamePoints,
-                                       text_align=TextNode.ALeft,
-                                       text_scale=TTLocalizer.DPGpointsFrame,
-                                       text_pos=(-1.9399999999999999,
-                                                 -0.10000000000000001,
-                                                 0.0))
+        self.pointsFrame = DirectFrame(
+            relief=None,
+            geom=DGG.getDefaultDialogGeom(),
+            geom_color=GlobalDialogColor,
+            geom_scale=(4, 1, 1),
+            pos=(-0.33000000000000002, 0, 0.90000000000000002),
+            scale=0.10000000000000001,
+            text=TTLocalizer.PairingGamePoints,
+            text_align=TextNode.ALeft,
+            text_scale=TTLocalizer.DPGpointsFrame,
+            text_pos=(-1.9399999999999999, -0.10000000000000001, 0.0))
         self.pointsLabel = DirectLabel(
-            parent=self.pointsFrame, relief=None, text='0', text_fg=VBase4(
-                0, 0.5, 0, 1), text_align=TextNode.ARight, text_scale=0.69999999999999996, pos=(
-                1.8200000000000001, 0, -0.14999999999999999))
-        self.flipsFrame = DirectFrame(relief=None,
-                                      geom=DGG.getDefaultDialogGeom(),
-                                      geom_color=GlobalDialogColor,
-                                      geom_scale=(4,
-                                                  1,
-                                                  1),
-                                      pos=(0.33000000000000002,
-                                           0,
-                                           0.90000000000000002),
-                                      scale=0.10000000000000001,
-                                      text=TTLocalizer.PairingGameFlips,
-                                      text_align=TextNode.ALeft,
-                                      text_scale=TTLocalizer.DPGflipsFrame,
-                                      text_pos=(-1.9399999999999999,
-                                                -0.10000000000000001,
-                                                0.0))
+            parent=self.pointsFrame,
+            relief=None,
+            text='0',
+            text_fg=VBase4(0, 0.5, 0, 1),
+            text_align=TextNode.ARight,
+            text_scale=0.69999999999999996,
+            pos=(1.8200000000000001, 0, -0.14999999999999999))
+        self.flipsFrame = DirectFrame(
+            relief=None,
+            geom=DGG.getDefaultDialogGeom(),
+            geom_color=GlobalDialogColor,
+            geom_scale=(4, 1, 1),
+            pos=(0.33000000000000002, 0, 0.90000000000000002),
+            scale=0.10000000000000001,
+            text=TTLocalizer.PairingGameFlips,
+            text_align=TextNode.ALeft,
+            text_scale=TTLocalizer.DPGflipsFrame,
+            text_pos=(-1.9399999999999999, -0.10000000000000001, 0.0))
         self.flipsLabel = DirectLabel(
-            parent=self.flipsFrame, relief=None, text='0', text_fg=VBase4(
-                0, 1.0, 0, 1), text_align=TextNode.ARight, text_scale=0.69999999999999996, pos=(
-                1.8200000000000001, 0, -0.14999999999999999))
+            parent=self.flipsFrame,
+            relief=None,
+            text='0',
+            text_fg=VBase4(0, 1.0, 0, 1),
+            text_align=TextNode.ARight,
+            text_scale=0.69999999999999996,
+            pos=(1.8200000000000001, 0, -0.14999999999999999))
         self._DistributedPairingGame__textGen = TextNode('ringGame')
         self._DistributedPairingGame__textGen.setFont(
             ToontownGlobals.getSignFont())
@@ -176,7 +170,8 @@ class DistributedPairingGame(DistributedMinigame):
         self.signalSfx = []
         for i in range(4):
             self.signalSfx.append(
-                base.loadSfx('phase_4/audio/sfx/MG_pairing_jumping_signal.mp3'))
+                base.loadSfx(
+                    'phase_4/audio/sfx/MG_pairing_jumping_signal.mp3'))
 
         self.bonusMovesSfx = base.loadSfx(
             'phase_4/audio/sfx/MG_pairing_bonus_moves.mp3')
@@ -292,7 +287,8 @@ class DistributedPairingGame(DistributedMinigame):
         orthoDrive = OrthoDrive(
             self.TOON_SPEED,
             maxFrameMove=self.MAX_FRAME_MOVE,
-            customCollisionCallback=self._DistributedPairingGame__doPairingGameCollisions)
+            customCollisionCallback=self.
+            _DistributedPairingGame__doPairingGameCollisions)
         self.orthoWalk = OrthoWalk(
             orthoDrive, broadcast=not self.isSinglePlayer())
         self.orthoWalk.start()
@@ -409,15 +405,14 @@ class DistributedPairingGame(DistributedMinigame):
         self.inactiveList.append(cardA)
         self.inactiveList.append(cardB)
         matchIval = Parallel()
-        for card in [
-                cardA,
-                cardB]:
+        for card in [cardA, cardB]:
             self.cards[card].setTransparency(1)
             cardSeq = Sequence(
                 LerpColorScaleInterval(
-                    self.cards[card], duration=1, colorScale=Vec4(
-                        1.0, 1.0, 1.0, 0.0)), Func(
-                    self.cards[card].hide))
+                    self.cards[card],
+                    duration=1,
+                    colorScale=Vec4(1.0, 1.0, 1.0, 0.0)),
+                Func(self.cards[card].hide))
             matchIval.append(cardSeq)
 
         if withBonus:
@@ -461,9 +456,8 @@ class DistributedPairingGame(DistributedMinigame):
             deckOrderIndex = cardToFlip
             card = self.cards[deckOrderIndex]
             if card.isFaceDown() and deckOrderIndex not in self.inactiveList:
-                self.sendUpdate('openCardRequest', [
-                    deckOrderIndex,
-                    self.bonusGlowCard])
+                self.sendUpdate('openCardRequest',
+                                [deckOrderIndex, self.bonusGlowCard])
             elif card.isFaceUp() and deckOrderIndex in self.faceUpList:
                 pass
 
@@ -500,13 +494,8 @@ class DistributedPairingGame(DistributedMinigame):
         green = lowFlipModifier
         self.flipsLabel['text_fg'] = Vec4(red, green, 0, 1.0)
 
-    def openCardResult(
-            self,
-            cardToTurnUp,
-            avId,
-            matchingCard,
-            points,
-            cardsToTurnDown):
+    def openCardResult(self, cardToTurnUp, avId, matchingCard, points,
+                       cardsToTurnDown):
         if not self.hasLocalToon:
             return None
 
@@ -565,8 +554,8 @@ class DistributedPairingGame(DistributedMinigame):
             frame = self._DistributedPairingGame__textGen.getCardActual()
             offsetY = -abs(frame[2] + frame[3]) / 2.0
             perfectTextSubnode.setPos(0, 0, offsetY)
-            perfectText.setColor(
-                1, 0.10000000000000001, 0.10000000000000001, 1)
+            perfectText.setColor(1, 0.10000000000000001, 0.10000000000000001,
+                                 1)
 
             def fadeFunc(t, text=perfectText):
                 text.setColorScale(1, 1, 1, t)
@@ -575,9 +564,7 @@ class DistributedPairingGame(DistributedMinigame):
                 text.removeNode()
 
             textTrack = Sequence(
-                Func(
-                    perfectText.reparentTo,
-                    aspect2d),
+                Func(perfectText.reparentTo, aspect2d),
                 Parallel(
                     LerpScaleInterval(
                         perfectText,
@@ -585,27 +572,17 @@ class DistributedPairingGame(DistributedMinigame):
                         scale=0.29999999999999999,
                         startScale=0.0),
                     LerpFunctionInterval(
-                        fadeFunc,
-                        fromData=0.0,
-                        toData=1.0,
-                        duration=0.5)),
+                        fadeFunc, fromData=0.0, toData=1.0, duration=0.5)),
                 Wait(2.0),
                 Parallel(
-                    LerpScaleInterval(
-                        perfectText,
-                        duration=0.5,
-                        scale=1.0),
+                    LerpScaleInterval(perfectText, duration=0.5, scale=1.0),
                     LerpFunctionInterval(
                         fadeFunc,
                         fromData=1.0,
                         toData=0.0,
                         duration=0.5,
-                        blendType='easeIn')),
-                Func(destroyText),
-                WaitInterval(0.5),
-                Func(
-                    endGame,
-                    None))
+                        blendType='easeIn')), Func(destroyText),
+                WaitInterval(0.5), Func(endGame, None))
             soundTrack = SoundInterval(self.sndPerfect)
             self.perfectIval = Parallel(textTrack, soundTrack)
             self.perfectIval.start()
@@ -618,8 +595,7 @@ class DistributedPairingGame(DistributedMinigame):
 
     def b_setSignaling(self, avId):
         self.setSignaling(avId)
-        self.sendUpdate('setSignaling', [
-            self.localAvId])
+        self.sendUpdate('setSignaling', [self.localAvId])
 
     def setSignaling(self, avId):
         if not self.hasLocalToon:
@@ -627,18 +603,17 @@ class DistributedPairingGame(DistributedMinigame):
 
         avIndex = self.avIdList.index(avId)
         av = base.cr.doId2do.get(avId)
-        if av and avIndex >= 0 and hasattr(
-                self, 'signalSfx') and self.signalSfx:
+        if av and avIndex >= 0 and hasattr(self,
+                                           'signalSfx') and self.signalSfx:
             base.playSfx(self.signalSfx[avIndex], node=av)
 
     def _DistributedPairingGame__beginSignal(self, mouseParam):
         self.notify.debug('beginSignal')
         base.localAvatar.b_setEmoteState(1, 1.0)
         self.b_setSignaling(self.localAvId)
-        taskMgr.doMethodLater(
-            1.6699999999999999,
-            self._DistributedPairingGame__continueSignal,
-            'pairGameContinueSignal')
+        taskMgr.doMethodLater(1.6699999999999999,
+                              self._DistributedPairingGame__continueSignal,
+                              'pairGameContinueSignal')
 
     def _DistributedPairingGame__endSignal(self, mouseParam):
         self.notify.debug('endSignal')
@@ -648,10 +623,9 @@ class DistributedPairingGame(DistributedMinigame):
     def _DistributedPairingGame__continueSignal(self, task):
         base.localAvatar.b_setEmoteState(1, 1.0)
         self.b_setSignaling(self.localAvId)
-        taskMgr.doMethodLater(
-            1.6699999999999999,
-            self._DistributedPairingGame__continueSignal,
-            'pairGameContinueSignal')
+        taskMgr.doMethodLater(1.6699999999999999,
+                              self._DistributedPairingGame__continueSignal,
+                              'pairGameContinueSignal')
 
     def getCardPos(self, deckOrderIndex):
         col = deckOrderIndex % self.cardsPerRow

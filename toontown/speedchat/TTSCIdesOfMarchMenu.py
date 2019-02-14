@@ -3,15 +3,11 @@ from otp.speedchat.SCMenu import SCMenu
 from otp.speedchat.SCMenuHolder import SCMenuHolder
 from otp.speedchat.SCStaticTextTerminal import SCStaticTextTerminal
 from otp.otpbase import OTPLocalizer
-IdesOfMarchMenu = [
-    (OTPLocalizer.IdesOfMarchMenuSections[0], [
-        30450,
-        30451,
-        30452])]
+IdesOfMarchMenu = [(OTPLocalizer.IdesOfMarchMenuSections[0],
+                    [30450, 30451, 30452])]
 
 
 class TTSCIdesOfMarchMenu(SCMenu):
-
     def __init__(self):
         SCMenu.__init__(self)
         self._TTSCIdesOfMarchMenu__messagesChanged()

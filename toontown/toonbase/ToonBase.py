@@ -29,12 +29,8 @@ class ToonBase(OTPBase.OTPBase):
             toonChatSounds = Settings.getToonChatSounds()
             musicVol = Settings.getMusicVolume()
             sfxVol = Settings.getSfxVolume()
-            resList = [
-                (640, 480),
-                (800, 600),
-                (1024, 768),
-                (1280, 1024),
-                (1600, 1200)]
+            resList = [(640, 480), (800, 600), (1024, 768), (1280, 1024),
+                       (1600, 1200)]
             res = resList[Settings.getResolution()]
             if mode is None:
                 mode = 1
@@ -42,33 +38,20 @@ class ToonBase(OTPBase.OTPBase):
             if res is None:
                 res = (800, 600)
 
-            loadPrcFileData(
-                'toonBase Settings Window Res', 'win-size %s %s' %
-                (res[0], res[1]))
-            loadPrcFileData(
-                'toonBase Settings Window FullScreen',
-                'fullscreen %s' %
-                mode)
-            loadPrcFileData(
-                'toonBase Settings Music Active',
-                'audio-music-active %s' %
-                music)
-            loadPrcFileData(
-                'toonBase Settings Sound Active',
-                'audio-sfx-active %s' %
-                sfx)
-            loadPrcFileData(
-                'toonBase Settings Music Volume',
-                'audio-master-music-volume %s' %
-                musicVol)
-            loadPrcFileData(
-                'toonBase Settings Sfx Volume',
-                'audio-master-sfx-volume %s' %
-                sfxVol)
-            loadPrcFileData(
-                'toonBase Settings Toon Chat Sounds',
-                'toon-chat-sounds %s' %
-                toonChatSounds)
+            loadPrcFileData('toonBase Settings Window Res',
+                            'win-size %s %s' % (res[0], res[1]))
+            loadPrcFileData('toonBase Settings Window FullScreen',
+                            'fullscreen %s' % mode)
+            loadPrcFileData('toonBase Settings Music Active',
+                            'audio-music-active %s' % music)
+            loadPrcFileData('toonBase Settings Sound Active',
+                            'audio-sfx-active %s' % sfx)
+            loadPrcFileData('toonBase Settings Music Volume',
+                            'audio-master-music-volume %s' % musicVol)
+            loadPrcFileData('toonBase Settings Sfx Volume',
+                            'audio-master-sfx-volume %s' % sfxVol)
+            loadPrcFileData('toonBase Settings Toon Chat Sounds',
+                            'toon-chat-sounds %s' % toonChatSounds)
 
         OTPBase.OTPBase.__init__(self)
         if not self.isMainWindowOpen():
@@ -89,9 +72,8 @@ class ToonBase(OTPBase.OTPBase):
         self.exitErrorCode = 0
         camera.setPosHpr(0, 0, 0, 0, 0, 0)
         self.camLens.setFov(ToontownGlobals.DefaultCameraFov)
-        self.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            ToontownGlobals.DefaultCameraFar)
+        self.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                ToontownGlobals.DefaultCameraFar)
         self.musicManager.setVolume(0.65000000000000002)
         self.setBackgroundColor(ToontownGlobals.DefaultBackgroundColor)
         tpm = TextPropertiesManager.getGlobalPtr()
@@ -100,10 +82,7 @@ class ToonBase(OTPBase.OTPBase):
         tpm.setProperties('candidate_active', candidateActive)
         candidateInactive = TextProperties()
         candidateInactive.setTextColor(
-            0.29999999999999999,
-            0.29999999999999999,
-            0.69999999999999996,
-            1)
+            0.29999999999999999, 0.29999999999999999, 0.69999999999999996, 1)
         tpm.setProperties('candidate_inactive', candidateInactive)
         self.transitions.IrisModelName = 'phase_3/models/misc/iris'
         self.transitions.FadeModelName = 'phase_3/models/misc/fade'
@@ -133,28 +112,27 @@ class ToonBase(OTPBase.OTPBase):
             'inactivity-timeout', ToontownGlobals.KeyboardTimeout)
         if self.inactivityTimeout:
             self.notify.debug(
-                'Enabling Panda timeout: %s' %
-                self.inactivityTimeout)
+                'Enabling Panda timeout: %s' % self.inactivityTimeout)
             self.mouseWatcherNode.setInactivityTimeout(self.inactivityTimeout)
 
-        self.randomMinigameAbort = self.config.GetBool(
-            'random-minigame-abort', 0)
+        self.randomMinigameAbort = self.config.GetBool('random-minigame-abort',
+                                                       0)
         self.randomMinigameDisconnect = self.config.GetBool(
             'random-minigame-disconnect', 0)
         self.randomMinigameNetworkPlugPull = self.config.GetBool(
             'random-minigame-netplugpull', 0)
         self.autoPlayAgain = self.config.GetBool('auto-play-again', 0)
-        self.skipMinigameReward = self.config.GetBool(
-            'skip-minigame-reward', 0)
+        self.skipMinigameReward = self.config.GetBool('skip-minigame-reward',
+                                                      0)
         self.wantMinigameDifficulty = self.config.GetBool(
             'want-minigame-difficulty', 0)
-        self.minigameDifficulty = self.config.GetFloat(
-            'minigame-difficulty', -1.0)
+        self.minigameDifficulty = self.config.GetFloat('minigame-difficulty',
+                                                       -1.0)
         if self.minigameDifficulty == -1.0:
             del self.minigameDifficulty
 
-        self.minigameSafezoneId = self.config.GetInt(
-            'minigame-safezone-id', -1)
+        self.minigameSafezoneId = self.config.GetInt('minigame-safezone-id',
+                                                     -1)
         if self.minigameSafezoneId == -1:
             del self.minigameSafezoneId
 
@@ -183,8 +161,8 @@ class ToonBase(OTPBase.OTPBase):
         self.restrictTrialers = self.config.GetBool('restrict-trialers', 1)
         self.roamingTrialers = self.config.GetBool('roaming-trialers', 1)
         self.slowQuietZone = self.config.GetBool('slow-quiet-zone', 0)
-        self.slowQuietZoneDelay = self.config.GetFloat(
-            'slow-quiet-zone-delay', 5)
+        self.slowQuietZoneDelay = self.config.GetFloat('slow-quiet-zone-delay',
+                                                       5)
         self.killInterestResponse = self.config.GetBool(
             'kill-interest-response', 0)
         tpMgr = TextPropertiesManager.getGlobalPtr()
@@ -285,62 +263,30 @@ class ToonBase(OTPBase.OTPBase):
         messenger.send('takingScreenshot')
         if coordOnScreen:
             coordTextLabel = DirectLabel(
-                pos=(
-                    -0.81000000000000005,
-                    0.001,
-                    -0.87),
+                pos=(-0.81000000000000005, 0.001, -0.87),
                 text=ctext,
                 text_scale=0.050000000000000003,
-                text_fg=VBase4(
-                    1.0,
-                    1.0,
-                    1.0,
-                    1.0),
-                text_bg=(
-                    0,
-                    0,
-                    0,
-                    0),
-                text_shadow=(
-                    0,
-                    0,
-                    0,
-                    1),
+                text_fg=VBase4(1.0, 1.0, 1.0, 1.0),
+                text_bg=(0, 0, 0, 0),
+                text_shadow=(0, 0, 0, 1),
                 relief=None)
             coordTextLabel.setBin('gui-popup', 0)
             strTextLabel = None
             if len(self.screenshotStr):
                 strTextLabel = DirectLabel(
-                    pos=(
-                        0.0,
-                        0.001,
-                        0.90000000000000002),
+                    pos=(0.0, 0.001, 0.90000000000000002),
                     text=self.screenshotStr,
                     text_scale=0.050000000000000003,
-                    text_fg=VBase4(
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0),
-                    text_bg=(
-                        0,
-                        0,
-                        0,
-                        0),
-                    text_shadow=(
-                        0,
-                        0,
-                        0,
-                        1),
+                    text_fg=VBase4(1.0, 1.0, 1.0, 1.0),
+                    text_bg=(0, 0, 0, 0),
+                    text_shadow=(0, 0, 0, 1),
                     relief=None)
                 strTextLabel.setBin('gui-popup', 0)
 
         self.graphicsEngine.renderFrame()
         self.screenshot(
             namePrefix=namePrefix,
-            imageComment=ctext +
-            ' ' +
-            self.screenshotStr)
+            imageComment=ctext + ' ' + self.screenshotStr)
         self.lastScreenShotTime = globalClock.getRealTime()
         if coordOnScreen:
             if strTextLabel is not None:
@@ -359,10 +305,11 @@ class ToonBase(OTPBase.OTPBase):
         card = loader.loadModel('phase_3/models/props/panel')
         speech3d = ChatBalloon(
             loader.loadModelNode('phase_3/models/props/chatbox'))
-        thought3d = ChatBalloon(loader.loadModelNode(
-            'phase_3/models/props/chatbox_thought_cutout'))
-        speech2d = ChatBalloon(loader.loadModelNode(
-            'phase_3/models/props/chatbox_noarrow'))
+        thought3d = ChatBalloon(
+            loader.loadModelNode(
+                'phase_3/models/props/chatbox_thought_cutout'))
+        speech2d = ChatBalloon(
+            loader.loadModelNode('phase_3/models/props/chatbox_noarrow'))
         chatButtonGui = loader.loadModel('phase_3/models/gui/chat_button_gui')
         NametagGlobals.setCamera(self.cam)
         NametagGlobals.setArrowModel(arrow)
@@ -374,24 +321,18 @@ class ToonBase(OTPBase.OTPBase):
         NametagGlobals.setThoughtBalloon3d(thought3d)
         NametagGlobals.setSpeechBalloon2d(speech2d)
         NametagGlobals.setThoughtBalloon2d(thought3d)
+        NametagGlobals.setPageButton(PGButton.SReady,
+                                     chatButtonGui.find('**/Horiz_Arrow_UP'))
+        NametagGlobals.setPageButton(PGButton.SDepressed,
+                                     chatButtonGui.find('**/Horiz_Arrow_DN'))
         NametagGlobals.setPageButton(
-            PGButton.SReady,
-            chatButtonGui.find('**/Horiz_Arrow_UP'))
-        NametagGlobals.setPageButton(
-            PGButton.SDepressed,
-            chatButtonGui.find('**/Horiz_Arrow_DN'))
-        NametagGlobals.setPageButton(
-            PGButton.SRollover,
-            chatButtonGui.find('**/Horiz_Arrow_Rllvr'))
-        NametagGlobals.setQuitButton(
-            PGButton.SReady,
-            chatButtonGui.find('**/CloseBtn_UP'))
-        NametagGlobals.setQuitButton(
-            PGButton.SDepressed,
-            chatButtonGui.find('**/CloseBtn_DN'))
-        NametagGlobals.setQuitButton(
-            PGButton.SRollover,
-            chatButtonGui.find('**/CloseBtn_Rllvr'))
+            PGButton.SRollover, chatButtonGui.find('**/Horiz_Arrow_Rllvr'))
+        NametagGlobals.setQuitButton(PGButton.SReady,
+                                     chatButtonGui.find('**/CloseBtn_UP'))
+        NametagGlobals.setQuitButton(PGButton.SDepressed,
+                                     chatButtonGui.find('**/CloseBtn_DN'))
+        NametagGlobals.setQuitButton(PGButton.SRollover,
+                                     chatButtonGui.find('**/CloseBtn_Rllvr'))
         rolloverSound = DirectGuiGlobals.getDefaultRolloverSound()
         if rolloverSound:
             NametagGlobals.setRolloverSound(rolloverSound)
@@ -406,30 +347,31 @@ class ToonBase(OTPBase.OTPBase):
             self.marginManager, DirectGuiGlobals.MIDGROUND_SORT_INDEX + 1)
         mm = self.marginManager
         self.leftCells = [
-            mm.addGridCell(0, 1, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-            mm.addGridCell(0, 2, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-            mm.addGridCell(0, 3, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
+            mm.addGridCell(0, 1, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(0, 2, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(0, 3, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop)
+        ]
         self.bottomCells = [
-            mm.addGridCell(0.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-            mm.addGridCell(1.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-            mm.addGridCell(2.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-            mm.addGridCell(3.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop),
-            mm.addGridCell(4.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom, base.a2dTop)]
+            mm.addGridCell(0.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(1.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(2.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(3.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(4.5, 0, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop)
+        ]
         self.rightCells = [
-            mm.addGridCell(
-                5,
-                2,
-                base.a2dLeft,
-                base.a2dRight,
-                base.a2dBottom,
-                base.a2dTop),
-            mm.addGridCell(
-                5,
-                1,
-                base.a2dLeft,
-                base.a2dRight,
-                base.a2dBottom,
-                base.a2dTop)]
+            mm.addGridCell(5, 2, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop),
+            mm.addGridCell(5, 1, base.a2dLeft, base.a2dRight, base.a2dBottom,
+                           base.a2dTop)
+        ]
 
     def setCellsAvailable(self, cell_list, available):
         for cell in cell_list:
@@ -447,19 +389,16 @@ class ToonBase(OTPBase.OTPBase):
         if launcher.isDownloadComplete():
             self.cleanupDownloadWatcher()
         else:
-            self.acceptOnce(
-                'launcherAllPhasesComplete',
-                self.cleanupDownloadWatcher)
+            self.acceptOnce('launcherAllPhasesComplete',
+                            self.cleanupDownloadWatcher)
         gameServer = base.config.GetString('game-server', '')
         if gameServer:
             self.notify.info(
-                'Using game-server from Configrc: %s ' %
-                gameServer)
+                'Using game-server from Configrc: %s ' % gameServer)
         elif launcherServer:
             gameServer = launcherServer
             self.notify.info(
-                'Using gameServer from launcher: %s ' %
-                gameServer)
+                'Using gameServer from launcher: %s ' % gameServer)
         else:
             gameServer = 'localhost'
         serverPort = base.config.GetInt('server-port', 6667)
@@ -488,8 +427,7 @@ class ToonBase(OTPBase.OTPBase):
                     serverList.append(url)
                     continue
 
-        cr.loginFSM.request('connect', [
-            serverList])
+        cr.loginFSM.request('connect', [serverList])
         self.ttAccess = ToontownAccess.ToontownAccess()
         self.ttAccess.initModuleInfo()
 
@@ -511,7 +449,8 @@ class ToonBase(OTPBase.OTPBase):
             exitCode2exitPage = {
                 OTPLauncherGlobals.ExitEnableChat: 'chat',
                 OTPLauncherGlobals.ExitSetParentPassword: 'setparentpassword',
-                OTPLauncherGlobals.ExitPurchase: 'purchase'}
+                OTPLauncherGlobals.ExitPurchase: 'purchase'
+            }
             if code in exitCode2exitPage:
                 launcher.setRegistry('EXIT_PAGE', exitCode2exitPage[code])
 
@@ -556,42 +495,23 @@ class ToonBase(OTPBase.OTPBase):
 
     def getShardPopLimits(self):
         if self.cr.productName == 'JP':
-            return (
-                config.GetInt(
-                    'shard-low-pop',
-                    ToontownGlobals.LOW_POP_JP),
-                config.GetInt(
-                    'shard-mid-pop',
-                    ToontownGlobals.MID_POP_JP),
-                config.GetInt(
-                    'shard-high-pop',
-                    ToontownGlobals.HIGH_POP_JP))
-        elif self.cr.productName in [
-            'BR',
-                'FR']:
-            return (
-                config.GetInt(
-                    'shard-low-pop',
-                    ToontownGlobals.LOW_POP_INTL),
-                config.GetInt(
-                    'shard-mid-pop',
-                    ToontownGlobals.MID_POP_INTL),
-                config.GetInt(
-                    'shard-high-pop',
-                    ToontownGlobals.HIGH_POP_INTL))
+            return (config.GetInt('shard-low-pop', ToontownGlobals.LOW_POP_JP),
+                    config.GetInt('shard-mid-pop', ToontownGlobals.MID_POP_JP),
+                    config.GetInt('shard-high-pop',
+                                  ToontownGlobals.HIGH_POP_JP))
+        elif self.cr.productName in ['BR', 'FR']:
+            return (config.GetInt('shard-low-pop',
+                                  ToontownGlobals.LOW_POP_INTL),
+                    config.GetInt('shard-mid-pop',
+                                  ToontownGlobals.MID_POP_INTL),
+                    config.GetInt('shard-high-pop',
+                                  ToontownGlobals.HIGH_POP_INTL))
         else:
-            return (
-                config.GetInt(
-                    'shard-low-pop',
-                    ToontownGlobals.LOW_POP),
-                config.GetInt(
-                    'shard-mid-pop',
-                    ToontownGlobals.MID_POP),
-                config.GetInt(
-                    'shard-high-pop',
-                    ToontownGlobals.HIGH_POP))
+            return (config.GetInt('shard-low-pop', ToontownGlobals.LOW_POP),
+                    config.GetInt('shard-mid-pop', ToontownGlobals.MID_POP),
+                    config.GetInt('shard-high-pop', ToontownGlobals.HIGH_POP))
 
     def playMusic(self, music, looping=0, interrupt=1, volume=None, time=0.0):
         OTPBase.OTPBase.playMusic(self, self.resetMusic)
-        OTPBase.OTPBase.playMusic(
-            self, music, looping, interrupt, volume, time)
+        OTPBase.OTPBase.playMusic(self, music, looping, interrupt, volume,
+                                  time)

@@ -44,9 +44,8 @@ class CatalogEmoteItem(CatalogItem.CatalogItem):
 
     def recordPurchase(self, avatar, optional):
         if self.emoteIndex < 0 or self.emoteIndex > len(avatar.emoteAccess):
-            self.notify.warning(
-                'Invalid emote access: %s for avatar %s' %
-                (self.emoteIndex, avatar.doId))
+            self.notify.warning('Invalid emote access: %s for avatar %s' %
+                                (self.emoteIndex, avatar.doId))
             return ToontownGlobals.P_InvalidIndex
 
         avatar.emoteAccess[self.emoteIndex] = 1
@@ -81,14 +80,12 @@ class CatalogEmoteItem(CatalogItem.CatalogItem):
         CatalogEmoteItem.sequenceNumber += 1
         if track is not None:
             track = Sequence(
-                Sequence(
-                    track, duration=0), Wait(
-                    duration + 2), name=name)
+                Sequence(track, duration=0), Wait(duration + 2), name=name)
         else:
             track = Sequence(
-                Func(
-                    Emote.globalEmote.doEmote, toon, self.emoteIndex), Wait(
-                    duration + 4), name=name)
+                Func(Emote.globalEmote.doEmote, toon, self.emoteIndex),
+                Wait(duration + 4),
+                name=name)
         self.pictureToon = toon
         return (model, track)
 
@@ -114,14 +111,12 @@ class CatalogEmoteItem(CatalogItem.CatalogItem):
         CatalogEmoteItem.sequenceNumber += 1
         if track is not None:
             track = Sequence(
-                Sequence(
-                    track, duration=0), Wait(
-                    duration + 2), name=name)
+                Sequence(track, duration=0), Wait(duration + 2), name=name)
         else:
             track = Sequence(
-                Func(
-                    Emote.globalEmote.doEmote, toon, self.emoteIndex), Wait(
-                    duration + 4), name=name)
+                Func(Emote.globalEmote.doEmote, toon, self.emoteIndex),
+                Wait(duration + 4),
+                name=name)
         return track
 
     def cleanupPicture(self):
@@ -132,8 +127,8 @@ class CatalogEmoteItem(CatalogItem.CatalogItem):
         self.pictureToon = None
 
     def output(self, store=-1):
-        return 'CatalogEmoteItem(%s%s)' % (
-            self.emoteIndex, self.formatOptionalData(store))
+        return 'CatalogEmoteItem(%s%s)' % (self.emoteIndex,
+                                           self.formatOptionalData(store))
 
     def compareTo(self, other):
         return self.emoteIndex - other.emoteIndex

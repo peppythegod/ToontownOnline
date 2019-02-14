@@ -15,7 +15,6 @@ from toontown.building import DoorTypes
 
 
 class DistributedHouseDoor(DistributedDoor.DistributedDoor):
-
     def __init__(self, cr):
         DistributedDoor.DistributedDoor.__init__(self, cr)
 
@@ -40,17 +39,13 @@ class DistributedHouseDoor(DistributedDoor.DistributedDoor):
             if house and house.house_loaded:
                 self._DistributedHouseDoor__gotRelatedHouse()
             else:
-                self.acceptOnce(
-                    'houseLoaded-%d' %
-                    self.houseId,
-                    self._DistributedHouseDoor__gotRelatedHouse)
+                self.acceptOnce('houseLoaded-%d' % self.houseId,
+                                self._DistributedHouseDoor__gotRelatedHouse)
         elif self.doorType == DoorTypes.INT_STANDARD:
             door = render.find('**/leftDoor;+s')
             if door.isEmpty():
-                self.acceptOnce(
-                    'houseInteriorLoaded-%d' %
-                    self.zoneId,
-                    self._DistributedHouseDoor__gotRelatedHouse)
+                self.acceptOnce('houseInteriorLoaded-%d' % self.zoneId,
+                                self._DistributedHouseDoor__gotRelatedHouse)
             else:
                 self._DistributedHouseDoor__gotRelatedHouse()
 
@@ -118,12 +113,16 @@ class DistributedHouseDoor(DistributedDoor.DistributedDoor):
         self.finishDoorTrack()
         self.doorTrack = Sequence(
             LerpHprInterval(
-                nodePath=rightDoor, duration=1.0, hpr=VBase3(
-                    0, 0, 0), startHpr=VBase3(
-                    h, 0, 0), other=otherNP, blendType='easeInOut'), Func(
-                doorFrameHoleRight.hide), Func(
-                        self.hideIfHasFlat, rightDoor), SoundInterval(
-                            self.closeSfx, node=rightDoor), name=trackName)
+                nodePath=rightDoor,
+                duration=1.0,
+                hpr=VBase3(0, 0, 0),
+                startHpr=VBase3(h, 0, 0),
+                other=otherNP,
+                blendType='easeInOut'),
+            Func(doorFrameHoleRight.hide),
+            Func(self.hideIfHasFlat, rightDoor),
+            SoundInterval(self.closeSfx, node=rightDoor),
+            name=trackName)
         self.doorTrack.start(ts)
         if hasattr(self, 'done'):
             base.cr.playGame.hood.loader.setHouse(self.houseId)
@@ -141,6 +140,6 @@ class DistributedHouseDoor(DistributedDoor.DistributedDoor):
                 'shardId': None,
                 'avId': -1,
                 'allowRedirect': 0,
-                'doorDoId': self.otherDoId}
-            messenger.send('doorDoneEvent', [
-                request])
+                'doorDoId': self.otherDoId
+            }
+            messenger.send('doorDoneEvent', [request])

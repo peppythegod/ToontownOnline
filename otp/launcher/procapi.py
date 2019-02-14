@@ -6,21 +6,15 @@ cwk = ctypes.windll.kernel32
 
 
 class PROCESSENTRY32(ctypes.Structure):
-    _fields_ = [
-        ('dwSize', DWORD),
-        ('cntUsage', DWORD),
-        ('th32ProcessID', DWORD),
-        ('th32DefaultHeapId', HANDLE),
-        ('th32ModuleID', DWORD),
-        ('cntThreads', DWORD),
-        ('th32ParentProcessID', DWORD),
-        ('pcPriClassBase', LONG),
-        ('dwFlags', DWORD),
-        ('szExeFile', c_char * MAX_PATH)]
+    _fields_ = [('dwSize', DWORD), ('cntUsage', DWORD), ('th32ProcessID',
+                                                         DWORD),
+                ('th32DefaultHeapId', HANDLE), ('th32ModuleID', DWORD),
+                ('cntThreads', DWORD), ('th32ParentProcessID', DWORD),
+                ('pcPriClassBase', LONG), ('dwFlags', DWORD),
+                ('szExeFile', c_char * MAX_PATH)]
 
 
 class ProcessEntryPY:
-
     def __init__(self, name, pid):
         self.name = name
         self.pid = pid

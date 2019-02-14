@@ -1,5 +1,3 @@
-
-
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.task.Task import Task
 from direct.interval.IntervalGlobal import *
@@ -11,12 +9,11 @@ class OrthoWalk:
     notify = DirectNotifyGlobal.directNotify.newCategory('OrthoWalk')
     BROADCAST_POS_TASK = 'OrthoWalkBroadcastPos'
 
-    def __init__(
-            self,
-            orthoDrive,
-            collisions=1,
-            broadcast=1,
-            broadcastPeriod=0.20000000000000001):
+    def __init__(self,
+                 orthoDrive,
+                 collisions=1,
+                 broadcast=1,
+                 broadcastPeriod=0.20000000000000001):
         self.orthoDrive = orthoDrive
         self.collisions = collisions
         self.broadcast = broadcast
@@ -70,9 +67,7 @@ class OrthoWalk:
         lt.sendCurrentPosition()
         taskMgr.remove(self.BROADCAST_POS_TASK)
         taskMgr.add(
-            self.doBroadcast,
-            self.BROADCAST_POS_TASK,
-            priority=self.priority)
+            self.doBroadcast, self.BROADCAST_POS_TASK, priority=self.priority)
 
     def shutdownBroadcast(self):
         self.notify.debug('OrthoWalk shutdownBroadcast')

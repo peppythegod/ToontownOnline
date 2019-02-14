@@ -18,8 +18,8 @@ class PathEntity(BasicEntities.NodePathEntity):
 
     def setPathIndex(self, pathIndex):
         self.pathIndex = pathIndex
-        pathTableId = GoonPathData.taskZoneId2pathId[self.level.getTaskZoneId(
-        )]
+        pathTableId = GoonPathData.taskZoneId2pathId[
+            self.level.getTaskZoneId()]
         if self.pathIndex in GoonPathData.Paths[pathTableId]:
             self.path = GoonPathData.Paths[pathTableId][self.pathIndex]
             if __dev__:
@@ -29,20 +29,18 @@ class PathEntity(BasicEntities.NodePathEntity):
             PathEntity.notify.warning('invalid pathIndex: %s' % pathIndex)
             self.path = None
 
-    def makePathTrack(
-            self,
-            node,
-            velocity,
-            name,
-            turnTime=1,
-            lookAroundNode=None):
+    def makePathTrack(self,
+                      node,
+                      velocity,
+                      name,
+                      turnTime=1,
+                      lookAroundNode=None):
         track = Sequence(name=name)
         if self.path is None:
             track.append(WaitInterval(1.0))
             return track
 
-        path = self.path + [
-            self.path[0]]
+        path = self.path + [self.path[0]]
         for pointIndex in range(len(path) - 1):
             startPoint = Point3(path[pointIndex]) * self.pathScale
             endPoint = Point3(path[pointIndex + 1]) * self.pathScale
@@ -55,9 +53,7 @@ class PathEntity(BasicEntities.NodePathEntity):
             duration = distance / velocity
             track.append(
                 LerpPosInterval(
-                    node,
-                    duration=duration,
-                    pos=endPoint,
+                    node, duration=duration, pos=endPoint,
                     startPos=startPoint))
 
         return track

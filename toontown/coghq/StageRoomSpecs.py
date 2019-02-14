@@ -43,14 +43,14 @@ CashbotStageRoomId2RoomName = {
     102: 'LawbotOfficeDiamondRoom_Action01',
     103: 'LawbotOfficeLobby_Action01',
     104: 'LawbotOfficeDiamondRoom_Battle00',
-    105: 'LawbotOfficeGearRoom_Battle00'}
+    105: 'LawbotOfficeGearRoom_Battle00'
+}
 CashbotStageRoomName2RoomId = invertDict(CashbotStageRoomId2RoomName)
-CashbotStageEntranceIDs = (0,)
-CashbotStageMiddleRoomIDs = (1,)
-CashbotStageFinalRoomIDs = (2,)
-CashbotStageConnectorRooms = (
-    'phase_11/models/lawbotHQ/LB_connector_7cubeL2',
-    'phase_11/models/lawbotHQ/LB_connector_7cubeLR')
+CashbotStageEntranceIDs = (0, )
+CashbotStageMiddleRoomIDs = (1, )
+CashbotStageFinalRoomIDs = (2, )
+CashbotStageConnectorRooms = ('phase_11/models/lawbotHQ/LB_connector_7cubeL2',
+                              'phase_11/models/lawbotHQ/LB_connector_7cubeLR')
 CashbotStageSpecModules = {}
 if not isClient():
     print 'EXECWARNING StageRoomSpecs: %s' % CashbotStageRoomName2RoomId
@@ -68,7 +68,8 @@ CogSpecModules = {
     'LawbotOfficeLobby_Trap00': LawbotOfficeLobby_Trap00_Cogs,
     'LawbotOfficeDiamondRoom_Trap00': LawbotOfficeDiamondRoom_Trap00_Cogs,
     'LawbotOfficeDiamondRoom_Battle00': LawbotOfficeDiamondRoom_Battle00_Cogs,
-    'LawbotOfficeGearRoom_Battle00': LawbotOfficeGearRoom_Battle00_Cogs}
+    'LawbotOfficeGearRoom_Battle00': LawbotOfficeGearRoom_Battle00_Cogs
+}
 roomId2numBattles = {}
 for (roomName, roomId) in CashbotStageRoomName2RoomId.items():
     if roomName not in CogSpecModules:

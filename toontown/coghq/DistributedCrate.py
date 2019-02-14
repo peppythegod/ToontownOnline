@@ -16,9 +16,8 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
     DOWN_KEY = 'arrow_down'
     LEFT_KEY = 'arrow_left'
     RIGHT_KEY = 'arrow_right'
-    ModelPaths = (
-        'phase_9/models/cogHQ/woodCrateB',
-        'phase_10/models/cashbotHQ/CBWoodCrate')
+    ModelPaths = ('phase_9/models/cogHQ/woodCrateB',
+                  'phase_10/models/cashbotHQ/CBWoodCrate')
 
     def __init__(self, cr):
         DistributedCrushableEntity.DistributedCrushableEntity.__init__(
@@ -133,8 +132,7 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
     def _DistributedCrate__listenForCollisions(self, on):
         if on:
             self.accept(
-                self.uniqueName('entercrateCollision'),
-                self.handleCollision)
+                self.uniqueName('entercrateCollision'), self.handleCollision)
         else:
             self.ignore(self.uniqueName('entercrateCollision'))
 
@@ -153,9 +151,8 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
         offsetVec = Vec3(base.localAvatar.getPos(render) - self.getPos(render))
         offsetVec.normalize()
         offsetDot = offsetVec[0] * worldVec[0] + offsetVec[1] * worldVec[1]
-        self.notify.debug(
-            'offsetDot = %s, world = %s, rel = %s' %
-            (offsetDot, worldVec, offsetVec))
+        self.notify.debug('offsetDot = %s, world = %s, rel = %s' %
+                          (offsetDot, worldVec, offsetVec))
         if relativeVec.getY() < - \
                 0.69999999999999996 and offsetDot > 0.90000000000000002 and offsetVec.getZ() < 0.050000000000000003:
             self.getCrateSide(crateNormal)
@@ -201,10 +198,16 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
             startHpr = Vec3(h, 0, 0)
             self.avPushTrack = Sequence(
                 LerpPosHprInterval(
-                    lToon, 0.25, newPos, newHpr, startHpr=startHpr, other=self, blendType='easeInOut'), Func(
-                    place.fsm.request, 'push'), Func(
-                    self._DistributedCrate__sendPushRequest, task.crateNormal), SoundInterval(
-                    self.creakSound, node=self))
+                    lToon,
+                    0.25,
+                    newPos,
+                    newHpr,
+                    startHpr=startHpr,
+                    other=self,
+                    blendType='easeInOut'), Func(place.fsm.request, 'push'),
+                Func(self._DistributedCrate__sendPushRequest,
+                     task.crateNormal),
+                SoundInterval(self.creakSound, node=self))
             self.avPushTrack.start()
             return Task.done
         else:
@@ -223,8 +226,7 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
         self.notify.debug('__sendPushRequest')
         if self.crateSide is not None:
             self.sentRequest = 1
-            self.sendUpdate('requestPush', [
-                self.crateSide])
+            self.sendUpdate('requestPush', [self.crateSide])
         else:
             self.notify.debug("didn't send request")
 
@@ -244,10 +246,8 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
         self._DistributedCrate__moveCrateTo(Vec3(x0, y0, z0), Vec3(x1, y1, z1))
         isLocal = base.localAvatar.doId == avId
         if isLocal or self.stuckToCrate or not isLocal:
-            self._DistributedCrate__moveAvTo(
-                avId, Vec3(
-                    x0, y0, z0), Vec3(
-                    x1, y1, z1))
+            self._DistributedCrate__moveAvTo(avId, Vec3(x0, y0, z0),
+                                             Vec3(x1, y1, z1))
 
     def _DistributedCrate__moveCrateTo(self, startPos, endPos):
         if self.moveTrack:
@@ -257,9 +257,13 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
         self.moveTrack = Parallel(
             Sequence(
                 LerpPosInterval(
-                    self, T_PUSH, endPos, startPos=startPos, fluid=1)), SoundInterval(
-                self.creakSound, node=self), SoundInterval(
-                    self.pushSound, node=self, duration=T_PUSH, volume=0.20000000000000001))
+                    self, T_PUSH, endPos, startPos=startPos, fluid=1)),
+            SoundInterval(self.creakSound, node=self),
+            SoundInterval(
+                self.pushSound,
+                node=self,
+                duration=T_PUSH,
+                volume=0.20000000000000001))
         self.moveTrack.start()
 
     def _DistributedCrate__moveAvTo(self, avId, startPos, endPos):
@@ -315,9 +319,7 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
         taskMgr.add(
             self.crushTask,
             self.taskName('crushTask'),
-            extraArgs=(
-                crusherId,
-                axis),
+            extraArgs=(crusherId, axis),
             priority=25)
 
     def crushTask(self, crusherId, axis):
@@ -332,12 +334,7 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
                 if crusherHeight == minHeight:
                     self.setScale(Vec3(1.2, 1.2, minScale))
                     taskMgr.doMethodLater(
-                        2,
-                        self.setScale,
-                        'resetScale',
-                        extraArgs=(
-                            1,
-                        ))
+                        2, self.setScale, 'resetScale', extraArgs=(1, ))
                     return Task.done
                 else:
                     k = crusherHeight / maxHeight
@@ -355,12 +352,18 @@ class DistributedCrate(DistributedCrushableEntity.DistributedCrushableEntity):
 
         self.crushTrack = Sequence(
             LerpScaleInterval(
-                self, tSquash, VBase3(
-                    1.2, 1.2, 0.25), blendType='easeInOut'), LerpColorScaleInterval(
-                self, 2.0, VBase4(
-                    1, 1, 1, 0), blendType='easeInOut'), Wait(2.0), LerpScaleInterval(
-                        self, 0.10000000000000001, VBase3(
-                            1, 1, 1), blendType='easeInOut'), LerpColorScaleInterval(
-                                self, 0.10000000000000001, VBase4(
-                                    1, 1, 1, 0), blendType='easeInOut'))
+                self, tSquash, VBase3(1.2, 1.2, 0.25), blendType='easeInOut'),
+            LerpColorScaleInterval(
+                self, 2.0, VBase4(1, 1, 1, 0), blendType='easeInOut'),
+            Wait(2.0),
+            LerpScaleInterval(
+                self,
+                0.10000000000000001,
+                VBase3(1, 1, 1),
+                blendType='easeInOut'),
+            LerpColorScaleInterval(
+                self,
+                0.10000000000000001,
+                VBase4(1, 1, 1, 0),
+                blendType='easeInOut'))
         self.crushTrack.start()

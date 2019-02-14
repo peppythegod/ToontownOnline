@@ -9,7 +9,6 @@ from toontown.quest import Quests
 
 
 class HQBuildingAI:
-
     def __init__(self, air, exteriorZone, interiorZone, blockNumber):
         self.air = air
         self.exteriorZone = exteriorZone
@@ -55,16 +54,12 @@ class HQBuildingAI:
         insideDoor1.zoneId = self.interiorZone
         door0.generateWithRequired(self.exteriorZone)
         door1.generateWithRequired(self.exteriorZone)
-        door0.sendUpdate('setDoorIndex', [
-            door0.getDoorIndex()])
-        door1.sendUpdate('setDoorIndex', [
-            door1.getDoorIndex()])
+        door0.sendUpdate('setDoorIndex', [door0.getDoorIndex()])
+        door1.sendUpdate('setDoorIndex', [door1.getDoorIndex()])
         insideDoor0.generateWithRequired(self.interiorZone)
         insideDoor1.generateWithRequired(self.interiorZone)
-        insideDoor0.sendUpdate('setDoorIndex', [
-            insideDoor0.getDoorIndex()])
-        insideDoor1.sendUpdate('setDoorIndex', [
-            insideDoor1.getDoorIndex()])
+        insideDoor0.sendUpdate('setDoorIndex', [insideDoor0.getDoorIndex()])
+        insideDoor1.sendUpdate('setDoorIndex', [insideDoor1.getDoorIndex()])
         self.door0 = door0
         self.door1 = door1
         self.insideDoor0 = insideDoor0

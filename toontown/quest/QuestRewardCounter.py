@@ -21,14 +21,7 @@ class QuestRewardCounter:
         self.maxMoney = 40
         self.questCarryLimit = 1
         self.teleportAccess = []
-        self.trackAccess = [
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
-            0]
+        self.trackAccess = [0, 0, 0, 0, 1, 1, 0]
         self.trackProgressId = -1
         self.trackProgress = 0
 
@@ -67,15 +60,16 @@ class QuestRewardCounter:
         fishHp = int(len(av.fishCollection) / FishGlobals.FISH_PER_BONUS)
         self.notify.debug('Adding %s hp for fish collection' % fishHp)
         self.maxHp += fishHp
-        flowerHp = int(len(av.flowerCollection) /
-                       GardenGlobals.FLOWERS_PER_BONUS)
+        flowerHp = int(
+            len(av.flowerCollection) / GardenGlobals.FLOWERS_PER_BONUS)
         self.notify.debug('Adding %s hp for fish collection' % flowerHp)
         self.maxHp += flowerHp
-        HQdepts = (
-            ToontownGlobals.cogHQZoneId2deptIndex(
-                ToontownGlobals.SellbotHQ), ToontownGlobals.cogHQZoneId2deptIndex(
-                ToontownGlobals.LawbotHQ), ToontownGlobals.cogHQZoneId2deptIndex(
-                ToontownGlobals.CashbotHQ))
+        HQdepts = (ToontownGlobals.cogHQZoneId2deptIndex(
+            ToontownGlobals.SellbotHQ),
+                   ToontownGlobals.cogHQZoneId2deptIndex(
+                       ToontownGlobals.LawbotHQ),
+                   ToontownGlobals.cogHQZoneId2deptIndex(
+                       ToontownGlobals.CashbotHQ))
         levels = av.getCogLevels()
         cogTypes = av.getCogTypes()
         suitHp = 0
@@ -92,8 +86,7 @@ class QuestRewardCounter:
         self.notify.debug('Adding %s hp for cog suits' % suitHp)
         self.maxHp += suitHp
         kartingHp = int(
-            av.kartingTrophies.count(1) /
-            RaceGlobals.TrophiesPerCup)
+            av.kartingTrophies.count(1) / RaceGlobals.TrophiesPerCup)
         self.notify.debug('Adding %s hp for karting trophies' % kartingHp)
         self.maxHp += kartingHp
         golfHp = int(av.golfTrophies.count(True) / GolfGlobals.TrophiesPerCup)
@@ -135,9 +128,8 @@ class QuestRewardCounter:
         self.setFromAvatar(av)
         anyChanged = 0
         if self.maxHp != av.maxHp:
-            self.notify.info(
-                'Changed avatar %d to have maxHp %d instead of %d' %
-                (av.doId, self.maxHp, av.maxHp))
+            self.notify.info('Changed avatar %d to have maxHp %d instead of %d'
+                             % (av.doId, self.maxHp, av.maxHp))
             av.b_setMaxHp(self.maxHp)
             anyChanged = 1
 

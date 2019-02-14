@@ -1,5 +1,3 @@
-
-
 from direct.showbase.PythonUtil import Enum
 from direct.gui.DirectGui import DirectFrame, DGG
 from pandac.PandaModules import Vec2, VBase4D
@@ -15,20 +13,13 @@ MAZE_REVEAL_TYPE = MazeRevealType.SmoothCircle
 class MazeMapGui(DirectFrame):
     notify = directNotify.newCategory('MazeMapGui')
 
-    def __init__(
-        self,
-        mazeCollTable,
-        maskResolution=None,
-        radiusRatio=None,
-        bgColor=(
-            0.80000000000000004,
-            0.80000000000000004,
-            0.80000000000000004),
-        fgColor=(
-            0.5,
-            0.5,
-            0.5,
-            1.0)):
+    def __init__(self,
+                 mazeCollTable,
+                 maskResolution=None,
+                 radiusRatio=None,
+                 bgColor=(0.80000000000000004, 0.80000000000000004,
+                          0.80000000000000004),
+                 fgColor=(0.5, 0.5, 0.5, 1.0)):
         DirectFrame.__init__(
             self,
             relief=None,
@@ -56,7 +47,8 @@ class MazeMapGui(DirectFrame):
         self._revealFunctions = {
             MazeRevealType.SmoothCircle: self._revealSmoothCircle,
             MazeRevealType.HardCircle: self._revealHardCircle,
-            MazeRevealType.Square: self._revealSquare}
+            MazeRevealType.Square: self._revealSquare
+        }
         self._revealFunction = MAZE_REVEAL_TYPE
         self.map = self._createMapTextureCard()
         self.map.reparentTo(self)
@@ -82,13 +74,9 @@ class MazeMapGui(DirectFrame):
                     continue
 
         mapTexture = Texture('mapTexture')
-        mapTexture.setupTexture(
-            Texture.TT2dTexture,
-            self._maskResolution,
-            self._maskResolution,
-            1,
-            Texture.TUnsignedByte,
-            Texture.FRgba)
+        mapTexture.setupTexture(Texture.TT2dTexture, self._maskResolution,
+                                self._maskResolution, 1, Texture.TUnsignedByte,
+                                Texture.FRgba)
         mapTexture.setMinfilter(Texture.FTLinear)
         mapTexture.load(mapImage)
         mapTexture.setWrapU(Texture.WMClamp)
@@ -102,28 +90,24 @@ class MazeMapGui(DirectFrame):
         return map
 
     def _createMaskTextureCard(self):
-        self._maskImage = PNMImage(
-            self._maskResolution, self._maskResolution, 4)
+        self._maskImage = PNMImage(self._maskResolution, self._maskResolution,
+                                   4)
         for x in range(self._maskResolution):
             for y in range(self._maskResolution):
                 self._maskImage.setXelA(x, y, 0, 0, 0, 1)
 
         self.maskTexture = Texture('maskTexture')
         self.maskTexture.setupTexture(
-            Texture.TT2dTexture,
-            self._maskResolution,
-            self._maskResolution,
-            1,
-            Texture.TUnsignedByte,
-            Texture.FRgba)
+            Texture.TT2dTexture, self._maskResolution, self._maskResolution, 1,
+            Texture.TUnsignedByte, Texture.FRgba)
         self.maskTexture.setMinfilter(Texture.FTLinear)
         self.maskTexture.setWrapU(Texture.WMClamp)
         self.maskTexture.setWrapV(Texture.WMClamp)
         self.maskTexture.load(self._maskImage)
         base.graphicsEngine.renderFrame()
         cm = CardMaker('mask_cardMaker')
-        cm.setFrame(-1.1000000000000001, 1.1000000000000001, -
-                    1.1000000000000001, 1.1000000000000001)
+        cm.setFrame(-1.1000000000000001, 1.1000000000000001,
+                    -1.1000000000000001, 1.1000000000000001)
         mask = self.attachNewNode(cm.generate())
         mask.setTexture(self.maskTexture, 1)
         mask.setTransparency(1)
@@ -134,7 +118,8 @@ class MazeMapGui(DirectFrame):
         while x <= ulx + size:
             y = int(uly)
             while y <= uly + size:
-                if x > 0 and y > 0 and x < image.getXSize() and y < image.getYSize():
+                if x > 0 and y > 0 and x < image.getXSize(
+                ) and y < image.getYSize():
                     image.setXelA(x, y, color)
 
                 y += 1
@@ -167,10 +152,9 @@ class MazeMapGui(DirectFrame):
         length = (Vec2(x, y) - center).length()
         goalAlpha = max(0.0, length / float(self._radius) - 0.5)
         self._maskImage.setXelA(
-            x, y, VBase4D(
-                0.0, 0.0, 0.0, min(
-                    self._maskImage.getAlpha(
-                        x, y), goalAlpha * 2.0)))
+            x, y,
+            VBase4D(0.0, 0.0, 0.0,
+                    min(self._maskImage.getAlpha(x, y), goalAlpha * 2.0)))
 
     def _revealHardCircle(self, x, y, center):
         length = (Vec2(x, y) - center).length()
@@ -215,8 +199,8 @@ class MazeMapGui(DirectFrame):
         return (ax, ay)
 
     def gui2pos(self, x, y):
-        return ((x / self._maskResolution) * 2.0 - 0.96999999999999997,
-                0, (y / self._maskResolution) * -2.0 + 1.02)
+        return ((x / self._maskResolution) * 2.0 - 0.96999999999999997, 0,
+                (y / self._maskResolution) * -2.0 + 1.02)
 
     def _getToonMarker(self, toon):
         hType = toon.style.getType()
@@ -254,31 +238,25 @@ class MazeMapGui(DirectFrame):
         if tY < 0 or tY >= len(self._revealedCells):
             self.notify.warning('updateToon earlying out:')
             self.notify.warning('(tX, tY): (%s, %s)' % (tX, tY))
-            self.notify.warning('len(_revealedCells): %s' %
-                                (len(self._revealedCells),))
+            self.notify.warning(
+                'len(_revealedCells): %s' % (len(self._revealedCells), ))
             if len(self._revealedCells) > 0:
-                self.notify.warning(
-                    'len(_revealedCells[0]): %s' %
-                    (len(
-                        self._revealedCells[0]),))
+                self.notify.warning('len(_revealedCells[0]): %s' % (len(
+                    self._revealedCells[0]), ))
 
             return None
 
         if tX < 0 or tX >= len(self._revealedCells[tY]):
             self.notify.warning('updateToon earlying out:')
             self.notify.warning('(tX, tY): (%s, %s)' % (tX, tY))
-            self.notify.warning('len(_revealedCells): %s' %
-                                (len(self._revealedCells),))
+            self.notify.warning(
+                'len(_revealedCells): %s' % (len(self._revealedCells), ))
             if tY < len(self._revealedCells):
-                self.notify.warning(
-                    'len(_revealedCells[tY]): %s' %
-                    (len(
-                        self._revealedCells[tY]),))
+                self.notify.warning('len(_revealedCells[tY]): %s' % (len(
+                    self._revealedCells[tY]), ))
             elif len(self._revealedCells) > 0:
-                self.notify.warning(
-                    'len(_revealedCells[0]): %s' %
-                    (len(
-                        self._revealedCells[0]),))
+                self.notify.warning('len(_revealedCells[0]): %s' % (len(
+                    self._revealedCells[0]), ))
 
             return None
 

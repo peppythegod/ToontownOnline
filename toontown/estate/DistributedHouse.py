@@ -80,9 +80,10 @@ class DistributedHouse(DistributedObject.DistributedObject):
                     'want-custom-house', HouseGlobals.HOUSE_DEFAULT)
             else:
                 houseModelIndex = HouseGlobals.HOUSE_DEFAULT
-            houseModelIndex = base.config.GetInt(
-                'want-custom-house-all', houseModelIndex)
-            houseModel = self.cr.playGame.hood.loader.houseModels[houseModelIndex]
+            houseModelIndex = base.config.GetInt('want-custom-house-all',
+                                                 houseModelIndex)
+            houseModel = self.cr.playGame.hood.loader.houseModels[
+                houseModelIndex]
             self.house = houseModel.copyTo(
                 self.cr.playGame.hood.loader.houseNode[self.housePosInd])
             self.house_loaded = 1
@@ -111,10 +112,8 @@ class DistributedHouse(DistributedObject.DistributedObject):
         door = self.dnaStore.findNode(doorModelName)
         door_origin = self.house.find('**/door_origin')
         door_origin.setHpr(90, 0, 0)
-        door_origin.setScale(
-            0.59999999999999998,
-            0.59999999999999998,
-            0.80000000000000004)
+        door_origin.setScale(0.59999999999999998, 0.59999999999999998,
+                             0.80000000000000004)
         door_origin.setPos(door_origin, 0.5, 0, 0.0)
         doorNP = door.copyTo(door_origin)
         self.door_origin = door_origin
@@ -122,8 +121,8 @@ class DistributedHouse(DistributedObject.DistributedObject):
         self.randomGenerator.seed(self.doId)
         houseColor = HouseGlobals.stairWood
         color = Vec4(houseColor[0], houseColor[1], houseColor[2], 1)
-        DNADoor.setupDoor(doorNP, door_origin, door_origin,
-                          self.dnaStore, str(self.doId), color)
+        DNADoor.setupDoor(doorNP, door_origin, door_origin, self.dnaStore,
+                          str(self.doId), color)
         self._DistributedHouse__setupNamePlate()
         self._DistributedHouse__setupFloorMat()
         self._DistributedHouse__setupNametag()
@@ -136,10 +135,8 @@ class DistributedHouse(DistributedObject.DistributedObject):
         door = self.house.find('**/door_0')
         door_origin = self.house.find('**/door_origin')
         door_origin.setHpr(90, 0, 0)
-        door_origin.setScale(
-            0.59999999999999998,
-            0.59999999999999998,
-            0.80000000000000004)
+        door_origin.setScale(0.59999999999999998, 0.59999999999999998,
+                             0.80000000000000004)
         doorNP = door
         self.door_origin = door_origin
         color = Vec4(1, 1, 1, 1)
@@ -192,15 +189,9 @@ class DistributedHouse(DistributedObject.DistributedObject):
 
         sign_origin = self.house.find('**/sign_origin')
         pos = sign_origin.getPos()
-        sign_origin.setPosHpr(
-            pos[0],
-            pos[1],
-            pos[2] +
-            0.14999999999999999 *
-            textHeight,
-            90,
-            0,
-            0)
+        sign_origin.setPosHpr(pos[0], pos[1],
+                              pos[2] + 0.14999999999999999 * textHeight, 90, 0,
+                              0)
         self.namePlate = sign_origin.attachNewNode(self.nameText)
         self.namePlate.setDepthWrite(0)
         self.namePlate.setPos(0, -0.050000000000000003, 0)
@@ -215,11 +206,8 @@ class DistributedHouse(DistributedObject.DistributedObject):
 
         mat = self.house.find('**/mat')
         if changeColor:
-            mat.setColor(
-                0.40000000000000002,
-                0.35699999999999998,
-                0.25900000000000001,
-                1.0)
+            mat.setColor(0.40000000000000002, 0.35699999999999998,
+                         0.25900000000000001, 1.0)
 
         color = HouseGlobals.houseColors[self.housePosInd]
         matText = TextNode('matText')
@@ -249,10 +237,8 @@ class DistributedHouse(DistributedObject.DistributedObject):
 
         mat_origin = self.house.find('**/mat_origin')
         pos = mat_origin.getPos()
-        mat_origin.setPosHpr(pos[0] -
-                             0.14999999999999999 *
-                             textHeight, pos[1], pos[2], 90, -
-                             90, 0)
+        mat_origin.setPosHpr(pos[0] - 0.14999999999999999 * textHeight, pos[1],
+                             pos[2], 90, -90, 0)
         self.floorMat = mat_origin.attachNewNode(self.matText)
         self.floorMat.setDepthWrite(0)
         self.floorMat.setPos(0, -0.025000000000000001, 0)
@@ -364,8 +350,7 @@ class DistributedHouse(DistributedObject.DistributedObject):
         self.d_setColor(colorInd)
 
     def d_setColor(self, colorInd):
-        self.sendUpdate('setColor', [
-            colorInd])
+        self.sendUpdate('setColor', [colorInd])
 
     def setColor(self, colorInd):
         self.colorIndex = colorInd
@@ -383,11 +368,8 @@ class DistributedHouse(DistributedObject.DistributedObject):
             self.namePlate = None
 
         nameText = TextNode('nameText')
-        nameText.setCardAsMargin(
-            0.10000000000000001,
-            0.10000000000000001,
-            0.10000000000000001,
-            0.10000000000000001)
+        nameText.setCardAsMargin(0.10000000000000001, 0.10000000000000001,
+                                 0.10000000000000001, 0.10000000000000001)
         nameText.setCardDecal(True)
         nameText.setCardColor(1.0, 1.0, 1.0, 0.0)
         r = self.randomGenerator.random()
@@ -419,15 +401,9 @@ class DistributedHouse(DistributedObject.DistributedObject):
 
         sign_origin = self.house.find('**/sign_origin')
         pos = sign_origin.getPos()
-        sign_origin.setPosHpr(
-            pos[0],
-            pos[1],
-            pos[2] +
-            0.14999999999999999 *
-            textHeight,
-            90,
-            0,
-            0)
+        sign_origin.setPosHpr(pos[0], pos[1],
+                              pos[2] + 0.14999999999999999 * textHeight, 90, 0,
+                              0)
         self.namePlate = sign_origin.attachNewNode(self.nameText)
         self.namePlate.setDepthWrite(0)
         self.namePlate.setPos(0, -0.050000000000000003, 0)

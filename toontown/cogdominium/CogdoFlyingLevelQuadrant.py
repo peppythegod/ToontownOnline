@@ -94,11 +94,10 @@ class CogdoFlyingLevelQuadrant:
 
             self.gatherables.append(pickup)
 
-    def generateGatherables(
-            self,
-            gatherableModel,
-            parent=None,
-            spread=Globals.Level.GatherablesDefaultSpread):
+    def generateGatherables(self,
+                            gatherableModel,
+                            parent=None,
+                            spread=Globals.Level.GatherablesDefaultSpread):
         if not parent:
             pass
         parent = self._root
@@ -131,10 +130,12 @@ class CogdoFlyingLevelQuadrant:
                         pickup = self._level.gatherableFactory.createMemo()
                         pickup.reparentTo(parent)
                         mopath.goTo(pickup, t)
-                        pickup.setX(parent, pickup.getX() + r *
-                                    math.cos(math.radians(angle)))
-                        pickup.setZ(parent, pickup.getZ() + r *
-                                    math.sin(math.radians(angle)))
+                        pickup.setX(
+                            parent,
+                            pickup.getX() + r * math.cos(math.radians(angle)))
+                        pickup.setZ(
+                            parent,
+                            pickup.getZ() + r * math.sin(math.radians(angle)))
                         self.gatherables.append(pickup)
                         angle += angleSpread
                     t += spread + 0.5
@@ -151,9 +152,8 @@ class CogdoFlyingLevelQuadrant:
                 gatherable.removeNode()
 
         def generatePowerUps():
-            for (
-                powerupType,
-                    locName) in Globals.Level.PowerupType2Loc.iteritems():
+            for (powerupType,
+                 locName) in Globals.Level.PowerupType2Loc.iteritems():
                 if powerupType == Globals.Level.GatherableTypes.LaffPowerup and Globals.Level.IgnoreLaffPowerups:
                     continue
 
@@ -178,14 +178,13 @@ class CogdoFlyingLevelQuadrant:
         generatePowerUps()
 
     def _initObstacles(self, parent):
-
         def initWhirlwinds():
             obstacles = self._root.findAllMatches(
                 '**/%s' % Globals.Level.WhirlwindName)
             for obstacleLoc in obstacles:
                 motionPath = self._model.find(
-                    '**/%s%s' %
-                    (obstacleLoc.getName(), Globals.Level.WhirlwindPathName))
+                    '**/%s%s' % (obstacleLoc.getName(),
+                                 Globals.Level.WhirlwindPathName))
                 if motionPath.isEmpty():
                     motionPath = None
 

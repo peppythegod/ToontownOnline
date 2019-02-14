@@ -2,7 +2,6 @@ import PlatformEntity
 
 
 class PaintMixer(PlatformEntity.PlatformEntity):
-
     def start(self):
         PlatformEntity.PlatformEntity.start(self)
         model = self.platform.model

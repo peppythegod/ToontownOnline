@@ -3,7 +3,6 @@ from toontown.pets import PetMood, PetTraits, PetDetail
 
 
 class PetHandle:
-
     def __init__(self, avatar):
         self.doId = avatar.doId
         self.name = avatar.name
@@ -12,9 +11,7 @@ class PetHandle:
         self.bFake = False
         self.cr = avatar.cr
         self.traits = PetTraits.PetTraits(
-            avatar.traitSeed,
-            avatar.safeZone,
-            traitValueList=avatar.traitList)
+            avatar.traitSeed, avatar.safeZone, traitValueList=avatar.traitList)
         self._grabMood(avatar)
 
     def _grabMood(self, avatar):
@@ -51,8 +48,7 @@ class PetHandle:
 
     def updateOfflineMood(self):
         self.mood.driftMood(
-            dt=self.getTimeSinceLastSeen(),
-            curMood=self.lastKnownMood)
+            dt=self.getTimeSinceLastSeen(), curMood=self.lastKnownMood)
 
     def getDominantMood(self):
         if not hasattr(self, 'mood'):
@@ -64,7 +60,6 @@ class PetHandle:
         return idString + '-' + str(self.getDoId())
 
     def updateMoodFromServer(self, callWhenDone=None):
-
         def handleGotDetails(avatar, callWhenDone=callWhenDone):
             self._grabMood(avatar)
             if callWhenDone:

@@ -17,14 +17,12 @@ from toontown.parties.PartyUtils import getPartyActivityIcon, getCenterPosFromGr
 
 
 class DistributedPartyActivity(DistributedObject.DistributedObject):
-
-    def __init__(
-            self,
-            cr,
-            activityId,
-            activityType,
-            wantLever=False,
-            wantRewardGui=False):
+    def __init__(self,
+                 cr,
+                 activityId,
+                 activityType,
+                 wantLever=False,
+                 wantRewardGui=False):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.activityId = activityId
         self.activityName = PartyGlobals.ActivityIds.getString(self.activityId)
@@ -36,8 +34,9 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         self.toonIds = []
         self._toonId2ror = {}
         childName = '%s' % self
-        childName = childName[childName.rfind(
-            '.DistributedParty') + len('.DistributedParty'):childName.rfind('Activity instance')]
+        childName = childName[childName.rfind('.DistributedParty') +
+                              len('.DistributedParty'):childName.
+                              rfind('Activity instance')]
         if not hasattr(base, 'partyActivityDict'):
             base.partyActivityDict = {}
 
@@ -79,19 +78,16 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         self._localToonRequestStatus = None
 
     def handleToonJoined(self, toonId):
-        self.notify.error(
-            'BASE: handleToonJoined should be overridden %s' %
-            self.activityName)
+        self.notify.error('BASE: handleToonJoined should be overridden %s' %
+                          self.activityName)
 
     def handleToonExited(self, toonId):
-        self.notify.error(
-            'BASE: handleToonExited should be overridden %s' %
-            self.activityName)
+        self.notify.error('BASE: handleToonExited should be overridden %s' %
+                          self.activityName)
 
     def handleToonDisabled(self, toonId):
-        self.notify.error(
-            'BASE: handleToonDisabled should be overridden %s' %
-            self.activityName)
+        self.notify.error('BASE: handleToonDisabled should be overridden %s' %
+                          self.activityName)
 
     def setToonsPlaying(self, toonIds):
         (exitedToons, joinedToons) = self.getToonsPlayingChanges(
@@ -102,7 +98,9 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
 
     def _processExitedToons(self, exitedToons):
         for toonId in exitedToons:
-            if (toonId != base.localAvatar.doId or toonId == base.localAvatar.doId) and self.isLocalToonRequestStatus(
+            if (toonId != base.localAvatar.doId
+                    or toonId == base.localAvatar.doId
+                ) and self.isLocalToonRequestStatus(
                     PartyGlobals.ActivityRequestStatus.Exiting):
                 toon = self.getAvatar(toonId)
                 if toon is not None:
@@ -121,11 +119,13 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
 
     def _processJoinedToons(self, joinedToons):
         for toonId in joinedToons:
-            if (toonId != base.localAvatar.doId or toonId == base.localAvatar.doId) and self.isLocalToonRequestStatus(
+            if (toonId != base.localAvatar.doId
+                    or toonId == base.localAvatar.doId
+                ) and self.isLocalToonRequestStatus(
                     PartyGlobals.ActivityRequestStatus.Joining):
                 if toonId not in self._toonId2ror:
-                    request = self.cr.relatedObjectMgr.requestObjects([
-                        toonId], allCallback=self._handlePlayerPresent)
+                    request = self.cr.relatedObjectMgr.requestObjects(
+                        [toonId], allCallback=self._handlePlayerPresent)
                     if toonId in self._toonId2ror:
                         del self._toonId2ror[toonId]
                     else:
@@ -149,13 +149,11 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         toon = self.getAvatar(toonId)
         if toon is not None:
             self.acceptOnce(
-                toon.uniqueName('disable'),
-                self.handleToonDisabled,
-                [toonId])
+                toon.uniqueName('disable'), self.handleToonDisabled, [toonId])
         else:
             self.notify.warning(
-                'BASE: unable to get handle to toon with toonId:%d. Hook for handleToonDisabled not set.' %
-                toonId)
+                'BASE: unable to get handle to toon with toonId:%d. Hook for handleToonDisabled not set.'
+                % toonId)
 
     def isLocalToonRequestStatus(self, requestStatus):
         return self._localToonRequestStatus == requestStatus
@@ -180,13 +178,12 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         return TTLocalizer.DefaultPartyActivityInstructions
 
     def getParentNodePath(self):
-        if hasattr(
-                base.cr.playGame,
-                'hood') and base.cr.playGame.hood and hasattr(
-                base.cr.playGame.hood,
-                'loader') and base.cr.playGame.hood.loader and hasattr(
-                base.cr.playGame.hood.loader,
-                'geom') and base.cr.playGame.hood.loader.geom:
+        if hasattr(base.cr.playGame,
+                   'hood') and base.cr.playGame.hood and hasattr(
+                       base.cr.playGame.hood,
+                       'loader') and base.cr.playGame.hood.loader and hasattr(
+                           base.cr.playGame.hood.loader,
+                           'geom') and base.cr.playGame.hood.loader.geom:
             return base.cr.playGame.hood.loader.geom
         else:
             self.notify.warning(
@@ -212,8 +209,9 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.announceGenerate(self)
         self.notify.debug('BASE: announceGenerate %s' % self.activityName)
         self.root.setName(self.activityName + 'Root')
-        (centeredX, centeredY) = getCenterPosFromGridSize(self.x, self.y,
-                                                          PartyGlobals.ActivityInformationDict[self.activityId]['gridsize'])
+        (centeredX, centeredY) = getCenterPosFromGridSize(
+            self.x, self.y,
+            PartyGlobals.ActivityInformationDict[self.activityId]['gridsize'])
         self.root.setPos(centeredX, centeredY, 0.0)
         self.root.setH(self.h)
         self.normalExit = True
@@ -277,31 +275,22 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         self.signFlat = self.signModel.find('**/sign_flat')
         self.signFlatWithNote = self.signModel.find('**/sign_withNote')
         self.signTextLocator = self.signModel.find('**/signText_locator')
-        textureNodePath = getPartyActivityIcon(
-            self.party.activityIconsModel, actNameForSign)
+        textureNodePath = getPartyActivityIcon(self.party.activityIconsModel,
+                                               actNameForSign)
         textureNodePath.setPos(0.0, -0.02, 2.2000000000000002)
         textureNodePath.setScale(2.3500000000000001)
         textureNodePath.copyTo(self.signFlat)
         textureNodePath.copyTo(self.signFlatWithNote)
         text = TextNode('noteText')
-        text.setTextColor(
-            0.20000000000000001,
-            0.10000000000000001,
-            0.69999999999999996,
-            1.0)
+        text.setTextColor(0.20000000000000001, 0.10000000000000001,
+                          0.69999999999999996, 1.0)
         text.setAlign(TextNode.ACenter)
         text.setFont(OTPGlobals.getInterfaceFont())
         text.setWordwrap(10.0)
         text.setText('')
         self.noteText = self.signFlatWithNote.attachNewNode(text)
-        self.noteText.setPosHpr(
-            self.signTextLocator,
-            0.0,
-            0.0,
-            0.20000000000000001,
-            0.0,
-            0.0,
-            0.0)
+        self.noteText.setPosHpr(self.signTextLocator, 0.0, 0.0,
+                                0.20000000000000001, 0.0, 0.0, 0.0)
         self.noteText.setScale(0.20000000000000001)
         self.signFlatWithNote.stash()
         self.signTextLocator.stash()
@@ -329,14 +318,8 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         self.leverTrigger = self.root.attachNewNode(cn)
         self.leverTrigger.reparentTo(self.lever)
         self.leverTrigger.stash()
-        cs = CollisionTube(
-            0.0,
-            2.7000000000000002,
-            0.0,
-            0.0,
-            2.7000000000000002,
-            3.0,
-            1.2)
+        cs = CollisionTube(0.0, 2.7000000000000002, 0.0, 0.0,
+                           2.7000000000000002, 3.0, 1.2)
         cn = CollisionNode('levertube')
         cn.addSolid(cs)
         cn.setIntoCollideMask(OTPGlobals.WallBitmask)
@@ -344,8 +327,8 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         host = base.cr.doId2do.get(self.party.partyInfo.hostId)
         if host is None:
             self.notify.debug(
-                '%s loadLever : Host has left the game before lever could be created.' %
-                self.activityName)
+                '%s loadLever : Host has left the game before lever could be created.'
+                % self.activityName)
             return None
 
         scale = host.getGeomNode().getChild(0).getSz(render)
@@ -357,10 +340,8 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         pos = host.rightHand.getPos(self.controlColumn)
         self.controlColumn.setPos(pos[0], pos[1], pos[2] - 1)
         self.bottom.setZ(host, 0.0)
-        self.bottom.setPos(
-            self.bottomPos[0],
-            self.bottomPos[1],
-            self.bottom.getZ())
+        self.bottom.setPos(self.bottomPos[0], self.bottomPos[1],
+                           self.bottom.getZ())
         lookAtPoint = Point3(0.29999999999999999, 0, 0.10000000000000001)
         lookAtUp = Vec3(0, -1, 0)
         self.stickHinge.lookAt(host.rightHand, lookAtPoint, lookAtUp)
@@ -418,47 +399,18 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
                 toon,
                 'walk',
                 loop=True,
-                duration=walkTime -
-                reach.getDuration()),
-            reach,
-            pull)
+                duration=walkTime - reach.getDuration()), reach, pull)
         leverSeq = Sequence(
-            Wait(
-                walkTime +
-                reach.getDuration() -
-                0.10000000000000001),
-            self.stick.hprInterval(
-                0.55000000000000004,
-                Point3(
-                    0.0,
-                    25.0,
-                    0.0),
-                Point3(
-                    0.0,
-                    0.0,
-                    0.0)),
+            Wait(walkTime + reach.getDuration() - 0.10000000000000001),
+            self.stick.hprInterval(0.55000000000000004, Point3(0.0, 25.0, 0.0),
+                                   Point3(0.0, 0.0, 0.0)),
             Wait(0.29999999999999999),
-            self.stick.hprInterval(
-                0.40000000000000002,
-                Point3(
-                    0.0,
-                    0.0,
-                    0.0),
-                Point3(
-                    0.0,
-                    25.0,
-                    0.0)))
+            self.stick.hprInterval(0.40000000000000002, Point3(0.0, 0.0, 0.0),
+                                   Point3(0.0, 25.0, 0.0)))
         returnSeq = Sequence(
             Parallel(
-                toon.posInterval(
-                    walkTime,
-                    newPos,
-                    origPos),
-                toon.hprInterval(
-                    walkTime,
-                    newHpr,
-                    origHpr),
-                leverSeq,
+                toon.posInterval(walkTime, newPos, origPos),
+                toon.hprInterval(walkTime, newHpr, origHpr), leverSeq,
                 reachAndPull))
         return returnSeq
 
@@ -476,10 +428,10 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         self.ignore(self.messageDoneEvent)
         if hasattr(base.cr.playGame.getPlace(), 'fsm'):
             if self.messageGui and hasattr(self.messageGui, 'endState'):
-                self.notify.info(
-                    '__handleMessageDone (endState=%s)' %
+                self.notify.info('__handleMessageDone (endState=%s)' %
+                                 self.messageGui.endState)
+                base.cr.playGame.getPlace().fsm.request(
                     self.messageGui.endState)
-                base.cr.playGame.getPlace().fsm.request(self.messageGui.endState)
             else:
                 self.notify.warning(
                     "messageGui has no endState, defaulting to 'walk'")
@@ -490,7 +442,8 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
             self.messageGui = None
 
     def showJellybeanReward(self, earnedAmount, jarAmount, message):
-        if not self.isLocalToonInActivity() or base.localAvatar.doId in self.getToonIdsAsList():
+        if not self.isLocalToonInActivity(
+        ) or base.localAvatar.doId in self.getToonIdsAsList():
             messenger.send('DistributedPartyActivity-showJellybeanReward')
             base.cr.playGame.getPlace().fsm.request('activity')
             self.acceptOnce(
@@ -503,7 +456,8 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
         self.handleRewardDone()
 
     def handleRewardDone(self):
-        if base.cr.playGame.getPlace() and hasattr(base.cr.playGame.getPlace(), 'fsm'):
+        if base.cr.playGame.getPlace() and hasattr(base.cr.playGame.getPlace(),
+                                                   'fsm'):
             base.cr.playGame.getPlace().fsm.request('walk')
 
     def setSignNote(self, note):
@@ -611,15 +565,12 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
     def startRules(self, timeout=PartyGlobals.DefaultRulesTimeout):
         self.notify.debug('BASE: startRules')
         self.accept(self.rulesDoneEvent, self.handleRulesDone)
-        self.rulesPanel = MinigameRulesPanel(
-            'PartyRulesPanel',
-            self.getTitle(),
-            self.getInstructions(),
-            self.rulesDoneEvent,
-            timeout)
-        base.setCellsAvailable(base.bottomCells + [
-            base.leftCells[0],
-            base.rightCells[1]], False)
+        self.rulesPanel = MinigameRulesPanel('PartyRulesPanel',
+                                             self.getTitle(),
+                                             self.getInstructions(),
+                                             self.rulesDoneEvent, timeout)
+        base.setCellsAvailable(
+            base.bottomCells + [base.leftCells[0], base.rightCells[1]], False)
         self.rulesPanel.load()
         self.rulesPanel.enter()
 
@@ -630,9 +581,9 @@ class DistributedPartyActivity(DistributedObject.DistributedObject):
             self.rulesPanel.exit()
             self.rulesPanel.unload()
             del self.rulesPanel
-            base.setCellsAvailable(base.bottomCells + [
-                base.leftCells[0],
-                base.rightCells[1]], True)
+            base.setCellsAvailable(
+                base.bottomCells + [base.leftCells[0], base.rightCells[1]],
+                True)
 
     def handleRulesDone(self):
         self.notify.error('BASE: handleRulesDone should be overridden')

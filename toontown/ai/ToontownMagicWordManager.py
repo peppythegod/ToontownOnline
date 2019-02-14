@@ -54,11 +54,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
         if base.config.GetBool('want-chat', 0):
             self.d_setMagicWord('~chat', base.localAvatar.doId, 0)
 
-        if base.config.GetBool(
-                'want-run',
-                0) or base.config.GetBool(
-                'want-toontown-run',
-                0):
+        if base.config.GetBool('want-run', 0) or base.config.GetBool(
+                'want-toontown-run', 0):
             self.toggleRun()
 
         if base.config.GetBool('immortal-mode', 0):
@@ -66,9 +63,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
 
         mintFloor = base.config.GetInt('mint-floor', -1)
         if mintFloor != -1:
-            self.d_setMagicWord(
-                '~mintFloor %s' %
-                mintFloor, base.localAvatar.doId, 0)
+            self.d_setMagicWord('~mintFloor %s' % mintFloor,
+                                base.localAvatar.doId, 0)
 
         mintId = base.config.GetInt('mint-id', -1)
         if mintId != -1:
@@ -76,58 +72,49 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
 
         autoRestock = base.config.GetInt('auto-restock', -1)
         if autoRestock != -1:
-            self.d_setMagicWord(
-                '~autoRestock %s' %
-                autoRestock, base.localAvatar.doId, 0)
+            self.d_setMagicWord('~autoRestock %s' % autoRestock,
+                                base.localAvatar.doId, 0)
 
         autoRich = base.config.GetInt('auto-rich', -1)
         if autoRich != -1:
-            self.d_setMagicWord(
-                '~autoRich %s' %
-                autoRich, base.localAvatar.doId, 0)
+            self.d_setMagicWord('~autoRich %s' % autoRich,
+                                base.localAvatar.doId, 0)
 
-        autoResistanceRestock = base.config.GetInt(
-            'auto-resistance-restock', -1)
+        autoResistanceRestock = base.config.GetInt('auto-resistance-restock',
+                                                   -1)
         if autoResistanceRestock != -1:
             self.d_setMagicWord(
-                '~autoResistanceRestock %s' %
-                autoResistanceRestock, base.localAvatar.doId, 0)
+                '~autoResistanceRestock %s' % autoResistanceRestock,
+                base.localAvatar.doId, 0)
 
         autoRestockSOS = base.config.GetInt('auto-restock-sos', -1)
         if autoRestockSOS != -1:
-            self.d_setMagicWord(
-                '~autoRestockSOS %s' %
-                autoRestockSOS, base.localAvatar.doId, 0)
+            self.d_setMagicWord('~autoRestockSOS %s' % autoRestockSOS,
+                                base.localAvatar.doId, 0)
 
-        autoRestockPinkSlips = base.config.GetInt(
-            'auto-restock-pink-slips', -1)
+        autoRestockPinkSlips = base.config.GetInt('auto-restock-pink-slips',
+                                                  -1)
         if autoRestockPinkSlips != -1:
             self.d_setMagicWord(
-                '~autoRestockPinkSlips %s' %
-                autoRestockPinkSlips, base.localAvatar.doId, 0)
+                '~autoRestockPinkSlips %s' % autoRestockPinkSlips,
+                base.localAvatar.doId, 0)
 
         autoRestockSummons = base.config.GetInt('auto-restock-summons', -1)
         if autoRestockSummons != -1:
-            self.d_setMagicWord(
-                '~autoRestockSummons %s' %
-                autoRestockSummons, base.localAvatar.doId, 0)
+            self.d_setMagicWord('~autoRestockSummons %s' % autoRestockSummons,
+                                base.localAvatar.doId, 0)
 
         paidStatus = base.config.GetString('force-paid-status', 'none')
         if paidStatus != 'none':
             self.d_setMagicWord(
-                '~setPaid %s' %
-                choice(
-                    paidStatus == 'paid',
-                    1,
-                    0),
-                localAvatar.doId,
-                0)
+                '~setPaid %s' % choice(paidStatus == 'paid', 1, 0),
+                localAvatar.doId, 0)
 
         self.doConfigMagicWords()
 
     def doConfigMagicWords(self):
-        autoMagicWords = base.config.GetString(
-            'auto-magic-words', '').split('|')
+        autoMagicWords = base.config.GetString('auto-magic-words',
+                                               '').split('|')
         for command in autoMagicWords:
             if command:
                 self.d_setMagicWord(command.strip(), base.localAvatar.doId, 0)
@@ -155,54 +142,51 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             base.cr.useShader(name)
         elif wordIs('~fanfare'):
             go = Fanfare.makeFanfareWithMessageImage(
-                0,
-                base.localAvatar,
-                1,
+                0, base.localAvatar, 1,
                 "You just did a ~fanfare.  Here's a rake.",
-                Vec2(
-                    0,
-                    0.20000000000000001),
-                0.080000000000000002,
-                base.localAvatar.inventory.buttonLookup(
-                    1,
-                    1),
-                Vec3(
-                    0,
-                    0,
-                    0),
-                4)
+                Vec2(0, 0.20000000000000001), 0.080000000000000002,
+                base.localAvatar.inventory.buttonLookup(1, 1), Vec3(0, 0,
+                                                                    0), 4)
             Sequence(
-                go[0], Func(
-                    go[1].show), LerpColorScaleInterval(
-                    go[1], duration=0.5, startColorScale=Vec4(
-                        1, 1, 1, 0), colorScale=Vec4(
-                        1, 1, 1, 1)), Wait(2), LerpColorScaleInterval(
-                        go[1], duration=0.5, startColorScale=Vec4(
-                            1, 1, 1, 1), colorScale=Vec4(
-                                1, 1, 1, 0)), Func(
-                                    go[1].remove)).start()
+                go[0], Func(go[1].show),
+                LerpColorScaleInterval(
+                    go[1],
+                    duration=0.5,
+                    startColorScale=Vec4(1, 1, 1, 0),
+                    colorScale=Vec4(1, 1, 1, 1)), Wait(2),
+                LerpColorScaleInterval(
+                    go[1],
+                    duration=0.5,
+                    startColorScale=Vec4(1, 1, 1, 1),
+                    colorScale=Vec4(1, 1, 1, 0)), Func(go[1].remove)).start()
         elif wordIs('~endgame'):
-            print 'Requesting minigame abort...'
+            print('Requesting minigame abort...')
             messenger.send('minigameAbort')
         elif wordIs('~wingame'):
-            print 'Requesting minigame victory...'
+            print('Requesting minigame victory...')
             messenger.send('minigameVictory')
         elif wordIs('~walk'):
 
             try:
                 fsm = base.cr.playGame.getPlace().fsm
                 fsm.forceTransition('walk')
+            except:
+                pass
 
         elif wordIs('~movie'):
 
             try:
                 fsm = base.cr.playGame.getPlace().fsm
                 fsm.forceTransition('movie')
+            except:
+                pass
 
         elif wordIs('~sit'):
 
             try:
                 base.cr.playGame.getPlace().fsm.request('sit')
+            except:
+                pass
 
         elif wordIs('~rogues'):
             suitname = None
@@ -217,8 +201,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             self.acceptOnce('mouse1', self.exit_rogues)
         elif wordIs('~showPaths'):
             for obj in self.cr.doId2do.values():
-                if isinstance(
-                        obj, DistributedSuitPlanner.DistributedSuitPlanner):
+                if isinstance(obj,
+                              DistributedSuitPlanner.DistributedSuitPlanner):
                     obj.showPaths()
                     continue
 
@@ -228,8 +212,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
 
         elif wordIs('~hidePaths'):
             for obj in self.cr.doId2do.values():
-                if isinstance(
-                        obj, DistributedSuitPlanner.DistributedSuitPlanner):
+                if isinstance(obj,
+                              DistributedSuitPlanner.DistributedSuitPlanner):
                     obj.hidePaths()
                     continue
 
@@ -330,7 +314,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             if base.cr.periodTimerExpired:
                 response = 'Period timer has expired.'
             elif base.cr.periodTimerStarted:
-                elapsed = globalClock.getFrameTime() - base.cr.periodTimerStarted
+                elapsed = globalClock.getFrameTime(
+                ) - base.cr.periodTimerStarted
                 secondsRemaining = base.cr.periodTimerSecondsRemaining - elapsed
                 response = 'Period timer expires in %s seconds.' % int(
                     secondsRemaining)
@@ -414,8 +399,7 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             mint = bboard.get('mint')
             if not mint.warpToRoom(roomNum):
                 self.setMagicWordResponse(
-                    'invalid roomId or roomId not in this mint: %s' %
-                    args[1])
+                    'invalid roomId or roomId not in this mint: %s' % args[1])
                 return None
 
         elif wordIs('~mintLayouts'):
@@ -441,12 +425,14 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             editUsername = EditorGlobals.getEditUsername()
             editors = base.cr.doFindAll('DistributedInGameEditor')
             for e in editors:
-                if isinstance(
-                        e, DistributedInGameEditor.DistributedInGameEditor):
+                if isinstance(e,
+                              DistributedInGameEditor.DistributedInGameEditor):
                     if e.getLevelDoId() == level.doId:
-                        if e.editorIsLocalToon() or e.getEditUsername() == editUsername:
+                        if e.editorIsLocalToon() or e.getEditUsername(
+                        ) == editUsername:
                             self.setMagicWordResponse(
-                                "you ('%s') are already editing this level" % editUsername)
+                                "you ('%s') are already editing this level" %
+                                editUsername)
                             return None
 
                 e.getLevelDoId() == level.doId
@@ -497,6 +483,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
                 goons = base.cr.doFindAll('Goon')
                 for goon in goons:
                     goon.undead()
+            except:
+                pass
             self.notify.warning('Error in undead')
 
         elif wordIs('~resyncGoons'):
@@ -505,6 +493,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
                 goons = base.cr.doFindAll('Goon')
                 for goon in goons:
                     goon.resync()
+            except:
+                pass
             self.notify.warning('Error in resyncing')
 
         elif wordIs('~catalog'):
@@ -554,15 +544,16 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
                     return 0
 
                 if base.localAvatar.hasKart():
-                    response = 'Returning Kart %s' % base.localAvatar.getKartBodyType()
+                    response = 'Returning Kart %s' % base.localAvatar.getKartBodyType(
+                    )
                     base.localAvatar.requestKartDNAFieldUpdate(
                         KartDNA.bodyType, InvalidEntry)
                     self.setMagicWordResponse(response)
                 else:
                     base.localAvatar.requestKartDNAFieldUpdate(
                         KartDNA.rimsType, getDefaultRim())
-                    taskMgr.doMethodLater(
-                        1.0, doShtikerLater, 'doShtikerLater')
+                    taskMgr.doMethodLater(1.0, doShtikerLater,
+                                          'doShtikerLater')
                 response = 'Kart %s has been purchased with body and accessory color %s.' % (
                     word[9], getDefaultColor())
                 base.localAvatar.requestKartDNAFieldUpdate(
@@ -594,28 +585,28 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             args = word.split()
             if len(args) > 1:
                 paid = int(args[1])
-                statusString = base.config.GetString(
-                    'force-paid-status', 'none')
+                statusString = base.config.GetString('force-paid-status',
+                                                     'none')
                 if paid:
                     paid = 1
                     if statusString != 'none':
                         if statusString == 'VELVET':
-                            ConfigVariableString(
-                                'force-paid-status').setValue('FULL')
+                            ConfigVariableString('force-paid-status').setValue(
+                                'FULL')
                         elif statusString == 'unpaid':
-                            ConfigVariableString(
-                                'force-paid-status').setValue('paid')
+                            ConfigVariableString('force-paid-status').setValue(
+                                'paid')
 
                     base.cr.setIsPaid(1)
                 else:
                     paid = 0
                     if statusString != 'none':
                         if statusString == 'FULL':
-                            ConfigVariableString(
-                                'force-paid-status').setValue('VELVET')
+                            ConfigVariableString('force-paid-status').setValue(
+                                'VELVET')
                         elif statusString == 'paid':
-                            ConfigVariableString(
-                                'force-paid-status').setValue('unpaid')
+                            ConfigVariableString('force-paid-status').setValue(
+                                'unpaid')
 
                     base.cr.setIsPaid(0)
             else:
@@ -688,7 +679,7 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
             errMsg = TTCodeRedemptionConsts.RedeemErrorStrings[result]
         else:
             errMsg = AwardManagerConsts.GiveAwardErrorStrings[awardMgrResult]
-        msg = 'code NOT redeemed (%s)' % (errMsg,)
+        msg = 'code NOT redeemed (%s)' % (errMsg, )
         base.localAvatar.setChatAbsolute(msg, CFSpeech | CFTimeout)
 
     def doParty(self, word, av, zoneId):
@@ -730,7 +721,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
                 'hoodId': hoodId,
                 'zoneId': -1,
                 'shardId': shardId,
-                'avId': -1})
+                'avId': -1
+            })
         elif action == 'unreleasedClient':
             newVal = base.cr.partyManager.toggleAllowUnreleasedClient()
             response = 'Allow Unreleased Client = %s' % newVal
@@ -800,15 +792,15 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
         if avId == 0:
             avId = -1
 
-        place.fsm.forceTransition('teleportOut', [
-            {
-                'loader': loaderId,
-                'where': whereId,
-                'how': 'teleportIn',
-                'hoodId': hoodId,
-                'zoneId': zoneId,
-                'shardId': None,
-                'avId': avId}])
+        place.fsm.forceTransition('teleportOut', [{
+            'loader': loaderId,
+            'where': whereId,
+            'how': 'teleportIn',
+            'hoodId': hoodId,
+            'zoneId': zoneId,
+            'shardId': None,
+            'avId': avId
+        }])
 
     def exit_rogues(self):
         self.rogues.exit()
@@ -827,7 +819,8 @@ class ToontownMagicWordManager(MagicWordManager.MagicWordManager):
                 name = className
 
             if string.lower(name) == lowerName and string.lower(
-                    className) == lowerName or string.lower(className) == 'distributed' + lowerName:
+                    className) == lowerName or string.lower(
+                        className) == 'distributed' + lowerName:
                 result.append((name, obj))
                 continue
 

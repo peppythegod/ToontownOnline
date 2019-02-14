@@ -27,7 +27,6 @@ GAMEWIN = 2
 
 
 class GardenProgressMeter(DirectObject.DirectObject):
-
     def __init__(self, typePromotion='game', level=0):
         if typePromotion == 'shovel':
             self.typePromotion = SHOVEL
@@ -63,63 +62,38 @@ class GardenProgressMeter(DirectObject.DirectObject):
             congratsMessage = TTLocalizer.GardenMiniGameWon
 
         self.frame = DirectFrame(
-            scale=1.1000000000000001, relief=None, image=DGG.getDefaultDialogGeom(), image_scale=(
-                1.75, 1, 0.75), image_color=ToontownGlobals.GlobalDialogColor, frameSize=(
-                -0.5, 0.5, -0.45000000000000001, -0.050000000000000003))
+            scale=1.1000000000000001,
+            relief=None,
+            image=DGG.getDefaultDialogGeom(),
+            image_scale=(1.75, 1, 0.75),
+            image_color=ToontownGlobals.GlobalDialogColor,
+            frameSize=(-0.5, 0.5, -0.45000000000000001, -0.050000000000000003))
         self.congratsText = DirectLabel(
             scale=1.1000000000000001,
             relief=None,
-            text_pos=(
-                0,
-                0.20000000000000001),
+            text_pos=(0, 0.20000000000000001),
             text_wordwrap=16,
             text=congratsMessage,
             text_font=ToontownGlobals.getSignFont(),
-            pos=(
-                0.0,
-                0.0,
-                0.0),
+            pos=(0.0, 0.0, 0.0),
             text_scale=0.10000000000000001,
-            text0_fg=(
-                1,
-                1,
-                1,
-                1),
+            text0_fg=(1, 1, 1, 1),
             parent=self.frame)
         gui2 = loader.loadModel('phase_3/models/gui/quit_button')
         self.quitButton = DirectButton(
             parent=self.frame,
             relief=None,
-            image=(
-                gui2.find('**/QuitBtn_UP'),
-                gui2.find('**/QuitBtn_DN'),
-                gui2.find('**/QuitBtn_RLVR')),
-            pos=(
-                0.5,
-                1.0,
-                -0.32000000000000001),
+            image=(gui2.find('**/QuitBtn_UP'), gui2.find('**/QuitBtn_DN'),
+                   gui2.find('**/QuitBtn_RLVR')),
+            pos=(0.5, 1.0, -0.32000000000000001),
             scale=0.90000000000000002,
             text='Exit',
             text_font=ToontownGlobals.getSignFont(),
-            text0_fg=(
-                1,
-                1,
-                1,
-                1),
-            text1_fg=(
-                1,
-                1,
-                1,
-                1),
-            text2_fg=(
-                1,
-                1,
-                1,
-                1),
+            text0_fg=(1, 1, 1, 1),
+            text1_fg=(1, 1, 1, 1),
+            text2_fg=(1, 1, 1, 1),
             text_scale=0.044999999999999998,
-            text_pos=(
-                0,
-                -0.01),
+            text_pos=(0, -0.01),
             command=self._GardenProgressMeter__handleExit)
 
     def unload(self):

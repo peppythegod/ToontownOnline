@@ -30,7 +30,8 @@ class FlowerBase:
         return (self.species, self.variety)
 
     def getValue(self):
-        return GardenGlobals.PlantAttributes[self.species]['varieties'][self.variety][2]
+        return GardenGlobals.PlantAttributes[self.species]['varieties'][
+            self.variety][2]
 
     def getSpeciesName(self):
         return TTLocalizer.FlowerSpeciesNames[self.species]
@@ -43,7 +44,8 @@ class FlowerBase:
 
     def getFullNameWithRecipe(self):
         name = GardenGlobals.getFlowerVarietyName(self.species, self.variety)
-        recipeKey = GardenGlobals.PlantAttributes[self.species]['varieties'][self.variety][0]
+        recipeKey = GardenGlobals.PlantAttributes[self.species]['varieties'][
+            self.variety][0]
         name += ' (%s)' % GardenGlobals.Recipes[recipeKey]['beans']
         return name
 

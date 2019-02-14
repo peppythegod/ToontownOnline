@@ -8,7 +8,6 @@ class NonRepeatableRandomSourceUD(DistributedObjectGlobalUD):
     RandomNumberCacheSize = 2000000
 
     class Request(ScratchPad):
-
         def __init__(self, replyTo, replyToClass, context, num):
             ScratchPad.__init__(
                 self,
@@ -29,29 +28,21 @@ class NonRepeatableRandomSourceUD(DistributedObjectGlobalUD):
         if __dev__:
             NonRepeatableRandomSourceUD.RandomNumberCacheSize = config.GetInt(
                 'random-source-cache-size', 5000)
-            self._fakeIt = config.GetBool(
-                'fake-non-repeatable-random-source', self._fakeIt)
+            self._fakeIt = config.GetBool('fake-non-repeatable-random-source',
+                                          self._fakeIt)
 
     def randomSample(self, nrrsDoId, random):
-        self._randoms = [
-            random] + self._randoms
+        self._randoms = [random] + self._randoms
         if len(self._randoms) > self.RandomNumberCacheSize:
             self._randoms.pop()
 
         self._processRequests()
-        self.air.sendUpdateToDoId(
-            'NonRepeatableRandomSource',
-            'randomSampleAck',
-            nrrsDoId,
-            [])
+        self.air.sendUpdateToDoId('NonRepeatableRandomSource',
+                                  'randomSampleAck', nrrsDoId, [])
 
     def getRandomSamples(self, replyTo, replyToClass, context, num):
         self._requests.append(
-            self.Request(
-                replyTo,
-                replyToClass,
-                context,
-                num))
+            self.Request(replyTo, replyToClass, context, num))
         self._processRequests()
 
     def _processRequests(self):
@@ -75,6 +66,6 @@ class NonRepeatableRandomSourceUD(DistributedObjectGlobalUD):
             if request.num == len(request.randoms):
                 self._requests.pop(0)
                 self.air.dispatchUpdateToDoId(
-                    request.replyToClass, 'getRandomSamplesReply', request.replyTo, [
-                        request.context, request.randoms])
+                    request.replyToClass, 'getRandomSamplesReply',
+                    request.replyTo, [request.context, request.randoms])
                 continue

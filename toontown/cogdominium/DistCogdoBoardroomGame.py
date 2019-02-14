@@ -29,7 +29,7 @@ class DistCogdoBoardroomGame(CogdoBoardroomGameBase, DistCogdoLevelGame):
         self.timer = None
         DistCogdoLevelGame.disable(self)
 
-    def enterGame(self)
+    def enterGame(self):
         DistCogdoLevelGame.enterGame(self)
         timeLeft = Consts.GameDuration.get() - globalClock.getRealTime() - \
             self.getStartTime()

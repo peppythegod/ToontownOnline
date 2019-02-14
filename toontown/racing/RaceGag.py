@@ -2,15 +2,10 @@ from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.showbase import DirectObject
 from DroppedGag import *
-types = [
-    '',
-    'Pie',
-    'Banana',
-    'Anvil']
+types = ['', 'Pie', 'Banana', 'Anvil']
 
 
 class RaceGag(DirectObject.DirectObject):
-
     def __init__(self, parent, slot, testPos):
         DirectObject.DirectObject.__init__(self)
         self.parent = parent
@@ -69,9 +64,8 @@ class RaceGag(DirectObject.DirectObject):
             self.fadeout.finish()
 
         self.fadeout = Sequence(
-            self.geom.scaleInterval(
-                0.20000000000000001, 0), Func(
-                self.hideGeom))
+            self.geom.scaleInterval(0.20000000000000001, 0),
+            Func(self.hideGeom))
         self.fadeout.start()
 
     def hitGag(self, cevent):

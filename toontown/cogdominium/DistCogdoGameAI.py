@@ -17,19 +17,17 @@ class DistCogdoGameAI(DistributedObjectAI):
         DistributedObjectAI.__init__(self, air)
         self._interior = interior
         self.loadFSM = ClassicFSM.ClassicFSM('DistCogdoGameAI.loaded', [
-            State.State('NotLoaded', self.enterNotLoaded, self.exitNotLoaded, [
-                'Loaded']),
-            State.State('Loaded', self.enterLoaded, self.exitLoaded, [
-                'NotLoaded'])], 'NotLoaded', 'NotLoaded')
+            State.State('NotLoaded', self.enterNotLoaded, self.exitNotLoaded,
+                        ['Loaded']),
+            State.State('Loaded', self.enterLoaded, self.exitLoaded,
+                        ['NotLoaded'])
+        ], 'NotLoaded', 'NotLoaded')
         self.fsm = ClassicFSM.ClassicFSM('DistCogdoGameAI', [
-            State.State('Intro', self.enterIntro, self.exitIntro, [
-                'Game']),
-            State.State('Game', self.enterGame, self.exitGame, [
-                'Finish']),
-            State.State('Finish', self.enterFinish, self.exitFinish, [
-                'Off']),
-            State.State('Off', self.enterOff, self.exitOff, [
-                'Intro'])], 'Off', 'Off')
+            State.State('Intro', self.enterIntro, self.exitIntro, ['Game']),
+            State.State('Game', self.enterGame, self.exitGame, ['Finish']),
+            State.State('Finish', self.enterFinish, self.exitFinish, ['Off']),
+            State.State('Off', self.enterOff, self.exitOff, ['Intro'])
+        ], 'Off', 'Off')
 
     def generate(self):
         DistributedObjectAI.generate(self)
@@ -147,8 +145,7 @@ class DistCogdoGameAI(DistributedObjectAI):
         senderId = self.air.getAvatarIdFromSender()
         if senderId not in self.getToonIds():
             self.air.writeServerEvent(
-                'suspicious',
-                senderId,
+                'suspicious', senderId,
                 'CogdoGameAI.setAvatarReady: unknown avatar')
             return None
 
@@ -160,8 +157,9 @@ class DistCogdoGameAI(DistributedObjectAI):
 
     def enterGame(self):
         self.markStartTime()
-        self.sendUpdate('setGameStart', [
-            globalClockDelta.localToNetworkTime(self.getStartTime())])
+        self.sendUpdate(
+            'setGameStart',
+            [globalClockDelta.localToNetworkTime(self.getStartTime())])
 
     def exitGame(self):
         pass
@@ -171,8 +169,9 @@ class DistCogdoGameAI(DistributedObjectAI):
 
     def enterFinish(self):
         self.markFinishTime()
-        self.sendUpdate('setGameFinish', [
-            globalClockDelta.localToNetworkTime(self.getFinishTime())])
+        self.sendUpdate(
+            'setGameFinish',
+            [globalClockDelta.localToNetworkTime(self.getFinishTime())])
 
     def exitFinish(self):
         pass

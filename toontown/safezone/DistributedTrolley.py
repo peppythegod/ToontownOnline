@@ -23,20 +23,17 @@ class DistributedTrolley(DistributedObject.DistributedObject):
         self.trolleyCountdownTime = base.config.GetFloat(
             'trolley-countdown-time', TROLLEY_COUNTDOWN_TIME)
         self.fsm = ClassicFSM.ClassicFSM('DistributedTrolley', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'entering',
-                'waitEmpty',
-                'waitCountdown',
-                'leaving']),
-            State.State('entering', self.enterEntering, self.exitEntering, [
-                'waitEmpty']),
-            State.State('waitEmpty', self.enterWaitEmpty, self.exitWaitEmpty, [
-                'waitCountdown']),
-            State.State('waitCountdown', self.enterWaitCountdown, self.exitWaitCountdown, [
-                'waitEmpty',
-                'leaving']),
-            State.State('leaving', self.enterLeaving, self.exitLeaving, [
-                'entering'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['entering', 'waitEmpty', 'waitCountdown', 'leaving']),
+            State.State('entering', self.enterEntering, self.exitEntering,
+                        ['waitEmpty']),
+            State.State('waitEmpty', self.enterWaitEmpty, self.exitWaitEmpty,
+                        ['waitCountdown']),
+            State.State('waitCountdown', self.enterWaitCountdown,
+                        self.exitWaitCountdown, ['waitEmpty', 'leaving']),
+            State.State('leaving', self.enterLeaving, self.exitLeaving,
+                        ['entering'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
         self.trolleyAwaySfx = base.loadSfx(
             'phase_4/audio/sfx/SZ_trolley_away.mp3')
@@ -106,9 +103,7 @@ class DistributedTrolley(DistributedObject.DistributedObject):
         trolleyEnterPos = Sequence(name='TrolleyEnterPos')
         if base.wantFog:
             trolleyEnterPos.append(
-                Func(
-                    self.trolleyCar.setFog,
-                    self.trolleyEnterFogNode))
+                Func(self.trolleyCar.setFog, self.trolleyEnterFogNode))
 
         trolleyEnterPos.append(
             self.trolleyCar.posInterval(
@@ -120,9 +115,7 @@ class DistributedTrolley(DistributedObject.DistributedObject):
             trolleyEnterPos.append(Func(self.trolleyCar.setFogOff))
 
         trolleyEnterTrack = Sequence(
-            trolleyAnimationReset,
-            trolleyEnterPos,
-            name='trolleyEnter')
+            trolleyAnimationReset, trolleyEnterPos, name='trolleyEnter')
         keyAngle = round(TROLLEY_ENTER_TIME) * 360
         dist = Vec3(trolleyEnterEndPos - trolleyEnterStartPos).length()
         wheelAngle = (dist / 2.0 * math.pi * 0.94999999999999996) * 360
@@ -130,24 +123,19 @@ class DistributedTrolley(DistributedObject.DistributedObject):
             self.animateTrolley,
             duration=TROLLEY_ENTER_TIME,
             blendType='easeOut',
-            extraArgs=[
-                keyAngle,
-                wheelAngle],
+            extraArgs=[keyAngle, wheelAngle],
             name='TrolleyAnimate')
         trolleyEnterSoundTrack = SoundInterval(
             self.trolleyAwaySfx, node=self.trolleyCar)
-        self.trolleyEnterTrack = Parallel(
-            trolleyEnterTrack,
-            trolleyEnterAnimateInterval,
-            trolleyEnterSoundTrack)
+        self.trolleyEnterTrack = Parallel(trolleyEnterTrack,
+                                          trolleyEnterAnimateInterval,
+                                          trolleyEnterSoundTrack)
         trolleyExitStartPos = Point3(15, 14, -1)
         trolleyExitEndPos = Point3(50, 14, -1)
         trolleyExitPos = Sequence(name='TrolleyExitPos')
         if base.wantFog:
             trolleyExitPos.append(
-                Func(
-                    self.trolleyCar.setFog,
-                    self.trolleyExitFogNode))
+                Func(self.trolleyCar.setFog, self.trolleyExitFogNode))
 
         trolleyExitPos.append(
             self.trolleyCar.posInterval(
@@ -169,9 +157,7 @@ class DistributedTrolley(DistributedObject.DistributedObject):
             self.animateTrolley,
             duration=TROLLEY_EXIT_TIME,
             blendType='easeIn',
-            extraArgs=[
-                keyAngle,
-                wheelAngle],
+            extraArgs=[keyAngle, wheelAngle],
             name='TrolleyAnimate')
         self.trolleyExitTrack = Parallel(
             trolleyExitPos,
@@ -219,13 +205,11 @@ class DistributedTrolley(DistributedObject.DistributedObject):
         del self.fsm
 
     def setState(self, state, timestamp):
-        self.fsm.request(state, [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
     def allowedToEnter(self):
-        if hasattr(
-                base,
-                'ttAccess') and base.ttAccess and base.ttAccess.canAccess():
+        if hasattr(base,
+                   'ttAccess') and base.ttAccess and base.ttAccess.canAccess():
             return True
 
         return False
@@ -239,8 +223,8 @@ class DistributedTrolley(DistributedObject.DistributedObject):
 
     def handleEnterTrolleySphere(self, collEntry):
         self.notify.debug('Entering Trolley Sphere....')
-        if base.localAvatar.getPos(render).getZ(
-        ) < self.trolleyCar.getPos(render).getZ():
+        if base.localAvatar.getPos(render).getZ() < self.trolleyCar.getPos(
+                render).getZ():
             return None
 
         if self.allowedToEnter():
@@ -275,18 +259,18 @@ class DistributedTrolley(DistributedObject.DistributedObject):
         1
         if avId == base.localAvatar.getDoId():
             if not self.fsm.getCurrentState().getName(
-            ) == 'waitEmpty' or self.fsm.getCurrentState().getName() == 'waitCountdown':
+            ) == 'waitEmpty' or self.fsm.getCurrentState().getName(
+            ) == 'waitCountdown':
                 self.notify.warning(
                     "Can't board the trolley while in the '%s' state." %
                     self.fsm.getCurrentState().getName())
                 self.loader.place.fsm.request('walk')
                 return None
 
-            if hasattr(
-                    self.loader.place,
-                    'trolley') and self.loader.place.trolley:
-                self.loader.place.trolley.fsm.request('boarding', [
-                    self.trolleyCar])
+            if hasattr(self.loader.place,
+                       'trolley') and self.loader.place.trolley:
+                self.loader.place.trolley.fsm.request('boarding',
+                                                      [self.trolleyCar])
                 self.localToonOnBoard = 1
                 self.loader.place.trolley.fsm.request('boarded')
             else:
@@ -303,40 +287,19 @@ class DistributedTrolley(DistributedObject.DistributedObject):
             sitStartDuration = toon.getDuration('sit-start')
             track = Sequence(
                 LerpPosInterval(
-                    toon,
-                    TOON_BOARD_TIME * 0.75,
-                    Point3(
-                        -5,
-                        -4.5 + index * 3,
-                        1.3999999999999999)),
-                LerpHprInterval(
-                    toon,
-                    TOON_BOARD_TIME * 0.25,
-                    Point3(
-                        90,
-                        0,
-                        0)),
+                    toon, TOON_BOARD_TIME * 0.75,
+                    Point3(-5, -4.5 + index * 3, 1.3999999999999999)),
+                LerpHprInterval(toon, TOON_BOARD_TIME * 0.25, Point3(90, 0,
+                                                                     0)),
                 Parallel(
                     Sequence(
-                        Wait(
-                            sitStartDuration * 0.25),
+                        Wait(sitStartDuration * 0.25),
                         LerpPosInterval(
-                            toon,
-                            sitStartDuration * 0.25,
-                            Point3(
-                                -3.8999999999999999,
-                                -4.5 + index * 3,
-                                3.0))),
-                    ActorInterval(
-                        toon,
-                        'sit-start')),
-                Func(
-                    toon.setAnimState,
-                    'Sit',
-                    1.0),
-                Func(
-                    self.clearToonTrack,
-                    avId),
+                            toon, sitStartDuration * 0.25,
+                            Point3(-3.8999999999999999, -4.5 + index * 3,
+                                   3.0))), ActorInterval(toon, 'sit-start')),
+                Func(toon.setAnimState, 'Sit', 1.0),
+                Func(self.clearToonTrack, avId),
                 name=toon.uniqueName('fillTrolley'),
                 autoPause=1)
             track.delayDelete = DelayDelete.DelayDelete(
@@ -344,11 +307,9 @@ class DistributedTrolley(DistributedObject.DistributedObject):
             self.storeToonTrack(avId, track)
             track.start()
         else:
-            DistributedTrolley.notify.warning(
-                'toon: ' +
-                str(avId) +
-                " doesn't exist, and" +
-                ' cannot board the trolley!')
+            DistributedTrolley.notify.warning('toon: ' + str(avId) +
+                                              " doesn't exist, and" +
+                                              ' cannot board the trolley!')
 
     def emptySlot0(self, avId, timestamp):
         self.emptySlot(0, avId, timestamp)
@@ -365,9 +326,8 @@ class DistributedTrolley(DistributedObject.DistributedObject):
     def notifyToonOffTrolley(self, toon):
         toon.setAnimState('neutral', 1.0)
         if toon == base.localAvatar:
-            if hasattr(
-                    self.loader.place,
-                    'trolley') and self.loader.place.trolley:
+            if hasattr(self.loader.place,
+                       'trolley') and self.loader.place.trolley:
                 self.loader.place.trolley.handleOffTrolley()
 
             self.localToonOnBoard = 0
@@ -392,34 +352,20 @@ class DistributedTrolley(DistributedObject.DistributedObject):
                         startTime=sitStartDuration,
                         endTime=0.0),
                     Sequence(
-                        Wait(
-                            sitStartDuration * 0.5),
+                        Wait(sitStartDuration * 0.5),
                         LerpPosInterval(
                             toon,
                             sitStartDuration * 0.25,
-                            Point3(
-                                -5,
-                                -4.5 + index * 3,
-                                1.3999999999999999),
+                            Point3(-5, -4.5 + index * 3, 1.3999999999999999),
                             other=self.trolleyCar))),
-                Func(
-                    toon.setAnimState,
-                    'run',
-                    1.0),
+                Func(toon.setAnimState, 'run', 1.0),
                 LerpPosInterval(
                     toon,
                     TOON_EXIT_TIME,
-                    Point3(
-                        21 - index * 3,
-                        -5,
-                        0.02),
+                    Point3(21 - index * 3, -5, 0.02),
                     other=self.trolleyStation),
-                Func(
-                    self.notifyToonOffTrolley,
-                    toon),
-                Func(
-                    self.clearToonTrack,
-                    avId),
+                Func(self.notifyToonOffTrolley, toon),
+                Func(self.clearToonTrack, avId),
                 name=toon.uniqueName('emptyTrolley'),
                 autoPause=1)
             track.delayDelete = DelayDelete.DelayDelete(
@@ -427,24 +373,21 @@ class DistributedTrolley(DistributedObject.DistributedObject):
             self.storeToonTrack(avId, track)
             track.start()
             if avId == base.localAvatar.getDoId() and hasattr(
-                    self.loader.place, 'trolley') and self.loader.place.trolley:
+                    self.loader.place,
+                    'trolley') and self.loader.place.trolley:
                 self.loader.place.trolley.fsm.request('exiting')
 
         else:
-            DistributedTrolley.notify.warning(
-                'toon: ' +
-                str(avId) +
-                " doesn't exist, and" +
-                ' cannot exit the trolley!')
+            DistributedTrolley.notify.warning('toon: ' + str(avId) +
+                                              " doesn't exist, and" +
+                                              ' cannot exit the trolley!')
 
     def rejectBoard(self, avId):
         self.loader.place.trolley.handleRejectBoard()
 
     def setMinigameZone(self, zoneId, minigameId):
         self.localToonOnBoard = 0
-        messenger.send('playMinigame', [
-            zoneId,
-            minigameId])
+        messenger.send('playMinigame', [zoneId, minigameId])
 
     def _DistributedTrolley__enableCollisions(self):
         self.accept('entertrolley_sphere', self.handleEnterTrolleySphere)
@@ -480,16 +423,13 @@ class DistributedTrolley(DistributedObject.DistributedObject):
         self.clockNode = TextNode('trolleyClock')
         self.clockNode.setFont(ToontownGlobals.getSignFont())
         self.clockNode.setAlign(TextNode.ACenter)
-        self.clockNode.setTextColor(
-            0.90000000000000002,
-            0.10000000000000001,
-            0.10000000000000001,
-            1)
+        self.clockNode.setTextColor(0.90000000000000002, 0.10000000000000001,
+                                    0.10000000000000001, 1)
         self.clockNode.setText('10')
         self.clock = self.trolleyStation.attachNewNode(self.clockNode)
         self.clock.setBillboardAxis()
-        self.clock.setPosHprScale(
-            15.859999999999999, 13.82, 11.68, -0.0, 0.0, 0.0, 3.02, 3.02, 3.02)
+        self.clock.setPosHprScale(15.859999999999999, 13.82, 11.68, -0.0, 0.0,
+                                  0.0, 3.02, 3.02, 3.02)
         if ts < self.trolleyCountdownTime:
             self.countdown(self.trolleyCountdownTime - ts)
 
@@ -524,9 +464,8 @@ class DistributedTrolley(DistributedObject.DistributedObject):
     def enterLeaving(self, ts):
         self.trolleyExitTrack.start(ts)
         if self.localToonOnBoard:
-            if hasattr(
-                    self.loader.place,
-                    'trolley') and self.loader.place.trolley:
+            if hasattr(self.loader.place,
+                       'trolley') and self.loader.place.trolley:
                 self.loader.place.trolley.fsm.request('trolleyLeaving')
 
     def exitLeaving(self):

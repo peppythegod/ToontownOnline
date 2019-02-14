@@ -28,7 +28,6 @@ class WebLauncherBase(DirectObject):
     logPrefix = ''
 
     class PhaseData:
-
         def __init__(self, phase):
             self.phase = phase
             self.percent = 0
@@ -49,18 +48,14 @@ class WebLauncherBase(DirectObject):
                     print 'switching to %s' % taskChain
                     taskMgr.add(
                         self._PhaseData__nextCallback,
-                        'phaseCallback-%s' %
-                        self.phase,
+                        'phaseCallback-%s' % self.phase,
                         taskChain=taskChain,
-                        extraArgs=[
-                            callback,
-                            taskChain])
+                        extraArgs=[callback, taskChain])
                     return None
 
             self.complete = True
             messenger.send(
-                'phaseComplete-%s' %
-                self.phase, taskChain='default')
+                'phaseComplete-%s' % self.phase, taskChain='default')
 
     def __init__(self, appRunner):
         self.appRunner = appRunner
@@ -82,8 +77,8 @@ class WebLauncherBase(DirectObject):
         for (phase, packageName) in self.LauncherPhases:
             self.phasesByPackageName[packageName] = phase
             self.phaseData[phase] = self.PhaseData(phase)
-            self.acceptOnce('phaseComplete-%s' %
-                            phase, self._WebLauncherBase__gotPhaseComplete)
+            self.acceptOnce('phaseComplete-%s' % phase,
+                            self._WebLauncherBase__gotPhaseComplete)
 
         self.packageInstaller = None
         self.started = False
@@ -101,7 +96,8 @@ class WebLauncherBase(DirectObject):
         self.testServerFlag = self.getTestServerFlag()
         self.notify.info('isTestServer: %s' % self.testServerFlag)
         print '\n\nStarting %s...' % self.GameName
-        print 'Current time: ' + time.asctime(time.localtime(time.time())) + ' ' + time.tzname[0]
+        print 'Current time: ' + time.asctime(time.localtime(
+            time.time())) + ' ' + time.tzname[0]
         print 'sys.argv = ', sys.argv
         print 'tokens = ', appRunner.tokens
         print 'gameInfo = ', self.gameInfo
@@ -252,9 +248,8 @@ class WebLauncherBase(DirectObject):
         self.gameInfo.disconnectCode = self.disconnectCode
         self.gameInfo.disconnectMsg = self.disconnectMsg
         self.notify.warning(
-            'disconnected with code: %s - %s' %
-            (self.gameInfo.disconnectCode,
-             self.gameInfo.disconnectMsg))
+            'disconnected with code: %s - %s' % (self.gameInfo.disconnectCode,
+                                                 self.gameInfo.disconnectMsg))
 
     def setServerVersion(self, version):
         self.ServerVersion = version
@@ -312,7 +307,6 @@ class WebLauncherBase(DirectObject):
 
 
 class WebLauncherInstaller(PackageInstaller):
-
     def __init__(self, launcher):
         PackageInstaller.__init__(self, launcher.appRunner)
         self.launcher = launcher
@@ -324,11 +318,8 @@ class WebLauncherInstaller(PackageInstaller):
         phase = self.launcher.phasesByPackageName[package.packageName]
         self.launcher.phaseData[phase].percent = percent
         if (phase, percent) != self.lastProgress:
-            messenger.send('launcherPercentPhaseComplete', [
-                phase,
-                percent,
-                None,
-                None])
+            messenger.send('launcherPercentPhaseComplete',
+                           [phase, percent, None, None])
             self.lastProgress = (phase, percent)
 
     def packageFinished(self, package, success):

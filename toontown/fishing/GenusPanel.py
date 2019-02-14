@@ -16,51 +16,22 @@ class GenusPanel(DirectFrame):
         albumGui = fishingGui.find('**/photo_frame1').copyTo(hidden)
         albumGui.find('**/picture_frame').reparentTo(albumGui, -1)
         albumGui.find('**/arrows').removeNode()
-        optiondefs = (
-            ('relief',
-             None,
-             None),
-            ('state',
-             DGG.NORMAL,
-             None),
-            ('image',
-             albumGui,
-             None),
-            ('image_scale',
-             (0.025000000000000001,
-              0.025000000000000001,
-              0.025000000000000001),
-                None),
-            ('image_pos',
-             (0,
-              1,
-              0),
-                None),
-            ('text',
-             TTLocalizer.UnknownFish,
-             None),
-            ('text_scale',
-             0.065000000000000002,
-             None),
-            ('text_fg',
-             (0.20000000000000001,
-              0.10000000000000001,
-              0.0,
-              1),
-                None),
-            ('text_pos',
-             (-0.5,
-              -0.34000000000000002),
-                None),
-            ('text_font',
-             ToontownGlobals.getInterfaceFont(),
-             None),
-            ('text_wordwrap',
-             13.5,
-             None),
-            ('text_align',
-             TextNode.ALeft,
-             None))
+        optiondefs = (('relief', None, None), ('state', DGG.NORMAL, None),
+                      ('image', albumGui,
+                       None), ('image_scale',
+                               (0.025000000000000001, 0.025000000000000001,
+                                0.025000000000000001),
+                               None), ('image_pos', (0, 1, 0), None),
+                      ('text', TTLocalizer.UnknownFish,
+                       None), ('text_scale', 0.065000000000000002, None),
+                      ('text_fg', (0.20000000000000001, 0.10000000000000001,
+                                   0.0, 1),
+                       None), ('text_pos', (-0.5, -0.34000000000000002),
+                               None), ('text_font',
+                                       ToontownGlobals.getInterfaceFont(),
+                                       None), ('text_wordwrap', 13.5,
+                                               None), ('text_align',
+                                                       TextNode.ALeft, None))
         self.defineoptions({}, optiondefs)
         DirectFrame.__init__(self)
         self.initialiseoptions(GenusPanel)
@@ -92,10 +63,11 @@ class GenusPanel(DirectFrame):
             f = FishBase.FishBase(self.genus, 0, 0)
             self.fishPanel = FishPhoto.FishPhoto(fish=f, parent=self)
             self.fishPanel.setPos(-0.23000000000000001, 1, -0.01)
-            self.fishPanel.setSwimBounds(-0.24610000000000001,
-                                         0.23669999999999999, -0.20699999999999999, 0.26640000000000003)
-            self.fishPanel.setSwimColor(
-                0.46999999999999997, 1.0, 0.98999999999999999, 1.0)
+            self.fishPanel.setSwimBounds(
+                -0.24610000000000001, 0.23669999999999999,
+                -0.20699999999999999, 0.26640000000000003)
+            self.fishPanel.setSwimColor(0.46999999999999997, 1.0,
+                                        0.98999999999999999, 1.0)
             speciesList = FishGlobals.getSpecies(self.genus)
             self.speciesLabels = []
             offset = 0.074999999999999997
@@ -108,16 +80,9 @@ class GenusPanel(DirectFrame):
                     parent=self,
                     relief=None,
                     state=DGG.NORMAL,
-                    pos=(
-                        0.059999999999999998,
-                        0,
-                        startPos - species * offset),
+                    pos=(0.059999999999999998, 0, startPos - species * offset),
                     text=TTLocalizer.UnknownFish,
-                    text_fg=(
-                        0.20000000000000001,
-                        0.10000000000000001,
-                        0.0,
-                        1),
+                    text_fg=(0.20000000000000001, 0.10000000000000001, 0.0, 1),
                     text_scale=TTLocalizer.GPgenus,
                     text_align=TextNode.ALeft,
                     text_font=ToontownGlobals.getInterfaceFont())
@@ -141,5 +106,6 @@ class GenusPanel(DirectFrame):
 
         for species in range(len(FishGlobals.getSpecies(self.genus))):
             if base.localAvatar.fishCollection.hasFish(self.genus, species):
-                self.speciesLabels[species]['text'] = TTLocalizer.FishSpeciesNames[self.genus][species]
+                self.speciesLabels[species][
+                    'text'] = TTLocalizer.FishSpeciesNames[self.genus][species]
                 continue

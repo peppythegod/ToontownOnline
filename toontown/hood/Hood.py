@@ -36,10 +36,14 @@ class Hood(StateData.StateData):
         zoneId = requestStatus['zoneId']
         hoodText = self.getHoodText(zoneId)
         self.titleText = OnscreenText.OnscreenText(
-            hoodText, fg=self.titleColor, font=getSignFont(), pos=(
-                0, -0.5), scale=TTLocalizer.HtitleText, drawOrder=0, mayChange=1)
-        self.fsm.request(requestStatus['loader'], [
-            requestStatus])
+            hoodText,
+            fg=self.titleColor,
+            font=getSignFont(),
+            pos=(0, -0.5),
+            scale=TTLocalizer.HtitleText,
+            drawOrder=0,
+            mayChange=1)
+        self.fsm.request(requestStatus['loader'], [requestStatus])
 
     def getHoodText(self, zoneId):
         hoodText = base.cr.hoodMgr.getFullnameFromId(self.id)
@@ -62,11 +66,10 @@ class Hood(StateData.StateData):
         self.titleText.clearColorScale()
         self.titleText.setFg(self.titleColor)
         seq = Task.sequence(
-            Task.pause(0.10000000000000001), Task.pause(6.0), self.titleText.lerpColorScale(
-                Vec4(
-                    1.0, 1.0, 1.0, 1.0), Vec4(
-                    1.0, 1.0, 1.0, 0.0), 0.5), Task(
-                self.hideTitleTextTask))
+            Task.pause(0.10000000000000001), Task.pause(6.0),
+            self.titleText.lerpColorScale(
+                Vec4(1.0, 1.0, 1.0, 1.0), Vec4(1.0, 1.0, 1.0, 0.0), 0.5),
+            Task(self.hideTitleTextTask))
         taskMgr.add(seq, 'titleText')
 
     def hideTitleTextTask(self, task):
@@ -115,8 +118,7 @@ class Hood(StateData.StateData):
     def unload(self):
         if hasattr(self, 'loader'):
             self.notify.info(
-                'Aggressively cleaning up loader: %s' %
-                self.loader)
+                'Aggressively cleaning up loader: %s' % self.loader)
             self.loader.exit()
             self.loader.unload()
             del self.loader
@@ -149,19 +151,18 @@ class Hood(StateData.StateData):
         pass
 
     def enterQuietZone(self, requestStatus):
-        teleportDebug(
-            requestStatus,
-            'Hood.enterQuietZone: status=%s' %
-            requestStatus)
+        teleportDebug(requestStatus,
+                      'Hood.enterQuietZone: status=%s' % requestStatus)
         self._quietZoneDoneEvent = uniqueName('quietZoneDone')
         self.acceptOnce(self._quietZoneDoneEvent, self.handleQuietZoneDone)
         self.quietZoneStateData = QuietZoneState.QuietZoneState(
             self._quietZoneDoneEvent)
-        self._enterWaitForSetZoneResponseMsg = self.quietZoneStateData.getEnterWaitForSetZoneResponseMsg()
-        self.acceptOnce(
-            self._enterWaitForSetZoneResponseMsg,
-            self.handleWaitForSetZoneResponse)
-        self._quietZoneLeftEvent = self.quietZoneStateData.getQuietZoneLeftEvent()
+        self._enterWaitForSetZoneResponseMsg = self.quietZoneStateData.getEnterWaitForSetZoneResponseMsg(
+        )
+        self.acceptOnce(self._enterWaitForSetZoneResponseMsg,
+                        self.handleWaitForSetZoneResponse)
+        self._quietZoneLeftEvent = self.quietZoneStateData.getQuietZoneLeftEvent(
+        )
         if base.placeBeforeObjects:
             self.acceptOnce(self._quietZoneLeftEvent, self.handleLeftQuietZone)
 
@@ -184,10 +185,8 @@ class Hood(StateData.StateData):
         loaderName = requestStatus['loader']
         if loaderName == 'safeZoneLoader':
             if not loader.inBulkBlock:
-                loader.beginBulkLoad('hood',
-                                     TTLocalizer.HeadingToPlayground,
-                                     safeZoneCountMap[self.id],
-                                     1,
+                loader.beginBulkLoad('hood', TTLocalizer.HeadingToPlayground,
+                                     safeZoneCountMap[self.id], 1,
                                      TTLocalizer.TIP_GENERAL)
 
             self.loadLoader(requestStatus)
@@ -199,9 +198,11 @@ class Hood(StateData.StateData):
                     zoneId)][0]
                 streetName = StreetNames[ZoneUtil.getCanonicalBranchZone(
                     zoneId)][-1]
-                loader.beginBulkLoad('hood', TTLocalizer.HeadingToStreet % {
-                    'to': toPhrase,
-                    'street': streetName}, townCountMap[self.id], 1, TTLocalizer.TIP_STREET)
+                loader.beginBulkLoad(
+                    'hood', TTLocalizer.HeadingToStreet % {
+                        'to': toPhrase,
+                        'street': streetName
+                    }, townCountMap[self.id], 1, TTLocalizer.TIP_STREET)
 
             self.loadLoader(requestStatus)
             loader.endBulkLoad('hood')
@@ -214,14 +215,12 @@ class Hood(StateData.StateData):
         status = self.quietZoneStateData.getRequestStatus()
         teleportDebug(status, 'handleLeftQuietZone, status=%s' % status)
         teleportDebug(status, 'requesting %s' % status['loader'])
-        self.fsm.request(status['loader'], [
-            status])
+        self.fsm.request(status['loader'], [status])
 
     def handleQuietZoneDone(self):
         if not base.placeBeforeObjects:
             status = self.quietZoneStateData.getRequestStatus()
-            self.fsm.request(status['loader'], [
-                status])
+            self.fsm.request(status['loader'], [status])
 
     def enterSafeZoneLoader(self, requestStatus):
         self.accept(self.loaderDoneEvent, self.handleSafeZoneLoaderDone)
@@ -238,15 +237,12 @@ class Hood(StateData.StateData):
 
     def handleSafeZoneLoaderDone(self):
         doneStatus = self.loader.getDoneStatus()
-        teleportDebug(
-            doneStatus,
-            'handleSafeZoneLoaderDone, doneStatus=%s' %
-            doneStatus)
-        if self.isSameHood(
-                doneStatus) or doneStatus['where'] != 'party' or doneStatus['loader'] == 'minigame':
+        teleportDebug(doneStatus,
+                      'handleSafeZoneLoaderDone, doneStatus=%s' % doneStatus)
+        if self.isSameHood(doneStatus) or doneStatus[
+                'where'] != 'party' or doneStatus['loader'] == 'minigame':
             teleportDebug(doneStatus, 'same hood')
-            self.fsm.request('quietZone', [
-                doneStatus])
+            self.fsm.request('quietZone', [doneStatus])
         else:
             teleportDebug(doneStatus, 'different hood')
             self.doneStatus = doneStatus
@@ -277,9 +273,10 @@ class Hood(StateData.StateData):
         self.sky.reparentTo(camera)
         self.sky.setTransparency(TransparencyAttrib.MDual, 1)
         fadeIn = self.sky.colorScaleInterval(
-            1.5, Vec4(
-                1, 1, 1, 1), startColorScale=Vec4(
-                1, 1, 1, 0.25), blendType='easeInOut')
+            1.5,
+            Vec4(1, 1, 1, 1),
+            startColorScale=Vec4(1, 1, 1, 0.25),
+            blendType='easeInOut')
         fadeIn.start()
         self.sky.setZ(0.0)
         self.sky.setHpr(0.0, 0.0, 0.0)

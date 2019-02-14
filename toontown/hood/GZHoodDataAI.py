@@ -59,10 +59,9 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
 
     def _GZHoodDataAI__cycleLeaderBoards(self, task=None):
         messenger.send('GS_LeaderBoardSwap')
-        taskMgr.doMethodLater(
-            self.cycleDuration,
-            self._GZHoodDataAI__cycleLeaderBoards,
-            str(self) + '_leaderBoardSwitch')
+        taskMgr.doMethodLater(self.cycleDuration,
+                              self._GZHoodDataAI__cycleLeaderBoards,
+                              str(self) + '_leaderBoardSwitch')
 
     def createStartingBlocks(self):
         self.racingPads = []
@@ -78,10 +77,16 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
             dnaData = self.air.dnaDataMap.get(zone[0], None)
             if isinstance(dnaData, DNAData):
                 area = ZoneUtil.getCanonicalZoneId(zoneId)
-                (foundRacingPads, foundRacingPadGroups) = self.air.findRacingPads(
-                    dnaData, zoneId, area, overrideDNAZone=True)
-                (foundViewingPads, foundViewingPadGroups) = self.air.findRacingPads(
-                    dnaData, zoneId, area, type='viewing_pad', overrideDNAZone=True)
+                (foundRacingPads,
+                 foundRacingPadGroups) = self.air.findRacingPads(
+                     dnaData, zoneId, area, overrideDNAZone=True)
+                (foundViewingPads,
+                 foundViewingPadGroups) = self.air.findRacingPads(
+                     dnaData,
+                     zoneId,
+                     area,
+                     type='viewing_pad',
+                     overrideDNAZone=True)
                 self.racingPads += foundRacingPads
                 self.foundRacingPadGroups += foundRacingPadGroups
                 self.viewingPads += foundViewingPads
@@ -89,11 +94,8 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
                 continue
 
         self.startingBlocks = []
-        for (
-                dnaGroup,
-                distRacePad) in zip(
-                self.foundRacingPadGroups,
-                self.racingPads):
+        for (dnaGroup, distRacePad) in zip(self.foundRacingPadGroups,
+                                           self.racingPads):
             startingBlocks = self.air.findStartingBlocks(dnaGroup, distRacePad)
             self.startingBlocks += startingBlocks
             for startingBlock in startingBlocks:
@@ -102,11 +104,8 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
         for distObj in self.startingBlocks:
             self.addDistObj(distObj)
 
-        for (
-                dnaGroup,
-                distViewPad) in zip(
-                self.foundViewingPadGroups,
-                self.viewingPads):
+        for (dnaGroup, distViewPad) in zip(self.foundViewingPadGroups,
+                                           self.viewingPads):
             startingBlocks = self.air.findStartingBlocks(dnaGroup, distViewPad)
             for viewingBlock in self.viewingBlocks:
                 distViewPad.addStartingBlock(viewingBlocks)
@@ -121,20 +120,16 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
             racePad.request('WaitEmpty')
             self.addDistObj(racePad)
 
-    def findAndCreateGolfKarts(
-            self,
-            dnaGroup,
-            zoneId,
-            area,
-            overrideDNAZone=0,
-            type='golf_kart'):
+    def findAndCreateGolfKarts(self,
+                               dnaGroup,
+                               zoneId,
+                               area,
+                               overrideDNAZone=0,
+                               type='golf_kart'):
         golfKarts = []
         golfKartGroups = []
-        if isinstance(
-                dnaGroup,
-                DNAGroup) and string.find(
-                dnaGroup.getName(),
-                type) >= 0:
+        if isinstance(dnaGroup,
+                      DNAGroup) and string.find(dnaGroup.getName(), type) >= 0:
             golfKartGroups.append(dnaGroup)
             if type == 'golf_kart':
                 nameInfo = dnaGroup.getName().split('_')
@@ -143,9 +138,8 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
                 hpr = Point3(0, 0, 0)
                 for i in range(dnaGroup.getNumChildren()):
                     childDnaGroup = dnaGroup.at(i)
-                    if string.find(
-                            childDnaGroup.getName(),
-                            'starting_block') >= 0:
+                    if string.find(childDnaGroup.getName(),
+                                   'starting_block') >= 0:
                         padLocation = dnaGroup.getName().split('_')[2]
                         pos = childDnaGroup.getPos()
                         hpr = childDnaGroup.getHpr()
@@ -154,7 +148,8 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
 
                 pos += Point3(0, 0, 0.050000000000000003)
                 golfKart = DistributedGolfKartAI.DistributedGolfKartAI(
-                    self.air, golfCourse, pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2])
+                    self.air, golfCourse, pos[0], pos[1], pos[2], hpr[0],
+                    hpr[1], hpr[2])
             else:
                 self.notify.warning('unhandled case')
             golfKart.generateWithRequired(zoneId)
@@ -164,8 +159,9 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
                 int(dnaGroup.getName().split(':')[0]), zoneId)
 
         for i in range(dnaGroup.getNumChildren()):
-            (childGolfKarts, childGolfKartGroups) = self.findAndCreateGolfKarts(
-                dnaGroup.at(i), zoneId, area, overrideDNAZone, type)
+            (childGolfKarts,
+             childGolfKartGroups) = self.findAndCreateGolfKarts(
+                 dnaGroup.at(i), zoneId, area, overrideDNAZone, type)
             golfKarts += childGolfKarts
             golfKartGroups += childGolfKartGroups
 
@@ -199,31 +195,20 @@ class GZHoodDataAI(HoodDataAI.HoodDataAI):
                 pos = dnaGroup.getPos()
                 hpr = dnaGroup.getHpr()
                 if isinstance(distRacePad, DistributedRacePadAI):
-                    sb = DistributedStartingBlockAI(
-                        self,
-                        distRacePad,
-                        pos[0],
-                        pos[1],
-                        pos[2],
-                        hpr[0],
-                        hpr[1],
-                        hpr[2],
-                        int(padLocation))
+                    sb = DistributedStartingBlockAI(self, distRacePad, pos[0],
+                                                    pos[1], pos[2], hpr[0],
+                                                    hpr[1], hpr[2],
+                                                    int(padLocation))
                 else:
-                    sb = DistributedViewingBlockAI(
-                        self,
-                        distRacePad,
-                        pos[0],
-                        pos[1],
-                        pos[2],
-                        hpr[0],
-                        hpr[1],
-                        hpr[2],
-                        int(padLocation))
+                    sb = DistributedViewingBlockAI(self, distRacePad, pos[0],
+                                                   pos[1], pos[2], hpr[0],
+                                                   hpr[1], hpr[2],
+                                                   int(padLocation))
                 sb.generateWithRequired(distRacePad.zoneId)
                 startingBlocks.append(sb)
                 continue
             self.notify.debug(
-                'Found dnaGroup that is not a starting_block under a race pad group')
+                'Found dnaGroup that is not a starting_block under a race pad group'
+            )
 
         return startingBlocks

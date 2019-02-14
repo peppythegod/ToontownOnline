@@ -199,5 +199,6 @@ AccessoryTypes = {
     446: (AShoes, 'srb4', APriceCool, 3),
     447: (AShoes, 'sat4', APriceBasic, 3),
     448: (AShoes, 'shw1', APriceCool, 7),
-    449: (AShoes, 'shw2', APriceCool, 7)}
+    449: (AShoes, 'shw2', APriceCool, 7)
+}
 LoyaltyAccessoryItems = []

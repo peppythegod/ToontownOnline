@@ -34,12 +34,15 @@ class TraitDistribution:
             TraitQuality.VERY_BAD: 0.10000000000000001,
             TraitQuality.BAD: 0.25,
             TraitQuality.GOOD: 0.75,
-            TraitQuality.VERY_GOOD: 0.90000000000000002},
+            TraitQuality.VERY_GOOD: 0.90000000000000002
+        },
         TraitTypes.DECREASING: {
             TraitQuality.VERY_BAD: 0.90000000000000002,
             TraitQuality.BAD: 0.75,
             TraitQuality.GOOD: 0.25,
-            TraitQuality.VERY_GOOD: 0.10000000000000001}}
+            TraitQuality.VERY_GOOD: 0.10000000000000001
+        }
+    }
 
     def __init__(self, rndFunc=gaussian):
         self.rndFunc = rndFunc
@@ -52,9 +55,7 @@ class TraitDistribution:
                 _min = min(_min, thisMin)
                 _max = max(_max, thisMax)
 
-            self.__class__.GlobalMinMax = [
-                _min,
-                _max]
+            self.__class__.GlobalMinMax = [_min, _max]
 
     def getRandValue(self, szId, rng=random):
         (min, max) = self.getMinMax(szId)
@@ -120,26 +121,35 @@ class TraitDistribution:
 
 
 class PetTraits:
-
     class StdIncDistrib(TraitDistribution):
         TraitType = TraitDistribution.TraitTypes.INCREASING
         Sz2MinMax = {
-            ToontownGlobals.ToontownCentral: (0.20000000000000001, 0.65000000000000002),
-            ToontownGlobals.DonaldsDock: (0.29999999999999999, 0.69999999999999996),
+            ToontownGlobals.ToontownCentral: (0.20000000000000001,
+                                              0.65000000000000002),
+            ToontownGlobals.DonaldsDock: (0.29999999999999999,
+                                          0.69999999999999996),
             ToontownGlobals.DaisyGardens: (0.40000000000000002, 0.75),
             ToontownGlobals.MinniesMelodyland: (0.5, 0.80000000000000004),
-            ToontownGlobals.TheBrrrgh: (0.59999999999999998, 0.84999999999999998),
-            ToontownGlobals.DonaldsDreamland: (0.69999999999999996, 0.90000000000000002)}
+            ToontownGlobals.TheBrrrgh: (0.59999999999999998,
+                                        0.84999999999999998),
+            ToontownGlobals.DonaldsDreamland: (0.69999999999999996,
+                                               0.90000000000000002)
+        }
 
     class StdDecDistrib(TraitDistribution):
         TraitType = TraitDistribution.TraitTypes.DECREASING
         Sz2MinMax = {
-            ToontownGlobals.ToontownCentral: (0.34999999999999998, 0.80000000000000004),
-            ToontownGlobals.DonaldsDock: (0.29999999999999999, 0.69999999999999996),
+            ToontownGlobals.ToontownCentral: (0.34999999999999998,
+                                              0.80000000000000004),
+            ToontownGlobals.DonaldsDock: (0.29999999999999999,
+                                          0.69999999999999996),
             ToontownGlobals.DaisyGardens: (0.25, 0.59999999999999998),
             ToontownGlobals.MinniesMelodyland: (0.20000000000000001, 0.5),
-            ToontownGlobals.TheBrrrgh: (0.14999999999999999, 0.40000000000000002),
-            ToontownGlobals.DonaldsDreamland: (0.10000000000000001, 0.29999999999999999)}
+            ToontownGlobals.TheBrrrgh: (0.14999999999999999,
+                                        0.40000000000000002),
+            ToontownGlobals.DonaldsDreamland: (0.10000000000000001,
+                                               0.29999999999999999)
+        }
 
     class ForgetfulnessDistrib(TraitDistribution):
         TraitType = TraitDistribution.TraitTypes.DECREASING
@@ -149,52 +159,28 @@ class PetTraits:
             ToontownGlobals.DaisyGardens: (0.0, 0.80000000000000004),
             ToontownGlobals.MinniesMelodyland: (0.0, 0.69999999999999996),
             ToontownGlobals.TheBrrrgh: (0.0, 0.59999999999999998),
-            ToontownGlobals.DonaldsDreamland: (0.0, 0.5)}
+            ToontownGlobals.DonaldsDreamland: (0.0, 0.5)
+        }
 
-    TraitDescs = (
-        ('forgetfulness',
-         ForgetfulnessDistrib(),
-         True),
-        ('boredomThreshold',
-         StdIncDistrib(),
-         True),
-        ('restlessnessThreshold',
-         StdIncDistrib(),
-         True),
-        ('playfulnessThreshold',
-         StdDecDistrib(),
-         True),
-        ('lonelinessThreshold',
-         StdIncDistrib(),
-         True),
-        ('sadnessThreshold',
-         StdIncDistrib(),
-         True),
-        ('fatigueThreshold',
-         StdIncDistrib(),
-         True),
-        ('hungerThreshold',
-         StdIncDistrib(),
-         True),
-        ('confusionThreshold',
-         StdIncDistrib(),
-         True),
-        ('excitementThreshold',
-         StdDecDistrib(),
-         True),
-        ('angerThreshold',
-         StdIncDistrib(),
-         True),
-        ('surpriseThreshold',
-         StdIncDistrib(),
-         False),
-        ('affectionThreshold',
-         StdDecDistrib(),
-         True))
+    TraitDescs = (('forgetfulness', ForgetfulnessDistrib(),
+                   True), ('boredomThreshold', StdIncDistrib(),
+                           True), ('restlessnessThreshold', StdIncDistrib(),
+                                   True), ('playfulnessThreshold',
+                                           StdDecDistrib(), True),
+                  ('lonelinessThreshold', StdIncDistrib(),
+                   True), ('sadnessThreshold', StdIncDistrib(),
+                           True), ('fatigueThreshold', StdIncDistrib(),
+                                   True), ('hungerThreshold', StdIncDistrib(),
+                                           True), ('confusionThreshold',
+                                                   StdIncDistrib(), True),
+                  ('excitementThreshold', StdDecDistrib(),
+                   True), ('angerThreshold', StdIncDistrib(),
+                           True), ('surpriseThreshold', StdIncDistrib(),
+                                   False), ('affectionThreshold',
+                                            StdDecDistrib(), True))
     NumTraits = len(TraitDescs)
 
     class Trait:
-
         def __init__(self, index, traitsObj, value=None):
             (self.name, distrib, self.hasWorth) = PetTraits.TraitDescs[index]
             if value is not None:
@@ -210,11 +196,10 @@ class PetTraits:
             self.howExtreme = distrib.getExtremeness(self.value)
 
         def __repr__(self):
-            return 'Trait: %s, %s, %s, %s' % (self.name,
-                                              self.value,
-                                              TraitDistribution.TraitQuality.getString(
-                                                  self.quality),
-                                              self.howExtreme)
+            return 'Trait: %s, %s, %s, %s' % (
+                self.name, self.value,
+                TraitDistribution.TraitQuality.getString(
+                    self.quality), self.howExtreme)
 
     def __init__(self, traitSeed, safeZoneId, traitValueList=[]):
         self.traitSeed = traitSeed
@@ -238,8 +223,8 @@ class PetTraits:
                 continue
 
             i = 0
-            while i < len(
-                    extremeTraits) and extremeTraits[i].howExtreme > trait.howExtreme:
+            while i < len(extremeTraits
+                          ) and extremeTraits[i].howExtreme > trait.howExtreme:
                 i += 1
             extremeTraits.insert(i, trait)
 
@@ -284,9 +269,10 @@ class PetTraits:
             TraitQuality.VERY_BAD: 0,
             TraitQuality.BAD: 1,
             TraitQuality.GOOD: 2,
-            TraitQuality.VERY_GOOD: 3}
+            TraitQuality.VERY_GOOD: 3
+        }
         for (name, quality) in self.extremeTraits:
-            descs.append(
-                TTLocalizer.PetTrait2descriptions[name][Quality2index[quality]])
+            descs.append(TTLocalizer.PetTrait2descriptions[name][
+                Quality2index[quality]])
 
         return descs

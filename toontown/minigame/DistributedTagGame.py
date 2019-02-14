@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from DistributedMinigame import *
@@ -27,17 +25,16 @@ class DistributedTagGame(DistributedMinigame):
     def __init__(self, cr):
         DistributedMinigame.__init__(self, cr)
         self.gameFSM = ClassicFSM.ClassicFSM('DistributedTagGame', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'play']),
-            State.State('play', self.enterPlay, self.exitPlay, [
-                'cleanup']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                'off'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['play']),
+            State.State('play', self.enterPlay, self.exitPlay, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['off'])
+        ], 'off', 'off')
         self.addChildGameFSM(self.gameFSM)
         self.walkStateData = Walk.Walk('walkDone')
         self.scorePanels = []
-        self.initialPositions = (
-            (0, 10, 0, 180, 0, 0), (10, 0, 0, 90, 0, 0), (0, -10, 0, 0, 0, 0), (-10, 0, 0, -90, 0, 0))
+        self.initialPositions = ((0, 10, 0, 180, 0, 0), (10, 0, 0, 90, 0, 0),
+                                 (0, -10, 0, 0, 0, 0), (-10, 0, 0, -90, 0, 0))
         base.localAvatar.isIt = 0
         self.modelCount = 4
 
@@ -55,16 +52,11 @@ class DistributedTagGame(DistributedMinigame):
         DistributedMinigame.load(self)
         self.itText = OnscreenText.OnscreenText(
             'itText',
-            fg=(
-                0.94999999999999996,
-                0.94999999999999996,
-                0.65000000000000002,
+            fg=(0.94999999999999996, 0.94999999999999996, 0.65000000000000002,
                 1),
             scale=0.14000000000000001,
             font=ToontownGlobals.getSignFont(),
-            pos=(
-                0.0,
-                -0.80000000000000004),
+            pos=(0.0, -0.80000000000000004),
             wordwrap=15,
             mayChange=1)
         self.itText.hide()
@@ -169,12 +161,8 @@ class DistributedTagGame(DistributedMinigame):
             avName = self.getAvatarName(avId)
             scorePanel = MinigameAvatarScorePanel.MinigameAvatarScorePanel(
                 avId, avName)
-            scorePanel.setPos(
-                1.1200000000000001,
-                0.0,
-                0.28000000000000003 *
-                i -
-                0.34000000000000002)
+            scorePanel.setPos(1.1200000000000001, 0.0,
+                              0.28000000000000003 * i - 0.34000000000000002)
             self.scorePanels.append(scorePanel)
 
         base.setCellsAvailable(base.rightCells, 0)
@@ -247,17 +235,13 @@ class DistributedTagGame(DistributedMinigame):
             self.itText.setText(TTLocalizer.TagGameYouAreIt)
             base.localAvatar.isIt = 1
             base.localAvatar.controlManager.setSpeeds(
-                OTPGlobals.ToonForwardSpeed *
-                self.IT_SPEED_INCREASE,
+                OTPGlobals.ToonForwardSpeed * self.IT_SPEED_INCREASE,
                 OTPGlobals.ToonJumpForce,
-                OTPGlobals.ToonReverseSpeed *
-                self.IT_SPEED_INCREASE,
-                OTPGlobals.ToonRotateSpeed *
-                self.IT_ROT_INCREASE)
+                OTPGlobals.ToonReverseSpeed * self.IT_SPEED_INCREASE,
+                OTPGlobals.ToonRotateSpeed * self.IT_ROT_INCREASE)
         else:
             self.itText.setText(
-                TTLocalizer.TagGameSomeoneElseIsIt %
-                self.getAvatarName(avId))
+                TTLocalizer.TagGameSomeoneElseIsIt % self.getAvatarName(avId))
             base.localAvatar.isIt = 0
             base.localAvatar.setWalkSpeedNormal()
         avatar = self.getAvatar(avId)
@@ -271,23 +255,24 @@ class DistributedTagGame(DistributedMinigame):
         if not toon:
             return None
 
-        spinTrack = LerpHprInterval(toon.getGeomNode(), duration, Point3(
-            0, 0, 0), startHpr=Point3(-5.0 * 360.0, 0, 0), blendType='easeOut')
+        spinTrack = LerpHprInterval(
+            toon.getGeomNode(),
+            duration,
+            Point3(0, 0, 0),
+            startHpr=Point3(-5.0 * 360.0, 0, 0),
+            blendType='easeOut')
         growTrack = Parallel()
         gs = 2.5
         for hi in range(toon.headParts.getNumPaths()):
             head = toon.headParts[hi]
             growTrack.append(
-                LerpScaleInterval(
-                    head, duration, Point3(
-                        gs, gs, gs)))
+                LerpScaleInterval(head, duration, Point3(gs, gs, gs)))
 
         def bounceFunc(t, trajectory, node=toon.getGeomNode()):
             node.setZ(trajectory.calcZ(t))
 
-        def bounceCleanupFunc(
-                node=toon.getGeomNode(),
-                z=toon.getGeomNode().getZ()):
+        def bounceCleanupFunc(node=toon.getGeomNode(),
+                              z=toon.getGeomNode().getZ()):
             node.setZ(z)
 
         bounceTrack = Sequence()
@@ -297,9 +282,7 @@ class DistributedTagGame(DistributedMinigame):
         decay = 0.59999999999999998
         while tLen < duration:
             trajectory = Trajectory.Trajectory(
-                0, Point3(
-                    0, 0, startZ), Point3(
-                    0, 0, zVel), gravMult=5.0)
+                0, Point3(0, 0, startZ), Point3(0, 0, zVel), gravMult=5.0)
             dur = trajectory.calcTimeOfImpactOnPlane(startZ)
             if dur <= 0:
                 break
@@ -315,10 +298,9 @@ class DistributedTagGame(DistributedMinigame):
             zVel *= decay
         bounceTrack.append(Func(bounceCleanupFunc))
         tagTrack = Sequence(
-            Func(
-                toon.animFSM.request, 'off'), Parallel(
-                spinTrack, growTrack, bounceTrack), Func(
-                toon.animFSM.request, 'Happy'))
+            Func(toon.animFSM.request, 'off'),
+            Parallel(spinTrack, growTrack, bounceTrack),
+            Func(toon.animFSM.request, 'Happy'))
         self.tracks.append(tagTrack)
         tagTrack.start()
         if self.IT:
@@ -335,14 +317,13 @@ class DistributedTagGame(DistributedMinigame):
         self.IT = avId
 
     def acceptTagEvent(self, avId):
-        self.accept('enterdistAvatarCollNode-' + str(avId), self.sendTagIfIt, [
-            avId])
+        self.accept('enterdistAvatarCollNode-' + str(avId), self.sendTagIfIt,
+                    [avId])
 
     def sendTagIfIt(self, avId, collisionEntry):
         if base.localAvatar.isIt:
             self.notify.debug('Tagging ' + str(avId))
-            self.sendUpdate('tag', [
-                avId])
+            self.sendUpdate('tag', [avId])
         else:
             self.notify.debug('Bumped ' + str(avId))
 

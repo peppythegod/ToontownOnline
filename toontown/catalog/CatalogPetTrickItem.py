@@ -64,10 +64,7 @@ class CatalogPetTrickItem(CatalogItem.CatalogItem):
         if track is not None:
             track = Sequence(
                 Sequence(track),
-                ActorInterval(
-                    pet,
-                    'neutral',
-                    duration=2),
+                ActorInterval(pet, 'neutral', duration=2),
                 name=name)
         else:
             pet.animFSM.request('neutral')
@@ -82,8 +79,8 @@ class CatalogPetTrickItem(CatalogItem.CatalogItem):
         self.petPicture = None
 
     def output(self, store=-1):
-        return 'CatalogPetTrickItem(%s%s)' % (
-            self.trickId, self.formatOptionalData(store))
+        return 'CatalogPetTrickItem(%s%s)' % (self.trickId,
+                                              self.formatOptionalData(store))
 
     def compareTo(self, other):
         return self.trickId - other.trickId

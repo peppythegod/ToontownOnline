@@ -12,9 +12,8 @@ class DistCogdoFlyingGame(DistCogdoGame):
     def __init__(self, cr):
         DistCogdoGame.__init__(self, cr)
         if __debug__ and base.config.GetBool('schellgames-dev', True):
-            self.accept(
-                'onCodeReload',
-                self._DistCogdoFlyingGame__sgOnCodeReload)
+            self.accept('onCodeReload',
+                        self._DistCogdoFlyingGame__sgOnCodeReload)
 
         self.game = CogdoFlyingGame(self)
 
@@ -32,14 +31,10 @@ class DistCogdoFlyingGame(DistCogdoGame):
         self.game.placeEntranceElevator(elev)
 
     def d_sendRequestAction(self, action, data):
-        self.sendUpdate('requestAction', [
-            action,
-            data])
+        self.sendUpdate('requestAction', [action, data])
 
     def doAction(self, action, data):
-        messenger.send(self.getRemoteActionEventName(), [
-            action,
-            data])
+        messenger.send(self.getRemoteActionEventName(), [action, data])
 
     def toonSetAsEagleTarget(self, toonId, eagleId, networkTime):
         self.notify.debugCall()
@@ -86,9 +81,7 @@ class DistCogdoFlyingGame(DistCogdoGame):
         self.game.pickUp(toonId, pickupNum, elapsedTime)
 
     def d_sendRequestPickup(self, pickupNum, pickupType):
-        self.sendUpdate('requestPickUp', [
-            pickupNum,
-            pickupType])
+        self.sendUpdate('requestPickUp', [pickupNum, pickupType])
 
     def toonSetBlades(self, toonId, fuelState):
         if toonId != base.localAvatar.doId:

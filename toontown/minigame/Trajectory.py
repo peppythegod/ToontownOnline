@@ -1,5 +1,3 @@
-
-
 from direct.directnotify import DirectNotifyGlobal
 from pandac.PandaModules import *
 from math import *
@@ -32,8 +30,9 @@ class Trajectory:
         return self._Trajectory__startTime
 
     def __str__(self):
-        return 'startTime: %s, startPos: %s, startVel: %s, zAcc: %s' % (self._Trajectory__startTime, repr(
-            self._Trajectory__startPos), repr(self._Trajectory__startVel), self._Trajectory__zAcc)
+        return 'startTime: %s, startPos: %s, startVel: %s, zAcc: %s' % (
+            self._Trajectory__startTime, repr(self._Trajectory__startPos),
+            repr(self._Trajectory__startVel), self._Trajectory__zAcc)
 
     def _Trajectory__calcTimeOfHighestPoint(self):
         t = -self._Trajectory__startVel[2] / self._Trajectory__zAcc
@@ -72,22 +71,15 @@ class Trajectory:
     def getPos(self, t):
         tt = t - self._Trajectory__startTime
         return Point3(
-            self._Trajectory__startPos[0] +
-            self._Trajectory__startVel[0] *
-            tt,
-            self._Trajectory__startPos[1] +
-            self._Trajectory__startVel[1] *
-            tt,
+            self._Trajectory__startPos[0] + self._Trajectory__startVel[0] * tt,
+            self._Trajectory__startPos[1] + self._Trajectory__startVel[1] * tt,
             self.calcZ(t))
 
     def getVel(self, t):
         tt = t - self._Trajectory__startTime
         return Vec3(
-            self._Trajectory__startVel[0],
-            self._Trajectory__startVel[1],
-            self._Trajectory__startVel[2] +
-            self._Trajectory__zAcc *
-            tt)
+            self._Trajectory__startVel[0], self._Trajectory__startVel[1],
+            self._Trajectory__startVel[2] + self._Trajectory__zAcc * tt)
 
     def getStartTime(self):
         return self._Trajectory__startTime
@@ -131,16 +123,15 @@ class Trajectory:
         if t1 > t2:
             self.notify.debug('calcEnterAndLeaveCylinderXY: t1 > t2??')
 
-        mag = Vec2(
-            self._Trajectory__startVel[0],
-            self._Trajectory__startVel[1]).length()
+        mag = Vec2(self._Trajectory__startVel[0],
+                   self._Trajectory__startVel[1]).length()
         t1 = t1 / mag
         t2 = t2 / mag
         return (t1 + self._Trajectory__startTime,
                 t2 + self._Trajectory__startTime)
 
-    def checkCollisionWithCylinderSides(
-            self, cylBottomCenter, cylRadius, cylHeight):
+    def checkCollisionWithCylinderSides(self, cylBottomCenter, cylRadius,
+                                        cylHeight):
         if self._Trajectory__reachesHeight(cylBottomCenter[2]) == 0:
             return -1.0
 

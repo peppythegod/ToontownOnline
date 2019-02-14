@@ -16,11 +16,8 @@ from direct.distributed.MsgTypes import *
 class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
     notify = DirectNotifyGlobal.directNotify.newCategory('CreateAccountScreen')
     ActiveEntryColor = Vec4(1, 1, 1, 1)
-    InactiveEntryColor = Vec4(
-        0.80000000000000004,
-        0.80000000000000004,
-        0.80000000000000004,
-        1)
+    InactiveEntryColor = Vec4(0.80000000000000004, 0.80000000000000004,
+                              0.80000000000000004, 1)
     labelFg = (1, 1, 1, 1)
     labelFgActive = (1, 1, 0, 1)
 
@@ -30,13 +27,12 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
         self.cr = cr
         self.loginInterface = self.cr.loginInterface
         self.fsm = ClassicFSM.ClassicFSM('CreateAccountScreen', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'create']),
-            State.State('create', self.enterCreate, self.exitCreate, [
-                'waitForLoginResponse',
-                'create']),
-            State.State('waitForLoginResponse', self.enterWaitForLoginResponse, self.exitWaitForLoginResponse, [
-                'create'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['create']),
+            State.State('create', self.enterCreate, self.exitCreate,
+                        ['waitForLoginResponse', 'create']),
+            State.State('waitForLoginResponse', self.enterWaitForLoginResponse,
+                        self.exitWaitForLoginResponse, ['create'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def load(self):
@@ -54,66 +50,41 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
         self.nameLabel = DirectLabel(
             parent=self.frame,
             relief=None,
-            pos=(
-                -0.20999999999999999,
-                0,
-                linePos),
+            pos=(-0.20999999999999999, 0, linePos),
             text=OTPLocalizer.CreateAccountScreenUserName,
             text_scale=textScale,
             text_align=TextNode.ARight,
             text_fg=self.labelFg,
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            text_shadowOffset=(
-                0.080000000000000002,
-                0.080000000000000002))
-        self.nameEntry = DirectEntry(parent=self.frame,
-                                     relief=DGG.SUNKEN,
-                                     borderWidth=(0.10000000000000001,
-                                                  0.10000000000000001),
-                                     scale=entryScale,
-                                     pos=(-0.125,
-                                          0.0,
-                                          linePos),
-                                     width=OTPGlobals.maxLoginWidth,
-                                     numLines=1,
-                                     focus=0,
-                                     cursorKeys=1)
+            text_shadow=(0, 0, 0, 1),
+            text_shadowOffset=(0.080000000000000002, 0.080000000000000002))
+        self.nameEntry = DirectEntry(
+            parent=self.frame,
+            relief=DGG.SUNKEN,
+            borderWidth=(0.10000000000000001, 0.10000000000000001),
+            scale=entryScale,
+            pos=(-0.125, 0.0, linePos),
+            width=OTPGlobals.maxLoginWidth,
+            numLines=1,
+            focus=0,
+            cursorKeys=1)
         self.nameEntry.label = self.nameLabel
         linePos -= lineHeight
         self.passwordLabel = DirectLabel(
             parent=self.frame,
             relief=None,
-            pos=(
-                -0.20999999999999999,
-                0,
-                linePos),
+            pos=(-0.20999999999999999, 0, linePos),
             text=OTPLocalizer.CreateAccountScreenPassword,
             text_scale=textScale,
             text_align=TextNode.ARight,
             text_fg=self.labelFg,
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            text_shadowOffset=(
-                0.080000000000000002,
-                0.080000000000000002))
+            text_shadow=(0, 0, 0, 1),
+            text_shadowOffset=(0.080000000000000002, 0.080000000000000002))
         self.passwordEntry = DirectEntry(
             parent=self.frame,
             relief=DGG.SUNKEN,
-            borderWidth=(
-                0.10000000000000001,
-                0.10000000000000001),
+            borderWidth=(0.10000000000000001, 0.10000000000000001),
             scale=entryScale,
-            pos=(
-                -0.125,
-                0.0,
-                linePos),
+            pos=(-0.125, 0.0, linePos),
             width=OTPGlobals.maxLoginWidth,
             numLines=1,
             focus=0,
@@ -124,33 +95,19 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
         self.passwordConfirmLabel = DirectLabel(
             parent=self.frame,
             relief=None,
-            pos=(
-                -0.20999999999999999,
-                0,
-                linePos),
+            pos=(-0.20999999999999999, 0, linePos),
             text=OTPLocalizer.CreateAccountScreenConfirmPassword,
             text_scale=textScale,
             text_align=TextNode.ARight,
             text_fg=self.labelFg,
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            text_shadowOffset=(
-                0.080000000000000002,
-                0.080000000000000002))
+            text_shadow=(0, 0, 0, 1),
+            text_shadowOffset=(0.080000000000000002, 0.080000000000000002))
         self.passwordConfirmEntry = DirectEntry(
             parent=self.frame,
             relief=DGG.SUNKEN,
-            borderWidth=(
-                0.10000000000000001,
-                0.10000000000000001),
+            borderWidth=(0.10000000000000001, 0.10000000000000001),
             scale=entryScale,
-            pos=(
-                -0.125,
-                0.0,
-                linePos),
+            pos=(-0.125, 0.0, linePos),
             width=OTPGlobals.maxLoginWidth,
             numLines=1,
             focus=0,
@@ -162,37 +119,23 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
         self.submitButton = DirectButton(
             parent=self.frame,
             relief=DGG.RAISED,
-            borderWidth=(
-                0.01,
-                0.01),
-            pos=(
-                0,
-                0,
-                linePos),
+            borderWidth=(0.01, 0.01),
+            pos=(0, 0, linePos),
             scale=buttonScale,
             text=OTPLocalizer.CreateAccountScreenSubmit,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
+            text_pos=(0, -0.02),
             command=self._CreateAccountScreen__handleSubmit)
         linePos -= buttonLineHeight
         self.cancelButton = DirectButton(
             parent=self.frame,
             relief=DGG.RAISED,
-            borderWidth=(
-                0.01,
-                0.01),
-            pos=(
-                0,
-                0,
-                linePos),
+            borderWidth=(0.01, 0.01),
+            pos=(0, 0, linePos),
             scale=buttonScale,
             text=OTPLocalizer.CreateAccountScreenCancel,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
+            text_pos=(0, -0.02),
             command=self._CreateAccountScreen__handleCancel)
         linePos -= buttonLineHeight
         self.dialogDoneEvent = 'createAccountDialogAck'
@@ -240,9 +183,8 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
 
         self._CreateAccountScreen__firstTime = 0
         self.focusList = [
-            self.nameEntry,
-            self.passwordEntry,
-            self.passwordConfirmEntry]
+            self.nameEntry, self.passwordEntry, self.passwordConfirmEntry
+        ]
         self.startFocusMgmt(
             overrides={},
             globalFocusHandler=self._CreateAccountScreen__handleFocusChange)
@@ -294,9 +236,7 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
             self.fsm.request('waitForLoginResponse')
 
     def _CreateAccountScreen__handleCancel(self):
-        messenger.send(self.doneEvent, [
-            {
-                'mode': 'cancel'}])
+        messenger.send(self.doneEvent, [{'mode': 'cancel'}])
 
     def _CreateAccountScreen__handleUsernameAck(self):
         self.dialog.hide()
@@ -319,8 +259,8 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
             if referrer is not None:
                 data['referrer'] = referrer
 
-            error = self.loginInterface.createAccount(
-                self.userName, self.password, data)
+            error = self.loginInterface.createAccount(self.userName,
+                                                      self.password, data)
         except TTAccount.TTAccountException:
             e = None
             error = str(e)
@@ -365,18 +305,14 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
         else:
             errorString = di.getString()
             self.notify.warning(errorString)
-            messenger.send(self.doneEvent, [
-                {
-                    'mode': 'reject'}])
+            messenger.send(self.doneEvent, [{'mode': 'reject'}])
 
     def _CreateAccountScreen__handleLoginSuccess(self):
         self.notify.info('Logged in with username: %s' % self.userName)
         launcher.setGoUserName(self.userName)
         launcher.setLastLogin(self.userName)
         launcher.setUserLoggedIn()
-        messenger.send(self.doneEvent, [
-            {
-                'mode': 'success'}])
+        messenger.send(self.doneEvent, [{'mode': 'success'}])
 
     def handleLoginResponseMsg(self, di):
         returnCode = di.getUint8()
@@ -412,15 +348,11 @@ class CreateAccountScreen(StateData.StateData, GuiScreen.GuiScreen):
             accountCode = di.getUint32()
             errorString = di.getString()
             self.notify.warning(errorString)
-            messenger.send(self.doneEvent, [
-                {
-                    'mode': 'reject'}])
+            messenger.send(self.doneEvent, [{'mode': 'reject'}])
 
     def _CreateAccountScreen__handleConnectionErrorAck(self):
         self.dialog.hide()
-        messenger.send(self.doneEvent, [
-            {
-                'mode': 'failure'}])
+        messenger.send(self.doneEvent, [{'mode': 'failure'}])
 
     def _CreateAccountScreen__handleBadPasswordAck(self):
         self.dialog.hide()

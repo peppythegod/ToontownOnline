@@ -6,7 +6,6 @@ from toontown.toonbase import TTLocalizer
 
 
 class NPCFriendPage(ShtikerPage.ShtikerPage):
-
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
 
@@ -17,10 +16,7 @@ class NPCFriendPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.NPCFriendPageTitle,
             text_scale=0.12,
             textMayChange=0,
-            pos=(
-                0,
-                0,
-                0.59999999999999998))
+            pos=(0, 0, 0.59999999999999998))
         self.friendPanel = NPCFriendPanel.NPCFriendPanel(parent=self)
         self.friendPanel.setScale(0.1225)
         self.friendPanel.setZ(-0.029999999999999999)

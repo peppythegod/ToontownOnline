@@ -31,13 +31,11 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
         self.classicChar.generateWithRequired(self.zoneId)
         self.classicChar.start()
         self.addDistObj(self.classicChar)
-        messenger.send('GSHoodSpawned', [
-            self])
+        messenger.send('GSHoodSpawned', [self])
 
     def shutdown(self):
         self.notify.debug('shutting down GSHoodDataAI: %s' % self.zoneId)
-        messenger.send('GSHoodDestroyed', [
-            self])
+        messenger.send('GSHoodDestroyed', [self])
         HoodDataAI.HoodDataAI.shutdown(self)
 
     def cleanup(self):
@@ -73,10 +71,9 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
 
     def _GSHoodDataAI__cycleLeaderBoards(self, task=None):
         messenger.send('GS_LeaderBoardSwap' + str(self.zoneId))
-        taskMgr.doMethodLater(
-            self.cycleDuration,
-            self._GSHoodDataAI__cycleLeaderBoards,
-            str(self) + '_leaderBoardSwitch')
+        taskMgr.doMethodLater(self.cycleDuration,
+                              self._GSHoodDataAI__cycleLeaderBoards,
+                              str(self) + '_leaderBoardSwitch')
 
     def createStartingBlocks(self):
         self.racingPads = []
@@ -90,10 +87,12 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
             dnaData = self.air.dnaDataMap.get(zone[0], None)
             if isinstance(dnaData, DNAData):
                 area = ZoneUtil.getCanonicalZoneId(zoneId)
-                (foundRacingPads, foundRacingPadGroups) = self.air.findRacingPads(
-                    dnaData, zoneId, area)
-                (foundViewingPads, foundViewingPadGroups) = self.air.findRacingPads(
-                    dnaData, zoneId, area, type='viewing_pad')
+                (foundRacingPads,
+                 foundRacingPadGroups) = self.air.findRacingPads(
+                     dnaData, zoneId, area)
+                (foundViewingPads,
+                 foundViewingPadGroups) = self.air.findRacingPads(
+                     dnaData, zoneId, area, type='viewing_pad')
                 self.racingPads += foundRacingPads
                 self.foundRacingPadGroups += foundRacingPadGroups
                 self.viewingPads += foundViewingPads
@@ -101,11 +100,8 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
                 continue
 
         self.startingBlocks = []
-        for (
-                dnaGroup,
-                distRacePad) in zip(
-                self.foundRacingPadGroups,
-                self.racingPads):
+        for (dnaGroup, distRacePad) in zip(self.foundRacingPadGroups,
+                                           self.racingPads):
             startingBlocks = self.air.findStartingBlocks(dnaGroup, distRacePad)
             self.startingBlocks += startingBlocks
             for startingBlock in startingBlocks:
@@ -114,11 +110,8 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
         for distObj in self.startingBlocks:
             self.addDistObj(distObj)
 
-        for (
-                dnaGroup,
-                distViewPad) in zip(
-                self.foundViewingPadGroups,
-                self.viewingPads):
+        for (dnaGroup, distViewPad) in zip(self.foundViewingPadGroups,
+                                           self.viewingPads):
             viewingBlocks = self.air.findStartingBlocks(dnaGroup, distViewPad)
             self.viewingBlocks += viewingBlocks
             for viewingBlock in viewingBlocks:

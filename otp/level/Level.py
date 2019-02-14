@@ -31,10 +31,8 @@ class Level:
         for entType in self.entityCreator.getEntityTypes():
             self.entType2ids.setdefault(entType, [])
 
-        self.createAllEntities(priorityTypes=[
-            'levelMgr',
-            'zone',
-            'propSpinner'])
+        self.createAllEntities(
+            priorityTypes=['levelMgr', 'zone', 'propSpinner'])
         self.levelMgrEntity = self.getEntity(LevelConstants.LevelMgrEntId)
         self.uberZoneEntity = self.getEntity(LevelConstants.UberZoneEntId)
         self.initialized = 1
@@ -69,8 +67,7 @@ class Level:
 
     def createEntityCreator(self):
         Level.notify.error(
-            'concrete Level class must override %s' %
-            lineInfo()[2])
+            'concrete Level class must override %s' % lineInfo()[2])
 
     def createAllEntities(self, priorityTypes=[]):
         self.entities = {}
@@ -90,25 +87,19 @@ class Level:
         self.nothingEntIds = {}
         if not uniqueElements(self.createdEntIds):
             Level.notify.warning(
-                '%s: self.createdEntIds is not unique: %s' %
-                (getattr(
-                    self,
-                    'doId',
-                    None),
-                    self.createdEntIds))
+                '%s: self.createdEntIds is not unique: %s' % (getattr(
+                    self, 'doId', None), self.createdEntIds))
 
         while len(self.createdEntIds) > 0:
             entId = self.createdEntIds.pop()
             entity = self.getEntity(entId)
             if entity is not None:
                 Level.notify.debug(
-                    'destroying %s %s' %
-                    (self.getEntityType(entId), entId))
+                    'destroying %s %s' % (self.getEntityType(entId), entId))
                 entity.destroy()
                 continue
             Level.notify.error(
-                'trying to destroy entity %s, but it is already gone' %
-                entId)
+                'trying to destroy entity %s, but it is already gone' % entId)
 
     def createAllEntitiesOfType(self, entType):
         self.onEntityTypePreCreate(entType)
@@ -207,8 +198,7 @@ class Level:
     def onEntityCreate(self, entId):
         messenger.send(self.getEntityCreateEvent(entId))
         messenger.send(
-            self.getEntityOfTypeCreateEvent(
-                self.getEntityType(entId)),
+            self.getEntityOfTypeCreateEvent(self.getEntityType(entId)),
             [entId])
         if entId in self.entId2createCallbacks:
             for callback in self.entId2createCallbacks[entId]:
@@ -258,11 +248,8 @@ class Level:
             if entity is not None:
                 entity.handleAttribChange(attrib, value)
 
-            messenger.send(self.getAttribChangeEventName(), [
-                entId,
-                attrib,
-                value,
-                username])
+            messenger.send(self.getAttribChangeEventName(),
+                           [entId, attrib, value, username])
 
         def setEntityCreatorUsername(self, entId, editUsername):
             pass
@@ -270,12 +257,10 @@ class Level:
         def handleEntityInsert(self, entId):
             self.entType2ids[self.getEntityType(entId)].append(entId)
             self.createEntity(entId)
-            messenger.send(self.getInsertEntityEventName(), [
-                entId])
+            messenger.send(self.getInsertEntityEventName(), [entId])
 
         def handleEntityRemove(self, entId):
-            messenger.send(self.getRemoveEntityEventName(), [
-                entId])
+            messenger.send(self.getRemoveEntityEventName(), [entId])
             if entId in self.createdEntIds:
                 entity = self.getEntity(entId)
                 entity.destroy()

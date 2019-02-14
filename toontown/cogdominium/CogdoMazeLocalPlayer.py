@@ -21,8 +21,8 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
         self.game = game
         self.maze = self.game.maze
         self._guiMgr = guiMgr
-        self.cameraMgr = CogdoMazeCameraManager(
-            self.toon, self.maze, camera, render)
+        self.cameraMgr = CogdoMazeCameraManager(self.toon, self.maze, camera,
+                                                render)
         self._proximityRadius = self.maze.cellWidth * Globals.CameraRemoteToonRadius
         orthoDrive = OrthoDrive(
             Globals.ToonRunSpeed,
@@ -44,10 +44,9 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
         self.numEntered = 0
         self.throwPending = False
         self.coolDownAfterHitInterval = Sequence(
-            Wait(
-                Globals.HitCooldownTime), Func(
-                self.setInvulnerable, False), name='coolDownAfterHitInterval-%i' %
-            self.toon.doId)
+            Wait(Globals.HitCooldownTime),
+            Func(self.setInvulnerable, False),
+            name='coolDownAfterHitInterval-%i' % self.toon.doId)
         self.invulnerable = False
         self.gagHandler = CollisionHandlerEvent()
         self.gagHandler.addInPattern('%fn-into-%in')
@@ -57,7 +56,8 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
             'throw': False,
             'squashed': False,
             'boss': False,
-            'minion': False}
+            'minion': False
+        }
         self.accept('control', self.controlKeyPressed)
 
     def destroy(self):
@@ -109,12 +109,11 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
                 numPlayers += 1
                 continue
 
-        d = clamp(Globals.CameraMinDistance +
-                  (numPlayers /
-                   (CogdoGameConsts.MaxPlayers -
-                    1)) *
-                  (Globals.CameraMaxDistance -
-                      Globals.CameraMinDistance), Globals.CameraMinDistance, Globals.CameraMaxDistance)
+        d = clamp(
+            Globals.CameraMinDistance +
+            (numPlayers / (CogdoGameConsts.MaxPlayers - 1)) *
+            (Globals.CameraMaxDistance - Globals.CameraMinDistance),
+            Globals.CameraMinDistance, Globals.CameraMaxDistance)
         self.cameraMgr.setCameraTargetDistance(d)
         self.cameraMgr.update(dt)
 
@@ -162,8 +161,8 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
 
     def hitByDrop(self):
         if self.equippedGag is not None and not self.hints['squashed']:
-            self._guiMgr.setMessageTemporary(
-                TTLocalizer.CogdoMazeSquashHint, Globals.HintTimeout)
+            self._guiMgr.setMessageTemporary(TTLocalizer.CogdoMazeSquashHint,
+                                             Globals.HintTimeout)
             self.hints['squashed'] = True
 
         self._hitByDropSfx.play()
@@ -179,13 +178,13 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
 
     def hitSuit(self, suitType):
         if suitType == Globals.SuitTypes.Boss and not self.hints['boss']:
-            self._guiMgr.setMessageTemporary(
-                TTLocalizer.CogdoMazeBossHint, Globals.HintTimeout)
+            self._guiMgr.setMessageTemporary(TTLocalizer.CogdoMazeBossHint,
+                                             Globals.HintTimeout)
             self.hints['boss'] = True
 
         if suitType != Globals.SuitTypes.Boss and not self.hints['minion']:
-            self._guiMgr.setMessageTemporary(
-                TTLocalizer.CogdoMazeMinionHint, Globals.HintTimeout)
+            self._guiMgr.setMessageTemporary(TTLocalizer.CogdoMazeMinionHint,
+                                             Globals.HintTimeout)
             self.hints['minion'] = True
 
     def createThrowGag(self, gag):
@@ -240,10 +239,9 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
         self._CogdoMazeLocalPlayer__initCollisions()
         self._guiMgr.startGame(TTLocalizer.CogdoMazeFindHint)
         self.hints['find'] = True
-        self.notify.info(
-            'toonId:%d laff:%d/%d  %d player(s) started maze game' %
-            (self.toon.doId, self.toon.hp, self.toon.maxHp, len(
-                self.game.players)))
+        self.notify.info('toonId:%d laff:%d/%d  %d player(s) started maze game'
+                         % (self.toon.doId, self.toon.hp, self.toon.maxHp,
+                            len(self.game.players)))
 
     def handleGameExit(self):
         self.cameraMgr.disable()
@@ -260,9 +258,9 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
 
     def handleOpenDoor(self, door):
         self._guiMgr.setMessage(TTLocalizer.CogdoMazeGameDoorOpens)
-        self._guiMgr.showQuestArrow(
-            self.toon, door, Point3(
-                0, 0, self.toon.getHeight() + 2))
+        self._guiMgr.showQuestArrow(self.toon, door,
+                                    Point3(0, 0,
+                                           self.toon.getHeight() + 2))
 
     def handleTimeAlert(self):
         self._guiMgr.setMessageTemporary(TTLocalizer.CogdoMazeGameTimeAlert)
@@ -284,9 +282,8 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
             self._audioMgr.stopMusic()
 
         self.notify.info(
-            'toonId:%d laff:%d/%d  %d player(s) succeeded in maze game. Going to the executive suit building.' %
-            (toonId, self.toon.hp, self.toon.maxHp, len(
-                self.game.players)))
+            'toonId:%d laff:%d/%d  %d player(s) succeeded in maze game. Going to the executive suit building.'
+            % (toonId, self.toon.hp, self.toon.maxHp, len(self.game.players)))
         if self.numEntered > len(self.game.players):
             self.notify.info('%d player(s) failed in maze game' %
                              (self.numEntered - len(self.game.players)))
@@ -297,5 +294,5 @@ class CogdoMazeLocalPlayer(CogdoMazePlayer):
         self._guiMgr.setPickupCount(self.pickupCount)
         self.notify.info(
             'toonId:%d laff:%d/%d  %d player(s) failed in maze game' %
-            (self.toon.doId, self.toon.hp, self.toon.maxHp, len(
-                self.game.players)))
+            (self.toon.doId, self.toon.hp, self.toon.maxHp,
+             len(self.game.players)))

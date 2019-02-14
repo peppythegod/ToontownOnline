@@ -9,9 +9,8 @@ from direct.task import Task
 smileyDoId = 1
 
 
-class DistributedCashbotBossObject(
-        DistributedSmoothNode.DistributedSmoothNode,
-        FSM.FSM):
+class DistributedCashbotBossObject(DistributedSmoothNode.DistributedSmoothNode,
+                                   FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedCashbotBossObject')
     wantsWatchDrift = 1
@@ -25,9 +24,11 @@ class DistributedCashbotBossObject(
         self.cleanedUp = 0
         self.collisionNode = CollisionNode('object')
         self.collisionNode.setIntoCollideMask(
-            ToontownGlobals.PieBitmask | OTPGlobals.WallBitmask | ToontownGlobals.CashbotBossObjectBitmask | OTPGlobals.CameraBitmask)
-        self.collisionNode.setFromCollideMask(
-            ToontownGlobals.PieBitmask | OTPGlobals.FloorBitmask)
+            ToontownGlobals.PieBitmask | OTPGlobals.WallBitmask
+            | ToontownGlobals.CashbotBossObjectBitmask
+            | OTPGlobals.CameraBitmask)
+        self.collisionNode.setFromCollideMask(ToontownGlobals.PieBitmask
+                                              | OTPGlobals.FloorBitmask)
         self.collisionNodePath = NodePath(self.collisionNode)
         self.physicsActivated = 0
         self.toMagnetSoundInterval = Sequence()
@@ -89,9 +90,8 @@ class DistributedCashbotBossObject(
                         self._DistributedCashbotBossObject__hitFloor)
             self.accept(self.collideName + '-goon',
                         self._DistributedCashbotBossObject__hitGoon)
-            self.acceptOnce(
-                self.collideName + '-headTarget',
-                self._DistributedCashbotBossObject__hitBoss)
+            self.acceptOnce(self.collideName + '-headTarget',
+                            self._DistributedCashbotBossObject__hitBoss)
             self.accept(self.collideName + '-dropPlane',
                         self._DistributedCashbotBossObject__hitDropPlane)
 
@@ -133,8 +133,8 @@ class DistributedCashbotBossObject(
         pass
 
     def _DistributedCashbotBossObject__hitBoss(self, entry):
-        if (self.state == 'Dropped' or self.state ==
-                'LocalDropped') and self.craneId != self.boss.doId:
+        if (self.state == 'Dropped' or self.state == 'LocalDropped'
+            ) and self.craneId != self.boss.doId:
             vel = self.physicsObject.getVelocity()
             vel = self.crane.root.getRelativeVector(render, vel)
             vel.normalize()
@@ -208,15 +208,13 @@ class DistributedCashbotBossObject(
         self.sendUpdate('hitFloor')
 
     def d_requestFree(self):
-        self.sendUpdate('requestFree', [
-            self.getX(),
-            self.getY(),
-            self.getZ(),
-            self.getH()])
+        self.sendUpdate(
+            'requestFree',
+            [self.getX(), self.getY(),
+             self.getZ(), self.getH()])
 
     def d_hitBoss(self, impact):
-        self.sendUpdate('hitBoss', [
-            impact])
+        self.sendUpdate('hitBoss', [impact])
 
     def defaultFilter(self, request, args):
         if self.boss is None:
@@ -323,9 +321,8 @@ class DistributedCashbotBossObject(
             self.handler.setStaticFrictionCoef(0.90000000000000002)
             self.handler.setDynamicFrictionCoef(0.5)
             if self.wantsWatchDrift:
-                taskMgr.add(
-                    self._DistributedCashbotBossObject__watchDrift,
-                    self.watchDriftName)
+                taskMgr.add(self._DistributedCashbotBossObject__watchDrift,
+                            self.watchDriftName)
 
         else:
             self.startSmooth()

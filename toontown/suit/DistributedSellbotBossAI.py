@@ -15,9 +15,8 @@ import SuitDNA
 import random
 
 
-class DistributedSellbotBossAI(
-        DistributedBossCogAI.DistributedBossCogAI,
-        FSM.FSM):
+class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI,
+                               FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedSellbotBossAI')
     limitHitCount = 6
@@ -50,17 +49,12 @@ class DistributedSellbotBossAI(
 
     def hitBoss(self, bossDamage):
         avId = self.air.getAvatarIdFromSender()
-        if not self.validate(
-                avId,
-                avId in self.involvedToons,
-                'hitBoss from unknown avatar'):
+        if not self.validate(avId, avId in self.involvedToons,
+                             'hitBoss from unknown avatar'):
             return None
 
-        self.validate(
-            avId,
-            bossDamage == 1,
-            'invalid bossDamage %s' %
-            bossDamage)
+        self.validate(avId, bossDamage == 1,
+                      'invalid bossDamage %s' % bossDamage)
         if bossDamage < 1:
             return None
 
@@ -80,10 +74,8 @@ class DistributedSellbotBossAI(
 
     def hitBossInsides(self):
         avId = self.air.getAvatarIdFromSender()
-        if not self.validate(
-                avId,
-                avId in self.involvedToons,
-                'hitBossInsides from unknown avatar'):
+        if not self.validate(avId, avId in self.involvedToons,
+                             'hitBossInsides from unknown avatar'):
             return None
 
         currState = self.getCurrentOrNextState()
@@ -111,10 +103,8 @@ class DistributedSellbotBossAI(
         if currState != 'BattleThree' and currState != 'NearVictory':
             return None
 
-        if not self.validate(
-                avId,
-                avId in self.involvedToons,
-                'touchCage from unknown avatar'):
+        if not self.validate(avId, avId in self.involvedToons,
+                             'touchCage from unknown avatar'):
             return None
 
         toon = simbase.air.doId2do.get(avId)
@@ -139,7 +129,8 @@ class DistributedSellbotBossAI(
                 ToontownGlobals.BossCogDirectedAttack,
                 ToontownGlobals.BossCogDirectedAttack,
                 ToontownGlobals.BossCogDirectedAttack,
-                ToontownGlobals.BossCogDirectedAttack])
+                ToontownGlobals.BossCogDirectedAttack
+            ])
         if attackCode == ToontownGlobals.BossCogAreaAttack:
             self._DistributedSellbotBossAI__doAreaAttack()
         elif attackCode == ToontownGlobals.BossCogDirectedAttack:
@@ -179,10 +170,7 @@ class DistributedSellbotBossAI(
 
     def d_setBossDamage(self, bossDamage, recoverRate, recoverStartTime):
         timestamp = globalClockDelta.localToNetworkTime(recoverStartTime)
-        self.sendUpdate('setBossDamage', [
-            bossDamage,
-            recoverRate,
-            timestamp])
+        self.sendUpdate('setBossDamage', [bossDamage, recoverRate, timestamp])
 
     def waitForNextStrafe(self, delayTime):
         currState = self.getCurrentOrNextState()
@@ -197,15 +185,9 @@ class DistributedSellbotBossAI(
 
     def doNextStrafe(self, task):
         if self.attackCode != ToontownGlobals.BossCogDizzyNow:
-            side = random.choice([
-                0,
-                1])
-            direction = random.choice([
-                0,
-                1])
-            self.sendUpdate('doStrafe', [
-                side,
-                direction])
+            side = random.choice([0, 1])
+            direction = random.choice([0, 1])
+            self.sendUpdate('doStrafe', [side, direction])
 
         delayTime = 9
         self.waitForNextStrafe(delayTime)
@@ -215,13 +197,10 @@ class DistributedSellbotBossAI(
         for suit in self.doobers:
             dooberIds.append(suit.doId)
 
-        self.sendUpdate('setDooberIds', [
-            dooberIds])
+        self.sendUpdate('setDooberIds', [dooberIds])
 
     def d_cagedToonBattleThree(self, index, avId):
-        self.sendUpdate('cagedToonBattleThree', [
-            index,
-            avId])
+        self.sendUpdate('cagedToonBattleThree', [index, avId])
 
     def formatReward(self):
         return str(self.cagedToonNpcId)
@@ -263,9 +242,7 @@ class DistributedSellbotBossAI(
     def enterRollToBattleTwo(self):
         self.divideToons()
         self.barrier = self.beginBarrier(
-            'RollToBattleTwo',
-            self.involvedToons,
-            45,
+            'RollToBattleTwo', self.involvedToons, 45,
             self._DistributedSellbotBossAI__doneRollToBattleTwo)
 
     def _DistributedSellbotBossAI__doneRollToBattleTwo(self, avIds):
@@ -276,9 +253,7 @@ class DistributedSellbotBossAI(
 
     def enterPrepareBattleTwo(self):
         self.barrier = self.beginBarrier(
-            'PrepareBattleTwo',
-            self.involvedToons,
-            30,
+            'PrepareBattleTwo', self.involvedToons, 30,
             self._DistributedSellbotBossAI__donePrepareBattleTwo)
         self.makeBattleTwoBattles()
 
@@ -304,9 +279,7 @@ class DistributedSellbotBossAI(
 
     def enterPrepareBattleThree(self):
         self.barrier = self.beginBarrier(
-            'PrepareBattleThree',
-            self.involvedToons,
-            30,
+            'PrepareBattleThree', self.involvedToons, 30,
             self._DistributedSellbotBossAI__donePrepareBattleThree)
 
     def _DistributedSellbotBossAI__donePrepareBattleThree(self, avIds):
@@ -359,9 +332,7 @@ class DistributedSellbotBossAI(
         taskName = self.uniqueName('CagedToonSaySomething')
         taskMgr.remove(taskName)
         taskMgr.doMethodLater(
-            delayTime,
-            self._DistributedSellbotBossAI__saySomething,
-            taskName)
+            delayTime, self._DistributedSellbotBossAI__saySomething, taskName)
 
     def _DistributedSellbotBossAI__goodJump(self, avId):
         currState = self.getCurrentOrNextState()
@@ -397,31 +368,25 @@ class DistributedSellbotBossAI(
             'isCFO': 0,
             'isSupervisor': 0,
             'isVirtual': 0,
-            'activeToons': self.involvedToons[:]})
+            'activeToons': self.involvedToons[:]
+        })
         self.barrier = self.beginBarrier(
-            'Victory',
-            self.involvedToons,
-            10,
+            'Victory', self.involvedToons, 10,
             self._DistributedSellbotBossAI__doneVictory)
 
     def _DistributedSellbotBossAI__doneVictory(self, avIds):
         self.d_setBattleExperience()
         self.b_setState('Reward')
         BattleExperienceAI.assignRewards(
-            self.involvedToons,
-            self.toonSkillPtsGained,
-            self.suitsKilled,
-            ToontownGlobals.dept2cogHQ(
-                self.dept),
-            self.helpfulToons)
+            self.involvedToons, self.toonSkillPtsGained, self.suitsKilled,
+            ToontownGlobals.dept2cogHQ(self.dept), self.helpfulToons)
         for toonId in self.involvedToons:
             toon = self.air.doId2do.get(toonId)
             if toon:
                 if not toon.attemptAddNPCFriend(
                         self.cagedToonNpcId, numCalls=1):
-                    self.notify.info(
-                        '%s.unable to add NPCFriend %s to %s.' %
-                        (self.doId, self.cagedToonNpcId, toonId))
+                    self.notify.info('%s.unable to add NPCFriend %s to %s.' %
+                                     (self.doId, self.cagedToonNpcId, toonId))
 
                 toon.b_promote(self.deptIndex)
                 continue

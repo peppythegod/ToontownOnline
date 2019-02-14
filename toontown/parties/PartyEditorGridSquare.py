@@ -22,19 +22,12 @@ class PartyEditorGridSquare(DirectObject):
     def getPos(self):
         return Point3(
             PartyGlobals.PartyEditorGridBounds[0][0] +
-            self.x *
-            PartyGlobals.PartyEditorGridSquareSize[0] +
-            PartyGlobals.PartyEditorGridSquareSize[0] /
-            2.0,
-            0.0,
+            self.x * PartyGlobals.PartyEditorGridSquareSize[0] +
+            PartyGlobals.PartyEditorGridSquareSize[0] / 2.0, 0.0,
             PartyGlobals.PartyEditorGridBounds[1][1] +
-            (
-                PartyGlobals.PartyEditorGridSize[1] -
-                1 -
-                self.y) *
+            (PartyGlobals.PartyEditorGridSize[1] - 1 - self.y) *
             PartyGlobals.PartyEditorGridSquareSize[1] +
-            PartyGlobals.PartyEditorGridSquareSize[1] /
-            2.0)
+            PartyGlobals.PartyEditorGridSquareSize[1] / 2.0)
 
     def destroy(self):
         del self.gridElement

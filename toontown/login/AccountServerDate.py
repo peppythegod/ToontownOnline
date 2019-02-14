@@ -32,8 +32,7 @@ class AccountServerDate:
         if response[0] != 'ACCOUNT SERVER DATE':
             self.notify.debug('invalid response header')
             raise UnexpectedResponse(
-                'unexpected response, response=%s' %
-                response)
+                'unexpected response, response=%s' % response)
 
         try:
             epoch = int(response[1])
@@ -41,8 +40,7 @@ class AccountServerDate:
             e = None
             self.notify.debug(str(e))
             raise UnexpectedResponse(
-                'unexpected response, response=%s' %
-                response)
+                'unexpected response, response=%s' % response)
 
         timeTuple = time.gmtime(epoch)
         self.year = timeTuple[0]

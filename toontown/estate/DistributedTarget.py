@@ -101,22 +101,20 @@ class DistributedTarget(DistributedObject.DistributedObject):
 
             if enabled:
                 self.fadeTrack = Sequence(
-                    Func(
-                        base.localAvatar.setSystemMessage, 0, TTLocalizer.EstateTargetGameStart), Func(
-                        self.geom.unstash), Func(
-                        self.geom.lerpColorScale, Vec4(
-                            1.0, 1.0, 1.0, 0.0), Vec4(
-                            1.0, 1.0, 1.0, 1.0), 1.0), Wait(1), Func(
-                            base.localAvatar.setSystemMessage, 0, TTLocalizer.EstateTargetGameInst))
+                    Func(base.localAvatar.setSystemMessage, 0,
+                         TTLocalizer.EstateTargetGameStart),
+                    Func(self.geom.unstash),
+                    Func(self.geom.lerpColorScale, Vec4(1.0, 1.0, 1.0, 0.0),
+                         Vec4(1.0, 1.0, 1.0, 1.0), 1.0), Wait(1),
+                    Func(base.localAvatar.setSystemMessage, 0,
+                         TTLocalizer.EstateTargetGameInst))
             else:
                 self.fadeTrack = Sequence(
-                    Func(
-                        self.geom.lerpColorScale, Vec4(
-                            1.0, 1.0, 1.0, 1.0), Vec4(
-                            1.0, 1.0, 1.0, 0.0), 1.0), Func(
-                        self.geom.stash), Func(
-                        self.hideTimer), Func(
-                            base.localAvatar.setSystemMessage, 0, TTLocalizer.EstateTargetGameEnd))
+                    Func(self.geom.lerpColorScale, Vec4(1.0, 1.0, 1.0, 1.0),
+                         Vec4(1.0, 1.0, 1.0, 0.0), 1.0), Func(self.geom.stash),
+                    Func(self.hideTimer),
+                    Func(base.localAvatar.setSystemMessage, 0,
+                         TTLocalizer.EstateTargetGameEnd))
             self.fadeTrack.start()
             self.enabled = enabled
 
@@ -137,8 +135,7 @@ class DistributedTarget(DistributedObject.DistributedObject):
             avId = base.localAvatar.doId
 
         if self.enabled:
-            self.sendUpdate('setResult', [
-                avId])
+            self.sendUpdate('setResult', [avId])
 
         if vel:
             if self.targetBounceTrack:
@@ -150,8 +147,7 @@ class DistributedTarget(DistributedObject.DistributedObject):
             newPos = pos - dist * 1.5
             springPos = pos + dist
             self.notify.debug(
-                'reaction distance = %s,%s,%s' %
-                (vel[0], vel[1], vel[2]))
+                'reaction distance = %s,%s,%s' % (vel[0], vel[1], vel[2]))
             self.targetBounceTrack = Sequence(
                 LerpPosInterval(
                     self.geom,
@@ -172,13 +168,11 @@ class DistributedTarget(DistributedObject.DistributedObject):
 
     def handleMissedTarget(self):
         if self.enabled:
-            self.sendUpdate('setResult', [
-                0])
+            self.sendUpdate('setResult', [0])
 
     def handleHitCloud(self):
         if self.enabled:
-            self.sendUpdate('setBonus', [
-                0.5])
+            self.sendUpdate('setBonus', [0.5])
 
     def setLevel(self, level):
         self.notify.debug('setLevel(%s)' % level)
@@ -197,14 +191,12 @@ class DistributedTarget(DistributedObject.DistributedObject):
 
     def showTimer(self):
         if base.localAvatar.animFSM.getCurrentState().getName() != 'ReadBook':
-            base.setCellsAvailable([
-                base.rightCells[0]], 0)
+            base.setCellsAvailable([base.rightCells[0]], 0)
             self.timer.show()
 
     def hideTimer(self):
         self.timer.hide()
-        base.setCellsAvailable([
-            base.rightCells[0]], 1)
+        base.setCellsAvailable([base.rightCells[0]], 1)
 
     def setPosition(self, x, y, z):
         self.geom.setPos(x, y, z)
@@ -221,8 +213,8 @@ class DistributedTarget(DistributedObject.DistributedObject):
         if pinballEntry:
             titleText += TTLocalizer.PinballYourBestScore
             scoreText += TTLocalizer.PinballScoreHolder % pinballEntry[0]
-            titleText += TTLocalizer.PinballScore % (
-                pinballEntry[1], pinballEntry[2])
+            titleText += TTLocalizer.PinballScore % (pinballEntry[1],
+                                                     pinballEntry[2])
             scoreText += TTLocalizer.PinballScoreHolder % pinballEntry[1] * \
                 pinballEntry[2]
 
@@ -230,13 +222,9 @@ class DistributedTarget(DistributedObject.DistributedObject):
 
     def setCurPinballScore(self, avId, score, multiplier):
         self.notify.debug(
-            'setCurPinballScore %d %d %d' %
-            (avId, score, multiplier))
+            'setCurPinballScore %d %d %d' % (avId, score, multiplier))
         if self.pinballInfo.get(avId) is None:
-            self.pinballInfo[avId] = [
-                0,
-                0,
-                0]
+            self.pinballInfo[avId] = [0, 0, 0]
 
         pinballEntry = self.pinballInfo[avId]
         pinballEntry[1] = score
@@ -255,10 +243,7 @@ class DistributedTarget(DistributedObject.DistributedObject):
 
     def b_setCurPinballScore(self, avId, score, multiplier):
         self.setCurPinballScore(avId, score, multiplier)
-        self.sendUpdate('setCurPinballScore', [
-            avId,
-            score,
-            multiplier])
+        self.sendUpdate('setCurPinballScore', [avId, score, multiplier])
 
     def _DistributedTarget__showOnscreenMessage(self, titleText, scoreText):
         self.notify.debug('----- __showOnscreenmessage')
@@ -267,32 +252,25 @@ class DistributedTarget(DistributedObject.DistributedObject):
                 relief=None,
                 geom=DGG.getDefaultDialogGeom(),
                 geom_color=GlobalDialogColor,
-                geom_scale=(
-                    12,
-                    1,
-                    3),
-                pos=(
-                    0,
-                    0,
-                    0.80000000000000004),
+                geom_scale=(12, 1, 3),
+                pos=(0, 0, 0.80000000000000004),
                 scale=0.10000000000000001)
-            titles = DirectLabel(parent=self.onscreenMessage, relief=None, text=titleText, text_fg=VBase4(
-                0, 0, 0, 1), text_align=TextNode.ALeft, text_scale=0.69999999999999996, pos=(-5.75, 0, 0.5))
+            titles = DirectLabel(
+                parent=self.onscreenMessage,
+                relief=None,
+                text=titleText,
+                text_fg=VBase4(0, 0, 0, 1),
+                text_align=TextNode.ALeft,
+                text_scale=0.69999999999999996,
+                pos=(-5.75, 0, 0.5))
             scores = DirectLabel(
                 parent=self.onscreenMessage,
                 relief=None,
                 text=scoreText,
-                text_fg=VBase4(
-                    1,
-                    0,
-                    0,
-                    1),
+                text_fg=VBase4(1, 0, 0, 1),
                 text_align=TextNode.ARight,
                 text_scale=0.69999999999999996,
-                pos=(
-                    5.75,
-                    0,
-                    0.5))
+                pos=(5.75, 0, 0.5))
             self.onscreenMessage.titles = titles
             self.onscreenMessage.scores = scores
         else:

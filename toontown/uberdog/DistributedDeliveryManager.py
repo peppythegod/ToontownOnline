@@ -8,8 +8,7 @@ class DistributedDeliveryManager(DistributedObject):
     neverDisable = 1
 
     def sendHello(self, message):
-        self.sendUpdate('hello', [
-            message])
+        self.sendUpdate('hello', [message])
 
     def rejectHello(self, message):
         print 'rejected', message

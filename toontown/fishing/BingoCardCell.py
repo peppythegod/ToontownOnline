@@ -16,32 +16,12 @@ class BingoCardCell(DirectButton, FSM.FSM):
         self.model = model
         self.color = color
         buttonToUse = self.model.find('**/mickeyButton')
-        optiondefs = (
-            ('relief',
-             None,
-             None),
-            ('state',
-             DGG.DISABLED,
-             None),
-            ('image',
-             buttonToUse,
-             None),
-            ('image_color',
-             self.color,
-             None),
-            ('image_hpr',
-             (0,
-              90,
-              0),
-                None),
-            ('image_pos',
-             (0,
-              0,
-              0),
-                None),
-            ('pressEffect',
-             False,
-             None))
+        optiondefs = (('relief', None, None), ('state', DGG.DISABLED, None),
+                      ('image', buttonToUse, None), ('image_color', self.color,
+                                                     None), ('image_hpr',
+                                                             (0, 90, 0), None),
+                      ('image_pos', (0, 0, 0), None), ('pressEffect', False,
+                                                       None))
         self.defineoptions(kw, optiondefs)
         DirectButton.__init__(self, parent)
         FSM.FSM.__init__(self, 'BingoCardCell')
@@ -58,11 +38,8 @@ class BingoCardCell(DirectButton, FSM.FSM):
         button.setHpr(0, 90, 0)
         button.setPos(0, 0, 0)
         button.setScale(BingoGlobals.CellImageScale)
-        button.setColor(
-            self.color[0],
-            self.color[1],
-            self.color[2],
-            self.color[3])
+        button.setColor(self.color[0], self.color[1], self.color[2],
+                        self.color[3])
         self['image'] = button
         self.setImage()
 
@@ -115,8 +92,7 @@ class BingoCardCell(DirectButton, FSM.FSM):
             return request
         else:
             self.notify.debug(
-                'filterOff: Invalid State Transition from Off to %s' %
-                request)
+                'filterOff: Invalid State Transition from Off to %s' % request)
 
     def enterOn(self, args):
         self['state'] = DGG.NORMAL
@@ -128,5 +104,4 @@ class BingoCardCell(DirectButton, FSM.FSM):
             return request
         else:
             self.notify.debug(
-                'filterOn: Invalid State Transition from Off to %s' %
-                request)
+                'filterOn: Invalid State Transition from Off to %s' % request)

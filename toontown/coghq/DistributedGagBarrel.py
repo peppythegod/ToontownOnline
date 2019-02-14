@@ -6,7 +6,6 @@ import DistributedBarrelBase
 
 
 class DistributedGagBarrel(DistributedBarrelBase.DistributedBarrelBase):
-
     def __init__(self, cr):
         self.gagLevelMax = 0
         DistributedBarrelBase.DistributedBarrelBase.__init__(self, cr)
@@ -46,8 +45,7 @@ class DistributedGagBarrel(DistributedBarrelBase.DistributedBarrelBase):
             gagTrack = self.getGagTrack()
             gagLevel = self.getGagLevel()
             self.notify.debug(
-                'gagTrack = %s, gagLevel = %s' %
-                (gagTrack, gagLevel))
+                'gagTrack = %s, gagLevel = %s' % (gagTrack, gagLevel))
             self.gagModel = self.invModels[gagTrack][gagLevel]
             self.gagModel.reparentTo(self.gagNode)
             self.gagModel.setScale(self.gagScale)

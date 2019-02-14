@@ -12,7 +12,6 @@ from toontown.hood import ZoneUtil
 
 
 class PetshopBuildingAI:
-
     def __init__(self, air, exteriorZone, interiorZone, blockNumber):
         self.air = air
         self.exteriorZone = exteriorZone
@@ -37,8 +36,8 @@ class PetshopBuildingAI:
         self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         seeds = self.air.petMgr.getAvailablePets(1, len(self.npcs))
         self.interior.generateWithRequired(self.interiorZone)
-        door = DistributedDoorAI.DistributedDoorAI(
-            self.air, blockNumber, DoorTypes.EXT_STANDARD)
+        door = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber,
+                                                   DoorTypes.EXT_STANDARD)
         insideDoor = DistributedDoorAI.DistributedDoorAI(
             self.air, blockNumber, DoorTypes.INT_STANDARD)
         door.setOtherDoor(insideDoor)

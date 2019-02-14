@@ -12,11 +12,10 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
     localPlayer = None
     view = None
 
-    def __init__(
-            self,
-            cr,
-            arenaModel='phase_13/models/parties/cogPieArena_model',
-            texture=None):
+    def __init__(self,
+                 cr,
+                 arenaModel='phase_13/models/parties/cogPieArena_model',
+                 texture=None):
         DistributedPartyTeamActivity.__init__(
             self,
             cr,
@@ -73,24 +72,11 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
         h = toon.getH()
         toonId = toon.doId
         self.view.pieThrow(toonId, timestamp, h, pos, power)
-        self.d_broadcastPieThrow(
-            toonId,
-            timestamp,
-            h,
-            pos[0],
-            pos[1],
-            pos[2],
-            power)
+        self.d_broadcastPieThrow(toonId, timestamp, h, pos[0], pos[1], pos[2],
+                                 power)
 
     def d_broadcastPieThrow(self, toonId, timestamp, h, x, y, z, power):
-        self.sendUpdate('pieThrow', [
-            toonId,
-            timestamp,
-            h,
-            x,
-            y,
-            z,
-            power])
+        self.sendUpdate('pieThrow', [toonId, timestamp, h, x, y, z, power])
 
     def pieHitsToon(self, toonId, timestamp, x, y, z):
         if toonId not in self.toonIds:
@@ -99,56 +85,33 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
         self.view.pieHitsToon(toonId, timestamp, Point3(x, y, z))
 
     def d_broadcastPieHitsToon(self, toonId, timestamp, pos):
-        self.sendUpdate('pieHitsToon', [
-            toonId,
-            timestamp,
-            pos[0],
-            pos[1],
-            pos[2]])
+        self.sendUpdate('pieHitsToon',
+                        [toonId, timestamp, pos[0], pos[1], pos[2]])
 
     def b_pieHitsToon(self, toonId, timestamp, pos):
         self.view.pieHitsToon(toonId, timestamp, pos)
         self.d_broadcastPieHitsToon(toonId, timestamp, pos)
 
-    def pieHitsCog(
-            self,
-            toonId,
-            timestamp,
-            hitCogNum,
-            x,
-            y,
-            z,
-            direction,
-            part):
+    def pieHitsCog(self, toonId, timestamp, hitCogNum, x, y, z, direction,
+                   part):
         if toonId not in self.toonIds:
             return None
 
         if toonId != base.localAvatar.doId:
-            self.view.pieHitsCog(
-                timestamp, hitCogNum, Point3(
-                    x, y, z), direction, part)
+            self.view.pieHitsCog(timestamp, hitCogNum, Point3(x, y, z),
+                                 direction, part)
 
     def b_pieHitsCog(self, timestamp, hitCogNum, pos, direction, part):
         self.view.pieHitsCog(timestamp, hitCogNum, pos, direction, part)
-        self.d_broadcastSendPieHitsCog(
-            timestamp, hitCogNum, pos, direction, part)
+        self.d_broadcastSendPieHitsCog(timestamp, hitCogNum, pos, direction,
+                                       part)
 
-    def d_broadcastSendPieHitsCog(
-            self,
-            timestamp,
-            hitCogNum,
-            pos,
-            direction,
-            part):
+    def d_broadcastSendPieHitsCog(self, timestamp, hitCogNum, pos, direction,
+                                  part):
         self.sendUpdate('pieHitsCog', [
-            base.localAvatar.doId,
-            timestamp,
-            hitCogNum,
-            pos[0],
-            pos[1],
-            pos[2],
-            direction,
-            part])
+            base.localAvatar.doId, timestamp, hitCogNum, pos[0], pos[1],
+            pos[2], direction, part
+        ])
 
     def setCogDistances(self, distances):
         self.view.setCogDistances(distances)
@@ -210,10 +173,8 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
         self.view.closeArenaDoors()
         if not self.isLocalToonPlaying:
             self.view.showArenaDoorTimers(
-                self._duration +
-                PartyGlobals.CogActivityConclusionDuration +
-                1.0 -
-                self.getCurrentActivityTime())
+                self._duration + PartyGlobals.CogActivityConclusionDuration +
+                1.0 - self.getCurrentActivityTime())
 
     def finishActive(self):
         DistributedPartyTeamActivity.finishActive(self)
@@ -224,9 +185,11 @@ class DistributedPartyCogActivity(DistributedPartyTeamActivity):
         if self.isLocalToonPlaying:
             score = (int(data / 10000), data % 10000)
             winner = 2
-            if score[PartyGlobals.TeamActivityTeams.LeftTeam] > score[PartyGlobals.TeamActivityTeams.RightTeam]:
+            if score[PartyGlobals.TeamActivityTeams.LeftTeam] > score[
+                    PartyGlobals.TeamActivityTeams.RightTeam]:
                 winner = PartyGlobals.TeamActivityTeams.LeftTeam
-            elif score[PartyGlobals.TeamActivityTeams.LeftTeam] < score[PartyGlobals.TeamActivityTeams.RightTeam]:
+            elif score[PartyGlobals.TeamActivityTeams.LeftTeam] < score[
+                    PartyGlobals.TeamActivityTeams.RightTeam]:
                 winner = PartyGlobals.TeamActivityTeams.RightTeam
 
             if winner < 2:

@@ -4,16 +4,11 @@ import DistributedDDTreasureAI
 
 
 class DDTreasurePlannerAI(RegenTreasurePlannerAI.RegenTreasurePlannerAI):
-
     def __init__(self, zoneId):
         self.healAmount = 10
         RegenTreasurePlannerAI.RegenTreasurePlannerAI.__init__(
-            self,
-            zoneId,
-            DistributedDDTreasureAI.DistributedDDTreasureAI,
-            'DDTreasurePlanner',
-            20,
-            2)
+            self, zoneId, DistributedDDTreasureAI.DistributedDDTreasureAI,
+            'DDTreasurePlanner', 20, 2)
 
     def initSpawnPoints(self):
         self.spawnPoints = [
@@ -42,5 +37,6 @@ class DDTreasurePlannerAI(RegenTreasurePlannerAI.RegenTreasurePlannerAI):
             (-11.3513, 128.99100000000001, -12.308),
             (-14.1068, 83.204300000000003, -12.308),
             (53.268500000000003, 24.358499999999999, -12.308),
-            (41.419699999999999, 4.3538399999999999, -12.308)]
+            (41.419699999999999, 4.3538399999999999, -12.308)
+        ]
         return self.spawnPoints

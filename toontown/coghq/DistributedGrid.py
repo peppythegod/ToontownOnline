@@ -51,15 +51,11 @@ class DistributedGrid(BasicEntities.DistributedNodePathEntity):
 
         self.model.setScale(scale * long, scale * short, 1)
         self.model.setHpr(h, 180, 0)
-        self.model.setPos(
-            self.cellSize * self.numCol / 2.0,
-            self.cellSize * self.numRow / 2.0,
-            0.025000000000000001)
-        self.model.setColor(
-            0.58799999999999997,
-            0.58799999999999997,
-            0.45900000000000002,
-            0.40000000000000002)
+        self.model.setPos(self.cellSize * self.numCol / 2.0,
+                          self.cellSize * self.numRow / 2.0,
+                          0.025000000000000001)
+        self.model.setColor(0.58799999999999997, 0.58799999999999997,
+                            0.45900000000000002, 0.40000000000000002)
 
     def unloadModel(self):
         if self.model:

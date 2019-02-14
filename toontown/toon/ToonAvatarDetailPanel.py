@@ -14,12 +14,13 @@ from toontown.hood import ZoneUtil
 from toontown.toonbase.ToontownBattleGlobals import Tracks, Levels
 globalAvatarDetail = None
 
-def showAvatarDetail(avId, avName, playerId = None):
+
+def showAvatarDetail(avId, avName, playerId=None):
     global globalAvatarDetail
     if globalAvatarDetail != None:
         globalAvatarDetail.cleanup()
         globalAvatarDetail = None
-    
+
     playerId = base.cr.playerFriendsManager.findPlayerIdFromAvId(avId)
     globalAvatarDetail = ToonAvatarDetailPanel(avId, avName, playerId)
 
@@ -29,7 +30,6 @@ def hideAvatarDetail():
     if globalAvatarDetail != None:
         globalAvatarDetail.cleanup()
         globalAvatarDetail = None
-    
 
 
 def unloadAvatarDetail():
@@ -37,13 +37,13 @@ def unloadAvatarDetail():
     if globalAvatarDetail != None:
         globalAvatarDetail.cleanup()
         globalAvatarDetail = None
-    
 
 
 class ToonAvatarDetailPanel(DirectFrame):
-    notify = DirectNotifyGlobal.directNotify.newCategory('ToonAvatarDetailPanel')
-    
-    def __init__(self, avId, avName, playerId = None, parent = aspect2dp, **kw):
+    notify = DirectNotifyGlobal.directNotify.newCategory(
+        'ToonAvatarDetailPanel')
+
+    def __init__(self, avId, avName, playerId=None, parent=aspect2dp, **kw):
         print 'ToonAvatarDetailPanel %s' % playerId
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
         gui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
@@ -53,34 +53,57 @@ class ToonAvatarDetailPanel(DirectFrame):
         textWrap = 16.399999999999999
         self.playerInfo = None
         if self.playerId:
-            self.playerInfo = base.cr.playerFriendsManager.playerId2Info.get(playerId)
-        
-        optiondefs = (('pos', (0.52500000000000002, 0.0, 0.52500000000000002), None), ('scale', 0.5, None), ('relief', None, None), ('image', detailPanel, None), ('image_color', GlobalDialogColor, None), ('text', '', None), ('text_wordwrap', textWrap, None), ('text_scale', textScale, None), ('text_pos', (-0.125, 0.77500000000000002), None))
+            self.playerInfo = base.cr.playerFriendsManager.playerId2Info.get(
+                playerId)
+
+        optiondefs = (('pos', (0.52500000000000002, 0.0, 0.52500000000000002),
+                       None), ('scale', 0.5, None), ('relief', None, None),
+                      ('image', detailPanel,
+                       None), ('image_color', GlobalDialogColor,
+                               None), ('text', '', None), ('text_wordwrap',
+                                                           textWrap, None),
+                      ('text_scale', textScale,
+                       None), ('text_pos', (-0.125, 0.77500000000000002),
+                               None))
         self.defineoptions(kw, optiondefs)
         DirectFrame.__init__(self, parent)
-        self.dataText = DirectLabel(self, text = '', text_scale = 0.089999999999999997, text_align = TextNode.ALeft, text_wordwrap = 15, relief = None, pos = (-0.84999999999999998, 0.0, 0.64500000000000002))
+        self.dataText = DirectLabel(
+            self,
+            text='',
+            text_scale=0.089999999999999997,
+            text_align=TextNode.ALeft,
+            text_wordwrap=15,
+            relief=None,
+            pos=(-0.84999999999999998, 0.0, 0.64500000000000002))
         self.avId = avId
         self.avName = avName
         self.avatar = None
         self.createdAvatar = None
         self.fsm = ClassicFSM.ClassicFSM('ToonAvatarDetailPanel', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'begin']),
-            State.State('begin', self.enterBegin, self.exitBegin, [
-                'query',
-                'data',
-                'off']),
-            State.State('query', self.enterQuery, self.exitQuery, [
-                'data',
-                'invalid',
-                'off']),
-            State.State('data', self.enterData, self.exitData, [
-                'off']),
-            State.State('invalid', self.enterInvalid, self.exitInvalid, [
-                'off'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff, ['begin']),
+            State.State('begin', self.enterBegin, self.exitBegin,
+                        ['query', 'data', 'off']),
+            State.State('query', self.enterQuery, self.exitQuery,
+                        ['data', 'invalid', 'off']),
+            State.State('data', self.enterData, self.exitData, ['off']),
+            State.State('invalid', self.enterInvalid, self.exitInvalid,
+                        ['off'])
+        ], 'off', 'off')
         ToonTeleportPanel.hideTeleportPanel()
         FriendInviter.hideFriendInviter()
-        self.bCancel = DirectButton(self, image = (buttons.find('**/CloseBtn_UP'), buttons.find('**/CloseBtn_DN'), buttons.find('**/CloseBtn_Rllvr')), image_scale = 1.1000000000000001, relief = None, text = TTLocalizer.AvatarDetailPanelCancel, text_scale = TTLocalizer.TADPbCancel, text_pos = (0.12, -0.01), pos = TTLocalizer.TADPbCancelPos, scale = 2.0, command = self._ToonAvatarDetailPanel__handleCancel)
+        self.bCancel = DirectButton(
+            self,
+            image=(buttons.find('**/CloseBtn_UP'),
+                   buttons.find('**/CloseBtn_DN'),
+                   buttons.find('**/CloseBtn_Rllvr')),
+            image_scale=1.1000000000000001,
+            relief=None,
+            text=TTLocalizer.AvatarDetailPanelCancel,
+            text_scale=TTLocalizer.TADPbCancel,
+            text_pos=(0.12, -0.01),
+            pos=TTLocalizer.TADPbCancelPos,
+            scale=2.0,
+            command=self._ToonAvatarDetailPanel__handleCancel)
         self.bCancel.hide()
         self.initialiseoptions(ToonAvatarDetailPanel)
         self.fsm.enterInitialState()
@@ -88,28 +111,24 @@ class ToonAvatarDetailPanel(DirectFrame):
         buttons.removeNode()
         gui.removeNode()
 
-    
     def cleanup(self):
         if self.fsm:
             self.fsm.request('off')
             self.fsm = None
             base.cr.cancelAvatarDetailsRequest(self.avatar)
-        
+
         if self.createdAvatar:
             self.avatar.delete()
             self.createdAvatar = None
-        
+
         self.destroy()
 
-    
     def enterOff(self):
         pass
 
-    
     def exitOff(self):
         pass
 
-    
     def enterBegin(self):
         myId = base.localAvatar.doId
         self['text'] = self.avName
@@ -120,13 +139,12 @@ class ToonAvatarDetailPanel(DirectFrame):
         else:
             self.fsm.request('query')
 
-    
     def exitBegin(self):
         pass
 
-    
     def enterQuery(self):
-        self.dataText['text'] = TTLocalizer.AvatarDetailPanelLookup % self.avName
+        self.dataText[
+            'text'] = TTLocalizer.AvatarDetailPanelLookup % self.avName
         self.bCancel.show()
         self.avatar = base.cr.doId2do.get(self.avId)
         if self.avatar != None and not (self.avatar.ghostMode):
@@ -136,69 +154,81 @@ class ToonAvatarDetailPanel(DirectFrame):
             self.createdAvatar = 1
             self.avatar.doId = self.avId
             self.avatar.forceAllowDelayDelete()
-        base.cr.getAvatarDetails(self.avatar, self._ToonAvatarDetailPanel__handleAvatarDetails, 'DistributedToon')
+        base.cr.getAvatarDetails(
+            self.avatar, self._ToonAvatarDetailPanel__handleAvatarDetails,
+            'DistributedToon')
 
-    
     def exitQuery(self):
         self.bCancel.hide()
 
-    
     def enterData(self):
         self.bCancel['text'] = TTLocalizer.AvatarDetailPanelClose
         self.bCancel.show()
         self._ToonAvatarDetailPanel__showData()
 
-    
     def exitData(self):
         self.bCancel.hide()
 
-    
     def enterInvalid(self):
-        self.dataText['text'] = TTLocalizer.AvatarDetailPanelFailedLookup % self.avName
+        self.dataText[
+            'text'] = TTLocalizer.AvatarDetailPanelFailedLookup % self.avName
 
-    
     def exitInvalid(self):
         self.bCancel.hide()
 
-    
     def _ToonAvatarDetailPanel__handleCancel(self):
         unloadAvatarDetail()
 
-    
-    def _ToonAvatarDetailPanel__handleAvatarDetails(self, gotData, avatar, dclass):
+    def _ToonAvatarDetailPanel__handleAvatarDetails(self, gotData, avatar,
+                                                    dclass):
         if not (self.fsm) or avatar != self.avatar:
-            self.notify.warning('Ignoring unexpected request for avatar %s' % avatar.doId)
+            self.notify.warning(
+                'Ignoring unexpected request for avatar %s' % avatar.doId)
             return None
-        
+
         if gotData:
             self.fsm.request('data')
         else:
             self.fsm.request('invalid')
 
-    
     def _ToonAvatarDetailPanel__showData(self):
         av = self.avatar
         online = 1
         if base.cr.isFriend(self.avId):
             online = base.cr.isFriendOnline(self.avId)
-        
+
         if online:
             shardName = base.cr.getShardName(av.defaultShard)
             hoodName = base.cr.hoodMgr.getFullnameFromId(av.lastHood)
             if ZoneUtil.isWelcomeValley(av.lastHood):
-                shardName = '%s (%s)' % (TTLocalizer.WelcomeValley[-1], shardName)
-            
+                shardName = '%s (%s)' % (TTLocalizer.WelcomeValley[-1],
+                                         shardName)
+
             if self.playerInfo:
                 guiButton = loader.loadModel('phase_3/models/gui/quit_button')
-                self.gotoAvatarButton = DirectButton(parent = self, relief = None, image = (guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale = 1.1000000000000001, text = TTLocalizer.AvatarShowPlayer, text_scale = 0.070000000000000007, text_pos = (0.0, -0.02), textMayChange = 0, pos = (0.44, 0, 0.40999999999999998), command = self._ToonAvatarDetailPanel__showAvatar)
+                self.gotoAvatarButton = DirectButton(
+                    parent=self,
+                    relief=None,
+                    image=(guiButton.find('**/QuitBtn_UP'),
+                           guiButton.find('**/QuitBtn_DN'),
+                           guiButton.find('**/QuitBtn_RLVR')),
+                    image_scale=1.1000000000000001,
+                    text=TTLocalizer.AvatarShowPlayer,
+                    text_scale=0.070000000000000007,
+                    text_pos=(0.0, -0.02),
+                    textMayChange=0,
+                    pos=(0.44, 0, 0.40999999999999998),
+                    command=self._ToonAvatarDetailPanel__showAvatar)
                 text = TTLocalizer.AvatarDetailPanelOnlinePlayer % {
                     'district': shardName,
                     'location': hoodName,
-                    'player': self.playerInfo.playerName }
+                    'player': self.playerInfo.playerName
+                }
             else:
                 text = TTLocalizer.AvatarDetailPanelOnline % {
                     'district': shardName,
-                    'location': hoodName }
+                    'location': hoodName
+                }
         else:
             text = TTLocalizer.AvatarDetailPanelOffline
         self.dataText['text'] = text
@@ -206,41 +236,40 @@ class ToonAvatarDetailPanel(DirectFrame):
         self._ToonAvatarDetailPanel__updateTrophyInfo()
         self._ToonAvatarDetailPanel__updateLaffInfo()
 
-    
     def _ToonAvatarDetailPanel__showAvatar(self):
         messenger.send('wakeup')
         hasManager = hasattr(base.cr, 'playerFriendsManager')
         handle = base.cr.identifyFriend(self.avId)
         if not handle and hasManager:
             handle = base.cr.playerFriendsManager.getAvHandleFromId(self.avId)
-        
-        if handle != None:
-            self.notify.info("Clicked on name in friend's list. doId = %s" % handle.doId)
-            messenger.send('clickedNametagPlayer', [
-                handle,
-                self.playerId,
-                1])
-        
 
-    
+        if handle != None:
+            self.notify.info(
+                "Clicked on name in friend's list. doId = %s" % handle.doId)
+            messenger.send('clickedNametagPlayer', [handle, self.playerId, 1])
+
     def _ToonAvatarDetailPanel__updateLaffInfo(self):
         avatar = self.avatar
-        messenger.send('updateLaffMeter', [
-            avatar,
-            avatar.hp,
-            avatar.maxHp])
+        messenger.send('updateLaffMeter', [avatar, avatar.hp, avatar.maxHp])
 
-    
     def _ToonAvatarDetailPanel__updateTrackInfo(self):
         xOffset = -0.50181399999999998
         xSpacing = 0.1835
         yOffset = 0.10000000000000001
         ySpacing = -0.115
         inventory = self.avatar.inventory
-        inventoryModels = loader.loadModel('phase_3.5/models/gui/inventory_gui')
+        inventoryModels = loader.loadModel(
+            'phase_3.5/models/gui/inventory_gui')
         buttonModel = inventoryModels.find('**/InventoryButtonUp')
         for track in range(0, len(Tracks)):
-            DirectLabel(parent = self, relief = None, text = TextEncoder.upper(TTLocalizer.BattleGlobalTracks[track]), text_scale = TTLocalizer.TADPtrackLabel, text_align = TextNode.ALeft, pos = (-0.90000000000000002, 0, TTLocalizer.TADtrackLabelPosZ + track * ySpacing))
+            DirectLabel(
+                parent=self,
+                relief=None,
+                text=TextEncoder.upper(TTLocalizer.BattleGlobalTracks[track]),
+                text_scale=TTLocalizer.TADPtrackLabel,
+                text_align=TextNode.ALeft,
+                pos=(-0.90000000000000002, 0,
+                     TTLocalizer.TADtrackLabelPosZ + track * ySpacing))
             if self.avatar.hasTrackAccess(track):
                 (curExp, nextExp) = inventory.getCurAndNextExpValues(track)
                 for item in range(0, len(Levels[track])):
@@ -249,21 +278,30 @@ class ToonAvatarDetailPanel(DirectFrame):
                         numItems = inventory.numItem(track, item)
                         if numItems == 0:
                             image_color = Vec4(0.5, 0.5, 0.5, 1)
-                            geom_color = Vec4(0.20000000000000001, 0.20000000000000001, 0.20000000000000001, 0.5)
+                            geom_color = Vec4(0.20000000000000001,
+                                              0.20000000000000001,
+                                              0.20000000000000001, 0.5)
                         else:
                             image_color = Vec4(0, 0.59999999999999998, 1, 1)
                             geom_color = None
-                        DirectLabel(parent = self, image = buttonModel, image_scale = (0.92000000000000004, 1, 1), image_color = image_color, geom = inventory.invModels[track][item], geom_color = geom_color, geom_scale = 0.59999999999999998, relief = None, pos = (xOffset + item * xSpacing, 0, yOffset + track * ySpacing))
+                        DirectLabel(
+                            parent=self,
+                            image=buttonModel,
+                            image_scale=(0.92000000000000004, 1, 1),
+                            image_color=image_color,
+                            geom=inventory.invModels[track][item],
+                            geom_color=geom_color,
+                            geom_scale=0.59999999999999998,
+                            relief=None,
+                            pos=(xOffset + item * xSpacing, 0,
+                                 yOffset + track * ySpacing))
                         continue
                     break
-                
-        
 
-    
     def _ToonAvatarDetailPanel__updateTrophyInfo(self):
         if self.createdAvatar:
             return None
-        
+
         if self.avatar.trophyScore >= TrophyStarLevels[2]:
             color = TrophyStarColors[2]
         elif self.avatar.trophyScore >= TrophyStarLevels[1]:
@@ -275,8 +313,11 @@ class ToonAvatarDetailPanel(DirectFrame):
         if color:
             gui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
             star = gui.find('**/avatarStar')
-            self.star = DirectLabel(parent = self, image = star, image_color = color, pos = (0.61016499999999996, 0, -0.76067799999999997), scale = 0.90000000000000002, relief = None)
+            self.star = DirectLabel(
+                parent=self,
+                image=star,
+                image_color=color,
+                pos=(0.61016499999999996, 0, -0.76067799999999997),
+                scale=0.90000000000000002,
+                relief=None)
             gui.removeNode()
-        
-
-

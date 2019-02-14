@@ -4,7 +4,6 @@ from direct.task import Task
 
 
 class DistributedBeanBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI):
-
     def __init__(self, level, entityId):
         x = 0
         y = 0
@@ -15,8 +14,7 @@ class DistributedBeanBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI):
 
     def d_setGrab(self, avId):
         self.notify.debug('d_setGrab %s' % avId)
-        self.sendUpdate('setGrab', [
-            avId])
+        self.sendUpdate('setGrab', [avId])
         av = self.air.doId2do.get(avId)
         if av:
             av.addMoney(self.rewardPerGrab)

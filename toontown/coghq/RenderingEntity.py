@@ -11,11 +11,8 @@ class RenderingEntity(BasicEntities.NodePathEntity):
     def __init__(self, level, entId):
         BasicEntities.NodePathEntity.__init__(self, level, entId)
         if hasattr(self, 'colorR'):
-            self.setColorScale(
-                self.colorR,
-                self.colorG,
-                self.colorB,
-                self.colorA)
+            self.setColorScale(self.colorR, self.colorG, self.colorB,
+                               self.colorA)
 
         if hasattr(self, 'blending'):
             self.setBlending(self.blending)

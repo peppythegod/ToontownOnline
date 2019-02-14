@@ -11,7 +11,6 @@ from toontown.toonbase import TTLocalizer
 
 
 class DistributedTrigger(DistributedSwitch.DistributedSwitch):
-
     def setupSwitch(self):
         radius = 1.0
         cSphere = CollisionSphere(0.0, 0.0, 0.0, radius)

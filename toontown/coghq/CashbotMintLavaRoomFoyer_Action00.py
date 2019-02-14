@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE18a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10009: {
         'type': 'attribModifier',
         'name': '<unnamed>',
@@ -33,7 +36,8 @@ GlobalEntities = {
         'attribName': 'modelPath',
         'recursive': 1,
         'typeName': 'model',
-        'value': ''},
+        'value': ''
+    },
     10017: {
         'type': 'attribModifier',
         'name': '<unnamed>',
@@ -42,7 +46,8 @@ GlobalEntities = {
         'attribName': 'scale',
         'recursive': 1,
         'typeName': 'model',
-        'value': 'Vec3(.955,1,1)'},
+        'value': 'Vec3(.955,1,1)'
+    },
     10015: {
         'type': 'crate',
         'name': '<unnamed>',
@@ -53,7 +58,8 @@ GlobalEntities = {
         'crushCellId': None,
         'gridId': 10014,
         'modelType': 1,
-        'pushable': 1},
+        'pushable': 1
+    },
     10014: {
         'type': 'grid',
         'name': 'crateGrid',
@@ -63,7 +69,8 @@ GlobalEntities = {
         'scale': Vec3(1.0, 1.0, 1.0),
         'cellSize': 3.0,
         'numCol': 4,
-        'numRow': 2},
+        'numRow': 2
+    },
     10005: {
         'type': 'healBarrel',
         'name': '<unnamed>',
@@ -73,7 +80,8 @@ GlobalEntities = {
         'hpr': Vec3(160.01689147900001, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'rewardPerGrab': 8,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     10001: {
         'type': 'model',
         'name': '<unnamed>',
@@ -85,7 +93,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_F1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_F1.bam'
+    },
     10002: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -97,7 +106,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'
+    },
     10006: {
         'type': 'model',
         'name': '<unnamed>',
@@ -109,7 +119,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/CBMetalCrate.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/CBMetalCrate.bam'
+    },
     10007: {
         'type': 'model',
         'name': '<unnamed>',
@@ -121,7 +132,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'
+    },
     10018: {
         'type': 'model',
         'name': 'middle',
@@ -133,7 +145,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10019: {
         'type': 'model',
         'name': 'copy of middle',
@@ -145,7 +158,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10020: {
         'type': 'model',
         'name': 'copy of middle',
@@ -157,7 +171,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10021: {
         'type': 'model',
         'name': 'copy of middle',
@@ -169,7 +184,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10000: {
         'type': 'nodepath',
         'name': 'props',
@@ -177,7 +193,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10003: {
         'type': 'nodepath',
         'name': 'cratePuzzle',
@@ -185,7 +202,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Point3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10008: {
         'type': 'nodepath',
         'name': 'wall',
@@ -193,7 +211,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(13.4399995804, 6.57999992371, 0.0),
         'hpr': Point3(270.0, 0.0, 0.0),
-        'scale': Vec3(1.95812249184, 1.5, 1.7999999523200001)},
+        'scale': Vec3(1.95812249184, 1.5, 1.7999999523200001)
+    },
     10016: {
         'type': 'stomper',
         'name': '<unnamed>',
@@ -218,9 +237,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0}}
+        'zOffset': 0
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

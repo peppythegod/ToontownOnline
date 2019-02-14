@@ -22,7 +22,8 @@ FO_DICT = {
     's': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
     'l': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
     'm': 'tt_m_ara_cbe_fieldOfficeMoverShaker',
-    'c': 'tt_m_ara_cbe_fieldOfficeMoverShaker'}
+    'c': 'tt_m_ara_cbe_fieldOfficeMoverShaker'
+}
 
 
 class DistributedBuilding(DistributedObject.DistributedObject):
@@ -36,55 +37,49 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.elevatorModel = None
         self.fsm = ClassicFSM.ClassicFSM('DistributedBuilding', [
             State.State('off', self.enterOff, self.exitOff, [
-                'waitForVictors',
-                'waitForVictorsFromCogdo',
-                'becomingToon',
-                'becomingToonFromCogdo',
+                'waitForVictors', 'waitForVictorsFromCogdo', 'becomingToon',
+                'becomingToonFromCogdo', 'toon', 'clearOutToonInterior',
+                'becomingSuit', 'suit', 'clearOutToonInteriorForCogdo',
+                'becomingCogdo', 'becomingCogdoFromCogdo', 'cogdo'
+            ]),
+            State.State('waitForVictors', self.enterWaitForVictors,
+                        self.exitWaitForVictors, ['becomingToon']),
+            State.State('waitForVictorsFromCogdo',
+                        self.enterWaitForVictorsFromCogdo,
+                        self.exitWaitForVictorsFromCogdo,
+                        ['becomingToonFromCogdo', 'becomingCogdoFromCogdo']),
+            State.State('becomingToon', self.enterBecomingToon,
+                        self.exitBecomingToon, ['toon']),
+            State.State('becomingToonFromCogdo',
+                        self.enterBecomingToonFromCogdo,
+                        self.exitBecomingToonFromCogdo, ['toon']),
+            State.State(
                 'toon',
-                'clearOutToonInterior',
-                'becomingSuit',
-                'suit',
-                'clearOutToonInteriorForCogdo',
-                'becomingCogdo',
-                'becomingCogdoFromCogdo',
-                'cogdo']),
-            State.State('waitForVictors', self.enterWaitForVictors, self.exitWaitForVictors, [
-                'becomingToon']),
-            State.State('waitForVictorsFromCogdo', self.enterWaitForVictorsFromCogdo, self.exitWaitForVictorsFromCogdo, [
-                'becomingToonFromCogdo',
-                'becomingCogdoFromCogdo']),
-            State.State('becomingToon', self.enterBecomingToon, self.exitBecomingToon, [
-                'toon']),
-            State.State('becomingToonFromCogdo', self.enterBecomingToonFromCogdo, self.exitBecomingToonFromCogdo, [
-                'toon']),
-            State.State('toon', self.enterToon, self.exitToon, [
-                'clearOutToonInterior',
-                'clearOutToonInteriorForCogdo']),
-            State.State('clearOutToonInterior', self.enterClearOutToonInterior, self.exitClearOutToonInterior, [
-                'becomingSuit']),
-            State.State('becomingSuit', self.enterBecomingSuit, self.exitBecomingSuit, [
-                'suit']),
-            State.State('suit', self.enterSuit, self.exitSuit, [
-                'waitForVictors',
-                'becomingToon']),
-            State.State('clearOutToonInteriorForCogdo', self.enterClearOutToonInteriorForCogdo, self.exitClearOutToonInteriorForCogdo, [
-                'becomingCogdo']),
-            State.State('becomingCogdo', self.enterBecomingCogdo, self.exitBecomingCogdo, [
-                'cogdo']),
-            State.State('becomingCogdoFromCogdo', self.enterBecomingCogdoFromCogdo, self.exitBecomingCogdoFromCogdo, [
-                'cogdo']),
-            State.State('cogdo', self.enterCogdo, self.exitCogdo, [
-                'waitForVictorsFromCogdo',
-                'becomingToonFromCogdo'])], 'off', 'off')
+                self.enterToon, self.exitToon,
+                ['clearOutToonInterior', 'clearOutToonInteriorForCogdo']),
+            State.State('clearOutToonInterior', self.enterClearOutToonInterior,
+                        self.exitClearOutToonInterior, ['becomingSuit']),
+            State.State('becomingSuit', self.enterBecomingSuit,
+                        self.exitBecomingSuit, ['suit']),
+            State.State('suit', self.enterSuit, self.exitSuit,
+                        ['waitForVictors', 'becomingToon']),
+            State.State('clearOutToonInteriorForCogdo',
+                        self.enterClearOutToonInteriorForCogdo,
+                        self.exitClearOutToonInteriorForCogdo,
+                        ['becomingCogdo']),
+            State.State('becomingCogdo', self.enterBecomingCogdo,
+                        self.exitBecomingCogdo, ['cogdo']),
+            State.State('becomingCogdoFromCogdo',
+                        self.enterBecomingCogdoFromCogdo,
+                        self.exitBecomingCogdoFromCogdo, ['cogdo']),
+            State.State('cogdo', self.enterCogdo, self.exitCogdo,
+                        ['waitForVictorsFromCogdo', 'becomingToonFromCogdo'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
         self.bossLevel = 0
         self.transitionTrack = None
         self.elevatorNodePath = None
-        self.victorList = [
-            0,
-            0,
-            0,
-            0]
+        self.victorList = [0, 0, 0, 0]
         self.waitingMessage = None
         self.cogDropSound = None
         self.cogLandSound = None
@@ -131,8 +126,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self.numFloors = numFloors
 
     def setState(self, state, timestamp):
-        self.fsm.request(state, [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
     def getSuitElevatorNodePath(self):
         if self.mode != 'suit':
@@ -179,9 +173,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
         victorCount = self.victorList.count(base.localAvatar.doId)
         if victorCount == 1:
-            self.acceptOnce(
-                'insideVictorElevator',
-                self.handleInsideVictorElevator)
+            self.acceptOnce('insideVictorElevator',
+                            self.handleInsideVictorElevator)
             camera.reparentTo(render)
             camera.setPosHpr(self.elevatorNodePath, 0, -32.5,
                              9.4000000000000004, 0, 348, 0)
@@ -194,9 +187,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
             if anyOthers:
                 self.waitingMessage = DirectLabel(
-                    text=TTLocalizer.BuildingWaitingForVictors, text_fg=VBase4(
-                        1, 1, 1, 1), text_align=TextNode.ACenter, relief=None, pos=(
-                        0, 0, 0.34999999999999998), scale=0.10000000000000001)
+                    text=TTLocalizer.BuildingWaitingForVictors,
+                    text_fg=VBase4(1, 1, 1, 1),
+                    text_align=TextNode.ACenter,
+                    relief=None,
+                    pos=(0, 0, 0.34999999999999998),
+                    scale=0.10000000000000001)
 
         elif victorCount == 0:
             pass
@@ -224,9 +220,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
         victorCount = self.victorList.count(base.localAvatar.doId)
         if victorCount == 1:
-            self.acceptOnce(
-                'insideVictorElevator',
-                self.handleInsideVictorElevatorFromCogdo)
+            self.acceptOnce('insideVictorElevator',
+                            self.handleInsideVictorElevatorFromCogdo)
             camera.reparentTo(render)
             camera.setPosHpr(self.elevatorNodePath, 0, -32.5,
                              9.4000000000000004, 0, 348, 0)
@@ -239,9 +234,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
             if anyOthers:
                 self.waitingMessage = DirectLabel(
-                    text=TTLocalizer.BuildingWaitingForVictors, text_fg=VBase4(
-                        1, 1, 1, 1), text_align=TextNode.ACenter, relief=None, pos=(
-                        0, 0, 0.34999999999999998), scale=0.10000000000000001)
+                    text=TTLocalizer.BuildingWaitingForVictors,
+                    text_fg=VBase4(1, 1, 1, 1),
+                    text_align=TextNode.ACenter,
+                    relief=None,
+                    pos=(0, 0, 0.34999999999999998),
+                    scale=0.10000000000000001)
 
         elif victorCount == 0:
             pass
@@ -328,20 +326,15 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
     def getNodePaths(self):
         nodePath = []
-        npc = self.townTopLevel.findAllMatches(
-            '**/?b' + str(self.block) + ':*_DNARoot;+s')
+        npc = self.townTopLevel.findAllMatches('**/?b' + str(self.block) +
+                                               ':*_DNARoot;+s')
         for i in range(npc.getNumPaths()):
             nodePath.append(npc.getPath(i))
 
         return nodePath
 
     def loadElevator(self, newNP, cogdo=False):
-        self.floorIndicator = [
-            None,
-            None,
-            None,
-            None,
-            None]
+        self.floorIndicator = [None, None, None, None, None]
         self.elevatorNodePath = hidden.attachNewNode('elevatorNodePath')
         if cogdo:
             self.elevatorModel = loader.loadModel(
@@ -397,12 +390,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             self.notify.info('QA-REGRESSION: COGBUILDING: Cog Take Over')
 
         if self.cogDropSound is None:
-            self.cogDropSound = base.loadSfx(
-                self.TAKEOVER_SFX_PREFIX + 'cogbldg_drop.mp3')
-            self.cogLandSound = base.loadSfx(
-                self.TAKEOVER_SFX_PREFIX + 'cogbldg_land.mp3')
-            self.cogSettleSound = base.loadSfx(
-                self.TAKEOVER_SFX_PREFIX + 'cogbldg_settle.mp3')
+            self.cogDropSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX +
+                                             'cogbldg_drop.mp3')
+            self.cogLandSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX +
+                                             'cogbldg_land.mp3')
+            self.cogSettleSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX +
+                                               'cogbldg_settle.mp3')
             self.openSfx = base.loadSfx(
                 'phase_5/audio/sfx/elevator_door_open.mp3')
 
@@ -411,12 +404,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             self.notify.info('QA-REGRESSION: COGBUILDING: Toon Take Over')
 
         if self.cogWeakenSound is None:
-            self.cogWeakenSound = base.loadSfx(
-                self.TAKEOVER_SFX_PREFIX + 'cogbldg_weaken.mp3')
-            self.toonGrowSound = base.loadSfx(
-                self.TAKEOVER_SFX_PREFIX + 'toonbldg_grow.mp3')
-            self.toonSettleSound = base.loadSfx(
-                self.TAKEOVER_SFX_PREFIX + 'toonbldg_settle.mp3')
+            self.cogWeakenSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX +
+                                               'cogbldg_weaken.mp3')
+            self.toonGrowSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX +
+                                              'toonbldg_grow.mp3')
+            self.toonSettleSound = base.loadSfx(self.TAKEOVER_SFX_PREFIX +
+                                                'toonbldg_settle.mp3')
             self.openSfx = base.loadSfx(
                 'phase_5/audio/sfx/elevator_door_open.mp3')
 
@@ -456,8 +449,9 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             name = i.getName()
             timeForDrop = TO_SUIT_BLDG_TIME * 0.84999999999999998
             if name[0] == 's':
-                showTrack = Sequence(name=self.taskName(
-                    'ToSuitFlatsTrack') + '-' + str(sideBldgNodes.index(i)))
+                showTrack = Sequence(
+                    name=self.taskName('ToSuitFlatsTrack') + '-' +
+                    str(sideBldgNodes.index(i)))
                 initPos = Point3(0, 0, self.SUIT_INIT_HEIGHT) + i.getPos()
                 showTrack.append(Func(i.setPos, initPos))
                 showTrack.append(Func(i.unstash))
@@ -466,43 +460,30 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
                 if not soundPlayed:
                     showTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogDropSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogDropSound, 0, 1, None, 0.0))
 
-                showTrack.append(LerpPosInterval(i, timeForDrop, i.getPos(), name=self.taskName(
-                    'ToSuitAnim') + '-' + str(sideBldgNodes.index(i))))
+                showTrack.append(
+                    LerpPosInterval(
+                        i,
+                        timeForDrop,
+                        i.getPos(),
+                        name=self.taskName('ToSuitAnim') + '-' + str(
+                            sideBldgNodes.index(i))))
                 if not soundPlayed:
                     showTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogLandSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogLandSound, 0, 1, None, 0.0))
 
                 showTrack.append(
                     self.createBounceTrack(
                         i,
                         2,
                         0.65000000000000002,
-                        TO_SUIT_BLDG_TIME -
-                        timeForDrop,
+                        TO_SUIT_BLDG_TIME - timeForDrop,
                         slowInitBounce=1.0))
                 if not soundPlayed:
                     showTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogSettleSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogSettleSound, 0, 1, None,
+                             0.0))
 
                 tracks.append(showTrack)
                 if not soundPlayed:
@@ -522,14 +503,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                         duration=timeTillSquish,
                         extraArgs=[i]))
                 hideTrack.append(
-                    LerpScaleInterval(
-                        i,
-                        timeForDrop -
-                        timeTillSquish,
-                        Vec3(
-                            1,
-                            1,
-                            0.01)))
+                    LerpScaleInterval(i, timeForDrop - timeTillSquish,
+                                      Vec3(1, 1, 0.01)))
                 hideTrack.append(Func(i.stash))
                 hideTrack.append(Func(i.setScale, Vec3(1)))
                 hideTrack.append(Func(i.clearColorScale))
@@ -544,8 +519,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
     def setupSuitBuilding(self, nodePath):
         dnaStore = self.cr.playGame.dnaStore
         level = int(self.difficulty / 2) + 1
-        suitNP = dnaStore.findNode(
-            'suit_landmark_' + chr(self.track) + str(level))
+        suitNP = dnaStore.findNode('suit_landmark_' + chr(self.track) +
+                                   str(level))
         zoneId = dnaStore.getZoneFromBlockNumber(self.block)
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.interiorZoneId)
         newParentNP = base.cr.playGame.hood.loader.zoneDict[zoneId]
@@ -567,38 +542,23 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         signOrigin = suitBuildingNP.find('**/sign_origin;+s')
         backgroundNP = loader.loadModel('phase_5/models/modules/suit_sign')
         backgroundNP.reparentTo(signOrigin)
-        backgroundNP.setPosHprScale(
-            0.0,
-            0.0,
-            textHeight *
-            0.80000000000000004 /
-            zScale,
-            0.0,
-            0.0,
-            0.0,
-            8.0,
-            8.0,
-            8.0 *
-            zScale)
+        backgroundNP.setPosHprScale(0.0, 0.0,
+                                    textHeight * 0.80000000000000004 / zScale,
+                                    0.0, 0.0, 0.0, 8.0, 8.0, 8.0 * zScale)
         backgroundNP.node().setEffect(DecalEffect.make())
         signTextNodePath = backgroundNP.attachNewNode(textNode.generate())
         signTextNodePath.setPosHprScale(
-            0.0,
-            0.0,
+            0.0, 0.0,
             -0.20999999999999999 + textHeight * 0.10000000000000001 / zScale,
-            0.0,
-            0.0,
-            0.0,
-            0.10000000000000001,
-            0.10000000000000001,
+            0.0, 0.0, 0.0, 0.10000000000000001, 0.10000000000000001,
             0.10000000000000001 / zScale)
         signTextNodePath.setColor(1.0, 1.0, 1.0, 1.0)
         frontNP = suitBuildingNP.find('**/*_front/+GeomNode;+s')
         backgroundNP.wrtReparentTo(frontNP)
         frontNP.node().setEffect(DecalEffect.make())
         suitBuildingNP.setName('sb' + str(self.block) + ':_landmark__DNARoot')
-        suitBuildingNP.setPosHprScale(
-            nodePath, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
+        suitBuildingNP.setPosHprScale(nodePath, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                      1.0, 1.0, 1.0)
         suitBuildingNP.flattenMedium()
         self.loadElevator(suitBuildingNP)
         return suitBuildingNP
@@ -624,11 +584,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         sideBldgNodes.append(newNP)
         for np in sideBldgNodes:
             if not np.isEmpty():
-                np.setColorScale(
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    1.0)
+                np.setColorScale(0.59999999999999998, 0.59999999999999998,
+                                 0.59999999999999998, 1.0)
                 continue
 
         soundPlayed = 0
@@ -637,8 +594,9 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             name = i.getName()
             timeForDrop = TO_SUIT_BLDG_TIME * 0.84999999999999998
             if name[0] == 'c':
-                showTrack = Sequence(name=self.taskName(
-                    'ToCogdoFlatsTrack') + '-' + str(sideBldgNodes.index(i)))
+                showTrack = Sequence(
+                    name=self.taskName('ToCogdoFlatsTrack') + '-' +
+                    str(sideBldgNodes.index(i)))
                 initPos = Point3(0, 0, self.SUIT_INIT_HEIGHT) + i.getPos()
                 showTrack.append(Func(i.setPos, initPos))
                 showTrack.append(Func(i.unstash))
@@ -647,43 +605,30 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
                 if not soundPlayed:
                     showTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogDropSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogDropSound, 0, 1, None, 0.0))
 
-                showTrack.append(LerpPosInterval(i, timeForDrop, i.getPos(), name=self.taskName(
-                    'ToCogdoAnim') + '-' + str(sideBldgNodes.index(i))))
+                showTrack.append(
+                    LerpPosInterval(
+                        i,
+                        timeForDrop,
+                        i.getPos(),
+                        name=self.taskName('ToCogdoAnim') + '-' + str(
+                            sideBldgNodes.index(i))))
                 if not soundPlayed:
                     showTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogLandSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogLandSound, 0, 1, None, 0.0))
 
                 showTrack.append(
                     self.createBounceTrack(
                         i,
                         2,
                         0.65000000000000002,
-                        TO_SUIT_BLDG_TIME -
-                        timeForDrop,
+                        TO_SUIT_BLDG_TIME - timeForDrop,
                         slowInitBounce=1.0))
                 if not soundPlayed:
                     showTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogSettleSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogSettleSound, 0, 1, None,
+                             0.0))
 
                 tracks.append(showTrack)
                 if not soundPlayed:
@@ -703,14 +648,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                         duration=timeTillSquish,
                         extraArgs=[i]))
                 hideTrack.append(
-                    LerpScaleInterval(
-                        i,
-                        timeForDrop -
-                        timeTillSquish,
-                        Vec3(
-                            1,
-                            1,
-                            0.01)))
+                    LerpScaleInterval(i, timeForDrop - timeTillSquish,
+                                      Vec3(1, 1, 0.01)))
                 hideTrack.append(Func(i.stash))
                 hideTrack.append(Func(i.setScale, Vec3(1)))
                 hideTrack.append(Func(i.clearColorScale))
@@ -747,44 +686,25 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         backgroundNP = loader.loadModel(
             'phase_5/models/cogdominium/field_office_sign')
         backgroundNP.reparentTo(signOrigin)
-        backgroundNP.setPosHprScale(0.0, 0.0, -
-                                    1.2 +
-                                    textHeight *
-                                    0.80000000000000004 /
-                                    zScale, 0.0, 0.0, 0.0, 20.0, 8.0, 8.0 *
-                                    zScale)
+        backgroundNP.setPosHprScale(
+            0.0, 0.0, -1.2 + textHeight * 0.80000000000000004 / zScale, 0.0,
+            0.0, 0.0, 20.0, 8.0, 8.0 * zScale)
         backgroundNP.node().setEffect(DecalEffect.make())
         signTextNodePath = backgroundNP.attachNewNode(textNode.generate())
-        signTextNodePath.setPosHprScale(0.0, 0.0, -
-                                        0.13 +
-                                        textHeight *
-                                        0.10000000000000001 /
-                                        zScale, 0.0, 0.0, 0.0, 0.10000000000000001 *
-                                        8.0 /
-                                        20.0, 0.10000000000000001, 0.10000000000000001 /
-                                        zScale)
+        signTextNodePath.setPosHprScale(
+            0.0, 0.0, -0.13 + textHeight * 0.10000000000000001 / zScale, 0.0,
+            0.0, 0.0, 0.10000000000000001 * 8.0 / 20.0, 0.10000000000000001,
+            0.10000000000000001 / zScale)
         signTextNodePath.setColor(1.0, 1.0, 1.0, 1.0)
         frontNP = suitBuildingNP.find('**/*_front/+GeomNode;+s')
         backgroundNP.wrtReparentTo(frontNP)
         frontNP.node().setEffect(DecalEffect.make())
         suitBuildingNP.setName('cb' + str(self.block) + ':_landmark__DNARoot')
-        suitBuildingNP.setPosHprScale(
-            nodePath,
-            15.462999999999999,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            1.0)
+        suitBuildingNP.setPosHprScale(nodePath, 15.462999999999999, 0.0, 0.0,
+                                      0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
         suitBuildingNP.flattenMedium()
-        suitBuildingNP.setColorScale(
-            0.59999999999999998,
-            0.59999999999999998,
-            0.59999999999999998,
-            1.0)
+        suitBuildingNP.setColorScale(0.59999999999999998, 0.59999999999999998,
+                                     0.59999999999999998, 1.0)
         self.loadElevator(suitBuildingNP, cogdo=True)
         return suitBuildingNP
 
@@ -806,56 +726,42 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 landmark = name.find('_landmark_') != -1
                 if not suitSoundPlayed:
                     hideTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogWeakenSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogWeakenSound, 0, 1, None,
+                             0.0))
 
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         3,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.050000000000000003,
+                        TO_TOON_BLDG_TIME * 0.050000000000000003,
                         slowInitBounce=0.0))
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         5,
                         0.80000000000000004,
-                        TO_TOON_BLDG_TIME *
-                        0.10000000000000001,
+                        TO_TOON_BLDG_TIME * 0.10000000000000001,
                         slowInitBounce=0.0))
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         7,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.17000000000000001,
+                        TO_TOON_BLDG_TIME * 0.17000000000000001,
                         slowInitBounce=0.0))
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         9,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.17999999999999999,
+                        TO_TOON_BLDG_TIME * 0.17999999999999999,
                         slowInitBounce=0.0))
                 realScale = i.getScale()
                 hideTrack.append(
-                    LerpScaleInterval(
-                        i,
-                        TO_TOON_BLDG_TIME *
-                        0.10000000000000001,
-                        Vec3(
-                            realScale[0],
-                            realScale[1],
-                            0.01)))
+                    LerpScaleInterval(i,
+                                      TO_TOON_BLDG_TIME * 0.10000000000000001,
+                                      Vec3(realScale[0], realScale[1], 0.01)))
                 if landmark:
                     hideTrack.append(Func(i.removeNode))
                 else:
@@ -871,33 +777,22 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 hideTrack.append(Wait(TO_TOON_BLDG_TIME * 0.5))
                 if not toonSoundPlayed:
                     hideTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.toonGrowSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.toonGrowSound, 0, 1, None,
+                             0.0))
 
                 hideTrack.append(Func(i.unstash))
                 hideTrack.append(Func(i.setScale, Vec3(1, 1, 0.01)))
                 if not toonSoundPlayed:
                     hideTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.toonSettleSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.toonSettleSound, 0, 1, None,
+                             0.0))
 
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         11,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.5,
+                        TO_TOON_BLDG_TIME * 0.5,
                         slowInitBounce=4.0))
                 tracks.append(hideTrack)
                 if not toonSoundPlayed:
@@ -914,16 +809,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self._deleteTransitionTrack()
         if localToonIsVictor:
             freedomTrack1 = Func(self.cr.playGame.getPlace().setState, 'walk')
-            freedomTrack2 = Func(
-                base.localAvatar.d_setParent,
-                ToontownGlobals.SPRender)
+            freedomTrack2 = Func(base.localAvatar.d_setParent,
+                                 ToontownGlobals.SPRender)
             self.transitionTrack = Parallel(
                 camTrack,
-                Sequence(
-                    victoryRunTrack,
-                    bldgMTrack,
-                    freedomTrack1,
-                    freedomTrack2),
+                Sequence(victoryRunTrack, bldgMTrack, freedomTrack1,
+                         freedomTrack2),
                 name=trackName)
         else:
             self.transitionTrack = Sequence(
@@ -953,56 +844,42 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 landmark = name.find('_landmark_') != -1
                 if not suitSoundPlayed:
                     hideTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.cogWeakenSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.cogWeakenSound, 0, 1, None,
+                             0.0))
 
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         3,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.050000000000000003,
+                        TO_TOON_BLDG_TIME * 0.050000000000000003,
                         slowInitBounce=0.0))
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         5,
                         0.80000000000000004,
-                        TO_TOON_BLDG_TIME *
-                        0.10000000000000001,
+                        TO_TOON_BLDG_TIME * 0.10000000000000001,
                         slowInitBounce=0.0))
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         7,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.17000000000000001,
+                        TO_TOON_BLDG_TIME * 0.17000000000000001,
                         slowInitBounce=0.0))
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         9,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.17999999999999999,
+                        TO_TOON_BLDG_TIME * 0.17999999999999999,
                         slowInitBounce=0.0))
                 realScale = i.getScale()
                 hideTrack.append(
-                    LerpScaleInterval(
-                        i,
-                        TO_TOON_BLDG_TIME *
-                        0.10000000000000001,
-                        Vec3(
-                            realScale[0],
-                            realScale[1],
-                            0.01)))
+                    LerpScaleInterval(i,
+                                      TO_TOON_BLDG_TIME * 0.10000000000000001,
+                                      Vec3(realScale[0], realScale[1], 0.01)))
                 if landmark:
                     hideTrack.append(Func(i.removeNode))
                 else:
@@ -1019,33 +896,22 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 hideTrack.append(Wait(TO_TOON_BLDG_TIME * 0.5))
                 if not toonSoundPlayed:
                     hideTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.toonGrowSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.toonGrowSound, 0, 1, None,
+                             0.0))
 
                 hideTrack.append(Func(i.unstash))
                 hideTrack.append(Func(i.setScale, Vec3(1, 1, 0.01)))
                 if not toonSoundPlayed:
                     hideTrack.append(
-                        Func(
-                            base.playSfx,
-                            self.toonSettleSound,
-                            0,
-                            1,
-                            None,
-                            0.0))
+                        Func(base.playSfx, self.toonSettleSound, 0, 1, None,
+                             0.0))
 
                 hideTrack.append(
                     self.createBounceTrack(
                         i,
                         11,
                         1.2,
-                        TO_TOON_BLDG_TIME *
-                        0.5,
+                        TO_TOON_BLDG_TIME * 0.5,
                         slowInitBounce=4.0))
                 tracks.append(hideTrack)
                 if not toonSoundPlayed:
@@ -1062,16 +928,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self._deleteTransitionTrack()
         if localToonIsVictor:
             freedomTrack1 = Func(self.cr.playGame.getPlace().setState, 'walk')
-            freedomTrack2 = Func(
-                base.localAvatar.d_setParent,
-                ToontownGlobals.SPRender)
+            freedomTrack2 = Func(base.localAvatar.d_setParent,
+                                 ToontownGlobals.SPRender)
             self.transitionTrack = Parallel(
                 camTrack,
-                Sequence(
-                    victoryRunTrack,
-                    bldgMTrack,
-                    freedomTrack1,
-                    freedomTrack2),
+                Sequence(victoryRunTrack, bldgMTrack, freedomTrack1,
+                         freedomTrack2),
                 name=trackName)
         else:
             self.transitionTrack = Sequence(
@@ -1084,13 +946,13 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
     def walkOutCameraTrack(self):
         track = Sequence(
-            Func(
-                camera.reparentTo, render), Func(
-                camera.setPosHpr, self.elevatorNodePath, 0, -32.5, 9.4000000000000004, 0, 348, 0), Func(
-                base.camLens.setFov, 52.0), Wait(VICTORY_RUN_TIME), Func(
-                    camera.setPosHpr, self.elevatorNodePath, 0, -32.5, 17, 0, 347, 0), Func(
-                        base.camLens.setFov, 75.0), Wait(TO_TOON_BLDG_TIME), Func(
-                            base.camLens.setFov, 52.0))
+            Func(camera.reparentTo, render),
+            Func(camera.setPosHpr, self.elevatorNodePath, 0,
+                 -32.5, 9.4000000000000004, 0, 348, 0),
+            Func(base.camLens.setFov, 52.0), Wait(VICTORY_RUN_TIME),
+            Func(camera.setPosHpr, self.elevatorNodePath, 0, -32.5, 17, 0, 347,
+                 0), Func(base.camLens.setFov, 75.0), Wait(TO_TOON_BLDG_TIME),
+            Func(base.camLens.setFov, 52.0))
         return track
 
     def plantVictorsOutsideBldg(self):
@@ -1116,33 +978,19 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             if victor != 0 and victor in self.cr.doId2do:
                 toon = self.cr.doId2do[victor]
                 delayDeletes.append(
-                    DelayDelete.DelayDelete(
-                        toon, 'getVictoryRunTrack'))
+                    DelayDelete.DelayDelete(toon, 'getVictoryRunTrack'))
                 toon.stopSmooth()
                 toon.setParent(ToontownGlobals.SPHidden)
                 origPosTrack.append(
-                    Func(
-                        toon.setPosHpr,
-                        self.elevatorNodePath,
-                        Point3(
-                            *ElevatorPoints[i]),
-                        Point3(
-                            180,
-                            0,
-                            0)))
+                    Func(toon.setPosHpr, self.elevatorNodePath,
+                         Point3(*ElevatorPoints[i]), Point3(180, 0, 0)))
                 origPosTrack.append(
-                    Func(
-                        toon.setParent,
-                        ToontownGlobals.SPRender))
+                    Func(toon.setParent, ToontownGlobals.SPRender))
 
             i += 1
 
-        openDoors = getOpenInterval(
-            self,
-            self.leftDoor,
-            self.rightDoor,
-            self.openSfx,
-            None)
+        openDoors = getOpenInterval(self, self.leftDoor, self.rightDoor,
+                                    self.openSfx, None)
         toonDoorPosHpr = self.cr.playGame.dnaStore.getDoorPosHprFromBlockNumber(
             self.block)
         useFarExitPoints = toonDoorPosHpr.getPos().getZ() > 1.0
@@ -1152,37 +1000,25 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             if victor != 0 and victor in self.cr.doId2do:
                 toon = self.cr.doId2do[victor]
                 p0 = Point3(0, 0, 0)
-                p1 = Point3(
-                    ElevatorPoints[i][0],
-                    ElevatorPoints[i][1] - 5.0,
-                    ElevatorPoints[i][2])
+                p1 = Point3(ElevatorPoints[i][0], ElevatorPoints[i][1] - 5.0,
+                            ElevatorPoints[i][2])
                 if useFarExitPoints:
-                    p2 = Point3(
-                        ElevatorOutPointsFar[i][0],
-                        ElevatorOutPointsFar[i][1],
-                        ElevatorOutPointsFar[i][2])
+                    p2 = Point3(ElevatorOutPointsFar[i][0],
+                                ElevatorOutPointsFar[i][1],
+                                ElevatorOutPointsFar[i][2])
                 else:
-                    p2 = Point3(
-                        ElevatorOutPoints[i][0],
-                        ElevatorOutPoints[i][1],
-                        ElevatorOutPoints[i][2])
+                    p2 = Point3(ElevatorOutPoints[i][0],
+                                ElevatorOutPoints[i][1],
+                                ElevatorOutPoints[i][2])
                 runOutSingle = Sequence(
-                    Func(
-                        Emote.globalEmote.disableBody,
-                        toon,
-                        'getVictory'),
-                    Func(
-                        toon.animFSM.request,
-                        'run'),
+                    Func(Emote.globalEmote.disableBody, toon, 'getVictory'),
+                    Func(toon.animFSM.request, 'run'),
                     LerpPosInterval(
                         toon,
                         TOON_VICTORY_EXIT_TIME * 0.25,
                         p1,
                         other=self.elevatorNodePath),
-                    Func(
-                        toon.headsUp,
-                        self.elevatorNodePath,
-                        p2),
+                    Func(toon.headsUp, self.elevatorNodePath, p2),
                     LerpPosInterval(
                         toon,
                         TOON_VICTORY_EXIT_TIME * 0.5,
@@ -1191,20 +1027,11 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                     LerpHprInterval(
                         toon,
                         TOON_VICTORY_EXIT_TIME * 0.25,
-                        Point3(
-                            0,
-                            0,
-                            0),
+                        Point3(0, 0, 0),
                         other=self.elevatorNodePath),
-                    Func(
-                        toon.animFSM.request,
-                        'neutral'),
-                    Func(
-                        toon.startSmooth),
-                    Func(
-                        Emote.globalEmote.releaseBody,
-                        toon,
-                        'getVictory'))
+                    Func(toon.animFSM.request, 'neutral'),
+                    Func(toon.startSmooth),
+                    Func(Emote.globalEmote.releaseBody, toon, 'getVictory'))
                 runOutAll.append(runOutSingle)
 
             i += 1
@@ -1227,15 +1054,11 @@ class DistributedBuilding(DistributedObject.DistributedObject):
         self._deleteTransitionTrack()
         if localToonIsVictor:
             freedomTrack1 = Func(self.cr.playGame.getPlace().setState, 'walk')
-            freedomTrack2 = Func(
-                base.localAvatar.d_setParent,
-                ToontownGlobals.SPRender)
+            freedomTrack2 = Func(base.localAvatar.d_setParent,
+                                 ToontownGlobals.SPRender)
             self.transitionTrack = Parallel(
                 camTrack,
-                Sequence(
-                    victoryRunTrack,
-                    freedomTrack1,
-                    freedomTrack2),
+                Sequence(victoryRunTrack, freedomTrack1, freedomTrack2),
                 name=trackName)
         else:
             self.transitionTrack = Sequence(victoryRunTrack, name=trackName)
@@ -1254,13 +1077,12 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
         return retVal
 
-    def createBounceTrack(
-            self,
-            nodeObj,
-            numBounces,
-            startScale,
-            totalTime,
-            slowInitBounce=0.0):
+    def createBounceTrack(self,
+                          nodeObj,
+                          numBounces,
+                          startScale,
+                          totalTime,
+                          slowInitBounce=0.0):
         if not nodeObj and numBounces < 1 and startScale == 0.0 or totalTime == 0:
             self.notify.warning(
                 'createBounceTrack called with invalid parameter')
@@ -1289,10 +1111,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                 LerpScaleInterval(
                     nodeObj,
                     currTime,
-                    Vec3(
-                        realScale[0],
-                        realScale[1],
-                        currScale),
+                    Vec3(realScale[0], realScale[1], currScale),
                     blendType='easeInOut'))
             currScaleDiff *= 0.5
             currTime = bounceTime
@@ -1337,8 +1156,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             nodePath = npc.getPath(i)
             self.adjustSbNodepathScale(nodePath)
             self.notify.debug(
-                'net transform = %s' % str(
-                    nodePath.getNetTransform()))
+                'net transform = %s' % str(nodePath.getNetTransform()))
             self.setupSuitBuilding(nodePath)
 
     def setToCogdo(self):
@@ -1371,11 +1189,8 @@ class DistributedBuilding(DistributedObject.DistributedObject):
 
         for np in nodes:
             if not np.isEmpty():
-                np.setColorScale(
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    1.0)
+                np.setColorScale(0.59999999999999998, 0.59999999999999998,
+                                 0.59999999999999998, 1.0)
                 continue
 
         npc = hidden.findAllMatches(self.getSbSearchString())
@@ -1383,8 +1198,7 @@ class DistributedBuilding(DistributedObject.DistributedObject):
             nodePath = npc.getPath(i)
             self.adjustSbNodepathScale(nodePath)
             self.notify.debug(
-                'net transform = %s' % str(
-                    nodePath.getNetTransform()))
+                'net transform = %s' % str(nodePath.getNetTransform()))
             self.setupCogdo(nodePath)
 
     def setToToon(self):
@@ -1447,11 +1261,11 @@ class DistributedBuilding(DistributedObject.DistributedObject):
                     self.interactiveProp = loader.getInteractiveProp(visZoneId)
                     result = self.interactiveProp
                     self.notify.debug(
-                        'self.interactiveProp = %s' %
-                        self.interactiveProp)
+                        'self.interactiveProp = %s' % self.interactiveProp)
                 else:
                     self.notify.warning(
-                        'no loader.getInteractiveProp self.interactiveProp is None')
+                        'no loader.getInteractiveProp self.interactiveProp is None'
+                    )
             else:
                 self.notify.warning('no hood self.interactiveProp is None')
         return result

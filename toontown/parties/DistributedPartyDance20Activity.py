@@ -8,9 +8,7 @@ class DistributedPartyDance20Activity(DistributedPartyDanceActivityBase):
 
     def __init__(self, cr):
         DistributedPartyDanceActivityBase.__init__(
-            self,
-            cr,
-            PartyGlobals.ActivityIds.PartyDance20,
+            self, cr, PartyGlobals.ActivityIds.PartyDance20,
             PartyGlobals.DancePatternToAnims20)
 
     def getInstructions(self):

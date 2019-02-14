@@ -37,12 +37,10 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
         self.board.reparentTo(render)
         self.accept(
             'decorator-holiday-%d-ending' %
-            ToontownGlobals.CRASHED_LEADERBOARD,
-            self.showLists)
+            ToontownGlobals.CRASHED_LEADERBOARD, self.showLists)
         self.accept(
             'decorator-holiday-%d-starting' %
-            ToontownGlobals.CRASHED_LEADERBOARD,
-            self.hideLists)
+            ToontownGlobals.CRASHED_LEADERBOARD, self.hideLists)
         newsManager = base.cr.newsManager
         if newsManager:
             if ToontownGlobals.CRASHED_LEADERBOARD in newsManager.holidayIdList:
@@ -97,11 +95,10 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
 
         self.surface.flattenLight()
 
-    def display(
-            self,
-            pTrackTitle='Track Title',
-            pPeriodTitle='Period Title',
-            pLeaderList=[]):
+    def display(self,
+                pTrackTitle='Track Title',
+                pPeriodTitle='Period Title',
+                pLeaderList=[]):
         self.titleTextNode.setText(pPeriodTitle)
         self.trackNameNode.setText(pTrackTitle)
         self.updateCount += 1
@@ -116,19 +113,15 @@ class DistributedLeaderBoard(DistributedObject.DistributedObject):
             (min, sec) = divmod(secs, 60)
             self.nameTextNodes[i].setText(name[:22])
             self.timeTextNodes[i].setText(
-                '%02d:%02d:%02d' %
-                (min, sec, hundredths * 100))
+                '%02d:%02d:%02d' % (min, sec, hundredths * 100))
 
     def buildTitleRow(self):
         row = hidden.attachNewNode('TitleRow')
         nameText = TextNode('titleRow')
         nameText.setFont(ToontownGlobals.getSignFont())
         nameText.setAlign(TextNode.ACenter)
-        nameText.setTextColor(
-            0.29999999999999999,
-            0.75,
-            0.59999999999999998,
-            1)
+        nameText.setTextColor(0.29999999999999999, 0.75, 0.59999999999999998,
+                              1)
         nameText.setText('Score Title')
         namePath = row.attachNewNode(nameText)
         namePath.setScale(TTLocalizer.DLBbuildTitleRow)

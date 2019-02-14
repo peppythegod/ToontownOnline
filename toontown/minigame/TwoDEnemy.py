@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
@@ -110,8 +108,7 @@ class TwoDEnemy(DirectObject):
                     posIvalDuration,
                     pos=finalPos,
                     startPos=initPos,
-                    name='%s-moveFront' %
-                    self.suitName,
+                    name='%s-moveFront' % self.suitName,
                     blendType=blendTypeStr,
                     fluid=1)
                 return forwardIval
@@ -122,8 +119,7 @@ class TwoDEnemy(DirectObject):
                     posIvalDuration,
                     pos=initPos,
                     startPos=finalPos,
-                    name='%s-moveBack' %
-                    self.suitName,
+                    name='%s-moveBack' % self.suitName,
                     blendType=blendTypeStr,
                     fluid=1)
                 return backwardIval
@@ -165,23 +161,16 @@ class TwoDEnemy(DirectObject):
                         endFrame=28,
                         playRate=-0.5))
                 self.moveIval = Sequence(
-                    Func(
-                        setIsGoingUp, True), getForwardIval('easeInOut'), Func(
-                        setIsGoingUp, False), getBackwardIval('easeInOut'))
+                    Func(setIsGoingUp, True), getForwardIval('easeInOut'),
+                    Func(setIsGoingUp, False), getBackwardIval('easeInOut'))
                 self.suitSound = base.loadSfx(
                     'phase_4/audio/sfx/TB_propeller.wav')
             else:
                 self.isMovingLeftRight = True
                 self.moveIval = Sequence(
-                    Func(
-                        self.setHeading,
-                        finalPos,
-                        initPos),
+                    Func(self.setHeading, finalPos, initPos),
                     getForwardIval('noBlend'),
-                    Func(
-                        self.setHeading,
-                        initPos,
-                        finalPos),
+                    Func(self.setHeading, initPos, finalPos),
                     getBackwardIval('noBlend'))
 
         self.suit.setPos(initX, initY, initZ)
@@ -200,8 +189,7 @@ class TwoDEnemy(DirectObject):
             self.collNodePath.show()
 
         self.accept(
-            self.game.uniqueName(
-                'enter' + self.suitName),
+            self.game.uniqueName('enter' + self.suitName),
             self.handleEnemyCollision)
 
     def clearMoveIval(self):
@@ -255,29 +243,27 @@ class TwoDEnemy(DirectObject):
         startAngle = PythonUtil.fitSrcAngle2Dest(startAngle, angle)
         dur = 0.10000000000000001 * abs(startAngle - angle) / 90
         self.suitTurnIval = LerpHprInterval(
-            self.suit, dur, Point3(
-                angle, 0, 0), startHpr=Point3(
-                startAngle, 0, 0), name='SuitLerpHpr')
+            self.suit,
+            dur,
+            Point3(angle, 0, 0),
+            startHpr=Point3(startAngle, 0, 0),
+            name='SuitLerpHpr')
         self.suitTurnIval.start()
 
     def blinkColor(self, color, duration):
         blink = Sequence(
             LerpColorScaleInterval(
-                self.suit, 0.5, color, startColorScale=VBase4(
-                    1, 1, 1, 1)), LerpColorScaleInterval(
-                self.suit, 0.5, VBase4(
-                    1, 1, 1, 1), startColorScale=color))
+                self.suit, 0.5, color, startColorScale=VBase4(1, 1, 1, 1)),
+            LerpColorScaleInterval(
+                self.suit, 0.5, VBase4(1, 1, 1, 1), startColorScale=color))
         track = Sequence(Func(blink.loop), Wait(duration), Func(blink.finish))
         return track
 
     def doShotTrack(self):
         blinkRed = self.blinkColor(COLOR_RED, 2)
         point = Point3(
-            self.suit.getX(render),
-            self.suit.getY(render),
-            self.suit.getZ(render) +
-            self.suit.height /
-            2.0)
+            self.suit.getX(render), self.suit.getY(render),
+            self.suit.getZ(render) + self.suit.height / 2.0)
         scale = 0.29999999999999999
         splashHold = 0.10000000000000001
 
@@ -294,26 +280,14 @@ class TwoDEnemy(DirectObject):
         splash = globalPropPool.getProp('splash-from-splat')
         splash.setScale(scale)
         splashTrack = Sequence(
-            Func(
-                prepSplash,
-                splash,
-                point),
-            ActorInterval(
-                splash,
-                'splash-from-splat'),
-            Wait(splashHold),
-            Func(
-                MovieUtil.removeProp,
-                splash))
+            Func(prepSplash, splash, point),
+            ActorInterval(splash, 'splash-from-splat'), Wait(splashHold),
+            Func(MovieUtil.removeProp, splash))
         self.shotTrack = Parallel(
-            Func(
-                self.game.assetMgr.playSplashSound),
-            blinkRed,
-            splashTrack)
+            Func(self.game.assetMgr.playSplashSound), blinkRed, splashTrack)
         self.shotTrack.start()
 
     def doDeathTrack(self):
-
         def removeDeathSuit(suit, deathSuit):
             if not deathSuit.isEmpty():
                 deathSuit.detachNode()
@@ -328,12 +302,8 @@ class TwoDEnemy(DirectObject):
         self.deathSuit.setHpr(render, self.suit.getHpr(render))
         self.suit.hide()
         self.collNodePath.reparentTo(self.deathSuit)
-        treasureSpawnPoint = Point3(
-            self.suit.getX(),
-            self.suit.getY(),
-            self.suit.getZ() +
-            self.suit.height /
-            2.0)
+        treasureSpawnPoint = Point3(self.suit.getX(), self.suit.getY(),
+                                    self.suit.getZ() + self.suit.height / 2.0)
         gearPoint = Point3(0, 0, self.suit.height / 2.0 + 2.0)
         spinningSound = base.loadSfx('phase_3.5/audio/sfx/Cog_Death.mp3')
         deathSound = base.loadSfx('phase_3.5/audio/sfx/ENC_cogfall_apart.mp3')
@@ -356,12 +326,17 @@ class TwoDEnemy(DirectObject):
         if self.isMovingLeftRight:
             self.enterPause()
             suitTrack = Sequence(
+                Func(self.collNodePath.stash),
+                ActorInterval(
+                    self.deathSuit, 'lose', startFrame=80, endFrame=140),
                 Func(
-                    self.collNodePath.stash), ActorInterval(
-                    self.deathSuit, 'lose', startFrame=80, endFrame=140), Func(
-                    removeDeathSuit, self.suit, self.deathSuit, name='remove-death-suit'))
+                    removeDeathSuit,
+                    self.suit,
+                    self.deathSuit,
+                    name='remove-death-suit'))
             explosionTrack = Sequence(
-                Wait(1.5), MovieUtil.createKapowExplosionTrack(
+                Wait(1.5),
+                MovieUtil.createKapowExplosionTrack(
                     self.deathSuit, explosionPoint=gearPoint))
             soundTrack = Sequence(
                 SoundInterval(
@@ -382,31 +357,28 @@ class TwoDEnemy(DirectObject):
                     duration=4.2999999999999998,
                     cleanup=True),
                 name='gears1Track')
-            gears2MTrack = Track(
-                (0.0,
-                 explosionTrack),
-                (0.69999999999999996,
-                 ParticleInterval(
-                     singleGear,
-                     self.deathSuit,
-                     worldRelative=0,
-                     duration=5.7000000000000002,
-                     cleanup=True)),
-                (5.2000000000000002,
-                 ParticleInterval(
-                     smallGearExplosion,
-                     self.deathSuit,
-                     worldRelative=0,
-                     duration=1.2,
-                     cleanup=True)),
-                (5.4000000000000004,
-                 ParticleInterval(
-                     bigGearExplosion,
-                     self.deathSuit,
-                     worldRelative=0,
-                     duration=1.0,
-                     cleanup=True)),
-                name='gears2MTrack')
+            gears2MTrack = Track((0.0, explosionTrack),
+                                 (0.69999999999999996,
+                                  ParticleInterval(
+                                      singleGear,
+                                      self.deathSuit,
+                                      worldRelative=0,
+                                      duration=5.7000000000000002,
+                                      cleanup=True)), (5.2000000000000002,
+                                                       ParticleInterval(
+                                                           smallGearExplosion,
+                                                           self.deathSuit,
+                                                           worldRelative=0,
+                                                           duration=1.2,
+                                                           cleanup=True)),
+                                 (5.4000000000000004,
+                                  ParticleInterval(
+                                      bigGearExplosion,
+                                      self.deathSuit,
+                                      worldRelative=0,
+                                      duration=1.0,
+                                      cleanup=True)),
+                                 name='gears2MTrack')
         elif self.isMovingUpDown:
 
             def getFinalPos():
@@ -414,23 +386,31 @@ class TwoDEnemy(DirectObject):
                     direction = 1.0
                 else:
                     direction = -1.0
-                pos = Point3(
-                    self.deathSuit.getX(),
-                    self.deathSuit.getY(),
-                    self.deathSuit.getZ() + 2.0 * direction)
+                pos = Point3(self.deathSuit.getX(), self.deathSuit.getY(),
+                             self.deathSuit.getZ() + 2.0 * direction)
                 return pos
 
             deathMoveIval = LerpPosInterval(
-                self.deathSuit, 1.5, pos=getFinalPos(), name='%s-deathSuitMove' %
-                self.suitName, blendType='easeInOut', fluid=1)
+                self.deathSuit,
+                1.5,
+                pos=getFinalPos(),
+                name='%s-deathSuitMove' % self.suitName,
+                blendType='easeInOut',
+                fluid=1)
             suitTrack = Sequence(
-                Func(
-                    self.collNodePath.stash), Parallel(
+                Func(self.collNodePath.stash),
+                Parallel(
                     ActorInterval(
-                        self.deathSuit, 'lose', startFrame=80, endFrame=140), deathMoveIval), Func(
-                    removeDeathSuit, self.suit, self.deathSuit, name='remove-death-suit'))
+                        self.deathSuit, 'lose', startFrame=80, endFrame=140),
+                    deathMoveIval),
+                Func(
+                    removeDeathSuit,
+                    self.suit,
+                    self.deathSuit,
+                    name='remove-death-suit'))
             explosionTrack = Sequence(
-                Wait(1.5), MovieUtil.createKapowExplosionTrack(
+                Wait(1.5),
+                MovieUtil.createKapowExplosionTrack(
                     self.deathSuit, explosionPoint=gearPoint))
             soundTrack = Sequence(
                 SoundInterval(
@@ -451,31 +431,28 @@ class TwoDEnemy(DirectObject):
                     duration=4.2999999999999998,
                     cleanup=True),
                 name='gears1Track')
-            gears2MTrack = Track(
-                (0.0,
-                 explosionTrack),
-                (0.0,
-                 ParticleInterval(
-                     singleGear,
-                     self.deathSuit,
-                     worldRelative=0,
-                     duration=5.7000000000000002,
-                     cleanup=True)),
-                (2.7000000000000002,
-                 ParticleInterval(
-                     smallGearExplosion,
-                     self.deathSuit,
-                     worldRelative=0,
-                     duration=1.2,
-                     cleanup=True)),
-                (2.8999999999999999,
-                 ParticleInterval(
-                     bigGearExplosion,
-                     self.deathSuit,
-                     worldRelative=0,
-                     duration=1.0,
-                     cleanup=True)),
-                name='gears2MTrack')
+            gears2MTrack = Track((0.0, explosionTrack),
+                                 (0.0,
+                                  ParticleInterval(
+                                      singleGear,
+                                      self.deathSuit,
+                                      worldRelative=0,
+                                      duration=5.7000000000000002,
+                                      cleanup=True)), (2.7000000000000002,
+                                                       ParticleInterval(
+                                                           smallGearExplosion,
+                                                           self.deathSuit,
+                                                           worldRelative=0,
+                                                           duration=1.2,
+                                                           cleanup=True)),
+                                 (2.8999999999999999,
+                                  ParticleInterval(
+                                      bigGearExplosion,
+                                      self.deathSuit,
+                                      worldRelative=0,
+                                      duration=1.0,
+                                      cleanup=True)),
+                                 name='gears2MTrack')
 
         def removeParticle(particle):
             if particle and hasattr(particle, 'renderParent'):
@@ -483,18 +460,10 @@ class TwoDEnemy(DirectObject):
                 del particle
 
         removeParticles = Parallel(
-            Func(
-                removeParticle, smallGears), Func(
-                removeParticle, singleGear), Func(
-                removeParticle, smallGearExplosion), Func(
-                    removeParticle, bigGearExplosion))
+            Func(removeParticle, smallGears), Func(removeParticle, singleGear),
+            Func(removeParticle, smallGearExplosion),
+            Func(removeParticle, bigGearExplosion))
         self.deathTrack = Sequence(
-            Parallel(
-                suitTrack,
-                gears2MTrack,
-                gears1Track,
-                soundTrack),
-            removeParticles,
-            Func(
-                self.destroy))
+            Parallel(suitTrack, gears2MTrack, gears1Track, soundTrack),
+            removeParticles, Func(self.destroy))
         self.deathTrack.start()

@@ -5,7 +5,6 @@ import os
 
 
 class WhiteList:
-
     def __init__(self, wordlist):
         self.words = []
         for line in wordlist:

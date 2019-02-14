@@ -9,7 +9,6 @@ MIN_HEIGHT = 2.0
 
 
 class DistributedDGFlowerAI(DistributedObjectAI.DistributedObjectAI):
-
     def __init__(self, air):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.height = MIN_HEIGHT
@@ -27,8 +26,7 @@ class DistributedDGFlowerAI(DistributedObjectAI.DistributedObjectAI):
             self.avList.append(avId)
             if self.height + HEIGHT_DELTA <= MAX_HEIGHT:
                 self.height += HEIGHT_DELTA
-                self.sendUpdate('setHeight', [
-                    self.height])
+                self.sendUpdate('setHeight', [self.height])
 
     def avatarExit(self):
         avId = self.air.getAvatarIdFromSender()
@@ -36,5 +34,4 @@ class DistributedDGFlowerAI(DistributedObjectAI.DistributedObjectAI):
             self.avList.remove(avId)
             if self.height - HEIGHT_DELTA >= MIN_HEIGHT:
                 self.height -= HEIGHT_DELTA
-                self.sendUpdate('setHeight', [
-                    self.height])
+                self.sendUpdate('setHeight', [self.height])

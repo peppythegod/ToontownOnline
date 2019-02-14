@@ -5,7 +5,6 @@ import random
 
 
 class DownloadForceAcknowledge:
-
     def __init__(self, doneEvent):
         self.doneEvent = doneEvent
         self.dialog = None
@@ -14,8 +13,7 @@ class DownloadForceAcknowledge:
         doneStatus = {}
         if launcher.getPhaseComplete(phase):
             doneStatus['mode'] = 'complete'
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            messenger.send(self.doneEvent, [doneStatus])
         else:
 
             try:
@@ -30,7 +28,8 @@ class DownloadForceAcknowledge:
             verb = random.choice(TTLocalizer.DownloadForceAcknowledgeVerbList)
             msg = TTLocalizer.DownloadForceAcknowledgeMsg % {
                 'phase': phaseName,
-                'verb': verb}
+                'verb': verb
+            }
             self.dialog = TTDialog.TTDialog(
                 text=msg, command=self.handleOk, style=TTDialog.Acknowledge)
             self.dialog.show()
@@ -42,5 +41,4 @@ class DownloadForceAcknowledge:
             self.dialog = None
 
     def handleOk(self, value):
-        messenger.send(self.doneEvent, [
-            self.doneStatus])
+        messenger.send(self.doneEvent, [self.doneStatus])

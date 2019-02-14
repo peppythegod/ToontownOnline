@@ -2,7 +2,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class CountryClubRoomBase:
-
     def __init__(self):
         pass
 

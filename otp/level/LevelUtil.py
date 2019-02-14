@@ -3,7 +3,6 @@ import LevelConstants
 
 
 def getZoneNum2Node(levelModel, logFunc=lambda str: str):
-
     def findNumberedNodes(baseString, model, caseInsens=1):
         srch = '**/%s*' % baseString
         if caseInsens:
@@ -32,15 +31,13 @@ def getZoneNum2Node(levelModel, logFunc=lambda str: str):
                 continue
 
             if num < LevelConstants.MinZoneNum or num > LevelConstants.MaxZoneNum:
-                logFunc(
-                    'warning: zone %s is out of range. ignoring %s' %
-                    (num, potentialNode))
+                logFunc('warning: zone %s is out of range. ignoring %s' %
+                        (num, potentialNode))
                 continue
 
             if num in num2node:
-                logFunc(
-                    'warning: zone %s already assigned to %s. ignoring %s' %
-                    (num, num2node[num], potentialNode))
+                logFunc('warning: zone %s already assigned to %s. ignoring %s'
+                        % (num, num2node[num], potentialNode))
                 continue
 
             num2node[num] = potentialNode

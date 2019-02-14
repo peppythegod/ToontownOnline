@@ -85,22 +85,14 @@ class DistributedLawbotBossGavel(DistributedObject.DistributedObject, FSM.FSM):
         handleBounds = gavelHandle.getBounds()
         handleCenter = handleBounds.getCenter()
         handleRadius = handleBounds.getRadius()
-        tube2 = CollisionTube(
-            0,
-            0,
-            handleCenter.getZ() +
-            handleRadius,
-            0,
-            0,
-            handleCenter.getZ() -
-            handleRadius,
-            0.25)
+        tube2 = CollisionTube(0, 0,
+                              handleCenter.getZ() + handleRadius, 0, 0,
+                              handleCenter.getZ() - handleRadius, 0.25)
         tube2.setTangible(0)
         handleCollNode = CollisionNode(self.uniqueName('gavelHandle'))
         handleCollNode.addSolid(tube2)
-        handleCollNode.setTag(
-            'attackCode', str(
-                ToontownGlobals.BossCogGavelHandle))
+        handleCollNode.setTag('attackCode',
+                              str(ToontownGlobals.BossCogGavelHandle))
         handleCollNode.setName('GavelHandleZap')
         self.handleCollNodePath = self.nodePath.attachNewNode(handleCollNode)
 
@@ -153,40 +145,26 @@ class DistributedLawbotBossGavel(DistributedObject.DistributedObject, FSM.FSM):
 
             goingDown = self.nodePath.hprInterval(
                 self.downTime,
-                Point3(
-                    myHeadings[index] +
-                    self.origHpr[0],
-                    downAngle,
-                    self.origHpr[2]),
-                startHpr=Point3(
-                    myHeadings[index] +
-                    self.origHpr[0],
-                    0,
-                    self.origHpr[2]))
+                Point3(myHeadings[index] + self.origHpr[0], downAngle,
+                       self.origHpr[2]),
+                startHpr=Point3(myHeadings[index] + self.origHpr[0], 0,
+                                self.origHpr[2]))
             self.ival.append(goingDown)
             self.ival.append(SoundInterval(self.gavelSfx, node=self.gavelTop))
             self.ival.append(Wait(self.stayDownTime))
             goingUp = self.nodePath.hprInterval(
                 self.upTime,
-                Point3(
-                    myHeadings[nextIndex] +
-                    self.origHpr[0],
-                    0,
-                    self.origHpr[2]),
-                startHpr=Point3(
-                    myHeadings[index] +
-                    self.origHpr[0],
-                    downAngle,
-                    self.origHpr[2]))
+                Point3(myHeadings[nextIndex] + self.origHpr[0], 0,
+                       self.origHpr[2]),
+                startHpr=Point3(myHeadings[index] + self.origHpr[0], downAngle,
+                                self.origHpr[2]))
             self.ival.append(goingUp)
 
         self.ival.loop()
-        self.accept(
-            'enterGavelZap',
-            self._DistributedLawbotBossGavel__touchedGavel)
-        self.accept(
-            'enterGavelHandleZap',
-            self._DistributedLawbotBossGavel__touchedGavelHandle)
+        self.accept('enterGavelZap',
+                    self._DistributedLawbotBossGavel__touchedGavel)
+        self.accept('enterGavelHandleZap',
+                    self._DistributedLawbotBossGavel__touchedGavelHandle)
 
     def enterOff(self):
         if self.ival:

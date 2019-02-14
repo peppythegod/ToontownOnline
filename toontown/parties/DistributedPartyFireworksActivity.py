@@ -21,9 +21,8 @@ from activityFSMs import FireworksActivityFSM
 import PartyGlobals
 
 
-class DistributedPartyFireworksActivity(
-        DistributedPartyActivity,
-        FireworkShowMixin):
+class DistributedPartyFireworksActivity(DistributedPartyActivity,
+                                        FireworkShowMixin):
     notify = directNotify.newCategory('DistributedPartyFireworksActivity')
 
     def __init__(self, cr):
@@ -62,8 +61,7 @@ class DistributedPartyFireworksActivity(
             '**/launchPad_mesh/*railing*')
         for i in range(railingsCollection.getNumPaths()):
             railingsCollection[i].setAttrib(
-                AlphaTestAttrib.make(
-                    RenderAttrib.MGreater, 0.75))
+                AlphaTestAttrib.make(RenderAttrib.MGreater, 0.75))
 
         leverLocator = self.launchPadModel.find('**/RocketLever_locator')
         self.lever.setPosHpr(Vec3.zero(), Vec3.zero())
@@ -71,15 +69,16 @@ class DistributedPartyFireworksActivity(
         self.toonPullingLeverInterval = None
         self.sign.reparentTo(
             self.launchPadModel.find('**/launchPad_sign_locator'))
-        self.rocketActor = Actor('phase_13/models/parties/rocket_model', {
-            'launch': 'phase_13/models/parties/rocket_launch'})
+        self.rocketActor = Actor(
+            'phase_13/models/parties/rocket_model',
+            {'launch': 'phase_13/models/parties/rocket_launch'})
         rocketLocator = self.launchPadModel.find('**/rocket_locator')
         self.rocketActor.reparentTo(rocketLocator)
         self.rocketActor.node().setBound(OmniBoundingVolume())
         self.rocketActor.node().setFinal(True)
         effectsLocator = self.rocketActor.find('**/joint1')
-        self.rocketExplosionEffect = RocketExplosion(
-            effectsLocator, rocketLocator)
+        self.rocketExplosionEffect = RocketExplosion(effectsLocator,
+                                                     rocketLocator)
         self.rocketParticleSeq = None
         self.launchSound = base.loadSfx('phase_13/audio/sfx/rocket_launch.mp3')
         self.activityFSM = FireworksActivityFSM(self)
@@ -151,23 +150,20 @@ class DistributedPartyFireworksActivity(
         else:
             self.rocketActor.play('launch')
             self.rocketParticleSeq = Sequence(
-                Wait(RocketSoundDelay), Func(
-                    base.playSfx, self.launchSound), Func(
-                    self.rocketExplosionEffect.start), Wait(RocketDirectionDelay), LerpHprInterval(
-                    self.rocketActor, 4.0, Vec3(
-                        0, 0, -60)), Func(
-                        self.rocketExplosionEffect.end), Func(
-                            self.rocketActor.hide))
+                Wait(RocketSoundDelay), Func(base.playSfx, self.launchSound),
+                Func(self.rocketExplosionEffect.start),
+                Wait(RocketDirectionDelay),
+                LerpHprInterval(self.rocketActor, 4.0, Vec3(0, 0, -60)),
+                Func(self.rocketExplosionEffect.end),
+                Func(self.rocketActor.hide))
             self.rocketParticleSeq.start()
             taskMgr.doMethodLater(
                 FireworksPostLaunchDelay,
                 self.startShow,
                 self.taskName('delayedStartShow'),
                 extraArgs=[
-                    self.eventId,
-                    self.showStyle,
-                    showStartTimestamp,
-                    self.root])
+                    self.eventId, self.showStyle, showStartTimestamp, self.root
+                ])
 
     def finishActive(self):
         self.rocketParticleSeq = None

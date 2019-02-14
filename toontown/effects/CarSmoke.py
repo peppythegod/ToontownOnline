@@ -6,7 +6,6 @@ import os
 
 
 class CarSmoke(NodePath):
-
     def __init__(self, parent):
         NodePath.__init__(self)
         notify = DirectNotifyGlobal.directNotify.newCategory(
@@ -23,8 +22,7 @@ class CarSmoke(NodePath):
             pass
         basePath = './toontown'
         particleSearchPath.appendDirectory(
-            Filename.fromOsSpecific(
-                basePath + '/src/effects'))
+            Filename.fromOsSpecific(basePath + '/src/effects'))
         particleSearchPath.appendDirectory(Filename('phase_3.5/etc'))
         particleSearchPath.appendDirectory(Filename('phase_4/etc'))
         particleSearchPath.appendDirectory(Filename('phase_5/etc'))
@@ -42,8 +40,8 @@ class CarSmoke(NodePath):
         notify.debug('Loading particle file: %s' % pfile)
         self.effect.loadConfig(pfile)
         ren = self.effect.getParticlesNamed('particles-1').getRenderer()
-        ren.setTextureFromNode(
-            'phase_4/models/props/tt_m_efx_ext_smoke', '**/*')
+        ren.setTextureFromNode('phase_4/models/props/tt_m_efx_ext_smoke',
+                               '**/*')
 
     def start(self):
         self.effect.start(parent=self.effectNode)

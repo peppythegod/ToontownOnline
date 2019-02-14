@@ -17,17 +17,14 @@ class DistributedGoofyAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
         DistributedCCharBaseAI.DistributedCCharBaseAI.__init__(
             self, air, TTLocalizer.Goofy)
         self.fsm = ClassicFSM.ClassicFSM('DistributedGoofyAI', [
-            State.State('Off', self.enterOff, self.exitOff, [
-                'Lonely']),
-            State.State('Lonely', self.enterLonely, self.exitLonely, [
-                'Chatty',
-                'Walk']),
-            State.State('Chatty', self.enterChatty, self.exitChatty, [
-                'Lonely',
-                'Walk']),
-            State.State('Walk', self.enterWalk, self.exitWalk, [
-                'Lonely',
-                'Chatty'])], 'Off', 'Off')
+            State.State('Off', self.enterOff, self.exitOff, ['Lonely']),
+            State.State('Lonely', self.enterLonely, self.exitLonely,
+                        ['Chatty', 'Walk']),
+            State.State('Chatty', self.enterChatty, self.exitChatty,
+                        ['Lonely', 'Walk']),
+            State.State('Walk', self.enterWalk, self.exitWalk,
+                        ['Lonely', 'Chatty'])
+        ], 'Off', 'Off')
         self.fsm.enterInitialState()
 
     def delete(self):
@@ -101,9 +98,8 @@ class DistributedGoofyAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
     def enterWalk(self):
         self.notify.debug('going for a walk')
         self.walk.enter()
-        self.acceptOnce(
-            self.walkDoneEvent,
-            self._DistributedGoofyAI__decideNextState)
+        self.acceptOnce(self.walkDoneEvent,
+                        self._DistributedGoofyAI__decideNextState)
 
     def exitWalk(self):
         self.ignore(self.walkDoneEvent)
@@ -116,8 +112,8 @@ class DistributedGoofyAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
             else:
                 self.notify.debug('avatarEnterNextState: in walk state')
         else:
-            self.notify.debug(
-                'avatarEnterNextState: num avatars: ' + str(len(self.nearbyAvatars)))
+            self.notify.debug('avatarEnterNextState: num avatars: ' +
+                              str(len(self.nearbyAvatars)))
 
     def avatarExitNextState(self):
         if len(self.nearbyAvatars) == 0:

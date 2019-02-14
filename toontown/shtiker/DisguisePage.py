@@ -7,40 +7,24 @@ from toontown.suit import SuitDNA
 from toontown.battle import SuitBattleGlobals
 from toontown.minigame import MinigamePowerMeter
 from toontown.coghq import CogDisguiseGlobals
-DeptColors = (
-    Vec4(
-        0.64700000000000002, 0.60799999999999998, 0.59599999999999997, 1.0), Vec4(
-            0.58799999999999997, 0.63500000000000001, 0.67100000000000004, 1.0), Vec4(
-                0.59599999999999997, 0.71399999999999997, 0.65900000000000003, 1.0), Vec4(
-                    0.76100000000000001, 0.67800000000000005, 0.68999999999999995, 1.0))
+DeptColors = (Vec4(0.64700000000000002, 0.60799999999999998,
+                   0.59599999999999997, 1.0),
+              Vec4(0.58799999999999997, 0.63500000000000001,
+                   0.67100000000000004, 1.0),
+              Vec4(0.59599999999999997, 0.71399999999999997,
+                   0.65900000000000003, 1.0),
+              Vec4(0.76100000000000001, 0.67800000000000005,
+                   0.68999999999999995, 1.0))
 NumParts = max(CogDisguiseGlobals.PartsPerSuit)
-PartNames = (
-    'lUpleg',
-    'lLowleg',
-    'lShoe',
-    'rUpleg',
-    'rLowleg',
-    'rShoe',
-    'lShoulder',
-    'rShoulder',
-    'chest',
-    'waist',
-    'hip',
-    'lUparm',
-    'lLowarm',
-    'lHand',
-    'rUparm',
-    'rLowarm',
-    'rHand')
+PartNames = ('lUpleg', 'lLowleg', 'lShoe', 'rUpleg', 'rLowleg', 'rShoe',
+             'lShoulder', 'rShoulder', 'chest', 'waist', 'hip', 'lUparm',
+             'lLowarm', 'lHand', 'rUparm', 'rLowarm', 'rHand')
 
 
 class DisguisePage(ShtikerPage.ShtikerPage):
     meterColor = Vec4(0.87, 0.87, 0.82699999999999996, 1.0)
-    meterActiveColor = Vec4(
-        0.69999999999999996,
-        0.29999999999999999,
-        0.29999999999999999,
-        1)
+    meterActiveColor = Vec4(0.69999999999999996, 0.29999999999999999,
+                            0.29999999999999999, 1)
 
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
@@ -54,18 +38,12 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             parent=self,
             relief=None,
             scale=0.46999999999999997,
-            pos=(
-                0.02,
-                1,
-                0))
+            pos=(0.02, 1, 0))
         self.bkgd = DirectFrame(
             parent=self.frame,
             geom=gui.find('**/base'),
             relief=None,
-            scale=(
-                0.97999999999999998,
-                1,
-                1))
+            scale=(0.97999999999999998, 1, 1))
         self.bkgd.setTextureOff(1)
         self.tabs = []
         self.pageFrame = DirectFrame(parent=self.frame, relief=None)
@@ -85,104 +63,91 @@ class DisguisePage(ShtikerPage.ShtikerPage):
 
             pageGeom = gui.find('**/page%d' % tabIndex)
             tabGeom = gui.find('**/tab%d' % tabIndex)
-            tab = DirectButton(parent=self.pageFrame,
-                               relief=None,
-                               geom=tabGeom,
-                               geom_color=DeptColors[tabIndex - 1],
-                               text=SuitDNA.suitDeptFullnames[dept],
-                               text_font=ToontownGlobals.getSuitFont(),
-                               text_pos=textPos,
-                               text_roll=-90,
-                               text_scale=TTLocalizer.DPtab,
-                               text_align=TextNode.ACenter,
-                               text1_fg=Vec4(1,
-                                             0,
-                                             0,
-                                             1),
-                               text2_fg=Vec4(0.5,
-                                             0.40000000000000002,
-                                             0.40000000000000002,
-                                             1),
-                               text3_fg=Vec4(0.40000000000000002,
-                                             0.40000000000000002,
-                                             0.40000000000000002,
-                                             1),
-                               command=self.doTab,
-                               extraArgs=[len(self.tabs)],
-                               pressEffect=0)
+            tab = DirectButton(
+                parent=self.pageFrame,
+                relief=None,
+                geom=tabGeom,
+                geom_color=DeptColors[tabIndex - 1],
+                text=SuitDNA.suitDeptFullnames[dept],
+                text_font=ToontownGlobals.getSuitFont(),
+                text_pos=textPos,
+                text_roll=-90,
+                text_scale=TTLocalizer.DPtab,
+                text_align=TextNode.ACenter,
+                text1_fg=Vec4(1, 0, 0, 1),
+                text2_fg=Vec4(0.5, 0.40000000000000002, 0.40000000000000002,
+                              1),
+                text3_fg=Vec4(0.40000000000000002, 0.40000000000000002,
+                              0.40000000000000002, 1),
+                command=self.doTab,
+                extraArgs=[len(self.tabs)],
+                pressEffect=0)
             self.tabs.append(tab)
             page = DirectFrame(parent=tab, relief=None, geom=pageGeom)
 
-        self.deptLabel = DirectLabel(parent=self.frame,
-                                     text='',
-                                     text_font=ToontownGlobals.getSuitFont(),
-                                     text_scale=TTLocalizer.DPdeptLabel,
-                                     text_pos=(-0.10000000000000001,
-                                               0.80000000000000004))
-        DirectFrame(
+        self.deptLabel = DirectLabel(
             parent=self.frame,
-            relief=None,
-            geom=gui.find('**/pipe_frame'))
+            text='',
+            text_font=ToontownGlobals.getSuitFont(),
+            text_scale=TTLocalizer.DPdeptLabel,
+            text_pos=(-0.10000000000000001, 0.80000000000000004))
+        DirectFrame(
+            parent=self.frame, relief=None, geom=gui.find('**/pipe_frame'))
         self.tube = DirectFrame(
-            parent=self.frame,
-            relief=None,
-            geom=gui.find('**/tube'))
+            parent=self.frame, relief=None, geom=gui.find('**/tube'))
         DirectFrame(
-            parent=self.frame,
-            relief=None,
-            geom=gui.find('**/robot/face'))
+            parent=self.frame, relief=None, geom=gui.find('**/robot/face'))
         DirectLabel(
             parent=self.frame,
             relief=None,
             geom=gui.find('**/text_cog_disguises'),
-            geom_pos=(
-                0,
-                0.10000000000000001,
-                0))
-        self.meritTitle = DirectLabel(parent=self.frame, relief=None, geom=gui.find(
-            '**/text_merit_progress'), geom_pos=(0, 0.10000000000000001, 0))
+            geom_pos=(0, 0.10000000000000001, 0))
+        self.meritTitle = DirectLabel(
+            parent=self.frame,
+            relief=None,
+            geom=gui.find('**/text_merit_progress'),
+            geom_pos=(0, 0.10000000000000001, 0))
         self.meritTitle.hide()
-        self.cogbuckTitle = DirectLabel(parent=self.frame, relief=None, geom=gui.find(
-            '**/text_cashbuck_progress'), geom_pos=(0, 0.10000000000000001, 0))
+        self.cogbuckTitle = DirectLabel(
+            parent=self.frame,
+            relief=None,
+            geom=gui.find('**/text_cashbuck_progress'),
+            geom_pos=(0, 0.10000000000000001, 0))
         self.cogbuckTitle.hide()
         self.juryNoticeTitle = DirectLabel(
             parent=self.frame,
             relief=None,
             geom=gui.find('**/text_jury_notice_progress'),
-            geom_pos=(
-                0,
-                0.10000000000000001,
-                0))
+            geom_pos=(0, 0.10000000000000001, 0))
         self.juryNoticeTitle.hide()
         self.stockOptionTitle = DirectLabel(
             parent=self.frame,
             relief=None,
             geom=gui.find('**/text_stock_option_progress'),
-            geom_pos=(
-                0,
-                0.10000000000000001,
-                0))
+            geom_pos=(0, 0.10000000000000001, 0))
         self.stockOptionTitle.hide()
         self.progressTitle = self.meritTitle
         self.promotionTitle = DirectLabel(
             parent=self.frame,
             relief=None,
             geom=gui.find('**/text_ready4promotion'),
-            geom_pos=(
-                0,
-                0.10000000000000001,
-                0))
-        self.cogName = DirectLabel(parent=self.frame,
-                                   relief=None,
-                                   text='',
-                                   text_font=ToontownGlobals.getSuitFont(),
-                                   text_scale=TTLocalizer.DPcogName,
-                                   text_align=TextNode.ACenter,
-                                   pos=(-0.94799999999999995,
-                                        0,
-                                        -1.1499999999999999))
-        self.cogLevel = DirectLabel(parent=self.frame, relief=None, text='', text_font=ToontownGlobals.getSuitFont(
-        ), text_scale=0.089999999999999997, text_align=TextNode.ACenter, pos=(-0.91000000000000003, 0, -1.02))
+            geom_pos=(0, 0.10000000000000001, 0))
+        self.cogName = DirectLabel(
+            parent=self.frame,
+            relief=None,
+            text='',
+            text_font=ToontownGlobals.getSuitFont(),
+            text_scale=TTLocalizer.DPcogName,
+            text_align=TextNode.ACenter,
+            pos=(-0.94799999999999995, 0, -1.1499999999999999))
+        self.cogLevel = DirectLabel(
+            parent=self.frame,
+            relief=None,
+            text='',
+            text_font=ToontownGlobals.getSuitFont(),
+            text_scale=0.089999999999999997,
+            text_align=TextNode.ACenter,
+            pos=(-0.91000000000000003, 0, -1.02))
         self.partFrame = DirectFrame(parent=self.frame, relief=None)
         self.parts = []
         for partNum in range(0, NumParts):
@@ -190,9 +155,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
                 DirectFrame(
                     parent=self.partFrame,
                     relief=None,
-                    geom=gui.find(
-                        '**/robot/' +
-                        PartNames[partNum])))
+                    geom=gui.find('**/robot/' + PartNames[partNum])))
 
         self.holes = []
         for partNum in range(0, NumParts):
@@ -200,12 +163,16 @@ class DisguisePage(ShtikerPage.ShtikerPage):
                 DirectFrame(
                     parent=self.partFrame,
                     relief=None,
-                    geom=gui.find(
-                        '**/robot_hole/' +
-                        PartNames[partNum])))
+                    geom=gui.find('**/robot_hole/' + PartNames[partNum])))
 
-        self.cogPartRatio = DirectLabel(parent=self.frame, relief=None, text='', text_font=ToontownGlobals.getSuitFont(
-        ), text_scale=0.080000000000000002, text_align=TextNode.ACenter, pos=(-0.91000000000000003, 0, -0.81999999999999995))
+        self.cogPartRatio = DirectLabel(
+            parent=self.frame,
+            relief=None,
+            text='',
+            text_font=ToontownGlobals.getSuitFont(),
+            text_scale=0.080000000000000002,
+            text_align=TextNode.ACenter,
+            pos=(-0.91000000000000003, 0, -0.81999999999999995))
         self.cogMeritRatio = DirectLabel(
             parent=self.frame,
             relief=None,
@@ -213,10 +180,7 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             text_font=ToontownGlobals.getSuitFont(),
             text_scale=0.080000000000000002,
             text_align=TextNode.ACenter,
-            pos=(
-                0.45000000000000001,
-                0,
-                -0.35999999999999999))
+            pos=(0.45000000000000001, 0, -0.35999999999999999))
         meterFace = gui.find('**/meter_face_whole')
         meterFaceHalf = gui.find('**/meter_face_half')
         self.meterFace = DirectLabel(
@@ -224,28 +188,19 @@ class DisguisePage(ShtikerPage.ShtikerPage):
             relief=None,
             geom=meterFace,
             color=self.meterColor,
-            pos=(
-                0.45500000000000002,
-                0.0,
-                0.040000000000000001))
+            pos=(0.45500000000000002, 0.0, 0.040000000000000001))
         self.meterFaceHalf1 = DirectLabel(
             parent=self.frame,
             relief=None,
             geom=meterFaceHalf,
             color=self.meterActiveColor,
-            pos=(
-                0.45500000000000002,
-                0.0,
-                0.040000000000000001))
+            pos=(0.45500000000000002, 0.0, 0.040000000000000001))
         self.meterFaceHalf2 = DirectLabel(
             parent=self.frame,
             relief=None,
             geom=meterFaceHalf,
             color=self.meterColor,
-            pos=(
-                0.45500000000000002,
-                0.0,
-                0.040000000000000001))
+            pos=(0.45500000000000002, 0.0, 0.040000000000000001))
         self.frame.hide()
         self.activeTab = 3
         self.updatePage()
@@ -332,12 +287,12 @@ class DisguisePage(ShtikerPage.ShtikerPage):
                 tab['text2_fg'] = (1, 0, 0, 1)
                 continue
             tab['text0_fg'] = (0, 0, 0, 1)
-            tab['text2_fg'] = (
-                0.5, 0.40000000000000002, 0.40000000000000002, 1)
+            tab['text2_fg'] = (0.5, 0.40000000000000002, 0.40000000000000002,
+                               1)
 
         self.bkgd.setColor(DeptColors[index])
         self.deptLabel['text'] = (
-            SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[index]],)
+            SuitDNA.suitDeptFullnames[SuitDNA.suitDepts[index]], )
         cogIndex = base.localAvatar.cogTypes[index] + \
             SuitDNA.suitsPerDept * index
         cog = SuitDNA.suitHeadTypes[cogIndex]

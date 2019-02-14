@@ -9,8 +9,8 @@ class DistCogdoLevelGameAI(DistributedLevelAI, DistCogdoGameAI):
 
     def __init__(self, air, interior):
         DistCogdoGameAI.__init__(self, air, interior)
-        DistributedLevelAI.__init__(
-            self, air, self.zoneId, 0, self.getToonIds())
+        DistributedLevelAI.__init__(self, air, self.zoneId, 0,
+                                    self.getToonIds())
 
     def createEntityCreator(self):
         return CogdoEntityCreatorAI(level=self)

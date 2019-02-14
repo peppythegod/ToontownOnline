@@ -37,9 +37,8 @@ class DistributedMailbox(DistributedObject.DistributedObject):
         self.mailboxSphereEvent = self.taskName('mailboxSphere')
         self.mailboxSphereEnterEvent = 'enter' + self.mailboxSphereEvent
         if self.houseId == base.localAvatar.houseId:
-            self.accept(
-                self.mailboxSphereEnterEvent,
-                self._DistributedMailbox__handleEnterSphere)
+            self.accept(self.mailboxSphereEnterEvent,
+                        self._DistributedMailbox__handleEnterSphere)
 
         self.load()
 
@@ -134,9 +133,8 @@ class DistributedMailbox(DistributedObject.DistributedObject):
         DistributedMailbox.notify.debug('Entering Mailbox Sphere....')
         self.ignore(self.mailboxSphereEnterEvent)
         self.cr.playGame.getPlace().detectedMailboxCollision()
-        self.accept(
-            'mailboxAsleep',
-            self._DistributedMailbox__handleMailboxSleep)
+        self.accept('mailboxAsleep',
+                    self._DistributedMailbox__handleMailboxSleep)
         self.sendUpdate('avatarEnter', [])
 
     def _DistributedMailbox__handleMailboxSleep(self):
@@ -174,8 +172,8 @@ class DistributedMailbox(DistributedObject.DistributedObject):
         isLocalToon = avId == base.localAvatar.doId
         if isLocalToon:
             DistributedMailbox.notify.debug(
-                'setMovie( mode=%d, avId=%d ) called on a local toon' %
-                (mode, avId))
+                'setMovie( mode=%d, avId=%d ) called on a local toon' % (mode,
+                                                                         avId))
         else:
             DistributedMailbox.notify.debug(
                 'setMovie( mode=%d, avId=%d ) called on a non-local toon' %
@@ -228,9 +226,8 @@ class DistributedMailbox(DistributedObject.DistributedObject):
                 self.mailboxGui = MailboxScreen.MailboxScreen(
                     self, base.localAvatar, self.mailboxGuiDoneEvent)
                 self.mailboxGui.show()
-                self.accept(
-                    self.mailboxGuiDoneEvent,
-                    self._DistributedMailbox__handleMailboxDone)
+                self.accept(self.mailboxGuiDoneEvent,
+                            self._DistributedMailbox__handleMailboxDone)
 
             return None
         elif mode == MailboxGlobals.MAILBOX_MOVIE_NOT_OWNER:
@@ -252,57 +249,35 @@ class DistributedMailbox(DistributedObject.DistributedObject):
     def acceptItem(self, item, index, callback, optional=-1):
         DistributedMailbox.notify.debug('acceptItem')
         blob = item.getBlob(store=CatalogItem.Customization)
-        context = self.getCallbackContext(callback, [
-            item,
-            index])
-        self.sendUpdate('acceptItemMessage', [
-            context,
-            blob,
-            index,
-            optional])
+        context = self.getCallbackContext(callback, [item, index])
+        self.sendUpdate('acceptItemMessage', [context, blob, index, optional])
 
     def acceptInvite(self, item, acceptingIndex, callback, optional=-1):
         DistributedMailbox.notify.debug('acceptInvite')
-        context = self.getCallbackContext(callback, [
-            item,
-            acceptingIndex])
-        self.sendUpdate('acceptInviteMessage', [
-            context,
-            item.inviteKey])
+        context = self.getCallbackContext(callback, [item, acceptingIndex])
+        self.sendUpdate('acceptInviteMessage', [context, item.inviteKey])
 
     def acceptItemResponse(self, context, retcode):
         DistributedMailbox.notify.debug('acceptItemResponse')
         if retcode == ToontownGlobals.P_UserCancelled:
             print 'DistributedMailbox User Canceled'
 
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def discardItem(self, item, index, callback, optional=-1):
         DistributedMailbox.notify.debug('discardItem')
         blob = item.getBlob(store=CatalogItem.Customization)
-        context = self.getCallbackContext(callback, [
-            item,
-            index])
-        self.sendUpdate('discardItemMessage', [
-            context,
-            blob,
-            index,
-            optional])
+        context = self.getCallbackContext(callback, [item, index])
+        self.sendUpdate('discardItemMessage', [context, blob, index, optional])
 
     def rejectInvite(self, item, acceptingIndex, callback, optional=-1):
         DistributedMailbox.notify.debug('rejectInvite')
-        context = self.getCallbackContext(callback, [
-            item,
-            acceptingIndex])
-        self.sendUpdate('rejectInviteMessage', [
-            context,
-            item.inviteKey])
+        context = self.getCallbackContext(callback, [item, acceptingIndex])
+        self.sendUpdate('rejectInviteMessage', [context, item.inviteKey])
 
     def discardItemResponse(self, context, retcode):
         DistributedMailbox.notify.debug('discardItemResponse')
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def _DistributedMailbox__setupName(self):
         DistributedMailbox.notify.debug('__setupName')
@@ -329,5 +304,4 @@ class DistributedMailbox(DistributedObject.DistributedObject):
         self.freeAvatar()
 
     def sendInviteReadButNotReplied(self, inviteKey):
-        self.sendUpdate('markInviteReadButNotReplied', [
-            inviteKey])
+        self.sendUpdate('markInviteReadButNotReplied', [inviteKey])

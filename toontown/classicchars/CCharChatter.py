@@ -116,20 +116,20 @@ def getChatter(charName, chatterType):
         elif chatterType == ToontownGlobals.VALENTINES_DAY:
             return TTLocalizer.ValentinesDaisyChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_ONE:
-            SillyDaisyChatter = getExtendedChat(
-                DaisyChatter, TTLocalizer.SillyPhase1Chatter)
+            SillyDaisyChatter = getExtendedChat(DaisyChatter,
+                                                TTLocalizer.SillyPhase1Chatter)
             return SillyDaisyChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_TWO:
-            SillyDaisyChatter = getExtendedChat(
-                DaisyChatter, TTLocalizer.SillyPhase2Chatter)
+            SillyDaisyChatter = getExtendedChat(DaisyChatter,
+                                                TTLocalizer.SillyPhase2Chatter)
             return SillyDaisyChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_THREE:
-            SillyDaisyChatter = getExtendedChat(
-                DaisyChatter, TTLocalizer.SillyPhase3Chatter)
+            SillyDaisyChatter = getExtendedChat(DaisyChatter,
+                                                TTLocalizer.SillyPhase3Chatter)
             return SillyDaisyChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_FOUR:
-            SillyDaisyChatter = getExtendedChat(
-                DaisyChatter, TTLocalizer.SillyPhase4Chatter)
+            SillyDaisyChatter = getExtendedChat(DaisyChatter,
+                                                TTLocalizer.SillyPhase4Chatter)
             return SillyDaisyChatter
         elif chatterType == ToontownGlobals.SELLBOT_FIELD_OFFICE:
             fieldOfficeDaisyChatter = getExtendedChat(
@@ -246,20 +246,20 @@ def getChatter(charName, chatterType):
         elif chatterType == ToontownGlobals.VALENTINES_DAY:
             return TTLocalizer.ValentinesChipChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_ONE:
-            SillyChipChatter = getExtendedChat(
-                ChipChatter, TTLocalizer.SillyPhase1Chatter)
+            SillyChipChatter = getExtendedChat(ChipChatter,
+                                               TTLocalizer.SillyPhase1Chatter)
             return SillyChipChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_TWO:
-            SillyChipChatter = getExtendedChat(
-                ChipChatter, TTLocalizer.SillyPhase2Chatter)
+            SillyChipChatter = getExtendedChat(ChipChatter,
+                                               TTLocalizer.SillyPhase2Chatter)
             return SillyChipChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_THREE:
-            SillyChipChatter = getExtendedChat(
-                ChipChatter, TTLocalizer.SillyPhase3Chatter)
+            SillyChipChatter = getExtendedChat(ChipChatter,
+                                               TTLocalizer.SillyPhase3Chatter)
             return SillyChipChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_FOUR:
-            SillyChipChatter = getExtendedChat(
-                ChipChatter, TTLocalizer.SillyPhase4Chatter)
+            SillyChipChatter = getExtendedChat(ChipChatter,
+                                               TTLocalizer.SillyPhase4Chatter)
             return SillyChipChatter
         else:
             return ChipChatter
@@ -275,20 +275,20 @@ def getChatter(charName, chatterType):
         elif chatterType == ToontownGlobals.VALENTINES_DAY:
             return TTLocalizer.ValentinesDaleChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_ONE:
-            SillyDaleChatter = getExtendedChat(
-                DaleChatter, TTLocalizer.SillyPhase1Chatter)
+            SillyDaleChatter = getExtendedChat(DaleChatter,
+                                               TTLocalizer.SillyPhase1Chatter)
             return SillyDaleChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_TWO:
-            SillyDaleChatter = getExtendedChat(
-                DaleChatter, TTLocalizer.SillyPhase2Chatter)
+            SillyDaleChatter = getExtendedChat(DaleChatter,
+                                               TTLocalizer.SillyPhase2Chatter)
             return SillyDaleChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_THREE:
-            SillyDaleChatter = getExtendedChat(
-                DaleChatter, TTLocalizer.SillyPhase3Chatter)
+            SillyDaleChatter = getExtendedChat(DaleChatter,
+                                               TTLocalizer.SillyPhase3Chatter)
             return SillyDaleChatter
         elif chatterType == ToontownGlobals.SILLY_CHATTER_FOUR:
-            SillyDaleChatter = getExtendedChat(
-                DaleChatter, TTLocalizer.SillyPhase4Chatter)
+            SillyDaleChatter = getExtendedChat(DaleChatter,
+                                               TTLocalizer.SillyPhase4Chatter)
             return SillyDaleChatter
         else:
             return DaleChatter

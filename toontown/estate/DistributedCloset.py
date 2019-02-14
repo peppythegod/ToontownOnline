@@ -54,19 +54,15 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
         self.avMoveTrack = None
         self.scale = 1.0
         self.fsm = ClassicFSM.ClassicFSM('Closet', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'ready',
-                'open',
-                'closed']),
-            State.State('ready', self.enterReady, self.exitReady, [
-                'open',
-                'closed']),
-            State.State('closed', self.enterClosed, self.exitClosed, [
-                'open',
-                'off']),
-            State.State('open', self.enterOpen, self.exitOpen, [
-                'closed',
-                'off'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['ready', 'open', 'closed']),
+            State.State('ready', self.enterReady, self.exitReady,
+                        ['open', 'closed']),
+            State.State('closed', self.enterClosed, self.exitClosed,
+                        ['open', 'off']),
+            State.State('open', self.enterOpen, self.exitOpen,
+                        ['closed', 'off'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
@@ -168,18 +164,20 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self._openDoors()
             if self.customerId == base.localAvatar.doId:
                 camera.wrtReparentTo(self)
-                camera.lerpPosHpr(-7.5800000000000001,
-                                  -6.0199999999999996,
-                                  6.9000000000000004,
-                                  286.30000000000001,
-                                  336.80000000000001,
-                                  0,
-                                  1,
-                                  other=self,
-                                  blendType='easeOut',
-                                  task=self.uniqueName('lerpCamera'))
-                camera.setPosHpr(self, -7.5800000000000001, -6.0199999999999996,
-                                 6.9000000000000004, 286.30000000000001, 336.80000000000001, 0)
+                camera.lerpPosHpr(
+                    -7.5800000000000001,
+                    -6.0199999999999996,
+                    6.9000000000000004,
+                    286.30000000000001,
+                    336.80000000000001,
+                    0,
+                    1,
+                    other=self,
+                    blendType='easeOut',
+                    task=self.uniqueName('lerpCamera'))
+                camera.setPosHpr(self, -7.5800000000000001,
+                                 -6.0199999999999996, 6.9000000000000004,
+                                 286.30000000000001, 336.80000000000001, 0)
 
             if self.av:
                 if self.avMoveTrack:
@@ -188,13 +186,17 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
                 self.av.stopSmooth()
                 self.avMoveTrack = Sequence(
                     Parallel(
-                        Func(
-                            self.av.play, 'walk'), LerpPosHprInterval(
-                            nodePath=self.av, other=self, duration=1.0, pos=Vec3(
-                                1.6699999999999999, -3.29, 0.025000000000000001), hpr=Vec3(
-                                112, 0, 0), blendType='easeOut')), Func(
-                        self.av.loop, 'neutral'), Func(
-                        self.av.startSmooth))
+                        Func(self.av.play, 'walk'),
+                        LerpPosHprInterval(
+                            nodePath=self.av,
+                            other=self,
+                            duration=1.0,
+                            pos=Vec3(1.6699999999999999, -3.29,
+                                     0.025000000000000001),
+                            hpr=Vec3(112, 0, 0),
+                            blendType='easeOut')), Func(
+                                self.av.loop, 'neutral'),
+                    Func(self.av.startSmooth))
                 self.avMoveTrack.start()
 
     def exitOpen(self):
@@ -221,8 +223,7 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self.freeAvatar()
 
         self.notify.debug(
-            'Entering Closet Sphere....%s' %
-            self.closetSphereEnterEvent)
+            'Entering Closet Sphere....%s' % self.closetSphereEnterEvent)
         if self.cr.playGame.getPlace() is None:
             self.notify.info('Not opening closet before place is defined.')
             return None
@@ -236,8 +237,7 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
 
     def setState(self, mode, avId, ownerId, gender, topList, botList):
         self.notify.debug(
-            'setState, mode=%s, avId=%s, ownerId=%d' %
-            (mode, avId, ownerId))
+            'setState, mode=%s, avId=%s, ownerId=%d' % (mode, avId, ownerId))
         self.isOwner = avId == ownerId
         self.ownerGender = gender
         if mode == ClosetGlobals.CLOSED:
@@ -260,7 +260,8 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
                         self._DistributedCloset__popupNotOwnerPanel()
                     else:
                         taskMgr.doMethodLater(
-                            0.5, self.popupChangeClothesGUI, self.uniqueName('popupChangeClothesGUI'))
+                            0.5, self.popupChangeClothesGUI,
+                            self.uniqueName('popupChangeClothesGUI'))
 
                 self.fsm.request('open')
 
@@ -274,26 +275,19 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
         self.purchaseDoneEvent = self.uniqueName('purchaseDone')
         self.swapEvent = self.uniqueName('swap')
         self.cancelEvent = self.uniqueName('cancel')
-        self.accept(
-            self.purchaseDoneEvent,
-            self._DistributedCloset__proceedToCheckout)
+        self.accept(self.purchaseDoneEvent,
+                    self._DistributedCloset__proceedToCheckout)
         self.accept(self.swapEvent, self._DistributedCloset__handleSwap)
         self.accept(self.cancelEvent, self._handleCancel)
         self.deleteEvent = self.uniqueName('delete')
         if self.isOwner:
-            self.accept(
-                self.deleteEvent,
-                self._DistributedCloset__handleDelete)
+            self.accept(self.deleteEvent,
+                        self._DistributedCloset__handleDelete)
 
         if not self.closetGUI:
             self.closetGUI = ClosetGUI.ClosetGUI(
-                self.isOwner,
-                self.purchaseDoneEvent,
-                self.cancelEvent,
-                self.swapEvent,
-                self.deleteEvent,
-                self.topList,
-                self.botList)
+                self.isOwner, self.purchaseDoneEvent, self.cancelEvent,
+                self.swapEvent, self.deleteEvent, self.topList, self.botList)
             self.closetGUI.load()
             if self.gender != self.ownerGender:
                 self.closetGUI.setGender(self.ownerGender)
@@ -375,15 +369,13 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             else:
                 swapFunc(-1)
             removeFunc(trashIndex)
-            self.sendUpdate('removeItem', [
-                trashItem,
-                t_or_b])
+            self.sendUpdate('removeItem', [trashItem, t_or_b])
             swapFunc(0)
             self.closetGUI.updateTrashButtons()
         else:
             self.notify.warning(
-                "cant delete this item(type = %s), since we don't have a replacement" %
-                t_or_b)
+                "cant delete this item(type = %s), since we don't have a replacement"
+                % t_or_b)
 
     def resetItemLists(self):
         self.topList = self.oldTopList[0:]
@@ -404,11 +396,8 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self.d_setDNA(self.oldStyle.makeNetString(), 1)
         else:
             which = 0
-            if hasattr(
-                    self.closetGUI,
-                    'topChoice') and hasattr(
-                    self.closetGUI,
-                    'bottomChoice'):
+            if hasattr(self.closetGUI, 'topChoice') and hasattr(
+                    self.closetGUI, 'bottomChoice'):
                 if self.closetGUI.topChoice != 0 or self.topDeleted:
                     which = which | 1
 
@@ -418,10 +407,7 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self.d_setDNA(self.av.getStyle().makeNetString(), 2, which)
 
     def d_setDNA(self, dnaString, finished, whichItems=3):
-        self.sendUpdate('setDNA', [
-            dnaString,
-            finished,
-            whichItems])
+        self.sendUpdate('setDNA', [dnaString, finished, whichItems])
 
     def setCustomerDNA(self, avId, dnaString):
         if avId and avId != base.localAvatar.doId:
@@ -431,7 +417,8 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
                     oldTorso = self.av.style.torso
                     self.av.style.makeFromNetString(dnaString)
                     if len(oldTorso) == 2 and len(
-                            self.av.style.torso) == 2 and self.av.style.torso[1] != oldTorso[1]:
+                            self.av.style.torso
+                    ) == 2 and self.av.style.torso[1] != oldTorso[1]:
                         self.av.swapToonTorso(
                             self.av.style.torso, genClothes=0)
                         self.av.loop('neutral', 0)
@@ -440,7 +427,10 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
 
     def printInfo(self):
         print 'avid: %s, gender: %s' % (self.av.doId, self.av.style.gender)
-        print 'current top = %s,%s,%s,%s and  bot = %s,%s,' % (self.av.style.topTex, self.av.style.topTexColor, self.av.style.sleeveTex, self.av.style.sleeveTexColor, self.av.style.botTex, self.av.style.botTexColor)
+        print 'current top = %s,%s,%s,%s and  bot = %s,%s,' % (
+            self.av.style.topTex, self.av.style.topTexColor,
+            self.av.style.sleeveTex, self.av.style.sleeveTexColor,
+            self.av.style.botTex, self.av.style.botTexColor)
         print 'topsList = %s' % self.av.getClothesTopsList()
         print 'bottomsList = %s' % self.av.getClothesBottomsList()
 
@@ -499,29 +489,29 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self.popupInfo = None
 
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonImage = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                         buttons.find('**/ChtBx_OKBtn_DN'),
+                         buttons.find('**/ChtBx_OKBtn_Rllvr'))
         self.popupInfo = DirectFrame(
-            parent=hidden, relief=None, state='normal', text=TTLocalizer.ClosetTimeoutMessage, frameSize=(
-                -1, 1, -1, 1), geom=DGG.getDefaultDialogGeom(), geom_color=ToontownGlobals.GlobalDialogColor, geom_scale=(
-                0.88, 1, 0.45000000000000001), geom_pos=(
-                0, 0, -0.080000000000000002), text_scale=0.080000000000000002)
+            parent=hidden,
+            relief=None,
+            state='normal',
+            text=TTLocalizer.ClosetTimeoutMessage,
+            frameSize=(-1, 1, -1, 1),
+            geom=DGG.getDefaultDialogGeom(),
+            geom_color=ToontownGlobals.GlobalDialogColor,
+            geom_scale=(0.88, 1, 0.45000000000000001),
+            geom_pos=(0, 0, -0.080000000000000002),
+            text_scale=0.080000000000000002)
         DirectButton(
             self.popupInfo,
             image=okButtonImage,
             relief=None,
             text=TTLocalizer.ClosetPopupOK,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             textMayChange=0,
-            pos=(
-                0.0,
-                0.0,
-                -0.16),
+            pos=(0.0, 0.0, -0.16),
             command=self._DistributedCloset__handleTimeoutMessageOK)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)
@@ -537,71 +527,49 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
         self.purchaseDoneEvent = self.uniqueName('purchaseDone')
         self.swapEvent = self.uniqueName('swap')
         self.cancelEvent = self.uniqueName('cancel')
-        self.accept(
-            self.purchaseDoneEvent,
-            self._DistributedCloset__proceedToCheckout)
+        self.accept(self.purchaseDoneEvent,
+                    self._DistributedCloset__proceedToCheckout)
         self.accept(self.swapEvent, self._DistributedCloset__handleSwap)
         self.accept(self.cancelEvent, self._handleCancel)
         self.deleteEvent = self.uniqueName('delete')
         if self.isOwner:
-            self.accept(
-                self.deleteEvent,
-                self._DistributedCloset__handleDelete)
+            self.accept(self.deleteEvent,
+                        self._DistributedCloset__handleDelete)
 
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonImage = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                         buttons.find('**/ChtBx_OKBtn_DN'),
+                         buttons.find('**/ChtBx_OKBtn_Rllvr'))
         self.popupInfo = DirectFrame(
             parent=hidden,
             relief=None,
             state='normal',
             text=TTLocalizer.ClosetNotOwnerMessage,
-            frameSize=(
-                -1,
-                1,
-                -1,
-                1),
+            frameSize=(-1, 1, -1, 1),
             text_wordwrap=10,
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor,
-            geom_scale=(
-                0.88,
-                1,
-                0.55000000000000004),
-            geom_pos=(
-                0,
-                0,
-                -0.080000000000000002),
+            geom_scale=(0.88, 1, 0.55000000000000004),
+            geom_pos=(0, 0, -0.080000000000000002),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                0.059999999999999998))
+            text_pos=(0, 0.059999999999999998))
         DirectButton(
             self.popupInfo,
             image=okButtonImage,
             relief=None,
             text=TTLocalizer.ClosetPopupOK,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             textMayChange=0,
-            pos=(
-                0.0,
-                0.0,
-                -0.20999999999999999),
+            pos=(0.0, 0.0, -0.20999999999999999),
             command=self._handleNotOwnerMessageOK)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)
 
     def _handleNotOwnerMessageOK(self):
         self.popupInfo.reparentTo(hidden)
-        taskMgr.doMethodLater(
-            0.10000000000000001,
-            self.popupChangeClothesGUI,
-            self.uniqueName('popupChangeClothesGUI'))
+        taskMgr.doMethodLater(0.10000000000000001, self.popupChangeClothesGUI,
+                              self.uniqueName('popupChangeClothesGUI'))
 
     def _DistributedCloset__popupAreYouSurePanel(self):
         if self.popupInfo is not None:
@@ -609,55 +577,44 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self.popupInfo = None
 
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonImage = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
-        cancelButtonImage = (
-            buttons.find('**/CloseBtn_UP'),
-            buttons.find('**/CloseBtn_DN'),
-            buttons.find('**/CloseBtn_Rllvr'))
+        okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                         buttons.find('**/ChtBx_OKBtn_DN'),
+                         buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        cancelButtonImage = (buttons.find('**/CloseBtn_UP'),
+                             buttons.find('**/CloseBtn_DN'),
+                             buttons.find('**/CloseBtn_Rllvr'))
         self.popupInfo = DirectFrame(
             parent=hidden,
             relief=None,
             state='normal',
             text=TTLocalizer.ClosetAreYouSureMessage,
-            frameSize=(
-                -1,
-                1,
-                -1,
-                1),
+            frameSize=(-1, 1, -1, 1),
             text_wordwrap=10,
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor,
-            geom_scale=(
-                0.88,
-                1,
-                0.55000000000000004),
-            geom_pos=(
-                0,
-                0,
-                -0.080000000000000002),
+            geom_scale=(0.88, 1, 0.55000000000000004),
+            geom_pos=(0, 0, -0.080000000000000002),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                0.080000000000000002))
-        DirectButton(self.popupInfo, image=okButtonImage, relief=None, text=TTLocalizer.ClosetPopupOK, text_scale=0.050000000000000003, text_pos=(
-            0.0, -0.10000000000000001), textMayChange=0, pos=(-0.10000000000000001, 0.0, -0.20999999999999999), command=self._handleYesImSure)
+            text_pos=(0, 0.080000000000000002))
+        DirectButton(
+            self.popupInfo,
+            image=okButtonImage,
+            relief=None,
+            text=TTLocalizer.ClosetPopupOK,
+            text_scale=0.050000000000000003,
+            text_pos=(0.0, -0.10000000000000001),
+            textMayChange=0,
+            pos=(-0.10000000000000001, 0.0, -0.20999999999999999),
+            command=self._handleYesImSure)
         DirectButton(
             self.popupInfo,
             image=cancelButtonImage,
             relief=None,
             text=TTLocalizer.ClosetPopupCancel,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             textMayChange=0,
-            pos=(
-                0.10000000000000001,
-                0.0,
-                -0.20999999999999999),
+            pos=(0.10000000000000001, 0.0, -0.20999999999999999),
             command=self._handleNotSure)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)

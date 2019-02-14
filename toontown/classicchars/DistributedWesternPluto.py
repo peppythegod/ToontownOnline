@@ -23,12 +23,11 @@ class DistributedWesternPluto(DistributedPluto.DistributedPluto):
             DistributedCCharBase.DistributedCCharBase.__init__(
                 self, cr, TTLocalizer.WesternPluto, 'wp')
             self.fsm = ClassicFSM.ClassicFSM('DistributedWesternPluto', [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral, [
-                    'Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, [
-                    'Neutral'])], 'Off', 'Off')
+                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+                State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                            ['Walk']),
+                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+            ], 'Off', 'Off')
             self.fsm.enterInitialState()
             self.nametag.setName(TTLocalizer.Pluto)
 

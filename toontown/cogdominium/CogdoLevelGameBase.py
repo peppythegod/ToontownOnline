@@ -4,7 +4,6 @@ from otp.level.LevelSpec import LevelSpec
 
 
 class CogdoLevelGameBase:
-
     def getLevelSpec(self):
         return LevelSpec(self.getSpec())
 
@@ -17,8 +16,7 @@ class CogdoLevelGameBase:
                 if isinstance(item, EntityStateVarSet):
                     for attribName in item._getAttributeNames():
                         handler = getattr(
-                            self, '_handle%sChanged' %
-                            attribName, None)
+                            self, '_handle%sChanged' % attribName, None)
                         if handler:
                             stateVar = getattr(item, attribName)
                             fcs.append(FunctionCall(handler, stateVar))

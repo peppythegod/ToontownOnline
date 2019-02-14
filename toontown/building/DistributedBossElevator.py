@@ -15,7 +15,6 @@ from toontown.toontowngui import TTDialog
 
 
 class DistributedBossElevator(DistributedElevatorExt.DistributedElevatorExt):
-
     def __init__(self, cr):
         DistributedElevatorExt.DistributedElevatorExt.__init__(self, cr)
         self.elevatorPoints = BigElevatorPoints
@@ -75,32 +74,32 @@ class DistributedBossElevator(DistributedElevatorExt.DistributedElevatorExt):
                 'where': 'cogHQBossBattle',
                 'how': 'movie',
                 'zoneId': zoneId,
-                'hoodId': hoodId}
+                'hoodId': hoodId
+            }
             self.cr.playGame.getPlace().elevator.signalDone(doneStatus)
 
     def setBossOfficeZoneForce(self, zoneId):
         place = self.cr.playGame.getPlace()
         if place:
-            place.fsm.request('elevator', [
-                self,
-                1])
+            place.fsm.request('elevator', [self, 1])
             hoodId = self.cr.playGame.hood.hoodId
             doneStatus = {
                 'loader': 'cogHQLoader',
                 'where': 'cogHQBossBattle',
                 'how': 'movie',
                 'zoneId': zoneId,
-                'hoodId': hoodId}
+                'hoodId': hoodId
+            }
             if hasattr(place, 'elevator') and place.elevator:
                 place.elevator.signalDone(doneStatus)
             else:
                 self.notify.warning(
-                    "setMintInteriorZoneForce: Couldn't find playGame.getPlace().elevator, zoneId: %s" %
-                    zoneId)
+                    "setMintInteriorZoneForce: Couldn't find playGame.getPlace().elevator, zoneId: %s"
+                    % zoneId)
         else:
             self.notify.warning(
-                "setBossOfficeZoneForce: Couldn't find playGame.getPlace(), zoneId: %s" %
-                zoneId)
+                "setBossOfficeZoneForce: Couldn't find playGame.getPlace(), zoneId: %s"
+                % zoneId)
 
     def getDestName(self):
         return TTLocalizer.ElevatorSellBotBoss

@@ -1,5 +1,3 @@
-
-
 from toontown.toonbase.ToontownBattleGlobals import *
 from toontown.toonbase import ToontownGlobals
 from direct.fsm import StateData
@@ -20,10 +18,10 @@ class PurchaseBase(StateData.StateData):
         StateData.StateData.__init__(self, doneEvent)
         self.toon = toon
         self.fsm = ClassicFSM.ClassicFSM('Purchase', [
-            State.State('purchase', self.enterPurchase, self.exitPurchase, [
-                'done']),
-            State.State('done', self.enterDone, self.exitDone, [
-                'purchase'])], 'done', 'done')
+            State.State('purchase', self.enterPurchase, self.exitPurchase,
+                        ['done']),
+            State.State('done', self.enterDone, self.exitDone, ['purchase'])
+        ], 'done', 'done')
         self.fsm.enterInitialState()
 
     def load(self, purchaseModels=None):
@@ -39,37 +37,34 @@ class PurchaseBase(StateData.StateData):
         self.title = DirectLabel(
             parent=self.frame,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                0.82999999999999996),
+            pos=(0.0, 0.0, 0.82999999999999996),
             scale=1.2,
             image=purchaseModels.find('**/Goofys_Sign'),
             text=TTLocalizer.GagShopName,
-            text_fg=(
-                0.59999999999999998,
-                0.20000000000000001,
-                0,
-                1),
+            text_fg=(0.59999999999999998, 0.20000000000000001, 0, 1),
             text_scale=0.089999999999999997,
             text_wordwrap=10,
-            text_pos=(
-                0,
-                0.025000000000000001,
-                0),
+            text_pos=(0, 0.025000000000000001, 0),
             text_font=ToontownGlobals.getSignFont())
         self.pointDisplay = DirectLabel(
-            parent=self.frame, relief=None, pos=(
-                -1.1499999999999999, 0.0, 0.16), text=str(
-                self.toon.getMoney()), text_scale=0.20000000000000001, text_fg=(
-                0.94999999999999996, 0.94999999999999996, 0, 1), text_shadow=(
-                    0, 0, 0, 1), text_pos=(
-                        0, -0.10000000000000001, 0), image=self.jarImage, text_font=ToontownGlobals.getSignFont())
+            parent=self.frame,
+            relief=None,
+            pos=(-1.1499999999999999, 0.0, 0.16),
+            text=str(self.toon.getMoney()),
+            text_scale=0.20000000000000001,
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_pos=(0, -0.10000000000000001, 0),
+            image=self.jarImage,
+            text_font=ToontownGlobals.getSignFont())
         self.statusLabel = DirectLabel(
-            parent=self.frame, relief=None, pos=(
-                -0.25, 0, 0.625), text=TTLocalizer.GagShopYouHave %
-            self.toon.getMoney(), text_scale=TTLocalizer.PBstatusLabel, text_fg=(
-                0.050000000000000003, 0.14000000000000001, 0.40000000000000002, 1))
+            parent=self.frame,
+            relief=None,
+            pos=(-0.25, 0, 0.625),
+            text=TTLocalizer.GagShopYouHave % self.toon.getMoney(),
+            text_scale=TTLocalizer.PBstatusLabel,
+            text_fg=(0.050000000000000003, 0.14000000000000001,
+                     0.40000000000000002, 1))
         if self.toon.getMoney() == 1:
             self.statusLabel['text'] = TTLocalizer.GagShopYouHaveOne
 
@@ -94,8 +89,8 @@ class PurchaseBase(StateData.StateData):
     def _PurchaseBase__handleSelection(self, track, level):
         if gagIsPaidOnly(track, level):
             if not base.cr.isPaid():
-                self._teaserPanel = TeaserPanel(
-                    'restockGags', self._teaserDone)
+                self._teaserPanel = TeaserPanel('restockGags',
+                                                self._teaserDone)
                 return None
 
         self.handlePurchase(track, level)
@@ -139,8 +134,8 @@ class PurchaseBase(StateData.StateData):
         if money == 0:
             if not self.isBroke:
                 self.toon.inventory.setActivateModeBroke()
-                taskMgr.doMethodLater(
-                    2.25, self.showBrokeMsg, 'showBrokeMsgTask')
+                taskMgr.doMethodLater(2.25, self.showBrokeMsg,
+                                      'showBrokeMsgTask')
                 self.isBroke = 1
 
         elif self.isBroke:

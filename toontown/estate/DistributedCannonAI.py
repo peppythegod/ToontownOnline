@@ -14,13 +14,7 @@ class DistributedCannonAI(DistributedObjectAI.DistributedObjectAI):
 
     def __init__(self, air, estateId, targetId, x, y, z, h, p, r):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
-        self.posHpr = [
-            x,
-            y,
-            z,
-            h,
-            p,
-            r]
+        self.posHpr = [x, y, z, h, p, r]
         self.avId = 0
         self.estateId = estateId
         self.timeoutTask = None
@@ -51,33 +45,23 @@ class DistributedCannonAI(DistributedObjectAI.DistributedObjectAI):
                 CannonGlobals.CANNON_TIMEOUT)
         else:
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
+                'suspicious', avId,
                 'DistributedCannonAI.requestEnter cannon already occupied')
             self.notify.warning('requestEnter() - cannon already occupied')
             self.sendUpdateToAvatarId(avId, 'requestExit', [])
 
     def setMovie(self, mode, avId):
         self.avId = avId
-        self.sendUpdate('setMovie', [
-            mode,
-            avId])
+        self.sendUpdate('setMovie', [mode, avId])
 
     def getCannonBumperPos(self):
         self.notify.debug(
-            '---------getCannonBumperPos %s' %
-            self.cannonBumperPos)
+            '---------getCannonBumperPos %s' % self.cannonBumperPos)
         return self.cannonBumperPos
 
     def requestBumperMove(self, x, y, z):
-        self.cannonBumperPos = [
-            x,
-            y,
-            z]
-        self.sendUpdate('setCannonBumperPos', [
-            x,
-            y,
-            z])
+        self.cannonBumperPos = [x, y, z]
+        self.sendUpdate('setCannonBumperPos', [x, y, z])
 
     def getPosHpr(self):
         return self.posHpr
@@ -90,25 +74,20 @@ class DistributedCannonAI(DistributedObjectAI.DistributedObjectAI):
 
     def setCannonPosition(self, zRot, angle):
         avId = self.air.getAvatarIdFromSender()
-        self.notify.debug('setCannonPosition: ' + str(avId) +
-                          ': zRot=' + str(zRot) + ', angle=' + str(angle))
-        self.sendUpdate('updateCannonPosition', [
-            avId,
-            zRot,
-            angle])
+        self.notify.debug('setCannonPosition: ' + str(avId) + ': zRot=' +
+                          str(zRot) + ', angle=' + str(angle))
+        self.sendUpdate('updateCannonPosition', [avId, zRot, angle])
 
     def setCannonLit(self, zRot, angle):
         avId = self.air.getAvatarIdFromSender()
         self._DistributedCannonAI__stopTimeout()
-        self.notify.debug('setCannonLit: ' + str(avId) +
-                          ': zRot=' + str(zRot) + ', angle=' + str(angle))
+        self.notify.debug('setCannonLit: ' + str(avId) + ': zRot=' +
+                          str(zRot) + ', angle=' + str(angle))
         fireTime = CannonGameGlobals.FUSE_TIME
         self.sendUpdate('setCannonWillFire', [
-            avId,
-            fireTime,
-            zRot,
-            angle,
-            globalClockDelta.getRealNetworkTime()])
+            avId, fireTime, zRot, angle,
+            globalClockDelta.getRealNetworkTime()
+        ])
 
     def setLanded(self):
         self.ignore(self.air.getAvatarExitEvent(self.avId))
@@ -118,20 +97,17 @@ class DistributedCannonAI(DistributedObjectAI.DistributedObjectAI):
     def setActive(self, active):
         if active < 0 or active > 1:
             self.air.writeServerEvent(
-                'suspicious',
-                active,
+                'suspicious', active,
                 'DistributedCannon.setActive value should be 0-1 range')
             return None
 
         self.active = active
-        self.sendUpdate('setActiveState', [
-            active])
+        self.sendUpdate('setActiveState', [active])
 
     def _DistributedCannonAI__startTimeout(self, timeLimit):
         self._DistributedCannonAI__stopTimeout()
         self.timeoutTask = taskMgr.doMethodLater(
-            timeLimit,
-            self._DistributedCannonAI__handleTimeout,
+            timeLimit, self._DistributedCannonAI__handleTimeout,
             self.taskName('timeout'))
 
     def _DistributedCannonAI__stopTimeout(self):

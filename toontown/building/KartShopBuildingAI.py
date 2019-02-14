@@ -60,11 +60,11 @@ class KartShopBuildingAI:
         self.outsideDoor1.generateWithRequired(self.exteriorZone)
         self.insideDoor0.generateWithRequired(self.interiorZone)
         self.insideDoor1.generateWithRequired(self.interiorZone)
-        self.outsideDoor0.sendUpdate('setDoorIndex', [
-            self.outsideDoor0.getDoorIndex()])
-        self.outsideDoor1.sendUpdate('setDoorIndex', [
-            self.outsideDoor1.getDoorIndex()])
-        self.insideDoor0.sendUpdate('setDoorIndex', [
-            self.insideDoor0.getDoorIndex()])
-        self.insideDoor1.sendUpdate('setDoorIndex', [
-            self.insideDoor1.getDoorIndex()])
+        self.outsideDoor0.sendUpdate('setDoorIndex',
+                                     [self.outsideDoor0.getDoorIndex()])
+        self.outsideDoor1.sendUpdate('setDoorIndex',
+                                     [self.outsideDoor1.getDoorIndex()])
+        self.insideDoor0.sendUpdate('setDoorIndex',
+                                    [self.insideDoor0.getDoorIndex()])
+        self.insideDoor1.sendUpdate('setDoorIndex',
+                                    [self.insideDoor1.getDoorIndex()])

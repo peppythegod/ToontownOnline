@@ -13,11 +13,10 @@ import RenderingEntity
 
 
 class FactoryEntityCreator(EntityCreator.EntityCreator):
-
     def __init__(self, level):
         EntityCreator.EntityCreator.__init__(self, level)
         nothing = EntityCreator.nothing
-        nonlocal = EntityCreator.nonlocal
+        nonlocal = EntityCreator. nonlocal
         self.privRegisterTypes({
             'activeCell': nonlocal,
             'crusherCell': nonlocal,
@@ -54,4 +53,5 @@ class FactoryEntityCreator(EntityCreator.EntityCreator):
             'elevatorMarker': nonlocal,
             'trigger': nonlocal,
             'moleField': nonlocal,
-            'maze': nonlocal})
+            'maze': nonlocal
+        })

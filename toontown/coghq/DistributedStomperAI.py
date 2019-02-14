@@ -20,9 +20,7 @@ class DistributedStomperAI(
         DistributedCrusherEntityAI.DistributedCrusherEntityAI.generate(self)
         if self.switchId != 0:
             self.accept(
-                self.getOutputEventName(
-                    self.switchId),
-                self.reactToSwitch)
+                self.getOutputEventName(self.switchId), self.reactToSwitch)
 
         self.d_startStomper()
 
@@ -34,8 +32,8 @@ class DistributedStomperAI(
     def d_startStomper(self):
         self.sendUpdate('setMovie', [
             StomperGlobals.STOMPER_START,
-            ClockDelta.globalClockDelta.getRealNetworkTime(),
-            []])
+            ClockDelta.globalClockDelta.getRealNetworkTime(), []
+        ])
 
     def reactToSwitch(self, on):
         if on:
@@ -51,10 +49,10 @@ class DistributedStomperAI(
 
             self.sendUpdate('setMovie', [
                 StomperGlobals.STOMPER_STOMP,
-                ClockDelta.globalClockDelta.getRealNetworkTime(),
-                crushedList])
+                ClockDelta.globalClockDelta.getRealNetworkTime(), crushedList
+            ])
         else:
             self.sendUpdate('setMovie', [
                 StomperGlobals.STOMPER_RISE,
-                ClockDelta.globalClockDelta.getRealNetworkTime(),
-                []])
+                ClockDelta.globalClockDelta.getRealNetworkTime(), []
+            ])

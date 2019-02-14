@@ -21,52 +21,41 @@ class PartyCatchActivityToonSD(StateData.StateData):
     EatNeutralAnim = 'catch-eatneutral'
     EatNRunAnim = 'catch-eatnrun'
     animList = [
-        FallBackAnim,
-        FallFwdAnim,
-        CatchNeutralAnim,
-        CatchRunAnim,
-        EatNeutralAnim,
-        EatNRunAnim]
+        FallBackAnim, FallFwdAnim, CatchNeutralAnim, CatchRunAnim,
+        EatNeutralAnim, EatNRunAnim
+    ]
 
     def __init__(self, avId, activity):
         PartyCatchActivityToonSD.notify.debug(
-            'init : avId = %s, activity = %s ' %
-            (avId, activity))
+            'init : avId = %s, activity = %s ' % (avId, activity))
         self.avId = avId
         self.activity = activity
         self.isLocal = avId == base.localAvatar.doId
         self.toon = self.activity.getAvatar(self.avId)
         self.unexpectedExit = False
-        self.fsm = ClassicFSM.ClassicFSM('CatchActivityAnimFSM-%s' % self.avId, [
-            State.State('init', self.enterInit, self.exitInit, [
-                'notPlaying',
-                'normal',
-                'rules']),
-            State.State('notPlaying', self.enterNotPlaying, self.exitNotPlaying, [
-                'normal',
-                'rules',
-                'cleanup']),
-            State.State('rules', self.enterRules, self.exitRules, [
-                'normal',
-                'cleanup']),
-            State.State('normal', self.enterNormal, self.exitNormal, [
-                'eatFruit',
-                'fallBack',
-                'fallForward',
-                'notPlaying']),
-            State.State('eatFruit', self.enterEatFruit, self.exitEatFruit, [
-                'normal',
-                'fallBack',
-                'fallForward',
-                'eatFruit',
-                'notPlaying']),
-            State.State('fallBack', self.enterFallBack, self.exitFallBack, [
-                'normal',
-                'notPlaying']),
-            State.State('fallForward', self.enterFallForward, self.exitFallForward, [
-                'normal',
-                'notPlaying']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'init', 'cleanup')
+        self.fsm = ClassicFSM.ClassicFSM(
+            'CatchActivityAnimFSM-%s' % self.avId, [
+                State.State('init', self.enterInit, self.exitInit,
+                            ['notPlaying', 'normal', 'rules']),
+                State.State('notPlaying', self.enterNotPlaying,
+                            self.exitNotPlaying,
+                            ['normal', 'rules', 'cleanup']),
+                State.State('rules', self.enterRules, self.exitRules,
+                            ['normal', 'cleanup']),
+                State.State(
+                    'normal', self.enterNormal, self.exitNormal,
+                    ['eatFruit', 'fallBack', 'fallForward', 'notPlaying']),
+                State.State(
+                    'eatFruit', self.enterEatFruit, self.exitEatFruit, [
+                        'normal', 'fallBack', 'fallForward', 'eatFruit',
+                        'notPlaying'
+                    ]),
+                State.State('fallBack', self.enterFallBack, self.exitFallBack,
+                            ['normal', 'notPlaying']),
+                State.State('fallForward', self.enterFallForward,
+                            self.exitFallForward, ['normal', 'notPlaying']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+            ], 'init', 'cleanup')
         self.enteredAlready = False
 
     def load(self):
@@ -133,14 +122,12 @@ class PartyCatchActivityToonSD(StateData.StateData):
             self.activity.orthoWalk.stop()
             self.accept(self.activity.rulesDoneEvent, self.handleRulesDone)
             self.rulesPanel = MinigameRulesPanel(
-                'PartyRulesPanel',
-                self.activity.getTitle(),
-                self.activity.getInstructions(),
-                self.activity.rulesDoneEvent,
+                'PartyRulesPanel', self.activity.getTitle(),
+                self.activity.getInstructions(), self.activity.rulesDoneEvent,
                 PartyGlobals.DefaultRulesTimeout)
-            base.setCellsAvailable(base.bottomCells + [
-                base.leftCells[0],
-                base.rightCells[1]], False)
+            base.setCellsAvailable(
+                base.bottomCells + [base.leftCells[0], base.rightCells[1]],
+                False)
             self.rulesPanel.load()
             self.rulesPanel.enter()
         else:
@@ -156,9 +143,9 @@ class PartyCatchActivityToonSD(StateData.StateData):
             self.rulesPanel.exit()
             self.rulesPanel.unload()
             del self.rulesPanel
-            base.setCellsAvailable(base.bottomCells + [
-                base.leftCells[0],
-                base.rightCells[1]], True)
+            base.setCellsAvailable(
+                base.bottomCells + [base.leftCells[0], base.rightCells[1]],
+                True)
 
     def enterNormal(self):
         self.notify.debug('enterNormal')
@@ -167,9 +154,7 @@ class PartyCatchActivityToonSD(StateData.StateData):
             self.activity.orthoWalk.start()
 
         self.toon.lerpLookAt(
-            Vec3.forward() + Vec3.up(),
-            time=0.20000000000000001,
-            blink=0)
+            Vec3.forward() + Vec3.up(), time=0.20000000000000001, blink=0)
 
     def exitNormal(self):
         self.setAnimState('off', 1.0)
@@ -182,9 +167,7 @@ class PartyCatchActivityToonSD(StateData.StateData):
         if self.fsm.getCurrentState().getName() == 'eatFruit':
             self.fsm.request('normal')
 
-        self.fsm.request('eatFruit', [
-            fruitModel,
-            handNode])
+        self.fsm.request('eatFruit', [fruitModel, handNode])
 
     def enterEatFruit(self, fruitModel, handNode):
         self.notify.debug('enterEatFruit')
@@ -205,12 +188,8 @@ class PartyCatchActivityToonSD(StateData.StateData):
                         fruitModel,
                         duration / 2.0,
                         fruitModel.getScale() * 0.5,
-                        blendType='easeInOut'),
-                    Func(
-                        fruitModel.hide))),
-            Func(
-                self.fsm.request,
-                'normal'),
+                        blendType='easeInOut'), Func(fruitModel.hide))),
+            Func(self.fsm.request, 'normal'),
             name=self.toon.uniqueName('eatingIval'))
         self.eatIval.start()
 
@@ -245,12 +224,9 @@ class PartyCatchActivityToonSD(StateData.StateData):
             ActorInterval(
                 self.toon,
                 animName,
-                startTime=startFrame /
-                newRate,
-                endTime=totalFrames /
-                newRate,
-                playRate=playRate),
-            FunctionInterval(resume))
+                startTime=startFrame / newRate,
+                endTime=totalFrames / newRate,
+                playRate=playRate), FunctionInterval(resume))
         self.fallBackIval.start()
 
     def exitFallBack(self):
@@ -281,16 +257,13 @@ class PartyCatchActivityToonSD(StateData.StateData):
                 animName,
                 startTime=startFrame / newRate,
                 endTime=pauseFrame / newRate,
-                playRate=playRate),
-            WaitInterval(
-                duration / 2.0),
+                playRate=playRate), WaitInterval(duration / 2.0),
             ActorInterval(
                 self.toon,
                 animName,
                 startTime=pauseFrame / newRate,
                 endTime=totalFrames / newRate,
-                playRate=playRate),
-            FunctionInterval(resume))
+                playRate=playRate), FunctionInterval(resume))
         self.fallFwdIval.start()
 
     def exitFallForward(self):

@@ -71,7 +71,8 @@ AIMsgName2Id = {
     'DBSERVER_GET_STORED_VALUES': 1012,
     'DBSERVER_GET_STORED_VALUES_RESP': 1013,
     'DBSERVER_SET_STORED_VALUES': 1014,
-    'SERVER_PING': 5002}
+    'SERVER_PING': 5002
+}
 AIMsgId2Names = invertDictLossless(AIMsgName2Id)
 if not isClient():
     print 'EXECWARNING AIMsgTypes: %s' % AIMsgName2Id

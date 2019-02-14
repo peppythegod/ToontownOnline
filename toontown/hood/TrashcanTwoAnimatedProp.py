@@ -14,12 +14,14 @@ class TrashcanTwoAnimatedProp(ZeroAnimatedProp.ZeroAnimatedProp):
         3: ('tt_a_ara_dga_trashcan_firstMoveJump', 8 * PauseTimeMult),
         4: ('tt_a_ara_dga_trashcan_firstMoveLidFlip3', 6 * PauseTimeMult),
         5: ('tt_a_ara_dga_trashcan_firstMoveJumpHit', 4 * PauseTimeMult),
-        6: ('tt_a_ara_dga_trashcan_firstMoveJumpJuggle', 2 * PauseTimeMult)}
+        6: ('tt_a_ara_dga_trashcan_firstMoveJumpJuggle', 2 * PauseTimeMult)
+    }
     PhaseWeStartAnimating = 5
 
     def __init__(self, node):
         ZeroAnimatedProp.ZeroAnimatedProp.__init__(
-            self, node, 'trashcan', self.PhaseInfo, ToontownGlobals.TRASHCAN_ZERO_HOLIDAY)
+            self, node, 'trashcan', self.PhaseInfo,
+            ToontownGlobals.TRASHCAN_ZERO_HOLIDAY)
 
     def startIfNeeded(self):
 

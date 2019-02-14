@@ -75,11 +75,8 @@ class DistributedEstate(DistributedObject.DistributedObject):
         self.loadFlowerSellBox()
         self.oldClear = base.win.getClearColor()
         base.win.setClearColor(
-            Vec4(
-                0.089999999999999997,
-                0.55000000000000004,
-                0.20999999999999999,
-                1.0))
+            Vec4(0.089999999999999997, 0.55000000000000004,
+                 0.20999999999999999, 1.0))
 
     def unload(self):
         self.ignoreAll()
@@ -157,15 +154,14 @@ class DistributedEstate(DistributedObject.DistributedObject):
             self.bn.setScale(2.3500000000000001)
 
         replacement = Sequence(
-            LerpColorScaleInterval(
-                self.airplane, 0.10000000000000001, Vec4(
-                    1, 1, 1, 0)), Func(__replaceAirplane__), LerpColorScaleInterval(
-                self.airplane, 0.10000000000000001, Vec4(
-                    1, 1, 1, 1)))
+            LerpColorScaleInterval(self.airplane, 0.10000000000000001,
+                                   Vec4(1, 1, 1, 0)),
+            Func(__replaceAirplane__),
+            LerpColorScaleInterval(self.airplane, 0.10000000000000001,
+                                   Vec4(1, 1, 1, 1)))
         replacement.start()
 
     def unloadWitch(self):
-
         def __replaceWitch__():
             self.airplane.reparentTo(hidden)
             del self.airplane
@@ -187,11 +183,10 @@ class DistributedEstate(DistributedObject.DistributedObject):
             self.banner.hide()
 
         replacement = Sequence(
-            LerpColorScaleInterval(
-                self.airplane, 0.10000000000000001, Vec4(
-                    1, 1, 1, 0)), Func(__replaceWitch__), LerpColorScaleInterval(
-                self.airplane, 0.10000000000000001, Vec4(
-                    1, 1, 1, 1)))
+            LerpColorScaleInterval(self.airplane, 0.10000000000000001,
+                                   Vec4(1, 1, 1, 0)), Func(__replaceWitch__),
+            LerpColorScaleInterval(self.airplane, 0.10000000000000001,
+                                   Vec4(1, 1, 1, 1)))
         replacement.start()
 
     def initCamera(self):
@@ -211,8 +206,7 @@ class DistributedEstate(DistributedObject.DistributedObject):
         self.houseType = indexList
         self.housePos = posList
         self.numHouses = len(self.houseType)
-        self.house = [
-            None] * self.numHouses
+        self.house = [None] * self.numHouses
 
     def _DistributedEstate__startAirplaneTask(self):
         self.theta = 0
@@ -226,10 +220,8 @@ class DistributedEstate(DistributedObject.DistributedObject):
         self.airplane.hide()
         self.theta = (self.theta + 10) % 360
         taskMgr.remove(self.taskName('estate-airplane'))
-        taskMgr.doMethodLater(
-            pause,
-            self.airplaneFlyTask,
-            self.taskName('estate-airplane'))
+        taskMgr.doMethodLater(pause, self.airplaneFlyTask,
+                              self.taskName('estate-airplane'))
 
     def _DistributedEstate__killAirplaneTask(self):
         taskMgr.remove(self.taskName('estate-airplane'))
@@ -279,8 +271,10 @@ class DistributedEstate(DistributedObject.DistributedObject):
     def getDeltaTime(self):
         curTime = time.time() % HouseGlobals.DAY_NIGHT_PERIOD
         dawnTime = self.dawnTime
-        dT = (curTime - dawnTime - self.deltaTime) % HouseGlobals.DAY_NIGHT_PERIOD
-        print 'getDeltaTime = %s. curTime=%s. dawnTime=%s. serverTime=%s.  deltaTime=%s' % (dT, curTime, dawnTime, self.serverTime, self.deltaTime)
+        dT = (curTime - dawnTime -
+              self.deltaTime) % HouseGlobals.DAY_NIGHT_PERIOD
+        print 'getDeltaTime = %s. curTime=%s. dawnTime=%s. serverTime=%s.  deltaTime=%s' % (
+            dT, curTime, dawnTime, self.serverTime, self.deltaTime)
         return dT
 
     def _DistributedEstate__initDaytimeTask(self):
@@ -298,27 +292,40 @@ class DistributedEstate(DistributedObject.DistributedObject):
         track = Sequence(
             Parallel(
                 LerpColorScaleInterval(
-                    base.cr.playGame.hood.loader.geom, HouseGlobals.HALF_DAY_PERIOD, Vec4(
-                        1, 0.59999999999999998, 0.59999999999999998, 1)), LerpColorScaleInterval(
-                    base.cr.playGame.hood.sky, HouseGlobals.HALF_DAY_PERIOD, Vec4(
-                        1, 0.80000000000000004, 0.80000000000000004, 1))), Parallel(
-                            LerpColorScaleInterval(
-                                base.cr.playGame.hood.loader.geom, HouseGlobals.HALF_NIGHT_PERIOD, Vec4(
-                                    0.20000000000000001, 0.20000000000000001, 0.5, 1)), LerpColorScaleInterval(
-                                        base.cr.playGame.hood.sky, HouseGlobals.HALF_NIGHT_PERIOD, Vec4(
-                                            0.40000000000000002, 0.40000000000000002, 0.59999999999999998, 1))), Parallel(
-                                                LerpColorScaleInterval(
-                                                    base.cr.playGame.hood.loader.geom, HouseGlobals.HALF_NIGHT_PERIOD, Vec4(
-                                                        0.59999999999999998, 0.59999999999999998, 0.80000000000000004, 1)), LerpColorScaleInterval(
-                                                            base.cr.playGame.hood.sky, HouseGlobals.HALF_NIGHT_PERIOD, Vec4(
-                                                                0.69999999999999996, 0.69999999999999996, 0.80000000000000004, 1))), Parallel(
-                                                                    LerpColorScaleInterval(
-                                                                        base.cr.playGame.hood.loader.geom, HouseGlobals.HALF_DAY_PERIOD, Vec4(
-                                                                            1, 1, 1, 1)), LerpColorScaleInterval(
-                                                                                base.cr.playGame.hood.sky, HouseGlobals.HALF_DAY_PERIOD, Vec4(
-                                                                                    1, 1, 1, 1))), Func(
-                                                                                        base.cr.playGame.hood.loader.geom.clearColorScale), Func(
-                                                                                            base.cr.playGame.hood.sky.clearColorScale))
+                    base.cr.playGame.hood.loader.geom,
+                    HouseGlobals.HALF_DAY_PERIOD,
+                    Vec4(1, 0.59999999999999998, 0.59999999999999998, 1)),
+                LerpColorScaleInterval(
+                    base.cr.playGame.hood.sky, HouseGlobals.HALF_DAY_PERIOD,
+                    Vec4(1, 0.80000000000000004, 0.80000000000000004, 1))),
+            Parallel(
+                LerpColorScaleInterval(
+                    base.cr.playGame.hood.loader.geom,
+                    HouseGlobals.HALF_NIGHT_PERIOD,
+                    Vec4(0.20000000000000001, 0.20000000000000001, 0.5, 1)),
+                LerpColorScaleInterval(
+                    base.cr.playGame.hood.sky, HouseGlobals.HALF_NIGHT_PERIOD,
+                    Vec4(0.40000000000000002, 0.40000000000000002,
+                         0.59999999999999998, 1))),
+            Parallel(
+                LerpColorScaleInterval(
+                    base.cr.playGame.hood.loader.geom,
+                    HouseGlobals.HALF_NIGHT_PERIOD,
+                    Vec4(0.59999999999999998, 0.59999999999999998,
+                         0.80000000000000004, 1)),
+                LerpColorScaleInterval(
+                    base.cr.playGame.hood.sky, HouseGlobals.HALF_NIGHT_PERIOD,
+                    Vec4(0.69999999999999996, 0.69999999999999996,
+                         0.80000000000000004, 1))),
+            Parallel(
+                LerpColorScaleInterval(base.cr.playGame.hood.loader.geom,
+                                       HouseGlobals.HALF_DAY_PERIOD,
+                                       Vec4(1, 1, 1, 1)),
+                LerpColorScaleInterval(base.cr.playGame.hood.sky,
+                                       HouseGlobals.HALF_DAY_PERIOD,
+                                       Vec4(1, 1, 1, 1))),
+            Func(base.cr.playGame.hood.loader.geom.clearColorScale),
+            Func(base.cr.playGame.hood.sky.clearColorScale))
         if self.dayTrack:
             self.dayTrack.finish()
 
@@ -329,10 +336,9 @@ class DistributedEstate(DistributedObject.DistributedObject):
 
         print 'ts=%s' % ts
         self.dayTrack.start(ts)
-        taskMgr.doMethodLater(
-            HouseGlobals.DAY_NIGHT_PERIOD - ts,
-            self._DistributedEstate__dayTimeTask,
-            self.taskName('daytime'))
+        taskMgr.doMethodLater(HouseGlobals.DAY_NIGHT_PERIOD - ts,
+                              self._DistributedEstate__dayTimeTask,
+                              self.taskName('daytime'))
         return Task.done
 
     def _DistributedEstate__initSunTask(self):
@@ -352,37 +358,33 @@ class DistributedEstate(DistributedObject.DistributedObject):
         halfPeriod = HouseGlobals.DAY_NIGHT_PERIOD / 2.0
         track = Sequence(
             Parallel(
-                LerpHprInterval(
-                    sunMoonNode, HouseGlobals.HALF_DAY_PERIOD, Vec3(
-                        0, 0, 0)), LerpColorScaleInterval(
-                    sun, HouseGlobals.HALF_DAY_PERIOD, Vec4(
-                        1, 1, 0.5, 1))), Func(
-                            sun.clearColorScale), Func(
-                                self._DistributedEstate__stopBirds), LerpHprInterval(
-                                    sunMoonNode, 0.20000000000000001, Vec3(
-                                        0, -h - 3, 0)), LerpHprInterval(
-                                            sunMoonNode, 0.10000000000000001, Vec3(
-                                                0, -h + 2, 0)), LerpHprInterval(
-                                                    sunMoonNode, 0.10000000000000001, Vec3(
-                                                        0, -h - 1.5, 0)), LerpHprInterval(
-                                                            sunMoonNode, 0.10000000000000001, Vec3(
-                                                                0, -h, 0)), Func(
-                                                                    self.notify.debug, 'night'), Wait(
-                                                                        HouseGlobals.HALF_NIGHT_PERIOD - 0.5), LerpHprInterval(
-                                                                            sunMoonNode, HouseGlobals.HALF_NIGHT_PERIOD, Vec3(
-                                                                                0, 0, 0)), Func(
-                                                                                    self._DistributedEstate__startBirds), LerpHprInterval(
-                                                                                        sunMoonNode, 0.20000000000000001, Vec3(
-                                                                                            0, h + 3, 0)), LerpHprInterval(
-                                                                                                sunMoonNode, 0.10000000000000001, Vec3(
-                                                                                                    0, h - 2, 0)), LerpHprInterval(
-                                                                                                        sunMoonNode, 0.10000000000000001, Vec3(
-                                                                                                            0, h + 1.5, 0)), LerpHprInterval(
-                                                                                                                sunMoonNode, 0.10000000000000001, Vec3(
-                                                                                                                    0, h, 0)), Func(
-                                                                                                                        self.notify.debug, 'day'), Func(
-                                                                                                                            sunMoonNode.setHpr, 0, h, 0), Wait(
-                                                                                                                                HouseGlobals.HALF_DAY_PERIOD - 0.5))
+                LerpHprInterval(sunMoonNode, HouseGlobals.HALF_DAY_PERIOD,
+                                Vec3(0, 0, 0)),
+                LerpColorScaleInterval(sun, HouseGlobals.HALF_DAY_PERIOD,
+                                       Vec4(1, 1, 0.5, 1))),
+            Func(sun.clearColorScale),
+            Func(self._DistributedEstate__stopBirds),
+            LerpHprInterval(sunMoonNode, 0.20000000000000001, Vec3(
+                0, -h - 3, 0)),
+            LerpHprInterval(sunMoonNode, 0.10000000000000001, Vec3(
+                0, -h + 2, 0)),
+            LerpHprInterval(sunMoonNode, 0.10000000000000001,
+                            Vec3(0, -h - 1.5, 0)),
+            LerpHprInterval(sunMoonNode, 0.10000000000000001, Vec3(0, -h, 0)),
+            Func(self.notify.debug, 'night'),
+            Wait(HouseGlobals.HALF_NIGHT_PERIOD - 0.5),
+            LerpHprInterval(sunMoonNode, HouseGlobals.HALF_NIGHT_PERIOD,
+                            Vec3(0, 0, 0)),
+            Func(self._DistributedEstate__startBirds),
+            LerpHprInterval(sunMoonNode, 0.20000000000000001, Vec3(
+                0, h + 3, 0)),
+            LerpHprInterval(sunMoonNode, 0.10000000000000001, Vec3(
+                0, h - 2, 0)),
+            LerpHprInterval(sunMoonNode, 0.10000000000000001,
+                            Vec3(0, h + 1.5, 0)),
+            LerpHprInterval(sunMoonNode, 0.10000000000000001, Vec3(0, h, 0)),
+            Func(self.notify.debug, 'day'), Func(sunMoonNode.setHpr, 0, h, 0),
+            Wait(HouseGlobals.HALF_DAY_PERIOD - 0.5))
         if self.sunTrack:
             self.sunTrack.finish()
 
@@ -400,10 +402,9 @@ class DistributedEstate(DistributedObject.DistributedObject):
 
         print 'ts(sun)=%s' % ts
         self.sunTrack.start(ts)
-        taskMgr.doMethodLater(
-            HouseGlobals.DAY_NIGHT_PERIOD - ts,
-            self._DistributedEstate__sunTask,
-            self.taskName('sunTask'))
+        taskMgr.doMethodLater(HouseGlobals.DAY_NIGHT_PERIOD - ts,
+                              self._DistributedEstate__sunTask,
+                              self.taskName('sunTask'))
         return Task.done
 
     def _DistributedEstate__stopBirds(self):
@@ -411,14 +412,14 @@ class DistributedEstate(DistributedObject.DistributedObject):
 
     def _DistributedEstate__startBirds(self):
         self._DistributedEstate__stopBirds()
-        taskMgr.doMethodLater(
-            1, self._DistributedEstate__birds, 'estate-birds')
+        taskMgr.doMethodLater(1, self._DistributedEstate__birds,
+                              'estate-birds')
 
     def _DistributedEstate__birds(self, task):
         base.playSfx(random.choice(base.cr.playGame.hood.loader.birdSound))
         t = random.random() * 20.0 + 1
-        taskMgr.doMethodLater(
-            t, self._DistributedEstate__birds, 'estate-birds')
+        taskMgr.doMethodLater(t, self._DistributedEstate__birds,
+                              'estate-birds')
         return Task.done
 
     def _DistributedEstate__stopCrickets(self):
@@ -426,20 +427,16 @@ class DistributedEstate(DistributedObject.DistributedObject):
 
     def _DistributedEstate__startCrickets(self):
         self._DistributedEstate__stopCrickets()
-        taskMgr.doMethodLater(
-            1,
-            self._DistributedEstate__crickets,
-            'estate-crickets')
+        taskMgr.doMethodLater(1, self._DistributedEstate__crickets,
+                              'estate-crickets')
 
     def _DistributedEstate__crickets(self, task):
         sfx = random.choice(base.cr.playGame.hood.loader.cricketSound)
         track = Sequence(Func(base.playSfx, sfx), Wait(1))
         track.play()
         t = random.random() * 20.0 + 1
-        taskMgr.doMethodLater(
-            t,
-            self._DistributedEstate__crickets,
-            'estate-crickets')
+        taskMgr.doMethodLater(t, self._DistributedEstate__crickets,
+                              'estate-crickets')
         return Task.done
 
     def getLastEpochTimeStamp(self):
@@ -457,14 +454,13 @@ class DistributedEstate(DistributedObject.DistributedObject):
     def loadFlowerSellBox(self):
         self.flowerSellBox = loader.loadModel(
             'phase_5.5/models/estate/wheelbarrel.bam')
-        self.flowerSellBox.setPos(-142.58600000000001,
-                                  4.3529999999999998, 0.025000000000000001)
+        self.flowerSellBox.setPos(-142.58600000000001, 4.3529999999999998,
+                                  0.025000000000000001)
         self.flowerSellBox.reparentTo(render)
         colNode = self.flowerSellBox.find('**/collision')
         colNode.setName('FlowerSellBox')
-        self.accept(
-            'enterFlowerSellBox',
-            self._DistributedEstate__touchedFlowerSellBox)
+        self.accept('enterFlowerSellBox',
+                    self._DistributedEstate__touchedFlowerSellBox)
 
     def _DistributedEstate__touchedFlowerSellBox(self, entry):
         if base.localAvatar.doId in self.idList:
@@ -473,16 +469,14 @@ class DistributedEstate(DistributedObject.DistributedObject):
 
     def _DistributedEstate__handleSaleDone(self, sell=0):
         self.ignore(self.flowerGuiDoneEvent)
-        self.sendUpdate('completeFlowerSale', [
-            sell])
+        self.sendUpdate('completeFlowerSale', [sell])
         self.ignore('stoppedAsleep')
         self.flowerGui.destroy()
         self.flowerGui = None
 
     def popupFlowerGUI(self):
-        self.acceptOnce(
-            self.flowerGuiDoneEvent,
-            self._DistributedEstate__handleSaleDone)
+        self.acceptOnce(self.flowerGuiDoneEvent,
+                        self._DistributedEstate__handleSaleDone)
         self.flowerGui = FlowerSellGUI.FlowerSellGUI(self.flowerGuiDoneEvent)
         self.accept('stoppedAsleep', self._DistributedEstate__handleSaleDone)
 
@@ -493,11 +487,13 @@ class DistributedEstate(DistributedObject.DistributedObject):
     def awardedTrophy(self, avId):
         if base.localAvatar.doId == avId:
             base.cr.playGame.getPlace().detectedGardenPlotUse()
-            msg = TTLocalizer.GardenTrophyAwarded % (len(
-                base.localAvatar.getFlowerCollection()),
+            msg = TTLocalizer.GardenTrophyAwarded % (
+                len(base.localAvatar.getFlowerCollection()),
                 GardenGlobals.getNumberOfFlowerVarieties())
             self.awardDialog = TTDialog.TTDialog(
-                style=TTDialog.Acknowledge, text=msg, command=self.closedAwardDialog)
+                style=TTDialog.Acknowledge,
+                text=msg,
+                command=self.closedAwardDialog)
 
     def setClouds(self, clouds):
         self.clouds = clouds

@@ -30,13 +30,8 @@ class DistCogdoCraneMoneyBag(DistCogdoCraneObject):
                 duration=ToontownGlobals.CashbotBossToMagnetTime,
                 node=self),
             Sequence(
-                Wait(
-                    ToontownGlobals.CashbotBossToMagnetTime -
-                    0.02),
-                SoundInterval(
-                    self.hitMagnetSfx,
-                    duration=1.0,
-                    node=self)))
+                Wait(ToontownGlobals.CashbotBossToMagnetTime - 0.02),
+                SoundInterval(self.hitMagnetSfx, duration=1.0, node=self)))
         self.hitFloorSfx = loader.loadSfx(
             'phase_5/audio/sfx/AA_drop_bigweight_miss.mp3')  # Floor hit sound
         self.hitFloorSoundInterval = SoundInterval(self.hitFloorSfx, node=self)

@@ -32,8 +32,7 @@ from toontown.toonbase import TTLocalizer
 from toontown.toon import NPCToons
 camPos = Point3(14, 0, 10)
 camHpr = Vec3(89, -30, 0)
-randomBattleTimestamp = base.config.GetBool(
-    'random-battle-timestamp', 0)
+randomBattleTimestamp = base.config.GetBool('random-battle-timestamp', 0)
 
 
 class Movie(DirectObject.DirectObject):
@@ -123,10 +122,7 @@ class Movie(DirectObject.DirectObject):
                 headParts = toon.getHeadParts()
                 torsoParts = toon.getTorsoParts()
                 legsParts = toon.getLegsParts()
-                partsList = [
-                    headParts,
-                    torsoParts,
-                    legsParts]
+                partsList = [headParts, torsoParts, legsParts]
                 for parts in partsList:
                     for partNum in range(0, parts.getNumPaths()):
                         nextPart = parts.getPath(partNum)
@@ -144,8 +140,8 @@ class Movie(DirectObject.DirectObject):
                             continue
 
             if self.restoreHeadScale == 1:
-                headScale = ToontownGlobals.toonHeadScales[toon.style.getAnimal(
-                )]
+                headScale = ToontownGlobals.toonHeadScales[
+                    toon.style.getAnimal()]
                 for lod in toon.getLODNames():
                     toon.getPart('head', lod).setScale(headScale)
 
@@ -175,9 +171,7 @@ class Movie(DirectObject.DirectObject):
                 suit.battleTrapIsFresh = 0
                 (origPos, origHpr) = self.battle.getActorPosHpr(suit)
                 suit.setPosHpr(self.battle, origPos, origHpr)
-                hands = [
-                    suit.getRightHand(),
-                    suit.getLeftHand()]
+                hands = [suit.getRightHand(), suit.getLeftHand()]
                 for hand in hands:
                     props = hand.getChildren()
                     for prop in props:
@@ -265,8 +259,7 @@ class Movie(DirectObject.DirectObject):
             self.track = Parallel(
                 self.track,
                 Sequence(camtrack),
-                name='movie-track-with-cam-%d' %
-                self.battle.doId)
+                name='movie-track-with-cam-%d' % self.battle.doId)
 
         if randomBattleTimestamp == 1:
             randNum = random.randint(0, 99)
@@ -276,13 +269,11 @@ class Movie(DirectObject.DirectObject):
         self.track.delayDeletes = []
         for suit in self.battle.suits:
             self.track.delayDeletes.append(
-                DelayDelete.DelayDelete(
-                    suit, 'Movie.play'))
+                DelayDelete.DelayDelete(suit, 'Movie.play'))
 
         for toon in self.battle.toons:
             self.track.delayDeletes.append(
-                DelayDelete.DelayDelete(
-                    toon, 'Movie.play'))
+                DelayDelete.DelayDelete(toon, 'Movie.play'))
 
         self.track.start(ts)
 
@@ -295,18 +286,17 @@ class Movie(DirectObject.DirectObject):
         camtrack = Sequence()
         self.rewardPanel = RewardPanel.RewardPanel(name)
         self.rewardPanel.hide()
-        (victory,
-         camVictory,
-         skipper) = MovieToonVictory.doToonVictory(self.battle.localToonActive(),
-                                                   self.battle.activeToons,
-                                                   self.toonRewardIds,
-                                                   self.toonRewardDicts,
-                                                   self.deathList,
-                                                   self.rewardPanel,
-                                                   1,
-                                                   self.uberList,
-                                                   self.helpfulToonsList,
-                                                   noSkip=noSkip)
+        (victory, camVictory, skipper) = MovieToonVictory.doToonVictory(
+            self.battle.localToonActive(),
+            self.battle.activeToons,
+            self.toonRewardIds,
+            self.toonRewardDicts,
+            self.deathList,
+            self.rewardPanel,
+            1,
+            self.uberList,
+            self.helpfulToonsList,
+            noSkip=noSkip)
         if victory:
             skipper.setIvals((ptrack, camtrack), ptrack.getDuration())
             ptrack.append(victory)
@@ -315,22 +305,19 @@ class Movie(DirectObject.DirectObject):
         ptrack.append(Func(callback))
         self._deleteTrack()
         self.track = Sequence(
-            ptrack, name='movie-reward-track-%d' %
-            self.battle.doId)
+            ptrack, name='movie-reward-track-%d' % self.battle.doId)
         if self.battle.localToonActive():
             self.track = Parallel(
                 self.track,
                 camtrack,
-                name='movie-reward-track-with-cam-%d' %
-                self.battle.doId)
+                name='movie-reward-track-with-cam-%d' % self.battle.doId)
 
         self.track.delayDeletes = []
         for t in self.battle.activeToons:
             self.track.delayDeletes.append(
-                DelayDelete.DelayDelete(
-                    t, 'Movie.playReward'))
+                DelayDelete.DelayDelete(t, 'Movie.playReward'))
 
-        skipper.setIvals((self.track,), 0.0)
+        skipper.setIvals((self.track, ), 0.0)
         skipper.setBattle(self.battle)
         self.track.start(ts)
 
@@ -339,12 +326,11 @@ class Movie(DirectObject.DirectObject):
         self.rewardPanel = RewardPanel.RewardPanel(name)
         self.rewardCallback = callback
         self.questList = self.rewardPanel.getQuestIntervalList(
-            base.localAvatar, [
-                0, 1, 1, 0], [
-                base.localAvatar], base.localAvatar.quests[0], [], [
-                base.localAvatar.getDoId()])
-        camera.setPosHpr(0, 8, base.localAvatar.getHeight()
-                         * 0.66000000000000003, 179, 15, 0)
+            base.localAvatar, [0, 1, 1, 0], [base.localAvatar],
+            base.localAvatar.quests[0], [], [base.localAvatar.getDoId()])
+        camera.setPosHpr(0, 8,
+                         base.localAvatar.getHeight() * 0.66000000000000003,
+                         179, 15, 0)
         self.playTutorialReward_1()
 
     def playTutorialReward_1(self):
@@ -353,19 +339,16 @@ class Movie(DirectObject.DirectObject):
             command=self.playTutorialReward_2,
             style=TTDialog.Acknowledge,
             fadeScreen=None,
-            pos=(
-                0.65000000000000002,
-                0,
-                0.5),
+            pos=(0.65000000000000002, 0, 0.5),
             scale=0.80000000000000004)
         self.tutRewardDialog_1.hide()
         self._deleteTrack()
         self.track = Sequence(name='tutorial-reward-1')
         self.track.append(
             Func(
-                self.rewardPanel.initGagFrame, base.localAvatar, [
-                    0, 0, 0, 0, 0, 0, 0], [
-                    0, 0, 0, 0], noSkip=True))
+                self.rewardPanel.initGagFrame,
+                base.localAvatar, [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0],
+                noSkip=True))
         self.track += self.rewardPanel.getTrackIntervalList(
             base.localAvatar, THROW_TRACK, 0, 1, 0)
         self.track.append(Func(self.tutRewardDialog_1.show))
@@ -378,10 +361,7 @@ class Movie(DirectObject.DirectObject):
             command=self.playTutorialReward_3,
             style=TTDialog.Acknowledge,
             fadeScreen=None,
-            pos=(
-                0.65000000000000002,
-                0,
-                0.5),
+            pos=(0.65000000000000002, 0, 0.5),
             scale=0.80000000000000004)
         self.tutRewardDialog_2.hide()
         self._deleteTrack()
@@ -423,8 +403,8 @@ class Movie(DirectObject.DirectObject):
                 'phase_3.5/audio/dial/CC_tom_movie_tutorial_reward02.mp3')
             self.tomDialogue05 = base.loadSfx(
                 'phase_3.5/audio/dial/CC_tom_movie_tutorial_reward03.mp3')
-            self.musicVolume = base.config.GetFloat(
-                'tutorial-music-volume', 0.5)
+            self.musicVolume = base.config.GetFloat('tutorial-music-volume',
+                                                    0.5)
         else:
             self.tomDialogue03 = None
             self.tomDialogue04 = None
@@ -433,82 +413,66 @@ class Movie(DirectObject.DirectObject):
         music = base.cr.playGame.place.loader.battleMusic
         if self.questList:
             self.track1 = Sequence(
-                Wait(1.0), Func(
-                    self.rewardPanel.initQuestFrame, base.localAvatar, copy.deepcopy(
-                        base.localAvatar.quests)), Wait(1.0), Sequence(
-                    *self.questList), Wait(1.0), Func(
-                    self.rewardPanel.hide), Func(
-                        camera.setPosHpr, render, 34, 19.879999999999999, 3.48, -90, -2.3599999999999999, 0), Func(
-                            base.localAvatar.animFSM.request, 'neutral'), Func(
-                                base.localAvatar.setPosHpr, 40.310000000000002, 22.0, -0.46999999999999997, 150.0, 360.0, 0.0), Wait(0.5), Func(
-                                    self.tutorialTom.reparentTo, render), Func(
-                                        self.tutorialTom.show), Func(
-                                            self.tutorialTom.setPosHpr, 40.289999999999999, 17.899999999999999, -0.46999999999999997, 11.31, 0.0, 0.070000000000000007), Func(
-                                                self.tutorialTom.animFSM.request, 'TeleportIn'), Wait(1.5169999999999999), Func(
-                                                    self.tutorialTom.animFSM.request, 'neutral'), Func(
-                                                        self.acceptOnce, self.tutorialTom.uniqueName('doneChatPage'), doneChat1), Func(
-                                                            self.tutorialTom.addActive), Func(
-                                                                music.setVolume, self.musicVolume), Func(
-                                                                    self.tutorialTom.setLocalPageChat, TTLocalizer.MovieTutorialReward3, 0, None, [
-                                                                        self.tomDialogue03]), name='tutorial-reward-3a')
+                Wait(1.0),
+                Func(self.rewardPanel.initQuestFrame, base.localAvatar,
+                     copy.deepcopy(base.localAvatar.quests)),
+                Wait(1.0),
+                Sequence(*self.questList),
+                Wait(1.0),
+                Func(self.rewardPanel.hide),
+                Func(camera.setPosHpr, render, 34, 19.879999999999999, 3.48,
+                     -90, -2.3599999999999999, 0),
+                Func(base.localAvatar.animFSM.request, 'neutral'),
+                Func(base.localAvatar.setPosHpr, 40.310000000000002, 22.0,
+                     -0.46999999999999997, 150.0, 360.0, 0.0),
+                Wait(0.5),
+                Func(self.tutorialTom.reparentTo, render),
+                Func(self.tutorialTom.show),
+                Func(self.tutorialTom.setPosHpr, 40.289999999999999,
+                     17.899999999999999, -0.46999999999999997, 11.31, 0.0,
+                     0.070000000000000007),
+                Func(self.tutorialTom.animFSM.request, 'TeleportIn'),
+                Wait(1.5169999999999999),
+                Func(self.tutorialTom.animFSM.request, 'neutral'),
+                Func(self.acceptOnce,
+                     self.tutorialTom.uniqueName('doneChatPage'), doneChat1),
+                Func(self.tutorialTom.addActive),
+                Func(music.setVolume, self.musicVolume),
+                Func(self.tutorialTom.setLocalPageChat,
+                     TTLocalizer.MovieTutorialReward3, 0, None,
+                     [self.tomDialogue03]),
+                name='tutorial-reward-3a')
             self.track2 = Sequence(
-                Func(
-                    self.acceptOnce,
-                    self.tutorialTom.uniqueName('doneChatPage'),
-                    doneChat2),
-                Func(
-                    self.tutorialTom.setLocalPageChat,
-                    TTLocalizer.MovieTutorialReward4,
-                    1,
-                    None,
-                    [
-                        self.tomDialogue04]),
-                Func(
-                    self.tutorialTom.setPlayRate,
-                    1.5,
-                    'right-hand-start'),
-                Func(
-                    self.tutorialTom.play,
-                    'right-hand-start'),
-                Wait(
-                    self.tutorialTom.getDuration('right-hand-start') /
-                    1.5),
-                Func(
-                    self.tutorialTom.loop,
-                    'right-hand'),
+                Func(self.acceptOnce,
+                     self.tutorialTom.uniqueName('doneChatPage'), doneChat2),
+                Func(self.tutorialTom.setLocalPageChat,
+                     TTLocalizer.MovieTutorialReward4, 1, None,
+                     [self.tomDialogue04]),
+                Func(self.tutorialTom.setPlayRate, 1.5, 'right-hand-start'),
+                Func(self.tutorialTom.play, 'right-hand-start'),
+                Wait(self.tutorialTom.getDuration('right-hand-start') / 1.5),
+                Func(self.tutorialTom.loop, 'right-hand'),
                 name='tutorial-reward-3b')
             self.track3 = Parallel(
                 Sequence(
-                    Func(
-                        self.tutorialTom.setPlayRate,
-                        -1.8,
-                        'right-hand-start'),
-                    Func(
-                        self.tutorialTom.play,
-                        'right-hand-start'),
+                    Func(self.tutorialTom.setPlayRate, -1.8,
+                         'right-hand-start'),
+                    Func(self.tutorialTom.play, 'right-hand-start'),
                     Wait(
-                        self.tutorialTom.getDuration('right-hand-start') / 1.8),
-                    Func(
-                        self.tutorialTom.animFSM.request,
-                        'neutral'),
+                        self.tutorialTom.getDuration('right-hand-start') /
+                        1.8),
+                    Func(self.tutorialTom.animFSM.request, 'neutral'),
                     name='tutorial-reward-3ca'),
                 Sequence(
                     Wait(0.5),
-                    Func(
-                        self.tutorialTom.setChatAbsolute,
-                        TTLocalizer.MovieTutorialReward5,
-                        CFSpeech | CFTimeout,
-                        self.tomDialogue05),
+                    Func(self.tutorialTom.setChatAbsolute,
+                         TTLocalizer.MovieTutorialReward5,
+                         CFSpeech | CFTimeout, self.tomDialogue05),
                     Wait(1.0),
-                    Func(
-                        self.tutorialTom.animFSM.request,
-                        'TeleportOut'),
-                    Wait(
-                        self.tutorialTom.getDuration('teleport')),
+                    Func(self.tutorialTom.animFSM.request, 'TeleportOut'),
+                    Wait(self.tutorialTom.getDuration('teleport')),
                     Wait(1.0),
-                    Func(
-                        self.playTutorialReward_4,
-                        0),
+                    Func(self.playTutorialReward_4, 0),
                     name='tutorial-reward-3cb'),
                 name='tutorial-reward-3c')
             self.track1.start()
@@ -622,240 +586,50 @@ class Movie(DirectObject.DirectObject):
         else:
             return (None, None)
 
-    def genRewardDicts(
-            self,
-            id0,
-            origExp0,
-            earnedExp0,
-            origQuests0,
-            items0,
-            missedItems0,
-            origMerits0,
-            merits0,
-            parts0,
-            id1,
-            origExp1,
-            earnedExp1,
-            origQuests1,
-            items1,
-            missedItems1,
-            origMerits1,
-            merits1,
-            parts1,
-            id2,
-            origExp2,
-            earnedExp2,
-            origQuests2,
-            items2,
-            missedItems2,
-            origMerits2,
-            merits2,
-            parts2,
-            id3,
-            origExp3,
-            earnedExp3,
-            origQuests3,
-            items3,
-            missedItems3,
-            origMerits3,
-            merits3,
-            parts3,
-            deathList,
-            uberList,
-            helpfulToonsList):
+    def genRewardDicts(self, id0, origExp0, earnedExp0, origQuests0, items0,
+                       missedItems0, origMerits0, merits0, parts0, id1,
+                       origExp1, earnedExp1, origQuests1, items1, missedItems1,
+                       origMerits1, merits1, parts1, id2, origExp2, earnedExp2,
+                       origQuests2, items2, missedItems2, origMerits2, merits2,
+                       parts2, id3, origExp3, earnedExp3, origQuests3, items3,
+                       missedItems3, origMerits3, merits3, parts3, deathList,
+                       uberList, helpfulToonsList):
         self.deathList = deathList
         self.helpfulToonsList = helpfulToonsList
-        entries = (
-            (id0,
-             origExp0,
-             earnedExp0,
-             origQuests0,
-             items0,
-             missedItems0,
-             origMerits0,
-             merits0,
-             parts0),
-            (id1,
-             origExp1,
-             earnedExp1,
-             origQuests1,
-             items1,
-             missedItems1,
-             origMerits1,
-             merits1,
-             parts1),
-            (id2,
-             origExp2,
-             earnedExp2,
-             origQuests2,
-             items2,
-             missedItems2,
-             origMerits2,
-             merits2,
-             parts2),
-            (id3,
-             origExp3,
-             earnedExp3,
-             origQuests3,
-             items3,
-             missedItems3,
-             origMerits3,
-             merits3,
-             parts3))
+        entries = ((id0, origExp0, earnedExp0, origQuests0, items0,
+                    missedItems0, origMerits0, merits0,
+                    parts0), (id1, origExp1, earnedExp1, origQuests1, items1,
+                              missedItems1, origMerits1, merits1, parts1),
+                   (id2, origExp2, earnedExp2, origQuests2, items2,
+                    missedItems2, origMerits2, merits2, parts2),
+                   (id3, origExp3, earnedExp3, origQuests3, items3,
+                    missedItems3, origMerits3, merits3, parts3))
         self.toonRewardDicts = BattleExperience.genRewardDicts(entries)
-        self.toonRewardIds = [
-            id0,
-            id1,
-            id2,
-            id3]
+        self.toonRewardIds = [id0, id1, id2, id3]
         self.uberList = uberList
 
-    def genAttackDicts(
-            self,
-            toons,
-            suits,
-            id0,
-            tr0,
-            le0,
-            tg0,
-            hp0,
-            ac0,
-            hpb0,
-            kbb0,
-            died0,
-            revive0,
-            id1,
-            tr1,
-            le1,
-            tg1,
-            hp1,
-            ac1,
-            hpb1,
-            kbb1,
-            died1,
-            revive1,
-            id2,
-            tr2,
-            le2,
-            tg2,
-            hp2,
-            ac2,
-            hpb2,
-            kbb2,
-            died2,
-            revive2,
-            id3,
-            tr3,
-            le3,
-            tg3,
-            hp3,
-            ac3,
-            hpb3,
-            kbb3,
-            died3,
-            revive3,
-            sid0,
-            at0,
-            stg0,
-            dm0,
-            sd0,
-            sb0,
-            st0,
-            sid1,
-            at1,
-            stg1,
-            dm1,
-            sd1,
-            sb1,
-            st1,
-            sid2,
-            at2,
-            stg2,
-            dm2,
-            sd2,
-            sb2,
-            st2,
-            sid3,
-            at3,
-            stg3,
-            dm3,
-            sd3,
-            sb3,
-            st3):
+    def genAttackDicts(self, toons, suits, id0, tr0, le0, tg0, hp0, ac0, hpb0,
+                       kbb0, died0, revive0, id1, tr1, le1, tg1, hp1, ac1,
+                       hpb1, kbb1, died1, revive1, id2, tr2, le2, tg2, hp2,
+                       ac2, hpb2, kbb2, died2, revive2, id3, tr3, le3, tg3,
+                       hp3, ac3, hpb3, kbb3, died3, revive3, sid0, at0, stg0,
+                       dm0, sd0, sb0, st0, sid1, at1, stg1, dm1, sd1, sb1, st1,
+                       sid2, at2, stg2, dm2, sd2, sb2, st2, sid3, at3, stg3,
+                       dm3, sd3, sb3, st3):
         if self.track and self.track.isPlaying():
             self.notify.warning('genAttackDicts() - track is playing!')
 
-        toonAttacks = (
-            (id0,
-             tr0,
-             le0,
-             tg0,
-             hp0,
-             ac0,
-             hpb0,
-             kbb0,
-             died0,
-             revive0),
-            (id1,
-             tr1,
-             le1,
-             tg1,
-             hp1,
-             ac1,
-             hpb1,
-             kbb1,
-             died1,
-             revive1),
-            (id2,
-             tr2,
-             le2,
-             tg2,
-             hp2,
-             ac2,
-             hpb2,
-             kbb2,
-             died2,
-             revive2),
-            (id3,
-             tr3,
-             le3,
-             tg3,
-             hp3,
-             ac3,
-             hpb3,
-             kbb3,
-             died3,
-             revive3))
+        toonAttacks = ((id0, tr0, le0, tg0, hp0, ac0, hpb0, kbb0, died0,
+                        revive0), (id1, tr1, le1, tg1, hp1, ac1, hpb1, kbb1,
+                                   died1, revive1),
+                       (id2, tr2, le2, tg2, hp2, ac2, hpb2, kbb2, died2,
+                        revive2), (id3, tr3, le3, tg3, hp3, ac3, hpb3, kbb3,
+                                   died3, revive3))
         self._Movie__genToonAttackDicts(toons, suits, toonAttacks)
-        suitAttacks = (
-            (sid0,
-             at0,
-             stg0,
-             dm0,
-             sd0,
-             sb0,
-             st0),
-            (sid1,
-             at1,
-             stg1,
-             dm1,
-             sd1,
-             sb1,
-             st1),
-            (sid2,
-             at2,
-             stg2,
-             dm2,
-             sd2,
-             sb2,
-             st2),
-            (sid3,
-             at3,
-             stg3,
-             dm3,
-             sd3,
-             sb3,
-             st3))
+        suitAttacks = ((sid0, at0, stg0, dm0, sd0, sb0,
+                        st0), (sid1, at1, stg1, dm1, sd1, sb1,
+                               st1), (sid2, at2, stg2, dm2, sd2, sb2, st2),
+                       (sid3, at3, stg3, dm3, sd3, sb3, st3))
         self._Movie__genSuitAttackDicts(toons, suits, suitAttacks)
 
     def _Movie__genToonAttackDicts(self, toons, suits, toonAttacks):
@@ -879,8 +653,8 @@ class Movie(DirectObject.DirectObject):
                 if track == NPCSOS:
                     adict['npcId'] = ta[TOON_TGT_COL]
                     toonId = ta[TOON_TGT_COL]
-                    (track, npc_level, npc_hp) = NPCToons.getNPCTrackLevelHp(
-                        adict['npcId'])
+                    (track, npc_level,
+                     npc_hp) = NPCToons.getNPCTrackLevelHp(adict['npcId'])
                     if track is None:
                         track = NPCSOS
 
@@ -942,8 +716,9 @@ class Movie(DirectObject.DirectObject):
                                 tdict = {}
                                 tdict['toon'] = target
                                 tdict['hp'] = hps[toons.index(t)]
-                                self.notify.debug('PETSOS: toon: %d healed for hp: %d' % (
-                                    target.doId, hps[toons.index(t)]))
+                                self.notify.debug(
+                                    'PETSOS: toon: %d healed for hp: %d' %
+                                    (target.doId, hps[toons.index(t)]))
                                 targets.append(tdict)
                                 continue
 
@@ -962,8 +737,9 @@ class Movie(DirectObject.DirectObject):
                                 tdict = {}
                                 tdict['toon'] = target
                                 tdict['hp'] = hps[toons.index(t)]
-                                self.notify.debug('HEAL: toon: %d healed for hp: %d' % (
-                                    target.doId, hps[toons.index(t)]))
+                                self.notify.debug(
+                                    'HEAL: toon: %d healed for hp: %d' %
+                                    (target.doId, hps[toons.index(t)]))
                                 targets.append(tdict)
                                 continue
 
@@ -996,7 +772,8 @@ class Movie(DirectObject.DirectObject):
                                     continue
                                 elif track == TRAP:
                                     if self.battle.isSuitLured(
-                                            target) == 1 or target.battleTrap != NO_TRAP:
+                                            target
+                                    ) == 1 or target.battleTrap != NO_TRAP:
                                         continue
 
                                 target.battleTrap != NO_TRAP
@@ -1005,12 +782,15 @@ class Movie(DirectObject.DirectObject):
                             sdict = {}
                             sdict['suit'] = target
                             sdict['hp'] = hps[targetIndex]
-                            if ta[TOON_TRACK_COL] == NPCSOS and track == DROP and hps[targetIndex] == 0:
+                            if ta[TOON_TRACK_COL] == NPCSOS and track == DROP and hps[
+                                    targetIndex] == 0:
                                 continue
 
                             sdict['kbbonus'] = kbbonuses[targetIndex]
-                            sdict['died'] = ta[SUIT_DIED_COL] & 1 << targetIndex
-                            sdict['revived'] = ta[SUIT_REVIVE_COL] & 1 << targetIndex
+                            sdict[
+                                'died'] = ta[SUIT_DIED_COL] & 1 << targetIndex
+                            sdict['revived'] = ta[
+                                SUIT_REVIVE_COL] & 1 << targetIndex
                             if sdict['died'] != 0:
                                 pass
                             1
@@ -1055,7 +835,8 @@ class Movie(DirectObject.DirectObject):
                         sdict['hp'] = hps[targetIndex]
                         sdict['kbbonus'] = kbbonuses[targetIndex]
                         sdict['died'] = ta[SUIT_DIED_COL] & 1 << targetIndex
-                        sdict['revived'] = ta[SUIT_REVIVE_COL] & 1 << targetIndex
+                        sdict[
+                            'revived'] = ta[SUIT_REVIVE_COL] & 1 << targetIndex
                         if sdict['revived'] != 0:
                             pass
                         1
@@ -1063,8 +844,7 @@ class Movie(DirectObject.DirectObject):
                             pass
                         1
                         if track == DROP or track == TRAP:
-                            adict['target'] = [
-                                sdict]
+                            adict['target'] = [sdict]
                         else:
                             adict['target'] = sdict
                 adict['hpbonus'] = ta[TOON_HPBONUS_COL]
@@ -1133,8 +913,8 @@ class Movie(DirectObject.DirectObject):
                 if suit is None:
                     self.notify.error('suit: %d not in battle!' % suitId)
 
-                adict = getSuitAttack(
-                    suit.getStyleName(), suit.getLevel(), attack)
+                adict = getSuitAttack(suit.getStyleName(), suit.getLevel(),
+                                      attack)
                 adict['suit'] = suit
                 adict['battle'] = self.battle
                 adict['playByPlayText'] = self.playByPlayText
@@ -1175,9 +955,8 @@ class Movie(DirectObject.DirectObject):
                     tdict = {}
                     tdict['toon'] = target
                     tdict['hp'] = hps[targetIndex]
-                    self.notify.debug(
-                        'DAMAGE: toon: %d hit for hp: %d' %
-                        (target.doId, hps[targetIndex]))
+                    self.notify.debug('DAMAGE: toon: %d hit for hp: %d' %
+                                      (target.doId, hps[targetIndex]))
                     toonDied = sa[TOON_DIED_COL] & 1 << targetIndex
                     tdict['died'] = toonDied
                     toonIndex = self.battle.activeToons.index(target)
@@ -1219,12 +998,14 @@ class Movie(DirectObject.DirectObject):
 
                 if a['group'] == ATK_TGT_GROUP:
                     for target in targetField:
-                        if target['died'] and target['toon'].doId == base.localAvatar.doId:
+                        if target['died'] and target[
+                                'toon'].doId == base.localAvatar.doId:
                             isLocalToonSad = True
                             continue
 
                 elif a['group'] == ATK_TGT_SINGLE:
-                    if targetField['died'] and targetField['toon'].doId == base.localAvatar.doId:
+                    if targetField['died'] and targetField[
+                            'toon'].doId == base.localAvatar.doId:
                         isLocalToonSad = True
 
                 if isLocalToonSad:

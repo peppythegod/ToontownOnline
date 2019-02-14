@@ -49,15 +49,9 @@ class DirectRegion(NodePath):
             newBounds = card.getTightBounds()
             ll = render2d.getRelativePoint(card, newBounds[0])
             ur = render2d.getRelativePoint(card, newBounds[1])
-            newBounds = [
-                ll.getX(),
-                ur.getX(),
-                ll.getZ(),
-                ur.getZ()]
-            newBounds = map(
-                lambda x: max(
-                    0.0, min(
-                        1.0, (x + 1.0) / 2.0)), newBounds)
+            newBounds = [ll.getX(), ur.getX(), ll.getZ(), ur.getZ()]
+            newBounds = map(lambda x: max(0.0, min(1.0, (x + 1.0) / 2.0)),
+                            newBounds)
             self.cDr = base.win.makeDisplayRegion(*newBounds)
             self.cDr.setSort(10)
             self.cDr.setClearColor(card.getColor())
@@ -148,7 +142,8 @@ class FlowerPhoto(NodePath):
         modelName = GardenGlobals.PlantAttributes[species]['fullGrownModel']
         nodePath = loader.loadModel(modelName)
         desat = None
-        flowerColorIndex = GardenGlobals.PlantAttributes[species]['varieties'][variety][1]
+        flowerColorIndex = GardenGlobals.PlantAttributes[species]['varieties'][
+            variety][1]
         colorTuple = GardenGlobals.FlowerColors[flowerColorIndex]
         useWilted = 0
         wilt = nodePath.find('**/*wilt*')
@@ -162,14 +157,11 @@ class FlowerPhoto(NodePath):
             desat = bloom.find('**/*desat*')
             wilt.hide()
         if desat and not desat.isEmpty():
-            desat.setColorScale(
-                colorTuple[0],
-                colorTuple[1],
-                colorTuple[2],
-                1.0)
+            desat.setColorScale(colorTuple[0], colorTuple[1], colorTuple[2],
+                                1.0)
         else:
-            nodePath.setColorScale(
-                colorTuple[0], colorTuple[1], colorTuple[2], 1.0)
+            nodePath.setColorScale(colorTuple[0], colorTuple[1], colorTuple[2],
+                                   1.0)
         return nodePath
 
     def show(self, showBackground=0):

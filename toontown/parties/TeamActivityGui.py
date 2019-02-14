@@ -25,44 +25,47 @@ class TeamActivityGui:
         downButton = buttonModels.find('**/InventoryButtonDown')
         rolloverButton = buttonModels.find('**/InventoryButtonRollover')
         self.exitButton = DirectButton(
-            relief=None, text=TTLocalizer.PartyTeamActivityExitButton, text_fg=(
-                1, 1, 0.65000000000000002, 1), text_pos=(
-                0, -0.14999999999999999), text_scale=0.5, image=(
-                upButton, downButton, rolloverButton), image_color=(
-                    1, 0, 0, 1), image_scale=(
-                        14.5, 1, 9), pos=(
-                            0, 0, 0.80000000000000004), scale=0.14999999999999999, command=self.handleExitButtonClick)
+            relief=None,
+            text=TTLocalizer.PartyTeamActivityExitButton,
+            text_fg=(1, 1, 0.65000000000000002, 1),
+            text_pos=(0, -0.14999999999999999),
+            text_scale=0.5,
+            image=(upButton, downButton, rolloverButton),
+            image_color=(1, 0, 0, 1),
+            image_scale=(14.5, 1, 9),
+            pos=(0, 0, 0.80000000000000004),
+            scale=0.14999999999999999,
+            command=self.handleExitButtonClick)
         self.exitButton.hide()
         if self.activity.toonsCanSwitchTeams():
             self.switchButton = DirectButton(
-                relief=None, text=TTLocalizer.PartyTeamActivitySwitchTeamsButton, text_fg=(
-                    1, 1, 1, 1), text_pos=(
-                    0, 0.10000000000000001), text_scale=0.5, image=(
-                    upButton, downButton, rolloverButton), image_color=(
-                    0, 1, 0, 1), image_scale=(
-                        15, 1, 15), pos=(
-                            0, 0, 0.5), scale=0.14999999999999999, command=self.handleSwitchButtonClick)
+                relief=None,
+                text=TTLocalizer.PartyTeamActivitySwitchTeamsButton,
+                text_fg=(1, 1, 1, 1),
+                text_pos=(0, 0.10000000000000001),
+                text_scale=0.5,
+                image=(upButton, downButton, rolloverButton),
+                image_color=(0, 1, 0, 1),
+                image_scale=(15, 1, 15),
+                pos=(0, 0, 0.5),
+                scale=0.14999999999999999,
+                command=self.handleSwitchButtonClick)
             self.switchButton.hide()
         else:
             self.switchButton = None
         buttonModels.removeNode()
-        self.countdownText = OnscreenText(text='',
-                                          pos=(0.0,
-                                               -0.20000000000000001),
-                                          scale=PartyGlobals.TeamActivityTextScale * 1.2,
-                                          fg=(1.0,
-                                              1.0,
-                                              0.65000000000000002,
-                                              1.0),
-                                          align=TextNode.ACenter,
-                                          font=ToontownGlobals.getSignFont(),
-                                          mayChange=True)
+        self.countdownText = OnscreenText(
+            text='',
+            pos=(0.0, -0.20000000000000001),
+            scale=PartyGlobals.TeamActivityTextScale * 1.2,
+            fg=(1.0, 1.0, 0.65000000000000002, 1.0),
+            align=TextNode.ACenter,
+            font=ToontownGlobals.getSignFont(),
+            mayChange=True)
         self.countdownText.hide()
         self.statusText = OnscreenText(
             text='',
-            pos=(
-                0.0,
-                0.0),
+            pos=(0.0, 0.0),
             scale=PartyGlobals.TeamActivityTextScale,
             fg=PartyGlobals.TeamActivityStatusColor,
             align=TextNode.ACenter,
@@ -126,11 +129,10 @@ class TeamActivityGui:
         self.disableExitButton()
         self.activity.d_toonSwitchTeamRequest()
 
-    def showWaitToStartCountdown(
-            self,
-            duration,
-            waitToStartTimestamp,
-            almostDoneCallback=None):
+    def showWaitToStartCountdown(self,
+                                 duration,
+                                 waitToStartTimestamp,
+                                 almostDoneCallback=None):
         self._countdownAlmostDoneCallback = almostDoneCallback
         currentTime = globalClock.getRealTime()
         waitTimeElapsed = currentTime - waitToStartTimestamp

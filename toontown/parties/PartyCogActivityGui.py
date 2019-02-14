@@ -13,7 +13,6 @@ import PartyGlobals
 
 
 class PartyCogTrackerGui:
-
     def __init__(self):
         self.cogTracker = loader.loadModel(
             'phase_13/models/parties/cogTrackerGUI')
@@ -32,7 +31,8 @@ class PartyCogTrackerGui:
             layers = [
                 self.cogTracker.find('**/cog%d_blue' % i),
                 self.cogTracker.find('**/cog%d_orange' % i),
-                self.cogTracker.find('**/cog%d_white' % i)]
+                self.cogTracker.find('**/cog%d_white' % i)
+            ]
             self.cogs.append(self.cogTracker.find('**/cog%d' % i))
             self.cogLayers.append(layers)
             self.cogTracker.find('**/cog%d' % i).setBin('fixed', 2)
@@ -42,21 +42,14 @@ class PartyCogTrackerGui:
                     self.cogs[i],
                     duration=0.10000000000000001,
                     scale=big,
-                    startScale=Point3(
-                        1.0,
-                        1.0,
-                        1.0),
+                    startScale=Point3(1.0, 1.0, 1.0),
                     blendType='easeOut'),
                 LerpScaleInterval(
                     self.cogs[i],
                     duration=0.25,
-                    scale=Point3(
-                        1.0,
-                        1.0,
-                        1.0),
+                    scale=Point3(1.0, 1.0, 1.0),
                     startScale=big,
-                    blendType='easeOut'),
-                Wait(0.40000000000000002))
+                    blendType='easeOut'), Wait(0.40000000000000002))
             self.blinkIntervals.append(seq)
 
         self.top = self.cogTracker.find('**/cog0_top').getZ()
@@ -82,8 +75,8 @@ class PartyCogTrackerGui:
 
         elif cog.currentT > 0.0:
             self.cogLayers[cogNumber][1].unstash()
-            if team == 0 and cog.currentT > 0.5 and not self.blinkIntervals[cogNumber].isPlaying(
-            ):
+            if team == 0 and cog.currentT > 0.5 and not self.blinkIntervals[
+                    cogNumber].isPlaying():
                 self.blinkIntervals[cogNumber].start()
 
         else:
@@ -235,46 +228,39 @@ class PartyCogActivityGui(DirectObject):
         h = PartyGlobals.CogActivityPowerMeterHeight / 2.0
         w = PartyGlobals.CogActivityPowerMeterWidth / 2.0
         self._piePowerMeter = DirectWaitBar(
-            frameSize=(
-                -h, h, -w, w), relief=DGG.GROOVE, frameColor=(
-                0.90000000000000002, 0.90000000000000002, 0.90000000000000002, 1.0), borderWidth=(
-                0.01, 0.01), barColor=PartyGlobals.CogActivityColors[0], pos=PartyGlobals.CogActivityPowerMeterPos, hpr=(
-                    0.0, 0.0, -90.0))
+            frameSize=(-h, h, -w, w),
+            relief=DGG.GROOVE,
+            frameColor=(0.90000000000000002, 0.90000000000000002,
+                        0.90000000000000002, 1.0),
+            borderWidth=(0.01, 0.01),
+            barColor=PartyGlobals.CogActivityColors[0],
+            pos=PartyGlobals.CogActivityPowerMeterPos,
+            hpr=(0.0, 0.0, -90.0))
         self._piePowerMeter.setBin('fixed', 0)
         self._piePowerTitle = OnscreenText(
             text=TTLocalizer.PartyCogGuiPowerLabel,
             pos=PartyGlobals.CogActivityPowerMeterTextPos,
             scale=0.050000000000000003,
-            fg=(
-                1.0,
-                1.0,
-                1.0,
-                1.0),
+            fg=(1.0, 1.0, 1.0, 1.0),
             align=TextNode.ACenter)
         self._piePowerTitle.setBin('fixed', 0)
         self._piePowerMeter.hide()
         self._piePowerTitle.hide()
 
     def _initScore(self):
-        self._scoreLabel = OnscreenText(text='0',
-                                        pos=PartyGlobals.CogActivityScorePos,
-                                        scale=PartyGlobals.TugOfWarTextWordScale,
-                                        fg=(1.0,
-                                            1.0,
-                                            0.0,
-                                            1.0),
-                                        align=TextNode.ARight,
-                                        font=ToontownGlobals.getSignFont(),
-                                        mayChange=True)
+        self._scoreLabel = OnscreenText(
+            text='0',
+            pos=PartyGlobals.CogActivityScorePos,
+            scale=PartyGlobals.TugOfWarTextWordScale,
+            fg=(1.0, 1.0, 0.0, 1.0),
+            align=TextNode.ARight,
+            font=ToontownGlobals.getSignFont(),
+            mayChange=True)
         self._scoreTitle = OnscreenText(
             text=TTLocalizer.PartyCogGuiScoreLabel,
             pos=PartyGlobals.CogActivityScoreTitle,
             scale=0.050000000000000003,
-            fg=(
-                1.0,
-                1.0,
-                1.0,
-                1.0),
+            fg=(1.0, 1.0, 1.0, 1.0),
             align=TextNode.ARight)
         self._scoreLabel.hide()
         self._scoreTitle.hide()
@@ -284,10 +270,12 @@ class PartyCogActivityGui(DirectObject):
 
     def _initSpamWarning(self):
         self._spamWarning = OnscreenText(
-            text=TTLocalizer.PartyCogGuiSpamWarning, scale=0.14999999999999999, fg=(
-                1.0, 1.0, 0, 1.0), shadow=(
-                0, 0, 0, 0.62), mayChange=False, pos=(
-                0, 0.33000000000000002))
+            text=TTLocalizer.PartyCogGuiSpamWarning,
+            scale=0.14999999999999999,
+            fg=(1.0, 1.0, 0, 1.0),
+            shadow=(0, 0, 0, 0.62),
+            mayChange=False,
+            pos=(0, 0.33000000000000002))
         self._spamWarning.hide()
 
     def showScore(self):
@@ -328,10 +316,11 @@ class PartyCogActivityGui(DirectObject):
             self._spamWarning.show()
             taskMgr.remove(self._spamWarningIvalName)
             Sequence(
-                ToontownIntervals.getPulseLargerIval(
-                    self._spamWarning, ''), Wait(
-                    PartyGlobals.CogActivitySpamWarningShowTime), Func(
-                    self.hideSpamWarning), name=self._spamWarningIvalName, autoFinish=1).start()
+                ToontownIntervals.getPulseLargerIval(self._spamWarning, ''),
+                Wait(PartyGlobals.CogActivitySpamWarningShowTime),
+                Func(self.hideSpamWarning),
+                name=self._spamWarningIvalName,
+                autoFinish=1).start()
 
     def hide(self):
         self.hidePiePowerMeter()
@@ -342,14 +331,12 @@ class PartyCogActivityGui(DirectObject):
     def disableToontownHUD(self):
         base.localAvatar.hideName()
         base.localAvatar.laffMeter.hide()
-        base.setCellsAvailable(base.bottomCells + [
-            base.rightCells[1]], False)
+        base.setCellsAvailable(base.bottomCells + [base.rightCells[1]], False)
 
     def enableToontownHUD(self):
         base.localAvatar.showName()
         base.localAvatar.laffMeter.show()
-        base.setCellsAvailable(base.bottomCells + [
-            base.rightCells[1]], True)
+        base.setCellsAvailable(base.bottomCells + [base.rightCells[1]], True)
 
     def setTeam(self, team):
         self.team = team
@@ -383,16 +370,10 @@ class PartyCogActivityGui(DirectObject):
         teamDistance = netDistance / 6.0
         self._victoryBalanceBarOrange.setScale(
             PartyGlobals.CogActivityBarStartScale +
-            teamDistance *
-            10 *
-            PartyGlobals.CogActivityBarUnitScale,
-            1.0,
-            1.0)
+            teamDistance * 10 * PartyGlobals.CogActivityBarUnitScale, 1.0, 1.0)
         self._victoryBalanceBarPie.setX(
             PartyGlobals.CogActivityVictoryBarPiePos[0] +
-            teamDistance *
-            10 *
-            PartyGlobals.CogActivityBarPieUnitMove)
+            teamDistance * 10 * PartyGlobals.CogActivityBarPieUnitMove)
         self._victoryBalanceBarPie.setY(
             PartyGlobals.CogActivityVictoryBarPiePos[1])
         self._victoryBalanceBarPie.setZ(
@@ -415,9 +396,11 @@ class PartyCogActivityGui(DirectObject):
             taskMgr.remove(self._attackIvalName)
             Sequence(
                 ToontownIntervals.getPulseLargerIval(
-                    self._attackKeys, '', scale=0.14999999999999999), Wait(
-                    PartyGlobals.CogActivityControlsShowTime), Func(
-                    self.hideAttackControls), name=self._attackIvalName, autoFinish=1).start()
+                    self._attackKeys, '', scale=0.14999999999999999),
+                Wait(PartyGlobals.CogActivityControlsShowTime),
+                Func(self.hideAttackControls),
+                name=self._attackIvalName,
+                autoFinish=1).start()
 
     def showMoveControls(self):
         if self._moveKeys.isHidden() and not self._attackKeys.isHidden():
@@ -425,9 +408,11 @@ class PartyCogActivityGui(DirectObject):
             taskMgr.remove(self._moveIvalName)
             Sequence(
                 ToontownIntervals.getPulseLargerIval(
-                    self._moveKeys, '', scale=0.14999999999999999), Wait(
-                    PartyGlobals.CogActivityControlsShowTime), Func(
-                    self.hideMoveControls), name=self._moveIvalName, autoFinish=1).start()
+                    self._moveKeys, '', scale=0.14999999999999999),
+                Wait(PartyGlobals.CogActivityControlsShowTime),
+                Func(self.hideMoveControls),
+                name=self._moveIvalName,
+                autoFinish=1).start()
 
     def hideAttackControls(self):
         taskMgr.remove(self._attackIvalName)

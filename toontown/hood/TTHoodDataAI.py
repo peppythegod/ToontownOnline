@@ -36,13 +36,11 @@ class TTHoodDataAI(HoodDataAI.HoodDataAI):
         if simbase.blinkTrolley:
             taskMgr.doMethodLater(0.5, self._deleteTrolley, 'deleteTrolley')
 
-        messenger.send('TTHoodSpawned', [
-            self])
+        messenger.send('TTHoodSpawned', [self])
 
     def shutdown(self):
         HoodDataAI.HoodDataAI.shutdown(self)
-        messenger.send('TTHoodDestroyed', [
-            self])
+        messenger.send('TTHoodDestroyed', [self])
 
     def _deleteTrolley(self, task):
         self.trolley.requestDelete()

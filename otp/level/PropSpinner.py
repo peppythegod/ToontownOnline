@@ -5,7 +5,6 @@ from pandac.PandaModules import Vec3
 
 
 class PropSpinner(Entity):
-
     def __init__(self, level, entId):
         Entity.__init__(self, level, entId)
         self.initProps()

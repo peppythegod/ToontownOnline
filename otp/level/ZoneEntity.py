@@ -3,7 +3,6 @@ import BasicEntities
 
 
 class ZoneEntity(ZoneEntityBase.ZoneEntityBase, BasicEntities.NodePathAttribs):
-
     def __init__(self, level, entId):
         ZoneEntityBase.ZoneEntityBase.__init__(self, level, entId)
         self.nodePath = self.level.getZoneNode(self.entId)
@@ -14,8 +13,7 @@ class ZoneEntity(ZoneEntityBase.ZoneEntityBase, BasicEntities.NodePathAttribs):
                     self.entId)
             else:
                 self.notify.error(
-                    'zone %s not found in level model' %
-                    self.entId)
+                    'zone %s not found in level model' % self.entId)
 
         BasicEntities.NodePathAttribs.initNodePathAttribs(self, doReparent=0)
         self.visibleZoneNums = {}

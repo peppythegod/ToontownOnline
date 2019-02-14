@@ -3,15 +3,13 @@ from direct.showbase import GarbageReport
 
 
 class GarbageLeakServerEventAggregator(DirectObject):
-
     def __init__(self, cr):
         self.cr = cr
         self._doLaterName = None
         self._sentLeakDesc2num = {}
         self._curLeakDesc2num = {}
-        self.accept(
-            GarbageReport.GarbageCycleCountAnnounceEvent,
-            self._handleCycleCounts)
+        self.accept(GarbageReport.GarbageCycleCountAnnounceEvent,
+                    self._handleCycleCounts)
 
     def destroy(self):
         self._stopSending()
@@ -26,8 +24,7 @@ class GarbageLeakServerEventAggregator(DirectObject):
         if not self._doLaterName:
             self._sendLeaks()
             self._doLaterName = uniqueName(
-                '%s-sendGarbageLeakInfo' %
-                self.__class__.__name__)
+                '%s-sendGarbageLeakInfo' % self.__class__.__name__)
             self.doMethodLater(60 * 60.0, self._sendLeaks, self._doLaterName)
 
     def _stopSending(self):

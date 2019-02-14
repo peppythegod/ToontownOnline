@@ -1,5 +1,3 @@
-
-
 from DistributedMinigameAI import *
 from direct.distributed.ClockDelta import *
 from direct.fsm import ClassicFSM, State
@@ -10,7 +8,6 @@ import types
 
 
 class DistributedRingGameAI(DistributedMinigameAI):
-
     def __init__(self, air, minigameId):
 
         try:
@@ -19,12 +16,13 @@ class DistributedRingGameAI(DistributedMinigameAI):
             self.DistributedRingGameAI_initialized = 1
             DistributedMinigameAI.__init__(self, air, minigameId)
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedRingGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive, [
-                    'swimming']),
-                State.State('swimming', self.enterSwimming, self.exitSwimming, [
-                    'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                    'inactive'])], 'inactive', 'inactive')
+                State.State('inactive', self.enterInactive, self.exitInactive,
+                            ['swimming']),
+                State.State('swimming', self.enterSwimming, self.exitSwimming,
+                            ['cleanup']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
             self._DistributedRingGameAI__timeBase = globalClockDelta.localToNetworkTime(
                 globalClock.getRealTime())
@@ -69,11 +67,7 @@ class DistributedRingGameAI(DistributedMinigameAI):
         return self.colorIndices
 
     def selectColorIndices(self):
-        self.colorIndices = [
-            None,
-            None,
-            None,
-            None]
+        self.colorIndices = [None, None, None, None]
         chooseFrom = RingGameGlobals.ringColorSelection[:]
         for i in range(0, 4):
             c = random.choice(chooseFrom)
@@ -90,9 +84,11 @@ class DistributedRingGameAI(DistributedMinigameAI):
             self._DistributedRingGameAI__nextRingGroup[avId] = 0
 
         self._DistributedRingGameAI__numRingsPassed = [
-            0] * RingGameGlobals.NUM_RING_GROUPS
+            0
+        ] * RingGameGlobals.NUM_RING_GROUPS
         self._DistributedRingGameAI__ringResultBitfield = [
-            0] * RingGameGlobals.NUM_RING_GROUPS
+            0
+        ] * RingGameGlobals.NUM_RING_GROUPS
         self.perfectGames = {}
         for avId in self.avIdList:
             self.perfectGames[avId] = 1
@@ -120,42 +116,37 @@ class DistributedRingGameAI(DistributedMinigameAI):
         if self.gameFSM.getCurrentState(
         ) is None or self.gameFSM.getCurrentState().getName() != 'swimming':
             self.air.writeServerEvent(
-                'suspicious',
-                avId,
+                'suspicious', avId,
                 'RingGameAI.setToonGotRing: game not in swimming state')
             return None
 
         ringGroupIndex = self._DistributedRingGameAI__nextRingGroup[avId]
         if ringGroupIndex >= RingGameGlobals.NUM_RING_GROUPS:
             self.notify.warning(
-                'warning: got extra ToonGotRing msg from av %s' %
-                avId)
+                'warning: got extra ToonGotRing msg from av %s' % avId)
             return None
 
         self._DistributedRingGameAI__nextRingGroup[avId] += 1
         if not success:
-            self._DistributedRingGameAI__ringResultBitfield[ringGroupIndex] |= 1 << self.avIdList.index(
-                avId)
+            self._DistributedRingGameAI__ringResultBitfield[
+                ringGroupIndex] |= 1 << self.avIdList.index(avId)
             self.perfectGames[avId] = 0
         else:
             self.scoreDict[avId] += 1
         self._DistributedRingGameAI__numRingsPassed[ringGroupIndex] += 1
-        if self._DistributedRingGameAI__numRingsPassed[ringGroupIndex] >= self.numPlayers:
+        if self._DistributedRingGameAI__numRingsPassed[
+                ringGroupIndex] >= self.numPlayers:
             if not self.isSinglePlayer():
-                bitfield = self._DistributedRingGameAI__ringResultBitfield[ringGroupIndex]
+                bitfield = self._DistributedRingGameAI__ringResultBitfield[
+                    ringGroupIndex]
                 if bitfield == 0:
                     for id in self.avIdList:
                         self.scoreDict[id] += 0.5
 
-                self.sendUpdate('setRingGroupResults', [
-                    bitfield])
+                self.sendUpdate('setRingGroupResults', [bitfield])
 
             if ringGroupIndex >= RingGameGlobals.NUM_RING_GROUPS - 1:
-                perfectBonuses = {
-                    1: 5,
-                    2: 5,
-                    3: 10,
-                    4: 18}
+                perfectBonuses = {1: 5, 2: 5, 3: 10, 4: 18}
                 numPerfectToons = 0
                 for avId in self.avIdList:
                     if self.perfectGames[avId]:

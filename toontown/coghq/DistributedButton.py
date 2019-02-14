@@ -23,7 +23,8 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
 
     def avatarExit(self, avatarId):
         DistributedSwitch.DistributedSwitch.avatarExit(self, avatarId)
-        if self.secondsOn != -1.0 and self.secondsOn > 0.0 and self.countdownSeconds > 0.0 and self.countdownSeconds < self.secondsOn and self.fsm.getCurrentState().getName() == 'playing':
+        if self.secondsOn != -1.0 and self.secondsOn > 0.0 and self.countdownSeconds > 0.0 and self.countdownSeconds < self.secondsOn and self.fsm.getCurrentState(
+        ).getName() == 'playing':
             track = self.switchCountdownTrack()
             if track is not None:
                 track.start(0.0)
@@ -36,8 +37,8 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
             buttonBase = model.find('**/buttonBase')
             change = render.attachNewNode('changePos')
             buttonBase.reparentTo(change)
-            rootNode = render.attachNewNode(
-                self.getName() + '-buttonBase_root')
+            rootNode = render.attachNewNode(self.getName() +
+                                            '-buttonBase_root')
             change.reparentTo(rootNode)
             self.buttonFrameNode = rootNode
             self.buttonFrameNode.show()
@@ -64,20 +65,21 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
                 if collisionFloor.isEmpty():
                     top = 0.475
                     size = 0.5
-                    floor = CollisionPolygon(Point3(-size, -size, top),
-                                             Point3(size, -size, top),
-                                             Point3(size, size, top),
-                                             Point3(-size, size, top))
+                    floor = CollisionPolygon(
+                        Point3(-size, -size, top), Point3(size, -size, top),
+                        Point3(size, size, top), Point3(-size, size, top))
                     floor.setTangible(1)
                     floorNode = CollisionNode('collision_floor')
                     floorNode.addSolid(floor)
                     collisionFloor = button.attachNewNode(floorNode)
                 else:
-                    change = collisionFloor.getParent().attachNewNode('changeFloor')
+                    change = collisionFloor.getParent().attachNewNode(
+                        'changeFloor')
                     change.setScale(0.5, 0.5, 1.0)
                     collisionFloor.reparentTo(change)
                 collisionFloor.node().setFromCollideMask(BitMask32.allOff())
-                collisionFloor.node().setIntoCollideMask(ToontownGlobals.FloorBitmask)
+                collisionFloor.node().setIntoCollideMask(
+                    ToontownGlobals.FloorBitmask)
             self.buttonFrameNode.flattenMedium()
             self.buttonNode.flattenMedium()
 
@@ -97,14 +99,9 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
         pos = Vec3(0.0, 0.0, -0.2)
         color = Vec4(0.0, 1.0, 0.0, 1.0)
         track = Sequence(
-            Func(
-                self.setIsOn,
-                1),
+            Func(self.setIsOn, 1),
             Parallel(
-                SoundInterval(
-                    onSfx,
-                    node=self.node,
-                    volume=0.9),
+                SoundInterval(onSfx, node=self.node, volume=0.9),
                 LerpPosInterval(
                     nodePath=self.buttonNode,
                     duration=duration,
@@ -127,23 +124,67 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
         track = Parallel(
             SoundInterval(countDownSfx),
             Sequence(
-                Wait(wait),
-                Wait(0.5),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=self.color, override=1, blendType='easeIn'),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=Vec4(0.0, 1.0, 0.0, 1.0), override=1, blendType='easeOut'),
-                Wait(0.5),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=self.color, override=1, blendType='easeIn'),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=Vec4(0.0, 1.0, 0.0, 1.0), override=1, blendType='easeOut'),
-                Wait(0.4),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=self.color, override=1, blendType='easeIn'),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=Vec4(0.0, 1.0, 0.0, 1.0), override=1, blendType='easeOut'),
-                Wait(0.3),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=self.color, override=1, blendType='easeIn'),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=Vec4(0.0, 1.0, 0.0, 1.0), override=1, blendType='easeOut'),
-                Wait(0.2),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, color=self.color, override=1, blendType='easeIn'),
-                LerpColorInterval(nodePath=self.buttonNode, duration=0.1, override=1, color=Vec4(0.0, 1.0, 0.0, 1.0), blendType='easeOut'),
-                Wait(0.1)))
+                Wait(wait), Wait(0.5),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=self.color,
+                    override=1,
+                    blendType='easeIn'),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=Vec4(0.0, 1.0, 0.0, 1.0),
+                    override=1,
+                    blendType='easeOut'), Wait(0.5),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=self.color,
+                    override=1,
+                    blendType='easeIn'),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=Vec4(0.0, 1.0, 0.0, 1.0),
+                    override=1,
+                    blendType='easeOut'), Wait(0.4),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=self.color,
+                    override=1,
+                    blendType='easeIn'),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=Vec4(0.0, 1.0, 0.0, 1.0),
+                    override=1,
+                    blendType='easeOut'), Wait(0.3),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=self.color,
+                    override=1,
+                    blendType='easeIn'),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=Vec4(0.0, 1.0, 0.0, 1.0),
+                    override=1,
+                    blendType='easeOut'), Wait(0.2),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    color=self.color,
+                    override=1,
+                    blendType='easeIn'),
+                LerpColorInterval(
+                    nodePath=self.buttonNode,
+                    duration=0.1,
+                    override=1,
+                    color=Vec4(0.0, 1.0, 0.0, 1.0),
+                    blendType='easeOut'), Wait(0.1)))
         return track
 
     def switchOffTrack(self):
@@ -153,10 +194,7 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
         pos = Vec3(0.0)
         track = Sequence(
             Parallel(
-                SoundInterval(
-                    offSfx,
-                    node=self.node,
-                    volume=1.0),
+                SoundInterval(offSfx, node=self.node, volume=1.0),
                 LerpPosInterval(
                     nodePath=self.buttonNode,
                     duration=duration,
@@ -169,10 +207,7 @@ class DistributedButton(DistributedSwitch.DistributedSwitch):
                         duration=halfDur,
                         color=self.color,
                         override=1,
-                        blendType='easeIn'))),
-            Func(
-                self.setIsOn,
-                0))
+                        blendType='easeIn'))), Func(self.setIsOn, 0))
         return track
 
     def exitPlaying(self):

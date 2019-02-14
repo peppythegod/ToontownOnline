@@ -5,7 +5,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class ServerTimeGui(DirectFrame):
-
     def __init__(self, parent, pos=(0, 0, 0), hourCallback=None):
         DirectFrame.__init__(self, parent=parent, pos=pos)
         self.createGuiObjects()
@@ -16,15 +15,14 @@ class ServerTimeGui(DirectFrame):
     def createGuiObjects(self):
         textScale = 0.074999999999999997
         timeFont = ToontownGlobals.getMinnieFont()
-        self.hourLabel = DirectLabel(parent=self,
-                                     pos=(-0.014999999999999999,
-                                          0,
-                                          0),
-                                     relief=None,
-                                     text='',
-                                     text_scale=textScale,
-                                     text_align=TextNode.ARight,
-                                     text_font=timeFont)
+        self.hourLabel = DirectLabel(
+            parent=self,
+            pos=(-0.014999999999999999, 0, 0),
+            relief=None,
+            text='',
+            text_scale=textScale,
+            text_align=TextNode.ARight,
+            text_font=timeFont)
         self.colonLabel = DirectLabel(
             parent=self,
             relief=None,
@@ -35,10 +33,7 @@ class ServerTimeGui(DirectFrame):
         self.minutesLabel = DirectLabel(
             relief=None,
             parent=self,
-            pos=(
-                0.014999999999999999,
-                0,
-                0),
+            pos=(0.014999999999999999, 0, 0),
             text='',
             text_scale=textScale,
             text_align=TextNode.ALeft,
@@ -46,19 +41,14 @@ class ServerTimeGui(DirectFrame):
         self.amLabel = DirectLabel(
             relief=None,
             parent=self,
-            pos=(
-                0.14000000000000001,
-                0,
-                0),
+            pos=(0.14000000000000001, 0, 0),
             text='',
             text_scale=textScale,
             text_align=TextNode.ALeft,
             text_font=timeFont)
         self.ival = Sequence(
-            Func(
-                self.colonLabel.show), Wait(0.75), Func(
-                self.colonLabel.hide), Wait(0.25), Func(
-                self.updateTime))
+            Func(self.colonLabel.show), Wait(0.75), Func(self.colonLabel.hide),
+            Wait(0.25), Func(self.updateTime))
         self.ival.loop()
 
     def destroy(self):

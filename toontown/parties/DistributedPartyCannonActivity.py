@@ -131,9 +131,7 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         self._avId2trajectoryInfo = {}
         self._remoteToonFlyTaskName = 'remoteToonFlyTask-%s' % self.doId
         taskMgr.add(
-            self._remoteToonFlyTask,
-            self._remoteToonFlyTaskName,
-            priority=45)
+            self._remoteToonFlyTask, self._remoteToonFlyTaskName, priority=45)
         self.d_cloudsColorRequest()
 
     def unload(self):
@@ -196,9 +194,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
                 self.localFlyingToon)
             self._DistributedPartyCannonActivity__stopLocalFlyTask(
                 self.localFlyingToonId)
-            self.setMovie(
-                PartyGlobals.CANNON_MOVIE_CLEAR,
-                self.localFlyingToonId)
+            self.setMovie(PartyGlobals.CANNON_MOVIE_CLEAR,
+                          self.localFlyingToonId)
 
         if self.hitTrack is not None:
             self.hitTrack.finish()
@@ -257,12 +254,12 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
     def setCannonWillFire(self, cannonId, zRot, angle):
         self.notify.debug(
-            'setCannonWillFire: %d %d %d' %
-            (cannonId, zRot, angle))
+            'setCannonWillFire: %d %d %d' % (cannonId, zRot, angle))
         cannon = base.cr.doId2do.get(cannonId)
         if cannon is None:
             self.notify.warning(
-                "Cannon has not been created, but we got this message. Don't show firing.")
+                "Cannon has not been created, but we got this message. Don't show firing."
+            )
             return None
 
         if not cannon.getToonInside():
@@ -289,9 +286,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         toonId = task.toonId
         cannon = task.cannon
         toon = cannon.getToonInside()
-        self.notify.debug(str(self.doId) +
-                          ' FIRING CANNON FOR TOON ' +
-                          str(toonId))
+        self.notify.debug(
+            str(self.doId) + ' FIRING CANNON FOR TOON ' + str(toonId))
         if not cannon.isToonInside():
             return Task.done
 
@@ -311,12 +307,9 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             self.notify.debug('time of launch: ' + str(launchTime))
 
         cannon.removeToonReadyToFire()
-        shootTask = Task(
-            self._DistributedPartyCannonActivity__shootTask,
-            self.taskNameShoot)
-        shootTask.info = {
-            'toonId': toonId,
-            'cannon': cannon}
+        shootTask = Task(self._DistributedPartyCannonActivity__shootTask,
+                         self.taskNameShoot)
+        shootTask.info = {'toonId': toonId, 'cannon': cannon}
         if self.isLocalToonId(toonId):
             self.flyingToonOffsetRotation = 0
             self.flyingToonOffsetAngle = 0
@@ -338,13 +331,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             toon.lookAt(toon.getPos() + Vec3(vel[0], vel[1], vel[2]))
             toon.setP(localAvatar, -90)
             hpr = toon.getHpr()
-            toon.d_setPosHpr(
-                startPos[0],
-                startPos[1],
-                startPos[2],
-                hpr[0],
-                hpr[1],
-                hpr[2])
+            toon.d_setPosHpr(startPos[0], startPos[1], startPos[2], hpr[0],
+                             hpr[1], hpr[2])
             self.localFlyingToon.wrtReparentTo(render)
             info = {}
             info['toonId'] = toonId
@@ -353,9 +341,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             info['toon'] = self.localFlyingToon
             info['hRot'] = cannon.getRotation()
             camera.wrtReparentTo(self.localFlyingToon)
-            flyTask = Task(
-                self._DistributedPartyCannonActivity__localFlyTask,
-                self.taskNameFly)
+            flyTask = Task(self._DistributedPartyCannonActivity__localFlyTask,
+                           self.taskNameFly)
             flyTask.info = info
             seqTask = Task.sequence(shootTask, flyTask)
             self._DistributedPartyCannonActivity__startCollisionHandler()
@@ -365,35 +352,18 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             netLaunchTime = globalClockDelta.localToNetworkTime(
                 launchTime + frameTime, bits=31)
             self.sendUpdate('setToonTrajectoryAi', [
-                netLaunchTime,
-                startPos[0],
-                startPos[1],
-                startPos[2],
-                startHpr[0],
-                startHpr[1],
-                startHpr[2],
-                startVel[0],
-                startVel[1],
-                startVel[2]])
+                netLaunchTime, startPos[0], startPos[1], startPos[2],
+                startHpr[0], startHpr[1], startHpr[2], startVel[0],
+                startVel[1], startVel[2]
+            ])
         else:
             seqTask = shootTask
         taskMgr.add(seqTask, self.taskName('flyingToon') + '-' + str(toonId))
         toon.startSmooth()
         return Task.done
 
-    def setToonTrajectory(
-            self,
-            avId,
-            launchTime,
-            x,
-            y,
-            z,
-            h,
-            p,
-            r,
-            vx,
-            vy,
-            vz):
+    def setToonTrajectory(self, avId, launchTime, x, y, z, h, p, r, vx, vy,
+                          vz):
         if avId == localAvatar.doId:
             return None
 
@@ -455,7 +425,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             'startPos': startPos,
             'startHpr': startHpr,
             'startVel': startVel,
-            'trajectory': trajectory}
+            'trajectory': trajectory
+        }
 
     def _DistributedPartyCannonActivity__shootTask(self, task):
         task.info['cannon'].fire()
@@ -465,8 +436,7 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             toon.loop('swim')
         else:
             self.notify.debug(
-                '__shootTask avoided a crash, toon %d not found' %
-                toonId)
+                '__shootTask avoided a crash, toon %d not found' % toonId)
         if self.isLocalToonId(task.info['toonId']):
             self.localFlyingDropShadow.reparentTo(render)
             self.gui.enableAimKeys()
@@ -478,8 +448,7 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         self.notify.debug('d_setLanded %s' % toonId)
         if self.isLocalToonId(toonId):
             if self.cr:
-                self.sendUpdate('setLanded', [
-                    toonId])
+                self.sendUpdate('setLanded', [toonId])
             else:
                 self.notify.debug('we avoided crash 2')
 
@@ -544,8 +513,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
             toon.setPos(render, pos)
             toon.loop('neutral')
-            if self.localFiringCannon and hasattr(
-                    self.localFiringCannon, 'cannonNode'):
+            if self.localFiringCannon and hasattr(self.localFiringCannon,
+                                                  'cannonNode'):
                 if self.localFiringCannon.cannonNode:
                     toon.lookAt(self.localFiringCannon.cannonNode)
                 else:
@@ -593,9 +562,9 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
         if self._dirtyNewVel:
             self.sendUpdate('updateToonTrajectoryStartVelAi', [
-                self._dirtyNewVel[0],
-                self._dirtyNewVel[1],
-                self._dirtyNewVel[2]])
+                self._dirtyNewVel[0], self._dirtyNewVel[1],
+                self._dirtyNewVel[2]
+            ])
             self._lastBroadcastTime = now
             self._dirtyNewVel = None
 
@@ -672,7 +641,9 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             lastR = toon.getR()
             toon.setR(lastR - deltaT * self.angularVel * 2.0)
             cameraView = 0
-        elif not (self.hitCloud) and self._DistributedPartyCannonActivity__isFlightKeyPressed():
+        elif not (
+                self.hitCloud
+        ) and self._DistributedPartyCannonActivity__isFlightKeyPressed():
             self._DistributedPartyCannonActivity__moveFlyingToon(toon)
             self._DistributedPartyCannonActivity__updateFlightVelocity(
                 task.info['trajectory'])
@@ -689,16 +660,10 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             netLaunchTime = globalClockDelta.localToNetworkTime(now, bits=31)
             hpr = toon.getHpr()
             self.sendUpdate('setToonTrajectoryAi', [
-                netLaunchTime,
-                startPos[0],
-                startPos[1],
-                startPos[2],
-                hpr[0],
-                hpr[1],
-                hpr[2],
-                self.lastVel[0],
-                self.lastVel[1],
-                self.lastVel[2]])
+                netLaunchTime, startPos[0], startPos[1], startPos[2], hpr[0],
+                hpr[1], hpr[2], self.lastVel[0], self.lastVel[1],
+                self.lastVel[2]
+            ])
             self._lastBroadcastTime = now
             self._dirtyNewVel = None
             self.flyingToonOffsetRotation = 0
@@ -709,11 +674,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
         pos = task.info['trajectory'].getPos(t)
         toon.setFluidPos(pos)
-        toon.setFluidPos(
-            toon,
-            self.flyingToonOffsetX,
-            self.flyingToonOffsetY,
-            0)
+        toon.setFluidPos(toon, self.flyingToonOffsetX, self.flyingToonOffsetY,
+                         0)
         vel = task.info['trajectory'].getVel(t)
         toon.lookAt(toon.getPos() + Vec3(vel[0], vel[1], vel[2]))
         toon.setP(toon.getP() - 90)
@@ -727,8 +689,7 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         self.localFlyingDropShadow.setPos(shadowPos)
         if pos.getZ() < -20 or pos.getZ() > 1000:
             self.notify.debug(
-                'stopping fly task toon.getZ()=%.2f' %
-                pos.getZ())
+                'stopping fly task toon.getZ()=%.2f' % pos.getZ())
             self._DistributedPartyCannonActivity__resetToonToCannon(
                 self.localFlyingToon)
             return Task.done
@@ -760,9 +721,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             self.camNode.setPos(toon.getPos(render))
             camHpr = self.camNode.getHpr(toon)
             vec = -Point3(0, 0, 0) - camHpr
-            relativeSpeed = math.pow(
-                vec.length() / 60.0,
-                2) + 0.10000000000000001
+            relativeSpeed = math.pow(vec.length() / 60.0,
+                                     2) + 0.10000000000000001
             newHpr = camHpr + vec * deltaT * self.cameraSpeed * relativeSpeed
             self.camNode.setHpr(toon, newHpr)
             camera.lookAt(self.camNode)
@@ -797,10 +757,11 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
     def _DistributedPartyCannonActivity__startCollisionHandler(self):
         self.flyColSphere = CollisionSphere(
-            0, 0, self.localFlyingToon.getHeight() / 2.0, 1.0)
+            0, 0,
+            self.localFlyingToon.getHeight() / 2.0, 1.0)
         self.flyColNode = CollisionNode(self.uniqueName('flySphere'))
-        self.flyColNode.setCollideMask(
-            ToontownGlobals.WallBitmask | ToontownGlobals.FloorBitmask)
+        self.flyColNode.setCollideMask(ToontownGlobals.WallBitmask
+                                       | ToontownGlobals.FloorBitmask)
         self.flyColNode.addSolid(self.flyColSphere)
         self.flyColNodePath = self.localFlyingToon.attachNewNode(
             self.flyColNode)
@@ -808,9 +769,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         self._activeCollisions = set()
         self.handler = CollisionHandlerQueue()
         self._flyingCollisionTaskName = 'checkFlyingToonCollision-%s' % self.doId
-        taskMgr.add(
-            self._checkFlyingToonCollision,
-            self._flyingCollisionTaskName)
+        taskMgr.add(self._checkFlyingToonCollision,
+                    self._flyingCollisionTaskName)
         base.cTrav.addCollider(self.flyColNodePath, self.handler)
 
     def _DistributedPartyCannonActivity__stopCollisionHandler(self, avatar):
@@ -871,9 +831,8 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
         hitNode = collisionEntry.getIntoNode().getName()
         self.notify.debug('hitNode = %s' % hitNode)
-        self.notify.debug(
-            'hitNodePath.getParent = %s' %
-            collisionEntry.getIntoNodePath().getParent())
+        self.notify.debug('hitNodePath.getParent = %s' %
+                          collisionEntry.getIntoNodePath().getParent())
         self.vel = self.trajectory.getVel(self.t)
         vel = self.trajectory.getVel(self.t)
         vel.normalize()
@@ -891,14 +850,23 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         hitPylonAboveWater = False
         hitPylonBelowWater = False
         hitNormal = intoNormal
-        if hitNode.find('cSphere') == 0 and hitNode.find('treasureSphere') == 0 and hitNode.find('prop') == 0 and hitNode.find('distAvatarCollNode') == 0 and hitNode.find('CannonSphere') == 0 and hitNode.find('plotSphere') == 0 and hitNode.find(
-                'flySphere') == 0 and hitNode.find('FishingSpotSphere') == 0 and hitNode.find('TrampolineTrigger') == 0 and hitNode == 'gagtree_collision' and hitNode == 'sign_collision' and hitNode == 'FlowerSellBox' or hitPylonBelowWater:
+        if hitNode.find('cSphere') == 0 and hitNode.find(
+                'treasureSphere'
+        ) == 0 and hitNode.find('prop') == 0 and hitNode.find(
+                'distAvatarCollNode'
+        ) == 0 and hitNode.find('CannonSphere') == 0 and hitNode.find(
+                'plotSphere'
+        ) == 0 and hitNode.find('flySphere') == 0 and hitNode.find(
+                'FishingSpotSphere'
+        ) == 0 and hitNode.find(
+                'TrampolineTrigger'
+        ) == 0 and hitNode == 'gagtree_collision' and hitNode == 'sign_collision' and hitNode == 'FlowerSellBox' or hitPylonBelowWater:
             self.notify.debug('--------------hit and ignoring %s' % hitNode)
             return None
 
         if vel.dot(hitNormal) > 0 and not (
                 hitNode == 'collision_roof') and not (
-                hitNode == 'collision_fence'):
+                    hitNode == 'collision_fence'):
             self.notify.debug(
                 '--------------hit and ignoring backfacing %s, dot=%s' %
                 (hitNode, vel.dot(hitNormal)))
@@ -910,19 +878,26 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         cloudBumpers = PartyCannonCollisions['clouds']
         bumperNodes += cloudBumpers
         if hitNode in bumperNodes and hitNode.find(
-                'cogPie') == 0 or PartyCannonCollisions['trampoline_bounce'] in hitNode:
-            if hitNode == 'sky_collision' and hitNode in PartyCannonCollisions['fence'] or hitNode.find(
-                    'cogPie') == 0:
+                'cogPie'
+        ) == 0 or PartyCannonCollisions['trampoline_bounce'] in hitNode:
+            if hitNode == 'sky_collision' and hitNode in PartyCannonCollisions[
+                    'fence'] or hitNode.find('cogPie') == 0:
                 self._DistributedPartyCannonActivity__hitFence(
                     self.localFlyingToon, collisionEntry)
-            elif PartyCannonCollisions['trampoline_bounce'] in hitNode or hitNode in PartyCannonCollisions['bounce']:
+            elif PartyCannonCollisions[
+                    'trampoline_bounce'] in hitNode or hitNode in PartyCannonCollisions[
+                        'bounce']:
                 if hitNode == 'wall_collision':
                     hitSound = self.sndBounce2
                 else:
                     hitSound = self.sndBounce3
                 self.hitCloud = 1
                 self._DistributedPartyCannonActivity__hitBumper(
-                    self.localFlyingToon, collisionEntry, hitSound, kr=0.089999999999999997, angVel=5)
+                    self.localFlyingToon,
+                    collisionEntry,
+                    hitSound,
+                    kr=0.089999999999999997,
+                    angVel=5)
                 self.hitBumper = 0
             elif hitNode in cloudBumpers:
                 self._DistributedPartyCannonActivity__hitCloudPlatform(
@@ -959,41 +934,28 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
 
         if hitNode in PartyCannonCollisions['ground']:
             track.append(
-                Func(
-                    self._DistributedPartyCannonActivity__hitGround,
-                    self.localFlyingToon,
-                    pos))
+                Func(self._DistributedPartyCannonActivity__hitGround,
+                     self.localFlyingToon, pos))
             track.append(Wait(1.0))
             track.append(
-                Func(
-                    self._DistributedPartyCannonActivity__setToonUpright,
-                    self.localFlyingToon,
-                    self.landingPos))
+                Func(self._DistributedPartyCannonActivity__setToonUpright,
+                     self.localFlyingToon, self.landingPos))
         elif hitNode in PartyCannonCollisions['fence']:
             track.append(
-                Func(
-                    self._DistributedPartyCannonActivity__hitFence,
-                    self.localFlyingToon,
-                    collisionEntry))
+                Func(self._DistributedPartyCannonActivity__hitFence,
+                     self.localFlyingToon, collisionEntry))
         elif hitNode == 'collision3':
             track.append(
-                Func(
-                    self._DistributedPartyCannonActivity__hitWater,
-                    self.localFlyingToon,
-                    pos,
-                    collisionEntry))
+                Func(self._DistributedPartyCannonActivity__hitWater,
+                     self.localFlyingToon, pos, collisionEntry))
             track.append(Wait(2.0))
             track.append(
-                Func(
-                    self._DistributedPartyCannonActivity__setToonUpright,
-                    self.localFlyingToon,
-                    self.landingPos))
+                Func(self._DistributedPartyCannonActivity__setToonUpright,
+                     self.localFlyingToon, self.landingPos))
         elif hitNode.find('cloudSphere') == 0:
             track.append(
-                Func(
-                    self._DistributedPartyCannonActivity__hitCloudPlatform,
-                    self.localFlyingToon,
-                    collisionEntry))
+                Func(self._DistributedPartyCannonActivity__hitCloudPlatform,
+                     self.localFlyingToon, collisionEntry))
         else:
             self.notify.warning(
                 '************* unhandled hitNode=%s parent =%s' %
@@ -1008,13 +970,12 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         self.hitTrack = track
         self.hitTrack.start()
 
-    def _DistributedPartyCannonActivity__hitBumper(
-            self,
-            avatar,
-            collisionEntry,
-            sound,
-            kr=0.59999999999999998,
-            angVel=1):
+    def _DistributedPartyCannonActivity__hitBumper(self,
+                                                   avatar,
+                                                   collisionEntry,
+                                                   sound,
+                                                   kr=0.59999999999999998,
+                                                   angVel=1):
         self.hitBumper = 1
         base.playSfx(sound)
         hitP = avatar.getPos(render)
@@ -1045,8 +1006,10 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         t = Sequence(Func(avatar.pose, 'lose', 110))
         t.start()
 
-    def _DistributedPartyCannonActivity__hitGround(
-            self, avatar, pos, extraArgs=[]):
+    def _DistributedPartyCannonActivity__hitGround(self,
+                                                   avatar,
+                                                   pos,
+                                                   extraArgs=[]):
         self.notify.debug('__hitGround')
         hitP = avatar.getPos(render)
         self.notify.debug('hitGround pos = %s, hitP = %s' % (pos, hitP))
@@ -1054,34 +1017,36 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         avatar.setPos(pos[0], pos[1], pos[2] + avatar.getHeight() / 3.0)
         avatar.setHpr(avatar.getH(), -135, 0)
         self.notify.debug('parent = %s' % avatar.getParent())
-        self.notify.debug(
-            'pos = %s, hpr = %s' %
-            (avatar.getPos(render),
-             avatar.getHpr(render)))
+        self.notify.debug('pos = %s, hpr = %s' % (avatar.getPos(render),
+                                                  avatar.getHpr(render)))
         self._DistributedPartyCannonActivity__playDustCloud(avatar, pos)
         base.playSfx(self.sndHitGround)
         avatar.setPlayRate(2.0, 'run')
         avatar.loop('run')
 
     def _DistributedPartyCannonActivity__playDustCloud(self, toon, pos):
-        self.dustCloud.setPos(
-            render,
-            pos[0],
-            pos[1],
-            pos[2] +
-            toon.getHeight() /
-            3.0)
+        self.dustCloud.setPos(render, pos[0], pos[1],
+                              pos[2] + toon.getHeight() / 3.0)
         self.dustCloud.setScale(0.34999999999999998)
         self.dustCloud.play()
 
-    def _DistributedPartyCannonActivity__hitFence(
-            self, avatar, collisionEntry, extraArgs=[]):
+    def _DistributedPartyCannonActivity__hitFence(self,
+                                                  avatar,
+                                                  collisionEntry,
+                                                  extraArgs=[]):
         self.notify.debug('__hitFence')
         self._DistributedPartyCannonActivity__hitBumper(
-            avatar, collisionEntry, self.sndHitHouse, kr=0.20000000000000001, angVel=3)
+            avatar,
+            collisionEntry,
+            self.sndHitHouse,
+            kr=0.20000000000000001,
+            angVel=3)
 
-    def _DistributedPartyCannonActivity__hitWater(
-            self, avatar, pos, collisionEntry, extraArgs=[]):
+    def _DistributedPartyCannonActivity__hitWater(self,
+                                                  avatar,
+                                                  pos,
+                                                  collisionEntry,
+                                                  extraArgs=[]):
         hitP = avatar.getPos(render)
         if hitP[2] > ToontownGlobals.EstateWakeWaterHeight:
             self.notify.debug('we hit the ground before we hit water')
@@ -1099,10 +1064,16 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         base.playSfx(self.sndHitWater)
         place = base.cr.playGame.getPlace()
 
-    def _DistributedPartyCannonActivity__hitStatuary(
-            self, avatar, collisionEntry, extraArgs=[]):
+    def _DistributedPartyCannonActivity__hitStatuary(self,
+                                                     avatar,
+                                                     collisionEntry,
+                                                     extraArgs=[]):
         self._DistributedPartyCannonActivity__hitBumper(
-            avatar, collisionEntry, self.sndHitHouse, kr=0.40000000000000002, angVel=5)
+            avatar,
+            collisionEntry,
+            self.sndHitHouse,
+            kr=0.40000000000000002,
+            angVel=5)
 
     def d_cloudsColorRequest(self):
         self.notify.debug('cloudsColorRequest')
@@ -1114,11 +1085,12 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             self.setCloudHit(*cloudColor)
 
     def d_requestCloudHit(self, cloudNumber, color):
-        self.sendUpdate('requestCloudHit', [
-            cloudNumber,
-            color.getX(),
-            color.getY(),
-            color.getZ()])
+        self.sendUpdate(
+            'requestCloudHit',
+            [cloudNumber,
+             color.getX(),
+             color.getY(),
+             color.getZ()])
 
     def setCloudHit(self, cloudNumber, r, g, b):
         cloud = render.find('**/cloud-%d' % cloudNumber)
@@ -1132,21 +1104,25 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
         if not (self.hitBumper) and not (self.hitCloud):
             self.hitCloud = 1
             self._DistributedPartyCannonActivity__hitBumper(
-                avatar, collisionEntry, self.sndBounce1, kr=0.34999999999999998, angVel=5)
+                avatar,
+                collisionEntry,
+                self.sndBounce1,
+                kr=0.34999999999999998,
+                angVel=5)
             self.hitBumper = 0
             if self._lastCloudHit is None:
                 cloud = collisionEntry.getIntoNodePath().getParent()
                 self._lastCloudHit = cloud
                 cloud.setColor(base.localAvatar.style.getHeadColor())
                 cloudNumber = int(cloud.getNetTag('number'))
-                self.d_requestCloudHit(
-                    cloudNumber, base.localAvatar.style.getHeadColor())
+                self.d_requestCloudHit(cloudNumber,
+                                       base.localAvatar.style.getHeadColor())
                 self._DistributedPartyCannonActivity__playDustCloud(
                     avatar, collisionEntry.getSurfacePoint(render))
                 self.flyingToonCloudsHit += 1
                 taskMgr.doMethodLater(
-                    0.25,
-                    self._DistributedPartyCannonActivity__reactivateLastCloudHit,
+                    0.25, self.
+                    _DistributedPartyCannonActivity__reactivateLastCloudHit,
                     DistributedPartyCannonActivity.REACTIVATE_CLOUD_TASK)
 
     def _DistributedPartyCannonActivity__reactivateLastCloudHit(self, task):
@@ -1165,13 +1141,12 @@ class DistributedPartyCannonActivity(DistributedPartyActivity):
             self.notify.debug('Toon has left the party')
 
     def _DistributedPartyCannonActivity__checkHoodValidity(self):
-        if hasattr(
-                base.cr.playGame,
-                'hood') and base.cr.playGame.hood and hasattr(
-                base.cr.playGame.hood,
-                'loader') and base.cr.playGame.hood.loader and hasattr(
-                base.cr.playGame.hood.loader,
-                'geom') and base.cr.playGame.hood.loader.geom:
+        if hasattr(base.cr.playGame,
+                   'hood') and base.cr.playGame.hood and hasattr(
+                       base.cr.playGame.hood,
+                       'loader') and base.cr.playGame.hood.loader and hasattr(
+                           base.cr.playGame.hood.loader,
+                           'geom') and base.cr.playGame.hood.loader.geom:
             return True
         else:
             return False

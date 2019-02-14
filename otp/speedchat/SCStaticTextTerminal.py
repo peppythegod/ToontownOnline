@@ -8,7 +8,6 @@ def decodeSCStaticTextMsg(textId):
 
 
 class SCStaticTextTerminal(SCTerminal):
-
     def __init__(self, textId):
         SCTerminal.__init__(self)
         self.textId = textId
@@ -16,5 +15,4 @@ class SCStaticTextTerminal(SCTerminal):
 
     def handleSelect(self):
         SCTerminal.handleSelect(self)
-        messenger.send(self.getEventName(SCStaticTextMsgEvent), [
-            self.textId])
+        messenger.send(self.getEventName(SCStaticTextMsgEvent), [self.textId])

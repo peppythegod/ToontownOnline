@@ -1,5 +1,3 @@
-
-
 from direct.gui.DirectGui import DirectFrame, DGG, DirectLabel
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
@@ -12,25 +10,19 @@ from direct.interval.IntervalGlobal import Parallel, Sequence, LerpFunc, Func, W
 class VoteResultsPanel(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('VoteResultsPanel')
 
-    def __init__(
-            self,
-            numPlayers,
-            avIdList,
-            votes,
-            directions,
-            namesList,
-            disconnectedList,
-            directionToGo,
-            directionReason,
-            directionTotals,
-            *args,
-            **kwargs):
+    def __init__(self, numPlayers, avIdList, votes, directions, namesList,
+                 disconnectedList, directionToGo, directionReason,
+                 directionTotals, *args, **kwargs):
         opts = {
-            'relief': None,
-            'geom': DGG.getDefaultDialogGeom(),
-            'geom_color': ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004,),
+            'relief':
+            None,
+            'geom':
+            DGG.getDefaultDialogGeom(),
+            'geom_color':
+            ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004, ),
             'geom_scale': (1.75, 1, 0.75),
-            'pos': (0, 0, 0.52500000000000002)}
+            'pos': (0, 0, 0.52500000000000002)
+        }
         opts.update(kwargs)
         DirectFrame.__init__(self, *args, **args)
         self.initialiseoptions(VoteResultsPanel)
@@ -52,118 +44,87 @@ class VoteResultsPanel(DirectFrame):
         self.upDownFrame = DirectFrame(
             parent=self, relief=None, pos=self.getRowPos(-1))
         self.upLabel = DirectLabel(
-            parent=self.upDownFrame, relief=None, pos=(
-                1.2, 0, 0.0), text=TTLocalizer.TravelGameDirections[0], text_fg=(
-                0.0, 0.0, 1.0, 1.0), text_scale=0.050000000000000003, text_align=TextNode.ARight)
+            parent=self.upDownFrame,
+            relief=None,
+            pos=(1.2, 0, 0.0),
+            text=TTLocalizer.TravelGameDirections[0],
+            text_fg=(0.0, 0.0, 1.0, 1.0),
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ARight)
         self.downLabel = DirectLabel(
             parent=self.upDownFrame,
             relief=None,
-            pos=(
-                1.4299999999999999,
-                0,
-                0.0),
+            pos=(1.4299999999999999, 0, 0.0),
             text=TTLocalizer.TravelGameDirections[1],
-            text_fg=(
-                1.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(1.0, 0.0, 0.0, 1.0),
             text_scale=0.050000000000000003,
             text_align=TextNode.ARight)
         self.totalFrame = DirectFrame(
-            parent=self,
-            relief=None,
-            pos=self.getRowPos(
-                self.numPlayers))
+            parent=self, relief=None, pos=self.getRowPos(self.numPlayers))
         self.totalText = DirectLabel(
             parent=self.totalFrame,
             relief=None,
-            pos=(
-                1.0,
-                0,
-                0.0),
+            pos=(1.0, 0, 0.0),
             text='Total',
-            text_fg=(
-                0.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(0.0, 0.0, 0.0, 1.0),
             text_scale=0.050000000000000003,
             text_align=TextNode.ARight)
         self.totalVotesUpLabel = DirectLabel(
-            parent=self.totalFrame, relief=None, pos=(
-                1.2, 0, 0.0), text='', text_fg=(
-                0.0, 0.0, 1.0, 1.0), text_scale=0.050000000000000003, text_align=TextNode.ARight)
+            parent=self.totalFrame,
+            relief=None,
+            pos=(1.2, 0, 0.0),
+            text='',
+            text_fg=(0.0, 0.0, 1.0, 1.0),
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ARight)
         self.totalVotesDownLabel = DirectLabel(
-            parent=self.totalFrame, relief=None, pos=(
-                1.4299999999999999, 0, 0.0), text='', text_fg=(
-                1.0, 0.0, 0.0, 1.0), text_scale=0.050000000000000003, text_align=TextNode.ARight)
+            parent=self.totalFrame,
+            relief=None,
+            pos=(1.4299999999999999, 0, 0.0),
+            text='',
+            text_fg=(1.0, 0.0, 0.0, 1.0),
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ARight)
         self.totalVotesLabels = [
-            self.totalVotesUpLabel,
-            self.totalVotesDownLabel]
+            self.totalVotesUpLabel, self.totalVotesDownLabel
+        ]
         self.resultFrame = DirectFrame(
             parent=self, relief=None, pos=self.getRowPos(5))
         self.resultLabel = DirectLabel(
             parent=self.resultFrame,
             text='',
             text_scale=0.059999999999999998,
-            pos=(
-                0.69999999999999996,
-                0,
-                0.0),
+            pos=(0.69999999999999996, 0, 0.0),
             text_align=TextNode.ACenter)
         self.setupResultLabel()
         for index in range(self.numPlayers):
             frame = DirectFrame(
-                parent=self,
-                relief=None,
-                pos=self.getRowPos(index))
+                parent=self, relief=None, pos=self.getRowPos(index))
             self.rowFrame.append(frame)
             nameLabel = DirectFrame(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.46000000000000002,
-                    0.0,
-                    0.0),
+                pos=(0.46000000000000002, 0.0, 0.0),
                 text=self.namesList[index],
-                text_fg=(
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0),
+                text_fg=(0.0, 0.0, 0.0, 1.0),
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ACenter,
                 text_font=DGG.getDefaultFont())
             votesUpLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.2,
-                    0.0,
-                    0.0),
+                pos=(1.2, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    0,
-                    0,
-                    1,
-                    1),
+                text_fg=(0, 0, 1, 1),
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ARight,
                 text_font=DGG.getDefaultFont())
             votesDownLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.4299999999999999,
-                    0.0,
-                    0.0),
+                pos=(1.4299999999999999, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    1,
-                    0,
-                    0,
-                    1),
+                text_fg=(1, 0, 0, 1),
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ARight,
                 text_font=DGG.getDefaultFont())
@@ -179,15 +140,18 @@ class VoteResultsPanel(DirectFrame):
         if self.directionReason == TravelGameGlobals.ReasonVote:
             reasonStr = TTLocalizer.TravelGameReasonVotes % {
                 'dir': TTLocalizer.TravelGameDirections[self.directionToGo],
-                'numVotes': self.directionTotals[self.directionToGo]}
+                'numVotes': self.directionTotals[self.directionToGo]
+            }
         elif self.directionReason == TravelGameGlobals.ReasonRandom:
             reasonStr = TTLocalizer.TravelGameReasonRandom % {
                 'dir': TTLocalizer.TravelGameDirections[self.directionToGo],
-                'numVotes': self.directionTotals[self.directionToGo]}
+                'numVotes': self.directionTotals[self.directionToGo]
+            }
         elif self.directionReason == TravelGameGlobals.ReasonPlaceDecider:
             reasonStr = TravelGameReasonPlace % {
                 'name': 'TODO NAME',
-                'dir': TTLocalizer.TravelGameDirections[self.directionToGo]}
+                'dir': TTLocalizer.TravelGameDirections[self.directionToGo]
+            }
 
         self.resultLabel['text'] = reasonStr
         self.resultLabel.hide()
@@ -204,35 +168,25 @@ class VoteResultsPanel(DirectFrame):
 
         track = Parallel()
         track.append(
-            Func(
-                self.entryList[index][0].show,
-                name='showName %d' %
-                index))
+            Func(self.entryList[index][0].show, name='showName %d' % index))
         track.append(
             LerpFunc(
-                ticketTicker,
-                duration=duration,
-                name='countVotes %d' %
-                index))
+                ticketTicker, duration=duration, name='countVotes %d' % index))
         startVotes = 0
         for prev in range(index):
             if self.directions[prev] == direction:
                 startVotes += self.votes[prev]
                 continue
 
-        def totalTicker(
-                t,
-                label=self.totalVotesLabels[direction],
-                startVotes=startVotes,
-                additionalVotes=numVotes):
+        def totalTicker(t,
+                        label=self.totalVotesLabels[direction],
+                        startVotes=startVotes,
+                        additionalVotes=numVotes):
             label['text'] = str(int(t * additionalVotes + startVotes))
 
         track.append(
             LerpFunc(
-                totalTicker,
-                duration=duration,
-                name='countTotal %d' %
-                index))
+                totalTicker, duration=duration, name='countTotal %d' % index))
         return track
 
     def startMovie(self):

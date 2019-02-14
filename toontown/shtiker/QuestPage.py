@@ -16,18 +16,11 @@ class QuestPage(ShtikerPage.ShtikerPage):
 
     def __init__(self):
         ShtikerPage.ShtikerPage.__init__(self)
-        self.quests = {
-            0: None,
-            1: None,
-            2: None,
-            3: None}
+        self.quests = {0: None, 1: None, 2: None, 3: None}
         self.textRolloverColor = Vec4(1, 1, 0, 1)
         self.textDownColor = Vec4(0.5, 0.90000000000000002, 1, 1)
-        self.textDisabledColor = Vec4(
-            0.40000000000000002,
-            0.80000000000000004,
-            0.40000000000000002,
-            1)
+        self.textDisabledColor = Vec4(0.40000000000000002, 0.80000000000000004,
+                                      0.40000000000000002, 1)
         self.onscreen = 0
         self.lastQuestTime = globalClock.getRealTime()
 
@@ -38,12 +31,12 @@ class QuestPage(ShtikerPage.ShtikerPage):
             text=TTLocalizer.QuestPageToonTasks,
             text_scale=0.12,
             textMayChange=0,
-            pos=(
-                0,
-                0,
-                0.59999999999999998))
-        questFramePlaceList = ((-0.45000000000000001, 0, 0.25, 0, 0, 0), (-0.45000000000000001, 0, -0.34999999999999998,
-                                                                          0, 0, 0), (0.45000000000000001, 0, 0.25, 0, 0, 0), (0.45000000000000001, 0, -0.34999999999999998, 0, 0, 0))
+            pos=(0, 0, 0.59999999999999998))
+        questFramePlaceList = ((-0.45000000000000001, 0, 0.25, 0, 0, 0),
+                               (-0.45000000000000001, 0, -0.34999999999999998,
+                                0, 0, 0), (0.45000000000000001, 0, 0.25, 0, 0,
+                                           0), (0.45000000000000001, 0,
+                                                -0.34999999999999998, 0, 0, 0))
         self.questFrames = []
         for i in range(ToontownGlobals.MaxQuestCarryLimit):
             frame = QuestBookPoster.QuestBookPoster(

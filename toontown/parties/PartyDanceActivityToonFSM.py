@@ -11,8 +11,7 @@ class PartyDanceActivityToonFSM(FSM):
     def __init__(self, avId, activity, h):
         FSM.__init__(self, self.__class__.__name__)
         self.notify.debug(
-            'init : avId = %s, activity = %s ' %
-            (avId, activity))
+            'init : avId = %s, activity = %s ' % (avId, activity))
         self.avId = avId
         self.activity = activity
         self.isLocal = avId == base.localAvatar.doId
@@ -22,19 +21,11 @@ class PartyDanceActivityToonFSM(FSM):
         self.danceMoveSequence = None
         self.lastAnim = None
         self.defaultTransitions = {
-            'Init': [
-                'Run',
-                'DanceMove',
-                'Cleanup'],
-            'DanceMove': [
-                'Run',
-                'DanceMove',
-                'Cleanup'],
-            'Run': [
-                'Run',
-                'DanceMove',
-                'Cleanup'],
-            'Cleanup': []}
+            'Init': ['Run', 'DanceMove', 'Cleanup'],
+            'DanceMove': ['Run', 'DanceMove', 'Cleanup'],
+            'Run': ['Run', 'DanceMove', 'Cleanup'],
+            'Cleanup': []
+        }
         self.enteredAlready = False
 
     def destroy(self):
@@ -85,9 +76,8 @@ class PartyDanceActivityToonFSM(FSM):
 
         if anim in DanceReverseLoopAnims:
             self.danceMoveSequence = Sequence(
-                self.toon.actorInterval(
-                    anim, loop=0), self.toon.actorInterval(
-                    anim, loop=0, playRate=-1.0))
+                self.toon.actorInterval(anim, loop=0),
+                self.toon.actorInterval(anim, loop=0, playRate=-1.0))
             self.danceMoveSequence.loop()
         else:
             self.toon.loop(anim)

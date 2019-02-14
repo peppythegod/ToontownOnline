@@ -95,8 +95,7 @@ class DistributedCogdoBarrel(DistributedObject.DistributedObject):
                 self.model.setTexture(self.availableTex, 100)
 
             self.accept(
-                self.uniqueName('enterbarrelSphere'),
-                self.handleEnterSphere)
+                self.uniqueName('enterbarrelSphere'), self.handleEnterSphere)
         elif self.state == CogdoBarrelRoomConsts.StateUsed:
             if self.model:
                 self.model.unstash()

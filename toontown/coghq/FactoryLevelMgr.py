@@ -5,8 +5,15 @@ from toontown.toonbase import ToontownGlobals
 
 
 class FactoryLevelMgr(LevelMgr.LevelMgr):
-    InterestingLocations = [(((-866, -272, -40), -101), ((-662, -242, 7.5), 0), ((-20, -180, 20), 0), ((-249, 258, 111), 0), ((318, 241, 115), -16),
-                             ((-251, 241, 109), -180), ((296, 292, 703), 56), ((-740, 122, 28), 90), ((210, -270, 38), -90)), (((20, 21, 0), 0), ((3, 404, 39), -16), ((-496, 358, 5), 0))]
+    InterestingLocations = [(((-866, -272, -40), -101), ((-662, -242, 7.5), 0),
+                             ((-20, -180, 20), 0), ((-249, 258, 111),
+                                                    0), ((318, 241, 115), -16),
+                             ((-251, 241, 109),
+                              -180), ((296, 292, 703),
+                                      56), ((-740, 122, 28),
+                                            90), ((210, -270, 38), -90)),
+                            (((20, 21, 0), 0), ((3, 404, 39), -16),
+                             ((-496, 358, 5), 0))]
 
     def __init__(self, level, entId):
         LevelMgr.LevelMgr.__init__(self, level, entId)
@@ -31,9 +38,8 @@ class FactoryLevelMgr(LevelMgr.LevelMgr):
         LevelMgr.LevelMgr.destroy(self)
 
     def setFarPlaneDistance(self, farPlaneDistance):
-        base.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            farPlaneDistance)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                farPlaneDistance)
 
     if __dev__:
 

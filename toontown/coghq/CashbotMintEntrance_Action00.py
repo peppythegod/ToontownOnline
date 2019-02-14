@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE03a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10000: {
         'type': 'entrancePoint',
         'name': '<unnamed>',
@@ -35,7 +38,8 @@ GlobalEntities = {
         'scale': 1,
         'entranceId': 0,
         'radius': 15,
-        'theta': 20},
+        'theta': 20
+    },
     10001: {
         'type': 'mintProduct',
         'name': '<unnamed>',
@@ -44,7 +48,8 @@ GlobalEntities = {
         'pos': Point3(-11.489006996200001, 20.1173057556, 0.0),
         'hpr': Point3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
-        'mintId': 12700},
+        'mintId': 12700
+    },
     10003: {
         'type': 'mintProduct',
         'name': 'copy of <unnamed>',
@@ -53,7 +58,8 @@ GlobalEntities = {
         'pos': Point3(-20.428670883199999, 12.2706327438, 0.0),
         'hpr': Vec3(90.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
-        'mintId': 12700},
+        'mintId': 12700
+    },
     10007: {
         'type': 'mintProduct',
         'name': 'copy of <unnamed>',
@@ -62,7 +68,8 @@ GlobalEntities = {
         'pos': Point3(-19.214401245099999, 20.1173057556, 0.0),
         'hpr': Point3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
-        'mintId': 12700},
+        'mintId': 12700
+    },
     10006: {
         'type': 'model',
         'name': 'crateStack',
@@ -74,7 +81,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_G1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_G1.bam'
+    },
     10008: {
         'type': 'model',
         'name': '<unnamed>',
@@ -86,7 +94,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -94,7 +103,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10004: {
         'type': 'nodepath',
         'name': 'product',
@@ -102,9 +112,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)}}
+        'scale': Vec3(1.0, 1.0, 1.0)
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

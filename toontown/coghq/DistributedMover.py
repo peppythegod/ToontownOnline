@@ -17,8 +17,7 @@ from math import *
 
 class DistributedMover(BasicEntities.DistributedNodePathEntity):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedMover')
-    laserFieldModels = [
-        'phase_9/models/cogHQ/square_stomper']
+    laserFieldModels = ['phase_9/models/cogHQ/square_stomper']
 
     def __init__(self, cr):
         BasicEntities.DistributedNodePathEntity.__init__(self, cr)
@@ -141,9 +140,12 @@ class DistributedMover(BasicEntities.DistributedNodePathEntity):
                 self.moverIval.append(Wait(self.pos1Wait))
                 self.moverIval.append(
                     LerpPosHprInterval(
-                        self.moverNode, self.pos1Move, Vec3(
-                            0, 0, 0), Vec3(
-                            0, 0, 0), blendType=myBlend, fluid=1))
+                        self.moverNode,
+                        self.pos1Move,
+                        Vec3(0, 0, 0),
+                        Vec3(0, 0, 0),
+                        blendType=myBlend,
+                        fluid=1))
 
             if self.cycleType == 'loop':
                 self.moverIval.append(Wait(self.pos0Wait))

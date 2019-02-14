@@ -20,13 +20,15 @@ class CountryClubRoom(DirectObject.DirectObject):
                 loadFunc = loader.loadModel
             self.setGeom(loadFunc(path))
 
-        self.localToonFSM = ClassicFSM.ClassicFSM('CountryClubRoomLocalToonPresent', [
-            State.State('off', self.enterLtOff, self.exitLtOff, [
-                'notPresent']),
-            State.State('notPresent', self.enterLtNotPresent, self.exitLtNotPresent, [
-                'present']),
-            State.State('present', self.enterLtPresent, self.exitLtPresent, [
-                'notPresent'])], 'notPresent', 'notPresent')
+        self.localToonFSM = ClassicFSM.ClassicFSM(
+            'CountryClubRoomLocalToonPresent', [
+                State.State('off', self.enterLtOff, self.exitLtOff,
+                            ['notPresent']),
+                State.State('notPresent', self.enterLtNotPresent,
+                            self.exitLtNotPresent, ['present']),
+                State.State('present', self.enterLtPresent, self.exitLtPresent,
+                            ['notPresent'])
+            ], 'notPresent', 'notPresent')
         self.localToonFSM.enterInitialState()
 
     def delete(self):

@@ -10,7 +10,6 @@ from otp.otpbase import OTPLocalizer
 
 
 class TownBattleSOSPetInfoPanel(StateData.StateData):
-
     def __init__(self, doneEvent):
         StateData.StateData.__init__(self, doneEvent)
 
@@ -19,75 +18,62 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
         guiScale = 0.11600000000000001
         guiPos = (0, 0, 0)
         self.frame = DirectFrame(
-            image=gui,
-            scale=guiScale,
-            pos=guiPos,
-            relief=None)
+            image=gui, scale=guiScale, pos=guiPos, relief=None)
         self.frame.hide()
-        disabledImageColor = Vec4(
-            0.59999999999999998,
-            0.59999999999999998,
-            0.59999999999999998,
-            1)
+        disabledImageColor = Vec4(0.59999999999999998, 0.59999999999999998,
+                                  0.59999999999999998, 1)
         text0Color = Vec4(1, 1, 1, 1)
         text1Color = Vec4(0.5, 1, 0.5, 1)
         text2Color = Vec4(1, 1, 0.5, 1)
-        text3Color = Vec4(
-            0.59999999999999998,
-            0.59999999999999998,
-            0.59999999999999998,
-            1)
+        text3Color = Vec4(0.59999999999999998, 0.59999999999999998,
+                          0.59999999999999998, 1)
         self.closeButton = DirectButton(
             parent=self.frame,
-            image=(
-                gui.find('**/CancelButtonUp'),
-                gui.find('**/CancelButtonDown'),
-                gui.find('**/CancelButtonRollover')),
+            image=(gui.find('**/CancelButtonUp'),
+                   gui.find('**/CancelButtonDown'),
+                   gui.find('**/CancelButtonRollover')),
             relief=None,
             command=self._TownBattleSOSPetInfoPanel__handleClose)
-        self.feedButton = DirectButton(parent=self.frame,
-                                       image=(gui.find('**/ButtonFeedUp'),
-                                              gui.find('**/ButtonFeedDown'),
-                                              gui.find('**/ButtonFeedRollover'),
-                                              gui.find('**/ButtonFeedUp')),
-                                       geom=gui.find('**/PetControlFeedIcon'),
-                                       image3_color=disabledImageColor,
-                                       relief=None,
-                                       text=TTLocalizer.PetPanelFeed,
-                                       text_scale=0.5,
-                                       text0_fg=text0Color,
-                                       text1_fg=text1Color,
-                                       text2_fg=text2Color,
-                                       text3_fg=text3Color,
-                                       text_pos=(-0.5,
-                                                 2.7999999999999998),
-                                       text_align=TextNode.ALeft)
+        self.feedButton = DirectButton(
+            parent=self.frame,
+            image=(gui.find('**/ButtonFeedUp'), gui.find('**/ButtonFeedDown'),
+                   gui.find('**/ButtonFeedRollover'),
+                   gui.find('**/ButtonFeedUp')),
+            geom=gui.find('**/PetControlFeedIcon'),
+            image3_color=disabledImageColor,
+            relief=None,
+            text=TTLocalizer.PetPanelFeed,
+            text_scale=0.5,
+            text0_fg=text0Color,
+            text1_fg=text1Color,
+            text2_fg=text2Color,
+            text3_fg=text3Color,
+            text_pos=(-0.5, 2.7999999999999998),
+            text_align=TextNode.ALeft)
         self.feedButton['state'] = DGG.DISABLED
-        self.callButton = DirectButton(parent=self.frame,
-                                       image=(gui.find('**/ButtonGoToUp'),
-                                              gui.find('**/ButtonGoToDown'),
-                                              gui.find('**/ButtonGoToRollover'),
-                                              gui.find('**/ButtonGoToUp')),
-                                       geom=gui.find('**/PetControlGoToIcon'),
-                                       image3_color=disabledImageColor,
-                                       relief=None,
-                                       text=TTLocalizer.PetPanelCall,
-                                       text0_fg=text0Color,
-                                       text1_fg=text1Color,
-                                       text2_fg=text2Color,
-                                       text3_fg=text3Color,
-                                       text_scale=0.5,
-                                       text_pos=(-0.5,
-                                                 1.3),
-                                       text_align=TextNode.ALeft)
+        self.callButton = DirectButton(
+            parent=self.frame,
+            image=(gui.find('**/ButtonGoToUp'), gui.find('**/ButtonGoToDown'),
+                   gui.find('**/ButtonGoToRollover'),
+                   gui.find('**/ButtonGoToUp')),
+            geom=gui.find('**/PetControlGoToIcon'),
+            image3_color=disabledImageColor,
+            relief=None,
+            text=TTLocalizer.PetPanelCall,
+            text0_fg=text0Color,
+            text1_fg=text1Color,
+            text2_fg=text2Color,
+            text3_fg=text3Color,
+            text_scale=0.5,
+            text_pos=(-0.5, 1.3),
+            text_align=TextNode.ALeft)
         self.callButton['state'] = DGG.DISABLED
         self.scratchButton = DirectButton(
             parent=self.frame,
-            image=(
-                gui.find('**/ButtonScratchUp'),
-                gui.find('**/ButtonScratchDown'),
-                gui.find('**/ButtonScratchRollover'),
-                gui.find('**/ButtonScratchUp')),
+            image=(gui.find('**/ButtonScratchUp'),
+                   gui.find('**/ButtonScratchDown'),
+                   gui.find('**/ButtonScratchRollover'),
+                   gui.find('**/ButtonScratchUp')),
             geom=gui.find('**/PetControlScratchIcon'),
             image3_color=disabledImageColor,
             relief=None,
@@ -97,68 +83,43 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
             text2_fg=text2Color,
             text3_fg=text3Color,
             text_scale=0.5,
-            text_pos=(
-                -0.5,
-                2.0499999999999998),
+            text_pos=(-0.5, 2.0499999999999998),
             text_align=TextNode.ALeft)
         self.scratchButton['state'] = DGG.DISABLED
         self.callOwnerButton = DirectButton(
             parent=self.frame,
-            image=(
-                gui.find('**/PetControlToonButtonUp'),
-                gui.find('**/PetControlToonButtonDown'),
-                gui.find('**/PetControlToonButtonRollover')),
+            image=(gui.find('**/PetControlToonButtonUp'),
+                   gui.find('**/PetControlToonButtonDown'),
+                   gui.find('**/PetControlToonButtonRollover')),
             geom=gui.find('**/PetControlToonIcon'),
             geom3_color=disabledImageColor,
             relief=None,
             image3_color=disabledImageColor,
-            text=(
-                '',
-                TTLocalizer.PetPanelOwner,
-                TTLocalizer.PetPanelOwner,
-                ''),
+            text=('', TTLocalizer.PetPanelOwner, TTLocalizer.PetPanelOwner,
+                  ''),
             text_fg=text2Color,
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            text_shadow=(0, 0, 0, 1),
             text_scale=0.34999999999999998,
-            text_pos=(
-                0.29999999999999999,
-                1.1000000000000001),
+            text_pos=(0.29999999999999999, 1.1000000000000001),
             text_align=TextNode.ACenter,
             command=self._TownBattleSOSPetInfoPanel__handleDetail)
         self.callOwnerButton['state'] = DGG.DISABLED
         self.detailButton = DirectButton(
             parent=self.frame,
-            image=(
-                gui.find('**/PetControlToonButtonUp1'),
-                gui.find('**/PetControlToonButtonDown1'),
-                gui.find('**/PetControlToonButtonRollover1')),
+            image=(gui.find('**/PetControlToonButtonUp1'),
+                   gui.find('**/PetControlToonButtonDown1'),
+                   gui.find('**/PetControlToonButtonRollover1')),
             geom=gui.find('**/PetBattleIcon'),
             geom3_color=disabledImageColor,
             relief=None,
-            pos=(
-                0,
-                0,
-                0),
+            pos=(0, 0, 0),
             image3_color=disabledImageColor,
-            text=(
-                '',
-                TTLocalizer.PetPanelDetail,
-                TTLocalizer.PetPanelDetail,
-                ''),
+            text=('', TTLocalizer.PetPanelDetail, TTLocalizer.PetPanelDetail,
+                  ''),
             text_fg=text2Color,
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            text_shadow=(0, 0, 0, 1),
             text_scale=0.34999999999999998,
-            text_pos=(
-                0.29999999999999999,
-                1.1000000000000001),
+            text_pos=(0.29999999999999999, 1.1000000000000001),
             text_align=TextNode.ACenter,
             command=self._TownBattleSOSPetInfoPanel__handleDetail)
         self.detailButton['state'] = DGG.NORMAL
@@ -206,9 +167,8 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
         self.petProxy = base.cr.doId2do[petProxyId]
         self._TownBattleSOSPetInfoPanel__fillPetInfo(self.petProxy)
         self.frame.show()
-        self.accept(
-            self.trickMenuEventName,
-            self._TownBattleSOSPetInfoPanel__handleTrickMenuEvent)
+        self.accept(self.trickMenuEventName,
+                    self._TownBattleSOSPetInfoPanel__handleTrickMenuEvent)
         self.trickMenu.reparentTo(aspect2dp, DGG.FOREGROUND_SORT_INDEX)
         localAvatar.chatMgr.chatInputSpeedChat.whisperAvatarId = None
         self.detailButton['state'] = DGG.NORMAL
@@ -226,25 +186,17 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
     def _TownBattleSOSPetInfoPanel__handleTrickMenuEvent(self, textId):
         if textId in PetTricks.ScId2trickId:
             trickId = PetTricks.ScId2trickId[textId]
-            doneStatus = {
-                'mode': 'OK',
-                'trickId': trickId}
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            doneStatus = {'mode': 'OK', 'trickId': trickId}
+            messenger.send(self.doneEvent, [doneStatus])
             self.detailButton['state'] = DGG.NORMAL
 
     def _TownBattleSOSPetInfoPanel__handleClose(self):
-        doneStatus = {
-            'mode': 'Back'}
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        doneStatus = {'mode': 'Back'}
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleSOSPetInfoPanel__handleCall(self):
-        doneStatus = {
-            'mode': 'OK',
-            'trickId': 0}
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        doneStatus = {'mode': 'OK', 'trickId': 0}
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleSOSPetInfoPanel__handleDetailDone(self):
         if self.petDetailPanel is not None:
@@ -273,49 +225,25 @@ class TownBattleSOSPetInfoPanel(StateData.StateData):
             self.petModel.startBlink()
             self.nameLabel = DirectLabel(
                 parent=self.frame,
-                pos=(
-                    0,
-                    0,
-                    5.2000000000000002),
+                pos=(0, 0, 5.2000000000000002),
                 relief=None,
                 text=avatar.getName(),
                 text_font=avatar.getFont(),
-                text_fg=Vec4(
-                    0,
-                    0,
-                    0,
-                    1),
-                text_pos=(
-                    0,
-                    0),
+                text_fg=Vec4(0, 0, 0, 1),
+                text_pos=(0, 0),
                 text_scale=0.40000000000000002,
                 text_wordwrap=7.5,
-                text_shadow=(
-                    1,
-                    1,
-                    1,
-                    1))
+                text_shadow=(1, 1, 1, 1))
             self.stateLabel = DirectLabel(
                 parent=self.frame,
-                pos=(
-                    0.69999999999999996,
-                    0,
-                    3.5),
+                pos=(0.69999999999999996, 0, 3.5),
                 relief=None,
                 text='',
                 text_font=avatar.getFont(),
-                text_fg=Vec4(
-                    0,
-                    0,
-                    0,
-                    1),
+                text_fg=Vec4(0, 0, 0, 1),
                 text_scale=0.40000000000000002,
                 text_wordwrap=7.5,
-                text_shadow=(
-                    1,
-                    1,
-                    1,
-                    1))
+                text_shadow=(1, 1, 1, 1))
 
         self._TownBattleSOSPetInfoPanel__refreshPetInfo(avatar)
 

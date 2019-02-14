@@ -30,24 +30,17 @@ class DistributedFireworkShowAI(DistributedObjectAI.DistributedObjectAI):
         self.eventId = eventId
         self.style = style
         self.timestamp = timestamp
-        self.sendUpdate(
-            'startShow',
-            (self.eventId,
-             self.style,
-             self.timestamp))
+        self.sendUpdate('startShow',
+                        (self.eventId, self.style, self.timestamp))
         if simbase.air.config.GetBool('want-old-fireworks', 0):
             duration = getShowDuration(self.eventId, self.style)
-            taskMgr.doMethodLater(
-                duration,
-                self.fireworkShowDone,
-                self.taskName('waitForShowDone'))
+            taskMgr.doMethodLater(duration, self.fireworkShowDone,
+                                  self.taskName('waitForShowDone'))
         else:
             duration = self.throwAwayShow.getShowDuration(self.eventId)
             duration += 20.0
-            taskMgr.doMethodLater(
-                duration,
-                self.fireworkShowDone,
-                self.taskName('waitForShowDone'))
+            taskMgr.doMethodLater(duration, self.fireworkShowDone,
+                                  self.taskName('waitForShowDone'))
 
     def fireworkShowDone(self, task):
         self.notify.debug('fireworkShowDone')
@@ -59,8 +52,7 @@ class DistributedFireworkShowAI(DistributedObjectAI.DistributedObjectAI):
     def requestFirework(self, x, y, z, style, color1, color2):
         avId = self.air.getAvatarIdFromSender()
         self.notify.debug(
-            'requestFirework: avId: %s, style: %s' %
-            (avId, style))
+            'requestFirework: avId: %s, style: %s' % (avId, style))
         if self.fireworkMgr:
             if self.fireworkMgr.isShowRunning(self.zoneId):
                 self.d_shootFirework(x, y, z, style, color1, color2)

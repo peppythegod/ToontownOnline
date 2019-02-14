@@ -7,8 +7,7 @@ from direct.task import Task
 
 
 class DistributedCashbotBossObjectAI(
-        DistributedSmoothNodeAI.DistributedSmoothNodeAI,
-        FSM.FSM):
+        DistributedSmoothNodeAI.DistributedSmoothNodeAI, FSM.FSM):
     wantsWatchDrift = 1
 
     def __init__(self, air, boss):
@@ -49,15 +48,13 @@ class DistributedCashbotBossObjectAI(
         return self.boss.doId
 
     def d_setObjectState(self, state, avId, craneId):
-        self.sendUpdate('setObjectState', [
-            state,
-            avId,
-            craneId])
+        self.sendUpdate('setObjectState', [state, avId, craneId])
 
     def requestGrab(self):
         avId = self.air.getAvatarIdFromSender()
         if self.state != 'Grabbed' and self.state != 'Off':
-            (craneId, objectId) = self._DistributedCashbotBossObjectAI__getCraneAndObject(avId)
+            (craneId, objectId
+             ) = self._DistributedCashbotBossObjectAI__getCraneAndObject(avId)
             if craneId != 0 and objectId == 0:
                 self.demand('Grabbed', avId, craneId)
                 return None
@@ -67,7 +64,8 @@ class DistributedCashbotBossObjectAI(
     def requestDrop(self):
         avId = self.air.getAvatarIdFromSender()
         if avId == self.avId and self.state == 'Grabbed':
-            (craneId, objectId) = self._DistributedCashbotBossObjectAI__getCraneAndObject(avId)
+            (craneId, objectId
+             ) = self._DistributedCashbotBossObjectAI__getCraneAndObject(avId)
             if craneId != 0 and objectId == self.doId:
                 self.demand('Dropped', avId, craneId)
 

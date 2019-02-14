@@ -4,7 +4,6 @@ from toontown.coghq import LawbotCogHQLoader
 
 
 class LawbotHQ(CogHood.CogHood):
-
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
         CogHood.CogHood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
         self.id = ToontownGlobals.LawbotHQ
@@ -26,13 +25,11 @@ class LawbotHQ(CogHood.CogHood):
     def enter(self, *args):
         CogHood.CogHood.enter(self, *args)
         localAvatar.setCameraFov(ToontownGlobals.CogHQCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.LawbotHQCameraNear,
-            ToontownGlobals.LawbotHQCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.LawbotHQCameraNear,
+                                ToontownGlobals.LawbotHQCameraFar)
 
     def exit(self):
         localAvatar.setCameraFov(ToontownGlobals.DefaultCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            ToontownGlobals.DefaultCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                ToontownGlobals.DefaultCameraFar)
         CogHood.CogHood.exit(self)

@@ -12,11 +12,8 @@ from toontown.coghq import LaserGameRoll
 import random
 
 
-class DistributedMoverAI(
-        DistributedEntityAI.DistributedEntityAI,
-        NodePath,
-        BasicEntities.NodePathAttribs):
-
+class DistributedMoverAI(DistributedEntityAI.DistributedEntityAI, NodePath,
+                         BasicEntities.NodePathAttribs):
     def __init__(self, level, entId):
         DistributedEntityAI.DistributedEntityAI.__init__(self, level, entId)
         node = hidden.attachNewNode('DistributedMoverAI')
@@ -50,9 +47,7 @@ class DistributedMoverAI(
         DistributedEntityAI.DistributedEntityAI.generate(self)
         if self.switchId != 0:
             self.accept(
-                self.getOutputEventName(
-                    self.switchId),
-                self.reactToSwitch)
+                self.getOutputEventName(self.switchId), self.reactToSwitch)
 
         self.timerName = 'mover %s' % self.doId
         self.setPos(self.pos)
@@ -109,10 +104,10 @@ class DistributedMoverAI(
     def sendMove(self):
         timeStamp = ClockDelta.globalClockDelta.getRealNetworkTime()
         if self.oK2Play:
-            self.sendUpdate('startMove', [
-                timeStamp])
-            taskMgr.doMethodLater(
-                self.moveTime[self.cycleType], self._DistributedMoverAI__resetTimer, self.timerName)
+            self.sendUpdate('startMove', [timeStamp])
+            taskMgr.doMethodLater(self.moveTime[self.cycleType],
+                                  self._DistributedMoverAI__resetTimer,
+                                  self.timerName)
 
         self.oK2Play = 0
 

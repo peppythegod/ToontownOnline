@@ -6,9 +6,8 @@ from otp.otpbase import OTPGlobals
 from direct.fsm import FSM
 
 
-class DistributedLawbotBossGavelAI(
-        DistributedObjectAI.DistributedObjectAI,
-        FSM.FSM):
+class DistributedLawbotBossGavelAI(DistributedObjectAI.DistributedObjectAI,
+                                   FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedLawbotBossGavelAI')
 
@@ -42,8 +41,7 @@ class DistributedLawbotBossGavelAI(
         elif state == 'Off':
             newState = 'F'
 
-        self.sendUpdate('setState', [
-            newState])
+        self.sendUpdate('setState', [newState])
 
     def b_setState(self, state):
         self.request(state)

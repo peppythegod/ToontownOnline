@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE19a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10005: {
         'type': 'attribModifier',
         'name': 'sinkDuration',
@@ -33,7 +36,8 @@ GlobalEntities = {
         'attribName': 'sinkDuration',
         'recursive': 1,
         'typeName': 'sinkingPlatform',
-        'value': '2.0'},
+        'value': '2.0'
+    },
     10006: {
         'type': 'attribModifier',
         'name': 'riseDuration',
@@ -42,7 +46,8 @@ GlobalEntities = {
         'attribName': 'riseDuration',
         'recursive': 1,
         'typeName': 'sinkingPlatform',
-        'value': '2.0'},
+        'value': '2.0'
+    },
     10004: {
         'type': 'healBarrel',
         'name': '<unnamed>',
@@ -52,26 +57,37 @@ GlobalEntities = {
         'hpr': Vec3(100.165977478, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'rewardPerGrab': 8,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     10008: {
         'type': 'model',
         'name': '<unnamed>',
         'comment': '',
         'parentEntId': 10007,
-        'pos': Point3(-24.928899765000001, -4.86700963974, -1.7069653272600001),
+        'pos': Point3(-24.928899765000001, -4.86700963974,
+                      -1.7069653272600001),
         'hpr': Vec3(270.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'collisionsOnly': 0,
         'loadType': 'loadModel',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A5.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A5.bam'
+    },
     10002: {
-        'type': 'nodepath',
-        'name': 'sinkingPlatforms',
-        'comment': '',
-        'parentEntId': 0,
-        'pos': Point3(2.0, 0.0, 0.0),
-        'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(0.86423927545500001, 0.86423927545500001, 0.86423927545500001)},
+        'type':
+        'nodepath',
+        'name':
+        'sinkingPlatforms',
+        'comment':
+        '',
+        'parentEntId':
+        0,
+        'pos':
+        Point3(2.0, 0.0, 0.0),
+        'hpr':
+        Vec3(0.0, 0.0, 0.0),
+        'scale':
+        Vec3(0.86423927545500001, 0.86423927545500001, 0.86423927545500001)
+    },
     10007: {
         'type': 'nodepath',
         'name': 'props',
@@ -79,7 +95,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10000: {
         'type': 'sinkingPlatform',
         'name': 'plat1',
@@ -91,7 +108,8 @@ GlobalEntities = {
         'pauseBeforeRise': 1,
         'riseDuration': 2.0,
         'sinkDuration': 2.0,
-        'verticalRange': 3.0},
+        'verticalRange': 3.0
+    },
     10001: {
         'type': 'sinkingPlatform',
         'name': 'plat0',
@@ -103,7 +121,8 @@ GlobalEntities = {
         'pauseBeforeRise': 1,
         'riseDuration': 2.0,
         'sinkDuration': 2.0,
-        'verticalRange': 3.0},
+        'verticalRange': 3.0
+    },
     10003: {
         'type': 'sinkingPlatform',
         'name': 'plat2',
@@ -115,9 +134,8 @@ GlobalEntities = {
         'pauseBeforeRise': 1,
         'riseDuration': 2.0,
         'sinkDuration': 2.0,
-        'verticalRange': 3.0}}
+        'verticalRange': 3.0
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

@@ -4,7 +4,6 @@ import random
 
 
 class AmbientSound(BasicEntities.NodePathEntity):
-
     def __init__(self, level, entId):
         BasicEntities.NodePathEntity.__init__(self, level, entId)
         self.initSound()

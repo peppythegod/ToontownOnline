@@ -8,7 +8,6 @@ def decodeTTSCIndexedMsg(msgIndex):
 
 
 class TTSCIndexedTerminal(SCTerminal):
-
     def __init__(self, msg, msgIndex):
         SCTerminal.__init__(self)
         self.text = msg
@@ -16,5 +15,4 @@ class TTSCIndexedTerminal(SCTerminal):
 
     def handleSelect(self):
         SCTerminal.handleSelect(self)
-        messenger.send(self.getEventName(TTSCIndexedMsgEvent), [
-            self.msgIndex])
+        messenger.send(self.getEventName(TTSCIndexedMsgEvent), [self.msgIndex])

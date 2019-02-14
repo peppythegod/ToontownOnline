@@ -7,20 +7,10 @@ from direct.showbase.ShadowPlacer import ShadowPlacer
 
 
 class CogdoFlyingShadowPlacer(ShadowPlacer):
-
-    def __init__(
-            self,
-            cTrav,
-            shadowNodePath,
-            wallCollideMask,
-            floorCollideMask,
-            name):
-        ShadowPlacer.__init__(
-            self,
-            cTrav,
-            shadowNodePath,
-            wallCollideMask,
-            floorCollideMask)
+    def __init__(self, cTrav, shadowNodePath, wallCollideMask,
+                 floorCollideMask, name):
+        ShadowPlacer.__init__(self, cTrav, shadowNodePath, wallCollideMask,
+                              floorCollideMask)
         self.name = name
 
     def setup(self, cTrav, shadowNodePath, wallCollideMask, floorCollideMask):
@@ -67,8 +57,10 @@ class CogdoFlyingShadowPlacer(ShadowPlacer):
         self.cTrav.addCollider(self.cRayNodePath, self.queue)
         self.isActive = 1
         taskMgr.add(
-            self.update, 'ShadowPlacer.update.%s' %
-            self.name, -45, extraArgs=[])
+            self.update,
+            'ShadowPlacer.update.%s' % self.name,
+            -45,
+            extraArgs=[])
 
     def off(self):
         if not self.isActive:

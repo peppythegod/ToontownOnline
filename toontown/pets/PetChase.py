@@ -5,7 +5,6 @@ import math
 
 
 class PetChase(Impulse.Impulse):
-
     def __init__(self, target=None, minDist=None, moveAngle=None):
         Impulse.Impulse.__init__(self)
         self.target = target

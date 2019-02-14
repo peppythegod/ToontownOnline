@@ -10,8 +10,7 @@ AccountDatabaseChannelId = 4008
 ToonDatabaseChannelId = 4021
 DoodleDatabaseChannelId = 4023
 DefaultDatabaseChannelId = AccountDatabaseChannelId
-DatabaseIdFromClassName = {
-    'Account': AccountDatabaseChannelId}
+DatabaseIdFromClassName = {'Account': AccountDatabaseChannelId}
 CogHQCameraFov = 60.0
 BossBattleCameraFov = 72.0
 MakeAToonCameraFov = 52.0
@@ -182,7 +181,8 @@ HoodHierarchy = {
     MinniesMelodyland: (AltoAvenue, BaritoneBoulevard, TenorTerrace),
     DaisyGardens: (ElmStreet, MapleStreet, OakStreet),
     DonaldsDreamland: (LullabyLane, PajamaPlace),
-    GoofySpeedway: ()}
+    GoofySpeedway: ()
+}
 WelcomeValleyToken = 0
 BossbotHQ = 10000
 BossbotLobby = 10100
@@ -210,29 +210,23 @@ Tutorial = 15000
 MyEstate = 16000
 GolfZone = 17000
 PartyHood = 18000
-HoodsAlwaysVisited = [
-    17000,
-    18000]
+HoodsAlwaysVisited = [17000, 18000]
 WelcomeValleyBegin = 22000
 WelcomeValleyEnd = 61000
 DynamicZonesBegin = 61000
 DynamicZonesEnd = 1 << 20
-cogDept2index = {
-    'c': 0,
-    'l': 1,
-    'm': 2,
-    's': 3}
+cogDept2index = {'c': 0, 'l': 1, 'm': 2, 's': 3}
 cogIndex2dept = invertDict(cogDept2index)
 HQToSafezone = {
     SellbotHQ: DaisyGardens,
     CashbotHQ: DonaldsDreamland,
     LawbotHQ: TheBrrrgh,
-    BossbotHQ: DonaldsDock}
+    BossbotHQ: DonaldsDock
+}
 CogDeptNames = [
-    TTLocalizer.Bossbot,
-    TTLocalizer.Lawbot,
-    TTLocalizer.Cashbot,
-    TTLocalizer.Sellbot]
+    TTLocalizer.Bossbot, TTLocalizer.Lawbot, TTLocalizer.Cashbot,
+    TTLocalizer.Sellbot
+]
 
 
 def cogHQZoneId2deptIndex(zone):
@@ -251,49 +245,45 @@ def cogHQZoneId2dept(zone):
 
 
 def dept2cogHQ(dept):
-    dept2hq = {
-        'c': BossbotHQ,
-        'l': LawbotHQ,
-        'm': CashbotHQ,
-        's': SellbotHQ}
+    dept2hq = {'c': BossbotHQ, 'l': LawbotHQ, 'm': CashbotHQ, 's': SellbotHQ}
     return dept2hq[dept]
 
 
 MockupFactoryId = 0
-MintNumFloors = {
-    CashbotMintIntA: 20,
-    CashbotMintIntB: 20,
-    CashbotMintIntC: 20}
+MintNumFloors = {CashbotMintIntA: 20, CashbotMintIntB: 20, CashbotMintIntC: 20}
 CashbotMintCogLevel = 10
 CashbotMintSkelecogLevel = 11
 CashbotMintBossLevel = 12
-MintNumBattles = {
-    CashbotMintIntA: 4,
-    CashbotMintIntB: 6,
-    CashbotMintIntC: 8}
+MintNumBattles = {CashbotMintIntA: 4, CashbotMintIntB: 6, CashbotMintIntC: 8}
 MintCogBuckRewards = {
     CashbotMintIntA: 8,
     CashbotMintIntB: 14,
-    CashbotMintIntC: 20}
+    CashbotMintIntC: 20
+}
 MintNumRooms = {
-    CashbotMintIntA: 2 * (6,) + 5 * (7,) + 5 * (8,) + 5 * (9,) + 3 * (10,),
-    CashbotMintIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
-    CashbotMintIntC: 4 * (10,) + 10 * (11,) + 6 * (12,)}
+    CashbotMintIntA:
+    2 * (6, ) + 5 * (7, ) + 5 * (8, ) + 5 * (9, ) + 3 * (10, ),
+    CashbotMintIntB: 3 * (8, ) + 6 * (9, ) + 6 * (10, ) + 5 * (11, ),
+    CashbotMintIntC: 4 * (10, ) + 10 * (11, ) + 6 * (12, )
+}
 BossbotCountryClubCogLevel = 11
 BossbotCountryClubSkelecogLevel = 12
 BossbotCountryClubBossLevel = 12
 CountryClubNumRooms = {
-    BossbotCountryClubIntA: (4,),
-    BossbotCountryClubIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
-    BossbotCountryClubIntC: 4 * (10,) + 10 * (11,) + 6 * (12,)}
+    BossbotCountryClubIntA: (4, ),
+    BossbotCountryClubIntB: 3 * (8, ) + 6 * (9, ) + 6 * (10, ) + 5 * (11, ),
+    BossbotCountryClubIntC: 4 * (10, ) + 10 * (11, ) + 6 * (12, )
+}
 CountryClubNumBattles = {
     BossbotCountryClubIntA: 3,
     BossbotCountryClubIntB: 2,
-    BossbotCountryClubIntC: 3}
+    BossbotCountryClubIntC: 3
+}
 CountryClubCogBuckRewards = {
     BossbotCountryClubIntA: 8,
     BossbotCountryClubIntB: 14,
-    BossbotCountryClubIntC: 20}
+    BossbotCountryClubIntC: 20
+}
 LawbotStageCogLevel = 10
 LawbotStageSkelecogLevel = 11
 LawbotStageBossLevel = 12
@@ -301,17 +291,21 @@ StageNumBattles = {
     LawbotStageIntA: 0,
     LawbotStageIntB: 0,
     LawbotStageIntC: 0,
-    LawbotStageIntD: 0}
+    LawbotStageIntD: 0
+}
 StageNoticeRewards = {
     LawbotStageIntA: 75,
     LawbotStageIntB: 150,
     LawbotStageIntC: 225,
-    LawbotStageIntD: 300}
+    LawbotStageIntD: 300
+}
 StageNumRooms = {
-    LawbotStageIntA: 2 * (6,) + 5 * (7,) + 5 * (8,) + 5 * (9,) + 3 * (10,),
-    LawbotStageIntB: 3 * (8,) + 6 * (9,) + 6 * (10,) + 5 * (11,),
-    LawbotStageIntC: 4 * (10,) + 10 * (11,) + 6 * (12,),
-    LawbotStageIntD: 4 * (10,) + 10 * (11,) + 6 * (12,)}
+    LawbotStageIntA:
+    2 * (6, ) + 5 * (7, ) + 5 * (8, ) + 5 * (9, ) + 3 * (10, ),
+    LawbotStageIntB: 3 * (8, ) + 6 * (9, ) + 6 * (10, ) + 5 * (11, ),
+    LawbotStageIntC: 4 * (10, ) + 10 * (11, ) + 6 * (12, ),
+    LawbotStageIntD: 4 * (10, ) + 10 * (11, ) + 6 * (12, )
+}
 FT_FullSuit = 'fullSuit'
 FT_Leg = 'leg'
 FT_Arm = 'arm'
@@ -319,38 +313,17 @@ FT_Torso = 'torso'
 factoryId2factoryType = {
     MockupFactoryId: FT_FullSuit,
     SellbotFactoryInt: FT_FullSuit,
-    LawbotOfficeInt: FT_FullSuit}
+    LawbotOfficeInt: FT_FullSuit
+}
 StreetNames = TTLocalizer.GlobalStreetNames
 StreetBranchZones = StreetNames.keys()
-Hoods = (
-    DonaldsDock,
-    ToontownCentral,
-    TheBrrrgh,
-    MinniesMelodyland,
-    DaisyGardens,
-    OutdoorZone,
-    FunnyFarm,
-    GoofySpeedway,
-    DonaldsDreamland,
-    BossbotHQ,
-    SellbotHQ,
-    CashbotHQ,
-    LawbotHQ,
-    GolfZone)
-HoodsForTeleportAll = (
-    DonaldsDock,
-    ToontownCentral,
-    TheBrrrgh,
-    MinniesMelodyland,
-    DaisyGardens,
-    OutdoorZone,
-    GoofySpeedway,
-    DonaldsDreamland,
-    BossbotHQ,
-    SellbotHQ,
-    CashbotHQ,
-    LawbotHQ,
-    GolfZone)
+Hoods = (DonaldsDock, ToontownCentral, TheBrrrgh, MinniesMelodyland,
+         DaisyGardens, OutdoorZone, FunnyFarm, GoofySpeedway, DonaldsDreamland,
+         BossbotHQ, SellbotHQ, CashbotHQ, LawbotHQ, GolfZone)
+HoodsForTeleportAll = (DonaldsDock, ToontownCentral, TheBrrrgh,
+                       MinniesMelodyland, DaisyGardens, OutdoorZone,
+                       GoofySpeedway, DonaldsDreamland, BossbotHQ, SellbotHQ,
+                       CashbotHQ, LawbotHQ, GolfZone)
 NoPreviousGameId = 0
 RaceGameId = 1
 CannonGameId = 2
@@ -389,86 +362,33 @@ MinigameNames = {
     'thief': CogThiefGameId,
     '2d': TwoDGameId,
     'photo': PhotoGameId,
-    'travel': TravelGameId}
+    'travel': TravelGameId
+}
 MinigameTemplateId = -1
-MinigameIDs = (
-    RaceGameId,
-    CannonGameId,
-    TagGameId,
-    PatternGameId,
-    RingGameId,
-    MazeGameId,
-    TugOfWarGameId,
-    CatchGameId,
-    DivingGameId,
-    TargetGameId,
-    PairingGameId,
-    VineGameId,
-    IceGameId,
-    CogThiefGameId,
-    TwoDGameId,
-    PhotoGameId,
-    TravelGameId)
-MinigamePlayerMatrix = {1: (CannonGameId,
-                            RingGameId,
-                            MazeGameId,
-                            TugOfWarGameId,
-                            CatchGameId,
-                            DivingGameId,
-                            TargetGameId,
-                            PairingGameId,
-                            VineGameId,
-                            CogThiefGameId,
-                            TwoDGameId),
-                        2: (CannonGameId,
-                            PatternGameId,
-                            RingGameId,
-                            TagGameId,
-                            MazeGameId,
-                            TugOfWarGameId,
-                            CatchGameId,
-                            DivingGameId,
-                            TargetGameId,
-                            PairingGameId,
-                            VineGameId,
-                            IceGameId,
-                            CogThiefGameId,
-                            TwoDGameId),
-                        3: (CannonGameId,
-                            PatternGameId,
-                            RingGameId,
-                            TagGameId,
-                            RaceGameId,
-                            MazeGameId,
-                            TugOfWarGameId,
-                            CatchGameId,
-                            DivingGameId,
-                            TargetGameId,
-                            PairingGameId,
-                            VineGameId,
-                            IceGameId,
-                            CogThiefGameId,
-                            TwoDGameId),
-                        4: (CannonGameId,
-                            PatternGameId,
-                            RingGameId,
-                            TagGameId,
-                            RaceGameId,
-                            MazeGameId,
-                            TugOfWarGameId,
-                            CatchGameId,
-                            DivingGameId,
-                            TargetGameId,
-                            PairingGameId,
-                            VineGameId,
-                            IceGameId,
-                            CogThiefGameId,
-                            TwoDGameId)}
+MinigameIDs = (RaceGameId, CannonGameId, TagGameId, PatternGameId, RingGameId,
+               MazeGameId, TugOfWarGameId, CatchGameId, DivingGameId,
+               TargetGameId, PairingGameId, VineGameId, IceGameId,
+               CogThiefGameId, TwoDGameId, PhotoGameId, TravelGameId)
+MinigamePlayerMatrix = {
+    1: (CannonGameId, RingGameId, MazeGameId, TugOfWarGameId, CatchGameId,
+        DivingGameId, TargetGameId, PairingGameId, VineGameId, CogThiefGameId,
+        TwoDGameId),
+    2: (CannonGameId, PatternGameId, RingGameId, TagGameId, MazeGameId,
+        TugOfWarGameId, CatchGameId, DivingGameId, TargetGameId, PairingGameId,
+        VineGameId, IceGameId, CogThiefGameId, TwoDGameId),
+    3: (CannonGameId, PatternGameId, RingGameId, TagGameId, RaceGameId,
+        MazeGameId, TugOfWarGameId, CatchGameId, DivingGameId, TargetGameId,
+        PairingGameId, VineGameId, IceGameId, CogThiefGameId, TwoDGameId),
+    4: (CannonGameId, PatternGameId, RingGameId, TagGameId, RaceGameId,
+        MazeGameId, TugOfWarGameId, CatchGameId, DivingGameId, TargetGameId,
+        PairingGameId, VineGameId, IceGameId, CogThiefGameId, TwoDGameId)
+}
 MinigameReleaseDates = {
     IceGameId: (2008, 8, 5),
     PhotoGameId: (2008, 8, 13),
     TwoDGameId: (2008, 8, 20),
-    CogThiefGameId: (2008, 8, 27)}
+    CogThiefGameId: (2008, 8, 27)
+}
 KeyboardTimeout = 300
 phaseMap = {
     Tutorial: 4,
@@ -487,7 +407,8 @@ phaseMap = {
     CashbotHQ: 10,
     LawbotHQ: 11,
     GolfZone: 8,
-    PartyHood: 13}
+    PartyHood: 13
+}
 streetPhaseMap = {
     ToontownCentral: 5,
     DonaldsDock: 6,
@@ -502,7 +423,8 @@ streetPhaseMap = {
     SellbotHQ: 9,
     CashbotHQ: 10,
     LawbotHQ: 11,
-    PartyHood: 13}
+    PartyHood: 13
+}
 dnaMap = {
     Tutorial: 'toontown_central',
     ToontownCentral: 'toontown_central',
@@ -518,7 +440,8 @@ dnaMap = {
     SellbotHQ: 'cog_hq_sellbot',
     CashbotHQ: 'cog_hq_cashbot',
     LawbotHQ: 'cog_hq_lawbot',
-    GolfZone: 'golf_zone'}
+    GolfZone: 'golf_zone'
+}
 hoodNameMap = {
     DonaldsDock: TTLocalizer.DonaldsDock,
     ToontownCentral: TTLocalizer.ToontownCentral,
@@ -536,7 +459,8 @@ hoodNameMap = {
     Tutorial: TTLocalizer.Tutorial,
     MyEstate: TTLocalizer.MyEstate,
     GolfZone: TTLocalizer.GolfZone,
-    PartyHood: TTLocalizer.PartyHood}
+    PartyHood: TTLocalizer.PartyHood
+}
 safeZoneCountMap = {
     MyEstate: 8,
     Tutorial: 6,
@@ -550,7 +474,8 @@ safeZoneCountMap = {
     DonaldsDreamland: 5,
     OutdoorZone: 500,
     GolfZone: 500,
-    PartyHood: 500}
+    PartyHood: 500
+}
 townCountMap = {
     MyEstate: 8,
     Tutorial: 40,
@@ -563,7 +488,8 @@ townCountMap = {
     FunnyFarm: 40,
     DonaldsDreamland: 40,
     OutdoorZone: 40,
-    PartyHood: 20}
+    PartyHood: 20
+}
 hoodCountMap = {
     MyEstate: 2,
     Tutorial: 2,
@@ -581,16 +507,18 @@ hoodCountMap = {
     CashbotHQ: 2,
     LawbotHQ: 2,
     GolfZone: 2,
-    PartyHood: 2}
+    PartyHood: 2
+}
 TrophyStarLevels = (10, 20, 30, 50, 75, 100)
-TrophyStarColors = (
-    Vec4(
-        0.90000000000000002, 0.59999999999999998, 0.20000000000000001, 1), Vec4(
-            0.90000000000000002, 0.59999999999999998, 0.20000000000000001, 1), Vec4(
-                0.80000000000000004, 0.80000000000000004, 0.80000000000000004, 1), Vec4(
-                    0.80000000000000004, 0.80000000000000004, 0.80000000000000004, 1), Vec4(
-                        1, 1, 0, 1), Vec4(
-                            1, 1, 0, 1))
+TrophyStarColors = (Vec4(0.90000000000000002, 0.59999999999999998,
+                         0.20000000000000001, 1),
+                    Vec4(0.90000000000000002, 0.59999999999999998,
+                         0.20000000000000001, 1),
+                    Vec4(0.80000000000000004, 0.80000000000000004,
+                         0.80000000000000004, 1),
+                    Vec4(0.80000000000000004, 0.80000000000000004,
+                         0.80000000000000004, 1), Vec4(1, 1, 0, 1),
+                    Vec4(1, 1, 0, 1))
 MickeySpeed = 5.0
 VampireMickeySpeed = 1.1499999999999999
 MinnieSpeed = 3.2000000000000002
@@ -614,13 +542,13 @@ PieCodeDefensePan = 5
 PieCodeProsecutionPan = 6
 PieCodeLawyer = 7
 PieCodeColors = {
-    PieCodeBossCog: None,
-    PieCodeNotBossCog: (
-        0.80000000000000004,
-        0.80000000000000004,
-        0.80000000000000004,
-        1),
-    PieCodeToon: None}
+    PieCodeBossCog:
+    None,
+    PieCodeNotBossCog: (0.80000000000000004, 0.80000000000000004,
+                        0.80000000000000004, 1),
+    PieCodeToon:
+    None
+}
 BossCogRollSpeed = 7.5
 BossCogTurnSpeed = 20
 BossCogTreadSpeed = 3.5
@@ -659,7 +587,8 @@ BossCogAttackTimes = {
     BossCogGolfAttack: 6,
     BossCogGolfAreaAttack: 7,
     BossCogGearDirectedAttack: 4.8399999999999999,
-    BossCogOvertimeAttack: 5}
+    BossCogOvertimeAttack: 5
+}
 BossCogDamageLevels = {
     BossCogElectricFence: 1,
     BossCogSwatLeft: 5,
@@ -678,7 +607,8 @@ BossCogDamageLevels = {
     BossCogGolfAttack: 15,
     BossCogGolfAreaAttack: 15,
     BossCogGearDirectedAttack: 15,
-    BossCogOvertimeAttack: 10}
+    BossCogOvertimeAttack: 10
+}
 BossCogBattleAPosHpr = (0, -25, 0, 0, 0, 0)
 BossCogBattleBPosHpr = (0, 25, 0, 180, 0, 0)
 SellbotBossMaxDamage = 100
@@ -703,15 +633,14 @@ CashbotBossOffstagePosHpr = (120, -195, 0, 0, 0, 0)
 CashbotBossBattleOnePosHpr = (120, -230, 0, 90, 0, 0)
 CashbotRTBattleOneStartPosHpr = (94, -220, 0, 110, 0, 0)
 CashbotBossBattleThreePosHpr = (120, -315, 0, 180, 0, 0)
-CashbotToonsBattleThreeStartPosHpr = [
-    (105, -285, 0, 208, 0, 0),
-    (136, -342, 0, 398, 0, 0),
-    (105, -342, 0, 333, 0, 0),
-    (135, -292, 0, 146, 0, 0),
-    (93, -303, 0, 242, 0, 0),
-    (144, -327, 0, 64, 0, 0),
-    (145, -302, 0, 117, 0, 0),
-    (93, -327, 0, -65, 0, 0)]
+CashbotToonsBattleThreeStartPosHpr = [(105, -285, 0, 208, 0, 0),
+                                      (136, -342, 0, 398, 0, 0),
+                                      (105, -342, 0, 333, 0, 0),
+                                      (135, -292, 0, 146, 0, 0),
+                                      (93, -303, 0, 242, 0, 0),
+                                      (144, -327, 0, 64, 0, 0),
+                                      (145, -302, 0, 117, 0, 0),
+                                      (93, -327, 0, -65, 0, 0)]
 CashbotBossSafePosHprs = [
     (120, -315, 30, 0, 0, 0),
     (77.200000000000003, -329.30000000000001, 0, -90, 0, 0),
@@ -721,12 +650,14 @@ CashbotBossSafePosHprs = [
     (107.8, -359.10000000000002, 0, 0, 0, 0),
     (133.90000000000001, -359.10000000000002, 0, 0, 0, 0),
     (107.0, -274.69999999999999, 0, 180, 0, 0),
-    (134.19999999999999, -274.69999999999999, 0, 180, 0, 0)]
+    (134.19999999999999, -274.69999999999999, 0, 180, 0, 0)
+]
 CashbotBossCranePosHprs = [
     (97.400000000000006, -337.60000000000002, 0, -45, 0, 0),
     (97.400000000000006, -292.39999999999998, 0, -135, 0, 0),
     (142.59999999999999, -292.39999999999998, 0, 135, 0, 0),
-    (142.59999999999999, -337.60000000000002, 0, 45, 0, 0)]
+    (142.59999999999999, -337.60000000000002, 0, 45, 0, 0)
+]
 CashbotBossToMagnetTime = 0.20000000000000001
 CashbotBossFromMagnetTime = 1
 CashbotBossSafeKnockImpact = 0.5
@@ -885,33 +816,26 @@ LawbotBossP3PosB = (55, -9, 0)
 LawbotBossBattleThreePosHpr = LawbotBossBattleTwoPosHpr
 LawbotBossBottomPos = (50, 39, 0)
 LawbotBossDeathPos = (50, 40, 0)
-LawbotBossGavelPosHprs = [
-    (35, 78.328000000000003, 0, -135, 0, 0),
-    (68.5, 78.328000000000003, 0, 135, 0, 0),
-    (47, -33, 0, 45, 0, 0),
-    (-50, -39, 0, -45, 0, 0),
-    (-9, -37, 0, 0, 0, 0),
-    (-9, 49, 0, -180, 0, 0),
-    (32, 0, 0, 45, 0, 0),
-    (33, 56, 0, 135, 0, 0)]
-LawbotBossGavelTimes = [
-    (0.20000000000000001, 0.90000000000000002, 0.59999999999999998),
-    (0.25, 1, 0.5),
-    (1.0, 6, 0.5),
-    (0.29999999999999999, 3, 1),
-    (0.26000000000000001, 0.90000000000000002, 0.45000000000000001),
-    (0.23999999999999999, 1.1000000000000001, 0.65000000000000002),
-    (0.27000000000000002, 1.2, 0.45000000000000001),
-    (0.25, 0.94999999999999996, 0.5)]
-LawbotBossGavelHeadings = [
-    (0, -15, 4, -70 - 45, 5, 45),
-    (0, -45, -4, -35, -45, -16, 32),
-    (0, -8, 19, -7, 5, 23),
-    (0, -4, 8, -16, 32, -45, 7, 7, -30, 19, -13, 25),
-    (0, -45, -90, 45, 90),
-    (0, -45, -90, 45, 90),
-    (0, -45, 45),
-    (0, -45, 45)]
+LawbotBossGavelPosHprs = [(35, 78.328000000000003, 0, -135, 0, 0),
+                          (68.5, 78.328000000000003, 0, 135, 0, 0),
+                          (47, -33, 0, 45, 0, 0), (-50, -39, 0, -45, 0, 0),
+                          (-9, -37, 0, 0, 0, 0), (-9, 49, 0, -180, 0, 0),
+                          (32, 0, 0, 45, 0, 0), (33, 56, 0, 135, 0, 0)]
+LawbotBossGavelTimes = [(0.20000000000000001, 0.90000000000000002,
+                         0.59999999999999998), (0.25, 1, 0.5), (1.0, 6, 0.5),
+                        (0.29999999999999999, 3, 1),
+                        (0.26000000000000001, 0.90000000000000002,
+                         0.45000000000000001),
+                        (0.23999999999999999, 1.1000000000000001,
+                         0.65000000000000002),
+                        (0.27000000000000002, 1.2, 0.45000000000000001),
+                        (0.25, 0.94999999999999996, 0.5)]
+LawbotBossGavelHeadings = [(0, -15, 4, -70 - 45, 5, 45),
+                           (0, -45, -4, -35, -45, -16, 32),
+                           (0, -8, 19, -7, 5, 23),
+                           (0, -4, 8, -16, 32, -45, 7, 7, -30, 19, -13, 25),
+                           (0, -45, -90, 45, 90), (0, -45, -90, 45, 90),
+                           (0, -45, 45), (0, -45, 45)]
 LawbotBossCogRelBattleAPosHpr = (-25, -10, 0, 0, 0, 0)
 LawbotBossCogRelBattleBPosHpr = (-25, 10, 0, 0, 0, 0)
 LawbotBossCogAbsBattleAPosHpr = (-5, -2, 0, 0, 0, 0)
@@ -920,62 +844,40 @@ LawbotBossWitnessStandPosHpr = (54, 100, 0, -90, 0, 0)
 LawbotBossInjusticePosHpr = (-3, 12, 0, 90, 0, 0)
 LawbotBossInjusticeScale = (1.75, 1.75, 1.5)
 LawbotBossDefensePanDamage = 1
-LawbotBossLawyerPosHprs = [
-    (-57, -24, 0, -90, 0, 0),
-    (-57, -12, 0, -90, 0, 0),
-    (-57, 0, 0, -90, 0, 0),
-    (-57, 12, 0, -90, 0, 0),
-    (-57, 24, 0, -90, 0, 0),
-    (-57, 36, 0, -90, 0, 0),
-    (-57, 48, 0, -90, 0, 0),
-    (-57, 60, 0, -90, 0, 0),
-    (-3, -37.299999999999997, 0, 0, 0, 0),
-    (-3, 53, 0, -180, 0, 0)]
+LawbotBossLawyerPosHprs = [(-57, -24, 0, -90, 0, 0), (-57, -12, 0, -90, 0, 0),
+                           (-57, 0, 0, -90, 0, 0), (-57, 12, 0, -90, 0, 0),
+                           (-57, 24, 0, -90, 0, 0), (-57, 36, 0, -90, 0, 0),
+                           (-57, 48, 0, -90, 0, 0), (-57, 60, 0, -90, 0, 0),
+                           (-3, -37.299999999999997, 0, 0, 0, 0),
+                           (-3, 53, 0, -180, 0, 0)]
 LawbotBossLawyerCycleTime = 6
 LawbotBossLawyerToPanTime = 2.5
 LawbotBossLawyerChanceToAttack = 50
 LawbotBossLawyerHeal = 2
 LawbotBossLawyerStunTime = 5
-LawbotBossDifficultySettings = [
-    (38, 4, 8, 1, 0, 0),
-    (36, 5, 8, 1, 0, 0),
-    (34, 5, 8, 1, 0, 0),
-    (32, 6, 8, 2, 0, 0),
-    (30, 6, 8, 2, 0, 0),
-    (28, 7, 8, 3, 0, 0),
-    (26, 7, 9, 3, 1, 1),
-    (24, 8, 9, 4, 1, 1),
-    (22, 8, 10, 4, 1, 0)]
-LawbotBossCannonPosHprs = [
-    (-40, -12, 0, -90, 0, 0),
-    (-40, 0, 0, -90, 0, 0),
-    (-40, 12, 0, -90, 0, 0),
-    (-40, 24, 0, -90, 0, 0),
-    (-40, 36, 0, -90, 0, 0),
-    (-40, 48, 0, -90, 0, 0),
-    (-40, 60, 0, -90, 0, 0),
-    (-40, 72, 0, -90, 0, 0)]
+LawbotBossDifficultySettings = [(38, 4, 8, 1, 0, 0), (36, 5, 8, 1, 0, 0),
+                                (34, 5, 8, 1, 0, 0), (32, 6, 8, 2, 0, 0),
+                                (30, 6, 8, 2, 0, 0), (28, 7, 8, 3, 0, 0),
+                                (26, 7, 9, 3, 1, 1), (24, 8, 9, 4, 1, 1),
+                                (22, 8, 10, 4, 1, 0)]
+LawbotBossCannonPosHprs = [(-40, -12, 0, -90, 0, 0), (-40, 0, 0, -90, 0, 0),
+                           (-40, 12, 0, -90, 0, 0), (-40, 24, 0, -90, 0, 0),
+                           (-40, 36, 0, -90, 0, 0), (-40, 48, 0, -90, 0, 0),
+                           (-40, 60, 0, -90, 0, 0), (-40, 72, 0, -90, 0, 0)]
 LawbotBossCannonPosA = (-80, -51.479999999999997, 0)
 LawbotBossCannonPosB = (-80, 70.730000000000004, 0)
-LawbotBossChairPosHprs = [
-    (60, 72, 0, -90, 0, 0),
-    (60, 62, 0, -90, 0, 0),
-    (60, 52, 0, -90, 0, 0),
-    (60, 42, 0, -90, 0, 0),
-    (60, 32, 0, -90, 0, 0),
-    (60, 22, 0, -90, 0, 0),
-    (70, 72, 5, -90, 0, 0),
-    (70, 62, 5, -90, 0, 0),
-    (70, 52, 5, -90, 0, 0),
-    (70, 42, 5, -90, 0, 0),
-    (70, 32, 5, -90, 0, 0),
-    (70, 22, 5, -90, 0, 0)]
+LawbotBossChairPosHprs = [(60, 72, 0, -90, 0, 0), (60, 62, 0, -90, 0, 0),
+                          (60, 52, 0, -90, 0, 0), (60, 42, 0, -90, 0, 0),
+                          (60, 32, 0, -90, 0, 0), (60, 22, 0, -90, 0, 0),
+                          (70, 72, 5, -90, 0, 0), (70, 62, 5, -90, 0, 0),
+                          (70, 52, 5, -90, 0, 0), (70, 42, 5, -90, 0, 0),
+                          (70, 32, 5, -90, 0, 0), (70, 22, 5, -90, 0, 0)]
 LawbotBossChairRow1PosB = (59.299999999999997, 48, 14.050000000000001)
-LawbotBossChairRow1PosA = (59.299999999999997, -
-                           18.199999999999999, 14.050000000000001)
+LawbotBossChairRow1PosA = (59.299999999999997, -18.199999999999999,
+                           14.050000000000001)
 LawbotBossChairRow2PosB = (75.099999999999994, 48, 28.199999999999999)
-LawbotBossChairRow2PosA = (75.099999999999994, -
-                           18.199999999999999, 28.199999999999999)
+LawbotBossChairRow2PosA = (75.099999999999994, -18.199999999999999,
+                           28.199999999999999)
 LawbotBossCannonBallMax = 12
 LawbotBossJuryBoxStartPos = (94, -8, 5)
 LawbotBossJuryBoxRelativeEndPos = (30, 0, 12.645)
@@ -1011,53 +913,24 @@ PinballHouse = 6
 PinballFence = 7
 PinballBridge = 8
 PinballStatuary = 9
-PinballScoring = [
-    (100, 1),
-    (150, 1),
-    (200, 1),
-    (250, 1),
-    (350, 1),
-    (100, 1),
-    (50, 1),
-    (25, 1),
-    (100, 1),
-    (10, 1)]
+PinballScoring = [(100, 1), (150, 1), (200, 1), (250, 1), (350, 1), (100, 1),
+                  (50, 1), (25, 1), (100, 1), (10, 1)]
 PinballCannonBumperInitialPos = (0, -20, 40)
 RentalCop = 0
 RentalCannon = 1
 RentalGameTable = 2
-GlitchKillerZones = [
-    13300,
-    13400,
-    13500,
-    13600]
-ColorPlayer = (
-    0.29999999999999999,
-    0.69999999999999996,
-    0.29999999999999999,
-    1)
-ColorAvatar = (
-    0.29999999999999999,
-    0.29999999999999999,
-    0.69999999999999996,
-    1)
+GlitchKillerZones = [13300, 13400, 13500, 13600]
+ColorPlayer = (0.29999999999999999, 0.69999999999999996, 0.29999999999999999,
+               1)
+ColorAvatar = (0.29999999999999999, 0.29999999999999999, 0.69999999999999996,
+               1)
 ColorPet = (0.59999999999999998, 0.40000000000000002, 0.20000000000000001, 1)
-ColorFreeChat = (
-    0.29999999999999999,
-    0.29999999999999999,
-    0.80000000000000004,
-    1)
-ColorSpeedChat = (
-    0.20000000000000001,
-    0.59999999999999998,
-    0.40000000000000002,
-    1)
+ColorFreeChat = (0.29999999999999999, 0.29999999999999999, 0.80000000000000004,
+                 1)
+ColorSpeedChat = (0.20000000000000001, 0.59999999999999998,
+                  0.40000000000000002, 1)
 ColorNoChat = (0.80000000000000004, 0.5, 0.10000000000000001, 1)
-FactoryLaffMinimums = [
-    (0, 31),
-    (0, 66, 71),
-    (0, 81, 86, 96),
-    (0, 101, 106)]
+FactoryLaffMinimums = [(0, 31), (0, 66, 71), (0, 81, 86, 96), (0, 101, 106)]
 PICNIC_COUNTDOWN_TIME = 60
 BossbotRTIntroStartPosHpr = (0, -64, 0, 180, 0, 0)
 BossbotRTPreTwoPosHpr = (0, -20, 0, 180, 0, 0)
@@ -1077,12 +950,9 @@ DinerBattleBPosHpr = (-20, -240, 0, 0, 0, 0)
 BossbotBossMaxDamage = 500
 BossbotMaxSpeedDamage = 90
 BossbotSpeedRecoverRate = 20
-BossbotBossDifficultySettings = [
-    (8, 4, 11, 3, 30, 25),
-    (9, 5, 12, 6, 28, 26),
-    (10, 6, 11, 7, 26, 27),
-    (8, 8, 12, 8, 24, 28),
-    (13, 5, 12, 9, 22, 29)]
+BossbotBossDifficultySettings = [(8, 4, 11, 3, 30, 25), (9, 5, 12, 6, 28, 26),
+                                 (10, 6, 11, 7, 26, 27), (8, 8, 12, 8, 24, 28),
+                                 (13, 5, 12, 9, 22, 29)]
 BossbotRollSpeedMax = 22
 BossbotRollSpeedMin = 7.5
 BossbotTurnSpeedMax = 60
@@ -1102,22 +972,10 @@ OZ = 7
 DL = 8
 DefaultWantNewsPageSetting = 1
 gmMagicWordList = [
-    'restock',
-    'restockUber',
-    'autoRestock',
-    'resistanceRestock',
-    'restockSummons',
-    'uberDrop',
-    'rich',
-    'maxBankMoney',
-    'toonUp',
-    'rod',
-    'cogPageFull',
-    'pinkSlips',
-    'Tickets',
-    'newSummons',
-    'who',
-    'who all']
+    'restock', 'restockUber', 'autoRestock', 'resistanceRestock',
+    'restockSummons', 'uberDrop', 'rich', 'maxBankMoney', 'toonUp', 'rod',
+    'cogPageFull', 'pinkSlips', 'Tickets', 'newSummons', 'who', 'who all'
+]
 NewsPageScaleAdjust = 0.84999999999999998
 AnimPropTypes = Enum(('Unknown', 'Hydrant', 'Mailbox', 'Trashcan'), start=-1)
 EmblemTypes = Enum(('Silver', 'Gold'))
@@ -1125,50 +983,15 @@ NumEmblemTypes = 2
 DefaultMaxBankMoney = 12000
 DefaultBankItemId = 1350
 ToonAnimStates = set([
-    'off',
-    'neutral',
-    'victory',
-    'Happy',
-    'Sad',
-    'Catching',
-    'CatchEating',
-    'Sleep',
-    'walk',
-    'jumpSquat',
-    'jump',
-    'jumpAirborne',
-    'jumpLand',
-    'run',
-    'swim',
-    'swimhold',
-    'dive',
-    'cringe',
-    'OpenBook',
-    'ReadBook',
-    'CloseBook',
-    'TeleportOut',
-    'Died',
-    'TeleportedOut',
-    'TeleportIn',
-    'Emote',
-    'SitStart',
-    'Sit',
-    'Push',
-    'Squish',
-    'FallDown',
-    'GolfPuttLoop',
-    'GolfRotateLeft',
-    'GolfRotateRight',
-    'GolfPuttSwing',
-    'GolfGoodPutt',
-    'GolfBadPutt',
-    'Flattened',
-    'CogThiefRunning',
-    'ScientistJealous',
-    'ScientistEmcee',
-    'ScientistWork',
-    'ScientistLessWork',
-    'ScientistPlay'])
+    'off', 'neutral', 'victory', 'Happy', 'Sad', 'Catching', 'CatchEating',
+    'Sleep', 'walk', 'jumpSquat', 'jump', 'jumpAirborne', 'jumpLand', 'run',
+    'swim', 'swimhold', 'dive', 'cringe', 'OpenBook', 'ReadBook', 'CloseBook',
+    'TeleportOut', 'Died', 'TeleportedOut', 'TeleportIn', 'Emote', 'SitStart',
+    'Sit', 'Push', 'Squish', 'FallDown', 'GolfPuttLoop', 'GolfRotateLeft',
+    'GolfRotateRight', 'GolfPuttSwing', 'GolfGoodPutt', 'GolfBadPutt',
+    'Flattened', 'CogThiefRunning', 'ScientistJealous', 'ScientistEmcee',
+    'ScientistWork', 'ScientistLessWork', 'ScientistPlay'
+])
 AV_FLAG_REASON_TOUCH = 1
 AV_FLAG_HISTORY_LEN = 500
 AV_TOUCH_CHECK_DELAY_AI = 3.0

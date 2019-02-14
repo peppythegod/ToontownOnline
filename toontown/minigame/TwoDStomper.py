@@ -1,5 +1,3 @@
-
-
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
@@ -56,10 +54,8 @@ class TwoDStomper(DirectObject):
 
     def setupStomper(self, stomperAttribs):
         stomperType = stomperAttribs[0]
-        self.pos = Point3(
-            stomperAttribs[1][0],
-            stomperAttribs[1][1],
-            stomperAttribs[1][2])
+        self.pos = Point3(stomperAttribs[1][0], stomperAttribs[1][1],
+                          stomperAttribs[1][2])
         self.period = stomperAttribs[2]
         typeAttribs = ToonBlitzGlobals.StomperTypes[stomperType]
         self.motionType = typeAttribs[0]
@@ -92,7 +88,6 @@ class TwoDStomper(DirectObject):
         self.smoke.setDepthWrite(False)
 
     def getMotionIval(self):
-
         def motionFunc(t, self=self):
             stickTime = 0.20000000000000001
             turnaround = 0.94999999999999996
@@ -103,44 +98,40 @@ class TwoDStomper(DirectObject):
                     self.stomperState = STUCK_DOWN
 
             elif t < turnaround:
-                self.head.setFluidZ(
-                    (t - stickTime) * -(self.range) / (turnaround - stickTime) + self.headEndZ)
+                self.head.setFluidZ((t - stickTime) * -(self.range) /
+                                    (turnaround - stickTime) + self.headEndZ)
                 if self.stomperState != GOING_UP:
                     self.stomperState = GOING_UP
 
             elif t > turnaround:
-                self.head.setFluidZ(-(self.range) + (t - turnaround)
-                                    * self.range / (1 - turnaround) + self.headEndZ)
+                self.head.setFluidZ(-(self.range) +
+                                    (t - turnaround) * self.range /
+                                    (1 - turnaround) + self.headEndZ)
                 if self.stomperState != GOING_DOWN:
                     self.stomperState = GOING_DOWN
                     self.checkSquashedToon()
 
         motionIval = Sequence(
-            LerpFunctionInterval(
-                motionFunc,
-                duration=self.period))
+            LerpFunctionInterval(motionFunc, duration=self.period))
         return motionIval
 
     def getSmokeTrack(self):
         smokeTrack = Sequence(
             Parallel(
-                LerpScaleInterval(
-                    self.smoke, 0.20000000000000001, Point3(
-                        1, 1, 1.5)), LerpColorScaleInterval(
-                    self.smoke, 0.40000000000000002, VBase4(
-                        1, 1, 1, 0), VBase4(
-                            1, 1, 1, 0.5))), Func(
-                                self.smoke.reparentTo, hidden), Func(
-                                    self.smoke.clearColorScale))
+                LerpScaleInterval(self.smoke, 0.20000000000000001,
+                                  Point3(1, 1, 1.5)),
+                LerpColorScaleInterval(self.smoke, 0.40000000000000002,
+                                       VBase4(1, 1, 1, 0), VBase4(
+                                           1, 1, 1, 0.5))),
+            Func(self.smoke.reparentTo, hidden),
+            Func(self.smoke.clearColorScale))
         return smokeTrack
 
     def adjustShaftScale(self, t):
         heightDiff = self.head.getZ() - self.headStartZ
-        self.shaft.setScale(1, 1, self.shaftStartScaleZ +
-                            heightDiff *
-                            (self.shaftEndScaleZ -
-                             self.shaftStartScaleZ) /
-                            self.range)
+        self.shaft.setScale(
+            1, 1, self.shaftStartScaleZ + heightDiff *
+            (self.shaftEndScaleZ - self.shaftStartScaleZ) / self.range)
 
     def adjustCollSolidHeight(self, t):
         heightDiff = self.head.getZ() - self.headStartZ
@@ -162,18 +153,12 @@ class TwoDStomper(DirectObject):
                     self.stompSound,
                     node=self.model,
                     volume=0.29999999999999999),
-                Func(
-                    self.smoke.reparentTo,
-                    self.model),
-                self.getSmokeTrack()))
+                Func(self.smoke.reparentTo, self.model), self.getSmokeTrack()))
+        self.ival.append(
+            LerpFunctionInterval(self.adjustShaftScale, duration=self.period))
         self.ival.append(
             LerpFunctionInterval(
-                self.adjustShaftScale,
-                duration=self.period))
-        self.ival.append(
-            LerpFunctionInterval(
-                self.adjustCollSolidHeight,
-                duration=self.period))
+                self.adjustCollSolidHeight, duration=self.period))
         self.ival.loop()
         self.ival.setT(elapsedTime)
 

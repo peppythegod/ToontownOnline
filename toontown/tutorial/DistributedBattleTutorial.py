@@ -10,5 +10,5 @@ class DistributedBattleTutorial(DistributedBattle.DistributedBattle):
         self.townBattle.timer.hide()
 
     def playReward(self, ts):
-        self.movie.playTutorialReward(
-            ts, self.uniqueName('reward'), self.handleRewardDone)
+        self.movie.playTutorialReward(ts, self.uniqueName('reward'),
+                                      self.handleRewardDone)

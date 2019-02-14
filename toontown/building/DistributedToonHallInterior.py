@@ -19,96 +19,50 @@ from toontown.toon import ToonHead
 
 
 class DistributedToonHallInterior(DistributedToonInterior):
-
     def __init__(self, cr):
         DistributedToonInterior.__init__(self, cr)
         self.sillyFSM = ClassicFSM.ClassicFSM('SillyOMeter', [
             State.State('Setup', self.enterSetup, self.exitSetup, [
-                'Phase0',
-                'Phase1',
-                'Phase2',
-                'Phase3',
-                'Phase4',
-                'Phase5',
-                'Phase6',
-                'Phase7',
-                'Phase8',
-                'Phase9',
-                'Phase10',
-                'Phase11',
-                'Phase12',
-                'Phase13',
-                'Phase14',
-                'Phase15',
-                'Flat',
-                'Off']),
-            State.State('Phase0', self.enterPhase0, self.exitPhase0, [
-                'Phase1',
-                'Flat',
-                'Off']),
-            State.State('Phase1', self.enterPhase1, self.exitPhase1, [
-                'Phase2',
-                'Flat',
-                'Off']),
-            State.State('Phase2', self.enterPhase2, self.exitPhase2, [
-                'Phase3',
-                'Flat',
-                'Off']),
-            State.State('Phase3', self.enterPhase3, self.exitPhase3, [
-                'Phase4',
-                'Flat',
-                'Off']),
-            State.State('Phase4', self.enterPhase4, self.exitPhase4, [
-                'Phase5',
-                'Flat',
-                'Off']),
-            State.State('Phase5', self.enterPhase5, self.exitPhase5, [
-                'Phase6',
-                'Flat',
-                'Off']),
-            State.State('Phase6', self.enterPhase6, self.exitPhase6, [
-                'Phase7',
-                'Flat',
-                'Off']),
-            State.State('Phase7', self.enterPhase7, self.exitPhase7, [
-                'Phase8',
-                'Flat',
-                'Off']),
-            State.State('Phase8', self.enterPhase8, self.exitPhase8, [
-                'Phase9',
-                'Flat',
-                'Off']),
-            State.State('Phase9', self.enterPhase9, self.exitPhase9, [
-                'Phase10',
-                'Flat',
-                'Off']),
-            State.State('Phase10', self.enterPhase10, self.exitPhase10, [
-                'Phase11',
-                'Flat',
-                'Off']),
-            State.State('Phase11', self.enterPhase11, self.exitPhase11, [
-                'Phase12',
-                'Flat',
-                'Off']),
-            State.State('Phase12', self.enterPhase12, self.exitPhase12, [
-                'Phase13',
-                'Flat',
-                'Off']),
-            State.State('Phase13', self.enterPhase13, self.exitPhase13, [
-                'Phase14',
-                'Flat',
-                'Off']),
-            State.State('Phase14', self.enterPhase14, self.exitPhase14, [
-                'Phase15',
-                'Flat',
-                'Off']),
-            State.State('Phase15', self.enterPhase15, self.exitPhase15, [
-                'Flat',
-                'Off']),
-            State.State('Flat', self.enterFlat, self.exitFlat, [
-                'Off',
-                'Phase0']),
-            State.State('Off', self.enterOff, self.exitOff, [])], 'Setup', 'Off')
+                'Phase0', 'Phase1', 'Phase2', 'Phase3', 'Phase4', 'Phase5',
+                'Phase6', 'Phase7', 'Phase8', 'Phase9', 'Phase10', 'Phase11',
+                'Phase12', 'Phase13', 'Phase14', 'Phase15', 'Flat', 'Off'
+            ]),
+            State.State('Phase0', self.enterPhase0, self.exitPhase0,
+                        ['Phase1', 'Flat', 'Off']),
+            State.State('Phase1', self.enterPhase1, self.exitPhase1,
+                        ['Phase2', 'Flat', 'Off']),
+            State.State('Phase2', self.enterPhase2, self.exitPhase2,
+                        ['Phase3', 'Flat', 'Off']),
+            State.State('Phase3', self.enterPhase3, self.exitPhase3,
+                        ['Phase4', 'Flat', 'Off']),
+            State.State('Phase4', self.enterPhase4, self.exitPhase4,
+                        ['Phase5', 'Flat', 'Off']),
+            State.State('Phase5', self.enterPhase5, self.exitPhase5,
+                        ['Phase6', 'Flat', 'Off']),
+            State.State('Phase6', self.enterPhase6, self.exitPhase6,
+                        ['Phase7', 'Flat', 'Off']),
+            State.State('Phase7', self.enterPhase7, self.exitPhase7,
+                        ['Phase8', 'Flat', 'Off']),
+            State.State('Phase8', self.enterPhase8, self.exitPhase8,
+                        ['Phase9', 'Flat', 'Off']),
+            State.State('Phase9', self.enterPhase9, self.exitPhase9,
+                        ['Phase10', 'Flat', 'Off']),
+            State.State('Phase10', self.enterPhase10, self.exitPhase10,
+                        ['Phase11', 'Flat', 'Off']),
+            State.State('Phase11', self.enterPhase11, self.exitPhase11,
+                        ['Phase12', 'Flat', 'Off']),
+            State.State('Phase12', self.enterPhase12, self.exitPhase12,
+                        ['Phase13', 'Flat', 'Off']),
+            State.State('Phase13', self.enterPhase13, self.exitPhase13,
+                        ['Phase14', 'Flat', 'Off']),
+            State.State('Phase14', self.enterPhase14, self.exitPhase14,
+                        ['Phase15', 'Flat', 'Off']),
+            State.State('Phase15', self.enterPhase15, self.exitPhase15,
+                        ['Flat', 'Off']),
+            State.State('Flat', self.enterFlat, self.exitFlat,
+                        ['Off', 'Phase0']),
+            State.State('Off', self.enterOff, self.exitOff, [])
+        ], 'Setup', 'Off')
 
     def setup(self):
         self.dnaStore = base.cr.playGame.dnaStore
@@ -127,14 +81,12 @@ class DistributedToonHallInterior(DistributedToonInterior):
         door = self.dnaStore.findNode(doorModelName)
         door_origin = render.find('**/door_origin;+s')
         doorNP = door.copyTo(door_origin)
-        door_origin.setScale(
-            0.80000000000000004,
-            0.80000000000000004,
-            0.80000000000000004)
+        door_origin.setScale(0.80000000000000004, 0.80000000000000004,
+                             0.80000000000000004)
         door_origin.setPos(door_origin, 0, -0.025000000000000001, 0)
         color = self.randomGenerator.choice(self.colors['TI_door'])
-        DNADoor.setupDoor(doorNP, self.interior, door_origin,
-                          self.dnaStore, str(self.block), color)
+        DNADoor.setupDoor(doorNP, self.interior, door_origin, self.dnaStore,
+                          str(self.block), color)
         doorFrame = doorNP.find('door_*_flat')
         doorFrame.wrtReparentTo(self.interior)
         doorFrame.setColor(color)
@@ -155,12 +107,12 @@ class DistributedToonHallInterior(DistributedToonInterior):
         try:
             gotoPhase = 'Phase' + str(newPhase)
             if self.sillyFSM.hasStateNamed(gotoPhase) and not (
-                    self.sillyFSM.getCurrentState() == self.sillyFSM.getStateNamed(gotoPhase)):
+                    self.sillyFSM.getCurrentState() ==
+                    self.sillyFSM.getStateNamed(gotoPhase)):
                 self.sillyFSM.request(gotoPhase)
         except BaseException:
             self.notify.warning(
-                'Illegal phase transition requested %s' %
-                newPhase)
+                'Illegal phase transition requested %s' % newPhase)
 
     def startIfNeeded(self):
 
@@ -177,16 +129,15 @@ class DistributedToonHallInterior(DistributedToonInterior):
         result = -1
         enoughInfoToRun = False
         if base.cr.newsManager.isHolidayRunning(
-                ToontownGlobals.SILLYMETER_HOLIDAY) or base.cr.newsManager.isHolidayRunning(
+                ToontownGlobals.SILLYMETER_HOLIDAY
+        ) or base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_EXT_HOLIDAY):
-            if hasattr(
-                    base.cr,
-                    'SillyMeterMgr') and not base.cr.SillyMeterMgr.isDisabled():
+            if hasattr(base.cr, 'SillyMeterMgr'
+                       ) and not base.cr.SillyMeterMgr.isDisabled():
                 enoughInfoToRun = True
             elif hasattr(base.cr, 'SillyMeterMgr'):
                 self.notify.debug(
-                    'isDisabled = %s' %
-                    base.cr.SillyMeterMgr.isDisabled())
+                    'isDisabled = %s' % base.cr.SillyMeterMgr.isDisabled())
             else:
                 self.notify.debug('base.cr does not have SillyMeterMgr')
         else:
@@ -201,16 +152,15 @@ class DistributedToonHallInterior(DistributedToonInterior):
         result = -1
         valid = False
         if base.cr.newsManager.isHolidayRunning(
-                ToontownGlobals.SILLYMETER_HOLIDAY) or base.cr.newsManager.isHolidayRunning(
+                ToontownGlobals.SILLYMETER_HOLIDAY
+        ) or base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_EXT_HOLIDAY):
-            if hasattr(
-                    base.cr,
-                    'SillyMeterMgr') and not base.cr.SillyMeterMgr.isDisabled():
+            if hasattr(base.cr, 'SillyMeterMgr'
+                       ) and not base.cr.SillyMeterMgr.isDisabled():
                 valid = True
             elif hasattr(base.cr, 'SillyMeterMgr'):
                 self.notify.debug(
-                    'isDisabled = %s' %
-                    base.cr.SillyMeterMgr.isDisabled())
+                    'isDisabled = %s' % base.cr.SillyMeterMgr.isDisabled())
             else:
                 self.notify.debug('base.cr does not have SillyMeterMgr')
         else:
@@ -225,16 +175,15 @@ class DistributedToonHallInterior(DistributedToonInterior):
         result = -1
         valid = False
         if base.cr.newsManager.isHolidayRunning(
-                ToontownGlobals.SILLYMETER_HOLIDAY) or base.cr.newsManager.isHolidayRunning(
+                ToontownGlobals.SILLYMETER_HOLIDAY
+        ) or base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_EXT_HOLIDAY):
-            if hasattr(
-                    base.cr,
-                    'SillyMeterMgr') and not base.cr.SillyMeterMgr.isDisabled():
+            if hasattr(base.cr, 'SillyMeterMgr'
+                       ) and not base.cr.SillyMeterMgr.isDisabled():
                 valid = True
             elif hasattr(base.cr, 'SillyMeterMgr'):
                 self.notify.debug(
-                    'isDisabled = %s' %
-                    base.cr.SillyMeterMgr.isDisabled())
+                    'isDisabled = %s' % base.cr.SillyMeterMgr.isDisabled())
             else:
                 self.notify.debug('base.cr does not have SillyMeterMgr')
         else:
@@ -260,15 +209,22 @@ class DistributedToonHallInterior(DistributedToonInterior):
         ropes = loader.loadModel('phase_4/models/modules/tt_m_ara_int_ropes')
         ropes.reparentTo(self.interior)
         self.sillyMeter = Actor.Actor(
-            'phase_4/models/props/tt_a_ara_ttc_sillyMeter_default',
-            {
-                'arrowTube': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_arrowFluid',
-                'phaseOne': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseOne',
-                'phaseTwo': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseTwo',
-                'phaseThree': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseThree',
-                'phaseFour': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFour',
-                'phaseFourToFive': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFourToFive',
-                'phaseFive': 'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFive'})
+            'phase_4/models/props/tt_a_ara_ttc_sillyMeter_default', {
+                'arrowTube':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_arrowFluid',
+                'phaseOne':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseOne',
+                'phaseTwo':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseTwo',
+                'phaseThree':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseThree',
+                'phaseFour':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFour',
+                'phaseFourToFive':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFourToFive',
+                'phaseFive':
+                'phase_4/models/props/tt_a_ara_ttc_sillyMeter_phaseFive'
+            })
         self.sillyMeter.reparentTo(self.interior)
         self.flatSillyMeter = loader.loadModel(
             'phase_3.5/models/modules/tt_m_ara_int_sillyMeterFlat')
@@ -306,19 +262,15 @@ class DistributedToonHallInterior(DistributedToonInterior):
             '**/uvj_progressBar')[1]
         thermometerMesh = self.sillyMeter.find('**/tube')
         thermometerMesh.setTexProjector(
-            thermometerMesh.findTextureStage('default'),
-            thermometerLocator,
+            thermometerMesh.findTextureStage('default'), thermometerLocator,
             self.sillyMeter)
         self.sillyMeter.flattenMedium()
-        self.sillyMeter.makeSubpart('arrow', [
-            'uvj_progressBar*',
-            'def_springA'])
-        self.sillyMeter.makeSubpart('meter', [
-            'def_pivot'], [
-            'uvj_progressBar*',
-            'def_springA'])
-        self.audio3d = Audio3DManager.Audio3DManager(
-            base.sfxManagerList[0], camera)
+        self.sillyMeter.makeSubpart('arrow',
+                                    ['uvj_progressBar*', 'def_springA'])
+        self.sillyMeter.makeSubpart('meter', ['def_pivot'],
+                                    ['uvj_progressBar*', 'def_springA'])
+        self.audio3d = Audio3DManager.Audio3DManager(base.sfxManagerList[0],
+                                                     camera)
         self.phase1Sfx = self.audio3d.loadSfx(
             'phase_4/audio/sfx/tt_s_prp_sillyMeterPhaseOne.mp3')
         self.phase1Sfx.setLoop(True)
@@ -363,12 +315,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                 startFrame=1,
                 endFrame=30),
             Sequence(
-                Func(
-                    self.phase1Sfx.play),
-                Func(
-                    self.audio3d.attachSoundToObject,
-                    self.phase1Sfx,
-                    self.sillyMeter)))
+                Func(self.phase1Sfx.play),
+                Func(self.audio3d.attachSoundToObject, self.phase1Sfx,
+                     self.sillyMeter)))
         self.animSeq.start()
         self.sillyMeter.loop('phaseOne', partName='meter')
         self.accept('SillyMeterPhase', self.selectPhase)
@@ -395,9 +344,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=31,
-                    endFrame=42),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=42), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -408,12 +355,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=42,
                     endFrame=71),
                 Sequence(
-                    Func(
-                        self.phase1Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase1Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase1Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase1Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.sillyMeter.loop('phaseOne', partName='meter')
         self.accept('SillyMeterPhase', self.selectPhase)
@@ -441,12 +385,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                 startFrame=42,
                 endFrame=71),
             Sequence(
-                Func(
-                    self.phase1Sfx.play),
-                Func(
-                    self.audio3d.attachSoundToObject,
-                    self.phase1Sfx,
-                    self.sillyMeter)))
+                Func(self.phase1Sfx.play),
+                Func(self.audio3d.attachSoundToObject, self.phase1Sfx,
+                     self.sillyMeter)))
         self.animSeq.start()
         self.smPhase2.show()
         self.sillyMeter.loop('phaseOne', partName='meter')
@@ -474,9 +415,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=72,
-                    endFrame=83),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=83), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -487,12 +426,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=83,
                     endFrame=112),
                 Sequence(
-                    Func(
-                        self.phase1Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase1Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase1Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase1Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.sillyMeter.loop('phaseOne', partName='meter')
@@ -520,9 +456,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=113,
-                    endFrame=124),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=124), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -533,12 +467,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=124,
                     endFrame=153),
                 Sequence(
-                    Func(
-                        self.phase1Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase1Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase1Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase1Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.sillyMeter.loop('phaseOne', partName='meter')
@@ -566,9 +497,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=154,
-                    endFrame=165),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=165), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -579,12 +508,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=165,
                     endFrame=194),
                 Sequence(
-                    Func(
-                        self.phase2Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase2Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase2Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase2Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.sillyMeter.loop('phaseTwo', partName='meter')
@@ -612,9 +538,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=195,
-                    endFrame=206),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=206), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -625,12 +549,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=206,
                     endFrame=235),
                 Sequence(
-                    Func(
-                        self.phase2Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase2Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase2Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase2Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.sillyMeter.loop('phaseTwo', partName='meter')
@@ -658,9 +579,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=236,
-                    endFrame=247),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=247), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -671,12 +590,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=247,
                     endFrame=276),
                 Sequence(
-                    Func(
-                        self.phase3Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase3Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase3Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase3Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -706,9 +622,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=277,
-                    endFrame=288),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=288), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -719,12 +633,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=288,
                     endFrame=317),
                 Sequence(
-                    Func(
-                        self.phase3Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase3Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase3Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase3Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -754,9 +665,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=318,
-                    endFrame=329),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=329), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -767,12 +676,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=329,
                     endFrame=358),
                 Sequence(
-                    Func(
-                        self.phase3Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase3Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase3Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase3Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -802,9 +708,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=359,
-                    endFrame=370),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=370), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -815,12 +719,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=370,
                     endFrame=399),
                 Sequence(
-                    Func(
-                        self.phase4Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase4Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase4Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase4Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -852,9 +753,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=400,
-                    endFrame=411),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=411), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -865,12 +764,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=411,
                     endFrame=440),
                 Sequence(
-                    Func(
-                        self.phase4Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase4Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase4Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase4Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -904,9 +800,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     partName='arrow',
                     constrainedLoop=0,
                     startFrame=441,
-                    endFrame=452),
-                Func(
-                    self.arrowSfx.play)),
+                    endFrame=452), Func(self.arrowSfx.play)),
             Parallel(
                 ActorInterval(
                     self.sillyMeter,
@@ -917,12 +811,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=452,
                     endFrame=481),
                 Sequence(
-                    Func(
-                        self.phase4Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase4Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase4Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase4Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -948,8 +839,7 @@ class DistributedToonHallInterior(DistributedToonInterior):
 
         self.animSeq = Sequence(
             Parallel(
-                Func(
-                    self.phase4To5Sfx.play),
+                Func(self.phase4To5Sfx.play),
                 ActorInterval(
                     self.sillyMeter,
                     'phaseFourToFive',
@@ -965,12 +855,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                     startFrame=1,
                     endFrame=48),
                 Sequence(
-                    Func(
-                        self.phase5Sfx.play),
-                    Func(
-                        self.audio3d.attachSoundToObject,
-                        self.phase5Sfx,
-                        self.sillyMeter))))
+                    Func(self.phase5Sfx.play),
+                    Func(self.audio3d.attachSoundToObject, self.phase5Sfx,
+                         self.sillyMeter))))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -1002,12 +889,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                 startFrame=1,
                 endFrame=48),
             Sequence(
-                Func(
-                    self.phase5Sfx.play),
-                Func(
-                    self.audio3d.attachSoundToObject,
-                    self.phase5Sfx,
-                    self.sillyMeter)))
+                Func(self.phase5Sfx.play),
+                Func(self.audio3d.attachSoundToObject, self.phase5Sfx,
+                     self.sillyMeter)))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -1039,12 +923,9 @@ class DistributedToonHallInterior(DistributedToonInterior):
                 startFrame=1,
                 endFrame=48),
             Sequence(
-                Func(
-                    self.phase5Sfx.play),
-                Func(
-                    self.audio3d.attachSoundToObject,
-                    self.phase5Sfx,
-                    self.sillyMeter)))
+                Func(self.phase5Sfx.play),
+                Func(self.audio3d.attachSoundToObject, self.phase5Sfx,
+                     self.sillyMeter)))
         self.animSeq.start()
         self.smPhase2.show()
         self.smPhase3.show()
@@ -1102,12 +983,8 @@ class DistributedToonHallInterior(DistributedToonInterior):
         pass
 
     def enterToon(self):
-        self.toonhallView = (
-            Point3(
-                0, -5, 3), Point3(
-                0, 12.0, 7.0), Point3(
-                0.0, 10.0, 5.0), Point3(
-                    0.0, 10.0, 5.0), 1)
+        self.toonhallView = (Point3(0, -5, 3), Point3(0, 12.0, 7.0),
+                             Point3(0.0, 10.0, 5.0), Point3(0.0, 10.0, 5.0), 1)
         self.setupCollisions(2.5)
         self.firstEnter = 1
         self.accept('CamChangeColl' + '-into', self.handleCloseToWall)
@@ -1147,8 +1024,8 @@ class DistributedToonHallInterior(DistributedToonInterior):
         cn.addSolid(cs)
         cn.setFromCollideMask(ToontownGlobals.WallBitmask)
         cn.setIntoCollideMask(BitMask32.allOff())
-        self.camChangeNP = base.localAvatar.getPart(
-            'torso', '1000').attachNewNode(cn)
+        self.camChangeNP = base.localAvatar.getPart('torso',
+                                                    '1000').attachNewNode(cn)
         self.cHandlerEvent = CollisionHandlerEvent()
         self.cHandlerEvent.addInPattern('%fn-into')
         self.cHandlerEvent.addOutPattern('%fn-exit')
@@ -1164,7 +1041,6 @@ class DistributedToonHallInterior(DistributedToonInterior):
             del self.cHandlerEvent
 
     def cleanUpSounds(self):
-
         def __cleanUpSound__(soundFile):
             if soundFile.status() == soundFile.PLAYING:
                 soundFile.setLoop(False)

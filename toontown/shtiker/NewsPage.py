@@ -36,8 +36,8 @@ class NewsPage(ShtikerPage.ShtikerPage):
                 start = datetime.datetime.now()
                 self.newsFrame = DirectNewsFrame.DirectNewsFrame(parent=self)
                 ending = datetime.datetime.now()
-                self.notify.info('time to load news = %s' %
-                                 str(ending - start))
+                self.notify.info(
+                    'time to load news = %s' % str(ending - start))
             else:
                 self.newsFrame = InGameNewsFrame.InGameNewsFrame(parent=self)
                 self.newsFrame.activate()
@@ -63,8 +63,7 @@ class NewsPage(ShtikerPage.ShtikerPage):
 
             self.newsFrame.activate()
             base.setCellsAvailable(base.leftCells, 0)
-            base.setCellsAvailable([
-                base.rightCells[1]], 0)
+            base.setCellsAvailable([base.rightCells[1]], 0)
             localAvatar.book.bookCloseButton.hide()
             localAvatar.setLastTimeReadNews(
                 base.cr.toontownTimeManager.getCurServerDateTime())
@@ -79,8 +78,7 @@ class NewsPage(ShtikerPage.ShtikerPage):
         if HaveNewsFrame:
             self.newsFrame.deactivate()
             base.setCellsAvailable(base.leftCells, 1)
-            base.setCellsAvailable([
-                base.rightCells[1]], 1)
+            base.setCellsAvailable([base.rightCells[1]], 1)
             if localAvatar.book.shouldBookButtonBeHidden():
                 localAvatar.book.bookCloseButton.hide()
             else:

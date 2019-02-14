@@ -1,4 +1,3 @@
-
 def stubFunction(*args):
     pass
 

@@ -18,39 +18,29 @@ class TrackPoster(DirectFrame):
             parent=self,
             relief=None,
             image=bookModel.find('**/questCard'),
-            image_scale=(
-                0.80000000000000004,
-                0.57999999999999996,
-                0.57999999999999996))
+            image_scale=(0.80000000000000004, 0.57999999999999996,
+                         0.57999999999999996))
         invModel = loader.loadModel('phase_3.5/models/gui/inventory_icons')
-        iconGeom = invModel.find(
-            '**/' + ToontownBattleGlobals.AvPropsNew[trackId][1])
+        iconGeom = invModel.find('**/' +
+                                 ToontownBattleGlobals.AvPropsNew[trackId][1])
         invModel.removeNode()
         self.pictureFrame = DirectFrame(
             parent=self.poster,
             relief=None,
             image=bookModel.find('**/questPictureFrame'),
             image_scale=0.25,
-            image_color=(
-                0.45000000000000001,
-                0.80000000000000004,
-                0.45000000000000001,
-                1),
+            image_color=(0.45000000000000001, 0.80000000000000004,
+                         0.45000000000000001, 1),
             text=trackName,
             text_font=ToontownGlobals.getInterfaceFont(),
-            text_pos=(
-                0,
-                -0.16),
+            text_pos=(0, -0.16),
             text_fg=self.normalTextColor,
             text_scale=0.050000000000000003,
             text_align=TextNode.ACenter,
             text_wordwrap=8.0,
             textMayChange=0,
             geom=iconGeom,
-            pos=(
-                -0.20000000000000001,
-                0,
-                0.059999999999999998))
+            pos=(-0.20000000000000001, 0, 0.059999999999999998))
         bookModel.removeNode()
         if trackId == ToontownBattleGlobals.HEAL_TRACK:
             help = TTLocalizer.TrackChoiceGuiHEAL
@@ -64,79 +54,61 @@ class TrackPoster(DirectFrame):
             help = TTLocalizer.TrackChoiceGuiDROP
         else:
             help = ''
-        self.helpText = DirectFrame(parent=self.poster,
-                                    relief=None,
-                                    text=help,
-                                    text_font=ToontownGlobals.getInterfaceFont(),
-                                    text_fg=self.normalTextColor,
-                                    text_scale=0.050000000000000003,
-                                    text_align=TextNode.ALeft,
-                                    text_wordwrap=8.0,
-                                    textMayChange=0,
-                                    pos=(-0.050000000000000003,
-                                         0,
-                                         0.14000000000000001))
+        self.helpText = DirectFrame(
+            parent=self.poster,
+            relief=None,
+            text=help,
+            text_font=ToontownGlobals.getInterfaceFont(),
+            text_fg=self.normalTextColor,
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ALeft,
+            text_wordwrap=8.0,
+            textMayChange=0,
+            pos=(-0.050000000000000003, 0, 0.14000000000000001))
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         self.chooseButton = DirectButton(
             parent=self.poster,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
-            image_scale=(
-                0.69999999999999996,
-                1,
-                1),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
+            image_scale=(0.69999999999999996, 1, 1),
             text=TTLocalizer.TrackChoiceGuiChoose,
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
+            text_pos=(0, -0.02),
             command=callback,
             extraArgs=[trackId],
-            pos=(
-                0,
-                0,
-                -0.16),
+            pos=(0, 0, -0.16),
             scale=0.80000000000000004)
         guiButton.removeNode()
 
 
 class TrackChoiceGui(DirectFrame):
-
     def __init__(self, tracks, timeout):
         DirectFrame.__init__(
-            self, relief=None, geom=DGG.getDefaultDialogGeom(), geom_color=Vec4(
-                0.80000000000000004, 0.59999999999999998, 0.40000000000000002, 1), geom_scale=(
-                1.5, 1, 0.90000000000000002), geom_hpr=(
-                0, 0, -90), pos=(
-                    -0.84999999999999998, 0, 0))
+            self,
+            relief=None,
+            geom=DGG.getDefaultDialogGeom(),
+            geom_color=Vec4(0.80000000000000004, 0.59999999999999998,
+                            0.40000000000000002, 1),
+            geom_scale=(1.5, 1, 0.90000000000000002),
+            geom_hpr=(0, 0, -90),
+            pos=(-0.84999999999999998, 0, 0))
         self.initialiseoptions(TrackChoiceGui)
         guiButton = loader.loadModel('phase_3/models/gui/quit_button')
         self.cancelButton = DirectButton(
             parent=self,
             relief=None,
-            image=(
-                guiButton.find('**/QuitBtn_UP'),
-                guiButton.find('**/QuitBtn_DN'),
-                guiButton.find('**/QuitBtn_RLVR')),
-            image_scale=(
-                0.69999999999999996,
-                1,
-                1),
+            image=(guiButton.find('**/QuitBtn_UP'),
+                   guiButton.find('**/QuitBtn_DN'),
+                   guiButton.find('**/QuitBtn_RLVR')),
+            image_scale=(0.69999999999999996, 1, 1),
             text=TTLocalizer.TrackChoiceGuiCancel,
-            pos=(
-                0.14999999999999999,
-                0,
-                -0.625),
+            pos=(0.14999999999999999, 0, -0.625),
             text_scale=0.059999999999999998,
-            text_pos=(
-                0,
-                -0.02),
+            text_pos=(0, -0.02),
             command=self.chooseTrack,
-            extraArgs=[
-                -1])
+            extraArgs=[-1])
         guiButton.removeNode()
         self.timer = ToontownTimer.ToontownTimer()
         self.timer.reparentTo(self)
@@ -154,9 +126,7 @@ class TrackChoiceGui(DirectFrame):
 
     def chooseTrack(self, trackId):
         self.timer.stop()
-        messenger.send('chooseTrack', [
-            trackId])
+        messenger.send('chooseTrack', [trackId])
 
     def timeout(self):
-        messenger.send('chooseTrack', [
-            -1])
+        messenger.send('chooseTrack', [-1])

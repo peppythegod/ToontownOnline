@@ -10,8 +10,8 @@ from toontown.toonbase import TTLocalizer
 
 class StreetSign(DistributedObject.DistributedObject):
     RedownloadTaskName = 'RedownloadStreetSign'
-    StreetSignFileName = config.GetString(
-        'street-sign-filename', 'texture.jpg')
+    StreetSignFileName = config.GetString('street-sign-filename',
+                                          'texture.jpg')
     StreetSignBaseDir = config.GetString('street-sign-base-dir', 'sign')
     StreetSignUrl = base.config.GetString(
         'street-sign-url',
@@ -38,9 +38,8 @@ class StreetSign(DistributedObject.DistributedObject):
         http = HTTPClient.getGlobalPtr()
         self.url = self.StreetSignUrl + self.StreetSignFileName
         self.ch = http.makeChannel(True)
-        localFilename = Filename(
-            self.StreetSignBaseDir,
-            self.StreetSignFileName)
+        localFilename = Filename(self.StreetSignBaseDir,
+                                 self.StreetSignFileName)
         self.ch.getHeader(DocumentSpec(self.url))
         size = self.ch.getFileSize()
         doc = self.ch.getDocumentSpec()

@@ -43,24 +43,12 @@ class NewsPageButtonManager(FSM.FSM):
         self.newIssueButton = DirectButton(
             relief=None,
             sortOrder=DGG.BACKGROUND_SORT_INDEX - 1,
-            image=(
-                self.openNewNewsUp,
-                self.openNewNewsHover,
-                self.openNewNewsHover),
-            text=(
-                '',
-                TTLocalizer.EventsPageNewsTabName,
-                TTLocalizer.EventsPageNewsTabName),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            image=(self.openNewNewsUp, self.openNewNewsHover,
+                   self.openNewNewsHover),
+            text=('', TTLocalizer.EventsPageNewsTabName,
+                  TTLocalizer.EventsPageNewsTabName),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
             text_scale=textScale,
             text_font=ToontownGlobals.getInterfaceFont(),
             pos=newPos,
@@ -68,20 +56,9 @@ class NewsPageButtonManager(FSM.FSM):
             command=self._NewsPageButtonManager__handleGotoNewsButton)
         self.gotoPrevPageButton = DirectButton(
             relief=None,
-            image=(
-                self.closeNewsUp,
-                self.closeNewsHover,
-                self.closeNewsHover),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            image=(self.closeNewsUp, self.closeNewsHover, self.closeNewsHover),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
             text_scale=textScale,
             text_font=ToontownGlobals.getInterfaceFont(),
             pos=shtickerBookPos,
@@ -89,20 +66,9 @@ class NewsPageButtonManager(FSM.FSM):
             command=self._NewsPageButtonManager__handleGotoPrevPageButton)
         self.goto3dWorldButton = DirectButton(
             relief=None,
-            image=(
-                self.closeNewsUp,
-                self.closeNewsHover,
-                self.closeNewsHover),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
+            image=(self.closeNewsUp, self.closeNewsHover, self.closeNewsHover),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1),
             text_scale=textScale,
             text_font=ToontownGlobals.getInterfaceFont(),
             pos=shtickerBookPos,
@@ -112,16 +78,10 @@ class NewsPageButtonManager(FSM.FSM):
         self.gotoPrevPageButton.hide()
         self.goto3dWorldButton.hide()
         self.accept('newIssueOut', self.handleNewIssueOut)
-        bounce1Pos = VBase3(
-            newPos.getX(),
-            newPos.getY(),
-            newPos.getZ() +
-            0.021999999999999999)
-        bounce2Pos = VBase3(
-            newPos.getX(),
-            newPos.getY(),
-            newPos.getZ() +
-            0.014999999999999999)
+        bounce1Pos = VBase3(newPos.getX(), newPos.getY(),
+                            newPos.getZ() + 0.021999999999999999)
+        bounce2Pos = VBase3(newPos.getX(), newPos.getY(),
+                            newPos.getZ() + 0.014999999999999999)
         bounceIval = Sequence(
             LerpPosInterval(
                 self.newIssueButton,
@@ -144,26 +104,27 @@ class NewsPageButtonManager(FSM.FSM):
                 newPos,
                 blendType='easeIn'))
         self._NewsPageButtonManager__blinkIval = Sequence(
-            Func(
-                self._NewsPageButtonManager__showOpenEyes), Wait(2), bounceIval, Wait(0.5), Func(
-                self._NewsPageButtonManager__showClosedEyes), Wait(0.10000000000000001), Func(
-                self._NewsPageButtonManager__showOpenEyes), Wait(0.10000000000000001), Func(
-                    self._NewsPageButtonManager__showClosedEyes), Wait(0.10000000000000001))
+            Func(self._NewsPageButtonManager__showOpenEyes), Wait(2),
+            bounceIval, Wait(0.5),
+            Func(self._NewsPageButtonManager__showClosedEyes),
+            Wait(0.10000000000000001),
+            Func(self._NewsPageButtonManager__showOpenEyes),
+            Wait(0.10000000000000001),
+            Func(self._NewsPageButtonManager__showClosedEyes),
+            Wait(0.10000000000000001))
         self._NewsPageButtonManager__blinkIval.loop()
         self._NewsPageButtonManager__blinkIval.pause()
         self.buttonsLoaded = True
 
     def _NewsPageButtonManager__showOpenEyes(self):
-        self.newIssueButton['image'] = (
-            self.openNewNewsUp,
-            self.openNewNewsHover,
-            self.openNewNewsHover)
+        self.newIssueButton['image'] = (self.openNewNewsUp,
+                                        self.openNewNewsHover,
+                                        self.openNewNewsHover)
 
     def _NewsPageButtonManager__showClosedEyes(self):
-        self.newIssueButton['image'] = (
-            self.openNewNewsUpBlink,
-            self.openNewNewsHover,
-            self.openNewNewsHover)
+        self.newIssueButton['image'] = (self.openNewNewsUpBlink,
+                                        self.openNewNewsHover,
+                                        self.openNewNewsHover)
 
     def clearGoingToNewsInfo(self):
         self.goingToNewsPageFrom3dWorld = False
@@ -228,7 +189,8 @@ class NewsPageButtonManager(FSM.FSM):
         self._NewsPageButtonManager__blinkIval.pause()
 
     def isNewIssueButtonShown(self):
-        if localAvatar.getLastTimeReadNews() < base.cr.inGameNewsMgr.getLatestIssue():
+        if localAvatar.getLastTimeReadNews(
+        ) < base.cr.inGameNewsMgr.getLatestIssue():
             return True
 
         return False
@@ -243,7 +205,8 @@ class NewsPageButtonManager(FSM.FSM):
         if not self.buttonsLoaded:
             return None
 
-        if localAvatar.getLastTimeReadNews() < base.cr.inGameNewsMgr.getLatestIssue():
+        if localAvatar.getLastTimeReadNews(
+        ) < base.cr.inGameNewsMgr.getLatestIssue():
             self._NewsPageButtonManager__showNewIssueButton()
             self._NewsPageButtonManager__blinkIval.resume()
         else:
@@ -295,16 +258,17 @@ class NewsPageButtonManager(FSM.FSM):
         if not self.buttonsLoaded:
             return None
 
-        if base.cr and base.cr.playGame and base.cr.playGame.getPlace() and hasattr(
-                base.cr.playGame.getPlace(), 'fsm') and base.cr.playGame.getPlace().fsm:
+        if base.cr and base.cr.playGame and base.cr.playGame.getPlace(
+        ) and hasattr(base.cr.playGame.getPlace(),
+                      'fsm') and base.cr.playGame.getPlace().fsm:
             fsm = base.cr.playGame.getPlace().fsm
             curState = fsm.getCurrentState().getName()
             book = localAvatar.book
             if curState == 'walk':
                 if localAvatar.tutorialAck and not (
                         localAvatar.isDisguised) and not isinstance(
-                        base.cr.playGame.getPlace(),
-                        CogHQBossBattle.CogHQBossBattle):
+                            base.cr.playGame.getPlace(),
+                            CogHQBossBattle.CogHQBossBattle):
                     self.request('NormalWalk')
                 else:
                     self.request('Hidden')
@@ -314,7 +278,10 @@ class NewsPageButtonManager(FSM.FSM):
                         self.request('GotoWorld')
                     else:
                         self.request('Hidden')
-                elif (self.goingToNewsPageFromStickerBook or hasattr(localAvatar, 'newsPage')) and localAvatar.book.isOnPage(localAvatar.newsPage):
+                elif (self.goingToNewsPageFromStickerBook
+                      or hasattr(localAvatar,
+                                 'newsPage')) and localAvatar.book.isOnPage(
+                                     localAvatar.newsPage):
                     if localAvatar.tutorialAck:
                         self.request('PrevPage')
                     else:
@@ -365,12 +332,10 @@ class NewsPageButtonManager(FSM.FSM):
         self.showAppropriateButton()
 
     def acceptEscapeKeyPress(self):
-        self.accept(
-            ToontownGlobals.StickerBookHotkey,
-            self.simulateEscapeKeyPress)
-        self.accept(
-            ToontownGlobals.OptionsPageHotkey,
-            self.simulateEscapeKeyPress)
+        self.accept(ToontownGlobals.StickerBookHotkey,
+                    self.simulateEscapeKeyPress)
+        self.accept(ToontownGlobals.OptionsPageHotkey,
+                    self.simulateEscapeKeyPress)
 
     def ignoreEscapeKeyPress(self):
         self.ignore(ToontownGlobals.StickerBookHotkey)

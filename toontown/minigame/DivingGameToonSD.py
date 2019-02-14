@@ -1,5 +1,3 @@
-
-
 from direct.showbase.ShowBaseGlobal import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.interval.IntervalGlobal import *
@@ -21,12 +19,9 @@ class DivingGameToonSD(StateData.StateData):
     EatNRunAnim = 'catch-eatnrun'
     status = ''
     animList = [
-        FallBackAnim,
-        FallFwdAnim,
-        CatchNeutralAnim,
-        CatchRunAnim,
-        EatNeutralAnim,
-        EatNRunAnim]
+        FallBackAnim, FallFwdAnim, CatchNeutralAnim, CatchRunAnim,
+        EatNeutralAnim, EatNRunAnim
+    ]
 
     def __init__(self, avId, game):
         self.avId = avId
@@ -35,17 +30,15 @@ class DivingGameToonSD(StateData.StateData):
         self.toon = self.game.getAvatar(self.avId)
         self.unexpectedExit = False
         self.fsm = ClassicFSM.ClassicFSM('CatchGameAnimFSM-%s' % self.avId, [
-            State.State('init', self.enterInit, self.exitInit, [
-                'normal']),
-            State.State('normal', self.enterNormal, self.exitNormal, [
-                'freeze',
-                'treasure']),
-            State.State('treasure', self.enterTreasure, self.exitTreasure, [
-                'freeze',
-                'normal']),
-            State.State('freeze', self.enterFreeze, self.exitFreeze, [
-                'normal']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'init', 'cleanup')
+            State.State('init', self.enterInit, self.exitInit, ['normal']),
+            State.State('normal', self.enterNormal, self.exitNormal,
+                        ['freeze', 'treasure']),
+            State.State('treasure', self.enterTreasure, self.exitTreasure,
+                        ['freeze', 'normal']),
+            State.State('freeze', self.enterFreeze, self.exitFreeze,
+                        ['normal']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'init', 'cleanup')
 
     def load(self):
         self.setAnimState('off', 1.0)

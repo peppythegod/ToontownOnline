@@ -34,17 +34,11 @@ class PlantTreeGUI(StateData.StateData):
             return None
 
         if base.localAvatar.inventory.numItem(track, level) > 0:
-            messenger.send(self.doneEvent, [
-                True,
-                track,
-                level])
+            messenger.send(self.doneEvent, [True, track, level])
         else:
             self.notify.error(
                 "An item we don't have: track %s level %s was selected." %
                 (track, level))
 
     def _PlantTreeGUI__handleCancel(self):
-        messenger.send(self.doneEvent, [
-            False,
-            None,
-            None])
+        messenger.send(self.doneEvent, [False, None, None])

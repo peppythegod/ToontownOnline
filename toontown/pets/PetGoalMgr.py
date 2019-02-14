@@ -65,14 +65,11 @@ class PetGoalMgr(DirectObject.DirectObject):
             candidates = []
         else:
             highestPriority = self.primaryGoal.getPriority()
-            candidates = [
-                self.primaryGoal]
+            candidates = [self.primaryGoal]
             decayDur = PetConstants.PrimaryGoalDecayDur
             priFactor = PetConstants.PrimaryGoalScale
-            elapsed = min(
-                decayDur,
-                globalClock.getFrameTime() -
-                self.primaryStartT)
+            elapsed = min(decayDur,
+                          globalClock.getFrameTime() - self.primaryStartT)
             highestPriority *= lerp(priFactor, 1.0, elapsed / decayDur)
         if __dev__:
             self.pscSetup.stop()
@@ -85,8 +82,7 @@ class PetGoalMgr(DirectObject.DirectObject):
             if thisPri >= highestPriority:
                 if thisPri > highestPriority:
                     highestPriority = thisPri
-                    candidates = [
-                        goal]
+                    candidates = [goal]
                 else:
                     candidates.append(goal)
             thisPri > highestPriority
@@ -100,8 +96,8 @@ class PetGoalMgr(DirectObject.DirectObject):
         newPrimary = random.choice(candidates)
         if self.primaryGoal != newPrimary:
             self.pet.notify.debug(
-                'new goal: %s, priority=%s' %
-                (newPrimary.__class__.__name__, highestPriority))
+                'new goal: %s, priority=%s' % (newPrimary.__class__.__name__,
+                                               highestPriority))
             self._setPrimaryGoal(newPrimary)
 
         if __dev__:

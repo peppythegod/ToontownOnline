@@ -9,8 +9,8 @@ class BRSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
     SnowFadeLerpTime = 2.0
 
     def __init__(self, hood, parentFSM, doneEvent):
-        SafeZoneLoader.SafeZoneLoader.__init__(
-            self, hood, parentFSM, doneEvent)
+        SafeZoneLoader.SafeZoneLoader.__init__(self, hood, parentFSM,
+                                               doneEvent)
         self.playgroundClass = BRPlayground.BRPlayground
         self.musicFile = 'phase_8/audio/bgm/TB_nbrhood.mid'
         self.activityMusicFile = 'phase_8/audio/bgm/TB_SZ_activity.mid'
@@ -70,8 +70,8 @@ class BRSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
                 fromData=currentScale,
                 toData=1.0,
                 duration=self.SnowFadeLerpTime),
-            FunctionInterval(
-                self.snowRender.clearColorScale)]
+            FunctionInterval(self.snowRender.clearColorScale)
+        ]
         self.snowFade = Track(ivals, 'snow-fade')
         self.snowFade.play()
 
@@ -83,6 +83,7 @@ class BRSafeZoneLoader(SafeZoneLoader.SafeZoneLoader):
                 self.snowRender.setAlphaScale,
                 fromData=currentScale,
                 toData=0.0,
-                duration=self.SnowFadeLerpTime)]
+                duration=self.SnowFadeLerpTime)
+        ]
         self.snowFade = Track(ivals, 'snow-fade')
         self.snowFade.play()

@@ -1,5 +1,3 @@
-
-
 from PurchaseBase import *
 from direct.task.Task import Task
 from toontown.toon import ToonHead
@@ -28,17 +26,16 @@ OVERMAX_SFX_START_T = 0.021000000000000001
 class Purchase(PurchaseBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('Purchase')
 
-    def __init__(
-            self,
-            toon,
-            pointsArray,
-            playerMoney,
-            ids,
-            states,
-            remain,
-            doneEvent,
-            metagameRound=-1,
-            votesArray=None):
+    def __init__(self,
+                 toon,
+                 pointsArray,
+                 playerMoney,
+                 ids,
+                 states,
+                 remain,
+                 doneEvent,
+                 metagameRound=-1,
+                 votesArray=None):
         PurchaseBase.__init__(self, toon, doneEvent)
         self.ids = ids
         self.pointsArray = pointsArray
@@ -50,11 +47,8 @@ class Purchase(PurchaseBase):
         self.votesArray = votesArray
         self.voteMultiplier = 1
         self.fsm.addState(
-            State.State(
-                'reward',
-                self.enterReward,
-                self.exitReward,
-                ['purchase']))
+            State.State('reward', self.enterReward, self.exitReward,
+                        ['purchase']))
         doneState = self.fsm.getStateNamed('done')
         doneState.addTransition('reward')
         self.unexpectedEventNames = []
@@ -66,108 +60,59 @@ class Purchase(PurchaseBase):
         PurchaseBase.load(self, purchaseModels)
         interiorPhase = 3.5
         self.bg = loader.loadModel(
-            'phase_%s/models/modules/toon_interior' %
-            interiorPhase)
+            'phase_%s/models/modules/toon_interior' % interiorPhase)
         self.bg.setPos(0.0, 5.0, -1.0)
         self.wt = self.bg.find('**/random_tc1_TI_wallpaper')
         wallTex = loader.loadTexture(
-            'phase_%s/maps/wall_paper_a5.jpg' %
-            interiorPhase)
+            'phase_%s/maps/wall_paper_a5.jpg' % interiorPhase)
         self.wt.setTexture(wallTex, 100)
-        self.wt.setColorScale(
-            0.80000000000000004,
-            0.67000000000000004,
-            0.54900000000000004,
-            1.0)
+        self.wt.setColorScale(0.80000000000000004, 0.67000000000000004,
+                              0.54900000000000004, 1.0)
         self.bt = self.bg.find('**/random_tc1_TI_wallpaper_border')
         wallTex = loader.loadTexture(
-            'phase_%s/maps/wall_paper_a5.jpg' %
-            interiorPhase)
+            'phase_%s/maps/wall_paper_a5.jpg' % interiorPhase)
         self.bt.setTexture(wallTex, 100)
-        self.bt.setColorScale(
-            0.80000000000000004,
-            0.67000000000000004,
-            0.54900000000000004,
-            1.0)
+        self.bt.setColorScale(0.80000000000000004, 0.67000000000000004,
+                              0.54900000000000004, 1.0)
         self.wb = self.bg.find('**/random_tc1_TI_wainscotting')
         wainTex = loader.loadTexture(
-            'phase_%s/maps/wall_paper_b4.jpg' %
-            interiorPhase)
+            'phase_%s/maps/wall_paper_b4.jpg' % interiorPhase)
         self.wb.setTexture(wainTex, 100)
-        self.wb.setColorScale(
-            0.47299999999999998,
-            0.67500000000000004,
-            0.48799999999999999,
-            1.0)
+        self.wb.setColorScale(0.47299999999999998, 0.67500000000000004,
+                              0.48799999999999999, 1.0)
         self.playAgain = DirectButton(
             parent=self.frame,
             relief=None,
             scale=1.04,
-            pos=(
-                0.71999999999999997,
-                0,
-                -0.23999999999999999),
-            image=(
-                purchaseModels.find('**/PurchScrn_BTN_UP'),
-                purchaseModels.find('**/PurchScrn_BTN_DN'),
-                purchaseModels.find('**/PurchScrn_BTN_RLVR'),
-                purchaseModels.find('**/PurchScrn_BTN_UP')),
+            pos=(0.71999999999999997, 0, -0.23999999999999999),
+            image=(purchaseModels.find('**/PurchScrn_BTN_UP'),
+                   purchaseModels.find('**/PurchScrn_BTN_DN'),
+                   purchaseModels.find('**/PurchScrn_BTN_RLVR'),
+                   purchaseModels.find('**/PurchScrn_BTN_UP')),
             text=TTLocalizer.GagShopPlayAgain,
-            text_fg=(
-                0,
-                0.10000000000000001,
-                0.69999999999999996,
-                1),
+            text_fg=(0, 0.10000000000000001, 0.69999999999999996, 1),
             text_scale=0.050000000000000003,
-            text_pos=(
-                0,
-                0.014999999999999999,
-                0),
-            image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
-                1),
-            text3_fg=Vec4(
-                0,
-                0,
-                0.40000000000000002,
-                1),
+            text_pos=(0, 0.014999999999999999, 0),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 1),
+            text3_fg=Vec4(0, 0, 0.40000000000000002, 1),
             command=self._Purchase__handlePlayAgain)
         self.backToPlayground = DirectButton(
             parent=self.frame,
             relief=None,
             scale=1.04,
-            pos=(
-                0.71999999999999997,
-                0,
-                -0.044999999999999998),
-            image=(
-                purchaseModels.find('**/PurchScrn_BTN_UP'),
-                purchaseModels.find('**/PurchScrn_BTN_DN'),
-                purchaseModels.find('**/PurchScrn_BTN_RLVR'),
-                purchaseModels.find('**/PurchScrn_BTN_UP')),
+            pos=(0.71999999999999997, 0, -0.044999999999999998),
+            image=(purchaseModels.find('**/PurchScrn_BTN_UP'),
+                   purchaseModels.find('**/PurchScrn_BTN_DN'),
+                   purchaseModels.find('**/PurchScrn_BTN_RLVR'),
+                   purchaseModels.find('**/PurchScrn_BTN_UP')),
             text=TTLocalizer.GagShopBackToPlayground,
-            text_fg=(
-                0,
-                0.10000000000000001,
-                0.69999999999999996,
-                1),
+            text_fg=(0, 0.10000000000000001, 0.69999999999999996, 1),
             text_scale=0.050000000000000003,
-            text_pos=(
-                0,
-                0.014999999999999999,
-                0),
-            image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
-                1),
-            text3_fg=Vec4(
-                0,
-                0,
-                0.40000000000000002,
-                1),
+            text_pos=(0, 0.014999999999999999, 0),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 1),
+            text3_fg=Vec4(0, 0, 0.40000000000000002, 1),
             command=self._Purchase__handleBackToPlayground)
         self.timer = ToontownTimer.ToontownTimer()
         self.timer.reparentTo(self.frame)
@@ -180,23 +125,28 @@ class Purchase(PurchaseBase):
             if avId == base.localAvatar.doId:
                 localToonIndex = index
 
-            if self.states[index] != PURCHASE_NO_CLIENT_STATE and self.states[index] != PURCHASE_DISCONNECTED_STATE:
+            if self.states[index] != PURCHASE_NO_CLIENT_STATE and self.states[
+                    index] != PURCHASE_DISCONNECTED_STATE:
                 numAvs = numAvs + 1
                 continue
 
-        layoutList = (None, (0,), (0, 2), (0, 1, 3), (0, 1, 2, 3))
+        layoutList = (None, (0, ), (0, 2), (0, 1, 3), (0, 1, 2, 3))
         layout = layoutList[numAvs]
-        headFramePosList = (Vec3(0.105, 0, -0.38400000000000001), Vec3(0.105, 0, -0.77600000000000002), Vec3(
-            0.84999999999999998, 0, -0.55500000000000005), Vec3(-0.65400000000000003, 0, -0.55500000000000005))
+        headFramePosList = (Vec3(0.105, 0, -0.38400000000000001),
+                            Vec3(0.105, 0, -0.77600000000000002),
+                            Vec3(0.84999999999999998, 0, -0.55500000000000005),
+                            Vec3(-0.65400000000000003, 0,
+                                 -0.55500000000000005))
         AVID_INDEX = 0
         LAYOUT_INDEX = 1
         TOON_INDEX = 2
-        self.avInfoArray = [
-            (base.localAvatar.doId, headFramePosList[0], localToonIndex)]
+        self.avInfoArray = [(base.localAvatar.doId, headFramePosList[0],
+                             localToonIndex)]
         pos = 1
         for index in range(len(self.ids)):
             avId = self.ids[index]
-            if self.states[index] != PURCHASE_NO_CLIENT_STATE and self.states[index] != PURCHASE_DISCONNECTED_STATE:
+            if self.states[index] != PURCHASE_NO_CLIENT_STATE and self.states[
+                    index] != PURCHASE_DISCONNECTED_STATE:
                 if avId != base.localAvatar.doId:
                     if avId in base.cr.doId2do:
                         self.avInfoArray.append(
@@ -228,10 +178,8 @@ class Purchase(PurchaseBase):
         sidewalk = streets.find('**/street_sidewalk_40x40')
         self.sidewalk = sidewalk.copyTo(hidden)
         self.sidewalk.setPos(-20, -25, -5.5)
-        self.sidewalk.setColor(
-            0.90000000000000002,
-            0.59999999999999998,
-            0.40000000000000002)
+        self.sidewalk.setColor(0.90000000000000002, 0.59999999999999998,
+                               0.40000000000000002)
         streets.removeNode()
         doors = loader.loadModel('phase_4/models/modules/doors')
         door = doors.find('**/door_single_square_ur_door')
@@ -242,15 +190,19 @@ class Purchase(PurchaseBase):
         self.door.setColor(1.0, 0.80000000000000004, 0, 1)
         doors.removeNode()
         self.convertingVotesToBeansLabel = DirectLabel(
-            text=TTLocalizer.TravelGameConvertingVotesToBeans, text_fg=VBase4(
-                1, 1, 1, 1), relief=None, pos=(
-                0.0, 0, -0.57999999999999996), scale=0.074999999999999997)
+            text=TTLocalizer.TravelGameConvertingVotesToBeans,
+            text_fg=VBase4(1, 1, 1, 1),
+            relief=None,
+            pos=(0.0, 0, -0.57999999999999996),
+            scale=0.074999999999999997)
         self.convertingVotesToBeansLabel.hide()
         self.rewardDoubledJellybeanLabel = DirectLabel(
-            text=TTLocalizer.PartyRewardDoubledJellybean, text_fg=(
-                1.0, 0.125, 0.125, 1.0), text_shadow=(
-                0, 0, 0, 1), relief=None, pos=(
-                0.0, 0, -0.67000000000000004), scale=0.080000000000000002)
+            text=TTLocalizer.PartyRewardDoubledJellybean,
+            text_fg=(1.0, 0.125, 0.125, 1.0),
+            text_shadow=(0, 0, 0, 1),
+            relief=None,
+            pos=(0.0, 0, -0.67000000000000004),
+            scale=0.080000000000000002)
         self.rewardDoubledJellybeanLabel.hide()
         self.countSound = base.loadSfx('phase_3.5/audio/sfx/tick_counter.mp3')
         self.overMaxSound = base.loadSfx(
@@ -339,13 +291,12 @@ class Purchase(PurchaseBase):
     def handleDone(self, playAgain):
         base.localAvatar.b_setParent(ToontownGlobals.SPHidden)
         if playAgain:
-            self.doneStatus = {
-                'loader': 'minigame',
-                'where': 'minigame'}
+            self.doneStatus = {'loader': 'minigame', 'where': 'minigame'}
         else:
             self.doneStatus = {
                 'loader': 'safeZoneLoader',
-                'where': 'playground'}
+                'where': 'playground'
+            }
         messenger.send(self.doneEvent)
 
     def _Purchase__handleBackToPlayground(self):
@@ -376,7 +327,7 @@ class Purchase(PurchaseBase):
 
     def enterReward(self):
         numToons = 0
-        toonLayouts = ((2,), (1, 3), (0, 2, 4), (0, 1, 3, 4))
+        toonLayouts = ((2, ), (1, 3), (0, 2, 4), (0, 1, 3, 4))
         toonPositions = (5.0, 1.75, -0.25, -1.75, -5.0)
         self.toons = []
         self.toonsKeep = []
@@ -395,8 +346,9 @@ class Purchase(PurchaseBase):
         self.door.reparentTo(render)
         size = 20
         z = -2.5
-        floor = CollisionPolygon(Point3(-size, -size, z), Point3(
-            size, -size, z), Point3(size, size, z), Point3(-size, size, z))
+        floor = CollisionPolygon(
+            Point3(-size, -size, z), Point3(size, -size, z),
+            Point3(size, size, z), Point3(-size, size, z))
         floor.setTangible(1)
         floorNode = CollisionNode('collision_floor')
         floorNode.addSolid(floor)
@@ -411,26 +363,34 @@ class Purchase(PurchaseBase):
                 toon.stopSmooth()
                 self.toons.append(toon)
                 self.toonsKeep.append(
-                    DelayDelete.DelayDelete(
-                        toon, 'Purchase.enterReward'))
+                    DelayDelete.DelayDelete(toon, 'Purchase.enterReward'))
                 counter = DirectLabel(
-                    parent=hidden, relief=None, pos=(
-                        0.0, 0.0, 0.0), text=str(0), text_scale=0.20000000000000001, text_fg=(
-                        0.94999999999999996, 0.94999999999999996, 0, 1), text_pos=(
-                        0, -0.10000000000000001, 0), text_font=ToontownGlobals.getSignFont())
+                    parent=hidden,
+                    relief=None,
+                    pos=(0.0, 0.0, 0.0),
+                    text=str(0),
+                    text_scale=0.20000000000000001,
+                    text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+                    text_pos=(0, -0.10000000000000001, 0),
+                    text_font=ToontownGlobals.getSignFont())
                 counter['image'] = DGG.getDefaultDialogGeom()
-                counter['image_scale'] = (
-                    0.33000000000000002, 1, 0.33000000000000002)
+                counter['image_scale'] = (0.33000000000000002, 1,
+                                          0.33000000000000002)
                 counter.setScale(0.5)
                 counter.count = 0
                 counter.max = self.pointsArray[index]
                 self.counters.append(counter)
                 money = self.playerMoney[index]
                 totalCounter = DirectLabel(
-                    parent=hidden, relief=None, pos=(
-                        0.0, 0.0, 0.0), text=str(money), text_scale=0.20000000000000001, text_fg=(
-                        0.94999999999999996, 0.94999999999999996, 0, 1), text_pos=(
-                        0, -0.10000000000000001, 0), text_font=ToontownGlobals.getSignFont(), image=self.jarImage)
+                    parent=hidden,
+                    relief=None,
+                    pos=(0.0, 0.0, 0.0),
+                    text=str(money),
+                    text_scale=0.20000000000000001,
+                    text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+                    text_pos=(0, -0.10000000000000001, 0),
+                    text_font=ToontownGlobals.getSignFont(),
+                    image=self.jarImage)
                 totalCounter.setScale(0.5)
                 totalCounter.count = money
                 totalCounter.max = toon.getMaxMoney()
@@ -449,13 +409,11 @@ class Purchase(PurchaseBase):
             if not toon.isDisabled():
                 toon.reparentTo(render)
 
-            self.counters[pos].setPos(
-                thisPos * -0.17000000000000001,
-                0,
-                toon.getHeight() / 10 + 0.25)
+            self.counters[pos].setPos(thisPos * -0.17000000000000001, 0,
+                                      toon.getHeight() / 10 + 0.25)
             self.counters[pos].reparentTo(aspect2d)
-            self.totalCounters[pos].setPos(
-                thisPos * -0.17000000000000001, 0, -0.82499999999999996)
+            self.totalCounters[pos].setPos(thisPos * -0.17000000000000001, 0,
+                                           -0.82499999999999996)
             self.totalCounters[pos].reparentTo(aspect2d)
             pos += 1
 
@@ -463,7 +421,8 @@ class Purchase(PurchaseBase):
         if self.votesArray:
             self.maxVotes = max(self.votesArray)
             numToons = len(self.toons)
-            self.voteMultiplier = TravelGameGlobals.PercentOfVotesConverted[numToons] / 100.0
+            self.voteMultiplier = TravelGameGlobals.PercentOfVotesConverted[
+                numToons] / 100.0
             self.maxBeansFromVotes = int(self.voteMultiplier * self.maxVotes)
         else:
             self.maxVotes = 0
@@ -501,8 +460,8 @@ class Purchase(PurchaseBase):
             return Task.done
 
         celebrateDelay = countDownDelay + COUNT_DOWN_DURATION + DELAY_AFTER_COUNT_DOWN
-        celebrateTask = taskMgr.doMethodLater(
-            celebrateDelay, celebrate, 'celebrate')
+        celebrateTask = taskMgr.doMethodLater(celebrateDelay, celebrate,
+                                              'celebrate')
         celebrateTask.counters = self.counters
         celebrateTask.pointsArray = self.pointsArray
         celebrateTask.ids = self.ids
@@ -518,16 +477,12 @@ class Purchase(PurchaseBase):
 
         if self.metagameRound == TravelGameGlobals.FinalMetagameRoundIndex:
             countVotesUpDelay = celebrateDelay + DELAY_AFTER_CELEBRATE
-            taskMgr.doMethodLater(
-                countVotesUpDelay,
-                reqCountVotesUp,
-                'countVotesUpTask')
+            taskMgr.doMethodLater(countVotesUpDelay, reqCountVotesUp,
+                                  'countVotesUpTask')
             countVotesUpTime = self.maxVotes * COUNT_UP_RATE + DELAY_AFTER_COUNT_UP
             countVotesDownDelay = countVotesUpDelay + countVotesUpTime
-            taskMgr.doMethodLater(
-                countVotesDownDelay,
-                reqCountVotesDown,
-                'countVotesDownTask')
+            taskMgr.doMethodLater(countVotesDownDelay, reqCountVotesDown,
+                                  'countVotesDownTask')
             celebrateDelay += countVotesUpTime + self.maxVotes * \
                 COUNT_DOWN_RATE + DELAY_AFTER_COUNT_DOWN
 
@@ -572,7 +527,8 @@ class Purchase(PurchaseBase):
     def countUp(self):
         totalDelay = 0
         if base.cr.newsManager.isHolidayRunning(
-                ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY) or base.cr.newsManager.isHolidayRunning(
+                ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY
+        ) or base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH):
             self.rewardDoubledJellybeanLabel.show()
 
@@ -610,13 +566,8 @@ class Purchase(PurchaseBase):
         now = globalClock.getRealTime()
         startT = task.getStartTime()
         if now >= startT + task.duration:
-            for (
-                    counter,
-                    total,
-                    toonId) in zip(
-                    self.counters,
-                    self.totalCounters,
-                    self.ids):
+            for (counter, total, toonId) in zip(self.counters,
+                                                self.totalCounters, self.ids):
                 if counter.count != 0:
                     self._changeCounterDown(task, counter, 0, total, toonId)
                     continue
@@ -624,13 +575,8 @@ class Purchase(PurchaseBase):
             return Task.done
 
         t = (now - startT) / task.duration
-        for (
-                counter,
-                total,
-                toonId) in zip(
-                self.counters,
-                self.totalCounters,
-                self.ids):
+        for (counter, total, toonId) in zip(self.counters, self.totalCounters,
+                                            self.ids):
             curCount = int(triglerp(counter.max, 0, t))
             if curCount != counter.count:
                 self._changeCounterDown(task, counter, curCount, total, toonId)
@@ -653,7 +599,8 @@ class Purchase(PurchaseBase):
         totalDelay = 0
         self.convertingVotesToBeansLabel.show()
         if base.cr.newsManager.isHolidayRunning(
-                ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY) or base.cr.newsManager.isHolidayRunning(
+                ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY
+        ) or base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH):
             self.rewardDoubledJellybeanLabel.show()
 
@@ -680,8 +627,8 @@ class Purchase(PurchaseBase):
             for counter in self.counters:
                 index = self.counters.index(counter)
                 if count < counter.max:
-                    addTask = taskMgr.doMethodLater(
-                        totalDelay, delayAdd, 'delayAdd')
+                    addTask = taskMgr.doMethodLater(totalDelay, delayAdd,
+                                                    'delayAdd')
                     addTask.counter = counter
                     addTask.toonId = self.ids[index]
                     addTask.countSound = self.countSound
@@ -775,10 +722,8 @@ class Purchase(PurchaseBase):
         self.convertingVotesToBeansLabel.hide()
         self.rewardDoubledJellybeanLabel.hide()
         self.bg.reparentTo(render)
-        base.setBackgroundColor(
-            0.050000000000000003,
-            0.14000000000000001,
-            0.40000000000000002)
+        base.setBackgroundColor(0.050000000000000003, 0.14000000000000001,
+                                0.40000000000000002)
         self.accept('purchaseStateChange', self._Purchase__handleStateChange)
         self.playAgain.reparentTo(self.toon.inventory.purchaseFrame)
         self.backToPlayground.reparentTo(self.toon.inventory.purchaseFrame)
@@ -809,9 +754,8 @@ class Purchase(PurchaseBase):
                     self.toon.inventory.setActivateMode,
                     'gagTutDisabled',
                     gagTutMode=1))
-            self.accept(
-                'disableBackToPlayground',
-                self.disableBackToPlayground)
+            self.accept('disableBackToPlayground',
+                        self.disableBackToPlayground)
             self.accept('enableGagPanel', self.handleEnableGagPanel)
             self.accept('enableBackToPlayground', self.enableBackToPlayground)
             for (avId, headFrame) in self.headFrames:
@@ -906,9 +850,7 @@ class PurchaseHeadFrame(DirectFrame):
 
     def __init__(self, av, purchaseModels):
         DirectFrame.__init__(
-            self,
-            relief=None,
-            image=purchaseModels.find('**/Char_Pnl'))
+            self, relief=None, image=purchaseModels.find('**/Char_Pnl'))
         self.initialiseoptions(PurchaseHeadFrame)
         self.statusLabel = DirectLabel(
             parent=self,
@@ -916,21 +858,16 @@ class PurchaseHeadFrame(DirectFrame):
             text='',
             text_scale=TTLocalizer.PstatusLabel,
             text_wordwrap=7.5,
-            text_fg=(
-                0.050000000000000003,
-                0.14000000000000001,
-                0.40000000000000002,
-                1),
-            text_pos=(
-                0.10000000000000001,
-                0,
-                0))
+            text_fg=(0.050000000000000003, 0.14000000000000001,
+                     0.40000000000000002, 1),
+            text_pos=(0.10000000000000001, 0, 0))
         self.av = av
         self.avKeep = DelayDelete.DelayDelete(av, 'PurchaseHeadFrame.av')
         self.accept('clientCleanup', self._handleClientCleanup)
         self.head = self.stateNodePath[0].attachNewNode('head', 20)
         self.head.setPosHprScale(-0.22, 10.0, -0.10000000000000001, 180.0, 0.0,
-                                 0.0, 0.10000000000000001, 0.10000000000000001, 0.10000000000000001)
+                                 0.0, 0.10000000000000001, 0.10000000000000001,
+                                 0.10000000000000001)
         self.headModel = ToonHead.ToonHead()
         self.headModel.setupHead(self.av.style, forGui=1)
         self.headModel.reparentTo(self.head)
@@ -938,21 +875,16 @@ class PurchaseHeadFrame(DirectFrame):
         self.tag2Node.setContents(Nametag.CName)
         self.av.nametag.addNametag(self.tag2Node)
         self.tag2 = self.attachNewNode(self.tag2Node.upcastToPandaNode())
-        self.tag2.setPosHprScale(-0.22,
-                                 10.0,
-                                 0.12,
-                                 0,
-                                 0,
-                                 0,
-                                 0.045999999999999999,
-                                 0.045999999999999999,
+        self.tag2.setPosHprScale(-0.22, 10.0, 0.12, 0, 0, 0,
+                                 0.045999999999999999, 0.045999999999999999,
                                  0.045999999999999999)
         self.tag1Node = NametagFloat2d()
         self.tag1Node.setContents(Nametag.CSpeech | Nametag.CThought)
         self.av.nametag.addNametag(self.tag1Node)
         self.tag1 = self.attachNewNode(self.tag1Node.upcastToPandaNode())
-        self.tag1.setPosHprScale(-0.14999999999999999, 0, -0.10000000000000001, 0,
-                                 0, 0, 0.045999999999999999, 0.045999999999999999, 0.045999999999999999)
+        self.tag1.setPosHprScale(-0.14999999999999999, 0, -0.10000000000000001,
+                                 0, 0, 0, 0.045999999999999999,
+                                 0.045999999999999999, 0.045999999999999999)
         self.hide()
 
     def destroy(self):
@@ -975,18 +907,19 @@ class PurchaseHeadFrame(DirectFrame):
 
     def setAvatarState(self, state):
         if state == PURCHASE_DISCONNECTED_STATE:
-            self.statusLabel['text'] = TTLocalizer.GagShopPlayerDisconnected % self.av.getName(
-            )
-            self.statusLabel['text_pos'] = (
-                0.014999999999999999, 0.071999999999999995, 0)
+            self.statusLabel[
+                'text'] = TTLocalizer.GagShopPlayerDisconnected % self.av.getName(
+                )
+            self.statusLabel['text_pos'] = (0.014999999999999999,
+                                            0.071999999999999995, 0)
             self.head.hide()
             self.tag1.hide()
             self.tag2.hide()
         elif state == PURCHASE_EXIT_STATE:
-            self.statusLabel['text'] = TTLocalizer.GagShopPlayerExited % self.av.getName(
-            )
-            self.statusLabel['text_pos'] = (
-                0.014999999999999999, 0.071999999999999995, 0)
+            self.statusLabel[
+                'text'] = TTLocalizer.GagShopPlayerExited % self.av.getName()
+            self.statusLabel['text_pos'] = (0.014999999999999999,
+                                            0.071999999999999995, 0)
             self.head.hide()
             self.tag1.hide()
             self.tag2.hide()
@@ -998,7 +931,8 @@ class PurchaseHeadFrame(DirectFrame):
             self.statusLabel['text_pos'] = (0.10000000000000001, -0.12, 0)
         elif state == PURCHASE_NO_CLIENT_STATE:
             Purchase.notify.warning(
-                "setAvatarState('no client state'); OK for gag purchase tutorial")
+                "setAvatarState('no client state'); OK for gag purchase tutorial"
+            )
         else:
             Purchase.notify.warning('unknown avatar state: %s' % state)
 

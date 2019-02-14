@@ -17,13 +17,8 @@ class DistributedBattleFinalAI(
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBattleFinalAI')
 
-    def __init__(
-            self,
-            air,
-            bossCog,
-            roundCallback,
-            finishCallback,
-            battleSide):
+    def __init__(self, air, bossCog, roundCallback, finishCallback,
+                 battleSide):
         DistributedBattleBaseAI.DistributedBattleBaseAI.__init__(
             self, air, bossCog.zoneId, finishCallback)
         self.bossCogId = bossCog.doId
@@ -35,11 +30,8 @@ class DistributedBattleFinalAI(
         self.pos = Point3(0, 30, 0)
         self.resumeNeedUpdate = 0
         self.fsm.addState(
-            State.State(
-                'ReservesJoining',
-                self.enterReservesJoining,
-                self.exitReservesJoining,
-                ['WaitForJoin']))
+            State.State('ReservesJoining', self.enterReservesJoining,
+                        self.exitReservesJoining, ['WaitForJoin']))
         offState = self.fsm.getStateNamed('Off')
         offState.addTransition('ReservesJoining')
         waitForJoinState = self.fsm.getStateNamed('WaitForJoin')
@@ -70,12 +62,8 @@ class DistributedBattleFinalAI(
         self.d_setMembers()
         self.b_setState('ReservesJoining')
 
-    def localMovieDone(
-            self,
-            needUpdate,
-            deadToons,
-            deadSuits,
-            lastActiveSuitDied):
+    def localMovieDone(self, needUpdate, deadToons, deadSuits,
+                       lastActiveSuitDied):
         self.timer.stop()
         self.resumeNeedUpdate = needUpdate
         self.resumeDeadToons = deadToons
@@ -105,8 +93,9 @@ class DistributedBattleFinalAI(
             for toonId in self.activeToons:
                 toon = self.getToon(toonId)
                 if toon:
-                    (recovered, notRecovered) = self.air.questManager.recoverItems(
-                        toon, self.suitsKilledThisBattle, self.zoneId)
+                    (recovered,
+                     notRecovered) = self.air.questManager.recoverItems(
+                         toon, self.suitsKilledThisBattle, self.zoneId)
                     self.toonItems[toonId][0].extend(recovered)
                     self.toonItems[toonId][1].extend(notRecovered)
                     continue
@@ -116,9 +105,9 @@ class DistributedBattleFinalAI(
             self.b_setState('Reward')
         elif self.resumeNeedUpdate == 1:
             self.d_setMembers()
-            if len(
-                    self.resumeDeadSuits) > 0 or self.resumeLastActiveSuitDied == 0 or len(
-                    self.resumeDeadToons) > 0:
+            if len(self.resumeDeadSuits
+                   ) > 0 or self.resumeLastActiveSuitDied == 0 or len(
+                       self.resumeDeadToons) > 0:
                 self.needAdjust = 1
 
         self.setState('WaitForJoin')
@@ -128,11 +117,8 @@ class DistributedBattleFinalAI(
         self.resumeLastActiveSuitDied = 0
 
     def enterReservesJoining(self, ts=0):
-        self.beginBarrier(
-            'ReservesJoining',
-            self.toons,
-            15,
-            self._DistributedBattleFinalAI__doneReservesJoining)
+        self.beginBarrier('ReservesJoining', self.toons, 15,
+                          self._DistributedBattleFinalAI__doneReservesJoining)
 
     def _DistributedBattleFinalAI__doneReservesJoining(self, avIds):
         self.b_setState('WaitForJoin')
@@ -141,9 +127,8 @@ class DistributedBattleFinalAI(
         pass
 
     def enterReward(self):
-        self.timer.startCallback(
-            FLOOR_REWARD_TIMEOUT + 5,
-            self.serverRewardDone)
+        self.timer.startCallback(FLOOR_REWARD_TIMEOUT + 5,
+                                 self.serverRewardDone)
 
     def exitReward(self):
         self.timer.stop()

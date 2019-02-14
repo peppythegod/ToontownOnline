@@ -42,8 +42,7 @@ class Mover(CMover):
         if name not in self.impulses:
             if not CMover.removeCImpulse(self, name):
                 Mover.notify.warning(
-                    "Mover.removeImpulse: unknown impulse '%s'" %
-                    name)
+                    "Mover.removeImpulse: unknown impulse '%s'" % name)
 
             return None
 
@@ -61,8 +60,11 @@ class Mover(CMover):
                     doMove(dt, profile=1)
 
             __builtin__.func = func
-            PythonUtil.startProfile(cmd='func()', filename='profile', sorts=[
-                'cumulative'], callInfo=0)
+            PythonUtil.startProfile(
+                cmd='func()',
+                filename='profile',
+                sorts=['cumulative'],
+                callInfo=0)
             del __builtin__.func
             return None
 

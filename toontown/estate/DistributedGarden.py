@@ -31,11 +31,9 @@ class DistributedGarden(DistributedObject.DistributedObject):
         self.pos = None
         self.radius = 0
         self.gridCells = 20
-        self.propTable = [
-            None] * self.gridCells
+        self.propTable = [None] * self.gridCells
         for i in range(len(self.propTable)):
-            self.propTable[i] = [
-                None] * self.gridCells
+            self.propTable[i] = [None] * self.gridCells
 
         self.dx = 1.0 / self.gridCells
         self.occupied = []
@@ -79,17 +77,11 @@ class DistributedGarden(DistributedObject.DistributedObject):
         model.setScale(0.20000000000000001)
         model.setBillboardPointEye()
         model.reparentTo(render)
-        self.props.append([
-            model,
-            x,
-            y,
-            z])
+        self.props.append([model, x, y, z])
 
     def getPropPos(self, i, j):
-        pos = [
-            (self.pos[0] - self.radius) + 2 * self.radius * i,
-            (self.pos[1] - self.radius) + 2 * self.radius * j,
-            self.pos[2]]
+        pos = [(self.pos[0] - self.radius) + 2 * self.radius * i,
+               (self.pos[1] - self.radius) + 2 * self.radius * j, self.pos[2]]
         return pos
 
     def loadProp(self, prop, i, j):
@@ -112,10 +104,7 @@ class DistributedGarden(DistributedObject.DistributedObject):
 
     def setAddProp(self, prop, i, j):
         self.notify.debug('addProp')
-        self.props.append([
-            prop,
-            i,
-            j])
+        self.props.append([prop, i, j])
         self.loadProp(prop, i, j)
         self.b_setProps(self, props)
 
@@ -130,8 +119,7 @@ class DistributedGarden(DistributedObject.DistributedObject):
         for prop in props:
             aProps = aProps + prop
 
-        self.sendUpdate('setProps', [
-            aProps])
+        self.sendUpdate('setProps', [aProps])
 
     def setProps(self, props):
         self.notify.debug('setProps')

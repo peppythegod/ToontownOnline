@@ -5,12 +5,9 @@ from pandac.PandaModules import *
 
 
 class ShtikerPage(DirectFrame, StateData.StateData):
-
     def __init__(self):
         DirectFrame.__init__(
-            self,
-            relief=None,
-            sortOrder=DGG.BACKGROUND_SORT_INDEX)
+            self, relief=None, sortOrder=DGG.BACKGROUND_SORT_INDEX)
         self.initialiseoptions(ShtikerPage)
         StateData.StateData.__init__(self, 'shtiker-page-done')
         self.book = None

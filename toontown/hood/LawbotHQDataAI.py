@@ -28,13 +28,17 @@ class LawbotHQDataAI(HoodDataAI.HoodDataAI):
         HoodDataAI.HoodDataAI.startup(self)
 
         def makeOfficeElevator(index, antiShuffle=0, minLaff=0):
-            destZone = (
-                ToontownGlobals.LawbotStageIntA,
-                ToontownGlobals.LawbotStageIntB,
-                ToontownGlobals.LawbotStageIntC,
-                ToontownGlobals.LawbotStageIntD)[index]
+            destZone = (ToontownGlobals.LawbotStageIntA,
+                        ToontownGlobals.LawbotStageIntB,
+                        ToontownGlobals.LawbotStageIntC,
+                        ToontownGlobals.LawbotStageIntD)[index]
             elev = DistributedLawOfficeElevatorExtAI.DistributedLawOfficeElevatorExtAI(
-                self.air, self.air.lawMgr, destZone, index, antiShuffle=0, minLaff=minLaff)
+                self.air,
+                self.air.lawMgr,
+                destZone,
+                index,
+                antiShuffle=0,
+                minLaff=minLaff)
             elev.generateWithRequired(ToontownGlobals.LawbotOfficeExt)
             self.addDistObj(elev)
             return elev.doId
@@ -49,7 +53,10 @@ class LawbotHQDataAI(HoodDataAI.HoodDataAI):
         self.lobbyMgr.generateWithRequired(ToontownGlobals.LawbotLobby)
         self.addDistObj(self.lobbyMgr)
         self.lobbyElevator = DistributedCJElevatorAI.DistributedCJElevatorAI(
-            self.air, self.lobbyMgr, ToontownGlobals.LawbotLobby, antiShuffle=1)
+            self.air,
+            self.lobbyMgr,
+            ToontownGlobals.LawbotLobby,
+            antiShuffle=1)
         self.lobbyElevator.generateWithRequired(ToontownGlobals.LawbotLobby)
         self.addDistObj(self.lobbyElevator)
         if simbase.config.GetBool('want-boarding-groups', 1):
@@ -77,22 +84,16 @@ class LawbotHQDataAI(HoodDataAI.HoodDataAI):
             extDoor.setOtherDoor(intDoor)
             intDoor.setOtherDoor(extDoor)
             intDoor.generateWithRequired(destinationZone)
-            intDoor.sendUpdate('setDoorIndex', [
-                intDoor.getDoorIndex()])
+            intDoor.sendUpdate('setDoorIndex', [intDoor.getDoorIndex()])
             self.addDistObj(intDoor)
             extDoor.generateWithRequired(self.canonicalHoodId)
-            extDoor.sendUpdate('setDoorIndex', [
-                extDoor.getDoorIndex()])
+            extDoor.sendUpdate('setDoorIndex', [extDoor.getDoorIndex()])
             self.addDistObj(extDoor)
 
         makeDoor(ToontownGlobals.LawbotLobby, 0, 1,
                  FADoorCodes.LB_DISGUISE_INCOMPLETE)
         makeDoor(ToontownGlobals.LawbotOfficeExt, 0, 0)
-        officeIdList = [
-            officeId0,
-            officeId1,
-            officeId2,
-            officeId3]
+        officeIdList = [officeId0, officeId1, officeId2, officeId3]
         if simbase.config.GetBool('want-boarding-parties', 1):
             self.officeBoardingParty = DistributedBoardingPartyAI.DistributedBoardingPartyAI(
                 self.air, officeIdList, 4)

@@ -16,13 +16,11 @@ class DistributedHydrantZeroMgr(
     def announceGenerate(self):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.announceGenerate(
             self)
-        messenger.send('hydrantZeroIsRunning', [
-            self.isRunning])
+        messenger.send('hydrantZeroIsRunning', [self.isRunning])
 
     def delete(self):
         self.notify.debug('deleting hydrantzeromgr')
-        messenger.send('hydrantZeroIsRunning', [
-            False])
+        messenger.send('hydrantZeroIsRunning', [False])
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.delete(self)
         if hasattr(self.cr, 'hydrantZeroMgr'):
             del self.cr.hydrantZeroMgr
@@ -30,11 +28,9 @@ class DistributedHydrantZeroMgr(
     def setCurPhase(self, newPhase):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.setCurPhase(
             self, newPhase)
-        messenger.send('hydrantZeroPhase', [
-            newPhase])
+        messenger.send('hydrantZeroPhase', [newPhase])
 
     def setIsRunning(self, isRunning):
         DistributedPhaseEventMgr.DistributedPhaseEventMgr.setIsRunning(
             self, isRunning)
-        messenger.send('hydrantZeroIsRunning', [
-            isRunning])
+        messenger.send('hydrantZeroIsRunning', [isRunning])

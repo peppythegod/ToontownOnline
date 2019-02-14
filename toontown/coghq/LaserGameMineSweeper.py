@@ -5,10 +5,9 @@ import random
 
 
 class LaserGameMineSweeper(LaserGameBase.LaserGameBase):
-
     def __init__(self, funcSuccess, funcFail, funcSendGrid, funcSetGrid):
-        LaserGameBase.LaserGameBase.__init__(
-            self, funcSuccess, funcFail, funcSendGrid, funcSetGrid)
+        LaserGameBase.LaserGameBase.__init__(self, funcSuccess, funcFail,
+                                             funcSendGrid, funcSetGrid)
         self.setGridSize(7, 7)
         self.blankGrid()
 
@@ -30,8 +29,7 @@ class LaserGameMineSweeper(LaserGameBase.LaserGameBase):
         LaserGameBase.LaserGameBase.startGrid(self)
         self.hiddenData = []
         for i in range(0, self.gridNumX):
-            self.hiddenData.append([
-                0] * self.gridNumY)
+            self.hiddenData.append([0] * self.gridNumY)
 
         numBombs = int(self.gridNumX * self.gridNumY / 8)
         numBombs += 1

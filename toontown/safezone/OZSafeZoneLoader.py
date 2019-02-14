@@ -21,7 +21,6 @@ if __debug__:
 
 
 class OZSafeZoneLoader(SafeZoneLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
         SafeZoneLoader.__init__(self, hood, parentFSM, doneEvent)
         self.musicFile = 'phase_6/audio/bgm/OZ_SZ.mid'
@@ -31,24 +30,18 @@ class OZSafeZoneLoader(SafeZoneLoader):
         self._OZSafeZoneLoader__toonTracks = {}
         del self.fsm
         self.fsm = ClassicFSM.ClassicFSM('SafeZoneLoader', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'quietZone',
-                'playground',
-                'toonInterior']),
-            State.State('playground', self.enterPlayground, self.exitPlayground, [
-                'quietZone',
-                'golfcourse']),
-            State.State('toonInterior', self.enterToonInterior, self.exitToonInterior, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'playground',
-                'toonInterior',
-                'golfcourse']),
-            State.State('golfcourse', self.enterGolfCourse, self.exitGolfCourse, [
-                'quietZone',
-                'playground']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+            State.State('start', self.enterStart, self.exitStart,
+                        ['quietZone', 'playground', 'toonInterior']),
+            State.State('playground', self.enterPlayground,
+                        self.exitPlayground, ['quietZone', 'golfcourse']),
+            State.State('toonInterior', self.enterToonInterior,
+                        self.exitToonInterior, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['playground', 'toonInterior', 'golfcourse']),
+            State.State('golfcourse', self.enterGolfCourse,
+                        self.exitGolfCourse, ['quietZone', 'playground']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
 
     def load(self):
         self.done = 0
@@ -57,7 +50,8 @@ class OZSafeZoneLoader(SafeZoneLoader):
         self.birdSound = map(base.loadSfx, [
             'phase_4/audio/sfx/SZ_TC_bird1.mp3',
             'phase_4/audio/sfx/SZ_TC_bird2.mp3',
-            'phase_4/audio/sfx/SZ_TC_bird3.mp3'])
+            'phase_4/audio/sfx/SZ_TC_bird3.mp3'
+        ])
         self.underwaterSound = base.loadSfx(
             'phase_4/audio/sfx/AV_ambient_water.mp3')
         self.swimSound = base.loadSfx(
@@ -98,8 +92,8 @@ class OZSafeZoneLoader(SafeZoneLoader):
             cutOff=120)
         if self.geyserModel:
             self.geyserActor = Actor.Actor(self.geyserModel)
-            self.geyserActor.loadAnims({
-                'idle': 'phase_6/models/golf/golf_geyser'})
+            self.geyserActor.loadAnims(
+                {'idle': 'phase_6/models/golf/golf_geyser'})
             self.geyserActor.reparentTo(render)
             self.geyserActor.setPlayRate(8.5999999999999996, 'idle')
             self.geyserActor.loop('idle')
@@ -110,9 +104,7 @@ class OZSafeZoneLoader(SafeZoneLoader):
             mesh = self.geyserActor.find('**/mesh_tide1')
             joint = self.geyserActor.find('**/uvj_WakeWhiteTide1')
             mesh.setTexProjector(
-                mesh.findTextureStage('default'),
-                joint,
-                self.geyserActor)
+                mesh.findTextureStage('default'), joint, self.geyserActor)
             self.geyserActor.setPos(geyserPlacer.getPos())
             self.geyserActor.setZ(geyserPlacer.getZ() - 100.0)
             self.geyserPos = geyserPlacer.getPos()
@@ -140,23 +132,21 @@ class OZSafeZoneLoader(SafeZoneLoader):
         self.geyserCollNode.setIntoCollideMask(OTPGlobals.WallBitmask)
         self.geyserCollNode.addSolid(self.geyserCollSphere)
         self.geyserNodePath = self.collBase.attachNewNode(self.geyserCollNode)
-        self.geyserNodePath.setPos(
-            self.geyserPos[0],
-            self.geyserPos[1],
-            self.geyserPos[2] - 100.0)
+        self.geyserNodePath.setPos(self.geyserPos[0], self.geyserPos[1],
+                                   self.geyserPos[2] - 100.0)
         self.waterfallModel = loader.loadModel(
             'phase_6/models/golf/golf_waterfall_model')
         if self.waterfallModel:
             self.waterfallActor = Actor.Actor(self.waterfallModel)
-            self.waterfallActor.loadAnims({
-                'idle': 'phase_6/models/golf/golf_waterfall'})
+            self.waterfallActor.loadAnims(
+                {'idle': 'phase_6/models/golf/golf_waterfall'})
             self.waterfallActor.reparentTo(render)
             self.waterfallActor.setPlayRate(3.5, 'idle')
             self.waterfallActor.loop('idle')
             mesh = self.waterfallActor.find('**/mesh_tide1')
             joint = self.waterfallActor.find('**/uvj_WakeWhiteTide1')
-            mesh.setTexProjector(mesh.findTextureStage(
-                'default'), joint, self.waterfallActor)
+            mesh.setTexProjector(
+                mesh.findTextureStage('default'), joint, self.waterfallActor)
 
         self.waterfallActor.setPos(waterfallPlacer.getPos())
         self.accept('clientLogout', self._handleLogout)
@@ -171,10 +161,8 @@ class OZSafeZoneLoader(SafeZoneLoader):
             self.geyserCycleTime = 20.0
             useTime = base.cr.DTimer.getTime()
             timeToNextGeyser = 20.0 - useTime % 20.0
-            taskMgr.doMethodLater(
-                timeToNextGeyser,
-                self.doGeyser,
-                'geyser Task')
+            taskMgr.doMethodLater(timeToNextGeyser, self.doGeyser,
+                                  'geyser Task')
         else:
             taskMgr.doMethodLater(5.0, self.startGeyser, 'start geyser Task')
 
@@ -183,10 +171,8 @@ class OZSafeZoneLoader(SafeZoneLoader):
             self.setGeyserAnim()
             useTime = base.cr.DTimer.getTime()
             timeToNextGeyser = 20.0 - useTime % 20.0
-            taskMgr.doMethodLater(
-                timeToNextGeyser,
-                self.doGeyser,
-                'geyser Task')
+            taskMgr.doMethodLater(timeToNextGeyser, self.doGeyser,
+                                  'geyser Task')
 
         return task.done
 
@@ -212,10 +198,8 @@ class OZSafeZoneLoader(SafeZoneLoader):
         time = 1.0
         self.geyserTrack = Sequence()
         upPos = Vec3(self.geyserPos[0], self.geyserPos[1], self.geyserPos[2])
-        downPos = Vec3(
-            self.geyserPos[0],
-            self.geyserPos[1],
-            self.geyserPos[2] - 8.0)
+        downPos = Vec3(self.geyserPos[0], self.geyserPos[1],
+                       self.geyserPos[2] - 8.0)
         avList = copy.copy(Avatar.Avatar.ActiveAvatars)
         avList.append(base.localAvatar)
         playSound = 0
@@ -225,37 +209,19 @@ class OZSafeZoneLoader(SafeZoneLoader):
                 place = base.cr.playGame.getPlace()
                 local = 0
                 avPos = av.getPos()
-                upToon = Vec3(
-                    avPos[0],
-                    avPos[1],
-                    maxSize *
-                    self.geyserPos[2] +
-                    40.0)
-                midToon = Vec3(
-                    avPos[0],
-                    avPos[1],
-                    maxSize *
-                    self.geyserPos[2] +
-                    30.0)
+                upToon = Vec3(avPos[0], avPos[1],
+                              maxSize * self.geyserPos[2] + 40.0)
+                midToon = Vec3(avPos[0], avPos[1],
+                               maxSize * self.geyserPos[2] + 30.0)
                 downToon = Vec3(avPos[0], avPos[1], self.geyserPos[2])
-                returnPoints = [
-                    (7, 7),
-                    (8, 0),
-                    (-8, 3),
-                    (-7, 7),
-                    (3, -7),
-                    (0, 8),
-                    (-10, 0),
-                    (8, -3),
-                    (5, 8),
-                    (-8, 5),
-                    (-1, 7)]
+                returnPoints = [(7, 7), (8, 0), (-8, 3), (-7, 7), (3, -7),
+                                (0, 8), (-10, 0), (8, -3), (5, 8), (-8, 5),
+                                (-1, 7)]
                 pick = int((float(av.doId) - 11.0) / 13.0 % len(returnPoints))
                 returnChoice = returnPoints[pick]
-                toonReturn = Vec3(
-                    self.geyserPos[0] + returnChoice[0],
-                    self.geyserPos[1] + returnChoice[1],
-                    self.geyserPos[2] - 1.5)
+                toonReturn = Vec3(self.geyserPos[0] + returnChoice[0],
+                                  self.geyserPos[1] + returnChoice[1],
+                                  self.geyserPos[2] - 1.5)
                 topTrack = Sequence()
                 av.dropShadow.hide()
                 playSound = 1
@@ -267,25 +233,17 @@ class OZSafeZoneLoader(SafeZoneLoader):
                 else:
                     topTrack.delayDeletes = [
                         DelayDelete.DelayDelete(
-                            av, 'OZSafeZoneLoader.setGeyserAnim')]
+                            av, 'OZSafeZoneLoader.setGeyserAnim')
+                    ]
                     av.stopSmooth()
                 animTrack = Parallel()
                 toonTrack = Sequence()
                 toonTrack.append(Wait(0.5))
                 animTrack.append(
                     ActorInterval(
-                        av,
-                        'jump-idle',
-                        loop=1,
-                        endTime=11.5 *
-                        time))
+                        av, 'jump-idle', loop=1, endTime=11.5 * time))
                 animTrack.append(
-                    ActorInterval(
-                        av,
-                        'neutral',
-                        loop=0,
-                        endTime=0.25 *
-                        time))
+                    ActorInterval(av, 'neutral', loop=0, endTime=0.25 * time))
                 holder = render.attachNewNode('toon hold')
                 base.holder = holder
                 toonPos = av.getPos(render)
@@ -302,16 +260,14 @@ class OZSafeZoneLoader(SafeZoneLoader):
                     lookIn = Vec3(0 + lookAt, -30, 0)
                 else:
                     lookIn = Vec3(360 + lookAt, -30, 0)
-                print 'Camera Hprs toon %s; lookIn %s; final %s' % (newHpr, lookIn, lookIn - newHpr)
+                print 'Camera Hprs toon %s; lookIn %s; final %s' % (
+                    newHpr, lookIn, lookIn - newHpr)
                 if local == 1:
                     camPosOriginal = camera.getPos()
                     camHprOriginal = camera.getHpr()
                     camParentOriginal = camera.getParent()
                     cameraPivot = holder.attachNewNode('camera pivot')
-                    chooseHeading = random.choice([
-                        -10.0,
-                        15.0,
-                        40.0])
+                    chooseHeading = random.choice([-10.0, 15.0, 40.0])
                     cameraPivot.setHpr(chooseHeading, -20.0, 0.0)
                     cameraArm = cameraPivot.attachNewNode('camera arm')
                     cameraArm.setPos(0.0, -23.0, 3.0)
@@ -321,11 +277,8 @@ class OZSafeZoneLoader(SafeZoneLoader):
                     cameraTrack = Sequence()
                     cameraTrack.append(Wait(11.0 * time))
                     cameraTrack.append(
-                        Func(
-                            self.changeCamera,
-                            camParentOriginal,
-                            camPosOriginal,
-                            camHprOriginal))
+                        Func(self.changeCamera, camParentOriginal,
+                             camPosOriginal, camHprOriginal))
                     cameraTrack.start()
 
                 moveTrack = Sequence()
@@ -389,18 +342,11 @@ class OZSafeZoneLoader(SafeZoneLoader):
 
         self.geyserTrack.append(Func(self.doPrint, 'geyser start'))
         self.geyserTrack.append(
-            Func(
-                self.geyserNodePath.setPos,
-                self.geyserPos[0],
-                self.geyserPos[1],
-                self.geyserPos[2]))
+            Func(self.geyserNodePath.setPos, self.geyserPos[0],
+                 self.geyserPos[1], self.geyserPos[2]))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    2.0 * time,
-                    0.75,
-                    0.01),
+                LerpScaleInterval(self.geyserActor, 2.0 * time, 0.75, 0.01),
                 LerpPosInterval(
                     self.geyserActor,
                     2.0 * time,
@@ -408,83 +354,40 @@ class OZSafeZoneLoader(SafeZoneLoader):
                     startPos=downPos)))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    time,
-                    maxSize,
-                    0.75),
+                LerpScaleInterval(self.geyserActor, time, maxSize, 0.75),
                 LerpPosInterval(
-                    self.geyserActor,
-                    time,
-                    pos=upPos,
-                    startPos=downPos)))
+                    self.geyserActor, time, pos=upPos, startPos=downPos)))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    2.0 * time,
-                    0.75,
-                    maxSize),
+                LerpScaleInterval(self.geyserActor, 2.0 * time, 0.75, maxSize),
                 LerpPosInterval(
-                    self.geyserActor,
-                    2.0 * time,
-                    pos=downPos,
+                    self.geyserActor, 2.0 * time, pos=downPos,
                     startPos=upPos)))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    time,
-                    maxSize,
-                    0.75),
+                LerpScaleInterval(self.geyserActor, time, maxSize, 0.75),
                 LerpPosInterval(
-                    self.geyserActor,
-                    time,
-                    pos=upPos,
-                    startPos=downPos)))
+                    self.geyserActor, time, pos=upPos, startPos=downPos)))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    2.0 * time,
-                    0.75,
-                    maxSize),
+                LerpScaleInterval(self.geyserActor, 2.0 * time, 0.75, maxSize),
                 LerpPosInterval(
-                    self.geyserActor,
-                    2.0 * time,
-                    pos=downPos,
+                    self.geyserActor, 2.0 * time, pos=downPos,
                     startPos=upPos)))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    time,
-                    maxSize,
-                    0.75),
+                LerpScaleInterval(self.geyserActor, time, maxSize, 0.75),
                 LerpPosInterval(
-                    self.geyserActor,
-                    time,
-                    pos=upPos,
-                    startPos=downPos)))
+                    self.geyserActor, time, pos=upPos, startPos=downPos)))
         self.geyserTrack.append(
             Parallel(
-                LerpScaleInterval(
-                    self.geyserActor,
-                    4.0 * time,
-                    0.01,
-                    maxSize),
+                LerpScaleInterval(self.geyserActor, 4.0 * time, 0.01, maxSize),
                 LerpPosInterval(
-                    self.geyserActor,
-                    4.0 * time,
-                    pos=downPos,
+                    self.geyserActor, 4.0 * time, pos=downPos,
                     startPos=upPos)))
         self.geyserTrack.append(
-            Func(
-                self.geyserNodePath.setPos,
-                self.geyserPos[0],
-                self.geyserPos[1],
-                self.geyserPos[2] -
-                100.0))
+            Func(self.geyserNodePath.setPos, self.geyserPos[0],
+                 self.geyserPos[1], self.geyserPos[2] - 100.0))
         self.geyserTrack.append(Func(self.doPrint, 'geyser end'))
         self.geyserTrack.start()
         if playSound:
@@ -583,9 +486,9 @@ class OZSafeZoneLoader(SafeZoneLoader):
             'how': 'teleportIn',
             'zoneId': 6000,
             'hoodId': 6000,
-            'shardId': None}
-        self.fsm.request('quietZone', [
-            req])
+            'shardId': None
+        }
+        self.fsm.request('quietZone', [req])
 
     def _handleLogout(self):
         self.clearToonTracks()

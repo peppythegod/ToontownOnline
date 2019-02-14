@@ -8,7 +8,6 @@ import CogdoFlyingGameGlobals as Globals
 
 
 class CogdoFlyingProgressGui(DirectFrame):
-
     def __init__(self, parent, level, pos2d=Globals.Gui.ProgressPos2D):
         DirectFrame.__init__(
             self,
@@ -66,22 +65,14 @@ class CogdoFlyingProgressGui(DirectFrame):
     def update(self):
         for (toon, marker) in self._toonMarkers.items():
             progress = clamp(
-                (toon.getY() -
-                 self._levelStartY) /
-                self._levelDistance,
-                self._levelStartY,
-                self._levelEndY)
+                (toon.getY() - self._levelStartY) / self._levelDistance,
+                self._levelStartY, self._levelEndY)
             marker.setZ(
-                clamp(
-                    self._lineStart +
-                    self._lineDistance *
-                    progress,
-                    self._lineStart,
-                    self._lineEnd))
+                clamp(self._lineStart + self._lineDistance * progress,
+                      self._lineStart, self._lineEnd))
 
 
 class CogdoFlyingFuelGui(DirectFrame):
-
     def __init__(self, parent):
         DirectFrame.__init__(
             self,
@@ -116,10 +107,8 @@ class CogdoFlyingFuelGui(DirectFrame):
         self.fuelVeryLowIndicator.setBin('fixed', 2)
         pos = self.fuelVeryLowIndicator.getPos(render)
         newPos = pos
-        newPos.setZ(
-            bottomBarPos.getZ() +
-            zDist *
-            Globals.Gameplay.FuelVeryLowAmt)
+        newPos.setZ(bottomBarPos.getZ() +
+                    zDist * Globals.Gameplay.FuelVeryLowAmt)
         self.fuelVeryLowIndicator.setPos(render, newPos)
         self.propellerMain = self.gui.find('**/propellers')
         self.propellerMain.setBin('fixed', 3)
@@ -139,25 +128,13 @@ class CogdoFlyingFuelGui(DirectFrame):
         self.bladeNumberLabel = DirectLabel(
             parent=self.propellerHead,
             relief=None,
-            pos=(
-                Globals.Gui.FuelNumBladesPos2D[0],
-                0,
-                Globals.Gui.FuelNumBladesPos2D[1]),
+            pos=(Globals.Gui.FuelNumBladesPos2D[0], 0,
+                 Globals.Gui.FuelNumBladesPos2D[1]),
             scale=Globals.Gui.FuelNumBladesScale,
-            text=str(
-                len(
-                    self.activeBlades)),
+            text=str(len(self.activeBlades)),
             text_align=TextNode.ACenter,
-            text_fg=(
-                0.0,
-                0.0,
-                -0.002,
-                1),
-            text_shadow=(
-                0.75,
-                0.75,
-                0.75,
-                1),
+            text_fg=(0.0, 0.0, -0.002, 1),
+            text_shadow=(0.75, 0.75, 0.75, 1),
             text_font=ToontownGlobals.getInterfaceFont())
         self.bladeNumberLabel.setBin('fixed', 5)
 

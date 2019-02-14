@@ -47,15 +47,10 @@ class FriendInviter(DirectFrame):
         self.wantPlayerFriends = base.config.GetBool('want-player-friends', 0)
         DirectFrame.__init__(
             self,
-            pos=(
-                0.29999999999999999,
-                0.10000000000000001,
-                0.65000000000000002),
+            pos=(0.29999999999999999, 0.10000000000000001,
+                 0.65000000000000002),
             image_color=GlobalDialogColor,
-            image_scale=(
-                1.0,
-                1.0,
-                0.59999999999999998),
+            image_scale=(1.0, 1.0, 0.59999999999999998),
             text='',
             text_wordwrap=TTLocalizer.FIdirectFrameWordwrap,
             text_scale=TTLocalizer.FIdirectFrame,
@@ -74,28 +69,36 @@ class FriendInviter(DirectFrame):
         self.playerFriend = 0
         self.fsm = ClassicFSM.ClassicFSM('FriendInviter', [
             State.State('off', self.enterOff, self.exitOff),
-            State.State('getNewFriend', self.enterGetNewFriend, self.exitGetNewFriend),
+            State.State('getNewFriend', self.enterGetNewFriend,
+                        self.exitGetNewFriend),
             State.State('begin', self.enterBegin, self.exitBegin),
             State.State('check', self.enterCheck, self.exitCheck),
             State.State('tooMany', self.enterTooMany, self.exitTooMany),
-            State.State('checkAvailability', self.enterCheckAvailability, self.exitCheckAvailability),
-            State.State('notAvailable', self.enterNotAvailable, self.exitNotAvailable),
-            State.State('notAcceptingFriends', self.enterNotAcceptingFriends, self.exitNotAcceptingFriends),
+            State.State('checkAvailability', self.enterCheckAvailability,
+                        self.exitCheckAvailability),
+            State.State('notAvailable', self.enterNotAvailable,
+                        self.exitNotAvailable),
+            State.State('notAcceptingFriends', self.enterNotAcceptingFriends,
+                        self.exitNotAcceptingFriends),
             State.State('wentAway', self.enterWentAway, self.exitWentAway),
             State.State('already', self.enterAlready, self.exitAlready),
             State.State('askingCog', self.enterAskingCog, self.exitAskingCog),
             State.State('askingPet', self.enterAskingPet, self.exitAskingPet),
-            State.State('endFriendship', self.enterEndFriendship, self.exitEndFriendship),
-            State.State('friendsNoMore', self.enterFriendsNoMore, self.exitFriendsNoMore),
+            State.State('endFriendship', self.enterEndFriendship,
+                        self.exitEndFriendship),
+            State.State('friendsNoMore', self.enterFriendsNoMore,
+                        self.exitFriendsNoMore),
             State.State('self', self.enterSelf, self.exitSelf),
             State.State('ignored', self.enterIgnored, self.exitIgnored),
             State.State('asking', self.enterAsking, self.exitAsking),
             State.State('yes', self.enterYes, self.exitYes),
             State.State('no', self.enterNo, self.exitNo),
-            State.State('otherTooMany', self.enterOtherTooMany, self.exitOtherTooMany),
+            State.State('otherTooMany', self.enterOtherTooMany,
+                        self.exitOtherTooMany),
             State.State('maybe', self.enterMaybe, self.exitMaybe),
             State.State('down', self.enterDown, self.exitDown),
-            State.State('cancel', self.enterCancel, self.exitCancel)], 'off', 'off')
+            State.State('cancel', self.enterCancel, self.exitCancel)
+        ], 'off', 'off')
         self.context = None
         ToonAvatarDetailPanel = ToonAvatarDetailPanel
         import toontown.toon
@@ -105,43 +108,32 @@ class FriendInviter(DirectFrame):
         gui = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
         self.bOk = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=OTPLocalizer.FriendInviterOK,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.0,
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.0, 0.0, -0.10000000000000001),
             command=self._FriendInviter__handleOk)
         self.bOk.hide()
         self.bCancel = DirectButton(
             self,
-            image=(
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr')),
+            image=(buttons.find('**/CloseBtn_UP'),
+                   buttons.find('**/CloseBtn_DN'),
+                   buttons.find('**/CloseBtn_Rllvr')),
             relief=None,
             text=OTPLocalizer.FriendInviterCancel,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             pos=TTLocalizer.FIbCancelPos,
             command=self._FriendInviter__handleCancel)
         self.bCancel.hide()
         self.bStop = DirectButton(
             self,
-            image=(
-                gui.find('**/Ignore_Btn_UP'),
-                gui.find('**/Ignore_Btn_DN'),
-                gui.find('**/Ignore_Btn_RLVR')),
+            image=(gui.find('**/Ignore_Btn_UP'), gui.find('**/Ignore_Btn_DN'),
+                   gui.find('**/Ignore_Btn_RLVR')),
             relief=None,
             text=OTPLocalizer.FriendInviterStopBeingFriends,
             text_align=TextNode.ALeft,
@@ -152,103 +144,68 @@ class FriendInviter(DirectFrame):
         self.bStop.hide()
         self.bYes = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=OTPLocalizer.FriendInviterYes,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             pos=TTLocalizer.FIbYesPos,
             command=self._FriendInviter__handleYes)
         self.bYes.hide()
         self.bNo = DirectButton(
             self,
-            image=(
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr')),
+            image=(buttons.find('**/CloseBtn_UP'),
+                   buttons.find('**/CloseBtn_DN'),
+                   buttons.find('**/CloseBtn_Rllvr')),
             relief=None,
             text=OTPLocalizer.FriendInviterNo,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.14999999999999999,
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.14999999999999999, 0.0, -0.10000000000000001),
             command=self._FriendInviter__handleNo)
         self.bNo.hide()
-        self.bToon = DirectButton(self,
-                                  image=(buttons.find('**/ChtBx_OKBtn_UP'),
-                                         buttons.find('**/ChtBx_OKBtn_DN'),
-                                         buttons.find('**/ChtBx_OKBtn_Rllvr')),
-                                  relief=None,
-                                  text=TTLocalizer.FriendInviterToon,
-                                  text_scale=0.050000000000000003,
-                                  text_pos=(0.0,
-                                            -0.10000000000000001),
-                                  pos=(-0.34999999999999998,
-                                       0.0,
-                                       -0.050000000000000003),
-                                  command=self._FriendInviter__handleToon)
+        self.bToon = DirectButton(
+            self,
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            relief=None,
+            text=TTLocalizer.FriendInviterToon,
+            text_scale=0.050000000000000003,
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(-0.34999999999999998, 0.0, -0.050000000000000003),
+            command=self._FriendInviter__handleToon)
         toonText = DirectLabel(
             parent=self,
             relief=None,
-            pos=Vec3(
-                0.34999999999999998,
-                0,
-                -0.20000000000000001),
+            pos=Vec3(0.34999999999999998, 0, -0.20000000000000001),
             text=TTLocalizer.FriendInviterToonFriendInfo,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                0),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, 0),
             text_scale=0.044999999999999998,
             text_align=TextNode.ACenter)
         toonText.reparentTo(self.bToon.stateNodePath[2])
         self.bToon.hide()
         self.bPlayer = DirectButton(
             self,
-            image=(
-                buttons.find('**/ChtBx_OKBtn_UP'),
-                buttons.find('**/ChtBx_OKBtn_DN'),
-                buttons.find('**/ChtBx_OKBtn_Rllvr')),
+            image=(buttons.find('**/ChtBx_OKBtn_UP'),
+                   buttons.find('**/ChtBx_OKBtn_DN'),
+                   buttons.find('**/ChtBx_OKBtn_Rllvr')),
             relief=None,
             text=TTLocalizer.FriendInviterPlayer,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
-            pos=(
-                0.0,
-                0.0,
-                -0.050000000000000003),
+            text_pos=(0.0, -0.10000000000000001),
+            pos=(0.0, 0.0, -0.050000000000000003),
             command=self._FriendInviter__handlePlayer)
         playerText = DirectLabel(
             parent=self,
             relief=None,
-            pos=Vec3(
-                0,
-                0,
-                -0.20000000000000001),
+            pos=Vec3(0, 0, -0.20000000000000001),
             text=TTLocalizer.FriendInviterPlayerFriendInfo,
-            text_fg=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0,
-                0),
+            text_fg=(0, 0, 0, 1),
+            text_pos=(0, 0),
             text_scale=0.044999999999999998,
             text_align=TextNode.ACenter)
         playerText.reparentTo(self.bPlayer.stateNodePath[2])
@@ -288,17 +245,12 @@ class FriendInviter(DirectFrame):
     def enterGetNewFriend(self):
         self['text'] = TTLocalizer.FriendInviterClickToon % len(
             base.localAvatar.friendsList)
-        if base.cr.productName in [
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+        if base.cr.productName in ['JP', 'DE', 'BR', 'FR']:
             self.bOk.show()
         else:
             self.bCancel.show()
-        self.accept(
-            'clickedNametag',
-            self._FriendInviter__handleClickedNametag)
+        self.accept('clickedNametag',
+                    self._FriendInviter__handleClickedNametag)
 
     def exitGetNewFriend(self):
         self.bCancel.hide()
@@ -324,9 +276,8 @@ class FriendInviter(DirectFrame):
             self.bPlayer.show()
         else:
             self._FriendInviter__handleToon()
-        self.accept(
-            self.avDisableName,
-            self._FriendInviter__handleDisableAvatar)
+        self.accept(self.avDisableName,
+                    self._FriendInviter__handleDisableAvatar)
 
     def exitBegin(self):
         self.ignore(self.avDisableName)
@@ -339,14 +290,14 @@ class FriendInviter(DirectFrame):
 
     def enterCheck(self):
         myId = base.localAvatar.doId
-        self.accept(
-            self.avDisableName,
-            self._FriendInviter__handleDisableAvatar)
+        self.accept(self.avDisableName,
+                    self._FriendInviter__handleDisableAvatar)
         if self.avId == myId:
             self.fsm.request('self')
         elif not (self.playerFriend) and base.cr.isFriend(self.avId):
             self.fsm.request('already')
-        elif self.playerFriend and base.cr.playerFriendsManager.isPlayerFriend(self.avId):
+        elif self.playerFriend and base.cr.playerFriendsManager.isPlayerFriend(
+                self.avId):
             self.fsm.request('already')
         elif not self.playerFriend:
             tooMany = len(base.localAvatar.friendsList) >= MaxFriends
@@ -376,9 +327,8 @@ class FriendInviter(DirectFrame):
         self.bCancel.hide()
 
     def enterCheckAvailability(self):
-        self.accept(
-            self.avDisableName,
-            self._FriendInviter__handleDisableAvatar)
+        self.accept(self.avDisableName,
+                    self._FriendInviter__handleDisableAvatar)
         if not self.playerFriend:
             if self.avId not in base.cr.doId2do:
                 self.fsm.request('wentAway')
@@ -407,20 +357,19 @@ class FriendInviter(DirectFrame):
             self.notify.info('Inviter requesting player friend')
             self['text'] = OTPLocalizer.FriendInviterAsking % self.playerName
             base.cr.playerFriendsManager.sendRequestInvite(self.playerId)
-            self.accept(
-                OTPGlobals.PlayerFriendRejectInviteEvent,
-                self._FriendInviter__playerFriendRejectResponse)
+            self.accept(OTPGlobals.PlayerFriendRejectInviteEvent,
+                        self._FriendInviter__playerFriendRejectResponse)
             self.accept(OTPGlobals.PlayerFriendAddEvent,
                         self._FriendInviter__playerFriendAcceptResponse)
             self.bOk.show()
         else:
             base.cr.friendManager.up_friendQuery(self.avId)
-            self['text'] = OTPLocalizer.FriendInviterCheckAvailability % self.toonName
+            self[
+                'text'] = OTPLocalizer.FriendInviterCheckAvailability % self.toonName
             self.accept('friendResponse', self._FriendInviter__friendResponse)
             self.bCancel.show()
-        self.accept(
-            'friendConsidering',
-            self._FriendInviter__friendConsidering)
+        self.accept('friendConsidering',
+                    self._FriendInviter__friendConsidering)
 
     def exitCheckAvailability(self):
         self.ignore(self.avDisableName)
@@ -437,7 +386,9 @@ class FriendInviter(DirectFrame):
         self.bOk.hide()
 
     def enterNotAcceptingFriends(self):
-        self['text'] = OTPLocalizer.FriendInviterFriendSaidNoNewFriends % self.getName()
+        self[
+            'text'] = OTPLocalizer.FriendInviterFriendSaidNoNewFriends % self.getName(
+            )
         self.context = None
         self.bOk.show()
 
@@ -458,17 +409,17 @@ class FriendInviter(DirectFrame):
 
     def enterAlready(self):
         if self.playerFriend:
-            self['text'] = TTLocalizer.FriendInviterPlayerAlready % self.getName()
-            self.bStop['text'] = TTLocalizer.FriendInviterStopBeingPlayerFriends
+            self[
+                'text'] = TTLocalizer.FriendInviterPlayerAlready % self.getName(
+                )
+            self.bStop[
+                'text'] = TTLocalizer.FriendInviterStopBeingPlayerFriends
         else:
-            self['text'] = TTLocalizer.FriendInviterToonAlready % self.getName()
+            self['text'] = TTLocalizer.FriendInviterToonAlready % self.getName(
+            )
             self.bStop['text'] = TTLocalizer.FriendInviterStopBeingToonFriends
         self.context = None
-        if base.cr.productName in [
-            'JP',
-            'DE',
-            'BR',
-                'FR']:
+        if base.cr.productName in ['JP', 'DE', 'BR', 'FR']:
             self.bStop.setPos(-0.20000000000000001, 0.0, -0.10000000000000001)
             self.bCancel.setPos(0.20000000000000001, 0.0, -0.10000000000000001)
 
@@ -497,7 +448,9 @@ class FriendInviter(DirectFrame):
         self['text'] = OTPLocalizer.FriendInviterAskingPet % self.getName()
         if base.localAvatar.hasPet():
             if base.localAvatar.getPetId() == self.avId:
-                self['text'] = OTPLocalizer.FriendInviterAskingMyPet % self.getName()
+                self[
+                    'text'] = OTPLocalizer.FriendInviterAskingMyPet % self.getName(
+                    )
 
         self.context = None
         self.bOk.show()
@@ -507,13 +460,17 @@ class FriendInviter(DirectFrame):
 
     def enterEndFriendship(self):
         if self.playerFriend:
-            self['text'] = TTLocalizer.FriendInviterEndFriendshipPlayer % self.getName()
+            self[
+                'text'] = TTLocalizer.FriendInviterEndFriendshipPlayer % self.getName(
+                )
             if base.cr.isFriend(self.avId):
                 self['text'] = self['text'] + \
                     TTLocalizer.FriendInviterRemainToon % self.toonName
 
         else:
-            self['text'] = TTLocalizer.FriendInviterEndFriendshipToon % self.getName()
+            self[
+                'text'] = TTLocalizer.FriendInviterEndFriendshipToon % self.getName(
+                )
             if base.cr.playerFriendsManager.isPlayerFriend(self.playerId):
                 self['text'] = self['text'] + \
                     TTLocalizer.FriendInviterRemainPlayer % self.playerName
@@ -558,9 +515,8 @@ class FriendInviter(DirectFrame):
         self.bOk.hide()
 
     def enterAsking(self):
-        self.accept(
-            self.avDisableName,
-            self._FriendInviter__handleDisableAvatar)
+        self.accept(self.avDisableName,
+                    self._FriendInviter__handleDisableAvatar)
         self['text'] = OTPLocalizer.FriendInviterAsking % self.toonName
         self.accept('friendResponse', self._FriendInviter__friendResponse)
         self.bCancel.show()
@@ -693,9 +649,8 @@ class FriendInviter(DirectFrame):
 
     def _FriendInviter__friendResponse(self, yesNoMaybe, context):
         if self.context != context:
-            self.notify.warning(
-                'Unexpected change of context from %s to %s.' %
-                (self.context, context))
+            self.notify.warning('Unexpected change of context from %s to %s.' %
+                                (self.context, context))
             self.context = context
 
         if yesNoMaybe == 1:
@@ -706,8 +661,7 @@ class FriendInviter(DirectFrame):
             self.fsm.request('otherTooMany')
         else:
             self.notify.warning(
-                'Got unexpected response to friendResponse: %s' %
-                yesNoMaybe)
+                'Got unexpected response to friendResponse: %s' % yesNoMaybe)
             self.fsm.request('maybe')
 
     def _FriendInviter__playerFriendRejectResponse(self, avId, reason):
@@ -718,8 +672,7 @@ class FriendInviter(DirectFrame):
             self.fsm.request('otherTooMany')
         else:
             self.notify.warning(
-                'Got unexpected response to friendResponse: %s' %
-                reason)
+                'Got unexpected response to friendResponse: %s' % reason)
             self.fsm.request('maybe')
 
     def _FriendInviter__playerFriendAcceptResponse(self):

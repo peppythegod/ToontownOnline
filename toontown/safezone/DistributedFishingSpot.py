@@ -67,46 +67,33 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.firstCast = 1
         self.fishPanel = None
         self.fsm = ClassicFSM.ClassicFSM('DistributedFishingSpot', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'waiting',
-                'distCasting',
-                'fishing',
-                'reward',
-                'leaving']),
-            State.State('waiting', self.enterWaiting, self.exitWaiting, [
-                'localAdjusting',
-                'distCasting',
-                'leaving',
-                'sellFish']),
-            State.State('localAdjusting', self.enterLocalAdjusting, self.exitLocalAdjusting, [
-                'localCasting',
-                'leaving']),
-            State.State('localCasting', self.enterLocalCasting, self.exitLocalCasting, [
-                'localAdjusting',
-                'fishing',
-                'leaving']),
-            State.State('distCasting', self.enterDistCasting, self.exitDistCasting, [
-                'fishing',
-                'leaving',
-                'reward']),
+            State.State(
+                'off', self.enterOff, self.exitOff,
+                ['waiting', 'distCasting', 'fishing', 'reward', 'leaving']),
+            State.State(
+                'waiting', self.enterWaiting, self.exitWaiting,
+                ['localAdjusting', 'distCasting', 'leaving', 'sellFish']),
+            State.State('localAdjusting', self.enterLocalAdjusting,
+                        self.exitLocalAdjusting, ['localCasting', 'leaving']),
+            State.State('localCasting', self.enterLocalCasting,
+                        self.exitLocalCasting,
+                        ['localAdjusting', 'fishing', 'leaving']),
+            State.State('distCasting', self.enterDistCasting,
+                        self.exitDistCasting,
+                        ['fishing', 'leaving', 'reward']),
             State.State('fishing', self.enterFishing, self.exitFishing, [
-                'localAdjusting',
-                'distCasting',
-                'waitForAI',
-                'reward',
-                'leaving']),
-            State.State('sellFish', self.enterSellFish, self.exitSellFish, [
-                'waiting',
-                'leaving']),
-            State.State('waitForAI', self.enterWaitForAI, self.exitWaitForAI, [
-                'reward',
-                'leaving']),
-            State.State('reward', self.enterReward, self.exitReward, [
-                'localAdjusting',
-                'distCasting',
-                'leaving',
-                'sellFish']),
-            State.State('leaving', self.enterLeaving, self.exitLeaving, [])], 'off', 'off')
+                'localAdjusting', 'distCasting', 'waitForAI', 'reward',
+                'leaving'
+            ]),
+            State.State('sellFish', self.enterSellFish, self.exitSellFish,
+                        ['waiting', 'leaving']),
+            State.State('waitForAI', self.enterWaitForAI, self.exitWaitForAI,
+                        ['reward', 'leaving']),
+            State.State(
+                'reward', self.enterReward, self.exitReward,
+                ['localAdjusting', 'distCasting', 'leaving', 'sellFish']),
+            State.State('leaving', self.enterLeaving, self.exitLeaving, [])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def disable(self):
@@ -162,8 +149,9 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
     def announceGenerate(self):
         DistributedObject.DistributedObject.announceGenerate(self)
         self.nodePath.reparentTo(self.getParentNodePath())
-        self.accept(self.uniqueName('enterFishingSpotSphere'),
-                    self._DistributedFishingSpot__handleEnterSphere)
+        self.accept(
+            self.uniqueName('enterFishingSpotSphere'),
+            self._DistributedFishingSpot__handleEnterSphere)
 
     def setPondDoId(self, pondDoId):
         self.pond = base.cr.doId2do[pondDoId]
@@ -171,9 +159,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.waterLevel = FishingTargetGlobals.getWaterLevel(self.area)
 
     def allowedToEnter(self):
-        if hasattr(
-                base,
-                'ttAccess') and base.ttAccess and base.ttAccess.canAccess():
+        if hasattr(base,
+                   'ttAccess') and base.ttAccess and base.ttAccess.canAccess():
             return True
 
         return False
@@ -187,7 +174,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
 
     def _DistributedFishingSpot__handleEnterSphere(self, collEntry):
         if self.allowedToEnter():
-            if base.localAvatar.doId == self.lastAvId and globalClock.getFrameCount() <= self.lastFrame + 1:
+            if base.localAvatar.doId == self.lastAvId and globalClock.getFrameCount(
+            ) <= self.lastFrame + 1:
                 self.notify.debug('Ignoring duplicate entry for avatar.')
                 return None
 
@@ -214,9 +202,7 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.sendUpdate('requestExit', [])
 
     def d_doCast(self, power, heading):
-        self.sendUpdate('doCast', [
-            power,
-            heading])
+        self.sendUpdate('doCast', [power, heading])
 
     def getSphereRadius(self):
         return 1.5
@@ -274,17 +260,15 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
                 self.av.setAnimState('neutral', 1.0)
                 self.createCastTrack()
             else:
-                self.notify.warning(
-                    'Unknown avatar %d in fishing spot %d' %
-                    (self.avId, self.doId))
+                self.notify.warning('Unknown avatar %d in fishing spot %d' %
+                                    (self.avId, self.doId))
         if wasLocalToon and not (self.localToonFishing):
             self._DistributedFishingSpot__hideCastGui()
             if base.wantBingo:
                 self.pond.setLocalToonSpot()
 
-            base.setCellsAvailable([
-                base.bottomCells[1],
-                base.bottomCells[2]], 1)
+            base.setCellsAvailable([base.bottomCells[1], base.bottomCells[2]],
+                                   1)
             base.setCellsAvailable(base.rightCells, 1)
             place = base.cr.playGame.getPlace()
             if place:
@@ -306,16 +290,10 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
             self.fsm.request('leaving')
         elif mode == FishGlobals.CastMovie:
             if not self.localToonFishing:
-                self.fsm.request('distCasting', [
-                    power,
-                    h])
+                self.fsm.request('distCasting', [power, h])
 
         elif mode == FishGlobals.PullInMovie:
-            self.fsm.request('reward', [
-                code,
-                itemDesc1,
-                itemDesc2,
-                itemDesc3])
+            self.fsm.request('reward', [code, itemDesc1, itemDesc2, itemDesc3])
 
     def getStareAtNodeAndOffset(self):
         return (self.nodePath, Point3())
@@ -329,8 +307,7 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
 
         self.pole = Actor.Actor()
         self.pole.loadModel(rodPath)
-        self.pole.loadAnims({
-            'cast': 'phase_4/models/props/fishing-pole-chan'})
+        self.pole.loadAnims({'cast': 'phase_4/models/props/fishing-pole-chan'})
         self.pole.pose('cast', 0)
         self.ptop = self.pole.find('**/joint_attachBill')
         if self.line is None:
@@ -417,9 +394,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.ripples.play()
         splashSound = random.choice(self.splashSounds)
         base.playSfx(splashSound, volume=0.80000000000000004, node=self.bob)
-        self.bobBobTask = taskMgr.add(
-            self._DistributedFishingSpot__doBobBob,
-            self.taskName('bob'))
+        self.bobBobTask = taskMgr.add(self._DistributedFishingSpot__doBobBob,
+                                      self.taskName('bob'))
 
     def _DistributedFishingSpot__hideBob(self):
         if self.bob:
@@ -456,8 +432,7 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
 
     def _DistributedFishingSpot__sellFishConfirm(self, result=None):
         if self.localToonFishing:
-            self.fsm.request('waiting', [
-                False])
+            self.fsm.request('waiting', [False])
 
     def _DistributedFishingSpot__showCastGui(self):
         self._DistributedFishingSpot__hideCastGui()
@@ -470,10 +445,12 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.castGui.reparentTo(aspect2d)
         self.castButton['state'] = DGG.NORMAL
         self.jar['text'] = str(self.av.getMoney())
-        self.accept(localAvatar.uniqueName('moneyChange'),
-                    self._DistributedFishingSpot__moneyChange)
-        self.accept(localAvatar.uniqueName('fishTankChange'),
-                    self._DistributedFishingSpot__updateFishTankGui)
+        self.accept(
+            localAvatar.uniqueName('moneyChange'),
+            self._DistributedFishingSpot__moneyChange)
+        self.accept(
+            localAvatar.uniqueName('fishTankChange'),
+            self._DistributedFishingSpot__updateFishTankGui)
         target = base.cr.doFind('DistributedTarget')
         if target:
             target.hideGui()
@@ -482,25 +459,27 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
             self._DistributedFishingSpot__setBingoCastGui()
 
         def requestLocalAdjusting(mouseEvent):
-            if self.av.isFishTankFull() and self._DistributedFishingSpot__allowSellFish():
+            if self.av.isFishTankFull(
+            ) and self._DistributedFishingSpot__allowSellFish():
                 self.fsm.request('sellFish')
             else:
                 self.fsm.request('localAdjusting')
 
         def requestLocalCasting(mouseEvent):
-            if not self.av.isFishTankFull() and self._DistributedFishingSpot__allowSellFish():
+            if not self.av.isFishTankFull(
+            ) and self._DistributedFishingSpot__allowSellFish():
                 self.fsm.request('localCasting')
 
         self.castButton.bind(DGG.B1PRESS, requestLocalAdjusting)
         self.castButton.bind(DGG.B3PRESS, requestLocalAdjusting)
         self.castButton.bind(DGG.B1RELEASE, requestLocalCasting)
         self.castButton.bind(DGG.B3RELEASE, requestLocalCasting)
-        if self.firstCast and len(
-                self.av.fishCollection) == 0 and len(
+        if self.firstCast and len(self.av.fishCollection) == 0 and len(
                 self.av.fishTank) == 0:
             self._DistributedFishingSpot__showHowTo(
                 TTLocalizer.FishingHowToFirstTime)
-        elif base.wantBingo and self.pond.hasPondBingoManager() and not (self.av.bFishBingoTutorialDone):
+        elif base.wantBingo and self.pond.hasPondBingoManager() and not (
+                self.av.bFishBingoTutorialDone):
             self._DistributedFishingSpot__showHowTo(
                 TTLocalizer.FishBingoHelpMain)
             self.av.b_setFishBingoTutorialDone(True)
@@ -548,8 +527,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
     def _DistributedFishingSpot__showFishItem(self, code, fish):
         self.fishPanel = FishPanel.FishPanel(fish)
         self._DistributedFishingSpot__setFishItemPos()
-        self.fishPanel.setSwimBounds(-0.29999999999999999,
-                                     0.29999999999999999, -0.23499999999999999, 0.25)
+        self.fishPanel.setSwimBounds(-0.29999999999999999, 0.29999999999999999,
+                                     -0.23499999999999999, 0.25)
         self.fishPanel.setSwimColor(1.0, 1.0, 0.74900999999999995, 1.0)
         self.fishPanel.load()
         self.fishPanel.show(code)
@@ -558,8 +537,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
     def _DistributedFishingSpot__setFishItemPos(self):
         if base.wantBingo:
             if self.pond.hasPondBingoManager():
-                self.fishPanel.setPos(
-                    0.65000000000000002, 0, 0.40000000000000002)
+                self.fishPanel.setPos(0.65000000000000002, 0,
+                                      0.40000000000000002)
             else:
                 self.fishPanel.setPos(0, 0, 0.5)
         else:
@@ -591,8 +570,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
     def _DistributedFishingSpot__showSellFishConfirmDialog(
             self, numFishCaught):
         self._DistributedFishingSpot__makeGui()
-        msg = TTLocalizer.STOREOWNER_TROPHY % (
-            numFishCaught, FishGlobals.getTotalNumFish())
+        msg = TTLocalizer.STOREOWNER_TROPHY % (numFishCaught,
+                                               FishGlobals.getTotalNumFish())
         self.sellFishConfirmDialog.setMessage(msg)
         self.sellFishConfirmDialog.show()
 
@@ -647,8 +626,7 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
     def _DistributedFishingSpot__makeGui(self):
         if base.config.GetBool('want-qa-regression', 0):
             self.notify.info(
-                'QA-REGRESSION: FISHING: ZoneId: %s' %
-                self.pond.getArea())
+                'QA-REGRESSION: FISHING: ZoneId: %s' % self.pond.getArea())
 
         if self.madeGui:
             return None
@@ -665,69 +643,59 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.exitButton = DirectButton(
             parent=self.castGui,
             relief=None,
-            text=(
-                '',
-                TTLocalizer.FishingExit,
-                TTLocalizer.FishingExit),
+            text=('', TTLocalizer.FishingExit, TTLocalizer.FishingExit),
             text_align=TextNode.ACenter,
             text_scale=0.10000000000000001,
-            text_fg=Vec4(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=Vec4(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0.0,
-                -0.12),
-            pos=(
-                1.75,
-                0,
-                -1.3300000000000001),
+            text_fg=Vec4(1, 1, 1, 1),
+            text_shadow=Vec4(0, 0, 0, 1),
+            text_pos=(0.0, -0.12),
+            pos=(1.75, 0, -1.3300000000000001),
             textMayChange=0,
-            image=(
-                self.castGui.find('**/exit_buttonUp'),
-                self.castGui.find('**/exit_buttonDown'),
-                self.castGui.find('**/exit_buttonRollover')),
+            image=(self.castGui.find('**/exit_buttonUp'),
+                   self.castGui.find('**/exit_buttonDown'),
+                   self.castGui.find('**/exit_buttonRollover')),
             command=self._DistributedFishingSpot__userExit)
         self.castGui.find('**/exitButton').removeNode()
         self.castButton = DirectButton(
-            parent=self.castGui, relief=None, text=TTLocalizer.FishingCast, text_align=TextNode.ACenter, text_scale=(
-                3, 3 * 0.75, 3 * 0.75), text_fg=Vec4(
-                1, 1, 1, 1), text_shadow=Vec4(
-                0, 0, 0, 1), text_pos=(
-                    0, -4), image=self.castGui.find('**/castButton'), image0_color=(
-                        1, 0, 0, 1), image1_color=(
-                            0, 1, 0, 1), image2_color=(
-                                1, 1, 0, 1), image3_color=(
-                                    0.80000000000000004, 0.5, 0.5, 1), pos=(
-                                        0, -0.050000000000000003, -0.66600000000000004), scale=(
-                                            0.035999999999999997, 1, 0.048000000000000001))
+            parent=self.castGui,
+            relief=None,
+            text=TTLocalizer.FishingCast,
+            text_align=TextNode.ACenter,
+            text_scale=(3, 3 * 0.75, 3 * 0.75),
+            text_fg=Vec4(1, 1, 1, 1),
+            text_shadow=Vec4(0, 0, 0, 1),
+            text_pos=(0, -4),
+            image=self.castGui.find('**/castButton'),
+            image0_color=(1, 0, 0, 1),
+            image1_color=(0, 1, 0, 1),
+            image2_color=(1, 1, 0, 1),
+            image3_color=(0.80000000000000004, 0.5, 0.5, 1),
+            pos=(0, -0.050000000000000003, -0.66600000000000004),
+            scale=(0.035999999999999997, 1, 0.048000000000000001))
         self.castGui.find('**/castButton').removeNode()
         self.arrow = self.castGui.find('**/arrow')
         self.arrowTip = self.arrow.find('**/arrowTip')
         self.arrowTail = self.arrow.find('**/arrowTail')
         self.arrow.reparentTo(self.castGui)
-        self.arrow.setColorScale(
-            0.90000000000000002,
-            0.90000000000000002,
-            0.10000000000000001,
-            0.69999999999999996)
+        self.arrow.setColorScale(0.90000000000000002, 0.90000000000000002,
+                                 0.10000000000000001, 0.69999999999999996)
         self.arrow.hide()
         self.jar = DirectLabel(
-            parent=self.castGui, relief=None, text=str(
-                self.av.getMoney()), text_scale=0.16, text_fg=(
-                0.94999999999999996, 0.94999999999999996, 0, 1), text_font=ToontownGlobals.getSignFont(), pos=(
-                -1.1200000000000001, 0, -1.3))
+            parent=self.castGui,
+            relief=None,
+            text=str(self.av.getMoney()),
+            text_scale=0.16,
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_font=ToontownGlobals.getSignFont(),
+            pos=(-1.1200000000000001, 0, -1.3))
         self.bucket = DirectLabel(
-            parent=self.castGui, relief=None, text='', text_scale=0.089999999999999997, text_fg=(
-                0.94999999999999996, 0.94999999999999996, 0, 1), text_shadow=(
-                0, 0, 0, 1), pos=(
-                1.1399999999999999, 0, -1.3300000000000001))
+            parent=self.castGui,
+            relief=None,
+            text='',
+            text_scale=0.089999999999999997,
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1),
+            pos=(1.1399999999999999, 0, -1.3300000000000001))
         self._DistributedFishingSpot__updateFishTankGui()
         self.itemGui = NodePath('itemGui')
         self.itemFrame = DirectFrame(
@@ -735,38 +703,25 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
             relief=None,
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor,
-            geom_scale=(
-                1,
-                1,
-                0.59999999999999998),
+            geom_scale=(1, 1, 0.59999999999999998),
             text=TTLocalizer.FishingItemFound,
-            text_pos=(
-                0,
-                0.20000000000000001),
+            text_pos=(0, 0.20000000000000001),
             text_scale=0.080000000000000002,
-            pos=(
-                0,
-                0,
-                0.58699999999999997))
+            pos=(0, 0, 0.58699999999999997))
         self.itemLabel = DirectLabel(
-            parent=self.itemFrame, text='', text_scale=0.059999999999999998, pos=(
-                0, 0, -0.25))
+            parent=self.itemFrame,
+            text='',
+            text_scale=0.059999999999999998,
+            pos=(0, 0, -0.25))
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
         self.itemGuiCloseButton = DirectButton(
             parent=self.itemFrame,
-            pos=(
-                0.44,
-                0,
-                -0.23999999999999999),
+            pos=(0.44, 0, -0.23999999999999999),
             relief=None,
-            image=(
-                buttons.find('**/CloseBtn_UP'),
-                buttons.find('**/CloseBtn_DN'),
-                buttons.find('**/CloseBtn_Rllvr')),
-            image_scale=(
-                0.69999999999999996,
-                1,
-                0.69999999999999996),
+            image=(buttons.find('**/CloseBtn_UP'),
+                   buttons.find('**/CloseBtn_DN'),
+                   buttons.find('**/CloseBtn_Rllvr')),
+            image_scale=(0.69999999999999996, 1, 0.69999999999999996),
             command=self._DistributedFishingSpot__itemGuiClose)
         buttons.removeNode()
         jarGui = loader.loadModel('phase_3.5/models/gui/jar_gui')
@@ -774,20 +729,14 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         packageGui = loader.loadModel(
             'phase_3.5/models/gui/stickerbook_gui').find('**/package')
         self.itemJellybean = DirectFrame(
-            parent=self.itemFrame,
-            relief=None,
-            image=jarGui,
-            scale=0.5)
+            parent=self.itemFrame, relief=None, image=jarGui, scale=0.5)
         self.itemBoot = DirectFrame(
             parent=self.itemFrame,
             relief=None,
             image=bootGui,
             scale=0.20000000000000001)
         self.itemPackage = DirectFrame(
-            parent=self.itemFrame,
-            relief=None,
-            image=packageGui,
-            scale=0.25)
+            parent=self.itemFrame, relief=None, image=packageGui, scale=0.25)
         self.itemJellybean.hide()
         self.itemBoot.hide()
         self.itemPackage.hide()
@@ -834,9 +783,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
 
     def _DistributedFishingSpot__setBingoCastGui(self):
         if self.pond.hasPondBingoManager():
-            self.notify.debug(
-                '__setBingoCastGui: Has PondBing Manager %s' %
-                self.pond.getPondBingoManager().getDoId())
+            self.notify.debug('__setBingoCastGui: Has PondBing Manager %s' %
+                              self.pond.getPondBingoManager().getDoId())
             bucket = self.castGui.find('**/bucket')
             self.castGui.find('**/display_bucket').reparentTo(bucket)
             self.bucket.reparentTo(bucket)
@@ -865,35 +813,20 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         jar = self.castGui.find('**/jar')
         bucketPosInt = bucket.posInterval(
             5.0,
-            Point3(
-                0,
-                0,
-                0),
+            Point3(0, 0, 0),
             startPos=bucket.getPos(),
             blendType='easeInOut')
         bucketScaleInt = bucket.scaleInterval(
             5.0,
-            VBase3(
-                1.0,
-                1.0,
-                1.0),
+            VBase3(1.0, 1.0, 1.0),
             startScale=bucket.getScale(),
             blendType='easeInOut')
         bucketTrack = Parallel(bucketPosInt, bucketScaleInt)
         jarPosInt = jar.posInterval(
-            5.0,
-            Point3(
-                0,
-                0,
-                0),
-            startPos=jar.getPos(),
-            blendType='easeInOut')
+            5.0, Point3(0, 0, 0), startPos=jar.getPos(), blendType='easeInOut')
         jarScaleInt = jar.scaleInterval(
             5.0,
-            VBase3(
-                1.0,
-                1.0,
-                1.0),
+            VBase3(1.0, 1.0, 1.0),
             startScale=jar.getScale(),
             blendType='easeInOut')
         jarTrack = Parallel(jarPosInt, jarScaleInt)
@@ -909,24 +842,26 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.castGui.find('**/display_jar').reparentTo(jar)
         self.jar.reparentTo(jar)
         bucketPosInt = bucket.posInterval(
-            3.0, Point3(-1.8999999999999999, 0, -0.11), startPos=bucket.getPos(), blendType='easeInOut')
+            3.0,
+            Point3(-1.8999999999999999, 0, -0.11),
+            startPos=bucket.getPos(),
+            blendType='easeInOut')
         bucketScaleInt = bucket.scaleInterval(
             3.0,
-            VBase3(
-                0.90000000000000002,
-                0.90000000000000002,
-                0.90000000000000002),
+            VBase3(0.90000000000000002, 0.90000000000000002,
+                   0.90000000000000002),
             startScale=bucket.getScale(),
             blendType='easeInOut')
         bucketTrack = Parallel(bucketPosInt, bucketScaleInt)
         jarPosInt = jar.posInterval(
-            3.0, Point3(-0.375, 0, -0.13500000000000001), startPos=jar.getPos(), blendType='easeInOut')
+            3.0,
+            Point3(-0.375, 0, -0.13500000000000001),
+            startPos=jar.getPos(),
+            blendType='easeInOut')
         jarScaleInt = jar.scaleInterval(
             3.0,
-            VBase3(
-                0.90000000000000002,
-                0.90000000000000002,
-                0.90000000000000002),
+            VBase3(0.90000000000000002, 0.90000000000000002,
+                   0.90000000000000002),
             startScale=jar.getScale(),
             blendType='easeInOut')
         jarTrack = Parallel(jarPosInt, jarScaleInt)
@@ -965,8 +900,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         deltaY = self.mouseY - self.initMouseY
         if deltaY >= 0:
             if self.power == 0:
-                self.arrowTail.setScale(
-                    0.074999999999999997, 0.074999999999999997, 0)
+                self.arrowTail.setScale(0.074999999999999997,
+                                        0.074999999999999997, 0)
                 self.arrow.setR(0)
 
             self.castTrack.pause()
@@ -975,10 +910,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         dist = math.sqrt(deltaX * deltaX + deltaY * deltaY)
         delta = dist / 0.5
         self.power = max(min(abs(delta), 1.0), 0.0)
-        self.castTrack.setT(
-            0.20000000000000001 +
-            self.power *
-            0.69999999999999996)
+        self.castTrack.setT(0.20000000000000001 +
+                            self.power * 0.69999999999999996)
         angle = rad2Deg(math.atan(deltaX / deltaY))
         if self.power < 0.25:
             angle = angle * math.pow(self.power * 4, 3)
@@ -995,18 +928,10 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
             self.arrow.setColorScale(1, 0, 0, 1)
             angle = maxAngle
         else:
-            self.arrow.setColorScale(
-                1,
-                1 -
-                math.pow(
-                    self.power,
-                    3),
-                0.10000000000000001,
-                0.69999999999999996)
-        self.arrowTail.setScale(
-            0.074999999999999997,
-            0.074999999999999997,
-            self.power * 0.20000000000000001)
+            self.arrow.setColorScale(1, 1 - math.pow(self.power, 3),
+                                     0.10000000000000001, 0.69999999999999996)
+        self.arrowTail.setScale(0.074999999999999997, 0.074999999999999997,
+                                self.power * 0.20000000000000001)
         self.arrow.setR(angle)
         self.angleNP.setH(-angle)
         return Task.cont
@@ -1031,10 +956,9 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
 
     def createCastTrack(self):
         self.castTrack = Sequence(
-            ActorInterval(
-                self.av, 'castlong', playRate=4), ActorInterval(
-                self.av, 'cast', startFrame=20), Func(
-                self.av.loop, 'fish-neutral'))
+            ActorInterval(self.av, 'castlong', playRate=4),
+            ActorInterval(self.av, 'cast', startFrame=20),
+            Func(self.av.loop, 'fish-neutral'))
 
     def startMoveBobTask(self):
         self._DistributedFishingSpot__showBob()
@@ -1078,25 +1002,27 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.track = Parallel()
         if doAnimation:
             toonTrack = Sequence(
-                Func(
-                    self.av.setPlayRate, 1.0, 'run'), Func(
-                    self.av.loop, 'run'), LerpPosHprInterval(
-                    self.av, 1.0, Point3(
-                        0, 0, 0), Point3(
-                        0, 0, 0)), Func(
-                            self._DistributedFishingSpot__placeAvatar), Parallel(
-                                ActorInterval(
-                                    self.av, 'pole'), Func(
-                                        self.pole.pose, 'cast', 0), LerpScaleInterval(
-                                            self.pole, duration=0.5, scale=1.0, startScale=0.01)), Func(
-                                                self.av.loop, 'pole-neutral'))
+                Func(self.av.setPlayRate, 1.0, 'run'), Func(
+                    self.av.loop, 'run'),
+                LerpPosHprInterval(self.av, 1.0, Point3(0, 0, 0),
+                                   Point3(0, 0, 0)),
+                Func(self._DistributedFishingSpot__placeAvatar),
+                Parallel(
+                    ActorInterval(self.av, 'pole'),
+                    Func(self.pole.pose, 'cast', 0),
+                    LerpScaleInterval(
+                        self.pole, duration=0.5, scale=1.0, startScale=0.01)),
+                Func(self.av.loop, 'pole-neutral'))
             if self.localToonFishing:
                 camera.wrtReparentTo(render)
                 self.track.append(
                     LerpPosHprInterval(
-                        nodePath=camera, other=self.av, duration=1.5, pos=Point3(
-                            0, -12, 15), hpr=VBase3(
-                            0, -38, 0), blendType='easeInOut'))
+                        nodePath=camera,
+                        other=self.av,
+                        duration=1.5,
+                        pos=Point3(0, -12, 15),
+                        hpr=VBase3(0, -38, 0),
+                        blendType='easeInOut'))
                 toonTrack.append(
                     Func(self._DistributedFishingSpot__showCastGui))
                 toonTrack.append(
@@ -1153,13 +1079,11 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.initMouseY = self.mouseY
         self._DistributedFishingSpot__hideBob()
         if config.GetBool('fishing-independent-axes', 0):
-            taskMgr.add(
-                self.localAdjustingCastTaskIndAxes,
-                self.taskName('adjustCastTask'))
+            taskMgr.add(self.localAdjustingCastTaskIndAxes,
+                        self.taskName('adjustCastTask'))
         else:
-            taskMgr.add(
-                self.localAdjustingCastTask,
-                self.taskName('adjustCastTask'))
+            taskMgr.add(self.localAdjustingCastTask,
+                        self.taskName('adjustCastTask'))
         if base.wantBingo:
             bingoMgr = self.pond.getPondBingoManager()
             if bingoMgr:
@@ -1191,12 +1115,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         startT = 0.69999999999999996 + (1 - self.power) * 0.29999999999999999
         self.castTrack.start(startT)
         self.track = Sequence(
-            Wait(
-                1.2 - startT),
-            Func(
-                self.startMoveBobTask),
-            Func(
-                self._DistributedFishingSpot__showLineCasting))
+            Wait(1.2 - startT), Func(self.startMoveBobTask),
+            Func(self._DistributedFishingSpot__showLineCasting))
         self.track.start()
         heading = self.angleNP.getH()
         self.d_doCast(self.power, heading)
@@ -1223,22 +1143,12 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self.power = power
         self.track = Parallel(
             Sequence(
-                ActorInterval(
-                    self.av,
-                    'cast'),
-                Func(
-                    self.pole.pose,
-                    'cast',
-                    0),
-                Func(
-                    self.av.loop,
-                    'fish-neutral')),
+                ActorInterval(self.av, 'cast'), Func(self.pole.pose, 'cast',
+                                                     0),
+                Func(self.av.loop, 'fish-neutral')),
             Sequence(
-                Wait(1.0),
-                Func(
-                    self.startMoveBobTask),
-                Func(
-                    self._DistributedFishingSpot__showLineCasting)))
+                Wait(1.0), Func(self.startMoveBobTask),
+                Func(self._DistributedFishingSpot__showLineCasting)))
         self.track.start()
 
     def exitDistCasting(self):
@@ -1251,10 +1161,9 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
     def enterFishing(self):
         if self.localToonFishing:
             self.track = Sequence(
-                ActorInterval(
-                    self.av, 'cast'), Func(
-                    self.pole.pose, 'cast', 0), Func(
-                    self.av.loop, 'fish-neutral'))
+                ActorInterval(self.av, 'cast'), Func(self.pole.pose, 'cast',
+                                                     0),
+                Func(self.av.loop, 'fish-neutral'))
             self.track.start(self.castTrack.getT())
         else:
             self.track = None
@@ -1288,7 +1197,8 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
             self._DistributedFishingSpot__showCastGui()
             if code == FishGlobals.QuestItem:
                 self._DistributedFishingSpot__showQuestItem(itemDesc1)
-            elif code in (FishGlobals.FishItem, FishGlobals.FishItemNewEntry, FishGlobals.FishItemNewRecord):
+            elif code in (FishGlobals.FishItem, FishGlobals.FishItemNewEntry,
+                          FishGlobals.FishItemNewRecord):
                 genus = itemDesc1
                 species = itemDesc2
                 weight = itemDesc3
@@ -1312,27 +1222,13 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
 
         self.track = Sequence(
             Parallel(
-                ActorInterval(
-                    self.av,
-                    'reel'),
-                ActorInterval(
-                    self.pole,
-                    'cast',
-                    startFrame=63,
-                    endFrame=127)),
-            ActorInterval(
-                self.av,
-                'reel-neutral'),
-            Func(
-                self._DistributedFishingSpot__hideLine),
-            Func(
-                self._DistributedFishingSpot__hideBob),
-            ActorInterval(
-                self.av,
-                'fish-again'),
-            Func(
-                self.av.loop,
-                'pole-neutral'))
+                ActorInterval(self.av, 'reel'),
+                ActorInterval(self.pole, 'cast', startFrame=63, endFrame=127)),
+            ActorInterval(self.av, 'reel-neutral'),
+            Func(self._DistributedFishingSpot__hideLine),
+            Func(self._DistributedFishingSpot__hideBob),
+            ActorInterval(self.av, 'fish-again'),
+            Func(self.av.loop, 'pole-neutral'))
         self.track.start()
 
     def cleanupFishPanel(self):
@@ -1366,23 +1262,12 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
         self._DistributedFishingSpot__hideBob()
         self.track = Sequence(
             Parallel(
-                ActorInterval(
-                    self.av,
-                    'fish-end'),
-                Func(
-                    self.pole.pose,
-                    'cast',
-                    0),
+                ActorInterval(self.av, 'fish-end'),
+                Func(self.pole.pose, 'cast', 0),
                 LerpScaleInterval(
-                    self.pole,
-                    duration=0.5,
-                    scale=0.01,
-                    startScale=1.0)),
-            Func(
-                self._DistributedFishingSpot__dropPole),
-            Func(
-                self.av.loop,
-                'neutral'))
+                    self.pole, duration=0.5, scale=0.01, startScale=1.0)),
+            Func(self._DistributedFishingSpot__dropPole),
+            Func(self.av.loop, 'neutral'))
         if self.localToonFishing:
             self.track.append(Func(self.fsm.requestFinalState))
 
@@ -1412,8 +1297,7 @@ class DistributedFishingSpot(DistributedObject.DistributedObject):
                 self._DistributedFishingSpot__showSellFishConfirmDialog(
                     numFishCaught)
             else:
-                self.fsm.request('waiting', [
-                    False])
+                self.fsm.request('waiting', [False])
 
     def _DistributedFishingSpot__allowSellFish(self):
         if base.wantBingo:

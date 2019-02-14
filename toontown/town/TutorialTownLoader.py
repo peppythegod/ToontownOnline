@@ -7,7 +7,6 @@ from toontown.hood import ZoneUtil
 
 
 class TutorialTownLoader(TTTownLoader.TTTownLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
         TTTownLoader.TTTownLoader.__init__(self, hood, parentFSM, doneEvent)
         self.streetClass = TutorialStreet.TutorialStreet

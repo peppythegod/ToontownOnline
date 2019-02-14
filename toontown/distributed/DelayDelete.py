@@ -1,6 +1,4 @@
-
 class DelayDelete:
-
     def __init__(self, distObj, name):
         self._distObj = distObj
         self._name = name

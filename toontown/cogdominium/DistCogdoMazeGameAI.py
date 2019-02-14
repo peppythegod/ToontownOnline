@@ -23,8 +23,7 @@ class DistCogdoMazeGameAI(DistributedMinigameAI, FSM):
     def delete(self):
         DistributedMinigameAI.delete(self)
         taskMgr.remove(
-            self.taskName(
-                DistCogdoMazeGameAI.TIMER_EXPIRED_TASK_NAME))
+            self.taskName(DistCogdoMazeGameAI.TIMER_EXPIRED_TASK_NAME))
 
     def _initLocks(self):
         self.locks = {}
@@ -38,11 +37,10 @@ class DistCogdoMazeGameAI(DistributedMinigameAI, FSM):
     def _getLockPositions(self, data, width, height):
         halfWidth = int(width / 2)
         halfHeight = int(height / 2)
-        quadrants = [
-            (0, 0, halfWidth - 2, halfHeight - 2),
-            (halfWidth + 2, 0, width - 1, halfHeight - 2),
-            (0, halfHeight + 2, halfWidth - 2, height - 1),
-            (halfWidth + 2, halfHeight + 2, width - 1, height - 1)]
+        quadrants = [(0, 0, halfWidth - 2, halfHeight - 2),
+                     (halfWidth + 2, 0, width - 1, halfHeight - 2),
+                     (0, halfHeight + 2, halfWidth - 2, height - 1),
+                     (halfWidth + 2, halfHeight + 2, width - 1, height - 1)]
         random.shuffle(quadrants)
         positions = []
         for i in range(len(self.avIdList)):
@@ -78,7 +76,8 @@ class DistCogdoMazeGameAI(DistributedMinigameAI, FSM):
     def areAllPlayersReady(self):
         continue
         return _[1] not in [
-            state == READY for state in self.stateDict.values()]
+            state == READY for state in self.stateDict.values()
+        ]
 
     def setGameStart(self, timestamp):
         DistributedMinigameAI.setGameStart(self, timestamp)
@@ -133,18 +132,13 @@ class DistCogdoMazeGameAI(DistributedMinigameAI, FSM):
             self.d_broadcastDoAction(action, data)
 
     def d_broadcastDoAction(self, action, data=0):
-        self.sendUpdate('doAction', [
-            action,
-            data])
+        self.sendUpdate('doAction', [action, data])
 
     def enterPlay(self):
         taskMgr.doMethodLater(
-            CogdoMazeGameGlobals.GameDuration,
-            self.timerExpiredTask,
-            self.taskName(
-                DistCogdoMazeGameAI.TIMER_EXPIRED_TASK_NAME))
+            CogdoMazeGameGlobals.GameDuration, self.timerExpiredTask,
+            self.taskName(DistCogdoMazeGameAI.TIMER_EXPIRED_TASK_NAME))
 
     def exitPlay(self):
         taskMgr.remove(
-            self.taskName(
-                DistCogdoMazeGameAI.TIMER_EXPIRED_TASK_NAME))
+            self.taskName(DistCogdoMazeGameAI.TIMER_EXPIRED_TASK_NAME))

@@ -14,7 +14,6 @@ from toontown.toonbase import TTLocalizer
 
 class DistributedFactoryElevatorExt(
         DistributedElevatorExt.DistributedElevatorExt):
-
     def __init__(self, cr):
         DistributedElevatorExt.DistributedElevatorExt.__init__(self, cr)
 
@@ -68,32 +67,32 @@ class DistributedFactoryElevatorExt(
                 'where': 'factoryInterior',
                 'how': 'teleportIn',
                 'zoneId': zoneId,
-                'hoodId': hoodId}
+                'hoodId': hoodId
+            }
             self.cr.playGame.getPlace().elevator.signalDone(doneStatus)
 
     def setFactoryInteriorZoneForce(self, zoneId):
         place = self.cr.playGame.getPlace()
         if place:
-            place.fsm.request('elevator', [
-                self,
-                1])
+            place.fsm.request('elevator', [self, 1])
             hoodId = self.cr.playGame.hood.hoodId
             doneStatus = {
                 'loader': 'cogHQLoader',
                 'where': 'factoryInterior',
                 'how': 'teleportIn',
                 'zoneId': zoneId,
-                'hoodId': hoodId}
+                'hoodId': hoodId
+            }
             if hasattr(place, 'elevator') and place.elevator:
                 place.elevator.signalDone(doneStatus)
             else:
                 self.notify.warning(
-                    "setMintInteriorZoneForce: Couldn't find playGame.getPlace().elevator, zoneId: %s" %
-                    zoneId)
+                    "setMintInteriorZoneForce: Couldn't find playGame.getPlace().elevator, zoneId: %s"
+                    % zoneId)
         else:
             self.notify.warning(
-                "setFactoryInteriorZoneForce: Couldn't find playGame.getPlace(), zoneId: %s" %
-                zoneId)
+                "setFactoryInteriorZoneForce: Couldn't find playGame.getPlace(), zoneId: %s"
+                % zoneId)
 
     def getDestName(self):
         if self.entranceId == 0:

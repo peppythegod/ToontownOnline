@@ -5,7 +5,6 @@ from toontown.cogdominium import CogdoBarrelRoomConsts
 
 
 class CogdoBarrelRoomRewardPanel(DirectFrame):
-
     def __init__(self):
         DirectFrame.__init__(
             self,
@@ -13,53 +12,39 @@ class CogdoBarrelRoomRewardPanel(DirectFrame):
             geom=DGG.getDefaultDialogGeom(),
             geom_color=ToontownGlobals.GlobalDialogColor,
             geom_scale=TTLocalizer.RPdirectFrame,
-            pos=(
-                0,
-                0,
-                0.58699999999999997))
+            pos=(0, 0, 0.58699999999999997))
         self.initialiseoptions(CogdoBarrelRoomRewardPanel)
         self.avNameLabel = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                0.29999999999999999),
+            pos=(0, 0, 0.29999999999999999),
             text='Toon Ups',
             text_scale=0.080000000000000002)
         self.rewardLines = []
         for i in range(CogdoBarrelRoomConsts.MaxToons):
             rewardLine = {}
             rewardLine['frame'] = DirectFrame(
-                parent=self, relief=None, frameSize=(
-                    -0.5, 0.5, -0.044999999999999998, 0.042000000000000003), pos=(
-                    0, 0, 0.10000000000000001 + -0.089999999999999997 * i))
+                parent=self,
+                relief=None,
+                frameSize=(-0.5, 0.5, -0.044999999999999998,
+                           0.042000000000000003),
+                pos=(0, 0, 0.10000000000000001 + -0.089999999999999997 * i))
             rewardLine['name'] = DirectLabel(
                 parent=rewardLine['frame'],
                 relief=None,
                 text='',
                 text_scale=TTLocalizer.RPtrackLabels,
                 text_align=TextNode.ALeft,
-                pos=(
-                    -0.40000000000000002,
-                    0,
-                    0),
-                text_pos=(
-                    0,
-                    -0.02))
+                pos=(-0.40000000000000002, 0, 0),
+                text_pos=(0, -0.02))
             rewardLine['laff'] = DirectLabel(
                 parent=rewardLine['frame'],
                 relief=None,
                 text='',
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ARight,
-                pos=(
-                    0.40000000000000002,
-                    0,
-                    0),
-                text_pos=(
-                    0,
-                    -0.02))
+                pos=(0.40000000000000002, 0, 0),
+                text_pos=(0, -0.02))
             self.rewardLines.append(rewardLine)
 
     def setRewards(self, results):

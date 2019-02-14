@@ -14,7 +14,6 @@ if __debug__:
 
 
 class GSSafeZoneLoader(SafeZoneLoader):
-
     def __init__(self, hood, parentFSM, doneEvent):
         SafeZoneLoader.__init__(self, hood, parentFSM, doneEvent)
         self.musicFile = 'phase_6/audio/bgm/GS_SZ.mid'
@@ -23,24 +22,18 @@ class GSSafeZoneLoader(SafeZoneLoader):
         self.safeZoneStorageDNAFile = 'phase_6/dna/storage_GS_sz.dna'
         del self.fsm
         self.fsm = ClassicFSM.ClassicFSM('SafeZoneLoader', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'quietZone',
-                'playground',
-                'toonInterior']),
-            State.State('playground', self.enterPlayground, self.exitPlayground, [
-                'quietZone',
-                'racetrack']),
-            State.State('toonInterior', self.enterToonInterior, self.exitToonInterior, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'playground',
-                'toonInterior',
-                'racetrack']),
-            State.State('racetrack', self.enterRacetrack, self.exitRacetrack, [
-                'quietZone',
-                'playground']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+            State.State('start', self.enterStart, self.exitStart,
+                        ['quietZone', 'playground', 'toonInterior']),
+            State.State('playground', self.enterPlayground,
+                        self.exitPlayground, ['quietZone', 'racetrack']),
+            State.State('toonInterior', self.enterToonInterior,
+                        self.exitToonInterior, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['playground', 'toonInterior', 'racetrack']),
+            State.State('racetrack', self.enterRacetrack, self.exitRacetrack,
+                        ['quietZone', 'playground']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
         self.smoke = None
 
     def load(self):
@@ -53,7 +46,8 @@ class GSSafeZoneLoader(SafeZoneLoader):
         self.birdSound = map(base.loadSfx, [
             'phase_4/audio/sfx/SZ_TC_bird1.mp3',
             'phase_4/audio/sfx/SZ_TC_bird2.mp3',
-            'phase_4/audio/sfx/SZ_TC_bird3.mp3'])
+            'phase_4/audio/sfx/SZ_TC_bird3.mp3'
+        ])
 
     def unload(self):
         del self.birdSound
@@ -76,11 +70,11 @@ class GSSafeZoneLoader(SafeZoneLoader):
         status = self.place.doneStatus
         if self.enteringARace(status) and status.get('shardId') is None:
             zoneId = status['zoneId']
-            self.fsm.request('quietZone', [
-                status])
-        elif ZoneUtil.getBranchZone(status['zoneId']) == self.hood.hoodId and status['shardId'] is None:
-            self.fsm.request('quietZone', [
-                status])
+            self.fsm.request('quietZone', [status])
+        elif ZoneUtil.getBranchZone(
+                status['zoneId']
+        ) == self.hood.hoodId and status['shardId'] is None:
+            self.fsm.request('quietZone', [status])
         else:
             self.doneStatus = status
             messenger.send(self.doneEvent)
@@ -113,9 +107,9 @@ class GSSafeZoneLoader(SafeZoneLoader):
             'how': 'teleportIn',
             'zoneId': 8000,
             'hoodId': 8000,
-            'shardId': None}
-        self.fsm.request('quietZone', [
-            req])
+            'shardId': None
+        }
+        self.fsm.request('quietZone', [req])
 
     def startSmokeEffect(self):
         if base.config.GetBool('want-crashedLeaderBoard-Smoke', 1):

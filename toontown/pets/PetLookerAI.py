@@ -34,9 +34,8 @@ class PetLookerAI:
             self.exitPetLook()
 
         if len(self.others):
-            PetLookerAI.notify.warning(
-                '%s: self.others not empty: %s' %
-                (self.doId, self.others.keys()))
+            PetLookerAI.notify.warning('%s: self.others not empty: %s' %
+                                       (self.doId, self.others.keys()))
             self.others = {}
 
     def _getPetLookerBodyNode(self):
@@ -49,14 +48,12 @@ class PetLookerAI:
         PetLookerAI.notify.debug('enterPetLook: %s' % self.doId)
         if self._PetLookerAI__active:
             PetLookerAI.notify.warning(
-                'enterPetLook: %s already active!' %
-                self.doId)
+                'enterPetLook: %s already active!' % self.doId)
             return None
 
         if len(self.others):
-            PetLookerAI.notify.warning(
-                '%s: len(self.others) != 0: %s' %
-                (self.doId, self.others.keys()))
+            PetLookerAI.notify.warning('%s: len(self.others) != 0: %s' %
+                                       (self.doId, self.others.keys()))
             self.others = {}
 
         self._PetLookerAI__active = 1
@@ -68,15 +65,13 @@ class PetLookerAI:
         PetLookerAI.notify.debug('exitPetLook: %s' % self.doId)
         if not self._PetLookerAI__active:
             PetLookerAI.notify.warning(
-                'exitPetLook: %s not active!' %
-                self.doId)
+                'exitPetLook: %s not active!' % self.doId)
             return None
 
         if len(self.others):
             otherIds = self.others.keys()
             PetLookerAI.notify.warning(
-                '%s: still in otherIds: %s' %
-                (self.doId, otherIds))
+                '%s: still in otherIds: %s' % (self.doId, otherIds))
             for otherId in otherIds:
                 self._handleLookingAtOtherStop(otherId)
 
@@ -119,21 +114,17 @@ class PetLookerAI:
         if collTrav:
             collTrav.addCollider(self.lookSphereNodePath, self._cHandler)
 
-        self.accept(
-            self._getLookingStartEvent(),
-            self._handleLookingAtOtherStart)
-        self.accept(
-            self._getLookingStopEvent(),
-            self._handleLookingAtOtherStop)
+        self.accept(self._getLookingStartEvent(),
+                    self._handleLookingAtOtherStart)
+        self.accept(self._getLookingStopEvent(),
+                    self._handleLookingAtOtherStop)
         if hasattr(self, 'eventProxy'):
             PetLookerAI.notify.warning(
-                '%s: already have an eventProxy!' %
-                self.doId)
+                '%s: already have an eventProxy!' % self.doId)
         else:
             self.eventProxy = DirectObject.DirectObject()
-            self.eventProxy.accept(
-                self.getZoneChangeEvent(),
-                self._handleZoneChange)
+            self.eventProxy.accept(self.getZoneChangeEvent(),
+                                   self._handleZoneChange)
 
     def _destroyPetLookSphere(self):
         collTrav = self.getCollTrav()
@@ -152,8 +143,7 @@ class PetLookerAI:
         PetLookerAI.notify.debug('_handleZoneChange: %s' % self.doId)
         if not self._PetLookerAI__active:
             PetLookerAI.notify.warning(
-                '%s: _handleZoneChange: not active!' %
-                self.doId)
+                '%s: _handleZoneChange: not active!' % self.doId)
             return None
 
         oldZoneData = AIZoneData(self.air, self.parentId, oldZoneId)
@@ -163,7 +153,8 @@ class PetLookerAI:
         oldZoneData.destroy()
         newZoneData = AIZoneData(self.air, self.parentId, newZoneId)
         if newZoneData.hasCollTrav():
-            newZoneData.getCollTrav().addCollider(self.lookSphereNodePath, self._cHandler)
+            newZoneData.getCollTrav().addCollider(self.lookSphereNodePath,
+                                                  self._cHandler)
 
         newZoneData.destroy()
 
@@ -183,49 +174,42 @@ class PetLookerAI:
     def _handleLookingAtOtherStart(self, other):
         if not self._PetLookerAI__active:
             PetLookerAI.notify.warning(
-                '%s: _handleLookingAtOtherStart: not active!' %
-                self.doId)
+                '%s: _handleLookingAtOtherStart: not active!' % self.doId)
             return None
 
         if isinstance(other, CollisionEntry):
             other = self._PetLookerAI__getOtherLookerDoIdFromCollEntry(other)
             if other == 0:
                 PetLookerAI.notify.warning(
-                    '%s: looking at unknown other avatar' %
-                    self.doId)
+                    '%s: looking at unknown other avatar' % self.doId)
                 return None
 
-        PetLookerAI.notify.debug(
-            '_handleLookingAtOtherStart: %s looking at %s' %
-            (self.doId, other))
+        PetLookerAI.notify.debug('_handleLookingAtOtherStart: %s looking at %s'
+                                 % (self.doId, other))
         if other in self.others:
             PetLookerAI.notify.warning(
-                '%s: other (%s) is already in self.others!' %
-                (self.doId, other))
+                '%s: other (%s) is already in self.others!' % (self.doId,
+                                                               other))
             if not hasattr(self, '_cHandler'):
                 PetLookerAI.notify.warning(
                     '-->The looker sphere has already been destroyed')
 
         else:
             self.others[other] = None
-            messenger.send(getStartLookingAtOtherEvent(self.doId), [
-                other])
-            messenger.send(getStartLookedAtByOtherEvent(other), [
-                self.doId])
+            messenger.send(getStartLookingAtOtherEvent(self.doId), [other])
+            messenger.send(getStartLookedAtByOtherEvent(other), [self.doId])
 
     def _handleLookingAtOtherStop(self, other):
         if not self._PetLookerAI__active:
             PetLookerAI.notify.warning(
-                '%s: _handleLookingAtOtherStop: not active!' %
-                self.doId)
+                '%s: _handleLookingAtOtherStop: not active!' % self.doId)
             return None
 
         if isinstance(other, CollisionEntry):
             other = self._PetLookerAI__getOtherLookerDoIdFromCollEntry(other)
             if other == 0:
                 PetLookerAI.notify.warning(
-                    '%s: stopped looking at unknown other avatar' %
-                    self.doId)
+                    '%s: stopped looking at unknown other avatar' % self.doId)
                 return None
 
         PetLookerAI.notify.debug(
@@ -233,15 +217,12 @@ class PetLookerAI:
             (self.doId, other))
         if other not in self.others:
             PetLookerAI.notify.warning(
-                '%s: other (%s) is not in self.others!' %
-                (self.doId, other))
+                '%s: other (%s) is not in self.others!' % (self.doId, other))
             if not hasattr(self, '_cHandler'):
                 PetLookerAI.notify.warning(
                     '-->The looker sphere has already been destroyed')
 
         else:
             del self.others[other]
-            messenger.send(getStopLookingAtOtherEvent(self.doId), [
-                other])
-            messenger.send(getStopLookedAtByOtherEvent(other), [
-                self.doId])
+            messenger.send(getStopLookingAtOtherEvent(self.doId), [other])
+            messenger.send(getStopLookedAtByOtherEvent(other), [self.doId])

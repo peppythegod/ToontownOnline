@@ -5,7 +5,6 @@ from direct.interval.IntervalGlobal import LerpScaleInterval, LerpColorScaleInte
 
 
 class DinerStatusIndicator(NodePath.NodePath, FSM.FSM):
-
     def __init__(self, parent, pos=None, scale=None):
         NodePath.NodePath.__init__(self, 'DinerStatusIndicator')
         if parent:
@@ -33,9 +32,12 @@ class DinerStatusIndicator(NodePath.NodePath, FSM.FSM):
 
     def loadAssets(self):
         iconsFile = loader.loadModel('phase_12/models/bossbotHQ/BanquetIcons')
-        (self.angryIcon, self.angryMeter) = self.loadIcon(iconsFile, '**/Anger')
-        (self.hungryIcon, self.hungryMeter) = self.loadIcon(iconsFile, '**/Hunger')
-        (self.eatingIcon, self.eatingMeter) = self.loadIcon(iconsFile, '**/Food')
+        (self.angryIcon, self.angryMeter) = self.loadIcon(
+            iconsFile, '**/Anger')
+        (self.hungryIcon, self.hungryMeter) = self.loadIcon(
+            iconsFile, '**/Hunger')
+        (self.eatingIcon, self.eatingMeter) = self.loadIcon(
+            iconsFile, '**/Food')
         self.angryMeter.hide()
         iconsFile.removeNode()
 
@@ -105,9 +107,7 @@ class DinerStatusIndicator(NodePath.NodePath, FSM.FSM):
 
     def createMeterInterval(self, icon, meter, time):
         ivalDarkness = LerpScaleInterval(
-            meter, time, scale=Vec3(
-                1, 1, 1), startScale=Vec3(
-                1, 0.001, 0.001))
+            meter, time, scale=Vec3(1, 1, 1), startScale=Vec3(1, 0.001, 0.001))
         flashingTrack = Sequence()
         flashDuration = 10
         if time > flashDuration:
@@ -115,16 +115,12 @@ class DinerStatusIndicator(NodePath.NodePath, FSM.FSM):
             for i in xrange(10):
                 flashingTrack.append(
                     Parallel(
-                        LerpColorScaleInterval(
-                            icon, 0.5, VBase4(
-                                1, 0, 0, 1)), icon.scaleInterval(
-                            0.5, 1.25)))
+                        LerpColorScaleInterval(icon, 0.5, VBase4(1, 0, 0, 1)),
+                        icon.scaleInterval(0.5, 1.25)))
                 flashingTrack.append(
                     Parallel(
-                        LerpColorScaleInterval(
-                            icon, 0.5, VBase4(
-                                1, 1, 1, 1)), icon.scaleInterval(
-                            0.5, 1)))
+                        LerpColorScaleInterval(icon, 0.5, VBase4(1, 1, 1, 1)),
+                        icon.scaleInterval(0.5, 1)))
 
         retIval = Parallel(ivalDarkness, flashingTrack)
         return retIval

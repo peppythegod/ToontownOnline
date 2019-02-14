@@ -49,10 +49,8 @@ class DistributedFishingPond(DistributedObject.DistributedObject):
         1
         self.localToonSpot = spot
         self.localToonBobPos = bobPos
-        taskMgr.doMethodLater(
-            self.pollInterval * 2,
-            self.checkTargets,
-            self.taskName('checkTargets'))
+        taskMgr.doMethodLater(self.pollInterval * 2, self.checkTargets,
+                              self.taskName('checkTargets'))
 
     def stopCheckingTargets(self):
         self.notify.debug('stopCheckingTargets')
@@ -71,16 +69,13 @@ class DistributedFishingPond(DistributedObject.DistributedObject):
                 dist = distVec.length()
                 if dist < target.getRadius():
                     self.notify.debug(
-                        'checkTargets: hit target: %s' %
-                        target.getDoId())
+                        'checkTargets: hit target: %s' % target.getDoId())
                     self.d_hitTarget(target)
                     return Task.done
                     continue
 
-            taskMgr.doMethodLater(
-                self.pollInterval,
-                self.checkTargets,
-                self.taskName('checkTargets'))
+            taskMgr.doMethodLater(self.pollInterval, self.checkTargets,
+                                  self.taskName('checkTargets'))
         else:
             self.notify.warning(
                 'localToonSpot became None while checking targets')
@@ -88,8 +83,7 @@ class DistributedFishingPond(DistributedObject.DistributedObject):
 
     def d_hitTarget(self, target):
         self.localToonSpot.hitTarget()
-        self.sendUpdate('hitTarget', [
-            target.getDoId()])
+        self.sendUpdate('hitTarget', [target.getDoId()])
 
     def setPondBingoManager(self, pondBingoMgr):
         self.pondBingoMgr = pondBingoMgr
@@ -102,11 +96,9 @@ class DistributedFishingPond(DistributedObject.DistributedObject):
         return self.pondBingoMgr
 
     def hasPondBingoManager(self):
-        if not self.pondBingoMgr or [
-                1]:
+        if not self.pondBingoMgr or [1]:
             pass
-        return [
-            0][0]
+        return [0][0]
 
     def handleBingoCatch(self, catch):
         if self.pondBingoMgr:

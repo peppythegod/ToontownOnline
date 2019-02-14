@@ -4,7 +4,6 @@ from toontown.hood import Place
 
 
 class BattlePlace(Place.Place):
-
     def __init__(self, loader, doneEvent):
         Place.Place.__init__(self, loader, doneEvent)
 
@@ -14,11 +13,10 @@ class BattlePlace(Place.Place):
 
     def setState(self, state, battleEvent=None):
         if battleEvent:
-            if not self.fsm.request(state, [
-                    battleEvent]):
+            if not self.fsm.request(state, [battleEvent]):
                 self.notify.warning(
-                    "fsm.request('%s') returned 0 (zone id %s, avatar pos %s)." %
-                    (state, self.zoneId, base.localAvatar.getPos(render)))
+                    "fsm.request('%s') returned 0 (zone id %s, avatar pos %s)."
+                    % (state, self.zoneId, base.localAvatar.getPos(render)))
 
         elif not self.fsm.request(state):
             self.notify.warning(
@@ -45,9 +43,7 @@ class BattlePlace(Place.Place):
 
         self.loader.music.stop()
         base.playMusic(
-            self.loader.battleMusic,
-            looping=1,
-            volume=0.90000000000000002)
+            self.loader.battleMusic, looping=1, volume=0.90000000000000002)
         self.enterTownBattle(event)
         base.localAvatar.b_setAnimState('off', 1)
         self.accept('teleportQuery', self.handleTeleportQuery)
@@ -61,9 +57,7 @@ class BattlePlace(Place.Place):
         self.loader.townBattle.exit()
         self.loader.battleMusic.stop()
         base.playMusic(
-            self.loader.music,
-            looping=1,
-            volume=0.80000000000000004)
+            self.loader.music, looping=1, volume=0.80000000000000004)
         base.localAvatar.cantLeaveGame = 0
         base.localAvatar.setTeleportAvailable(0)
         self.ignore('teleportQuery')
@@ -74,9 +68,7 @@ class BattlePlace(Place.Place):
     def enterFallDown(self, extraArgs=[]):
         base.localAvatar.laffMeter.start()
         base.localAvatar.b_setAnimState(
-            'FallDown',
-            callback=self.handleFallDownDone,
-            extraArgs=extraArgs)
+            'FallDown', callback=self.handleFallDownDone, extraArgs=extraArgs)
 
     def handleFallDownDone(self):
         base.cr.playGame.getPlace().setState('walk')
@@ -87,10 +79,8 @@ class BattlePlace(Place.Place):
     def enterSquished(self):
         base.localAvatar.laffMeter.start()
         base.localAvatar.b_setAnimState('Squish')
-        taskMgr.doMethodLater(
-            2.0,
-            self.handleSquishDone,
-            base.localAvatar.uniqueName('finishSquishTask'))
+        taskMgr.doMethodLater(2.0, self.handleSquishDone,
+                              base.localAvatar.uniqueName('finishSquishTask'))
 
     def handleSquishDone(self, extraArgs=[]):
         base.cr.playGame.getPlace().setState('walk')
@@ -104,10 +94,11 @@ class BattlePlace(Place.Place):
 
             try:
                 newZoneId = int(newZone.getIntoNode().getName())
-            self.notify.warning(
-                'Invalid floor collision node in street: %s' %
-                newZone.getIntoNode().getName())
-            return None
+            except:
+                self.notify.warning(
+                    'Invalid floor collision node in street: %s' %
+                    newZone.getIntoNode().getName())
+                return None
 
         else:
             newZoneId = newZone

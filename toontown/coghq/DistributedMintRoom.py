@@ -19,10 +19,8 @@ def getMintRoomReadyPostName(doId):
     return 'mintRoomReady-%s' % doId
 
 
-class DistributedMintRoom(
-        DistributedLevel.DistributedLevel,
-        MintRoomBase.MintRoomBase,
-        MintRoom.MintRoom):
+class DistributedMintRoom(DistributedLevel.DistributedLevel,
+                          MintRoomBase.MintRoomBase, MintRoom.MintRoom):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedMintRoom')
     EmulateEntrancePoint = False
 
@@ -153,7 +151,8 @@ class DistributedMintRoom(
             bboard.post(EditorGlobals.EditTargetPostName, self)
 
         if self.mint is not None:
-            self.mint.currentRoomName = MintRoomSpecs.CashbotMintRoomId2RoomName[self.roomId]
+            self.mint.currentRoomName = MintRoomSpecs.CashbotMintRoomId2RoomName[
+                self.roomId]
 
         def printPos(self=self):
             thisZone = self.getZoneNode(LevelConstants.UberZoneEntId)
@@ -186,9 +185,8 @@ class DistributedMintRoom(
         if hasattr(self, 'suits'):
             del self.suits
 
-        if hasattr(
-                self,
-                'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
+        if hasattr(self,
+                   'relatedObjectMgrRequest') and self.relatedObjectMgrRequest:
             self.cr.relatedObjectMgr.abortRequest(self.relatedObjectMgrRequest)
             del self.relatedObjectMgrRequest
 
@@ -229,8 +227,9 @@ class DistributedMintRoom(
 
     def __str__(self):
         if hasattr(self, 'roomId'):
-            return '%s %s: %s' % (self.__class__.__name__, self.roomId,
-                                  MintRoomSpecs.CashbotMintRoomId2RoomName[self.roomId])
+            return '%s %s: %s' % (
+                self.__class__.__name__, self.roomId,
+                MintRoomSpecs.CashbotMintRoomId2RoomName[self.roomId])
         else:
             return 'DistributedMintRoom'
 

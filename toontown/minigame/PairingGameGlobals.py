@@ -1,15 +1,8 @@
-
-
 import PlayingCardDeck
 EasiestGameDuration = 120
 HardestGameDuration = 90
 EndlessGame = config.GetBool('endless-pairing-game', 0)
-MaxRankIndexUsed = [
-    7,
-    7,
-    7,
-    8,
-    9]
+MaxRankIndexUsed = [7, 7, 7, 8, 9]
 
 
 def createDeck(deckSeed, numPlayers):

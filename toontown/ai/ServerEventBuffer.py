@@ -1,6 +1,4 @@
-
 class ServerEventBuffer:
-
     def __init__(self, air, name, avId, period=None):
         self.air = air
         self.name = name
@@ -23,12 +21,12 @@ class ServerEventBuffer:
     def considerFlush(self):
         if self.lastFlushTime is None:
             self.lastFlushTime = globalClock.getFrameTime()
-        elif globalClock.getFrameTime() - self.lastFlushTime > self.period * 60.0:
+        elif globalClock.getFrameTime(
+        ) - self.lastFlushTime > self.period * 60.0:
             self.flush()
 
 
 class ServerEventAccumulator(ServerEventBuffer):
-
     def __init__(self, air, name, avId, period=None):
         ServerEventBuffer.__init__(self, air, name, avId, period)
         self.count = 0
@@ -47,7 +45,6 @@ class ServerEventAccumulator(ServerEventBuffer):
 
 
 class ServerEventMultiAccumulator(ServerEventBuffer):
-
     def __init__(self, air, name, avId, period=None):
         ServerEventBuffer.__init__(self, air, name, avId, period)
         self.events = {}

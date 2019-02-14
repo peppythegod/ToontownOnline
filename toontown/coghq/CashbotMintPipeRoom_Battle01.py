@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_10/models/cashbotHQ/ZONE13a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,13 +26,15 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10001: {
         'type': 'locator',
         'name': '<unnamed>',
         'comment': '',
         'parentEntId': 0,
-        'searchPath': '**/EXIT'},
+        'searchPath': '**/EXIT'
+    },
     10020: {
         'type': 'mintProduct',
         'name': '<unnamed>',
@@ -39,7 +43,8 @@ GlobalEntities = {
         'pos': Point3(6.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10021: {
         'type': 'mintProduct',
         'name': 'copy of <unnamed>',
@@ -48,7 +53,8 @@ GlobalEntities = {
         'pos': Point3(13.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10022: {
         'type': 'mintProduct',
         'name': 'copy of <unnamed> (2)',
@@ -57,7 +63,8 @@ GlobalEntities = {
         'pos': Point3(-6.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10023: {
         'type': 'mintProduct',
         'name': 'copy of <unnamed> (3)',
@@ -66,7 +73,8 @@ GlobalEntities = {
         'pos': Point3(-13.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10025: {
         'type': 'mintShelf',
         'name': '<unnamed>',
@@ -75,7 +83,8 @@ GlobalEntities = {
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10029: {
         'type': 'mintShelf',
         'name': 'copy of <unnamed>',
@@ -84,7 +93,8 @@ GlobalEntities = {
         'pos': Point3(13.4300003052, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10030: {
         'type': 'mintShelf',
         'name': 'copy of <unnamed>',
@@ -93,7 +103,8 @@ GlobalEntities = {
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10031: {
         'type': 'mintShelf',
         'name': 'copy of <unnamed> (2)',
@@ -102,7 +113,8 @@ GlobalEntities = {
         'pos': Point3(-13.4300003052, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12600},
+        'mintId': 12600
+    },
     10033: {
         'type': 'mintShelf',
         'name': '<unnamed>',
@@ -111,7 +123,8 @@ GlobalEntities = {
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12500},
+        'mintId': 12500
+    },
     10034: {
         'type': 'mintShelf',
         'name': '<unnamed>',
@@ -120,7 +133,8 @@ GlobalEntities = {
         'pos': Point3(29.791614532499999, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
-        'mintId': 12500},
+        'mintId': 12500
+    },
     10036: {
         'type': 'mintShelf',
         'name': '<unnamed>',
@@ -129,7 +143,8 @@ GlobalEntities = {
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': 1,
-        'mintId': 12500},
+        'mintId': 12500
+    },
     10037: {
         'type': 'mintShelf',
         'name': '<unnamed>',
@@ -138,7 +153,8 @@ GlobalEntities = {
         'pos': Point3(-37.7522773743, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
-        'mintId': 12500},
+        'mintId': 12500
+    },
     10002: {
         'type': 'model',
         'name': '<unnamed>',
@@ -150,7 +166,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/VaultDoorCover.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/VaultDoorCover.bam'
+    },
     10009: {
         'type': 'model',
         'name': 'backPillar',
@@ -162,7 +179,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10010: {
         'type': 'model',
         'name': 'frontPillar',
@@ -174,7 +192,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10011: {
         'type': 'model',
         'name': 'rightPillar',
@@ -186,7 +205,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10012: {
         'type': 'model',
         'name': 'leftPillar',
@@ -198,7 +218,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10013: {
         'type': 'model',
         'name': 'frontRightPillar',
@@ -210,7 +231,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10014: {
         'type': 'model',
         'name': 'frontLeftPillar',
@@ -222,7 +244,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10015: {
         'type': 'model',
         'name': 'frontRightPillar',
@@ -234,7 +257,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10016: {
         'type': 'model',
         'name': 'frontLeftPillar',
@@ -246,7 +270,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10017: {
         'type': 'model',
         'name': 'leftPillar',
@@ -258,7 +283,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10018: {
         'type': 'model',
         'name': 'rightPillar',
@@ -270,7 +296,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'},
+        'modelPath': 'phase_10/models/cashbotHQ/pipes_A1'
+    },
     10039: {
         'type': 'model',
         'name': '<unnamed>',
@@ -282,7 +309,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'
+    },
     10000: {
         'type': 'nodepath',
         'name': 'cogs',
@@ -290,7 +318,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(107.260322571, 0.0, 0.0),
         'hpr': Vec3(270.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10003: {
         'type': 'nodepath',
         'name': 'props',
@@ -298,7 +327,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, -1.7999999523200001, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10004: {
         'type': 'nodepath',
         'name': 'pillars',
@@ -306,7 +336,8 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10005: {
         'type': 'nodepath',
         'name': 'centerPillars',
@@ -314,7 +345,8 @@ GlobalEntities = {
         'parentEntId': 10004,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10006: {
         'type': 'nodepath',
         'name': 'frontPillars',
@@ -322,7 +354,8 @@ GlobalEntities = {
         'parentEntId': 10004,
         'pos': Point3(-89.966552734399997, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10007: {
         'type': 'nodepath',
         'name': 'backPillars',
@@ -330,7 +363,8 @@ GlobalEntities = {
         'parentEntId': 10004,
         'pos': Point3(89.970001220699999, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10008: {
         'type': 'nodepath',
         'name': 'outerPillars',
@@ -338,7 +372,8 @@ GlobalEntities = {
         'parentEntId': 10004,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10019: {
         'type': 'nodepath',
         'name': 'byVaultDoor',
@@ -346,7 +381,8 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(127.898963928, 0.0, 0.0),
         'hpr': Vec3(90.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10024: {
         'type': 'nodepath',
         'name': 'shelves',
@@ -354,7 +390,8 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10026: {
         'type': 'nodepath',
         'name': 'nearVault',
@@ -362,7 +399,8 @@ GlobalEntities = {
         'parentEntId': 10024,
         'pos': Point3(101.76008606000001, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10027: {
         'type': 'nodepath',
         'name': 'left',
@@ -370,7 +408,8 @@ GlobalEntities = {
         'parentEntId': 10026,
         'pos': Point3(0.0, 19.362579345699999, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10028: {
         'type': 'nodepath',
         'name': 'right',
@@ -378,7 +417,8 @@ GlobalEntities = {
         'parentEntId': 10026,
         'pos': Point3(0.0, -19.3600006104, 0.0),
         'hpr': Point3(180.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10032: {
         'type': 'nodepath',
         'name': 'rightNear',
@@ -386,7 +426,8 @@ GlobalEntities = {
         'parentEntId': 10024,
         'pos': Point3(-15.3249912262, -55.9873504639, 0.0),
         'hpr': Vec3(152.447189331, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10035: {
         'type': 'nodepath',
         'name': 'leftNear',
@@ -394,7 +435,8 @@ GlobalEntities = {
         'parentEntId': 10024,
         'pos': Point3(-17.6631221771, 55.319175720200001, 0.0),
         'hpr': Vec3(26.358207702600001, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10038: {
         'type': 'nodepath',
         'name': 'nearEntrance',
@@ -402,9 +444,8 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(-107.08999633800001, -1.71000003815, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1}}
+        'scale': 1
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

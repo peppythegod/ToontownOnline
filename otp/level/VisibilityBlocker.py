@@ -2,7 +2,6 @@ import Entity
 
 
 class VisibilityBlocker:
-
     def __init__(self):
         self._VisibilityBlocker__nextSetZoneDoneEvent = None
 
@@ -11,10 +10,10 @@ class VisibilityBlocker:
 
     def requestUnblockVis(self):
         if self._VisibilityBlocker__nextSetZoneDoneEvent is None:
-            self._VisibilityBlocker__nextSetZoneDoneEvent = self.level.cr.getNextSetZoneDoneEvent()
-            self.acceptOnce(
-                self._VisibilityBlocker__nextSetZoneDoneEvent,
-                self.okToUnblockVis)
+            self._VisibilityBlocker__nextSetZoneDoneEvent = self.level.cr.getNextSetZoneDoneEvent(
+            )
+            self.acceptOnce(self._VisibilityBlocker__nextSetZoneDoneEvent,
+                            self.okToUnblockVis)
             self.level.forceSetZoneThisFrame()
 
     def cancelUnblockVis(self):

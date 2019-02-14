@@ -24,84 +24,52 @@ class CountryClubInterior(BattlePlace.BattlePlace):
         self.zoneId = loader.countryClubId
         self.elevatorDoneEvent = 'elevatorDone'
         self.fsm = ClassicFSM.ClassicFSM('CountryClubInterior', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'walk',
-                'teleportIn',
-                'fallDown']),
+            State.State('start', self.enterStart, self.exitStart,
+                        ['walk', 'teleportIn', 'fallDown']),
             State.State('walk', self.enterWalk, self.exitWalk, [
-                'push',
-                'sit',
-                'stickerBook',
-                'WaitForBattle',
-                'battle',
-                'died',
-                'teleportOut',
-                'squished',
-                'DFA',
-                'fallDown',
-                'stopped',
-                'elevator']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk',
-                'teleportOut',
-                'stickerBook']),
-            State.State('sit', self.enterSit, self.exitSit, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('push', self.enterPush, self.exitPush, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, [
-                'walk',
-                'battle',
-                'DFA',
-                'WaitForBattle',
-                'died',
-                'teleportOut']),
-            State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, [
-                'battle',
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('battle', self.enterBattle, self.exitBattle, [
-                'walk',
-                'teleportOut',
-                'died']),
-            State.State('fallDown', self.enterFallDown, self.exitFallDown, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('squished', self.enterSquished, self.exitSquished, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
-                'walk',
-                'teleportOut',
-                'quietZone',
-                'died']),
-            State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, [
-                'teleportIn',
-                'FLA',
-                'quietZone',
-                'WaitForBattle']),
-            State.State('DFA', self.enterDFA, self.exitDFA, [
-                'DFAReject',
-                'teleportOut']),
-            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, [
-                'walkteleportOut']),
-            State.State('died', self.enterDied, self.exitDied, [
-                'teleportOut']),
-            State.State('FLA', self.enterFLA, self.exitFLA, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'teleportIn']),
-            State.State('elevator', self.enterElevator, self.exitElevator, [
-                'walk']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+                'push', 'sit', 'stickerBook', 'WaitForBattle', 'battle',
+                'died', 'teleportOut', 'squished', 'DFA', 'fallDown',
+                'stopped', 'elevator'
+            ]),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk', 'teleportOut', 'stickerBook']),
+            State.State('sit', self.enterSit, self.exitSit,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('push', self.enterPush, self.exitPush,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('stickerBook', self.enterStickerBook,
+                        self.exitStickerBook, [
+                            'walk', 'battle', 'DFA', 'WaitForBattle', 'died',
+                            'teleportOut'
+                        ]),
+            State.State('WaitForBattle', self.enterWaitForBattle,
+                        self.exitWaitForBattle,
+                        ['battle', 'walk', 'died', 'teleportOut']),
+            State.State('battle', self.enterBattle, self.exitBattle,
+                        ['walk', 'teleportOut', 'died']),
+            State.State('fallDown', self.enterFallDown, self.exitFallDown,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('squished', self.enterSquished, self.exitSquished,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('teleportIn', self.enterTeleportIn,
+                        self.exitTeleportIn,
+                        ['walk', 'teleportOut', 'quietZone', 'died']),
+            State.State('teleportOut', self.enterTeleportOut,
+                        self.exitTeleportOut,
+                        ['teleportIn', 'FLA', 'quietZone', 'WaitForBattle']),
+            State.State('DFA', self.enterDFA, self.exitDFA,
+                        ['DFAReject', 'teleportOut']),
+            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject,
+                        ['walkteleportOut']),
+            State.State('died', self.enterDied, self.exitDied,
+                        ['teleportOut']),
+            State.State('FLA', self.enterFLA, self.exitFLA, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['teleportIn']),
+            State.State('elevator', self.enterElevator, self.exitElevator,
+                        ['walk']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
 
     def load(self):
         self.parentFSM.getStateNamed('countryClubInterior').addChild(self.fsm)
@@ -109,12 +77,13 @@ class CountryClubInterior(BattlePlace.BattlePlace):
         musicName = random.choice([
             'phase_12/audio/bgm/Bossbot_Factory_v1.mid',
             'phase_12/audio/bgm/Bossbot_Factory_v2.mid',
-            'phase_12/audio/bgm/Bossbot_Factory_v3.mid'])
+            'phase_12/audio/bgm/Bossbot_Factory_v3.mid'
+        ])
         self.music = base.loadMusic(musicName)
 
     def unload(self):
-        self.parentFSM.getStateNamed(
-            'countryClubInterior').removeChild(self.fsm)
+        self.parentFSM.getStateNamed('countryClubInterior').removeChild(
+            self.fsm)
         del self.music
         del self.fsm
         del self.parentFSM
@@ -128,34 +97,32 @@ class CountryClubInterior(BattlePlace.BattlePlace):
 
         def commence(self=self):
             NametagGlobals.setMasterArrowsOn(1)
-            self.fsm.request(requestStatus['how'], [
-                requestStatus])
+            self.fsm.request(requestStatus['how'], [requestStatus])
             base.playMusic(self.music, looping=1, volume=0.80000000000000004)
             base.transitions.irisIn()
             CountryClub = bboard.get(
                 DistributedCountryClub.DistributedCountryClub.ReadyPost)
-            self.loader.hood.spawnTitleText(
-                CountryClub.countryClubId, CountryClub.floorNum)
+            self.loader.hood.spawnTitleText(CountryClub.countryClubId,
+                                            CountryClub.floorNum)
 
         self.CountryClubReadyWatcher = BulletinBoardWatcher.BulletinBoardWatcher(
-            'CountryClubReady', DistributedCountryClub.DistributedCountryClub.ReadyPost, commence)
+            'CountryClubReady',
+            DistributedCountryClub.DistributedCountryClub.ReadyPost, commence)
         self.CountryClubDefeated = 0
-        self.acceptOnce(
-            DistributedCountryClub.DistributedCountryClub.WinEvent,
-            self.handleCountryClubWinEvent)
+        self.acceptOnce(DistributedCountryClub.DistributedCountryClub.WinEvent,
+                        self.handleCountryClubWinEvent)
         if __debug__ and 0:
             self.accept(
-                'f10', lambda: messenger.send(
-                    DistributedCountryClub.DistributedCountryClub.WinEvent))
+                'f10', lambda: messenger.send(DistributedCountryClub.
+                                              DistributedCountryClub.WinEvent))
 
         self.confrontedBoss = 0
 
         def handleConfrontedBoss(self=self):
             self.confrontedBoss = 1
 
-        self.acceptOnce(
-            'localToonConfrontedCountryClubBoss',
-            handleConfrontedBoss)
+        self.acceptOnce('localToonConfrontedCountryClubBoss',
+                        handleConfrontedBoss)
 
     def exit(self):
         NametagGlobals.setMasterArrowsOn(0)
@@ -232,8 +199,8 @@ class CountryClubInterior(BattlePlace.BattlePlace):
 
     def enterTeleportOut(self, requestStatus):
         CountryClubInterior.notify.debug('enterTeleportOut()')
-        BattlePlace.BattlePlace.enterTeleportOut(
-            self, requestStatus, self.__teleportOutDone)
+        BattlePlace.BattlePlace.enterTeleportOut(self, requestStatus,
+                                                 self.__teleportOutDone)
 
     def __processLeaveRequest(self, requestStatus):
         hoodId = requestStatus['hoodId']
@@ -259,7 +226,8 @@ class CountryClubInterior(BattlePlace.BattlePlace):
     def handleCountryClubWinEvent(self):
         CountryClubInterior.notify.debug('handleCountryClubWinEvent')
 
-        if base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'died':
+        if base.cr.playGame.getPlace().fsm.getCurrentState().getName(
+        ) == 'died':
             return
 
         self.CountryClubDefeated = 1
@@ -269,15 +237,16 @@ class CountryClubInterior(BattlePlace.BattlePlace):
         else:
             zoneId = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
 
-        self.fsm.request('teleportOut', [{
-            'loader': ZoneUtil.getLoaderName(zoneId),
-            'where': ZoneUtil.getToonWhereName(zoneId),
-            'how': 'teleportIn',
-            'hoodId': zoneId,
-            'zoneId': zoneId,
-            'shardId': None,
-            'avId': -1,
-        }])
+        self.fsm.request('teleportOut',
+                         [{
+                             'loader': ZoneUtil.getLoaderName(zoneId),
+                             'where': ZoneUtil.getToonWhereName(zoneId),
+                             'how': 'teleportIn',
+                             'hoodId': zoneId,
+                             'zoneId': zoneId,
+                             'shardId': None,
+                             'avId': -1,
+                         }])
 
     def enterDied(self, requestStatus, callback=None):
         CountryClubInterior.notify.debug('enterDied')
@@ -318,8 +287,7 @@ class CountryClubInterior(BattlePlace.BattlePlace):
     def enterElevator(self, distElevator, skipDFABoard=0):
         self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
         self.elevator = Elevator.Elevator(
-            self.fsm.getStateNamed('elevator'),
-            self.elevatorDoneEvent,
+            self.fsm.getStateNamed('elevator'), self.elevatorDoneEvent,
             distElevator)
         if skipDFABoard:
             self.elevator.skipDFABoard = 1
@@ -338,8 +306,8 @@ class CountryClubInterior(BattlePlace.BattlePlace):
         where = doneStatus['where']
         if where == 'reject':
             if hasattr(
-                    base.localAvatar,
-                    'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                    base.localAvatar, 'elevatorNotifier'
+            ) and base.localAvatar.elevatorNotifier.isNotifierOpen():
                 pass
             else:
                 self.fsm.request('walk')
@@ -350,7 +318,5 @@ class CountryClubInterior(BattlePlace.BattlePlace):
             self.doneEvent = 'lawOfficeFloorDone'
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleElevatorDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleElevatorDone')

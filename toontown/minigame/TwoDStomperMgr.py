@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject

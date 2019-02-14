@@ -20,9 +20,8 @@ from toontown.toonbase import TTLocalizer
 import time
 
 
-class DistributedPondBingoManager(
-        DistributedObject.DistributedObject,
-        FSM.FSM):
+class DistributedPondBingoManager(DistributedObject.DistributedObject,
+                                  FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedPondBingoManager')
     cardTypeDict = {
@@ -30,7 +29,8 @@ class DistributedPondBingoManager(
         BingoGlobals.FOURCORNER_CARD: FourCornerBingo.FourCornerBingo,
         BingoGlobals.DIAGONAL_CARD: DiagonalBingo.DiagonalBingo,
         BingoGlobals.THREEWAY_CARD: ThreewayBingo.ThreewayBingo,
-        BingoGlobals.BLOCKOUT_CARD: BlockoutBingo.BlockoutBingo}
+        BingoGlobals.BLOCKOUT_CARD: BlockoutBingo.BlockoutBingo
+    }
 
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
@@ -64,15 +64,10 @@ class DistributedPondBingoManager(
         DistributedObject.DistributedObject.delete(self)
 
     def d_cardUpdate(self, cellId, genus, species):
-        self.sendUpdate('cardUpdate', [
-            self.cardId,
-            cellId,
-            genus,
-            species])
+        self.sendUpdate('cardUpdate', [self.cardId, cellId, genus, species])
 
     def d_bingoCall(self):
-        self.sendUpdate('handleBingoCall', [
-            self.cardId])
+        self.sendUpdate('handleBingoCall', [self.cardId])
 
     def setCardState(self, cardId, typeId, tileSeed, gameState):
         self.cardId = cardId
@@ -117,21 +112,11 @@ class DistributedPondBingoManager(
         self.card.addGame(game)
         self.card.generateCard(self.tileSeed, self.pond.getArea())
         color = BingoGlobals.getColor(self.typeId)
-        self.card.setProp(
-            'image_color',
-            VBase4(
-                color[0],
-                color[1],
-                color[2],
-                color[3]))
+        self.card.setProp('image_color',
+                          VBase4(color[0], color[1], color[2], color[3]))
         color = BingoGlobals.getButtonColor(self.typeId)
-        self.card.bingo.setProp(
-            'image_color',
-            VBase4(
-                color[0],
-                color[1],
-                color[2],
-                color[3]))
+        self.card.bingo.setProp('image_color',
+                                VBase4(color[0], color[1], color[2], color[3]))
         if self.hasEntered:
             self.card.loadCard()
             self.card.show()
@@ -139,8 +124,8 @@ class DistributedPondBingoManager(
             self.card.hide()
 
     def showCard(self):
-        if (self.state != 'Off' or self.state !=
-                'CloseEvent') and self.card.getGame():
+        if (self.state != 'Off'
+                or self.state != 'CloseEvent') and self.card.getGame():
             self.card.loadCard()
             self.card.show()
         elif self.state == 'GameOver':
@@ -254,8 +239,8 @@ class DistributedPondBingoManager(
             return (request, args)
         else:
             self.notify.debug(
-                'filterOff: Invalid State Transition from WaitCountdown to %s' %
-                request)
+                'filterOff: Invalid State Transition from WaitCountdown to %s'
+                % request)
 
     def exitWaitCountdown(self):
         self.notify.debug('exitWaitCountdown: Exit WaitCountdown State')

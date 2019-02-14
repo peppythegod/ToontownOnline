@@ -82,8 +82,9 @@ class HoodDataAI:
             dnaData = self.air.dnaDataMap.get(zone[0], None)
             if isinstance(dnaData, DNAData):
                 area = ZoneUtil.getCanonicalZoneId(zoneId)
-                (foundFishingPonds, foundFishingPondGroups) = self.air.findFishingPonds(
-                    dnaData, zoneId, area)
+                (foundFishingPonds,
+                 foundFishingPondGroups) = self.air.findFishingPonds(
+                     dnaData, zoneId, area)
                 self.fishingPonds += foundFishingPonds
                 fishingPondGroups += foundFishingPondGroups
                 continue

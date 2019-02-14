@@ -20,10 +20,8 @@ if base.config.GetBool('want-chatfilter-hacks', 0):
     badwordpy.init(os.environ.get('OTP') + '\\src\\switchboard\\', '')
 
 
-class DistributedPlayer(
-        DistributedAvatar.DistributedAvatar,
-        PlayerBase.PlayerBase,
-        TelemetryLimited):
+class DistributedPlayer(DistributedAvatar.DistributedAvatar,
+                        PlayerBase.PlayerBase, TelemetryLimited):
     TeleportFailureTimeout = 60.0
     chatGarbler = ChatGarbler.ChatGarbler()
 
@@ -68,13 +66,11 @@ class DistributedPlayer(
 
     def networkDelete(self):
         DistributedAvatar.DistributedAvatar.networkDelete(self)
-        messenger.send(self.GetPlayerNetworkDeleteEvent(), [
-            self])
+        messenger.send(self.GetPlayerNetworkDeleteEvent(), [self])
 
     def disable(self):
         DistributedAvatar.DistributedAvatar.disable(self)
-        messenger.send(self.GetPlayerDeleteEvent(), [
-            self])
+        messenger.send(self.GetPlayerDeleteEvent(), [self])
 
     def delete(self):
 
@@ -94,8 +90,7 @@ class DistributedPlayer(
 
     def announceGenerate(self):
         DistributedAvatar.DistributedAvatar.announceGenerate(self)
-        messenger.send(self.GetPlayerGenerateEvent(), [
-            self])
+        messenger.send(self.GetPlayerGenerateEvent(), [self])
 
     def setLocation(self, parentId, zoneId):
         DistributedAvatar.DistributedAvatar.setLocation(self, parentId, zoneId)
@@ -118,13 +113,12 @@ class DistributedPlayer(
 
     def arrivedOnDistrict(self, districtId):
         curFrameTime = globalClock.getFrameTime()
-        if hasattr(
-                self,
-                'frameTimeWeArrivedOnDistrict') and curFrameTime == self.frameTimeWeArrivedOnDistrict:
+        if hasattr(self, 'frameTimeWeArrivedOnDistrict'
+                   ) and curFrameTime == self.frameTimeWeArrivedOnDistrict:
             if districtId == 0 and self._districtWeAreGeneratedOn:
                 self.notify.warning(
-                    'ignoring arrivedOnDistrict 0, since arrivedOnDistrict %d occured on the same frame' %
-                    self._districtWeAreGeneratedOn)
+                    'ignoring arrivedOnDistrict 0, since arrivedOnDistrict %d occured on the same frame'
+                    % self._districtWeAreGeneratedOn)
                 return None
 
         self._districtWeAreGeneratedOn = districtId
@@ -142,27 +136,26 @@ class DistributedPlayer(
     def setAccountName(self, accountName):
         self.accountName = accountName
 
-    def setSystemMessage(
-            self,
-            aboutId,
-            chatString,
-            whisperType=WhisperPopup.WTSystem):
+    def setSystemMessage(self,
+                         aboutId,
+                         chatString,
+                         whisperType=WhisperPopup.WTSystem):
         self.displayWhisper(aboutId, chatString, whisperType)
 
     def displayWhisper(self, fromId, chatString, whisperType):
         print 'Whisper type %s from %s: %s' % (whisperType, fromId, chatString)
 
     def displayWhisperPlayer(self, playerId, chatString, whisperType):
-        print 'WhisperPlayer type %s from %s: %s' % (whisperType, playerId, chatString)
+        print 'WhisperPlayer type %s from %s: %s' % (whisperType, playerId,
+                                                     chatString)
 
     def whisperSCTo(self, msgIndex, sendToId, toPlayer):
         if toPlayer:
             base.cr.playerFriendsManager.sendSCWhisper(sendToId, msgIndex)
         else:
             messenger.send('wakeup')
-            self.sendUpdate('setWhisperSCFrom', [
-                self.doId,
-                msgIndex], sendToId)
+            self.sendUpdate('setWhisperSCFrom', [self.doId, msgIndex],
+                            sendToId)
 
     def setWhisperSCFrom(self, fromId, msgIndex):
         handle = base.cr.identifyAvatar(fromId)
@@ -190,9 +183,8 @@ class DistributedPlayer(
             return None
 
         messenger.send('wakeup')
-        self.sendUpdate('setWhisperSCCustomFrom', [
-            self.doId,
-            msgIndex], sendToId)
+        self.sendUpdate('setWhisperSCCustomFrom', [self.doId, msgIndex],
+                        sendToId)
 
     def _isValidWhisperSource(self, source):
         return True
@@ -227,9 +219,8 @@ class DistributedPlayer(
             return None
 
         messenger.send('wakeup')
-        self.sendUpdate('setWhisperSCEmoteFrom', [
-            self.doId,
-            emoteId], sendToId)
+        self.sendUpdate('setWhisperSCEmoteFrom', [self.doId, emoteId],
+                        sendToId)
 
     def setWhisperSCEmoteFrom(self, fromId, emoteId):
         handle = base.cr.identifyAvatar(fromId)
@@ -250,13 +241,12 @@ class DistributedPlayer(
     def d_setWhisperIgnored(self, sendToId):
         pass
 
-    def setChatAbsolute(
-            self,
-            chatString,
-            chatFlags,
-            dialogue=None,
-            interrupt=1,
-            quiet=0):
+    def setChatAbsolute(self,
+                        chatString,
+                        chatFlags,
+                        dialogue=None,
+                        interrupt=1,
+                        quiet=0):
         DistributedAvatar.DistributedAvatar.setChatAbsolute(
             self, chatString, chatFlags, dialogue, interrupt)
         if not quiet:
@@ -266,8 +256,7 @@ class DistributedPlayer(
     def b_setChat(self, chatString, chatFlags):
         if self.cr.wantMagicWords and len(
                 chatString) > 0 and chatString[0] == '~':
-            messenger.send('magicWord', [
-                chatString])
+            messenger.send('magicWord', [chatString])
         elif base.config.GetBool('want-chatfilter-hacks', 0):
             if base.config.GetBool('want-chatfilter-drop-offending', 0):
                 if badwordpy.test(chatString):
@@ -281,34 +270,26 @@ class DistributedPlayer(
         self.d_setChat(chatString, chatFlags)
 
     def d_setChat(self, chatString, chatFlags):
-        self.sendUpdate('setChat', [
-            chatString,
-            chatFlags,
-            0])
+        self.sendUpdate('setChat', [chatString, chatFlags, 0])
 
     def setTalk(self, fromAV, fromAC, avatarName, chat, mods, flags):
         (newText, scrubbed) = self.scrubTalk(chat, mods)
         self.displayTalk(newText)
         if base.talkAssistant.isThought(newText):
             newText = base.talkAssistant.removeThoughtPrefix(newText)
-            base.talkAssistant.receiveThought(
-                fromAV, avatarName, fromAC, None, newText, scrubbed)
+            base.talkAssistant.receiveThought(fromAV, avatarName, fromAC, None,
+                                              newText, scrubbed)
         else:
-            base.talkAssistant.receiveOpenTalk(
-                fromAV, avatarName, fromAC, None, newText, scrubbed)
+            base.talkAssistant.receiveOpenTalk(fromAV, avatarName, fromAC,
+                                               None, newText, scrubbed)
 
     def setTalkWhisper(self, fromAV, fromAC, avatarName, chat, mods, flags):
         (newText, scrubbed) = self.scrubTalk(chat, mods)
         self.displayTalkWhisper(fromAV, avatarName, chat, mods)
-        base.talkAssistant.receiveWhisperTalk(
-            fromAV,
-            avatarName,
-            fromAC,
-            None,
-            self.doId,
-            self.getName(),
-            newText,
-            scrubbed)
+        base.talkAssistant.receiveWhisperTalk(fromAV, avatarName,
+                                              fromAC, None, self.doId,
+                                              self.getName(), newText,
+                                              scrubbed)
 
     def displayTalkWhisper(self, fromId, avatarName, chatString, mods):
         print 'TalkWhisper from %s: %s' % (fromId, chatString)
@@ -338,8 +319,7 @@ class DistributedPlayer(
 
     def d_setSC(self, msgIndex):
         messenger.send('wakeup')
-        self.sendUpdate('setSC', [
-            msgIndex])
+        self.sendUpdate('setSC', [msgIndex])
 
     def setSC(self, msgIndex):
         if base.cr.avatarFriendsManager.checkIgnored(self.doId):
@@ -351,12 +331,10 @@ class DistributedPlayer(
         chatString = SCDecoders.decodeSCStaticTextMsg(msgIndex)
         if chatString:
             self.setChatAbsolute(
-                chatString,
-                CFSpeech | CFQuicktalker | CFTimeout,
-                quiet=1)
+                chatString, CFSpeech | CFQuicktalker | CFTimeout, quiet=1)
 
-        base.talkAssistant.receiveOpenSpeedChat(
-            TalkAssistant.SPEEDCHAT_NORMAL, msgIndex, self.doId)
+        base.talkAssistant.receiveOpenSpeedChat(TalkAssistant.SPEEDCHAT_NORMAL,
+                                                msgIndex, self.doId)
 
     def b_setSCCustom(self, msgIndex):
         self.setSCCustom(msgIndex)
@@ -364,8 +342,7 @@ class DistributedPlayer(
 
     def d_setSCCustom(self, msgIndex):
         messenger.send('wakeup')
-        self.sendUpdate('setSCCustom', [
-            msgIndex])
+        self.sendUpdate('setSCCustom', [msgIndex])
 
     def setSCCustom(self, msgIndex):
         if base.cr.avatarFriendsManager.checkIgnored(self.doId):
@@ -376,38 +353,34 @@ class DistributedPlayer(
 
         chatString = SCDecoders.decodeSCCustomMsg(msgIndex)
         if chatString:
-            self.setChatAbsolute(
-                chatString, CFSpeech | CFQuicktalker | CFTimeout)
+            self.setChatAbsolute(chatString,
+                                 CFSpeech | CFQuicktalker | CFTimeout)
 
-        base.talkAssistant.receiveOpenSpeedChat(
-            TalkAssistant.SPEEDCHAT_CUSTOM, msgIndex, self.doId)
+        base.talkAssistant.receiveOpenSpeedChat(TalkAssistant.SPEEDCHAT_CUSTOM,
+                                                msgIndex, self.doId)
 
     def b_setSCEmote(self, emoteId):
         self.b_setEmoteState(emoteId, animMultiplier=self.animMultiplier)
 
     def d_friendsNotify(self, avId, status):
-        self.sendUpdate('friendsNotify', [
-            avId,
-            status])
+        self.sendUpdate('friendsNotify', [avId, status])
 
     def friendsNotify(self, avId, status):
         avatar = base.cr.identifyFriend(avId)
         if avatar is not None:
             if status == 1:
                 self.setSystemMessage(
-                    avId, OTPLocalizer.WhisperNoLongerFriend %
-                    avatar.getName())
+                    avId,
+                    OTPLocalizer.WhisperNoLongerFriend % avatar.getName())
             elif status == 2:
                 self.setSystemMessage(
-                    avId, OTPLocalizer.WhisperNowSpecialFriend %
-                    avatar.getName())
+                    avId,
+                    OTPLocalizer.WhisperNowSpecialFriend % avatar.getName())
 
     def d_teleportQuery(self, requesterId, sendToId=None):
         teleportNotify.debug(
-            'sending teleportQuery%s' %
-            ((requesterId, sendToId),))
-        self.sendUpdate('teleportQuery', [
-            requesterId], sendToId)
+            'sending teleportQuery%s' % ((requesterId, sendToId), ))
+        self.sendUpdate('teleportQuery', [requesterId], sendToId)
 
     def teleportQuery(self, requesterId):
         teleportNotify.debug('receieved teleportQuery(%s)' % requesterId)
@@ -442,23 +415,19 @@ class DistributedPlayer(
 
             if self._DistributedPlayer__teleportAvailable and not (
                     self.ghostMode) and base.config.GetBool(
-                    'can-be-teleported-to', 1):
+                        'can-be-teleported-to', 1):
                 teleportNotify.debug('teleport initiation successful')
                 self.setSystemMessage(
                     requesterId,
-                    OTPLocalizer.WhisperComingToVisit %
-                    avatar.getName())
-                messenger.send('teleportQuery', [
-                    avatar,
-                    self])
+                    OTPLocalizer.WhisperComingToVisit % avatar.getName())
+                messenger.send('teleportQuery', [avatar, self])
                 return None
 
             teleportNotify.debug('teleport initiation failed')
             if self.failedTeleportMessageOk(requesterId):
                 self.setSystemMessage(
                     requesterId,
-                    OTPLocalizer.WhisperFailedVisit %
-                    avatar.getName())
+                    OTPLocalizer.WhisperFailedVisit % avatar.getName())
 
         teleportNotify.debug('sending try-again-later message')
         self.d_teleportResponse(self.doId, 0, 0, 0, 0, sendToId=requesterId)
@@ -474,71 +443,55 @@ class DistributedPlayer(
         self.lastFailedTeleportMessage[fromId] = now
         return 1
 
-    def d_teleportResponse(
-            self,
-            avId,
-            available,
-            shardId,
-            hoodId,
-            zoneId,
-            sendToId=None):
-        teleportNotify.debug(
-            'sending teleportResponse%s' %
-            ((avId, available, shardId, hoodId, zoneId, sendToId),))
-        self.sendUpdate('teleportResponse', [
-            avId,
-            available,
-            shardId,
-            hoodId,
-            zoneId], sendToId)
+    def d_teleportResponse(self,
+                           avId,
+                           available,
+                           shardId,
+                           hoodId,
+                           zoneId,
+                           sendToId=None):
+        teleportNotify.debug('sending teleportResponse%s' % (
+            (avId, available, shardId, hoodId, zoneId, sendToId), ))
+        self.sendUpdate('teleportResponse',
+                        [avId, available, shardId, hoodId, zoneId], sendToId)
 
     def teleportResponse(self, avId, available, shardId, hoodId, zoneId):
-        teleportNotify.debug(
-            'received teleportResponse%s' %
-            ((avId, available, shardId, hoodId, zoneId),))
-        messenger.send('teleportResponse', [
-            avId,
-            available,
-            shardId,
-            hoodId,
-            zoneId])
+        teleportNotify.debug('received teleportResponse%s' % (
+            (avId, available, shardId, hoodId, zoneId), ))
+        messenger.send('teleportResponse',
+                       [avId, available, shardId, hoodId, zoneId])
 
     def d_teleportGiveup(self, requesterId, sendToId=None):
         teleportNotify.debug(
-            'sending teleportGiveup(%s) to %s' %
-            (requesterId, sendToId))
-        self.sendUpdate('teleportGiveup', [
-            requesterId], sendToId)
+            'sending teleportGiveup(%s) to %s' % (requesterId, sendToId))
+        self.sendUpdate('teleportGiveup', [requesterId], sendToId)
 
     def teleportGiveup(self, requesterId):
-        teleportNotify.debug('received teleportGiveup(%s)' % (requesterId,))
+        teleportNotify.debug('received teleportGiveup(%s)' % (requesterId, ))
         avatar = base.cr.identifyAvatar(requesterId)
         if not self._isValidWhisperSource(avatar):
             self.notify.warning(
-                'teleportGiveup from non-toon %s' %
-                requesterId)
+                'teleportGiveup from non-toon %s' % requesterId)
             return None
 
         if avatar is not None:
             self.setSystemMessage(
                 requesterId,
-                OTPLocalizer.WhisperGiveupVisit %
-                avatar.getName())
+                OTPLocalizer.WhisperGiveupVisit % avatar.getName())
 
     def b_teleportGreeting(self, avId):
         self.d_teleportGreeting(avId)
         self.teleportGreeting(avId)
 
     def d_teleportGreeting(self, avId):
-        self.sendUpdate('teleportGreeting', [
-            avId])
+        self.sendUpdate('teleportGreeting', [avId])
 
     def teleportGreeting(self, avId):
         avatar = base.cr.getDo(avId)
         if isinstance(avatar, Avatar.Avatar):
             self.setChatAbsolute(
-                OTPLocalizer.TeleportGreeting %
-                avatar.getName(), CFSpeech | CFTimeout)
+                OTPLocalizer.TeleportGreeting % avatar.getName(),
+                CFSpeech | CFTimeout)
         elif avatar is not None:
             self.notify.warning(
                 'got teleportGreeting from %s referencing non-toon %s' %

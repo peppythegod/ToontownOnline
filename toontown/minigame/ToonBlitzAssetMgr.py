@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToonBaseGlobal import *
@@ -86,24 +84,20 @@ class ToonBlitzAssetMgr(DirectObject):
         self.cardMaker.setFrame(-0.5, 0.5, -0.5, 0.5)
         self.progressLine = self.aspect2dRoot.attachNewNode(
             self.cardMaker.generate())
-        self.progressLine.setScale(
-            self.faceEndPos[0] - self.faceStartPos[0], 1, 0.01)
+        self.progressLine.setScale(self.faceEndPos[0] - self.faceStartPos[0],
+                                   1, 0.01)
         self.progressLine.setPos(0, 0, self.faceStartPos[2])
         self.cardMaker.setName('RaceProgressLineHash')
         for n in xrange(
                 ToonBlitzGlobals.NumSections[self.game.getSafezoneId()] + 1):
             hash = self.aspect2dRoot.attachNewNode(self.cardMaker.generate())
-            hash.setScale(
-                self.progressLine.getScale()[2],
-                1,
-                self.progressLine.getScale()[2] * 5)
+            hash.setScale(self.progressLine.getScale()[2], 1,
+                          self.progressLine.getScale()[2] * 5)
             t = float(n) / \
                 ToonBlitzGlobals.NumSections[self.game.getSafezoneId()]
             hash.setPos(
-                self.faceStartPos[0] * (
-                    1 - t) + self.faceEndPos[0] * t,
-                self.faceStartPos[1],
-                self.faceStartPos[2])
+                self.faceStartPos[0] * (1 - t) + self.faceEndPos[0] * t,
+                self.faceStartPos[1], self.faceStartPos[2])
 
     def destroy(self):
         while len(self.blockTypes):

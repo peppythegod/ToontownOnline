@@ -1,5 +1,3 @@
-
-
 from OrthoWalk import *
 
 

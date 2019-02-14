@@ -17,25 +17,16 @@ class PromotionManagerAI:
     def getPercentChance(self):
         return 100.0
 
-    def recoverMerits(
-            self,
-            av,
-            cogList,
-            zoneId,
-            multiplier=1,
-            extraMerits=None):
+    def recoverMerits(self,
+                      av,
+                      cogList,
+                      zoneId,
+                      multiplier=1,
+                      extraMerits=None):
         avId = av.getDoId()
-        meritsRecovered = [
-            0,
-            0,
-            0,
-            0]
+        meritsRecovered = [0, 0, 0, 0]
         if extraMerits is None:
-            extraMerits = [
-                0,
-                0,
-                0,
-                0]
+            extraMerits = [0, 0, 0, 0]
 
         if self.air.suitInvasionManager.getInvading():
             multiplier *= getInvasionMultiplier()
@@ -44,8 +35,7 @@ class PromotionManagerAI:
             if CogDisguiseGlobals.isSuitComplete(av.getCogParts(), i):
                 meritsRecovered[i] += extraMerits[i]
                 self.notify.debug(
-                    'recoverMerits: extra merits = %s' %
-                    extraMerits[i])
+                    'recoverMerits: extra merits = %s' % extraMerits[i])
                 continue
 
         self.notify.debug('recoverMerits: multiplier = %s' % multiplier)
@@ -53,8 +43,8 @@ class PromotionManagerAI:
             dept = SuitDNA.suitDepts.index(cogDict['track'])
             if avId in cogDict['activeToons']:
                 if CogDisguiseGlobals.isSuitComplete(
-                    av.getCogParts(), SuitDNA.suitDepts.index(
-                        cogDict['track'])):
+                        av.getCogParts(),
+                        SuitDNA.suitDepts.index(cogDict['track'])):
                     self.notify.debug(
                         'recoverMerits: checking against cogDict: %s' %
                         cogDict)
@@ -75,19 +65,10 @@ class PromotionManagerAI:
                         self.notify.debug('recoverMerits: virtual cog!')
 
             CogDisguiseGlobals.isSuitComplete(
-                av.getCogParts(), SuitDNA.suitDepts.index(
-                    cogDict['track']))
+                av.getCogParts(), SuitDNA.suitDepts.index(cogDict['track']))
 
-        if meritsRecovered != [
-                0,
-                0,
-                0,
-                0]:
-            actualCounted = [
-                0,
-                0,
-                0,
-                0]
+        if meritsRecovered != [0, 0, 0, 0]:
+            actualCounted = [0, 0, 0, 0]
             merits = av.getCogMerits()
             for i in range(len(meritsRecovered)):
                 max = CogDisguiseGlobals.getTotalMerits(av, i)
@@ -102,11 +83,9 @@ class PromotionManagerAI:
                     continue
 
             if reduce(lambda x, y: x + y, actualCounted):
-                self.air.writeServerEvent(
-                    'merits', avId, '%s|%s|%s|%s' %
-                    tuple(actualCounted))
-                self.notify.debug(
-                    'recoverMerits: av %s recovered merits %s' %
-                    (avId, actualCounted))
+                self.air.writeServerEvent('merits', avId,
+                                          '%s|%s|%s|%s' % tuple(actualCounted))
+                self.notify.debug('recoverMerits: av %s recovered merits %s' %
+                                  (avId, actualCounted))
 
         return meritsRecovered

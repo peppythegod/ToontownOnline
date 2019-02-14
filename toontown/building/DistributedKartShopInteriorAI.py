@@ -15,6 +15,4 @@ class DistributedKartShopInteriorAI(DistributedObjectAI):
         DistributedObjectAI.generate(self)
 
     def getZoneIdAndBlock(self):
-        return [
-            self.zoneId,
-            self.block]
+        return [self.zoneId, self.block]

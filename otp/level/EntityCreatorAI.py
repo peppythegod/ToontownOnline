@@ -22,7 +22,6 @@ def nothing(*args):
 
 
 class EntityCreatorAI(EntityCreatorBase.EntityCreatorBase):
-
     def __init__(self, level):
         EntityCreatorBase.EntityCreatorBase.__init__(self, level)
         cLE = createLocalEntity
@@ -42,7 +41,8 @@ class EntityCreatorAI(EntityCreatorBase.EntityCreatorBase):
             'path': nothing,
             'propSpinner': nothing,
             'visibilityExtender': nothing,
-            'zone': Functor(cLE, ZoneEntityAI.ZoneEntityAI)})
+            'zone': Functor(cLE, ZoneEntityAI.ZoneEntityAI)
+        })
 
     def doCreateEntity(self, ctor, entId):
         zoneId = self.level.getEntityZoneId(entId)

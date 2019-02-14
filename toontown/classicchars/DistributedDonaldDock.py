@@ -24,10 +24,10 @@ class DistributedDonaldDock(DistributedCCharBase.DistributedCCharBase):
             DistributedCCharBase.DistributedCCharBase.__init__(
                 self, cr, TTLocalizer.DonaldDock, 'dw')
             self.fsm = ClassicFSM.ClassicFSM('DistributedDonaldDock', [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral, [
-                    'Off'])], 'Off', 'Off')
+                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+                State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                            ['Off'])
+            ], 'Off', 'Off')
             self.fsm.enterInitialState()
             self.nametag.setName(TTLocalizer.Donald)
             self.handleHolidays()
@@ -55,8 +55,8 @@ class DistributedDonaldDock(DistributedCCharBase.DistributedCCharBase):
         self.setPos(0, -1, 3.9500000000000002)
         self.reparentTo(boat)
         self.neutralDoneEvent = self.taskName('DonaldDock-neutral-done')
-        self.neutral = CharStateDatas.CharNeutralState(
-            self.neutralDoneEvent, self)
+        self.neutral = CharStateDatas.CharNeutralState(self.neutralDoneEvent,
+                                                       self)
         self.fsm.request('Neutral')
 
     def enterOff(self):

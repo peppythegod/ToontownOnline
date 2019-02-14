@@ -34,14 +34,9 @@ class PartyPlanner(DirectFrame, FSM):
         DirectFrame.__init__(self)
         self.doneEvent = doneEvent
         self.stateArray = [
-            'Off',
-            'Welcome',
-            'PartyEditor',
-            'Guests',
-            'Date',
-            'Time',
-            'Invitation',
-            'Farewell']
+            'Off', 'Welcome', 'PartyEditor', 'Guests', 'Date', 'Time',
+            'Invitation', 'Farewell'
+        ]
         self.partyTime = base.cr.toontownTimeManager.getCurServerDateTime()
         self.partyNowTime = base.cr.toontownTimeManager.getCurServerDateTime()
         minutesToNextFifteen = 15 - self.partyTime.minute % 15
@@ -53,13 +48,12 @@ class PartyPlanner(DirectFrame, FSM):
         self.selectedCalendarGuiDay = None
         self.gui = loader.loadModel('phase_4/models/parties/partyPlannerGUI')
         self.partyDuration = timedelta(hours=PartyGlobals.DefaultPartyDuration)
-        self.timeTypeToMaxValue = {
-            'hour': 23,
-            'minute': 59}
+        self.timeTypeToMaxValue = {'hour': 23, 'minute': 59}
         self.timeTypeToChangeAmount = {
             'hour': (1, -1),
             'minute': (15, -15),
-            'ampm': (1, -1)}
+            'ampm': (1, -1)
+        }
         self.partyInfo = None
         self.asapMinuteRounding = base.config.GetInt(
             'party-asap-minute-rounding',
@@ -158,10 +152,11 @@ class PartyPlanner(DirectFrame, FSM):
         self.prevButton['state'] = DirectGuiGlobals.NORMAL
         self.nextButton.show()
         self.timePage.show()
-        self.timePageRecapToontownTimeLabel2['text'] = '%s' % PartyUtils.formatDateTime(
-            self.partyTime)
+        self.timePageRecapToontownTimeLabel2[
+            'text'] = '%s' % PartyUtils.formatDateTime(self.partyTime)
         self.timePageRecapLocalTimeLabel['text'] = '%s%s' % (
-            TTLocalizer.PartyPlannerTimeLocalTime, PartyUtils.formatDateTime(self.partyTime, inLocalTime=True))
+            TTLocalizer.PartyPlannerTimeLocalTime,
+            PartyUtils.formatDateTime(self.partyTime, inLocalTime=True))
 
     def exitTime(self):
         self.timePage.hide()
@@ -172,55 +167,51 @@ class PartyPlanner(DirectFrame, FSM):
         self.nextButton.hide()
         defaultInviteTheme = PartyGlobals.InviteTheme.GenericMale
         if hasattr(base.cr, 'newsManager') and base.cr.newsManager:
-            if ToontownGlobals.VICTORY_PARTY_HOLIDAY in base.cr.newsManager.getHolidayIdList():
+            if ToontownGlobals.VICTORY_PARTY_HOLIDAY in base.cr.newsManager.getHolidayIdList(
+            ):
                 defaultInviteTheme = PartyGlobals.InviteTheme.VictoryParty
-            elif ToontownGlobals.KARTING_TICKETS_HOLIDAY in base.cr.newsManager.getHolidayIdList() or ToontownGlobals.CIRCUIT_RACING_EVENT in base.cr.newsManager.getHolidayIdList():
+            elif ToontownGlobals.KARTING_TICKETS_HOLIDAY in base.cr.newsManager.getHolidayIdList(
+            ) or ToontownGlobals.CIRCUIT_RACING_EVENT in base.cr.newsManager.getHolidayIdList(
+            ):
                 defaultInviteTheme = PartyGlobals.InviteTheme.Racing
-            elif ToontownGlobals.VALENTINES_DAY in base.cr.newsManager.getHolidayIdList():
+            elif ToontownGlobals.VALENTINES_DAY in base.cr.newsManager.getHolidayIdList(
+            ):
                 defaultInviteTheme = PartyGlobals.InviteTheme.Valentoons
 
         if self.partyInfo is not None:
             del self.partyInfo
 
         activityList = self.partyEditor.partyEditorGrid.getActivitiesOnGrid()
-        decorationList = self.partyEditor.partyEditorGrid.getDecorationsOnGrid()
+        decorationList = self.partyEditor.partyEditorGrid.getDecorationsOnGrid(
+        )
         endTime = self.partyTime + self.partyDuration
         self.partyInfo = PartyInfo(
-            0,
-            0,
-            self.partyTime.year,
-            self.partyTime.month,
-            self.partyTime.day,
-            self.partyTime.hour,
-            self.partyTime.minute,
-            endTime.year,
-            endTime.month,
-            endTime.day,
-            endTime.hour,
-            endTime.minute,
-            self.isPrivate,
-            defaultInviteTheme,
-            activityList,
-            decorationList,
-            0)
+            0, 0, self.partyTime.year, self.partyTime.month,
+            self.partyTime.day, self.partyTime.hour, self.partyTime.minute,
+            endTime.year, endTime.month, endTime.day, endTime.hour,
+            endTime.minute, self.isPrivate, defaultInviteTheme, activityList,
+            decorationList, 0)
         if self.noFriends or len(self.getInvitees()) == 0:
             self.inviteVisual.setNoFriends(True)
-            self.invitationTitleLabel['text'] = TTLocalizer.PartyPlannerConfirmTitleNoFriends
-            self.inviteButton['text'] = TTLocalizer.PartyPlannerInviteButtonNoFriends
+            self.invitationTitleLabel[
+                'text'] = TTLocalizer.PartyPlannerConfirmTitleNoFriends
+            self.inviteButton[
+                'text'] = TTLocalizer.PartyPlannerInviteButtonNoFriends
             self.selectedInviteThemeLabel.stash()
             self.nextThemeButton.stash()
             self.prevThemeButton.stash()
             self.setInviteTheme(defaultInviteTheme)
         else:
             self.inviteVisual.setNoFriends(False)
-            self.invitationTitleLabel['text'] = TTLocalizer.PartyPlannerConfirmTitle
+            self.invitationTitleLabel[
+                'text'] = TTLocalizer.PartyPlannerConfirmTitle
             self.inviteButton['text'] = TTLocalizer.PartyPlannerInviteButton
             self.selectedInviteThemeLabel.unstash()
             self.nextThemeButton.unstash()
             self.prevThemeButton.unstash()
             self.setInviteTheme(defaultInviteTheme)
-        self.inviteVisual.updateInvitation(
-            base.localAvatar.getName(), self.partyInfo)
+        self.inviteVisual.updateInvitation(base.localAvatar.getName(),
+                                           self.partyInfo)
         self.invitationPage.show()
 
     def _PartyPlanner__prevTheme(self):
@@ -253,11 +244,14 @@ class PartyPlanner(DirectFrame, FSM):
 
     def setInviteTheme(self, themeNumber):
         self.currentInvitationTheme = themeNumber
-        self.selectedInviteThemeLabel['text'] = '%s %s (%d/%d)' % (self.inviteVisual.inviteThemesIdToInfo[self.currentInvitationTheme][
-            1], TTLocalizer.PartyPlannerInvitationTheme, self.inviteThemes.index(self.currentInvitationTheme) + 1, len(self.inviteThemes))
+        self.selectedInviteThemeLabel['text'] = '%s %s (%d/%d)' % (
+            self.inviteVisual.inviteThemesIdToInfo[self.currentInvitationTheme]
+            [1], TTLocalizer.PartyPlannerInvitationTheme,
+            self.inviteThemes.index(self.currentInvitationTheme) + 1,
+            len(self.inviteThemes))
         self.partyInfo.inviteTheme = self.currentInvitationTheme
-        self.inviteVisual.updateInvitation(
-            base.localAvatar.getName(), self.partyInfo)
+        self.inviteVisual.updateInvitation(base.localAvatar.getName(),
+                                           self.partyInfo)
 
     def exitInvitation(self):
         self.invitationPage.hide()
@@ -289,10 +283,7 @@ class PartyPlanner(DirectFrame, FSM):
             geom=self.gui.find('**/background'),
             relief=None,
             scale=0.84999999999999998,
-            pos=(
-                0.050000000000000003,
-                0.0,
-                0.10000000000000001))
+            pos=(0.050000000000000003, 0.0, 0.10000000000000001))
         self.titleScale = TTLocalizer.PPtitleScale
         self._createNavButtons()
         self.welcomePage = self._createWelcomePage()
@@ -314,18 +305,16 @@ class PartyPlanner(DirectFrame, FSM):
         self.quitButton = DirectButton(
             parent=self.frame,
             relief=None,
-            geom=(
-                self.gui.find('**/cancelButton_up'),
-                self.gui.find('**/cancelButton_down'),
-                self.gui.find('**/cancelButton_rollover')),
+            geom=(self.gui.find('**/cancelButton_up'),
+                  self.gui.find('**/cancelButton_down'),
+                  self.gui.find('**/cancelButton_rollover')),
             command=self._PartyPlanner__acceptExit)
         self.nextButton = DirectButton(
             parent=self.frame,
             relief=None,
-            geom=(
-                self.gui.find('**/bottomNext_button/nextButton_up'),
-                self.gui.find('**/bottomNext_button/nextButton_down'),
-                self.gui.find('**/bottomNext_button/nextButton_rollover')),
+            geom=(self.gui.find('**/bottomNext_button/nextButton_up'),
+                  self.gui.find('**/bottomNext_button/nextButton_down'),
+                  self.gui.find('**/bottomNext_button/nextButton_rollover')),
             command=self._PartyPlanner__nextItem,
             state=DirectGuiGlobals.DISABLED)
         self.prevButton = DirectButton(
@@ -334,7 +323,8 @@ class PartyPlanner(DirectFrame, FSM):
             geom=(
                 self.gui.find('**/bottomPrevious_button/previousButton_up'),
                 self.gui.find('**/bottomPrevious_button/previousButton_down'),
-                self.gui.find('**/bottomPrevious_button/previousButton_rollover')),
+                self.gui.find(
+                    '**/bottomPrevious_button/previousButton_rollover')),
             command=self._PartyPlanner__prevItem,
             state=DirectGuiGlobals.DISABLED)
         self.currentItem = None
@@ -357,35 +347,21 @@ class PartyPlanner(DirectFrame, FSM):
                 self.nametagNode.upcastToPandaNode())
             nametagPos = self.gui.find(
                 '**/step_01_partymanPeteNametag_locator').getPos()
-            self.nametagNP.setPosHprScale(
-                nametagPos[0],
-                0,
-                nametagPos[2],
-                0,
-                0,
-                0,
-                0.10000000000000001,
-                1,
-                0.10000000000000001)
+            self.nametagNP.setPosHprScale(nametagPos[0], 0, nametagPos[2], 0,
+                                          0, 0, 0.10000000000000001, 1,
+                                          0.10000000000000001)
             self.chatNode = NametagFloat2d()
             self.chatNode.setContents(Nametag.CSpeech | Nametag.CThought)
             self.nametagGroup.addNametag(self.chatNode)
-            self.nametagGroup.setChat(
-                TTLocalizer.PartyPlannerInstructions, CFSpeech)
+            self.nametagGroup.setChat(TTLocalizer.PartyPlannerInstructions,
+                                      CFSpeech)
             self.chatNP = parent.attachNewNode(
                 self.chatNode.upcastToPandaNode())
             chatPos = self.gui.find(
                 '**/step_01_partymanPeteText_locator').getPos()
-            self.chatNP.setPosHprScale(
-                chatPos[0],
-                0,
-                chatPos[2],
-                0,
-                0,
-                0,
-                0.080000000000000002,
-                1,
-                0.080000000000000002)
+            self.chatNP.setPosHprScale(chatPos[0], 0, chatPos[2], 0, 0, 0,
+                                       0.080000000000000002, 1,
+                                       0.080000000000000002)
 
     def clearNametag(self):
         if self.nametagGroup is not None:
@@ -444,14 +420,10 @@ class PartyPlanner(DirectFrame, FSM):
         self.makePartyNowButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/send_up'),
-                self.gui.find('**/send_down'),
-                self.gui.find('**/send_rollover')),
+            geom=(self.gui.find('**/send_up'), self.gui.find('**/send_down'),
+                  self.gui.find('**/send_rollover')),
             text=TTLocalizer.PartyPlannerPartyNow,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=0.050000000000000003,
             command=self._PartyPlanner__doMakePartyNow)
         curServerDate = base.cr.toontownTimeManager.getCurServerDateTime()
@@ -459,10 +431,7 @@ class PartyPlanner(DirectFrame, FSM):
             page,
             curServerDate,
             scale=0.94999999999999996,
-            pos=(
-                -0.050000000000000003,
-                0.0,
-                -0.33000000000000002),
+            pos=(-0.050000000000000003, 0.0, -0.33000000000000002),
             dayClickCallback=self._dayClickCallback,
             onlyFutureDaysClickable=True)
         return page
@@ -476,20 +445,19 @@ class PartyPlanner(DirectFrame, FSM):
         self.makePartyNowButton.hide()
         self.nextButton.show()
 
-    def alterPartyTime(
-            self,
-            year=None,
-            month=None,
-            day=None,
-            hour=None,
-            minute=None):
+    def alterPartyTime(self,
+                       year=None,
+                       month=None,
+                       day=None,
+                       hour=None,
+                       minute=None):
         self.partyTime = datetime(
-            year=self.positiveTime(
-                'year', year), month=self.positiveTime(
-                'month', month), day=self.positiveTime(
-                'day', day), hour=self.positiveTime(
-                    'hour', hour), minute=self.positiveTime(
-                        'minute', minute), tzinfo=self.partyTime.tzinfo)
+            year=self.positiveTime('year', year),
+            month=self.positiveTime('month', month),
+            day=self.positiveTime('day', day),
+            hour=self.positiveTime('hour', hour),
+            minute=self.positiveTime('minute', minute),
+            tzinfo=self.partyTime.tzinfo)
 
     def positiveTime(self, type, amount):
         if amount is None:
@@ -523,11 +491,7 @@ class PartyPlanner(DirectFrame, FSM):
             text=TTLocalizer.PartyPlannerTimeToontown,
             pos=self.gui.find('**/step_03_toontown_locator').getPos(),
             scale=0.14999999999999999,
-            text_fg=(
-                1.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(1.0, 0.0, 0.0, 1.0),
             text_font=ToontownGlobals.getSignFont())
         self.timePageTimeLabel = DirectLabel(
             parent=page,
@@ -535,11 +499,7 @@ class PartyPlanner(DirectFrame, FSM):
             text=TTLocalizer.PartyPlannerTimeTime,
             pos=self.gui.find('**/step_03_time_locator').getPos(),
             scale=0.14999999999999999,
-            text_fg=(
-                1.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=(1.0, 0.0, 0.0, 1.0),
             text_font=ToontownGlobals.getSignFont())
         self.timePageRecapLabel = DirectLabel(
             parent=page,
@@ -556,28 +516,21 @@ class PartyPlanner(DirectFrame, FSM):
         self.timePageRecapToontownTimeLabel2 = DirectLabel(
             parent=page,
             relief=None,
-            text='%s' %
-            PartyUtils.formatDateTime(
-                self.partyTime),
-            pos=self.gui.find('**/step_03_toontownDateAndTime_loactor').getPos(),
+            text='%s' % PartyUtils.formatDateTime(self.partyTime),
+            pos=self.gui.find(
+                '**/step_03_toontownDateAndTime_loactor').getPos(),
             textMayChange=True,
             scale=0.059999999999999998)
         self.timePageRecapLocalTimeLabel = DirectLabel(
             parent=page,
             relief=None,
-            text='%s%s' %
-            (TTLocalizer.PartyPlannerTimeLocalTime,
-             PartyUtils.formatDateTime(
-                 self.partyTime,
-                 inLocalTime=True)),
+            text='%s%s' % (TTLocalizer.PartyPlannerTimeLocalTime,
+                           PartyUtils.formatDateTime(
+                               self.partyTime, inLocalTime=True)),
             pos=self.gui.find('**/step_03_localDateAndTime_loactor').getPos(),
             textMayChange=True,
             scale=0.059999999999999998,
-            text_fg=(
-                1.0,
-                0.0,
-                0.0,
-                1.0))
+            text_fg=(1.0, 0.0, 0.0, 1.0))
         (self.timeInputHourLabel, self.timeInputHourUpButton,
          self.timeInputHourDownButton) = self.getTimeWidgets(page, 'hour')
         (self.timeInputMinuteLabel, self.timeInputMinuteUpButton,
@@ -608,12 +561,9 @@ class PartyPlanner(DirectFrame, FSM):
         label = DirectLabel(
             parent=page,
             relief=None,
-            text='%s' %
-            data,
+            text='%s' % data,
             textMayChange=True,
-            pos=self.gui.find(
-                '**/step_03_%s_locator' %
-                type).getPos(),
+            pos=self.gui.find('**/step_03_%s_locator' % type).getPos(),
             scale=0.12)
 
         def changeValue(self, amount):
@@ -624,7 +574,8 @@ class PartyPlanner(DirectFrame, FSM):
             elif type == 'hour':
                 newAmount = getattr(self.partyTime, type) + amount
                 newAmount = newAmount % 12
-                if self.timeInputAmPmLabel['text'] == TTLocalizer.PartyTimeFormatMeridiemPM:
+                if self.timeInputAmPmLabel[
+                        'text'] == TTLocalizer.PartyTimeFormatMeridiemPM:
                     newAmount = newAmount % 12 + 12
 
                 self.alterPartyTime(hour=newAmount)
@@ -633,8 +584,7 @@ class PartyPlanner(DirectFrame, FSM):
                 self.alterPartyTime(minute=newAmount)
             else:
                 PartyPlanner.notify.error(
-                    'Invalid type for changeValue in PartyPlanner: %s' %
-                    type)
+                    'Invalid type for changeValue in PartyPlanner: %s' % type)
             newAmount = getattr(self.partyTime, type)
             if newAmount < 10 and type == 'minute':
                 label['text'] = '0%d' % newAmount
@@ -644,45 +594,28 @@ class PartyPlanner(DirectFrame, FSM):
                     newAmount = 12
 
             label['text'] = '%d' % newAmount
-            self.timePageRecapToontownTimeLabel2['text'] = '%s' % PartyUtils.formatDateTime(
-                self.partyTime)
+            self.timePageRecapToontownTimeLabel2[
+                'text'] = '%s' % PartyUtils.formatDateTime(self.partyTime)
             self.timePageRecapLocalTimeLabel['text'] = '%s%s' % (
-                TTLocalizer.PartyPlannerTimeLocalTime, PartyUtils.formatDateTime(self.partyTime, inLocalTime=True))
+                TTLocalizer.PartyPlannerTimeLocalTime,
+                PartyUtils.formatDateTime(self.partyTime, inLocalTime=True))
 
         upButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find(
-                    '**/%sButtonUp_up' %
-                    type),
-                self.gui.find(
-                    '**/%sButtonUp_down' %
-                    type),
-                self.gui.find(
-                    '**/%sButtonUp_rollover' %
-                    type)),
+            geom=(self.gui.find('**/%sButtonUp_up' % type),
+                  self.gui.find('**/%sButtonUp_down' % type),
+                  self.gui.find('**/%sButtonUp_rollover' % type)),
             command=changeValue,
-            extraArgs=[
-                self,
-                self.timeTypeToChangeAmount[type][0]])
+            extraArgs=[self, self.timeTypeToChangeAmount[type][0]])
         downButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find(
-                    '**/%sButtonDown_up' %
-                    type),
-                self.gui.find(
-                    '**/%sButtonDown_down' %
-                    type),
-                self.gui.find(
-                    '**/%sButtonDown_rollover' %
-                    type)),
+            geom=(self.gui.find('**/%sButtonDown_up' % type),
+                  self.gui.find('**/%sButtonDown_down' % type),
+                  self.gui.find('**/%sButtonDown_rollover' % type)),
             command=changeValue,
-            extraArgs=[
-                self,
-                self.timeTypeToChangeAmount[type][1]])
+            extraArgs=[self, self.timeTypeToChangeAmount[type][1]])
         return (label, upButton, downButton)
 
     def getCurrentAmPm(self):
@@ -704,10 +637,7 @@ class PartyPlanner(DirectFrame, FSM):
             parent=page,
             relief=None,
             image=self.gui.find('**/guestListBackground_flat'),
-            scale=(
-                1.2,
-                1.0,
-                1.0))
+            scale=(1.2, 1.0, 1.0))
         self.friendList = ScrolledFriendList(
             page, self.gui, makeItemsCheckBoxes=True)
         if len(base.localAvatar.friendsList) == 0:
@@ -733,11 +663,7 @@ class PartyPlanner(DirectFrame, FSM):
             text=TTLocalizer.PartyPlannerPublicDescription,
             text_align=TextNode.ACenter,
             text_scale=TTLocalizer.PPpbulicDescriptionLabel,
-            pos=(
-                pos[0] -
-                0.52000000000000002,
-                pos[1],
-                pos[2]))
+            pos=(pos[0] - 0.52000000000000002, pos[1], pos[2]))
         self.publicDescriptionLabel.stash()
         self.privateDescriptionLabel = DirectLabel(
             parent=page,
@@ -745,69 +671,54 @@ class PartyPlanner(DirectFrame, FSM):
             text=TTLocalizer.PartyPlannerPrivateDescription,
             text_align=TextNode.ACenter,
             text_scale=TTLocalizer.PPprivateDescriptionLabel,
-            pos=(
-                pos[0] + 0.55000000000000004,
-                pos[1],
-                pos[2]))
+            pos=(pos[0] + 0.55000000000000004, pos[1], pos[2]))
         self.privateDescriptionLabel.stash()
         pos = self.gui.find('**/step_04_public_locator').getPos()
         self.publicButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/publicButton_up'),
-                self.gui.find('**/publicButton_down'),
-                self.gui.find('**/publicButton_rollover'),
-                self.gui.find('**/publicButton_inactive')),
+            geom=(self.gui.find('**/publicButton_up'),
+                  self.gui.find('**/publicButton_down'),
+                  self.gui.find('**/publicButton_rollover'),
+                  self.gui.find('**/publicButton_inactive')),
             text=TTLocalizer.PartyPlannerPublic,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=TTLocalizer.PPpublicButton,
             command=self._PartyPlanner__doTogglePublicPrivate)
         self.publicButton['state'] = DirectGuiGlobals.DISABLED
-        self.publicButton.bind(
-            DirectGuiGlobals.ENTER,
-            self._PartyPlanner__enterPublic)
-        self.publicButton.bind(
-            DirectGuiGlobals.EXIT,
-            self._PartyPlanner__exitPublic)
+        self.publicButton.bind(DirectGuiGlobals.ENTER,
+                               self._PartyPlanner__enterPublic)
+        self.publicButton.bind(DirectGuiGlobals.EXIT,
+                               self._PartyPlanner__exitPublic)
         pos = self.gui.find('**/step_04_private_locator').getPos()
         self.privateButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/privateButton_up'),
-                self.gui.find('**/privateButton_down'),
-                self.gui.find('**/privateButton_rollover'),
-                self.gui.find('**/privateButton_inactive')),
+            geom=(self.gui.find('**/privateButton_up'),
+                  self.gui.find('**/privateButton_down'),
+                  self.gui.find('**/privateButton_rollover'),
+                  self.gui.find('**/privateButton_inactive')),
             text=TTLocalizer.PartyPlannerPrivate,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=TTLocalizer.PPprivateButton,
             command=self._PartyPlanner__doTogglePublicPrivate)
-        self.privateButton.bind(
-            DirectGuiGlobals.ENTER,
-            self._PartyPlanner__enterPrivate)
-        self.privateButton.bind(
-            DirectGuiGlobals.EXIT,
-            self._PartyPlanner__exitPrivate)
+        self.privateButton.bind(DirectGuiGlobals.ENTER,
+                                self._PartyPlanner__enterPrivate)
+        self.privateButton.bind(DirectGuiGlobals.EXIT,
+                                self._PartyPlanner__exitPrivate)
         self.checkAllButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/checkAllButton_up'),
-                self.gui.find('**/checkAllButton_down'),
-                self.gui.find('**/checkAllButton_rollover')),
+            geom=(self.gui.find('**/checkAllButton_up'),
+                  self.gui.find('**/checkAllButton_down'),
+                  self.gui.find('**/checkAllButton_rollover')),
             command=self._PartyPlanner__doCheckAll)
         self.uncheckAllButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/uncheckAllButton_up'),
-                self.gui.find('**/uncheckAllButton_down'),
-                self.gui.find('**/uncheckAllButton_rollover')),
+            geom=(self.gui.find('**/uncheckAllButton_up'),
+                  self.gui.find('**/uncheckAllButton_down'),
+                  self.gui.find('**/uncheckAllButton_rollover')),
             command=self._PartyPlanner__doUncheckAll)
         return page
 
@@ -848,21 +759,17 @@ class PartyPlanner(DirectFrame, FSM):
             parent=page,
             relief=None,
             text=TTLocalizer.PartyPlannerEditorTitle,
-            pos=self.gui.find('**/title_locator').getPos() +
-            Point3(
-                0.0,
-                0.0,
-                0.074999999999999997),
+            pos=self.gui.find('**/title_locator').getPos() + Point3(
+                0.0, 0.0, 0.074999999999999997),
             scale=self.titleScale)
-        self.costLabel = DirectLabel(parent=page,
-                                     pos=(-0.73999999999999999,
-                                          0.0,
-                                          0.17000000000000001),
-                                     relief=None,
-                                     text=TTLocalizer.PartyPlannerTotalCost % 0,
-                                     text_align=TextNode.ACenter,
-                                     scale=TTLocalizer.PPcostLabel,
-                                     textMayChange=True)
+        self.costLabel = DirectLabel(
+            parent=page,
+            pos=(-0.73999999999999999, 0.0, 0.17000000000000001),
+            relief=None,
+            text=TTLocalizer.PartyPlannerTotalCost % 0,
+            text_align=TextNode.ACenter,
+            scale=TTLocalizer.PPcostLabel,
+            textMayChange=True)
         self.partyGridBackground = DirectFrame(
             parent=page, relief=None, geom=self.gui.find('**/partyGrid_flat'))
         self.partyGroundsLabel = DirectLabel(
@@ -870,11 +777,7 @@ class PartyPlanner(DirectFrame, FSM):
             relief=None,
             text=TTLocalizer.PartyPlannerPartyGrounds,
             text_font=ToontownGlobals.getSignFont(),
-            text_fg=VBase4(
-                1.0,
-                0.0,
-                0.0,
-                1.0),
+            text_fg=VBase4(1.0, 0.0, 0.0, 1.0),
             text_scale=TTLocalizer.PPpartyGroundsLabel,
             pos=self.gui.find('**/step_05_partyGrounds_text_locator').getPos(),
             scale=0.10000000000000001)
@@ -882,18 +785,13 @@ class PartyPlanner(DirectFrame, FSM):
             parent=page,
             relief=None,
             geom=self.gui.find('**/activitiesDecorations_flat1'),
-            pos=(
-                0.0,
-                0.0,
-                0.040000000000000001))
+            pos=(0.0, 0.0, 0.040000000000000001))
         pos = self.gui.find('**/step_05_instructions_locator').getPos()
         self.instructionLabel = DirectLabel(
             parent=page,
             relief=None,
             text=' ',
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=TTLocalizer.PPinstructionLabel,
             textMayChange=True,
             geom=self.gui.find('**/instructions_flat'))
@@ -901,11 +799,8 @@ class PartyPlanner(DirectFrame, FSM):
             parent=page,
             relief=None,
             text=' ',
-            pos=self.gui.find('**/step_05_activitiesName_text_locator').getPos() +
-            Point3(
-                0.0,
-                0.0,
-                0.040000000000000001),
+            pos=self.gui.find('**/step_05_activitiesName_text_locator').getPos(
+            ) + Point3(0.0, 0.0, 0.040000000000000001),
             text_scale=TTLocalizer.PPelementTitleLabel,
             textMayChange=True)
         self.elementPriceNode = TextNode('ElementPrice')
@@ -914,8 +809,9 @@ class PartyPlanner(DirectFrame, FSM):
         self.elementPriceNode.setFont(ToontownGlobals.getToonFont())
         self.elementPrice = page.attachNewNode(self.elementPriceNode)
         self.elementPrice.setScale(TTLocalizer.PPelementPriceNode)
-        self.elementPrice.setPos(self.gui.find(
-            '**/step_05_activityPrice_text_locator').getPos() + Point3(-0.02, 0.0, 0.040000000000000001))
+        self.elementPrice.setPos(
+            self.gui.find('**/step_05_activityPrice_text_locator').getPos() +
+            Point3(-0.02, 0.0, 0.040000000000000001))
         self.elementDescriptionNode = TextNode('ElementDescription')
         self.elementDescriptionNode.setAlign(TextNode.ACenter)
         self.elementDescriptionNode.setWordwrap(8)
@@ -925,45 +821,26 @@ class PartyPlanner(DirectFrame, FSM):
             self.elementDescriptionNode)
         self.elementDescription.setScale(TTLocalizer.PPelementDescription)
         self.elementDescription.setPos(
-            self.gui.find('**/step_05_activityDescription_text_locator').getPos() +
-            Point3(
-                0.0,
-                0.0,
-                0.040000000000000001))
+            self.gui.find('**/step_05_activityDescription_text_locator').
+            getPos() + Point3(0.0, 0.0, 0.040000000000000001))
         self.totalMoney = base.localAvatar.getTotalMoney()
         catalogGui = loader.loadModel('phase_5.5/models/gui/catalog_gui')
         self.beanBank = DirectLabel(
             parent=page,
             relief=None,
-            text=str(
-                self.totalMoney),
+            text=str(self.totalMoney),
             text_align=TextNode.ARight,
             text_scale=0.074999999999999997,
-            text_fg=(
-                0.94999999999999996,
-                0.94999999999999996,
-                0,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1),
-            text_pos=(
-                0.495,
-                -0.53000000000000003),
+            text_fg=(0.94999999999999996, 0.94999999999999996, 0, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_pos=(0.495, -0.53000000000000003),
             text_font=ToontownGlobals.getSignFont(),
             textMayChange=True,
             image=catalogGui.find('**/bean_bank'),
-            image_scale=(
-                0.65000000000000002,
-                0.65000000000000002,
-                0.65000000000000002),
+            image_scale=(0.65000000000000002, 0.65000000000000002,
+                         0.65000000000000002),
             scale=0.90000000000000002,
-            pos=(
-                -0.75,
-                0.0,
-                0.59999999999999998))
+            pos=(-0.75, 0.0, 0.59999999999999998))
         catalogGui.removeNode()
         del catalogGui
         self.accept(
@@ -979,29 +856,17 @@ class PartyPlanner(DirectFrame, FSM):
             parent=page,
             relief=None,
             text=TTLocalizer.PartyPlannerBuy,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=TTLocalizer.PPelementBuyButton,
-            geom=(
-                self.gui.find('**/add_up'),
-                self.gui.find('**/add_down'),
-                self.gui.find('**/add_rollover')),
-            geom3_color=VBase4(
-                0.5,
-                0.5,
-                0.5,
-                1.0),
+            geom=(self.gui.find('**/add_up'), self.gui.find('**/add_down'),
+                  self.gui.find('**/add_rollover')),
+            geom3_color=VBase4(0.5, 0.5, 0.5, 1.0),
             textMayChange=True,
-            pos=(
-                0.0,
-                0.0,
-                0.040000000000000001),
+            pos=(0.0, 0.0, 0.040000000000000001),
             command=self.partyEditor.buyCurrentElement)
         self.okWithPartyGroundsLayoutEvent = 'okWithPartyGroundsLayoutEvent'
-        self.accept(
-            self.okWithPartyGroundsLayoutEvent,
-            self.okWithPartyGroundsLayout)
+        self.accept(self.okWithPartyGroundsLayoutEvent,
+                    self.okWithPartyGroundsLayout)
         self.okWithGroundsGui = TTDialog.TTGlobalDialog(
             dialogName=self.uniqueName('PartyEditorOkGui'),
             doneEvent=self.okWithPartyGroundsLayoutEvent,
@@ -1038,7 +903,9 @@ class PartyPlanner(DirectFrame, FSM):
             pos=self.gui.find('**/title_locator').getPos(),
             scale=self.titleScale)
         self.invitationBackground = DirectFrame(
-            parent=page, relief=None, geom=self.gui.find('**/invitationBackground'))
+            parent=page,
+            relief=None,
+            geom=self.gui.find('**/invitationBackground'))
         self.inviteVisual = InviteVisual(page)
         self.selectedInviteThemeLabel = DirectLabel(
             parent=page,
@@ -1050,33 +917,28 @@ class PartyPlanner(DirectFrame, FSM):
         self.nextThemeButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/topNext_button/nextButton_up'),
-                self.gui.find('**/topNext_button/nextButton_down'),
-                self.gui.find('**/topNext_button/nextButton_rollover')),
+            geom=(self.gui.find('**/topNext_button/nextButton_up'),
+                  self.gui.find('**/topNext_button/nextButton_down'),
+                  self.gui.find('**/topNext_button/nextButton_rollover')),
             command=self._PartyPlanner__nextTheme)
         self.prevThemeButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/topPrevious_button/previousButton_up'),
-                self.gui.find('**/topPrevious_button/previousButton_down'),
-                self.gui.find('**/topPrevious_button/previousButton_rollover')),
+            geom=(self.gui.find('**/topPrevious_button/previousButton_up'),
+                  self.gui.find('**/topPrevious_button/previousButton_down'),
+                  self.gui.find(
+                      '**/topPrevious_button/previousButton_rollover')),
             command=self._PartyPlanner__prevTheme)
         pos = self.gui.find('**/step_06_sendInvitation_locator').getPos()
         self.inviteButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/send_up'),
-                self.gui.find('**/send_down'),
-                self.gui.find('**/send_rollover')),
+            geom=(self.gui.find('**/send_up'), self.gui.find('**/send_down'),
+                  self.gui.find('**/send_rollover')),
             text=TTLocalizer.PartyPlannerInviteButton,
             textMayChange=True,
             text_scale=0.050000000000000003,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             command=self._PartyPlanner__handleComplete)
         return page
 
@@ -1107,15 +969,11 @@ class PartyPlanner(DirectFrame, FSM):
         self.closePlannerButton = DirectButton(
             parent=page,
             relief=None,
-            geom=(
-                self.gui.find('**/close_up'),
-                self.gui.find('**/close_down'),
-                self.gui.find('**/close_rollover')),
+            geom=(self.gui.find('**/close_up'), self.gui.find('**/close_down'),
+                  self.gui.find('**/close_rollover')),
             text=TTLocalizer.PartyPlannerClosePlanner,
             text_scale=0.055,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             command=self._PartyPlanner__acceptExit)
         return page
 
@@ -1166,18 +1024,15 @@ class PartyPlanner(DirectFrame, FSM):
         self.prevButton['state'] = DirectGuiGlobals.DISABLED
         endTime = self.partyTime + self.partyDuration
         hostId = base.localAvatar.doId
-        self.partyActivities = self.partyEditor.partyEditorGrid.getActivitiesOnGrid()
+        self.partyActivities = self.partyEditor.partyEditorGrid.getActivitiesOnGrid(
+        )
         decorations = self.partyEditor.partyEditorGrid.getDecorationsOnGrid()
         invitees = self.getInvitees()
         self.accept('addPartyResponseReceived', self.processAddPartyResponse)
         base.cr.partyManager.sendAddParty(
-            hostId,
-            self.partyTime.strftime('%Y-%m-%d %H:%M:%S'),
-            endTime.strftime('%Y-%m-%d %H:%M:%S'),
-            self.isPrivate,
-            self.currentInvitationTheme,
-            self.partyActivities,
-            decorations,
+            hostId, self.partyTime.strftime('%Y-%m-%d %H:%M:%S'),
+            endTime.strftime('%Y-%m-%d %H:%M:%S'), self.isPrivate,
+            self.currentInvitationTheme, self.partyActivities, decorations,
             invitees)
 
     def getInvitees(self):
@@ -1196,20 +1051,24 @@ class PartyPlanner(DirectFrame, FSM):
         goingBackAllowed = False
         if errorCode == PartyGlobals.AddPartyErrorCode.AllOk:
             goingBackAllowed = False
-            self.confirmTitleLabel['text'] = TTLocalizer.PartyPlannerConfirmationAllOkTitle
+            self.confirmTitleLabel[
+                'text'] = TTLocalizer.PartyPlannerConfirmationAllOkTitle
             if self.noFriends or len(self.getInvitees()) == 0:
                 confirmRecapText = TTLocalizer.PartyPlannerConfirmationAllOkTextNoFriends
             else:
                 confirmRecapText = TTLocalizer.PartyPlannerConfirmationAllOkText
         elif errorCode == PartyGlobals.AddPartyErrorCode.ValidationError:
-            self.confirmTitleLabel['text'] = TTLocalizer.PartyPlannerConfirmationErrorTitle
+            self.confirmTitleLabel[
+                'text'] = TTLocalizer.PartyPlannerConfirmationErrorTitle
             confirmRecapText = TTLocalizer.PartyPlannerConfirmationValidationErrorText
         elif errorCode == PartyGlobals.AddPartyErrorCode.DatabaseError:
-            self.confirmTitleLabel['text'] = TTLocalizer.PartyPlannerConfirmationErrorTitle
+            self.confirmTitleLabel[
+                'text'] = TTLocalizer.PartyPlannerConfirmationErrorTitle
             confirmRecapText = TTLocalizer.PartyPlannerConfirmationDatabaseErrorText
         elif errorCode == PartyGlobals.AddPartyErrorCode.TooManyHostedParties:
             goingBackAllowed = False
-            self.confirmTitleLabel['text'] = TTLocalizer.PartyPlannerConfirmationErrorTitle
+            self.confirmTitleLabel[
+                'text'] = TTLocalizer.PartyPlannerConfirmationErrorTitle
             confirmRecapText = TTLocalizer.PartyPlannerConfirmationTooManyText
 
         self.nametagGroup.setChat(confirmRecapText, CFSpeech)
@@ -1238,11 +1097,11 @@ class PartyPlanner(DirectFrame, FSM):
             self.calendarGuiMonth.clearSelectedDay()
 
         if self.state == 'Time':
-            if self.partyTime < base.cr.toontownTimeManager.getCurServerDateTime():
+            if self.partyTime < base.cr.toontownTimeManager.getCurServerDateTime(
+            ):
                 self.okChooseFutureTimeEvent = 'okChooseFutureTimeEvent'
-                self.acceptOnce(
-                    self.okChooseFutureTimeEvent,
-                    self.okChooseFutureTime)
+                self.acceptOnce(self.okChooseFutureTimeEvent,
+                                self.okChooseFutureTime)
                 self.chooseFutureTimeDialog = TTDialog.TTGlobalDialog(
                     dialogName=self.uniqueName('chooseFutureTimeDialog'),
                     doneEvent=self.okChooseFutureTimeEvent,

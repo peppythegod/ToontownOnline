@@ -11,9 +11,8 @@ from otp.level import LevelConstants
 from toontown.distributed.DelayDeletable import DelayDeletable
 
 
-class DistributedFactorySuit(
-        DistributedSuitBase.DistributedSuitBase,
-        DelayDeletable):
+class DistributedFactorySuit(DistributedSuitBase.DistributedSuitBase,
+                             DelayDeletable):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedFactorySuit')
 
@@ -25,27 +24,19 @@ class DistributedFactorySuit(
             self.DistributedSuit_initialized = 1
             DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
             self.fsm = ClassicFSM.ClassicFSM('DistributedSuit', [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Walk',
-                    'Battle']),
-                State.State('Walk', self.enterWalk, self.exitWalk, [
-                    'WaitForBattle',
-                    'Battle',
-                    'Chase']),
-                State.State('Chase', self.enterChase, self.exitChase, [
-                    'WaitForBattle',
-                    'Battle',
-                    'Return']),
-                State.State('Return', self.enterReturn, self.exitReturn, [
-                    'WaitForBattle',
-                    'Battle',
-                    'Walk']),
-                State.State('Battle', self.enterBattle, self.exitBattle, [
-                    'Walk',
-                    'Chase',
-                    'Return']),
-                State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, [
-                    'Battle'])], 'Off', 'Off')
+                State.State('Off', self.enterOff, self.exitOff,
+                            ['Walk', 'Battle']),
+                State.State('Walk', self.enterWalk, self.exitWalk,
+                            ['WaitForBattle', 'Battle', 'Chase']),
+                State.State('Chase', self.enterChase, self.exitChase,
+                            ['WaitForBattle', 'Battle', 'Return']),
+                State.State('Return', self.enterReturn, self.exitReturn,
+                            ['WaitForBattle', 'Battle', 'Walk']),
+                State.State('Battle', self.enterBattle, self.exitBattle,
+                            ['Walk', 'Chase', 'Return']),
+                State.State('WaitForBattle', self.enterWaitForBattle,
+                            self.exitWaitForBattle, ['Battle'])
+            ], 'Off', 'Off')
             self.path = None
             self.walkTrack = None
             self.chaseTrack = None
@@ -80,7 +71,8 @@ class DistributedFactorySuit(
         self.notify.debug('Suit requesting reparenting')
         if not hasattr(self, 'factory'):
             self.notify.warning(
-                'no factory, get Redmond to look at DistributedFactorySuit.announceGenerate()')
+                'no factory, get Redmond to look at DistributedFactorySuit.announceGenerate()'
+            )
 
         self.factory.requestReparent(self, self.spec['parentEntId'])
         if self.pathEntId:
@@ -125,11 +117,11 @@ class DistributedFactorySuit(
                 self.setCogSpec(spec)
                 self.factoryRequest = None
 
-            self.factory.setEntityCreateCallback(
-                LevelConstants.LevelMgrEntId, onFactoryReady)
+            self.factory.setEntityCreateCallback(LevelConstants.LevelMgrEntId,
+                                                 onFactoryReady)
 
-        self.factoryRequest = self.cr.relatedObjectMgr.requestObjects([
-            self.levelDoId], onFactoryGenerate)
+        self.factoryRequest = self.cr.relatedObjectMgr.requestObjects(
+            [self.levelDoId], onFactoryGenerate)
         DistributedSuitBase.DistributedSuitBase.announceGenerate(self)
 
     def disable(self):
@@ -162,28 +154,23 @@ class DistributedFactorySuit(
     def d_requestBattle(self, pos, hpr):
         self.cr.playGame.getPlace().setState('WaitForBattle')
         self.factory.lockVisibility(
-            zoneNum=self.factory.getEntityZoneEntId(
-                self.spec['parentEntId']))
-        self.sendUpdate('requestBattle', [
-            pos[0],
-            pos[1],
-            pos[2],
-            hpr[0],
-            hpr[1],
-            hpr[2]])
+            zoneNum=self.factory.getEntityZoneEntId(self.spec['parentEntId']))
+        self.sendUpdate('requestBattle',
+                        [pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2]])
 
     def handleBattleBlockerCollision(self):
         self._DistributedFactorySuit__handleToonCollision(None)
 
     def _DistributedFactorySuit__handleToonCollision(self, collEntry):
         if collEntry:
-            if collEntry.getFromNodePath().getParent().getKey() != localAvatar.getKey():
+            if collEntry.getFromNodePath().getParent().getKey(
+            ) != localAvatar.getKey():
                 return None
 
         if hasattr(self, 'factory') and hasattr(self.factory, 'lastToonZone'):
             factoryZone = self.factory.lastToonZone
-            unitsBelow = self.getPos(
-                render)[2] - base.localAvatar.getPos(render)[2]
+            unitsBelow = self.getPos(render)[2] - base.localAvatar.getPos(
+                render)[2]
             if factoryZone == 24 and unitsBelow > 10.0:
                 self.notify.warning(
                     'Ignoring toon collision in %d from %f below.' %
@@ -226,9 +213,8 @@ class DistributedFactorySuit(
         self.sSphereBitMask = ToontownGlobals.WallBitmask
         self.sSphereNode.setCollideMask(self.sSphereBitMask)
         self.sSphere.setTangible(0)
-        self.accept(
-            'enter' + name,
-            self._DistributedFactorySuit__handleToonCollision)
+        self.accept('enter' + name,
+                    self._DistributedFactorySuit__handleToonCollision)
 
     def enableBattleDetect(self, name, handler):
         DistributedSuitBase.DistributedSuitBase.enableBattleDetect(
@@ -267,8 +253,7 @@ class DistributedFactorySuit(
             self.paused = 1
 
     def lookForToon(self, on=1):
-        if self.behavior in [
-                'chase']:
+        if self.behavior in ['chase']:
             if on:
                 self.accept(
                     self.uniqueName('entertoonSphere'),
@@ -282,8 +267,7 @@ class DistributedFactorySuit(
         suitZ = self.getZ(render)
         dZ = abs(toonZ - suitZ)
         if dZ < 8.0:
-            self.sendUpdate('setAlert', [
-                base.localAvatar.doId])
+            self.sendUpdate('setAlert', [base.localAvatar.doId])
 
     def resumePath(self, state):
         self.setState('Walk')
@@ -313,13 +297,10 @@ class DistributedFactorySuit(
 
     def startChaseTask(self, delay=0):
         self.notify.debug(
-            'DistributedFactorySuit.startChaseTask delay=%s' %
-            delay)
+            'DistributedFactorySuit.startChaseTask delay=%s' % delay)
         taskMgr.remove(self.taskName('chaseTask'))
-        taskMgr.doMethodLater(
-            delay,
-            self.chaseTask,
-            self.taskName('chaseTask'))
+        taskMgr.doMethodLater(delay, self.chaseTask,
+                              self.taskName('chaseTask'))
 
     def chaseTask(self, task):
         if not self.chasing:
@@ -349,19 +330,17 @@ class DistributedFactorySuit(
         targetPos = Vec3(toonPos[0] + 4.0 * (rand1 - 0.5),
                          toonPos[1] + 4.0 * (rand2 - 0.5), suitPos[2])
         track = Sequence(
-            Func(
-                self.headsUp,
-                targetPos[0],
-                targetPos[1],
-                targetPos[2]),
-            Func(
-                self.loop,
-                'walk',
-                0))
+            Func(self.headsUp, targetPos[0], targetPos[1], targetPos[2]),
+            Func(self.loop, 'walk', 0))
         chaseSpeed = 4.0
         duration = distance / chaseSpeed
-        track.extend([LerpPosInterval(self, duration=duration,
-                                      pos=Point3(targetPos), startPos=Point3(suitPos))])
+        track.extend([
+            LerpPosInterval(
+                self,
+                duration=duration,
+                pos=Point3(targetPos),
+                startPos=Point3(suitPos))
+        ])
         self.chaseTrack = track
         self.chaseTrack.start()
         self.startChaseTask(1.0)
@@ -397,10 +376,8 @@ class DistributedFactorySuit(
 
     def startReturnTask(self, delay=0):
         taskMgr.remove(self.taskName('returnTask'))
-        taskMgr.doMethodLater(
-            delay,
-            self.returnTask,
-            self.taskName('returnTask'))
+        taskMgr.doMethodLater(delay, self.returnTask,
+                              self.taskName('returnTask'))
 
     def returnTask(self, task):
         self.factory.requestReparent(self, self.spec['parentEntId'])
@@ -413,15 +390,8 @@ class DistributedFactorySuit(
         else:
             targetPos = self.originalPos
         track = Sequence(
-            Func(
-                self.headsUp,
-                targetPos[0],
-                targetPos[1],
-                targetPos[2]),
-            Func(
-                self.loop,
-                'walk',
-                0))
+            Func(self.headsUp, targetPos[0], targetPos[1], targetPos[2]),
+            Func(self.loop, 'walk', 0))
         curPos = self.getPos()
         distance = Vec3(curPos - targetPos).length()
         duration = distance / 3.0
@@ -487,11 +457,11 @@ class DistributedFactorySuit(
             parts = ()
             for thingIndex in range(0, actorCollection.getNumPaths()):
                 thing = actorCollection[thingIndex]
-                if thing.getName() not in ('joint_attachMeter', 'joint_nameTag', 'def_nameTag'):
+                if thing.getName() not in ('joint_attachMeter',
+                                           'joint_nameTag', 'def_nameTag'):
                     thing.setColorScale(1.0, 0.0, 0.0, 1.0)
                     thing.setAttrib(
-                        ColorBlendAttrib.make(
-                            ColorBlendAttrib.MAdd))
+                        ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
                     thing.setDepthWrite(False)
                     thing.setBin('fixed', 1)
                     continue

@@ -32,16 +32,14 @@ class TownBattleAttackPanel(StateData.StateData):
         if not AttackPanelHidden:
             base.localAvatar.inventory.show()
 
-        self.accept(
-            'inventory-selection',
-            self._TownBattleAttackPanel__handleInventory)
+        self.accept('inventory-selection',
+                    self._TownBattleAttackPanel__handleInventory)
         self.accept('inventory-run', self._TownBattleAttackPanel__handleRun)
         self.accept('inventory-sos', self._TownBattleAttackPanel__handleSOS)
         self.accept('inventory-pass', self._TownBattleAttackPanel__handlePass)
         self.accept('inventory-fire', self._TownBattleAttackPanel__handleFire)
-        self.accept(
-            'hide-attack-panel',
-            self._TownBattleAttackPanel__handleHide)
+        self.accept('hide-attack-panel',
+                    self._TownBattleAttackPanel__handleHide)
 
     def exit(self):
         StateData.StateData.exit(self)
@@ -57,28 +55,20 @@ class TownBattleAttackPanel(StateData.StateData):
             del self._teaserPanel
 
     def _TownBattleAttackPanel__handleRun(self):
-        doneStatus = {
-            'mode': 'Run'}
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        doneStatus = {'mode': 'Run'}
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleAttackPanel__handleSOS(self):
-        doneStatus = {
-            'mode': 'SOS'}
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        doneStatus = {'mode': 'SOS'}
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleAttackPanel__handlePass(self):
-        doneStatus = {
-            'mode': 'Pass'}
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        doneStatus = {'mode': 'Pass'}
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleAttackPanel__handleFire(self):
-        doneStatus = {
-            'mode': 'Fire'}
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        doneStatus = {'mode': 'Fire'}
+        messenger.send(self.doneEvent, [doneStatus])
 
     def _TownBattleAttackPanel__handleInventory(self, track, level):
         if not base.cr.isPaid() and gagIsPaidOnly(track, level):
@@ -90,13 +80,11 @@ class TownBattleAttackPanel(StateData.StateData):
             doneStatus['mode'] = 'Inventory'
             doneStatus['track'] = track
             doneStatus['level'] = level
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            messenger.send(self.doneEvent, [doneStatus])
         else:
             self.notify.error(
-                "An item we don't have: track %s level %s was selected." % [
-                    track,
-                    level])
+                "An item we don't have: track %s level %s was selected." %
+                [track, level])
 
     def _TownBattleAttackPanel__handleHide(self):
         if AttackPanelHidden:

@@ -17,28 +17,20 @@ import PartyGlobals
 
 
 class PartyCogManager:
-
     def __init__(self):
         self.cogs = []
 
-    def generateCog(
-            self,
-            parentNode,
-            bounceSpeed=3,
-            bounceHeight=1,
-            rotateSpeed=1,
-            heightShift=1,
-            xMoveSpeed=0,
-            xMoveDistance=0,
-            bounceOffset=0):
-        cog = PartyCog(parentNode,
-                       len(self.cogs),
-                       bounceSpeed,
-                       bounceHeight,
-                       rotateSpeed,
-                       heightShift,
-                       xMoveSpeed,
-                       xMoveDistance,
+    def generateCog(self,
+                    parentNode,
+                    bounceSpeed=3,
+                    bounceHeight=1,
+                    rotateSpeed=1,
+                    heightShift=1,
+                    xMoveSpeed=0,
+                    xMoveDistance=0,
+                    bounceOffset=0):
+        cog = PartyCog(parentNode, len(self.cogs), bounceSpeed, bounceHeight,
+                       rotateSpeed, heightShift, xMoveSpeed, xMoveDistance,
                        bounceOffset)
         self.cogs.append(cog)
         return cog
@@ -58,17 +50,16 @@ class PartyCog(FSM):
     hpText = None
     height = 7
 
-    def __init__(
-            self,
-            parentNode,
-            id,
-            bounceSpeed=3,
-            bounceHeight=1,
-            rotateSpeed=1,
-            heightShift=1,
-            xMoveSpeed=0,
-            xMoveDistance=0,
-            bounceOffset=0):
+    def __init__(self,
+                 parentNode,
+                 id,
+                 bounceSpeed=3,
+                 bounceHeight=1,
+                 rotateSpeed=1,
+                 heightShift=1,
+                 xMoveSpeed=0,
+                 xMoveDistance=0,
+                 bounceOffset=0):
         self.id = id
         FSM.__init__(self, 'PartyCogFSM-%d' % self.id)
         self.showFacingStatus = False
@@ -91,14 +82,16 @@ class PartyCog(FSM):
         self.root = NodePath('PartyCog-%d' % self.id)
         self.root.reparentTo(self.parentNode)
         path = 'phase_13/models/parties/cogPinata_'
-        self.actor = Actor(path + 'actor', {
-            'idle': path + 'idle_anim',
-            'down': path + 'down_anim',
-            'up': path + 'up_anim',
-            'bodyHitBack': path + 'bodyHitBack_anim',
-            'bodyHitFront': path + 'bodyHitFront_anim',
-            'headHitBack': path + 'headHitBack_anim',
-            'headHitFront': path + 'headHitFront_anim'})
+        self.actor = Actor(
+            path + 'actor', {
+                'idle': path + 'idle_anim',
+                'down': path + 'down_anim',
+                'up': path + 'up_anim',
+                'bodyHitBack': path + 'bodyHitBack_anim',
+                'bodyHitFront': path + 'bodyHitFront_anim',
+                'headHitBack': path + 'headHitBack_anim',
+                'headHitFront': path + 'headHitFront_anim'
+            })
         self.actor.reparentTo(self.root)
         self.temp_transform = Mat4()
         self.head_locator = self.actor.attachNewNode('temphead')
@@ -116,16 +109,16 @@ class PartyCog(FSM):
         self.headCollNode.setCollideMask(ToontownGlobals.PieBitmask)
         self.headCollNode.addSolid(self.headColl)
         self.headCollNodePath = self.root.attachNewNode(self.headCollNode)
-        self.arm1Coll = CollisionSphere(
-            1.6499999999999999, 0, 3.9500000000000002, 1.0)
+        self.arm1Coll = CollisionSphere(1.6499999999999999, 0,
+                                        3.9500000000000002, 1.0)
         self.arm1Coll.setTangible(1)
         self.arm1CollNode = CollisionNode(
             'PartyCog-%d-Arm1-Collision' % self.id)
         self.arm1CollNode.setCollideMask(ToontownGlobals.PieBitmask)
         self.arm1CollNode.addSolid(self.arm1Coll)
         self.arm1CollNodePath = self.root.attachNewNode(self.arm1CollNode)
-        self.arm2Coll = CollisionSphere(-1.6499999999999999,
-                                        0, 3.4500000000000002, 1.0)
+        self.arm2Coll = CollisionSphere(-1.6499999999999999, 0,
+                                        3.4500000000000002, 1.0)
         self.arm2Coll.setTangible(1)
         self.arm2CollNode = CollisionNode(
             'PartyCog-%d-Arm2-Collision' % self.id)
@@ -193,8 +186,8 @@ class PartyCog(FSM):
         taskMgr.remove('PartyCog.update-%d' % self.id)
         taskMgr.remove('PartyCog.bounceTask-%d' % self.id)
         self.clearHitInterval()
-        self.resetRollIval = self.root.hprInterval(0.5, Point3(
-            self.root.getH(), 0.0, 0.0), blendType='easeInOut')
+        self.resetRollIval = self.root.hprInterval(
+            0.5, Point3(self.root.getH(), 0.0, 0.0), blendType='easeInOut')
         self.resetRollIval.start()
         self.actor.stop()
 
@@ -225,17 +218,11 @@ class PartyCog(FSM):
                     volume=0.59999999999999998,
                     node=self.actor,
                     cutOff=PartyGlobals.PARTY_COG_CUTOFF),
-                ActorInterval(
-                    self.actor,
-                    'down',
-                    loop=0)),
+                ActorInterval(self.actor, 'down', loop=0)),
             LerpScaleInterval(
                 self.hole,
                 duration=0.17499999999999999,
-                scale=Point3(
-                    3,
-                    3,
-                    3),
+                scale=Point3(3, 3, 3),
                 startScale=endScale,
                 blendType='easeOut'))
         self.hitInterval.start()
@@ -263,20 +250,12 @@ class PartyCog(FSM):
                     volume=0.59999999999999998,
                     node=self.actor,
                     cutOff=PartyGlobals.PARTY_COG_CUTOFF),
-                ActorInterval(
-                    self.actor,
-                    'up',
-                    loop=0)),
-            Func(
-                self.actor.loop,
-                'idle'),
+                ActorInterval(self.actor, 'up', loop=0)),
+            Func(self.actor.loop, 'idle'),
             LerpScaleInterval(
                 self.hole,
                 duration=0.17499999999999999,
-                scale=Point3(
-                    3,
-                    3,
-                    3),
+                scale=Point3(3, 3, 3),
                 startScale=endScale,
                 blendType='easeOut'))
         self.hitInterval.start()
@@ -339,7 +318,8 @@ class PartyCog(FSM):
         t = t + 1.0
         dist = (self.endPoint.getX() - self.startPoint.getX()) / 2.0
         x = self.startPoint.getX() + t * dist
-        y = self.startPoint.getY() - math.sin(t * 2 * math.pi) * self.sinAmplitude
+        y = self.startPoint.getY() - math.sin(
+            t * 2 * math.pi) * self.sinAmplitude
         self.root.setPos(x, y, 0)
 
     def startBounce(self):
@@ -347,12 +327,8 @@ class PartyCog(FSM):
 
     def bounce(self, task):
         self.root.setZ(
-            math.sin(
-                (self.bounceOffset +
-                 task.time) *
-                self.bounceSpeed) *
-            self.bounceHeight +
-            self.heightShift)
+            math.sin((self.bounceOffset + task.time) * self.bounceSpeed) *
+            self.bounceHeight + self.heightShift)
         return task.cont
 
     def setPos(self, position):
@@ -407,13 +383,8 @@ class PartyCog(FSM):
             self.splat.setAlphaScale(amount)
 
         self.hitInterval = Sequence(
-            ActorInterval(
-                self.actor,
-                part + facing,
-                loop=0),
-            Func(
-                self.actor.loop,
-                'idle'))
+            ActorInterval(self.actor, part + facing, loop=0),
+            Func(self.actor.loop, 'idle'))
         self.hitInterval.start()
         self.kaboomTrack = Parallel(
             SoundInterval(
@@ -422,20 +393,17 @@ class PartyCog(FSM):
                 node=self.actor,
                 cutOff=PartyGlobals.PARTY_COG_CUTOFF),
             Sequence(
-                Func(
-                    self.splat.showThrough),
+                Func(self.splat.showThrough),
                 Parallel(
                     Sequence(
                         LerpScaleInterval(
                             self.splat,
                             duration=0.17499999999999999,
                             scale=targetscale,
-                            startScale=Point3(
-                                0.10000000000000001,
-                                0.10000000000000001,
-                                0.10000000000000001),
-                            blendType='easeOut'),
-                        Wait(0.17499999999999999)),
+                            startScale=Point3(0.10000000000000001,
+                                              0.10000000000000001,
+                                              0.10000000000000001),
+                            blendType='easeOut'), Wait(0.17499999999999999)),
                     Sequence(
                         Wait(0.10000000000000001),
                         LerpFunc(
@@ -443,11 +411,8 @@ class PartyCog(FSM):
                             duration=1.0,
                             fromData=1.0,
                             toData=0.0,
-                            blendType='easeOut'))),
-                Func(
-                    self.splat.cleanup),
-                Func(
-                    self.splat.removeNode)))
+                            blendType='easeOut'))), Func(self.splat.cleanup),
+                Func(self.splat.removeNode)))
         self.kaboomTrack.start()
 
     def showHitScore(self, number, scale=1):
@@ -478,28 +443,13 @@ class PartyCog(FSM):
         seq = Task.sequence(
             self.hpText.lerpPos(
                 Point3(
-                    self.root.getX(render),
-                    self.root.getY(render),
-                    self.root.getZ(render) +
-                    self.height +
-                    1.0),
+                    self.root.getX(render), self.root.getY(render),
+                    self.root.getZ(render) + self.height + 1.0),
                 0.25,
-                blendType='easeOut'),
-            Task.pause(0.25),
+                blendType='easeOut'), Task.pause(0.25),
             self.hpText.lerpColor(
-                Vec4(
-                    r,
-                    g,
-                    b,
-                    a),
-                Vec4(
-                    r,
-                    g,
-                    b,
-                    0),
-                0.10000000000000001),
-            Task.Task(
-                self._PartyCog__hideHitScoreTask))
+                Vec4(r, g, b, a), Vec4(r, g, b, 0), 0.10000000000000001),
+            Task.Task(self._PartyCog__hideHitScoreTask))
         taskMgr.add(seq, 'PartyCogHpText' + str(self.id))
 
     def _PartyCog__hideHitScoreTask(self, task):
@@ -513,8 +463,7 @@ class PartyCog(FSM):
             self.hpText = None
 
     def getHeadLocation(self):
-        self.actor.getJoints(
-            jointName='head')[0].getNetTransform(
+        self.actor.getJoints(jointName='head')[0].getNetTransform(
             self.temp_transform)
         self.head_locator.setMat(self.temp_transform)
         return self.head_locator.getZ(self.root)

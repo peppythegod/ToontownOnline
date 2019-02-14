@@ -24,10 +24,8 @@ import math
 import copy
 
 
-class DistributedSuitBase(
-        DistributedAvatar.DistributedAvatar,
-        Suit.Suit,
-        SuitBase.SuitBase):
+class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit,
+                          SuitBase.SuitBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSuitBase')
 
     def __init__(self, cr):
@@ -77,15 +75,21 @@ class DistributedSuitBase(
 
         if self.getSkeleRevives() > 0:
             nameInfo = TTLocalizer.SuitBaseNameWithLevel % {
-                'name': self.name,
-                'dept': self.getStyleDept(),
-                'level': '%s%s' % (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)}
+                'name':
+                self.name,
+                'dept':
+                self.getStyleDept(),
+                'level':
+                '%s%s' %
+                (self.getActualLevel(), TTLocalizer.SkeleRevivePostFix)
+            }
             self.setDisplayName(nameInfo)
         else:
             nameInfo = TTLocalizer.SuitBaseNameWithLevel % {
                 'name': self.name,
                 'dept': self.getStyleDept(),
-                'level': self.getActualLevel()}
+                'level': self.getActualLevel()
+            }
             self.setDisplayName(nameInfo)
 
     def getSkeleRevives(self):
@@ -153,9 +157,8 @@ class DistributedSuitBase(
 
     def setLevelDist(self, level):
         if self.notify.getDebug():
-            self.notify.debug(
-                'Got level %d from server for suit %d' %
-                (level, self.getDoId()))
+            self.notify.debug('Got level %d from server for suit %d' %
+                              (level, self.getDoId()))
 
         self.setLevel(level)
 
@@ -194,15 +197,11 @@ class DistributedSuitBase(
     def beginSupaFlyMove(self, pos, moveIn, trackName):
         skyPos = Point3(pos)
         if moveIn:
-            skyPos.setZ(
-                pos.getZ() +
-                SuitTimings.fromSky *
-                ToontownGlobals.SuitWalkSpeed)
+            skyPos.setZ(pos.getZ() +
+                        SuitTimings.fromSky * ToontownGlobals.SuitWalkSpeed)
         else:
-            skyPos.setZ(
-                pos.getZ() +
-                SuitTimings.toSky *
-                ToontownGlobals.SuitWalkSpeed)
+            skyPos.setZ(pos.getZ() +
+                        SuitTimings.toSky * ToontownGlobals.SuitWalkSpeed)
         groundF = 28
         dur = self.getDuration('landing')
         fr = self.getFrameRate('landing')
@@ -220,40 +219,34 @@ class DistributedSuitBase(
         openTime = (lastSpinFrame + 1) / fr
         if moveIn:
             lerpPosTrack = Sequence(
-                self.posInterval(
-                    timeTillLanding,
-                    pos,
-                    startPos=skyPos),
+                self.posInterval(timeTillLanding, pos, startPos=skyPos),
                 Wait(impactLength))
             shadowScale = self.dropShadow.getScale()
             shadowTrack = Sequence(
-                Func(
-                    self.dropShadow.reparentTo, render), Func(
-                    self.dropShadow.setPos, pos), self.dropShadow.scaleInterval(
-                    timeTillLanding, self.scale, startScale=Vec3(
-                        0.01, 0.01, 1.0)), Func(
-                        self.dropShadow.reparentTo, self.getShadowJoint()), Func(
-                            self.dropShadow.setPos, 0, 0, 0), Func(
-                                self.dropShadow.setScale, shadowScale))
+                Func(self.dropShadow.reparentTo, render),
+                Func(self.dropShadow.setPos, pos),
+                self.dropShadow.scaleInterval(
+                    timeTillLanding,
+                    self.scale,
+                    startScale=Vec3(0.01, 0.01, 1.0)),
+                Func(self.dropShadow.reparentTo, self.getShadowJoint()),
+                Func(self.dropShadow.setPos, 0, 0, 0),
+                Func(self.dropShadow.setScale, shadowScale))
             fadeInTrack = Sequence(
-                Func(
-                    self.setTransparency, 1), self.colorScaleInterval(
-                    1, colorScale=VBase4(
-                        1, 1, 1, 1), startColorScale=VBase4(
-                        1, 1, 1, 0)), Func(
-                        self.clearColorScale), Func(
-                            self.clearTransparency))
+                Func(self.setTransparency, 1),
+                self.colorScaleInterval(
+                    1,
+                    colorScale=VBase4(1, 1, 1, 1),
+                    startColorScale=VBase4(1, 1, 1, 0)),
+                Func(self.clearColorScale), Func(self.clearTransparency))
             animTrack = Sequence(
-                Func(
-                    self.pose, 'landing', 0), Wait(waitTime), ActorInterval(
-                    self, 'landing', duration=dur), Func(
-                    self.loop, 'walk'))
+                Func(self.pose, 'landing', 0), Wait(waitTime),
+                ActorInterval(self, 'landing', duration=dur),
+                Func(self.loop, 'walk'))
             self.attachPropeller()
             propTrack = Parallel(
                 SoundInterval(
-                    self.propInSound,
-                    duration=waitTime + dur,
-                    node=self),
+                    self.propInSound, duration=waitTime + dur, node=self),
                 Sequence(
                     ActorInterval(
                         self.prop,
@@ -266,9 +259,7 @@ class DistributedSuitBase(
                         self.prop,
                         'propeller',
                         duration=propDur - openTime,
-                        startTime=openTime),
-                    Func(
-                        self.detachPropeller)))
+                        startTime=openTime), Func(self.detachPropeller)))
             return Parallel(
                 lerpPosTrack,
                 shadowTrack,
@@ -278,41 +269,34 @@ class DistributedSuitBase(
                 name=self.taskName('trackName'))
         else:
             lerpPosTrack = Sequence(
-                Wait(impactLength), LerpPosInterval(
-                    self, timeTillLanding, skyPos, startPos=pos))
+                Wait(impactLength),
+                LerpPosInterval(self, timeTillLanding, skyPos, startPos=pos))
             shadowTrack = Sequence(
-                Func(
-                    self.dropShadow.reparentTo, render), Func(
-                    self.dropShadow.setPos, pos), self.dropShadow.scaleInterval(
-                    timeTillLanding, Vec3(
-                        0.01, 0.01, 1.0), startScale=self.scale), Func(
-                        self.dropShadow.reparentTo, self.getShadowJoint()), Func(
-                            self.dropShadow.setPos, 0, 0, 0))
+                Func(self.dropShadow.reparentTo, render),
+                Func(self.dropShadow.setPos, pos),
+                self.dropShadow.scaleInterval(
+                    timeTillLanding,
+                    Vec3(0.01, 0.01, 1.0),
+                    startScale=self.scale),
+                Func(self.dropShadow.reparentTo, self.getShadowJoint()),
+                Func(self.dropShadow.setPos, 0, 0, 0))
             fadeOutTrack = Sequence(
-                Func(
-                    self.setTransparency, 1), self.colorScaleInterval(
-                    1, colorScale=VBase4(
-                        1, 1, 1, 0), startColorScale=VBase4(
-                        1, 1, 1, 1)), Func(
-                        self.clearColorScale), Func(
-                            self.clearTransparency), Func(
-                                self.reparentTo, hidden))
+                Func(self.setTransparency, 1),
+                self.colorScaleInterval(
+                    1,
+                    colorScale=VBase4(1, 1, 1, 0),
+                    startColorScale=VBase4(1, 1, 1, 1)),
+                Func(self.clearColorScale), Func(self.clearTransparency),
+                Func(self.reparentTo, hidden))
             actInt = ActorInterval(
-                self,
-                'landing',
-                loop=0,
-                startTime=dur,
-                endTime=0.0)
+                self, 'landing', loop=0, startTime=dur, endTime=0.0)
             self.attachPropeller()
             self.prop.hide()
             propTrack = Parallel(
                 SoundInterval(
-                    self.propOutSound,
-                    duration=waitTime + dur,
-                    node=self),
+                    self.propOutSound, duration=waitTime + dur, node=self),
                 Sequence(
-                    Func(
-                        self.prop.show),
+                    Func(self.prop.show),
                     ActorInterval(
                         self.prop,
                         'propeller',
@@ -324,14 +308,9 @@ class DistributedSuitBase(
                         constrainedLoop=1,
                         duration=propDur - openTime,
                         startTime=spinTime,
-                        endTime=0.0),
-                    Func(
-                        self.detachPropeller)))
+                        endTime=0.0), Func(self.detachPropeller)))
             return Parallel(
-                ParallelEndTogether(
-                    lerpPosTrack,
-                    shadowTrack,
-                    fadeOutTrack),
+                ParallelEndTogether(lerpPosTrack, shadowTrack, fadeOutTrack),
                 actInt,
                 propTrack,
                 name=self.taskName('trackName'))
@@ -357,10 +336,8 @@ class DistributedSuitBase(
             self.collNodePath = None
 
     def enableRaycast(self, enable=1):
-        if not (
-            self.cTrav) and not hasattr(
-            self, 'cRayNode') or not (
-                self.cRayNode):
+        if not (self.cTrav) and not hasattr(self,
+                                            'cRayNode') or not (self.cRayNode):
             return None
 
         self.cTrav.removeCollider(self.cRayNodePath)
@@ -377,25 +354,22 @@ class DistributedSuitBase(
         self.d_setBrushOff(index)
 
     def d_setBrushOff(self, index):
-        self.sendUpdate('setBrushOff', [
-            index])
+        self.sendUpdate('setBrushOff', [index])
 
     def setBrushOff(self, index):
         self.setChatAbsolute(
-            SuitDialog.getBrushOffText(
-                self.getStyleName(),
-                index),
+            SuitDialog.getBrushOffText(self.getStyleName(), index),
             CFSpeech | CFTimeout)
 
     def initializeBodyCollisions(self, collIdStr):
         DistributedAvatar.DistributedAvatar.initializeBodyCollisions(
             self, collIdStr)
         if not self.ghostMode:
-            self.collNode.setCollideMask(
-                self.collNode.getIntoCollideMask() | ToontownGlobals.PieBitmask)
+            self.collNode.setCollideMask(self.collNode.getIntoCollideMask()
+                                         | ToontownGlobals.PieBitmask)
 
-        self.cRay = CollisionRay(
-            0.0, 0.0, CollisionHandlerRayStart, 0.0, 0.0, -1.0)
+        self.cRay = CollisionRay(0.0, 0.0, CollisionHandlerRayStart, 0.0, 0.0,
+                                 -1.0)
         self.cRayNode = CollisionNode(self.taskName('cRay'))
         self.cRayNode.addSolid(self.cRay)
         self.cRayNodePath = self.attachNewNode(self.cRayNode)
@@ -435,11 +409,7 @@ class DistributedSuitBase(
             startPoint = posPoints[pointIndex]
             endPoint = posPoints[pointIndex + 1]
             track.append(
-                Func(
-                    nodePath.headsUp,
-                    endPoint[0],
-                    endPoint[1],
-                    endPoint[2]))
+                Func(nodePath.headsUp, endPoint[0], endPoint[1], endPoint[2]))
             distance = Vec3(endPoint - startPoint).length()
             duration = distance / velocity
             track.append(
@@ -517,47 +487,60 @@ class DistributedSuitBase(
                         absNum = abs(number)
                         if absNum > 0 and absNum <= 10:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[1])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[1])
                         elif absNum > 10 and absNum <= 20:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[2])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[2])
                         elif absNum > 20 and absNum <= 30:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[3])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[3])
                         elif absNum > 30 and absNum <= 40:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[4])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[4])
                         elif absNum > 40 and absNum <= 50:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[5])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[5])
                         elif absNum > 50 and absNum <= 60:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[6])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[6])
                         elif absNum > 60 and absNum <= 70:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[7])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[7])
                         elif absNum > 70 and absNum <= 80:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[8])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[8])
                         elif absNum > 80 and absNum <= 90:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[9])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[9])
                         elif absNum > 90 and absNum <= 100:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[10])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[10])
                         elif absNum > 100 and absNum <= 110:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[11])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[11])
                         else:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.SillySurgeTerms[12])
+                                str(number) + '\n' +
+                                TTLocalizer.SillySurgeTerms[12])
 
                     if self.interactivePropTrackBonus > - \
                             1 and self.interactivePropTrackBonus == attackTrack:
                         self.sillySurgeText = True
                         if attackTrack in TTLocalizer.InteractivePropTrackBonusTerms:
                             self.HpTextGenerator.setText(
-                                str(number) + '\n' + TTLocalizer.InteractivePropTrackBonusTerms[attackTrack])
+                                str(number) + '\n' + TTLocalizer.
+                                InteractivePropTrackBonusTerms[attackTrack])
 
                 else:
                     self.HpTextGenerator.setText('+' + str(number))
@@ -603,27 +586,12 @@ class DistributedSuitBase(
                 self.hpText.setPos(0, 0, self.height / 2)
                 seq = Task.sequence(
                     self.hpText.lerpPos(
-                        Point3(
-                            0,
-                            0,
-                            self.height + 1.5),
+                        Point3(0, 0, self.height + 1.5),
                         1.0,
-                        blendType='easeOut'),
-                    Task.pause(0.84999999999999998),
+                        blendType='easeOut'), Task.pause(0.84999999999999998),
                     self.hpText.lerpColor(
-                        Vec4(
-                            r,
-                            g,
-                            b,
-                            a),
-                        Vec4(
-                            r,
-                            g,
-                            b,
-                            0),
-                        0.10000000000000001),
-                    Task.Task(
-                        self.hideHpTextTask))
+                        Vec4(r, g, b, a), Vec4(r, g, b, 0),
+                        0.10000000000000001), Task.Task(self.hideHpTextTask))
                 taskMgr.add(seq, self.uniqueName('hpText'))
 
     def hideHpTextTask(self, task):

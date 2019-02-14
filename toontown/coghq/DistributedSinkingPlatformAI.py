@@ -22,12 +22,8 @@ class DistributedSinkingPlatformAI(DistributedEntityAI.DistributedEntityAI):
             self.numStanding -= 1
         self.notify.debug('numStanding = %s' % self.numStanding)
         if self.numStanding > 0:
-            self.sendUpdate('setSinkMode', [
-                avId,
-                SinkingPlatformGlobals.SINKING,
-                timestamp])
+            self.sendUpdate('setSinkMode',
+                            [avId, SinkingPlatformGlobals.SINKING, timestamp])
         else:
-            self.sendUpdate('setSinkMode', [
-                avId,
-                SinkingPlatformGlobals.RISING,
-                timestamp])
+            self.sendUpdate('setSinkMode',
+                            [avId, SinkingPlatformGlobals.RISING, timestamp])

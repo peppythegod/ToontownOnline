@@ -13,36 +13,30 @@ from direct.showbase import PythonUtil
 
 
 class GolfKart(StateData.StateData):
-
     def __init__(self, safeZone, parentFSM, doneEvent, golfCourse):
         StateData.StateData.__init__(self, doneEvent)
         self.golfCourse = golfCourse
         self.fsm = ClassicFSM.ClassicFSM('GolfKart', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'requestBoard',
-                'trolleyHFA',
-                'trolleyTFA']),
-            State.State('trolleyHFA', self.enterTrolleyHFA, self.exitTrolleyHFA, [
-                'final']),
-            State.State('trolleyTFA', self.enterTrolleyTFA, self.exitTrolleyTFA, [
-                'final']),
-            State.State('requestBoard', self.enterRequestBoard, self.exitRequestBoard, [
-                'boarding']),
-            State.State('boarding', self.enterBoarding, self.exitBoarding, [
-                'boarded']),
-            State.State('boarded', self.enterBoarded, self.exitBoarded, [
-                'requestExit',
-                'trolleyLeaving',
-                'final']),
-            State.State('requestExit', self.enterRequestExit, self.exitRequestExit, [
-                'exiting',
-                'trolleyLeaving']),
-            State.State('trolleyLeaving', self.enterTrolleyLeaving, self.exitTrolleyLeaving, [
-                'final']),
-            State.State('exiting', self.enterExiting, self.exitExiting, [
-                'final']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+            State.State('start', self.enterStart, self.exitStart,
+                        ['requestBoard', 'trolleyHFA', 'trolleyTFA']),
+            State.State('trolleyHFA', self.enterTrolleyHFA,
+                        self.exitTrolleyHFA, ['final']),
+            State.State('trolleyTFA', self.enterTrolleyTFA,
+                        self.exitTrolleyTFA, ['final']),
+            State.State('requestBoard', self.enterRequestBoard,
+                        self.exitRequestBoard, ['boarding']),
+            State.State('boarding', self.enterBoarding, self.exitBoarding,
+                        ['boarded']),
+            State.State('boarded', self.enterBoarded, self.exitBoarded,
+                        ['requestExit', 'trolleyLeaving', 'final']),
+            State.State('requestExit', self.enterRequestExit,
+                        self.exitRequestExit, ['exiting', 'trolleyLeaving']),
+            State.State('trolleyLeaving', self.enterTrolleyLeaving,
+                        self.exitTrolleyLeaving, ['final']),
+            State.State('exiting', self.enterExiting, self.exitExiting,
+                        ['final']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
         self.parentFSM = parentFSM
 
     def load(self):
@@ -114,8 +108,7 @@ class GolfKart(StateData.StateData):
         if ntbDoneStatus == 'ok':
             doneStatus = {}
             doneStatus['mode'] = 'reject'
-            messenger.send(self.doneEvent, [
-                doneStatus])
+            messenger.send(self.doneEvent, [doneStatus])
         else:
             self.notify.error('Unrecognized doneStatus: ' + str(ntbDoneStatus))
 
@@ -125,8 +118,7 @@ class GolfKart(StateData.StateData):
     def handleRejectBoard(self):
         doneStatus = {}
         doneStatus['mode'] = 'reject'
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def exitRequestBoard(self):
         pass
@@ -134,10 +126,8 @@ class GolfKart(StateData.StateData):
     def enterBoarding(self, nodePath):
         camera.wrtReparentTo(nodePath)
         heading = PythonUtil.fitDestAngle2Src(camera.getH(nodePath), 180)
-        self.cameraBoardTrack = LerpPosHprInterval(
-            camera, 1.5, Point3(
-                0, 18, 8), Point3(
-                heading, -10, 0))
+        self.cameraBoardTrack = LerpPosHprInterval(camera, 1.5, Point3(
+            0, 18, 8), Point3(heading, -10, 0))
         self.cameraBoardTrack.start()
 
     def exitBoarding(self):
@@ -154,32 +144,13 @@ class GolfKart(StateData.StateData):
         self.exitButton = DirectButton(
             relief=None,
             text=TTLocalizer.TrolleyHopOff,
-            text_fg=(
-                1,
-                1,
-                0.65000000000000002,
-                1),
-            text_pos=(
-                0,
-                -0.23000000000000001),
+            text_fg=(1, 1, 0.65000000000000002, 1),
+            text_pos=(0, -0.23000000000000001),
             text_scale=0.80000000000000004,
-            image=(
-                self.upButton,
-                self.downButton,
-                self.rolloverButton),
-            image_color=(
-                1,
-                0,
-                0,
-                1),
-            image_scale=(
-                20,
-                1,
-                11),
-            pos=(
-                0,
-                0,
-                0.80000000000000004),
+            image=(self.upButton, self.downButton, self.rolloverButton),
+            image_color=(1, 0, 0, 1),
+            image_scale=(20, 1, 11),
+            pos=(0, 0, 0.80000000000000004),
             scale=0.14999999999999999,
             command=lambda self=self: self.fsm.request('requestExit'))
 
@@ -202,8 +173,7 @@ class GolfKart(StateData.StateData):
         doneStatus['mode'] = 'minigame'
         doneStatus['zoneId'] = zoneId
         doneStatus['minigameId'] = minigameId
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def handlePlayGolf(self, zoneId, courseId):
         base.localAvatar.b_setParent(ToontownGlobals.SPHidden)
@@ -211,8 +181,7 @@ class GolfKart(StateData.StateData):
         doneStatus['mode'] = 'golfcourse'
         doneStatus['zoneId'] = zoneId
         doneStatus['courseId'] = courseId
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def exitTrolleyLeaving(self):
         self.ignore('playMinigame')
@@ -224,8 +193,7 @@ class GolfKart(StateData.StateData):
     def handleOffTrolley(self):
         doneStatus = {}
         doneStatus['mode'] = 'exit'
-        messenger.send(self.doneEvent, [
-            doneStatus])
+        messenger.send(self.doneEvent, [doneStatus])
 
     def exitExiting(self):
         pass

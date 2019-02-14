@@ -20,15 +20,14 @@ class GuiScreen:
         self.focusIndex = None
         self.suppressClickSound = 0
 
-    def startFocusMgmt(
-            self,
-            startFocus=0,
-            enterPressBehavior=DGG.ENTERPRESS_ADVANCE_IFNOTEMPTY,
-            overrides={},
-            globalFocusHandler=None):
+    def startFocusMgmt(self,
+                       startFocus=0,
+                       enterPressBehavior=DGG.ENTERPRESS_ADVANCE_IFNOTEMPTY,
+                       overrides={},
+                       globalFocusHandler=None):
         GuiScreen.notify.debug(
-            'startFocusMgmt:\nstartFocus=%s,\nenterPressBehavior=%s\noverrides=%s' %
-            (startFocus, enterPressBehavior, overrides))
+            'startFocusMgmt:\nstartFocus=%s,\nenterPressBehavior=%s\noverrides=%s'
+            % (startFocus, enterPressBehavior, overrides))
         self.accept('tab', self._GuiScreen__handleTab)
         self.accept('shift-tab', self._GuiScreen__handleShiftTab)
         self.accept('enter', self._GuiScreen__handleEnter)
@@ -46,22 +45,22 @@ class GuiScreen:
         for i in xrange(len(self.focusList)):
             item = self.focusList[i]
             if isinstance(item, DirectEntry):
-                self.userFocusHandlers[item] = (
-                    item['focusInCommand'], item['focusInExtraArgs'])
-                item['focusInCommand'] = self._GuiScreen__handleFocusChangeAbsorb
-                item['focusInExtraArgs'] = [
-                    i]
-                self.userCommandHandlers[item] = (
-                    item['command'], item['extraArgs'])
+                self.userFocusHandlers[item] = (item['focusInCommand'],
+                                                item['focusInExtraArgs'])
+                item[
+                    'focusInCommand'] = self._GuiScreen__handleFocusChangeAbsorb
+                item['focusInExtraArgs'] = [i]
+                self.userCommandHandlers[item] = (item['command'],
+                                                  item['extraArgs'])
                 item['command'] = None
                 item['extraArgs'] = []
                 continue
             if isinstance(item, DirectScrolledList):
-                self.userCommandHandlers[item] = (
-                    item['command'], item['extraArgs'])
-                item['command'] = self._GuiScreen__handleDirectScrolledListCommand
-                item['extraArgs'] = [
-                    i]
+                self.userCommandHandlers[item] = (item['command'],
+                                                  item['extraArgs'])
+                item[
+                    'command'] = self._GuiScreen__handleDirectScrolledListCommand
+                item['extraArgs'] = [i]
                 continue
 
         self.enterPressHandlers = {}
@@ -75,15 +74,14 @@ class GuiScreen:
                 self.enterPressHandlers[item] = behavior
                 continue
             if not isinstance(
-                    item,
-                    DirectEntry) and behavior == GuiScreen_ENTERPRESS_ADVANCE_IFNOTEMPTY:
+                    item, DirectEntry
+            ) and behavior == GuiScreen_ENTERPRESS_ADVANCE_IFNOTEMPTY:
                 behavior = GuiScreen_ENTERPRESS_ADVANCE
 
-            commandHandlers = (
-                self._GuiScreen__alwaysAdvanceFocus,
-                self._GuiScreen__advanceFocusIfNotEmpty,
-                self._GuiScreen__neverAdvanceFocus,
-                self._GuiScreen__ignoreEnterPress)
+            commandHandlers = (self._GuiScreen__alwaysAdvanceFocus,
+                               self._GuiScreen__advanceFocusIfNotEmpty,
+                               self._GuiScreen__neverAdvanceFocus,
+                               self._GuiScreen__ignoreEnterPress)
             self.enterPressHandlers[item] = commandHandlers[behavior]
 
         self.setFocus(startFocus)
@@ -176,8 +174,7 @@ class GuiScreen:
         if userHandler:
             if isinstance(item, DirectEntry):
                 enteredText = item.get()
-                userHandler(*[
-                    enteredText] + userHandlerArgs)
+                userHandler(*[enteredText] + userHandlerArgs)
             elif isinstance(item, DirectScrolledList):
                 userHandler(*userHandlerArgs)
 
@@ -190,14 +187,14 @@ class GuiScreen:
     def _GuiScreen__handleTab(self):
         self.tabPressed = 1
         self.focusDirection = 1
-        self._GuiScreen__setFocusIndex(
-            self.getFocusIndex() + self.focusDirection)
+        self._GuiScreen__setFocusIndex(self.getFocusIndex() +
+                                       self.focusDirection)
 
     def _GuiScreen__handleShiftTab(self):
         self.tabPressed = 1
         self.focusDirection = -1
-        self._GuiScreen__setFocusIndex(
-            self.getFocusIndex() + self.focusDirection)
+        self._GuiScreen__setFocusIndex(self.getFocusIndex() +
+                                       self.focusDirection)
 
     def _GuiScreen__handleFocusChangeAbsorb(self, index):
         item = self.focusList[index]
@@ -236,8 +233,8 @@ class GuiScreen:
     def _GuiScreen__startFrameStartTask(self):
         self._GuiScreen__focusChangedThisFrame = 0
         self.frameStartTaskName = 'GuiScreenFrameStart'
-        taskMgr.add(self._GuiScreen__handleFrameStart,
-                    self.frameStartTaskName, -100)
+        taskMgr.add(self._GuiScreen__handleFrameStart, self.frameStartTaskName,
+                    -100)
 
     def _GuiScreen__stopFrameStartTask(self):
         taskMgr.remove(self.frameStartTaskName)
@@ -281,9 +278,8 @@ class GuiScreen:
         pass
 
     def waitForDatabaseTimeout(self, requestName='unknown'):
-        GuiScreen.notify.debug(
-            'waiting for database timeout %s at %s' %
-            (requestName, globalClock.getFrameTime()))
+        GuiScreen.notify.debug('waiting for database timeout %s at %s' %
+                               (requestName, globalClock.getFrameTime()))
         globalClock.tick()
         taskMgr.doMethodLater(
             OTPGlobals.DatabaseDialogTimeout,
@@ -292,15 +288,13 @@ class GuiScreen:
             extraArgs=[requestName])
 
     def _GuiScreen__showWaitingForDatabase(self, requestName):
-        GuiScreen.notify.info(
-            'timed out waiting for %s at %s' %
-            (requestName, globalClock.getFrameTime()))
+        GuiScreen.notify.info('timed out waiting for %s at %s' %
+                              (requestName, globalClock.getFrameTime()))
         dialogClass = OTPGlobals.getDialogClass()
         self.waitingForDatabase = dialogClass(
             text=OTPLocalizer.GuiScreenToontownUnavailable,
             dialogName='WaitingForDatabase',
-            buttonTextList=[
-                OTPLocalizer.GuiScreenCancel],
+            buttonTextList=[OTPLocalizer.GuiScreenCancel],
             style=OTPDialog.Acknowledge,
             command=self._GuiScreen__handleCancelWaiting)
         self.waitingForDatabase.show()
@@ -312,13 +306,10 @@ class GuiScreen:
         return Task.done
 
     def _GuiScreen__giveUpWaitingForDatabase(self, requestName):
-        GuiScreen.notify.info(
-            'giving up waiting for %s at %s' %
-            (requestName, globalClock.getFrameTime()))
+        GuiScreen.notify.info('giving up waiting for %s at %s' %
+                              (requestName, globalClock.getFrameTime()))
         self.cleanupWaitingForDatabase()
-        messenger.send(self.doneEvent, [
-            {
-                'mode': 'failure'}])
+        messenger.send(self.doneEvent, [{'mode': 'failure'}])
         return Task.done
 
     def cleanupWaitingForDatabase(self):
@@ -330,6 +321,4 @@ class GuiScreen:
 
     def _GuiScreen__handleCancelWaiting(self, value):
         self.cleanupWaitingForDatabase()
-        messenger.send(self.doneEvent, [
-            {
-                'mode': 'quit'}])
+        messenger.send(self.doneEvent, [{'mode': 'quit'}])

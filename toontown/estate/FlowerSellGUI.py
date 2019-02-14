@@ -12,26 +12,19 @@ class FlowerSellGUI(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('FlowerGui')
 
     def __init__(self, doneEvent):
-        DirectFrame.__init__(self,
-                             relief=None,
-                             state='normal',
-                             geom=DGG.getDefaultDialogGeom(),
-                             geom_color=ToontownGlobals.GlobalDialogColor,
-                             geom_scale=(2.0,
-                                         1,
-                                         1.5),
-                             frameSize=(-1,
-                                        1,
-                                        -1,
-                                        1),
-                             pos=(0,
-                                  0,
-                                  0),
-                             text='',
-                             text_wordwrap=26,
-                             text_scale=TTLocalizer.FSGUIdirectFrame,
-                             text_pos=(0,
-                                       0.65000000000000002))
+        DirectFrame.__init__(
+            self,
+            relief=None,
+            state='normal',
+            geom=DGG.getDefaultDialogGeom(),
+            geom_color=ToontownGlobals.GlobalDialogColor,
+            geom_scale=(2.0, 1, 1.5),
+            frameSize=(-1, 1, -1, 1),
+            pos=(0, 0, 0),
+            text='',
+            text_wordwrap=26,
+            text_scale=TTLocalizer.FSGUIdirectFrame,
+            text_pos=(0, 0.65000000000000002))
         self.initialiseoptions(FlowerSellGUI)
         self.doneEvent = doneEvent
         self.picker = FlowerPicker.FlowerPicker(self)
@@ -42,41 +35,29 @@ class FlowerSellGUI(DirectFrame):
         self.picker.update(newBasketFlower)
         self.picker.show()
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okImageList = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
-        cancelImageList = (
-            buttons.find('**/CloseBtn_UP'),
-            buttons.find('**/CloseBtn_DN'),
-            buttons.find('**/CloseBtn_Rllvr'))
+        okImageList = (buttons.find('**/ChtBx_OKBtn_UP'),
+                       buttons.find('**/ChtBx_OKBtn_DN'),
+                       buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        cancelImageList = (buttons.find('**/CloseBtn_UP'),
+                           buttons.find('**/CloseBtn_DN'),
+                           buttons.find('**/CloseBtn_Rllvr'))
         self.cancelButton = DirectButton(
             parent=self,
             relief=None,
             image=cancelImageList,
-            pos=(
-                0.29999999999999999,
-                0,
-                -0.57999999999999996),
+            pos=(0.29999999999999999, 0, -0.57999999999999996),
             text=TTLocalizer.FlowerGuiCancel,
             text_scale=TTLocalizer.FSGUIcancelButton,
-            text_pos=(
-                0,
-                -0.10000000000000001),
+            text_pos=(0, -0.10000000000000001),
             command=self._FlowerSellGUI__cancel)
         self.okButton = DirectButton(
             parent=self,
             relief=None,
             image=okImageList,
-            pos=(
-                0.59999999999999998,
-                0,
-                -0.57999999999999996),
+            pos=(0.59999999999999998, 0, -0.57999999999999996),
             text=TTLocalizer.FlowerGuiOk,
             text_scale=TTLocalizer.FSGUIokButton,
-            text_pos=(
-                0,
-                -0.10000000000000001),
+            text_pos=(0, -0.10000000000000001),
             command=self._FlowerSellGUI__sellFlower)
         buttons.removeNode()
         self._FlowerSellGUI__updateFlowerValue()
@@ -87,12 +68,10 @@ class FlowerSellGUI(DirectFrame):
         base.cr.playGame.getPlace().detectedFlowerSellDone()
 
     def _FlowerSellGUI__cancel(self):
-        messenger.send(self.doneEvent, [
-            0])
+        messenger.send(self.doneEvent, [0])
 
     def _FlowerSellGUI__sellFlower(self):
-        messenger.send(self.doneEvent, [
-            1])
+        messenger.send(self.doneEvent, [1])
 
     def _FlowerSellGUI__updateFlowerValue(self):
         flowerBasket = base.localAvatar.getFlowerBasket()
@@ -101,5 +80,6 @@ class FlowerSellGUI(DirectFrame):
         self['text'] = TTLocalizer.FlowerBasketValue % {
             'name': base.localAvatar.getName(),
             'num': num,
-            'value': value}
+            'value': value
+        }
         self.setText()

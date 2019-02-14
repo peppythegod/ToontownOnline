@@ -8,7 +8,6 @@ def decodeTTSCResistanceMsg(textId):
 
 
 class TTSCResistanceTerminal(SCTerminal):
-
     def __init__(self, textId, charges):
         SCTerminal.__init__(self)
         self.setCharges(charges)
@@ -20,5 +19,5 @@ class TTSCResistanceTerminal(SCTerminal):
 
     def handleSelect(self):
         SCTerminal.handleSelect(self)
-        messenger.send(self.getEventName(TTSCResistanceMsgEvent), [
-            self.textId])
+        messenger.send(
+            self.getEventName(TTSCResistanceMsgEvent), [self.textId])

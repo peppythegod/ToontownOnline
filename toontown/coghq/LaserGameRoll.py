@@ -5,10 +5,9 @@ import random
 
 
 class LaserGameRoll(LaserGameBase.LaserGameBase):
-
     def __init__(self, funcSuccess, funcFail, funcSendGrid, funcSetGrid):
-        LaserGameBase.LaserGameBase.__init__(
-            self, funcSuccess, funcFail, funcSendGrid, funcSetGrid)
+        LaserGameBase.LaserGameBase.__init__(self, funcSuccess, funcFail,
+                                             funcSendGrid, funcSetGrid)
         self.setGridSize(5, 5)
         self.blankGrid()
 
@@ -28,9 +27,7 @@ class LaserGameRoll(LaserGameBase.LaserGameBase):
         LaserGameBase.LaserGameBase.startGrid(self)
         for column in range(0, self.gridNumX):
             for row in range(0, self.gridNumY):
-                tile = random.choice([
-                    10,
-                    13])
+                tile = random.choice([10, 13])
                 self.gridData[column][row] = tile
 
         for column in range(0, self.gridNumX):

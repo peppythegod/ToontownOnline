@@ -1,5 +1,3 @@
-
-
 from DistributedMinigameAI import *
 from direct.fsm import ClassicFSM, State
 from direct.fsm import State
@@ -10,7 +8,6 @@ import MazeData
 
 
 class DistributedMazeGameAI(DistributedMinigameAI):
-
     def __init__(self, air, minigameId):
 
         try:
@@ -19,15 +16,15 @@ class DistributedMazeGameAI(DistributedMinigameAI):
             self.DistributedMinigameTemplateAI_initialized = 1
             DistributedMinigameAI.__init__(self, air, minigameId)
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedMazeGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive, [
-                    'play']),
-                State.State('play', self.enterPlay, self.exitPlay, [
-                    'waitShowScores',
-                    'cleanup']),
-                State.State('waitShowScores', self.enterWaitShowScores, self.exitWaitShowScores, [
-                    'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                    'inactive'])], 'inactive', 'inactive')
+                State.State('inactive', self.enterInactive, self.exitInactive,
+                            ['play']),
+                State.State('play', self.enterPlay, self.exitPlay,
+                            ['waitShowScores', 'cleanup']),
+                State.State('waitShowScores', self.enterWaitShowScores,
+                            self.exitWaitShowScores, ['cleanup']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
 
     def delete(self):
@@ -38,13 +35,12 @@ class DistributedMazeGameAI(DistributedMinigameAI):
     def setGameReady(self):
         self.notify.debug('setGameReady')
         DistributedMinigameAI.setGameReady(self)
-        mazeName = MazeGameGlobals.getMazeName(
-            self.doId, self.numPlayers, MazeData.mazeNames)
+        mazeName = MazeGameGlobals.getMazeName(self.doId, self.numPlayers,
+                                               MazeData.mazeNames)
         mData = MazeData.mazeData[mazeName]
         self.numTreasures = len(mData['treasurePosList'])
         self.numTreasuresTaken = 0
-        self.takenTable = [
-            0] * self.numTreasures
+        self.takenTable = [0] * self.numTreasures
         for avId in self.scoreDict.keys():
             self.scoreDict[avId] = 0
 
@@ -76,10 +72,8 @@ class DistributedMazeGameAI(DistributedMinigameAI):
 
     def enterPlay(self):
         self.notify.debug('enterPlay')
-        taskMgr.doMethodLater(
-            MazeGameGlobals.GAME_DURATION,
-            self.timerExpired,
-            self.taskName('gameTimer'))
+        taskMgr.doMethodLater(MazeGameGlobals.GAME_DURATION, self.timerExpired,
+                              self.taskName('gameTimer'))
 
     def exitPlay(self):
         taskMgr.remove(self.taskName('gameTimer'))
@@ -92,14 +86,13 @@ class DistributedMazeGameAI(DistributedMinigameAI):
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.scoreDict:
             self.notify.warning(
-                'PROBLEM: avatar %s called claimTreasure(%s) but he is not in the scoreDict: %s. avIdList is: %s' %
-                (avId, treasureNum, self.scoreDict, self.avIdList))
+                'PROBLEM: avatar %s called claimTreasure(%s) but he is not in the scoreDict: %s. avIdList is: %s'
+                % (avId, treasureNum, self.scoreDict, self.avIdList))
             return None
 
         if treasureNum < 0 or treasureNum >= self.numTreasures:
             self.air.writeServerEvent(
-                'warning',
-                treasureNum,
+                'warning', treasureNum,
                 'MazeGameAI.claimTreasure treasureNum out of range')
             return None
 
@@ -108,9 +101,7 @@ class DistributedMazeGameAI(DistributedMinigameAI):
 
         self.takenTable[treasureNum] = 1
         avId = self.air.getAvatarIdFromSender()
-        self.sendUpdate('setTreasureGrabbed', [
-            avId,
-            treasureNum])
+        self.sendUpdate('setTreasureGrabbed', [avId, treasureNum])
         self.scoreDict[avId] += 1
         self.numTreasuresTaken += 1
         if self.numTreasuresTaken >= self.numTreasures:
@@ -128,10 +119,9 @@ class DistributedMazeGameAI(DistributedMinigameAI):
 
     def enterWaitShowScores(self):
         self.notify.debug('enterWaitShowScores')
-        taskMgr.doMethodLater(
-            MazeGameGlobals.SHOWSCORES_DURATION,
-            self._DistributedMazeGameAI__doneShowingScores,
-            self.taskName('waitShowScores'))
+        taskMgr.doMethodLater(MazeGameGlobals.SHOWSCORES_DURATION,
+                              self._DistributedMazeGameAI__doneShowingScores,
+                              self.taskName('waitShowScores'))
 
     def _DistributedMazeGameAI__doneShowingScores(self, task):
         self.notify.debug('doneShowingScores')

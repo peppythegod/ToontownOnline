@@ -5,10 +5,9 @@ import random
 
 
 class LaserGameAvoid(LaserGameBase.LaserGameBase):
-
     def __init__(self, funcSuccess, funcFail, funcSendGrid, funcSetGrid):
-        LaserGameBase.LaserGameBase.__init__(
-            self, funcSuccess, funcFail, funcSendGrid, funcSetGrid)
+        LaserGameBase.LaserGameBase.__init__(self, funcSuccess, funcFail,
+                                             funcSendGrid, funcSetGrid)
         self.setGridSize(8, 8)
         self.blankGrid()
         self.cycleName = simbase.air.uniqueName('AvoidGame')
@@ -38,10 +37,7 @@ class LaserGameAvoid(LaserGameBase.LaserGameBase):
         LaserGameBase.LaserGameBase.startGrid(self)
         for column in range(0, self.gridNumX):
             for row in range(0, self.gridNumY):
-                tile = random.choice([
-                    0,
-                    14,
-                    12])
+                tile = random.choice([0, 14, 12])
                 self.gridData[column][row] = tile
 
         taskMgr.doMethodLater(2.5, self._LaserGameAvoid__cycle, self.cycleName)
@@ -53,9 +49,7 @@ class LaserGameAvoid(LaserGameBase.LaserGameBase):
         for column in range(0, self.gridNumX):
             for row in range(0, self.gridNumY):
                 if self.gridData[column][row] == 0:
-                    tile = random.choice([
-                        0,
-                        14])
+                    tile = random.choice([0, 14])
                     self.gridData[column][row] = tile
                     continue
                 if self.gridData[column][row] == 14:
@@ -68,8 +62,8 @@ class LaserGameAvoid(LaserGameBase.LaserGameBase):
                     continue
 
         if not self.finshed:
-            taskMgr.doMethodLater(
-                2.5, self._LaserGameAvoid__cycle, self.cycleName)
+            taskMgr.doMethodLater(2.5, self._LaserGameAvoid__cycle,
+                                  self.cycleName)
             self.funcSendGrid()
 
         return Task.done

@@ -21,9 +21,8 @@ def clearPythonIvals(ival):
         ival.pythonIvals = []
 
 
-class InteractiveAnimatedProp(
-        GenericAnimatedProp.GenericAnimatedProp,
-        FSM.FSM):
+class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
+                              FSM.FSM):
     ZoneToIdles = {}
     ZoneToIdleIntoFightAnims = {}
     ZoneToFightAnims = {}
@@ -174,20 +173,17 @@ class InteractiveAnimatedProp(
                 continue
             if self.hasSpecialIval(origAnimName):
                 result.append(
-                    Parallel(
-                        animAndSoundIval,
-                        self.getSpecialIval(origAnimName)))
+                    Parallel(animAndSoundIval,
+                             self.getSpecialIval(origAnimName)))
                 continue
             result.append(animAndSoundIval)
 
         self.createBattleCheerText()
         battleCheerTextIval = Sequence(
-            Func(
-                self.hpText.show), self.hpText.posInterval(
-                duration=4.0, pos=Vec3(
-                    0, 0, 7), startPos=(
-                    0, 0, 3)), Func(
-                        self.hpText.hide))
+            Func(self.hpText.show),
+            self.hpText.posInterval(
+                duration=4.0, pos=Vec3(0, 0, 7), startPos=(0, 0, 3)),
+            Func(self.hpText.hide))
         ivalWithText = Parallel(battleCheerTextIval, result)
         return ivalWithText
 
@@ -241,9 +237,8 @@ class InteractiveAnimatedProp(
 
     def exit(self):
         self.okToStartNextAnim = False
-        self.notify.debug(
-            '%s %d okToStartNextAnim=%s' %
-            (self, self.visId, self.okToStartNextAnim))
+        self.notify.debug('%s %d okToStartNextAnim=%s' %
+                          (self, self.visId, self.okToStartNextAnim))
         GenericAnimatedProp.GenericAnimatedProp.exit(self)
         self.request('Off')
 
@@ -251,8 +246,7 @@ class InteractiveAnimatedProp(
         if not hasattr(self, 'node') or not (self.node):
             self.notify.warning(
                 "requestIdleOrSad  returning hasattr(self,'node')=%s" %
-                hasattr(
-                    self, 'node'))
+                hasattr(self, 'node'))
             return None
 
         if self.buildingsMakingMeSad:
@@ -263,17 +257,15 @@ class InteractiveAnimatedProp(
     def enterDoIdleAnim(self):
         self.notify.debug('enterDoIdleAnim numIdels=%d' % self.numIdles)
         self.okToStartNextAnim = True
-        self.notify.debug(
-            '%s %d okToStartNextAnim=%s' %
-            (self, self.visId, self.okToStartNextAnim))
+        self.notify.debug('%s %d okToStartNextAnim=%s' %
+                          (self, self.visId, self.okToStartNextAnim))
         self.startNextIdleAnim()
 
     def exitDoIdleAnim(self):
         self.notify.debug('exitDoIdlesAnim numIdles=%d' % self.numIdles)
         self.okToStartNextAnim = False
-        self.notify.debug(
-            '%s %d okToStartNextAnim=%s' %
-            (self, self.visId, self.okToStartNextAnim))
+        self.notify.debug('%s %d okToStartNextAnim=%s' %
+                          (self, self.visId, self.okToStartNextAnim))
         self.calcLastIdleFrame()
         self.clearCurIval()
 
@@ -301,9 +293,8 @@ class InteractiveAnimatedProp(
 
             sum = math.pow(2, self.numIdles) - 1
             result = weightedChoice(pairs, sum=sum)
-            self.notify.debug(
-                'chooseAnimToRun numIdles=%s pairs=%s result=%s' %
-                (self.numIdles, pairs, result))
+            self.notify.debug('chooseAnimToRun numIdles=%s pairs=%s result=%s'
+                              % (self.numIdles, pairs, result))
         else:
             result = self.lastPlayingAnimPhase + 1
             if result >= len(self.ZoneToIdles[self.hoodId]):
@@ -313,13 +304,11 @@ class InteractiveAnimatedProp(
 
     def startNextIdleAnim(self):
         self.notify.debug(
-            'startNextAnim self.okToStartNextAnim=%s' %
-            self.okToStartNextAnim)
+            'startNextAnim self.okToStartNextAnim=%s' % self.okToStartNextAnim)
         if not hasattr(self, 'node') or not (self.node):
             self.notify.warning(
                 "startNextIdleAnim returning hasattr(self,'node')=%s" %
-                hasattr(
-                    self, 'node'))
+                hasattr(self, 'node'))
             return None
 
         self.curIval = None
@@ -336,20 +325,16 @@ class InteractiveAnimatedProp(
             self.lastPlayingAnimPhase = whichAnim
             self.curIval = self.createIdleAnimSequence(whichAnim)
             self.notify.debug(
-                'starting curIval of length %s' %
-                self.curIval.getDuration())
+                'starting curIval of length %s' % self.curIval.getDuration())
             self.curIval.start()
         else:
             self.curIval = Wait(10)
             self.notify.debug(
-                'false self.okToStartNextAnim=%s' %
-                self.okToStartNextAnim)
+                'false self.okToStartNextAnim=%s' % self.okToStartNextAnim)
 
     def createIdleAnimAndSoundInterval(self, whichIdleAnim, startingTime=0):
         animIval = self.node.actorInterval(
-            'idle%d' %
-            whichIdleAnim,
-            startTime=startingTime)
+            'idle%d' % whichIdleAnim, startTime=startingTime)
         animIvalDuration = animIval.getDuration()
         origAnimName = self.ZoneToIdles[self.hoodId][whichIdleAnim]
         if isinstance(origAnimName, tuple):
@@ -368,18 +353,16 @@ class InteractiveAnimatedProp(
         dummyResult = Sequence(Wait(self.IdlePauseTime))
         if not hasattr(self, 'node') or not (self.node):
             self.notify.warning(
-                "createIdleAnimSequence returning dummyResult hasattr(self,'node')=%s" %
-                hasattr(
-                    self, 'node'))
+                "createIdleAnimSequence returning dummyResult hasattr(self,'node')=%s"
+                % hasattr(self, 'node'))
             return dummyResult
 
         idleAnimAndSound = self.createIdleAnimAndSoundInterval(whichIdleAnim)
-        result = Sequence(
-            idleAnimAndSound, Wait(
-                self.IdlePauseTime), Func(
-                self.startNextIdleAnim))
-        if isinstance(self.ZoneToIdles[self.hoodId][whichIdleAnim], tuple) and len(
-                self.ZoneToIdles[self.hoodId][whichIdleAnim]) > 2:
+        result = Sequence(idleAnimAndSound, Wait(self.IdlePauseTime),
+                          Func(self.startNextIdleAnim))
+        if isinstance(self.ZoneToIdles[self.hoodId][whichIdleAnim],
+                      tuple) and len(
+                          self.ZoneToIdles[self.hoodId][whichIdleAnim]) > 2:
             info = self.ZoneToIdles[self.hoodId][whichIdleAnim]
             origAnimName = info[0]
             minLoop = info[1]
@@ -395,9 +378,7 @@ class InteractiveAnimatedProp(
 
             if self.getSettleName(whichIdleAnim):
                 result.append(
-                    self.node.actorInterval(
-                        'settle%d' %
-                        whichIdleAnim))
+                    self.node.actorInterval('settle%d' % whichIdleAnim))
 
             result.append(Wait(pauseTime))
             result.append(Func(self.startNextIdleAnim))
@@ -534,8 +515,9 @@ class InteractiveAnimatedProp(
 
     def getSettleName(self, whichIdleAnim):
         result = None
-        if isinstance(self.ZoneToIdles[self.hoodId][whichIdleAnim], tuple) and len(
-                self.ZoneToIdles[self.hoodId][whichIdleAnim]) > 3:
+        if isinstance(self.ZoneToIdles[self.hoodId][whichIdleAnim],
+                      tuple) and len(
+                          self.ZoneToIdles[self.hoodId][whichIdleAnim]) > 3:
             result = self.ZoneToIdles[self.hoodId][whichIdleAnim][3]
 
         return result

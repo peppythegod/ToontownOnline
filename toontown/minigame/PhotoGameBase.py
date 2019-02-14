@@ -1,11 +1,8 @@
-
-
 import PhotoGameGlobals
 import random
 
 
 class PhotoGameBase:
-
     def __init__(self):
         pass
 
@@ -25,9 +22,8 @@ class PhotoGameBase:
             pose = (None, None)
             while pose[0] is None:
                 animSetIndex = self.data['PATHANIMREL'][subjectIndex]
-                pose = random.choice(
-                    self.data['ANIMATIONS'][animSetIndex] +
-                    self.data['MOVEMODES'][animSetIndex])
+                pose = random.choice(self.data['ANIMATIONS'][animSetIndex] +
+                                     self.data['MOVEMODES'][animSetIndex])
             newTemplate = (subjectIndex, pose[0])
             if newTemplate not in assignmentTemplates:
                 assignmentTemplates.append((subjectIndex, pose[0]))

@@ -12,7 +12,6 @@ from toontown.toontowngui import TeaserPanel
 
 
 class DistributedCogHQDoor(DistributedDoor.DistributedDoor):
-
     def __init__(self, cr):
         DistributedDoor.DistributedDoor.__init__(self, cr)
         self.openSfx = base.loadSfx('phase_9/audio/sfx/CHQ_door_open.mp3')
@@ -32,7 +31,8 @@ class DistributedCogHQDoor(DistributedDoor.DistributedDoor):
             'shardId': None,
             'avId': -1,
             'allowRedirect': 0,
-            'doorDoId': self.otherDoId}
+            'doorDoId': self.otherDoId
+        }
         return request
 
     def enterClosing(self, ts):
@@ -57,18 +57,19 @@ class DistributedCogHQDoor(DistributedDoor.DistributedDoor):
         self.doorTrack = Parallel(
             Sequence(
                 LerpHprInterval(
-                    nodePath=rightDoor, duration=1.0, hpr=VBase3(
-                        0, 0, 0), startHpr=VBase3(
-                        h, 0, 0), other=otherNP, blendType='easeInOut'), Func(
-                    doorFrameHoleRight.hide), Func(
-                            self.hideIfHasFlat, rightDoor)), Sequence(
-                                Wait(0.5), SoundInterval(
-                                    self.closeSfx, node=rightDoor)), name=trackName)
+                    nodePath=rightDoor,
+                    duration=1.0,
+                    hpr=VBase3(0, 0, 0),
+                    startHpr=VBase3(h, 0, 0),
+                    other=otherNP,
+                    blendType='easeInOut'), Func(doorFrameHoleRight.hide),
+                Func(self.hideIfHasFlat, rightDoor)),
+            Sequence(Wait(0.5), SoundInterval(self.closeSfx, node=rightDoor)),
+            name=trackName)
         self.doorTrack.start(ts)
         if hasattr(self, 'done'):
             request = self.getRequestStatus()
-            messenger.send('doorDoneEvent', [
-                request])
+            messenger.send('doorDoneEvent', [request])
 
     def exitDoorEnterClosing(self, ts):
         doorFrameHoleLeft = self.findDoorNode('doorFrameHoleLeft')
@@ -90,22 +91,24 @@ class DistributedCogHQDoor(DistributedDoor.DistributedDoor):
             self.doorExitTrack = Parallel(
                 Sequence(
                     LerpHprInterval(
-                        nodePath=leftDoor, duration=1.0, hpr=VBase3(
-                            0, 0, 0), startHpr=VBase3(
-                            h, 0, 0), other=otherNP, blendType='easeInOut'), Func(
-                        doorFrameHoleLeft.hide), Func(
-                            self.hideIfHasFlat, leftDoor)), Sequence(
-                                Wait(0.5), SoundInterval(
-                                    self.closeSfx, node=leftDoor)), name=trackName)
+                        nodePath=leftDoor,
+                        duration=1.0,
+                        hpr=VBase3(0, 0, 0),
+                        startHpr=VBase3(h, 0, 0),
+                        other=otherNP,
+                        blendType='easeInOut'), Func(doorFrameHoleLeft.hide),
+                    Func(self.hideIfHasFlat, leftDoor)),
+                Sequence(
+                    Wait(0.5), SoundInterval(self.closeSfx, node=leftDoor)),
+                name=trackName)
             self.doorExitTrack.start(ts)
 
     def setZoneIdAndBlock(self, zoneId, block):
         self.zoneId = zoneId
         self.block = block
         canonicalZoneId = ZoneUtil.getCanonicalZoneId(zoneId)
-        if canonicalZoneId in (
-                ToontownGlobals.BossbotHQ,
-                ToontownGlobals.BossbotLobby):
+        if canonicalZoneId in (ToontownGlobals.BossbotHQ,
+                               ToontownGlobals.BossbotLobby):
             self.doorX = 1.0
 
     def enterDoor(self):

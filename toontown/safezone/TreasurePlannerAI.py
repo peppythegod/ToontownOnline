@@ -75,8 +75,8 @@ class TreasurePlannerAI(DirectObject.DirectObject):
 
     def placeTreasure(self, index):
         spawnPoint = self.spawnPoints[index]
-        treasure = self.treasureConstructor(
-            simbase.air, self, spawnPoint[0], spawnPoint[1], spawnPoint[2])
+        treasure = self.treasureConstructor(simbase.air, self, spawnPoint[0],
+                                            spawnPoint[1], spawnPoint[2])
         treasure.generateWithRequired(self.zoneId)
         self.treasures[index] = treasure
 
@@ -92,8 +92,9 @@ class TreasurePlannerAI(DirectObject.DirectObject):
                 secondsPerGrab = elapsed / self.requestCount
                 if self.requestCount >= 3 and secondsPerGrab <= 0.40000000000000002:
                     simbase.air.writeServerEvent(
-                        'suspicious', avId, 'TreasurePlannerAI.grabAttempt %s treasures in %s seconds' %
-                        (self.requestCount, elapsed))
+                        'suspicious', avId,
+                        'TreasurePlannerAI.grabAttempt %s treasures in %s seconds'
+                        % (self.requestCount, elapsed))
 
         else:
             self.lastRequestId = avId
@@ -106,7 +107,8 @@ class TreasurePlannerAI(DirectObject.DirectObject):
         av = simbase.air.doId2do.get(avId)
         if av is None:
             simbase.air.writeServerEvent(
-                'suspicious', avId, 'TreasurePlannerAI.grabAttempt unknown avatar')
+                'suspicious', avId,
+                'TreasurePlannerAI.grabAttempt unknown avatar')
             self.notify.warning('avid: %s does not exist' % avId)
         else:
             treasure = self.treasures[index]
@@ -126,9 +128,7 @@ class TreasurePlannerAI(DirectObject.DirectObject):
             5,
             self._TreasurePlannerAI__deleteTreasureNow,
             taskName,
-            extraArgs=(
-                treasure,
-                taskName))
+            extraArgs=(treasure, taskName))
         self.deleteTaskNames.add(taskName)
 
     def deleteAllTreasuresNow(self):

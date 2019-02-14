@@ -4,10 +4,7 @@ ROTATE_LEFT_KEY = 'arrow_left'
 ROTATE_RIGHT_KEY = 'arrow_right'
 FORWARD_KEY = 'arrow_up'
 BACKWARDS_KEY = 'arrow_down'
-THROW_PIE_KEYS = [
-    'control',
-    'delete',
-    'insert']
+THROW_PIE_KEYS = ['control', 'delete', 'insert']
 
 
 class PartyCogActivityInput(DirectObject):
@@ -41,8 +38,7 @@ class PartyCogActivityInput(DirectObject):
 
     def enableThrowPieKeys(self):
         for key in THROW_PIE_KEYS:
-            self.accept(key, self.handleThrowPieKeyPressed, [
-                key])
+            self.accept(key, self.handleThrowPieKeyPressed, [key])
 
         self.throwPiePressed = False
         self.readyToThrowPie = False
@@ -57,8 +53,7 @@ class PartyCogActivityInput(DirectObject):
             return None
 
         self.throwPiePressed = True
-        self.accept(key + '-up', self.handleThrowPieKeyReleased, [
-            key])
+        self.accept(key + '-up', self.handleThrowPieKeyReleased, [key])
         self.throwPiePressedStartTime = globalClock.getFrameTime()
 
     def handleThrowPieKeyReleased(self, key):
@@ -74,18 +69,14 @@ class PartyCogActivityInput(DirectObject):
         self.rightPressed = 0
         base.mouseWatcherNode.setModifierButtons(ModifierButtons())
         base.buttonThrowers[0].node().setModifierButtons(ModifierButtons())
-        self.accept(
-            ROTATE_LEFT_KEY,
-            self._PartyCogActivityInput__handleLeftKeyPressed)
-        self.accept(
-            ROTATE_RIGHT_KEY,
-            self._PartyCogActivityInput__handleRightKeyPressed)
-        self.accept(
-            FORWARD_KEY,
-            self._PartyCogActivityInput__handleUpKeyPressed)
-        self.accept(
-            BACKWARDS_KEY,
-            self._PartyCogActivityInput__handleDownKeyPressed)
+        self.accept(ROTATE_LEFT_KEY,
+                    self._PartyCogActivityInput__handleLeftKeyPressed)
+        self.accept(ROTATE_RIGHT_KEY,
+                    self._PartyCogActivityInput__handleRightKeyPressed)
+        self.accept(FORWARD_KEY,
+                    self._PartyCogActivityInput__handleUpKeyPressed)
+        self.accept(BACKWARDS_KEY,
+                    self._PartyCogActivityInput__handleDownKeyPressed)
 
     def disableAimKeys(self):
         self.ignore(ROTATE_LEFT_KEY)
@@ -106,9 +97,8 @@ class PartyCogActivityInput(DirectObject):
 
     def _PartyCogActivityInput__handleLeftKeyPressed(self):
         self.ignore(ROTATE_LEFT_KEY)
-        self.accept(
-            ROTATE_LEFT_KEY + '-up',
-            self._PartyCogActivityInput__handleLeftKeyReleased)
+        self.accept(ROTATE_LEFT_KEY + '-up',
+                    self._PartyCogActivityInput__handleLeftKeyReleased)
         self._PartyCogActivityInput__leftPressed()
 
     def _PartyCogActivityInput__handleRightKeyPressed(self):
@@ -119,44 +109,38 @@ class PartyCogActivityInput(DirectObject):
 
     def _PartyCogActivityInput__handleLeftKeyReleased(self):
         self.ignore(ROTATE_LEFT_KEY + '-up')
-        self.accept(
-            ROTATE_LEFT_KEY,
-            self._PartyCogActivityInput__handleLeftKeyPressed)
+        self.accept(ROTATE_LEFT_KEY,
+                    self._PartyCogActivityInput__handleLeftKeyPressed)
         self._PartyCogActivityInput__leftReleased()
 
     def _PartyCogActivityInput__handleRightKeyReleased(self):
         self.ignore(ROTATE_RIGHT_KEY + '-up')
-        self.accept(
-            ROTATE_RIGHT_KEY,
-            self._PartyCogActivityInput__handleRightKeyPressed)
+        self.accept(ROTATE_RIGHT_KEY,
+                    self._PartyCogActivityInput__handleRightKeyPressed)
         self._PartyCogActivityInput__rightReleased()
 
     def _PartyCogActivityInput__handleUpKeyPressed(self):
         self.ignore(FORWARD_KEY)
-        self.accept(
-            FORWARD_KEY + '-up',
-            self._PartyCogActivityInput__handleUpKeyReleased)
+        self.accept(FORWARD_KEY + '-up',
+                    self._PartyCogActivityInput__handleUpKeyReleased)
         self._PartyCogActivityInput__upPressed()
 
     def _PartyCogActivityInput__handleUpKeyReleased(self):
         self.ignore(FORWARD_KEY + '-up')
-        self.accept(
-            FORWARD_KEY,
-            self._PartyCogActivityInput__handleUpKeyPressed)
+        self.accept(FORWARD_KEY,
+                    self._PartyCogActivityInput__handleUpKeyPressed)
         self._PartyCogActivityInput__upReleased()
 
     def _PartyCogActivityInput__handleDownKeyPressed(self):
         self.ignore(BACKWARDS_KEY)
-        self.accept(
-            BACKWARDS_KEY + '-up',
-            self._PartyCogActivityInput__handleDownKeyReleased)
+        self.accept(BACKWARDS_KEY + '-up',
+                    self._PartyCogActivityInput__handleDownKeyReleased)
         self._PartyCogActivityInput__downPressed()
 
     def _PartyCogActivityInput__handleDownKeyReleased(self):
         self.ignore(BACKWARDS_KEY + '-up')
-        self.accept(
-            BACKWARDS_KEY,
-            self._PartyCogActivityInput__handleDownKeyPressed)
+        self.accept(BACKWARDS_KEY,
+                    self._PartyCogActivityInput__handleDownKeyPressed)
         self._PartyCogActivityInput__downReleased()
 
     def _PartyCogActivityInput__leftPressed(self):

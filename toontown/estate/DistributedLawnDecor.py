@@ -26,10 +26,8 @@ def recurseParent(intoNode, ParentName):
         return recurseParent(parent, ParentName)
 
 
-class DistributedLawnDecor(
-        DistributedNode.DistributedNode,
-        NodePath,
-        ShadowCaster.ShadowCaster):
+class DistributedLawnDecor(DistributedNode.DistributedNode, NodePath,
+                           ShadowCaster.ShadowCaster):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedLawnDecor')
 
@@ -101,10 +99,8 @@ class DistributedLawnDecor(
         self.model = None
         if __dev__:
             self.model = loader.loadModel(self.defaultModel)
-            self.model.setScale(
-                0.40000000000000002,
-                0.40000000000000002,
-                0.10000000000000001)
+            self.model.setScale(0.40000000000000002, 0.40000000000000002,
+                                0.10000000000000001)
             self.model.reparentTo(self.rotateNode)
 
     def setupShadow(self):
@@ -124,8 +120,9 @@ class DistributedLawnDecor(
         if self.collSphereOffset <= 0.10000000000000001:
             colSphere = CollisionSphere(0, 0, 0, self.collSphereRadius)
         else:
-            colSphere = CollisionTube(
-                0, -(self.collSphereOffset), 0, 0, self.collSphereOffset, 0, self.collSphereRadius)
+            colSphere = CollisionTube(0, -(self.collSphereOffset), 0, 0,
+                                      self.collSphereOffset, 0,
+                                      self.collSphereRadius)
         colSphere.setTangible(0)
         colNode = CollisionNode(self.messageStartName)
         colNode.addSolid(colSphere)
@@ -184,9 +181,7 @@ class DistributedLawnDecor(
         picker.addCollider(cRayNodePath, queue)
         if self.movieNode:
             testPath.setPos(
-                self.movieNode.getX(render),
-                self.movieNode.getY(render),
-                0)
+                self.movieNode.getX(render), self.movieNode.getY(render), 0)
             picker.traverse(render)
             if queue.getNumEntries() > 0:
                 queue.sortEntries()
@@ -204,17 +199,14 @@ class DistributedLawnDecor(
                 entry = queue.getEntry(index)
                 if recurseParent(entry.getIntoNode(), 'terrain_DNARoot'):
                     self.setZ(
-                        entry.getSurfacePoint(render)[2] +
-                        self.stickUp +
+                        entry.getSurfacePoint(render)[2] + self.stickUp +
                         0.10000000000000001)
                     self.stickParts()
                     return Task.done
                     continue
 
-        taskMgr.doMethodLater(
-            1.0,
-            self.stick2Ground,
-            uniqueName('groundsticker'))
+        taskMgr.doMethodLater(1.0, self.stick2Ground,
+                              uniqueName('groundsticker'))
         return Task.done
 
     def stickParts(self):
@@ -291,13 +283,15 @@ class DistributedLawnDecor(
         node.removeNode()
         toonTrack = Sequence(
             Parallel(
-                ActorInterval(
-                    toon, 'walk', loop=True, duration=1), Parallel(
+                ActorInterval(toon, 'walk', loop=True, duration=1),
+                Parallel(
                     LerpPosInterval(
-                        toon, 1.0, Point3(
-                            finalX, finalY, toon.getZ(render)), fluid=True, bakeInStart=False)), LerpHprInterval(
-                    toon, 1.0, hpr=hpr)), Func(
-                toon.loop, 'neutral'))
+                        toon,
+                        1.0,
+                        Point3(finalX, finalY, toon.getZ(render)),
+                        fluid=True,
+                        bakeInStart=False)), LerpHprInterval(
+                            toon, 1.0, hpr=hpr)), Func(toon.loop, 'neutral'))
         return toonTrack
 
     def unprint(self, string):
@@ -315,7 +309,8 @@ class DistributedLawnDecor(
             self.notify.debug('done interaction')
         else:
             self.notify.warning(
-                'base.cr.playGame.getPlace() does not have detectedGardenPlotDone')
+                'base.cr.playGame.getPlace() does not have detectedGardenPlotDone'
+            )
         if hasattr(base, 'localAvatar'):
             base.localAvatar.handleEndPlantInteraction(self)
 
@@ -323,17 +318,18 @@ class DistributedLawnDecor(
         track = Sequence()
         if avId == localAvatar.doId:
             track = Sequence(
-                Func(
-                    base.localAvatar.disableSmartCameraViews), Func(
-                    base.localAvatar.setCameraPosForPetInteraction))
+                Func(base.localAvatar.disableSmartCameraViews),
+                Func(base.localAvatar.setCameraPosForPetInteraction))
 
         return track
 
     def stopCamIval(self, avId):
         track = Sequence()
         if avId == localAvatar.doId:
-            track = Sequence(Func(base.localAvatar.unsetCameraPosForPetInteraction), Wait(
-                0.80000000000000004), Func(base.localAvatar.enableSmartCameraViews))
+            track = Sequence(
+                Func(base.localAvatar.unsetCameraPosForPetInteraction),
+                Wait(0.80000000000000004),
+                Func(base.localAvatar.enableSmartCameraViews))
 
         return track
 
@@ -376,8 +372,7 @@ class DistributedLawnDecor(
         moveTrack = self.generateToonMoveTrack(toon)
         digupTrack = self.generateDigupTrack(toon)
         self.movie = Sequence(
-            self.startCamIval(avId), moveTrack, Func(
-                shovel.show), digupTrack)
+            self.startCamIval(avId), moveTrack, Func(shovel.show), digupTrack)
         if avId == localAvatar.doId:
             self.expectingReplacement = 1
             self.movie.append(Func(self.movieDone))
@@ -392,45 +387,25 @@ class DistributedLawnDecor(
         track = Parallel()
         track.append(
             Sequence(
-                ActorInterval(
-                    toon,
-                    'start-dig'),
+                ActorInterval(toon, 'start-dig'),
                 Parallel(
                     ActorInterval(
-                        toon,
-                        'loop-dig',
-                        loop=1,
-                        duration=5.1299999999999999),
+                        toon, 'loop-dig', loop=1, duration=5.1299999999999999),
                     Sequence(
                         Wait(0.25),
                         SoundInterval(
-                            sound,
-                            node=toon,
-                            duration=0.55000000000000004),
+                            sound, node=toon, duration=0.55000000000000004),
                         Wait(0.80000000000000004),
                         SoundInterval(
-                            sound,
-                            node=toon,
-                            duration=0.55000000000000004),
+                            sound, node=toon, duration=0.55000000000000004),
                         Wait(1.3500000000000001),
                         SoundInterval(
-                            sound,
-                            node=toon,
-                            duration=0.55000000000000004))),
-                ActorInterval(
-                    toon,
-                    'start-dig',
-                    playRate=-1),
+                            sound, node=toon, duration=0.55000000000000004))),
+                ActorInterval(toon, 'start-dig', playRate=-1),
                 LerpFunc(
-                    self.model.setAlphaScale,
-                    fromData=1,
-                    toData=0,
-                    duration=1),
-                Func(
-                    toon.loop,
-                    'neutral'),
-                Func(
-                    toon.detachShovel)))
+                    self.model.setAlphaScale, fromData=1, toData=0,
+                    duration=1), Func(toon.loop, 'neutral'),
+                Func(toon.detachShovel)))
         return track
 
     def doFinishPlantingTrack(self, avId):
@@ -448,9 +423,7 @@ class DistributedLawnDecor(
             self.model.setAlphaScale(0)
             self.movie.append(
                 LerpFunc(
-                    self.model.setAlphaScale,
-                    fromData=0,
-                    toData=1,
+                    self.model.setAlphaScale, fromData=0, toData=1,
                     duration=3))
 
         self.movie.append(self.stopCamIval(avId))

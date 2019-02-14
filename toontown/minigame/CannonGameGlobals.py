@@ -1,5 +1,3 @@
-
-
 TowerYRange = 200
 GameTime = 90
 MAX_SCORE = 23

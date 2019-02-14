@@ -4,25 +4,14 @@ from pandac.PandaModules import NodePath
 
 
 class NodePathEntityBase:
-
     def initNodePathAttribs(self, doReparent=1):
-        self.callSetters(
-            'pos',
-            'x',
-            'y',
-            'z',
-            'hpr',
-            'h',
-            'p',
-            'r',
-            'scale',
-            'sx',
-            'sy',
-            'sz')
+        self.callSetters('pos', 'x', 'y', 'z', 'hpr', 'h', 'p', 'r', 'scale',
+                         'sx', 'sy', 'sz')
         if doReparent:
             self.callSetters('parentEntId')
 
-        self.getNodePath().setName('%s-%s' % (self.__class__.__name__, self.entId))
+        self.getNodePath().setName(
+            '%s-%s' % (self.__class__.__name__, self.entId))
         if __dev__:
             self.getNodePath().setTag('entity', '1')
 
@@ -36,7 +25,6 @@ class NodePathEntityBase:
 
 
 class NodePathAttribs(NodePathEntityBase):
-
     def initNodePathAttribs(self, doReparent=1):
         NodePathEntityBase.initNodePathAttribs(self, doReparent)
 
@@ -48,7 +36,6 @@ class NodePathAttribs(NodePathEntityBase):
 
 
 class NodePathAndAttribs(NodePathEntityBase, NodePath):
-
     def __init__(self):
         node = hidden.attachNewNode('EntityNodePath')
         NodePath.__init__(self, node)
@@ -65,7 +52,6 @@ class NodePathAndAttribs(NodePathEntityBase, NodePath):
 
 
 class NodePathAttribsProxy(NodePathEntityBase):
-
     def initNodePathAttribs(self, doReparent=1):
         NodePathEntityBase.initNodePathAttribs(self, doReparent)
 
@@ -113,7 +99,6 @@ class NodePathAttribsProxy(NodePathEntityBase):
 
 
 class NodePathEntity(Entity.Entity, NodePath, NodePathAttribs):
-
     def __init__(self, level, entId):
         node = hidden.attachNewNode('NodePathEntity')
         NodePath.__init__(self, node)
@@ -126,11 +111,8 @@ class NodePathEntity(Entity.Entity, NodePath, NodePathAttribs):
         self.removeNode()
 
 
-class DistributedNodePathEntity(
-        DistributedEntity.DistributedEntity,
-        NodePath,
-        NodePathAttribs):
-
+class DistributedNodePathEntity(DistributedEntity.DistributedEntity, NodePath,
+                                NodePathAttribs):
     def __init__(self, cr):
         DistributedEntity.DistributedEntity.__init__(self, cr)
 

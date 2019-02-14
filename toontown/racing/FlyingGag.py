@@ -6,7 +6,6 @@ from otp.avatar.ShadowCaster import ShadowCaster
 
 
 class FlyingGag(NodePath, ShadowCaster):
-
     def __init__(self, name, geom=None):
         an = ActorNode('flyingGagAN')
         NodePath.__init__(self, an)

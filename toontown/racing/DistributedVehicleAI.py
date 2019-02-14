@@ -9,9 +9,8 @@ if __debug__:
     import pdb
 
 
-class DistributedVehicleAI(
-        DistributedSmoothNodeAI.DistributedSmoothNodeAI,
-        FSM.FSM):
+class DistributedVehicleAI(DistributedSmoothNodeAI.DistributedSmoothNodeAI,
+                           FSM.FSM):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedVehicleAI')
 
@@ -20,8 +19,7 @@ class DistributedVehicleAI(
         DistributedSmoothNodeAI.DistributedSmoothNodeAI.__init__(self, air)
         FSM.FSM.__init__(self, 'DistributedVehicleAI')
         self.driverId = 0
-        self.kartDNA = [
-            -1] * getNumFields()
+        self.kartDNA = [-1] * getNumFields()
         self._DistributedVehicleAI__initDNA()
         self.request('Off')
 
@@ -45,13 +43,10 @@ class DistributedVehicleAI(
             self.kartDNA[KartDNA.decalType] = owner.getKartDecalType()
         else:
             self.notify.warning(
-                '__initDNA - OWNER %s OF KART NOT FOUND!' %
-                self.ownerId)
+                '__initDNA - OWNER %s OF KART NOT FOUND!' % self.ownerId)
 
     def d_setState(self, state, avId):
-        self.sendUpdate('setState', [
-            state,
-            avId])
+        self.sendUpdate('setState', [state, avId])
 
     def requestControl(self):
         avId = self.air.getAvatarIdFromSender()
@@ -82,28 +77,12 @@ class DistributedVehicleAI(
     def enterControlled(self, avId):
         self.driverId = avId
         fieldList = [
-            'setComponentL',
-            'setComponentX',
-            'setComponentY',
-            'setComponentZ',
-            'setComponentH',
-            'setComponentP',
-            'setComponentR',
-            'setComponentT',
-            'setSmStop',
-            'setSmH',
-            'setSmZ',
-            'setSmXY',
-            'setSmXZ',
-            'setSmPos',
-            'setSmHpr',
-            'setSmXYH',
-            'setSmXYZH',
-            'setSmPosHpr',
-            'setSmPosHprL',
-            'clearSmoothing',
-            'suggestResync',
-            'returnResync']
+            'setComponentL', 'setComponentX', 'setComponentY', 'setComponentZ',
+            'setComponentH', 'setComponentP', 'setComponentR', 'setComponentT',
+            'setSmStop', 'setSmH', 'setSmZ', 'setSmXY', 'setSmXZ', 'setSmPos',
+            'setSmHpr', 'setSmXYH', 'setSmXYZH', 'setSmPosHpr', 'setSmPosHprL',
+            'clearSmoothing', 'suggestResync', 'returnResync'
+        ]
         self.air.setAllowClientSend(avId, self, fieldNameList=fieldList)
         self.d_setState('C', self.driverId)
 

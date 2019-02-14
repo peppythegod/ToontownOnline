@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_11/models/lawbotHQ/LB_Zone7a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     100008: {
         'type': 'healBarrel',
         'name': '<unnamed>',
@@ -34,7 +37,8 @@ GlobalEntities = {
         'hpr': Vec3(218.47999999999999, 0, 0),
         'scale': Vec3(1, 1, 1),
         'rewardPerGrab': 20,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     100000: {
         'type': 'model',
         'name': '<unnamed>',
@@ -46,7 +50,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX2'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX2'
+    },
     100002: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -58,7 +63,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX3'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX3'
+    },
     100003: {
         'type': 'model',
         'name': 'copy of <unnamed> (2)',
@@ -70,7 +76,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'
+    },
     100004: {
         'type': 'model',
         'name': 'copy of <unnamed> (3)',
@@ -82,7 +89,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX2'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX2'
+    },
     100005: {
         'type': 'model',
         'name': 'copy of <unnamed> (4)',
@@ -94,7 +102,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX2'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBoxX2'
+    },
     100009: {
         'type': 'model',
         'name': 'copy of <unnamed> (4)',
@@ -106,7 +115,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_metal_crate'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_metal_crate'
+    },
     100017: {
         'type': 'model',
         'name': 'copy of <unnamed> (3)',
@@ -114,11 +124,13 @@ GlobalEntities = {
         'parentEntId': 100001,
         'pos': Point3(-7.9470400000000003, -1.5659099999999999, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Point3(2.2999999999999998, 2.9199999999999999, 2.9199999999999999),
+        'scale': Point3(2.2999999999999998, 2.9199999999999999,
+                        2.9199999999999999),
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'
+    },
     100012: {
         'type': 'mover',
         'name': 'mover',
@@ -136,7 +148,8 @@ GlobalEntities = {
         'pos1Move': 2,
         'pos1Wait': 2,
         'startOn': 1,
-        'switchId': 0},
+        'switchId': 0
+    },
     100001: {
         'type': 'nodepath',
         'name': 'crateMaster',
@@ -144,7 +157,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     100011: {
         'type': 'nodepath',
         'name': 'spotlightMover',
@@ -152,7 +166,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(29.817900000000002, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100013: {
         'type': 'nodepath',
         'name': 'mover target',
@@ -160,7 +175,8 @@ GlobalEntities = {
         'parentEntId': 100011,
         'pos': Point3(0, 10, 0),
         'hpr': Point3(180, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100015: {
         'type': 'nodepath',
         'name': 'lightTarget1',
@@ -168,7 +184,8 @@ GlobalEntities = {
         'parentEntId': 100011,
         'pos': Point3(0, -10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     100016: {
         'type': 'nodepath',
         'name': 'copy of lightTarget1',
@@ -176,7 +193,8 @@ GlobalEntities = {
         'parentEntId': 100011,
         'pos': Point3(0, 10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100010: {
         'type': 'platform',
         'name': '<unnamed>',
@@ -192,7 +210,8 @@ GlobalEntities = {
         'offset': Point3(0, 0, 15),
         'period': 4.0,
         'phaseShift': 0.0,
-        'waitPercent': 0.10000000000000001},
+        'waitPercent': 0.10000000000000001
+    },
     100014: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -211,7 +230,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 100015,
         'trackTarget2': 100016,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     100006: {
         'type': 'stomper',
         'name': 'copy of <unnamed>',
@@ -240,7 +260,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     100007: {
         'type': 'stomper',
         'name': 'copy of <unnamed>',
@@ -269,7 +290,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     100018: {
         'type': 'stomper',
         'name': '<unnamed>',
@@ -298,9 +320,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0}}
+        'zOffset': 0
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

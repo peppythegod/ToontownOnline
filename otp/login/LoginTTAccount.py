@@ -15,8 +15,7 @@ class LoginTTAccount(LoginBase.LoginBase, TTAccount.TTAccount):
         TTAccount.TTAccount.__init__(self, cr)
         self.useTTSpecificLogin = base.config.GetBool('tt-specific-login', 0)
         self.notify.info(
-            'self.useTTSpecificLogin =%s' %
-            self.useTTSpecificLogin)
+            'self.useTTSpecificLogin =%s' % self.useTTSpecificLogin)
 
     def supportsRelogin(self):
         return 1
@@ -75,9 +74,7 @@ class LoginTTAccount(LoginBase.LoginBase, TTAccount.TTAccount):
             try:
                 errorMsg = self.talk(
                     'authenticateParentUsernameAndPassword',
-                    data=self.makeLoginDict(
-                        loginName,
-                        parentPassword))
+                    data=self.makeLoginDict(loginName, parentPassword))
                 if not errorMsg:
                     return (1, None)
 
@@ -94,9 +91,7 @@ class LoginTTAccount(LoginBase.LoginBase, TTAccount.TTAccount):
             try:
                 errorMsg = self.talk(
                     'authenticateParentPasswordNewStyle',
-                    data=self.makeLoginDict(
-                        loginName,
-                        parentPassword))
+                    data=self.makeLoginDict(loginName, parentPassword))
                 if not errorMsg:
                     return (1, None)
 
@@ -117,9 +112,7 @@ class LoginTTAccount(LoginBase.LoginBase, TTAccount.TTAccount):
             try:
                 errorMsg = self.talk(
                     'authenticateDeleteNewStyle',
-                    data=self.makeLoginDict(
-                        loginName,
-                        password))
+                    data=self.makeLoginDict(loginName, password))
                 if not errorMsg:
                     return (1, None)
 

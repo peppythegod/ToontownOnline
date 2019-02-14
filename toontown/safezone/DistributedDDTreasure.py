@@ -2,7 +2,6 @@ import DistributedSZTreasure
 
 
 class DistributedDDTreasure(DistributedSZTreasure.DistributedSZTreasure):
-
     def __init__(self, cr):
         DistributedSZTreasure.DistributedSZTreasure.__init__(self, cr)
         self.modelPath = 'phase_6/models/props/starfish_treasure'

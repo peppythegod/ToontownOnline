@@ -15,8 +15,7 @@ def decodeTTSCToontaskMsg(taskId, toNpcId, toonProgress, msgIndex):
 
     msgs = q.getSCStrings(toNpcId, toonProgress)
     if not isinstance(msgs, type([])):
-        msgs = [
-            msgs]
+        msgs = [msgs]
 
     if msgIndex >= len(msgs):
         return None
@@ -25,7 +24,6 @@ def decodeTTSCToontaskMsg(taskId, toNpcId, toonProgress, msgIndex):
 
 
 class TTSCToontaskTerminal(SCTerminal):
-
     def __init__(self, msg, taskId, toNpcId, toonProgress, msgIndex):
         SCTerminal.__init__(self)
         self.msg = msg
@@ -39,8 +37,6 @@ class TTSCToontaskTerminal(SCTerminal):
 
     def handleSelect(self):
         SCTerminal.handleSelect(self)
-        messenger.send(self.getEventName(TTSCToontaskMsgEvent), [
-            self.taskId,
-            self.toNpcId,
-            self.toonProgress,
-            self.msgIndex])
+        messenger.send(
+            self.getEventName(TTSCToontaskMsgEvent),
+            [self.taskId, self.toNpcId, self.toonProgress, self.msgIndex])

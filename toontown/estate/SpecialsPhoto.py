@@ -50,15 +50,9 @@ class DirectRegion(NodePath):
             newBounds = card.getTightBounds()
             ll = render2d.getRelativePoint(card, newBounds[0])
             ur = render2d.getRelativePoint(card, newBounds[1])
-            newBounds = [
-                ll.getX(),
-                ur.getX(),
-                ll.getZ(),
-                ur.getZ()]
-            newBounds = map(
-                lambda x: max(
-                    0.0, min(
-                        1.0, (x + 1.0) / 2.0)), newBounds)
+            newBounds = [ll.getX(), ur.getX(), ll.getZ(), ur.getZ()]
+            newBounds = map(lambda x: max(0.0, min(1.0, (x + 1.0) / 2.0)),
+                            newBounds)
             self.cDr = base.win.makeDisplayRegion(*newBounds)
             self.cDr.setSort(10)
             self.cDr.setClearColor(card.getColor())
@@ -98,11 +92,8 @@ class SpecialsPhoto(NodePath):
             self.background.destroy()
             del self.background
 
-        if hasattr(
-                self,
-                'specialsFrame') and hasattr(
-                self.specialsFrame,
-                'destroy'):
+        if hasattr(self, 'specialsFrame') and hasattr(self.specialsFrame,
+                                                      'destroy'):
             self.specialsFrame.destroy()
 
         if hasattr(self, 'toonStatuary'):
@@ -158,7 +149,8 @@ class SpecialsPhoto(NodePath):
             self.toonStatuary.setupStoneToon(base.localAvatar.style)
             self.toonStatuary.poseToonFromSpecialsIndex(specialsIndex)
             self.toonStatuary.toon.setH(180)
-            pedestalModelPath = GardenGlobals.Specials[specialsIndex]['photoModel']
+            pedestalModelPath = GardenGlobals.Specials[specialsIndex][
+                'photoModel']
             pedestal = loader.loadModel(pedestalModelPath)
             self.toonStatuary.toon.reparentTo(pedestal)
             pedestal.setScale(
@@ -170,15 +162,11 @@ class SpecialsPhoto(NodePath):
             anims = GardenGlobals.Specials[specialsIndex]['photoAnimation']
             animPath = modelPath + anims[1]
             model.loadModel(modelPath + anims[0])
-            model.loadAnims(dict([
-                [
-                    anims[1],
-                    animPath]]))
+            model.loadAnims(dict([[anims[1], animPath]]))
             frameNo = random.randint(1, 2)
             model.pose(anims[1], 1)
-            model.setScale(
-                GardenGlobals.Specials[specialsIndex]['photoScale'] *
-                0.10000000000000001)
+            model.setScale(GardenGlobals.Specials[specialsIndex]['photoScale']
+                           * 0.10000000000000001)
             return model
         else:
             modelName = GardenGlobals.Specials[specialsIndex]['photoModel']
@@ -186,11 +174,11 @@ class SpecialsPhoto(NodePath):
             desat = None
             colorTuple = (1, 1, 1)
             if desat and not desat.isEmpty():
-                desat.setColorScale(
-                    colorTuple[0], colorTuple[1], colorTuple[2], 1.0)
+                desat.setColorScale(colorTuple[0], colorTuple[1],
+                                    colorTuple[2], 1.0)
             else:
-                nodePath.setColorScale(
-                    colorTuple[0], colorTuple[1], colorTuple[2], 1.0)
+                nodePath.setColorScale(colorTuple[0], colorTuple[1],
+                                       colorTuple[2], 1.0)
             nodePath.setScale(
                 GardenGlobals.Specials[specialsIndex]['photoScale'] * 0.5)
             return nodePath

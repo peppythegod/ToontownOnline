@@ -10,11 +10,8 @@ from direct.fsm import State
 from direct.task import Task
 
 
-class Lock(
-        DistributedDoorEntityBase.LockBase,
-        DirectObject.DirectObject,
-        FourStateAI.FourStateAI):
-
+class Lock(DistributedDoorEntityBase.LockBase, DirectObject.DirectObject,
+           FourStateAI.FourStateAI):
     def __init__(self, door, lockIndex, event, isUnlocked):
         self.door = door
         self.lockIndex = lockIndex
@@ -61,9 +58,7 @@ class Lock(
 
 class DistributedDoorEntityAI(
         DistributedDoorEntityBase.DistributedDoorEntityBase,
-        DistributedEntityAI.DistributedEntityAI,
-        FourStateAI.FourStateAI):
-
+        DistributedEntityAI.DistributedEntityAI, FourStateAI.FourStateAI):
     def __init__(self, level, entId, zoneId=None):
         self.entId = entId
         self._isGenerated = 0
@@ -89,22 +84,22 @@ class DistributedDoorEntityAI(
     def getLocksState(self):
         stateBits = 0
         if hasattr(self, 'locks'):
-            stateBits = self.locks[0].getLockState() & 15 | self.locks[1].getLockState(
+            stateBits = self.locks[0].getLockState(
+            ) & 15 | self.locks[1].getLockState(
             ) << 4 & 240 | self.locks[2].getLockState() << 8 & 3840
 
         return stateBits
 
     def sendLocksState(self):
         if self._isGenerated:
-            self.sendUpdate('setLocksState', [
-                self.getLocksState()])
+            self.sendUpdate('setLocksState', [self.getLocksState()])
 
     def getDoorState(self):
         r = (self.stateIndex, globalClockDelta.getRealNetworkTime())
         return r
 
     def getName(self):
-        return 'door-%s' % (self.entId,)
+        return 'door-%s' % (self.entId, )
 
     def setup(self):
         if not hasattr(self, 'unlock0Event'):
@@ -134,7 +129,8 @@ class DistributedDoorEntityAI(
         self.locks = [
             Lock(self, 0, self.unlock0Event, self.isLock0Unlocked),
             Lock(self, 1, self.unlock1Event, self.isLock1Unlocked),
-            Lock(self, 2, self.unlock2Event, self.isLock2Unlocked)]
+            Lock(self, 2, self.unlock2Event, self.isLock2Unlocked)
+        ]
         del self.unlock0Event
         del self.unlock1Event
         del self.unlock2Event
@@ -172,8 +168,7 @@ class DistributedDoorEntityAI(
 
     def changedOnState(self, isOn):
         if hasattr(self, 'entId'):
-            messenger.send(self.getOutputEventName(), [
-                not isOn])
+            messenger.send(self.getOutputEventName(), [not isOn])
 
     def setIsOpen(self, isOpen):
         self.setIsOn(not isOpen)

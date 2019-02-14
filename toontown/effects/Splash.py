@@ -39,26 +39,21 @@ class Splash(NodePath):
         animDuration = self.splashdown.getDuration(
             'splashdown') * 0.65000000000000002
         rippleSequence = Sequence(
-            Func(
-                self.splashdown.show), Func(
-                self.splashdown.play, 'splashdown'), Wait(animDuration), Func(
-                self.splashdown.hide))
+            Func(self.splashdown.show), Func(self.splashdown.play,
+                                             'splashdown'), Wait(animDuration),
+            Func(self.splashdown.hide))
         if self.wantParticles:
             particleSequence = Sequence(
-                Func(
-                    self.pSystem.show), Func(
-                    self.particles.induceLabor), Func(
-                    self.pSystem.start, self), Wait(2.2000000000000002), Func(
-                    self.pSystem.hide), Func(
-                        self.pSystem.disable))
+                Func(self.pSystem.show), Func(self.particles.induceLabor),
+                Func(self.pSystem.start, self), Wait(2.2000000000000002),
+                Func(self.pSystem.hide), Func(self.pSystem.disable))
         else:
             particleSequence = Sequence()
         self.track = Sequence(
-            Func(
-                self.show), Parallel(
-                self.ripples.track, rippleSequence, particleSequence), Func(
-                self.hide), name='splashdown-%d-track' %
-            self.trackId)
+            Func(self.show),
+            Parallel(self.ripples.track, rippleSequence, particleSequence),
+            Func(self.hide),
+            name='splashdown-%d-track' % self.trackId)
 
     def play(self, rate=1):
         self.stop()

@@ -100,10 +100,7 @@ class DistributedFireworksCannon(
             self.notify.warning('unknown mode in setMovie: %s' % mode)
 
     def setPosition(self, x, y, z):
-        self.pos = [
-            x,
-            y,
-            z]
+        self.pos = [x, y, z]
         self.geom.setPos(x, y, z)
 
     def localShootFirework(self, index):

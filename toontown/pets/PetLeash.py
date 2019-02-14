@@ -3,7 +3,6 @@ from otp.movement import Impulse
 
 
 class PetLeash(Impulse.Impulse):
-
     def __init__(self, origin, length):
         Impulse.Impulse.__init__(self)
         self.origin = origin

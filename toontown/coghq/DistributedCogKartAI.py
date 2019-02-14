@@ -32,9 +32,7 @@ class DistributedCogKartAI(DistributedElevatorExtAI.DistributedElevatorExtAI):
         if numPlayers > 0:
             players = []
             for i in self.seats:
-                if i not in [
-                        None,
-                        0]:
+                if i not in [None, 0]:
                     players.append(i)
                     continue
 
@@ -59,7 +57,8 @@ class DistributedCogKartAI(DistributedElevatorExtAI.DistributedElevatorExtAI):
             for avId in avIdList:
                 if avId:
                     self.sendUpdateToAvatarId(
-                        avId, 'setCountryClubInteriorZoneForce', [countryClubZone])
+                        avId, 'setCountryClubInteriorZoneForce',
+                        [countryClubZone])
                     continue
 
     def getCountryClubId(self):

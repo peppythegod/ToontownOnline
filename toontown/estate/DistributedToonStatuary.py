@@ -13,7 +13,6 @@ from pandac.PandaModules import Point3
 
 
 def dnaCodeFromToonDNA(dna):
-
     def findItemNumInList(wantItem, wantList):
         i = 0
         for item in wantList:
@@ -45,27 +44,12 @@ class DistributedToonStatuary(DistributedStatuary.DistributedStatuary):
 
     def loadModel(self):
         DistributedStatuary.DistributedStatuary.loadModel(self)
-        self.model.setScale(
-            self.worldScale * 1.5,
-            self.worldScale * 1.5,
-            self.worldScale)
+        self.model.setScale(self.worldScale * 1.5, self.worldScale * 1.5,
+                            self.worldScale)
         self.getToonPropertiesFromOptional()
         dna = ToonDNA.ToonDNA()
-        dna.newToonFromProperties(
-            self.headType,
-            self.torsoType,
-            self.legType,
-            self.gender,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0)
+        dna.newToonFromProperties(self.headType, self.torsoType, self.legType,
+                                  self.gender, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         self.setupStoneToon(dna)
         self.poseToonFromTypeIndex(self.typeIndex)
         self.toon.reparentTo(self.model)
@@ -142,11 +126,8 @@ class DistributedToonStatuary(DistributedStatuary.DistributedStatuary):
                     self.toon.style.torso[1] == 's'
 
     def setStoneTexture(self):
-        gray = VBase4(
-            1.6000000000000001,
-            1.6000000000000001,
-            1.6000000000000001,
-            1)
+        gray = VBase4(1.6000000000000001, 1.6000000000000001,
+                      1.6000000000000001, 1)
         self.toon.setColor(gray, 10)
         stoneTex = loader.loadTexture('phase_5.5/maps/smoothwall_1.jpg')
         ts = TextureStage('ts')
@@ -155,14 +136,10 @@ class DistributedToonStatuary(DistributedStatuary.DistributedStatuary):
         tsDetail = TextureStage('tsDetail')
         tsDetail.setPriority(2)
         tsDetail.setSort(10)
-        tsDetail.setCombineRgb(
-            tsDetail.CMInterpolate,
-            tsDetail.CSTexture,
-            tsDetail.COSrcColor,
-            tsDetail.CSPrevious,
-            tsDetail.COSrcColor,
-            tsDetail.CSConstant,
-            tsDetail.COSrcColor)
+        tsDetail.setCombineRgb(tsDetail.CMInterpolate, tsDetail.CSTexture,
+                               tsDetail.COSrcColor, tsDetail.CSPrevious,
+                               tsDetail.COSrcColor, tsDetail.CSConstant,
+                               tsDetail.COSrcColor)
         tsDetail.setColor(VBase4(0.5, 0.5, 0.5, 1))
         if self.toon.hasLOD():
             for lodName in self.toon.getLODNames():
@@ -170,12 +147,8 @@ class DistributedToonStatuary(DistributedStatuary.DistributedStatuary):
                 eyes = head.find('**/eye*')
                 if not eyes.isEmpty():
                     eyes.setColor(
-                        Vec4(
-                            1.3999999999999999,
-                            1.3999999999999999,
-                            1.3999999999999999,
-                            0.29999999999999999),
-                        10)
+                        Vec4(1.3999999999999999, 1.3999999999999999,
+                             1.3999999999999999, 0.29999999999999999), 10)
 
                 ears = head.find('**/ears*')
                 animal = self.toon.style.getAnimal()
@@ -193,12 +166,8 @@ class DistributedToonStatuary(DistributedStatuary.DistributedStatuary):
                     elif self.speciesType == 'monkey':
                         ears.setTexture(tsDetail, stoneTex)
                         ears.setColor(
-                            VBase4(
-                                0.59999999999999998,
-                                0.90000000000000002,
-                                1,
-                                1),
-                            10)
+                            VBase4(0.59999999999999998, 0.90000000000000002, 1,
+                                   1), 10)
 
                 if muzzle != muzzle.notFound():
                     muzzle.setTexture(tsDetail, stoneTex)

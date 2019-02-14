@@ -30,10 +30,7 @@ class JukeboxGui(DirectObject):
         self._windowFrame = DirectFrame(
             image=guiNode.find('**/background'),
             relief=None,
-            pos=(
-                0,
-                0,
-                0),
+            pos=(0, 0, 0),
             scale=0.69999999999999996)
         self._songFrame = DirectFrame(
             image=guiNode.find('**/songTitle_background'),
@@ -51,26 +48,29 @@ class JukeboxGui(DirectObject):
             parent=self._windowFrame,
             text=TTLocalizer.JukeboxCurrentSongNothing,
             scale=TTLocalizer.JGsongNameLabel)
-        (self._queueList, self._queueLabel) = self._JukeboxGui__createLabeledScrolledList(
-            guiNode, 'queue', label=TTLocalizer.JukeboxQueueLabel, parent=self._windowFrame)
-        (self._songsList, self._songsLabel) = self._JukeboxGui__createLabeledScrolledList(
-            guiNode, 'songs', label=TTLocalizer.JukeboxSongsLabel, parent=self._windowFrame)
+        (self._queueList,
+         self._queueLabel) = self._JukeboxGui__createLabeledScrolledList(
+             guiNode,
+             'queue',
+             label=TTLocalizer.JukeboxQueueLabel,
+             parent=self._windowFrame)
+        (self._songsList,
+         self._songsLabel) = self._JukeboxGui__createLabeledScrolledList(
+             guiNode,
+             'songs',
+             label=TTLocalizer.JukeboxSongsLabel,
+             parent=self._windowFrame)
         pos = guiNode.find('**/addButton_text_locator').getPos()
         self._addSongButton = self._JukeboxGui__createButton(
             guiNode,
             'addSongButton',
             parent=self._windowFrame,
             command=self._JukeboxGui__handleAddSongButtonClick,
-            image3_color=Vec4(
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998,
-                0.59999999999999998),
+            image3_color=Vec4(0.59999999999999998, 0.59999999999999998,
+                              0.59999999999999998, 0.59999999999999998),
             text=TTLocalizer.JukeboxAddSong,
             text_align=TextNode.ACenter,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=TTLocalizer.JGaddSongButton)
         self._closeButton = self._JukeboxGui__createButton(
             guiNode,
@@ -85,115 +85,80 @@ class JukeboxGui(DirectObject):
             command=self._JukeboxGui__handleCloseButtonClick,
             text=TTLocalizer.JukeboxClose,
             text_align=TextNode.ACenter,
-            text_pos=(
-                pos[0],
-                pos[2]),
+            text_pos=(pos[0], pos[2]),
             text_scale=0.080000000000000002)
         self._moveToTopButton = self._JukeboxGui__createButton(
-            guiNode, 'moveToTop', command=self._JukeboxGui__handleMoveToTopButtonClick)
+            guiNode,
+            'moveToTop',
+            command=self._JukeboxGui__handleMoveToTopButtonClick)
         guiNode.removeNode()
         self._loaded = True
 
-    def _JukeboxGui__createButton(
-            self,
-            guiNode,
-            imagePrefix,
-            parent=hidden,
-            **kwargs):
+    def _JukeboxGui__createButton(self,
+                                  guiNode,
+                                  imagePrefix,
+                                  parent=hidden,
+                                  **kwargs):
         return DirectButton(
             parent=parent,
             relief=None,
-            image=(
-                guiNode.find(
-                    '**/%s_up' %
-                    imagePrefix),
-                guiNode.find(
-                    '**/%s_down' %
-                    imagePrefix),
-                guiNode.find(
-                    '**/%s_rollover' %
-                    imagePrefix)),
+            image=(guiNode.find('**/%s_up' % imagePrefix),
+                   guiNode.find('**/%s_down' % imagePrefix),
+                   guiNode.find('**/%s_rollover' % imagePrefix)),
             **None)
 
-    def _JukeboxGui__createLabel(
-            self,
-            guiNode,
-            locatorPrefix,
-            parent=hidden,
-            **kwargs):
+    def _JukeboxGui__createLabel(self,
+                                 guiNode,
+                                 locatorPrefix,
+                                 parent=hidden,
+                                 **kwargs):
         return DirectLabel(
             parent=parent,
             relief=None,
-            pos=guiNode.find(
-                '**/%s_text_locator' %
-                locatorPrefix).getPos(),
+            pos=guiNode.find('**/%s_text_locator' % locatorPrefix).getPos(),
             **None)
 
-    def _JukeboxGui__createLabeledScrolledList(
-            self, guiNode, namePrefix, label, parent=hidden, **kwargs):
-        return (
-            DirectScrolledList(
-                parent=parent,
-                relief=None,
-                incButton_image=(
-                    guiNode.find(
-                        '**/%sButtonDown_up' %
-                        namePrefix),
-                    guiNode.find(
-                        '**/%sButtonDown_down' %
-                        namePrefix),
-                    guiNode.find(
-                        '**/%sButtonDown_rollover' %
-                        namePrefix)),
-                incButton_relief=None,
-                incButton_image3_color=Vec4(
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    0.59999999999999998),
-                decButton_image=(
-                    guiNode.find(
-                        '**/%sButtonUp_up' %
-                        namePrefix),
-                    guiNode.find(
-                        '**/%sButtonUp_down' %
-                        namePrefix),
-                    guiNode.find(
-                        '**/%sButtonUp_rollover' %
-                        namePrefix)),
-                decButton_relief=None,
-                decButton_image3_color=Vec4(
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    0.59999999999999998,
-                    0.59999999999999998),
-                image=guiNode.find(
-                    '**/%s_background' %
-                    namePrefix),
-                itemFrame_relief=None,
-                itemFrame_pos=guiNode.find(
-                    '**/%sList_locator' %
-                    namePrefix).getPos(),
-                itemFrame_scale=0.070000000000000007,
-                numItemsVisible=TTLocalizer.JGnumItemsVisible,
-                items=[],
-                **None),
-            self._JukeboxGui__createLabel(
-                guiNode,
-                namePrefix,
-                parent=parent,
-                text=label,
-                text_fg=(
-                    0.5,
-                    1.0,
-                    1.0,
-                    1.0),
-                text_shadow=(
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0),
-                scale=0.12))
+    def _JukeboxGui__createLabeledScrolledList(self,
+                                               guiNode,
+                                               namePrefix,
+                                               label,
+                                               parent=hidden,
+                                               **kwargs):
+        return (DirectScrolledList(
+            parent=parent,
+            relief=None,
+            incButton_image=(guiNode.find('**/%sButtonDown_up' % namePrefix),
+                             guiNode.find('**/%sButtonDown_down' % namePrefix),
+                             guiNode.find(
+                                 '**/%sButtonDown_rollover' % namePrefix)),
+            incButton_relief=None,
+            incButton_image3_color=Vec4(
+                0.59999999999999998, 0.59999999999999998, 0.59999999999999998,
+                0.59999999999999998),
+            decButton_image=(guiNode.find('**/%sButtonUp_up' % namePrefix),
+                             guiNode.find('**/%sButtonUp_down' % namePrefix),
+                             guiNode.find(
+                                 '**/%sButtonUp_rollover' % namePrefix)),
+            decButton_relief=None,
+            decButton_image3_color=Vec4(
+                0.59999999999999998, 0.59999999999999998, 0.59999999999999998,
+                0.59999999999999998),
+            image=guiNode.find('**/%s_background' % namePrefix),
+            itemFrame_relief=None,
+            itemFrame_pos=guiNode.find(
+                '**/%sList_locator' % namePrefix).getPos(),
+            itemFrame_scale=0.070000000000000007,
+            numItemsVisible=TTLocalizer.JGnumItemsVisible,
+            items=[],
+            **None),
+                self._JukeboxGui__createLabel(
+                    guiNode,
+                    namePrefix,
+                    parent=parent,
+                    text=label,
+                    text_fg=(0.5, 1.0, 1.0, 1.0),
+                    text_shadow=(0.0, 0.0, 0.0, 1.0),
+                    scale=0.12))
 
     def enable(self, timer=0):
         if not self.isLoaded():
@@ -242,13 +207,19 @@ class JukeboxGui(DirectObject):
 
     def addToSongList(self, text, phase, filename, length):
         listItem = DirectScrolledListItem(
-            relief=None, parent=self._songsList, text=text, text_align=TextNode.ALeft, text_pos=(
-                0.0, 0.0, 0.0), text_scale=TTLocalizer.JGlistItem, text_fg=(
-                0.0, 0.0, 0.0, 1.0), text1_fg=(
-                1.0, 1.0, 1.0, 1.0), text1_bg=(
-                    0.0, 0.0, 1.0, 1.0), text2_fg=(
-                        0.0, 0.0, 1.0, 1.0), text3_bg=(
-                            0.0, 0.80000000000000004, 0.0, 1.0), command=self._JukeboxGui__handleSongListItemSelect, extraArgs=[])
+            relief=None,
+            parent=self._songsList,
+            text=text,
+            text_align=TextNode.ALeft,
+            text_pos=(0.0, 0.0, 0.0),
+            text_scale=TTLocalizer.JGlistItem,
+            text_fg=(0.0, 0.0, 0.0, 1.0),
+            text1_fg=(1.0, 1.0, 1.0, 1.0),
+            text1_bg=(0.0, 0.0, 1.0, 1.0),
+            text2_fg=(0.0, 0.0, 1.0, 1.0),
+            text3_bg=(0.0, 0.80000000000000004, 0.0, 1.0),
+            command=self._JukeboxGui__handleSongListItemSelect,
+            extraArgs=[])
         listItem.setPythonTag('value', (phase, filename, length))
         self._songsList.addItem(listItem)
         return listItem
@@ -266,9 +237,9 @@ class JukeboxGui(DirectObject):
     def _JukeboxGui__handleAddSongButtonClick(self):
         if hasattr(self._songsList, 'currentSelected'):
             song = self._songsList.currentSelected
-            messenger.send(JukeboxGui.ADD_SONG_CLICK_EVENT, [
-                song['text'],
-                song.getPythonTag('value')])
+            messenger.send(
+                JukeboxGui.ADD_SONG_CLICK_EVENT,
+                [song['text'], song.getPythonTag('value')])
 
     def disableAddSongButton(self):
         self._addSongButton['state'] = DirectGuiGlobals.DISABLED
@@ -282,10 +253,7 @@ class JukeboxGui(DirectObject):
             parent=self._queueList,
             text=text,
             text_align=TextNode.ALeft,
-            text_pos=(
-                0.0,
-                0.0,
-                0.0),
+            text_pos=(0.0, 0.0, 0.0),
             text_scale=TTLocalizer.JGlistItem)
         self._queueList.addItem(listItem)
         if highlight:
@@ -323,10 +291,12 @@ class JukeboxGui(DirectObject):
             songName = songs.get(filename)
             if songName:
                 self._songNameLabel['text'] = songName
-                self._currentlyPlayingLabel['text'] = TTLocalizer.JukeboxCurrentlyPlaying
+                self._currentlyPlayingLabel[
+                    'text'] = TTLocalizer.JukeboxCurrentlyPlaying
 
     def clearSongCurrentlyPlaying(self):
-        self._currentlyPlayingLabel['text'] = TTLocalizer.JukeboxCurrentlyPlayingNothing
+        self._currentlyPlayingLabel[
+            'text'] = TTLocalizer.JukeboxCurrentlyPlayingNothing
         self._songNameLabel['text'] = TTLocalizer.JukeboxCurrentSongNothing
 
     def pushQueuedItemToTop(self, item):

@@ -8,7 +8,6 @@ def decodeSCStaticTextMsg(textId):
 
 
 class TTSCSingingTerminal(SCTerminal):
-
     def __init__(self, textId):
         SCTerminal.__init__(self)
         self.textId = textId
@@ -16,11 +15,8 @@ class TTSCSingingTerminal(SCTerminal):
 
     def handleSelect(self):
         SCTerminal.handleSelect(self)
-        messenger.send(self.getEventName(TTSCSingingMsgEvent), [
-            self.textId])
+        messenger.send(self.getEventName(TTSCSingingMsgEvent), [self.textId])
 
     def finalize(self):
-        args = {
-            'rolloverSound': None,
-            'clickSound': None}
+        args = {'rolloverSound': None, 'clickSound': None}
         SCTerminal.finalize(self, args)

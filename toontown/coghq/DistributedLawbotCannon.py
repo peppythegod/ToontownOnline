@@ -198,17 +198,13 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
     def _DistributedLawbotCannon__createCannon(self):
         self.barrel = self.cannon.find('**/cannon')
         self.cannonLocation = Point3(0, 0, 0.025000000000000001)
-        self.cannonPosition = [
-            0,
-            CANNON_ANGLE_MIN]
+        self.cannonPosition = [0, CANNON_ANGLE_MIN]
         self.cannon.setPos(self.cannonLocation)
         self._DistributedLawbotCannon__updateCannonPosition(self.avId)
 
     def updateCannonPosition(self, avId, zRot, angle):
         if avId != self.localAvId:
-            self.cannonPosition = [
-                zRot,
-                angle]
+            self.cannonPosition = [zRot, angle]
             self._DistributedLawbotCannon__updateCannonPosition(avId)
 
     def _DistributedLawbotCannon__updateCannonPosition(self, avId):
@@ -261,8 +257,7 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
                 self.av.reparentTo(self.cannon)
             else:
                 self.notify.warning(
-                    'Unknown avatar %d in cannon %d' %
-                    (self.avId, self.doId))
+                    'Unknown avatar %d in cannon %d' % (self.avId, self.doId))
         else:
             self.notify.warning('unhandled case, mode = %d' % mode)
 
@@ -279,103 +274,59 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         self.aimPad = DirectFrame(
             image=cannonGui.find('**/CannonFire_PAD'),
             relief=None,
-            pos=(
-                0.69999999999999996,
-                0,
-                -0.55333299999999996),
+            pos=(0.69999999999999996, 0, -0.55333299999999996),
             scale=0.80000000000000004)
         cannonGui.removeNode()
         self.fireButton = DirectButton(
             parent=self.aimPad,
-            image=(
-                (guiModel,
-                 '**/Fire_Btn_UP'),
-                (guiModel,
-                 '**/Fire_Btn_DN'),
-                (guiModel,
-                 '**/Fire_Btn_RLVR')),
+            image=((guiModel, '**/Fire_Btn_UP'), (guiModel, '**/Fire_Btn_DN'),
+                   (guiModel, '**/Fire_Btn_RLVR')),
             relief=None,
-            pos=(
-                0.0115741,
-                0,
-                0.0050505100000000002),
+            pos=(0.0115741, 0, 0.0050505100000000002),
             scale=1.0,
             command=self._DistributedLawbotCannon__firePressed)
         self.upButton = DirectButton(
             parent=self.aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                0.0115741,
-                0,
-                0.221717))
+            pos=(0.0115741, 0, 0.221717))
         self.downButton = DirectButton(
             parent=self.aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                0.0136112,
-                0,
-                -0.21010100000000001),
-            image_hpr=(
-                0,
-                0,
-                180))
+            pos=(0.0136112, 0, -0.21010100000000001),
+            image_hpr=(0, 0, 180))
         self.leftButton = DirectButton(
             parent=self.aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                -0.199352,
-                0,
-                -0.00050526900000000003),
-            image_hpr=(
-                0,
-                0,
-                -90))
+            pos=(-0.199352, 0, -0.00050526900000000003),
+            image_hpr=(0, 0, -90))
         self.rightButton = DirectButton(
             parent=self.aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                0.219167,
-                0,
-                -0.0010102399999999999),
-            image_hpr=(
-                0,
-                0,
-                90))
+            pos=(0.219167, 0, -0.0010102399999999999),
+            image_hpr=(0, 0, 90))
         guiClose = loader.loadModel('phase_3.5/models/gui/avatar_panel_gui')
         cannonBallText = '%d/%d' % (self.cannonBallsLeft,
                                     ToontownGlobals.LawbotBossCannonBallMax)
         self.cannonBallLabel = DirectLabel(
-            parent=self.aimPad, text=cannonBallText, text_fg=VBase4(
-                1, 1, 1, 1), text_align=TextNode.ACenter, relief=None, pos=(
-                0.47499999999999998, 0.0, -0.34999999999999998), scale=0.25)
+            parent=self.aimPad,
+            text=cannonBallText,
+            text_fg=VBase4(1, 1, 1, 1),
+            text_align=TextNode.ACenter,
+            relief=None,
+            pos=(0.47499999999999998, 0.0, -0.34999999999999998),
+            scale=0.25)
         if self.cannonBallsLeft < 5:
             if self.flashingLabel:
                 self.flashingLabel.stop()
@@ -383,13 +334,11 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
             flashingTrack = Sequence()
             for i in range(10):
                 flashingTrack.append(
-                    LerpColorScaleInterval(
-                        self.cannonBallLabel, 0.5, VBase4(
-                            1, 0, 0, 1)))
+                    LerpColorScaleInterval(self.cannonBallLabel, 0.5,
+                                           VBase4(1, 0, 0, 1)))
                 flashingTrack.append(
-                    LerpColorScaleInterval(
-                        self.cannonBallLabel, 0.5, VBase4(
-                            1, 1, 1, 1)))
+                    LerpColorScaleInterval(self.cannonBallLabel, 0.5,
+                                           VBase4(1, 1, 1, 1)))
 
             self.flashingLabel = flashingTrack
             self.flashingLabel.start()
@@ -399,26 +348,17 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         def bindButton(button, upHandler, downHandler):
             button.bind(DGG.B1PRESS, lambda x, handler=upHandler: handler())
             button.bind(
-                DGG.B1RELEASE,
-                lambda x,
-                handler=downHandler: handler())
+                DGG.B1RELEASE, lambda x, handler=downHandler: handler())
 
-        bindButton(
-            self.upButton,
-            self._DistributedLawbotCannon__upPressed,
-            self._DistributedLawbotCannon__upReleased)
-        bindButton(
-            self.downButton,
-            self._DistributedLawbotCannon__downPressed,
-            self._DistributedLawbotCannon__downReleased)
-        bindButton(
-            self.leftButton,
-            self._DistributedLawbotCannon__leftPressed,
-            self._DistributedLawbotCannon__leftReleased)
-        bindButton(
-            self.rightButton,
-            self._DistributedLawbotCannon__rightPressed,
-            self._DistributedLawbotCannon__rightReleased)
+        bindButton(self.upButton, self._DistributedLawbotCannon__upPressed,
+                   self._DistributedLawbotCannon__upReleased)
+        bindButton(self.downButton, self._DistributedLawbotCannon__downPressed,
+                   self._DistributedLawbotCannon__downReleased)
+        bindButton(self.leftButton, self._DistributedLawbotCannon__leftPressed,
+                   self._DistributedLawbotCannon__leftReleased)
+        bindButton(self.rightButton,
+                   self._DistributedLawbotCannon__rightPressed,
+                   self._DistributedLawbotCannon__rightReleased)
         self._DistributedLawbotCannon__enableAimInterface()
         self.madeGui = 1
 
@@ -452,19 +392,15 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
 
     def _DistributedLawbotCannon__enableAimInterface(self):
         self.aimPad.show()
-        self.accept(
-            self.FIRE_KEY,
-            self._DistributedLawbotCannon__fireKeyPressed)
+        self.accept(self.FIRE_KEY,
+                    self._DistributedLawbotCannon__fireKeyPressed)
         self.accept(self.UP_KEY, self._DistributedLawbotCannon__upKeyPressed)
-        self.accept(
-            self.DOWN_KEY,
-            self._DistributedLawbotCannon__downKeyPressed)
-        self.accept(
-            self.LEFT_KEY,
-            self._DistributedLawbotCannon__leftKeyPressed)
-        self.accept(
-            self.RIGHT_KEY,
-            self._DistributedLawbotCannon__rightKeyPressed)
+        self.accept(self.DOWN_KEY,
+                    self._DistributedLawbotCannon__downKeyPressed)
+        self.accept(self.LEFT_KEY,
+                    self._DistributedLawbotCannon__leftKeyPressed)
+        self.accept(self.RIGHT_KEY,
+                    self._DistributedLawbotCannon__rightKeyPressed)
         self._DistributedLawbotCannon__spawnLocalCannonMoveTask()
 
     def _DistributedLawbotCannon__disableAimInterface(self):
@@ -483,57 +419,49 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
 
     def _DistributedLawbotCannon__fireKeyPressed(self):
         self.ignore(self.FIRE_KEY)
-        self.accept(
-            self.FIRE_KEY + '-up',
-            self._DistributedLawbotCannon__fireKeyReleased)
+        self.accept(self.FIRE_KEY + '-up',
+                    self._DistributedLawbotCannon__fireKeyReleased)
         self._DistributedLawbotCannon__firePressed()
 
     def _DistributedLawbotCannon__upKeyPressed(self):
         self.ignore(self.UP_KEY)
-        self.accept(
-            self.UP_KEY + '-up',
-            self._DistributedLawbotCannon__upKeyReleased)
+        self.accept(self.UP_KEY + '-up',
+                    self._DistributedLawbotCannon__upKeyReleased)
         self._DistributedLawbotCannon__upPressed()
 
     def _DistributedLawbotCannon__downKeyPressed(self):
         self.ignore(self.DOWN_KEY)
-        self.accept(
-            self.DOWN_KEY + '-up',
-            self._DistributedLawbotCannon__downKeyReleased)
+        self.accept(self.DOWN_KEY + '-up',
+                    self._DistributedLawbotCannon__downKeyReleased)
         self._DistributedLawbotCannon__downPressed()
 
     def _DistributedLawbotCannon__leftKeyPressed(self):
         self.ignore(self.LEFT_KEY)
-        self.accept(
-            self.LEFT_KEY + '-up',
-            self._DistributedLawbotCannon__leftKeyReleased)
+        self.accept(self.LEFT_KEY + '-up',
+                    self._DistributedLawbotCannon__leftKeyReleased)
         self._DistributedLawbotCannon__leftPressed()
 
     def _DistributedLawbotCannon__rightKeyPressed(self):
         self.ignore(self.RIGHT_KEY)
-        self.accept(
-            self.RIGHT_KEY + '-up',
-            self._DistributedLawbotCannon__rightKeyReleased)
+        self.accept(self.RIGHT_KEY + '-up',
+                    self._DistributedLawbotCannon__rightKeyReleased)
         self._DistributedLawbotCannon__rightPressed()
 
     def _DistributedLawbotCannon__fireKeyReleased(self):
         self.ignore(self.FIRE_KEY + '-up')
-        self.accept(
-            self.FIRE_KEY,
-            self._DistributedLawbotCannon__fireKeyPressed)
+        self.accept(self.FIRE_KEY,
+                    self._DistributedLawbotCannon__fireKeyPressed)
 
     def _DistributedLawbotCannon__leftKeyReleased(self):
         self.ignore(self.LEFT_KEY + '-up')
-        self.accept(
-            self.LEFT_KEY,
-            self._DistributedLawbotCannon__leftKeyPressed)
+        self.accept(self.LEFT_KEY,
+                    self._DistributedLawbotCannon__leftKeyPressed)
         self._DistributedLawbotCannon__leftReleased()
 
     def _DistributedLawbotCannon__rightKeyReleased(self):
         self.ignore(self.RIGHT_KEY + '-up')
-        self.accept(
-            self.RIGHT_KEY,
-            self._DistributedLawbotCannon__rightKeyPressed)
+        self.accept(self.RIGHT_KEY,
+                    self._DistributedLawbotCannon__rightKeyPressed)
         self._DistributedLawbotCannon__rightReleased()
 
     def _DistributedLawbotCannon__upKeyReleased(self):
@@ -543,9 +471,8 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
 
     def _DistributedLawbotCannon__downKeyReleased(self):
         self.ignore(self.DOWN_KEY + '-up')
-        self.accept(
-            self.DOWN_KEY,
-            self._DistributedLawbotCannon__downKeyPressed)
+        self.accept(self.DOWN_KEY,
+                    self._DistributedLawbotCannon__downKeyPressed)
         self._DistributedLawbotCannon__downReleased()
 
     def _DistributedLawbotCannon__leaveCannon(self):
@@ -556,15 +483,13 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         self.notify.debug('fire pressed')
         if not self.boss.state == 'BattleTwo':
             self.notify.debug(
-                'boss is in state=%s, not firing' %
-                self.boss.state)
+                'boss is in state=%s, not firing' % self.boss.state)
             return None
 
         self._DistributedLawbotCannon__broadcastLocalCannonPosition()
         self._DistributedLawbotCannon__unmakeGui()
-        self.sendUpdate('setCannonLit', [
-            self.cannonPosition[0],
-            self.cannonPosition[1]])
+        self.sendUpdate('setCannonLit',
+                        [self.cannonPosition[0], self.cannonPosition[1]])
 
     def _DistributedLawbotCannon__upPressed(self):
         self.notify.debug('up pressed')
@@ -675,9 +600,8 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         return Task.cont
 
     def _DistributedLawbotCannon__broadcastLocalCannonPosition(self):
-        self.sendUpdate('setCannonPosition', [
-            self.cannonPosition[0],
-            self.cannonPosition[1]])
+        self.sendUpdate('setCannonPosition',
+                        [self.cannonPosition[0], self.cannonPosition[1]])
 
     def _DistributedLawbotCannon__updateCannonPosition(self, avId):
         self.cannon.setHpr(self.cannonPosition[0], 0.0, 0.0)
@@ -695,8 +619,8 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         self.toonScale = self.jurorToon.getScale()
         jurorToonParent = render.attachNewNode('toonOriginChange')
         self.jurorToon.wrtReparentTo(jurorToonParent)
-        self.jurorToon.setPosHpr(
-            0, 0, -(self.jurorToon.getHeight() / 2.0), 0, -90, 0)
+        self.jurorToon.setPosHpr(0, 0, -(self.jurorToon.getHeight() / 2.0), 0,
+                                 -90, 0)
         self.toonModel = jurorToonParent
         self.toonHead = ToonHead.ToonHead()
         self.toonHead.setupHead(self.jurorToon.style)
@@ -895,8 +819,8 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         barrelHpr = self.barrel.getHpr(render)
         juror.setHpr(startHpr)
         self.jurorToon.loop('swim')
-        self.jurorToon.setPosHpr(
-            0, 0, -(self.jurorToon.getHeight() / 2.0), 0, 0, 0)
+        self.jurorToon.setPosHpr(0, 0, -(self.jurorToon.getHeight() / 2.0), 0,
+                                 0, 0)
         info = {}
         info['avId'] = avId
         info['trajectory'] = trajectory
@@ -912,25 +836,25 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
             camera.setP(45.0)
             camera.setZ(-10.0)
 
-        self.flyColSphere = CollisionSphere(
-            0, 0, self.av.getHeight() / 2.0, 1.0)
+        self.flyColSphere = CollisionSphere(0, 0,
+                                            self.av.getHeight() / 2.0, 1.0)
         self.flyColNode = CollisionNode(self.uniqueName('flySphere'))
-        self.flyColNode.setCollideMask(
-            ToontownGlobals.WallBitmask | ToontownGlobals.FloorBitmask | ToontownGlobals.PieBitmask)
+        self.flyColNode.setCollideMask(ToontownGlobals.WallBitmask
+                                       | ToontownGlobals.FloorBitmask
+                                       | ToontownGlobals.PieBitmask)
         self.flyColNode.addSolid(self.flyColSphere)
         self.flyColNodePath = self.jurorToon.attachNewNode(self.flyColNode)
         self.flyColNodePath.setColor(1, 0, 0, 1)
         self.handler = CollisionHandlerEvent()
         self.handler.setInPattern(self.uniqueName('cannonHit'))
         base.cTrav.addCollider(self.flyColNodePath, self.handler)
-        self.accept(self.uniqueName('cannonHit'),
-                    self._DistributedLawbotCannon__handleCannonHit)
-        shootTask = Task(
-            self._DistributedLawbotCannon__shootTask,
-            self.taskName('shootTask'))
-        flyTask = Task(
-            self._DistributedLawbotCannon__flyTask,
-            self.taskName('flyTask'))
+        self.accept(
+            self.uniqueName('cannonHit'),
+            self._DistributedLawbotCannon__handleCannonHit)
+        shootTask = Task(self._DistributedLawbotCannon__shootTask,
+                         self.taskName('shootTask'))
+        flyTask = Task(self._DistributedLawbotCannon__flyTask,
+                       self.taskName('flyTask'))
         shootTask.info = info
         flyTask.info = info
         seqTask = Task.sequence(shootTask, flyTask)
@@ -960,14 +884,16 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         startVel = Vec3(xVel, yVel, zVel)
         trajectory = Trajectory.Trajectory(launchTime, startPos, startVel)
         self.trajectory = trajectory
-        (timeOfImpact, hitWhat) = self._DistributedLawbotCannon__calcToonImpact(trajectory)
+        (timeOfImpact,
+         hitWhat) = self._DistributedLawbotCannon__calcToonImpact(trajectory)
         return {
             'startPos': startPos,
             'startHpr': startHpr,
             'startVel': startVel,
             'trajectory': trajectory,
             'timeOfImpact': 3 * timeOfImpact,
-            'hitWhat': hitWhat}
+            'hitWhat': hitWhat
+        }
 
     def _DistributedLawbotCannon__calcToonImpact(self, trajectory):
         t_groundImpact = trajectory.checkCollisionWithGround(GROUND_PLANE_MIN)
@@ -985,8 +911,7 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         hitNode = collisionEntry.getIntoNode().getName()
         fromNodePath = collisionEntry.getFromNodePath()
         intoNodePath = collisionEntry.getIntoNodePath()
-        ignoredHits = [
-            'NearBoss']
+        ignoredHits = ['NearBoss']
         for nodeName in ignoredHits:
             if hitNode == nodeName:
                 return None
@@ -1003,40 +928,29 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         if self.localToonShooting:
             pass
         1
-        chairlist = [
-            'trigger-chair']
+        chairlist = ['trigger-chair']
         for index in range(len(ToontownGlobals.LawbotBossChairPosHprs)):
             chairlist.append('Chair-%s' % index)
 
         if hitNode in chairlist:
             track.append(
-                Func(
-                    self._DistributedLawbotCannon__hitChair,
-                    self.jurorToon,
-                    pos))
+                Func(self._DistributedLawbotCannon__hitChair, self.jurorToon,
+                     pos))
             track.append(Wait(1.0))
             track.append(
-                Func(
-                    self._DistributedLawbotCannon__setToonUpright,
-                    self.av))
+                Func(self._DistributedLawbotCannon__setToonUpright, self.av))
             if self.av == base.localAvatar:
                 strs = hitNode.split('-')
                 chairNum = int(strs[1])
-                self.boss.sendUpdate('hitChair', [
-                    chairNum,
-                    self.index])
+                self.boss.sendUpdate('hitChair', [chairNum, self.index])
 
         else:
             track.append(
-                Func(
-                    self._DistributedLawbotCannon__hitGround,
-                    self.jurorToon,
-                    pos))
+                Func(self._DistributedLawbotCannon__hitGround, self.jurorToon,
+                     pos))
             track.append(Wait(1.0))
             track.append(
-                Func(
-                    self._DistributedLawbotCannon__setToonUpright,
-                    self.av))
+                Func(self._DistributedLawbotCannon__setToonUpright, self.av))
         track.append(Func(self.b_setLanded))
         if self.localToonShooting:
             pass
@@ -1106,13 +1020,8 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         h = self.barrel.getH(render)
         avatar.setPos(pos[0], pos[1], pos[2] + avatar.getHeight() / 3.0)
         avatar.setHpr(h, -135, 0)
-        self.dustCloud.setPos(
-            render,
-            pos[0],
-            pos[1],
-            pos[2] +
-            avatar.getHeight() /
-            3.0)
+        self.dustCloud.setPos(render, pos[0], pos[1],
+                              pos[2] + avatar.getHeight() / 3.0)
         self.dustCloud.setScale(0.34999999999999998)
         self.dustCloud.play()
         base.playSfx(self.sndHitGround)
@@ -1123,13 +1032,8 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         h = self.barrel.getH(render)
         avatar.setPos(pos[0], pos[1], pos[2] + avatar.getHeight() / 3.0)
         avatar.setHpr(h, -135, 0)
-        self.dustCloud.setPos(
-            render,
-            pos[0],
-            pos[1],
-            pos[2] +
-            avatar.getHeight() /
-            3.0)
+        self.dustCloud.setPos(render, pos[0], pos[1],
+                              pos[2] + avatar.getHeight() / 3.0)
         self.dustCloud.setScale(0.34999999999999998)
         self.dustCloud.play()
         base.playSfx(self.sndHitGround)
@@ -1141,28 +1045,50 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         self.cannon.show()
         kartTrack = Parallel(
             Sequence(
-                ActorInterval(
-                    avatar, 'feedPet'), Func(
-                    avatar.loop, 'neutral')), Sequence(
-                Func(
-                    self.cannon.reparentTo, avatar.rightHand), Wait(2.1000000000000001), Func(
-                    self.cannon.wrtReparentTo, render), Func(
-                    self.cannon.setShear, 0, 0, 0), Parallel(
+                ActorInterval(avatar, 'feedPet'), Func(avatar.loop,
+                                                       'neutral')),
+            Sequence(
+                Func(self.cannon.reparentTo, avatar.rightHand),
+                Wait(2.1000000000000001),
+                Func(self.cannon.wrtReparentTo, render),
+                Func(self.cannon.setShear, 0, 0, 0),
+                Parallel(
                     LerpHprInterval(
-                        self.cannon, hpr=self.nodePath.getHpr(render), duration=1.2), ProjectileInterval(
-                        self.cannon, endPos=self.nodePath.getPos(render), duration=1.2, gravityMult=0.45000000000000001)), Wait(0.20000000000000001), Sequence(
+                        self.cannon,
+                        hpr=self.nodePath.getHpr(render),
+                        duration=1.2),
+                    ProjectileInterval(
+                        self.cannon,
+                        endPos=self.nodePath.getPos(render),
+                        duration=1.2,
+                        gravityMult=0.45000000000000001)),
+                Wait(0.20000000000000001),
+                Sequence(
                     LerpScaleInterval(
-                        self.cannon, scale=Point3(
-                            1.1000000000000001, 1.1000000000000001, 0.10000000000000001), duration=0.20000000000000001), LerpScaleInterval(
-                        self.cannon, scale=Point3(
-                            0.90000000000000002, 0.90000000000000002, 0.10000000000000001), duration=0.10000000000000001), LerpScaleInterval(
-                        self.cannon, scale=Point3(
-                            1.0, 1.0, 0.10000000000000001), duration=0.10000000000000001), LerpScaleInterval(
-                        self.cannon, scale=Point3(
-                            1.0, 1.0, 1.1000000000000001), duration=0.20000000000000001), LerpScaleInterval(
-                        self.cannon, scale=Point3(
-                            1.0, 1.0, 0.90000000000000002), duration=0.10000000000000001), LerpScaleInterval(
-                        self.cannon, scale=Point3(
-                            1.0, 1.0, 1.0), duration=0.10000000000000001), Func(
-                        self.cannon.wrtReparentTo, self.nodePath))))
+                        self.cannon,
+                        scale=Point3(1.1000000000000001, 1.1000000000000001,
+                                     0.10000000000000001),
+                        duration=0.20000000000000001),
+                    LerpScaleInterval(
+                        self.cannon,
+                        scale=Point3(0.90000000000000002, 0.90000000000000002,
+                                     0.10000000000000001),
+                        duration=0.10000000000000001),
+                    LerpScaleInterval(
+                        self.cannon,
+                        scale=Point3(1.0, 1.0, 0.10000000000000001),
+                        duration=0.10000000000000001),
+                    LerpScaleInterval(
+                        self.cannon,
+                        scale=Point3(1.0, 1.0, 1.1000000000000001),
+                        duration=0.20000000000000001),
+                    LerpScaleInterval(
+                        self.cannon,
+                        scale=Point3(1.0, 1.0, 0.90000000000000002),
+                        duration=0.10000000000000001),
+                    LerpScaleInterval(
+                        self.cannon,
+                        scale=Point3(1.0, 1.0, 1.0),
+                        duration=0.10000000000000001),
+                    Func(self.cannon.wrtReparentTo, self.nodePath))))
         return kartTrack

@@ -6,9 +6,8 @@ from otp.level import BasicEntities
 from direct.directnotify import DirectNotifyGlobal
 
 
-class DistributedBarrelBase(
-        BasicEntities.DistributedNodePathEntity,
-        BarrelBase.BarrelBase):
+class DistributedBarrelBase(BasicEntities.DistributedNodePathEntity,
+                            BarrelBase.BarrelBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBarrelBase')
 
@@ -58,8 +57,7 @@ class DistributedBarrelBase(
         self.collNodePath.hide()
         self.applyLabel()
         self.accept(
-            self.uniqueName('enterbarrelSphere'),
-            self.handleEnterSphere)
+            self.uniqueName('enterbarrelSphere'), self.handleEnterSphere)
 
     def loadModel(self):
         self.grabSound = base.loadSfx(self.grabSoundPath)
@@ -68,17 +66,12 @@ class DistributedBarrelBase(
         self.barrel.setScale(self.barrelScale)
         self.barrel.reparentTo(self)
         dcsNode = self.barrel.find('**/gagLabelDCS')
-        dcsNode.setColor(
-            0.14999999999999999,
-            0.14999999999999999,
-            0.10000000000000001)
+        dcsNode.setColor(0.14999999999999999, 0.14999999999999999,
+                         0.10000000000000001)
         self.gagNode = self.barrel.attachNewNode('gagNode')
         self.gagNode.setPosHpr(0.0, -2.6200000000000001, 4.0, 0, 0, 0)
-        self.gagNode.setColorScale(
-            0.69999999999999996,
-            0.69999999999999996,
-            0.59999999999999998,
-            1)
+        self.gagNode.setColorScale(0.69999999999999996, 0.69999999999999996,
+                                   0.59999999999999998, 1)
 
     def handleEnterSphere(self, collEntry=None):
         localAvId = base.localAvatar.getDoId()
@@ -94,7 +87,8 @@ class DistributedBarrelBase(
             self.ignore(self.uniqueName('entertreasureSphere'))
             self.barrel.setColorScale(0.5, 0.5, 0.5, 1)
 
-        if self.playSoundForRemoteToons or self.avId == base.localAvatar.getDoId():
+        if self.playSoundForRemoteToons or self.avId == base.localAvatar.getDoId(
+        ):
             base.playSfx(self.grabSound)
 
         if self.animTrack:
@@ -106,16 +100,14 @@ class DistributedBarrelBase(
             LerpScaleInterval(
                 self.barrel,
                 0.20000000000000001,
-                1.1000000000000001 *
-                self.barrelScale,
+                1.1000000000000001 * self.barrelScale,
                 blendType='easeInOut'),
             LerpScaleInterval(
                 self.barrel,
                 0.20000000000000001,
                 self.barrelScale,
                 blendType='easeInOut'),
-            Func(
-                self.resetBarrel),
+            Func(self.resetBarrel),
             name=self.uniqueName('animTrack'))
         self.animTrack.start()
 
@@ -125,5 +117,4 @@ class DistributedBarrelBase(
     def resetBarrel(self):
         self.barrel.setScale(self.barrelScale)
         self.accept(
-            self.uniqueName('entertreasureSphere'),
-            self.handleEnterSphere)
+            self.uniqueName('entertreasureSphere'), self.handleEnterSphere)

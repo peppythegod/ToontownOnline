@@ -35,8 +35,10 @@ class DistributedResistanceEmoteMgr(DistributedObject.DistributedObject):
         if not av.emoteAccess[RESIST_INDEX]:
             self.sendUpdate('addResistanceEmote', [])
             msgTrack = Sequence(
-                Wait(1), Func(
-                    av.setSystemMessage, 0, TTLocalizer.ResistanceEmote1), Wait(3), Func(
-                    av.setSystemMessage, 0, TTLocalizer.ResistanceEmote2), Wait(4), Func(
-                    av.setSystemMessage, 0, TTLocalizer.ResistanceEmote3))
+                Wait(1),
+                Func(av.setSystemMessage, 0, TTLocalizer.ResistanceEmote1),
+                Wait(3),
+                Func(av.setSystemMessage, 0, TTLocalizer.ResistanceEmote2),
+                Wait(4),
+                Func(av.setSystemMessage, 0, TTLocalizer.ResistanceEmote3))
             msgTrack.start()

@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
@@ -40,22 +38,20 @@ class TwoDTreasureMgr(DirectObject):
         numPlayers = self.section.sectionMgr.game.numPlayers
         pos = Point3(-1, -1, -1)
         for index in xrange(len(self.enemyList)):
-            self.createNewTreasure([
-                pos], numPlayers, isEnemyGenerated=True)
+            self.createNewTreasure([pos], numPlayers, isEnemyGenerated=True)
 
-    def createNewTreasure(
-            self,
-            attrib,
-            value,
-            isEnemyGenerated=False,
-            model=None):
+    def createNewTreasure(self,
+                          attrib,
+                          value,
+                          isEnemyGenerated=False,
+                          model=None):
         treasureId = self.section.getSectionizedId(len(self.treasures))
         if model is None:
             model = self.getModel(
                 value, self.section.sectionMgr.game.assetMgr.treasureModelList)
 
-        newTreasure = TwoDTreasure.TwoDTreasure(
-            self, treasureId, attrib[0], value, isEnemyGenerated, model)
+        newTreasure = TwoDTreasure.TwoDTreasure(self, treasureId, attrib[0],
+                                                value, isEnemyGenerated, model)
         newTreasure.model.reparentTo(self.treasuresNP)
         self.treasures.append(newTreasure)
         if isEnemyGenerated:

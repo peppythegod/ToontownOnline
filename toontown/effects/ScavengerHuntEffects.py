@@ -15,8 +15,10 @@ class ScavengerHuntEffect:
                 'phase_4/models/props/tot_jar')
 
         self.npRoot = DirectFrame(
-            parent=aspect2d, relief=None, scale=0.75, pos=(
-                0, 0, 0.59999999999999998))
+            parent=aspect2d,
+            relief=None,
+            scale=0.75,
+            pos=(0, 0, 0.59999999999999998))
         if beanAmount > 0:
             self.npRoot.setColorScale(VBase4(1, 1, 1, 0))
             self.jar = DirectFrame(
@@ -30,15 +32,9 @@ class ScavengerHuntEffect:
                 parent=self.jar,
                 relief=None,
                 text='+0',
-                text_pos=(
-                    0.02,
-                    -0.20000000000000001),
+                text_pos=(0.02, -0.20000000000000001),
                 text_scale=0.25,
-                text_fg=(
-                    0.94999999999999996,
-                    0.0,
-                    0,
-                    1),
+                text_fg=(0.94999999999999996, 0.0, 0, 1),
                 text_font=ToontownGlobals.getSignFont())
 
             def countUp(t, startVal, endVal):
@@ -50,34 +46,42 @@ class ScavengerHuntEffect:
 
             self.track = Sequence(
                 LerpColorScaleInterval(
-                    self.npRoot, 1, colorScale=VBase4(
-                        1, 1, 1, 1), startColorScale=VBase4(
-                        1, 1, 1, 0)), Wait(1), Func(
-                    self.jar.show), LerpColorScaleInterval(
-                        self.eventImage, 1, colorScale=VBase4(
-                            1, 1, 1, 0), startColorScale=VBase4(
-                                1, 1, 1, 1)), Parallel(
-                                    LerpScaleInterval(
-                                        self.npRoot, 1, scale=0.5, startScale=0.75), LerpPosInterval(
-                                            self.npRoot, 1, pos=VBase3(
-                                                -0.90000000000000002, 0, -0.82999999999999996))), LerpFunc(
-                                                    countUp, duration=2, extraArgs=[
-                                                        0, beanAmount]), Func(
-                                                            setCountColor, VBase4(
-                                                                0.94999999999999996, 0.94999999999999996, 0, 1)), Wait(3), Func(
-                                                                    self.destroy))
+                    self.npRoot,
+                    1,
+                    colorScale=VBase4(1, 1, 1, 1),
+                    startColorScale=VBase4(1, 1, 1, 0)), Wait(1),
+                Func(self.jar.show),
+                LerpColorScaleInterval(
+                    self.eventImage,
+                    1,
+                    colorScale=VBase4(1, 1, 1, 0),
+                    startColorScale=VBase4(1, 1, 1, 1)),
+                Parallel(
+                    LerpScaleInterval(
+                        self.npRoot, 1, scale=0.5, startScale=0.75),
+                    LerpPosInterval(
+                        self.npRoot,
+                        1,
+                        pos=VBase3(-0.90000000000000002, 0,
+                                   -0.82999999999999996))),
+                LerpFunc(countUp, duration=2, extraArgs=[0, beanAmount]),
+                Func(setCountColor,
+                     VBase4(0.94999999999999996, 0.94999999999999996, 0, 1)),
+                Wait(3), Func(self.destroy))
         else:
             self.npRoot.setColorScale(VBase4(1, 1, 1, 0))
             self.attemptFailedMsg()
             self.track = Sequence(
                 LerpColorScaleInterval(
-                    self.npRoot, 1, colorScale=VBase4(
-                        1, 1, 1, 1), startColorScale=VBase4(
-                        1, 1, 1, 0)), Wait(5), LerpColorScaleInterval(
-                    self.npRoot, 1, colorScale=VBase4(
-                        1, 1, 1, 0), startColorScale=VBase4(
-                            1, 1, 1, 1)), Func(
-                                self.destroy))
+                    self.npRoot,
+                    1,
+                    colorScale=VBase4(1, 1, 1, 1),
+                    startColorScale=VBase4(1, 1, 1, 0)), Wait(5),
+                LerpColorScaleInterval(
+                    self.npRoot,
+                    1,
+                    colorScale=VBase4(1, 1, 1, 0),
+                    startColorScale=VBase4(1, 1, 1, 1)), Func(self.destroy))
 
     def play(self):
         if self.npRoot:
@@ -90,11 +94,8 @@ class ScavengerHuntEffect:
 
     def cleanupIntervals(self, interval):
         while len(interval) > 0:
-            if isinstance(
-                    interval[0],
-                    Sequence) or isinstance(
-                    interval[0],
-                    Parallel):
+            if isinstance(interval[0], Sequence) or isinstance(
+                    interval[0], Parallel):
                 self.cleanupIntervals(interval[0])
                 interval.pop(0)
                 continue
@@ -121,7 +122,6 @@ class ScavengerHuntEffect:
 
 
 class TrickOrTreatTargetEffect(ScavengerHuntEffect):
-
     def __init__(self, beanAmount):
         ScavengerHuntEffect.__init__(self, beanAmount)
         if beanAmount > 0:
@@ -134,16 +134,9 @@ class TrickOrTreatTargetEffect(ScavengerHuntEffect):
         pLabel = DirectLabel(
             parent=self.npRoot,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                -0.14999999999999999),
+            pos=(0.0, 0.0, -0.14999999999999999),
             text=TTLocalizer.TrickOrTreatMsg,
-            text_fg=(
-                0.94999999999999996,
-                0.5,
-                0.0,
-                1.0),
+            text_fg=(0.94999999999999996, 0.5, 0.0, 1.0),
             text_scale=0.12,
             text_font=ToontownGlobals.getSignFont())
 
@@ -155,32 +148,21 @@ class TrickOrTreatTargetEffect(ScavengerHuntEffect):
 
 
 class WinterCarolingEffect(ScavengerHuntEffect):
-
     def __init__(self, beanAmount):
         ScavengerHuntEffect.__init__(self, beanAmount)
         if beanAmount > 0:
             sm = loader.loadModel(
                 'phase_5.5/models/estate/tt_m_prp_ext_snowman_icon')
             self.snowman = DirectFrame(
-                parent=self.eventImage,
-                relief=None,
-                image=sm,
-                scale=20.0)
+                parent=self.eventImage, relief=None, image=sm, scale=20.0)
 
     def attemptFailedMsg(self):
         pLabel = DirectLabel(
             parent=self.npRoot,
             relief=None,
-            pos=(
-                0.0,
-                0.0,
-                -0.14999999999999999),
+            pos=(0.0, 0.0, -0.14999999999999999),
             text=TTLocalizer.WinterCarolingMsg,
-            text_fg=(
-                0.90000000000000002,
-                0.90000000000000002,
-                1.0,
-                1.0),
+            text_fg=(0.90000000000000002, 0.90000000000000002, 1.0, 1.0),
             text_scale=0.12,
             text_font=ToontownGlobals.getSignFont())
 
@@ -192,7 +174,6 @@ class WinterCarolingEffect(ScavengerHuntEffect):
 
 
 class TrickOrTreatMilestoneEffect:
-
     def __init__(self):
         pass
 

@@ -41,17 +41,14 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         DistCogdoLevelGame.enterLoaded(self)
         self.lightning = loader.loadModel(
             'phase_10/models/cogHQ/CBLightning.bam')
-        self.magnet = loader.loadModel(
-            'phase_10/models/cogHQ/CBMagnet.bam')
+        self.magnet = loader.loadModel('phase_10/models/cogHQ/CBMagnet.bam')
         self.craneArm = loader.loadModel(
             'phase_10/models/cogHQ/CBCraneArm.bam')
         self.controls = loader.loadModel(
             'phase_10/models/cogHQ/CBCraneControls.bam')
-        self.stick = loader.loadModel(
-            'phase_10/models/cogHQ/CBCraneStick.bam')
+        self.stick = loader.loadModel('phase_10/models/cogHQ/CBCraneStick.bam')
         self.cableTex = self.craneArm.findTexture('MagnetControl')
-        self.moneyBag = loader.loadModel(
-            'phase_10/models/cashbotHQ/MoneyBag')
+        self.moneyBag = loader.loadModel('phase_10/models/cashbotHQ/MoneyBag')
         self.geomRoot = PM.NodePath('geom')
         self.sceneRoot = self.geomRoot.attachNewNode('sceneRoot')
         self.sceneRoot.setPos(35.840000000000003, -115.45999999999999, 6.46)
@@ -78,8 +75,9 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         self.endVault.findAllMatches('**/Safes').detach()
         self.endVault.findAllMatches('**/MagnetControlsAll').detach()
         cn = self.endVault.find('**/wallsCollision').node()
-        cn.setIntoCollideMask(
-            OTPGlobals.WallBitmask | ToontownGlobals.PieBitmask | PM.BitMask32.lowerOn(3) << 21)
+        cn.setIntoCollideMask(OTPGlobals.WallBitmask
+                              | ToontownGlobals.PieBitmask
+                              | PM.BitMask32.lowerOn(3) << 21)
         walls = self.endVault.find('**/RollUpFrameCillison')
         walls.detachNode()
         self.evWalls = self.replaceCollisionPolysWithPlanes(walls)
@@ -91,10 +89,7 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         self.evFloor.reparentTo(self.endVault)
         self.evFloor.setName('floor')
         plane = PM.CollisionPlane(
-            PM.Plane(
-                PM.Vec3(
-                    0, 0, 1), PM.Point3(
-                    0, 0, -50)))
+            PM.Plane(PM.Vec3(0, 0, 1), PM.Point3(0, 0, -50)))
         planeNode = PM.CollisionNode('dropPlane')
         planeNode.addSolid(plane)
         planeNode.setCollideMask(ToontownGlobals.PieBitmask)
@@ -106,8 +101,7 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
         planes = []
         collList = model.findAllMatches('**/+CollisionNode')
         if not collList:
-            collList = [
-                model]
+            collList = [model]
 
         for cnp in collList:
             cn = cnp.node()
@@ -123,8 +117,7 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
                     planes.append(plane)
                     continue
                 self.notify.warning(
-                    'Unexpected collision solid: %s' %
-                    repr(solid))
+                    'Unexpected collision solid: %s' % repr(solid))
                 newCollisionNode.addSolid(plane)
 
         newCollisionNode.setIntoCollideMask(newCollideMask)
@@ -165,16 +158,15 @@ class DistCogdoCraneGame(CogdoCraneGameBase, DistCogdoLevelGame):
     def enterGame(self):
         DistCogdoLevelGame.enterGame(self)
         self._physicsTask = taskMgr.add(
-            self._doPhysics,
-            self.uniqueName('physics'),
-            priority=25)
+            self._doPhysics, self.uniqueName('physics'), priority=25)
         self.evWalls.stash()
         self._startTimer()
         if __dev__:
             self.accept(self._durationChangedEvent, self._startTimer)
 
     def _startTimer(self):
-        timeLeft = GameConsts.Settings.GameDuration.get() - self.getCurrentGameTime()
+        timeLeft = GameConsts.Settings.GameDuration.get(
+        ) - self.getCurrentGameTime()
         self.timer.posInTopRightCorner()
         self.timer.setTime(timeLeft)
         self.timer.countdown(timeLeft, self.timerExpired)

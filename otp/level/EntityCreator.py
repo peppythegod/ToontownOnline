@@ -20,12 +20,11 @@ def nothing(*args):
     return 'nothing'
 
 
-def nonlocal(*args):
+def nonlocal (*args):
     return 'nonlocal'
 
 
 class EntityCreator(EntityCreatorBase.EntityCreatorBase):
-
     def __init__(self, level):
         EntityCreatorBase.EntityCreatorBase.__init__(self, level)
         self.level = level
@@ -45,7 +44,8 @@ class EntityCreator(EntityCreatorBase.EntityCreatorBase):
             'path': PathEntity.PathEntity,
             'propSpinner': PropSpinner.PropSpinner,
             'visibilityExtender': VisibilityExtender.VisibilityExtender,
-            'zone': ZoneEntity.ZoneEntity})
+            'zone': ZoneEntity.ZoneEntity
+        })
 
     def doCreateEntity(self, ctor, entId):
         return ctor(self.level, entId)

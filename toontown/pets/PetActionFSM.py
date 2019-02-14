@@ -89,9 +89,9 @@ class PetActionFSM(FSM.FSM):
         if not self.pet.isLockedDown():
             self.pet.lockPet()
 
-        self.pet.sendUpdate('doTrick', [
-            trickId,
-            globalClockDelta.getRealNetworkTime()])
+        self.pet.sendUpdate(
+            'doTrick',
+            [trickId, globalClockDelta.getRealNetworkTime()])
 
         def finish(avatar=avatar, trickId=trickId, self=self):
             if hasattr(self.pet, 'brain'):
@@ -102,8 +102,8 @@ class PetActionFSM(FSM.FSM):
                     for avId in self.pet.brain.getAvIdsLookingAtUs():
                         av = self.pet.air.doId2do.get(avId)
                         if av:
-                            if isinstance(
-                                    av, DistributedToonAI.DistributedToonAI):
+                            if isinstance(av,
+                                          DistributedToonAI.DistributedToonAI):
                                 av.toonUp(healAmt)
 
                         isinstance(av, DistributedToonAI.DistributedToonAI)
@@ -114,15 +114,13 @@ class PetActionFSM(FSM.FSM):
 
                 messenger.send(self.getTrickDoneEvent())
 
-        self.trickDoneEvent = 'trickDone-%s-%s' % (
-            self.pet.doId, self.trickSerialNum)
+        self.trickDoneEvent = 'trickDone-%s-%s' % (self.pet.doId,
+                                                   self.trickSerialNum)
         self.trickSerialNum += 1
         self.trickFinishIval = Sequence(
-            WaitInterval(
-                PetTricks.TrickLengths[trickId]),
+            WaitInterval(PetTricks.TrickLengths[trickId]),
             Func(finish),
-            name='petTrickFinish-%s' %
-            self.pet.doId)
+            name='petTrickFinish-%s' % self.pet.doId)
         self.trickFinishIval.start()
 
     def getTrickDoLaterName(self):

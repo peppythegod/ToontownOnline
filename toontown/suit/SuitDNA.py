@@ -8,109 +8,37 @@ from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from otp.avatar import AvatarDNA
 notify = directNotify.newCategory('SuitDNA')
 suitHeadTypes = [
-    'f',
-    'p',
-    'ym',
-    'mm',
-    'ds',
-    'hh',
-    'cr',
-    'tbc',
-    'bf',
-    'b',
-    'dt',
-    'ac',
-    'bs',
-    'sd',
-    'le',
-    'bw',
-    'sc',
-    'pp',
-    'tw',
-    'bc',
-    'nc',
-    'mb',
-    'ls',
-    'rb',
-    'cc',
-    'tm',
-    'nd',
-    'gh',
-    'ms',
-    'tf',
-    'm',
-    'mh']
+    'f', 'p', 'ym', 'mm', 'ds', 'hh', 'cr', 'tbc', 'bf', 'b', 'dt', 'ac', 'bs',
+    'sd', 'le', 'bw', 'sc', 'pp', 'tw', 'bc', 'nc', 'mb', 'ls', 'rb', 'cc',
+    'tm', 'nd', 'gh', 'ms', 'tf', 'm', 'mh'
+]
 suitATypes = [
-    'ym',
-    'hh',
-    'tbc',
-    'dt',
-    'bs',
-    'le',
-    'bw',
-    'pp',
-    'nc',
-    'rb',
-    'nd',
-    'tf',
-    'm',
-    'mh']
-suitBTypes = [
-    'p',
-    'ds',
-    'b',
-    'ac',
-    'sd',
-    'bc',
-    'ls',
-    'tm',
-    'ms']
-suitCTypes = [
-    'f',
-    'mm',
-    'cr',
-    'bf',
-    'sc',
-    'tw',
-    'mb',
-    'cc',
-    'gh']
-suitDepts = [
-    'c',
-    'l',
-    'm',
-    's']
+    'ym', 'hh', 'tbc', 'dt', 'bs', 'le', 'bw', 'pp', 'nc', 'rb', 'nd', 'tf',
+    'm', 'mh'
+]
+suitBTypes = ['p', 'ds', 'b', 'ac', 'sd', 'bc', 'ls', 'tm', 'ms']
+suitCTypes = ['f', 'mm', 'cr', 'bf', 'sc', 'tw', 'mb', 'cc', 'gh']
+suitDepts = ['c', 'l', 'm', 's']
 suitDeptFullnames = {
     'c': TTLocalizer.Bossbot,
     'l': TTLocalizer.Lawbot,
     'm': TTLocalizer.Cashbot,
-    's': TTLocalizer.Sellbot}
+    's': TTLocalizer.Sellbot
+}
 suitDeptFullnamesP = {
     'c': TTLocalizer.BossbotP,
     'l': TTLocalizer.LawbotP,
     'm': TTLocalizer.CashbotP,
-    's': TTLocalizer.SellbotP}
+    's': TTLocalizer.SellbotP
+}
 corpPolyColor = VBase4(0.94999999999999996, 0.75, 0.75, 1.0)
 legalPolyColor = VBase4(0.75, 0.75, 0.94999999999999996, 1.0)
-moneyPolyColor = VBase4(
-    0.65000000000000002,
-    0.94999999999999996,
-    0.84999999999999998,
-    1.0)
+moneyPolyColor = VBase4(0.65000000000000002, 0.94999999999999996,
+                        0.84999999999999998, 1.0)
 salesPolyColor = VBase4(0.94999999999999996, 0.75, 0.94999999999999996, 1.0)
-suitsPerLevel = [
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1]
+suitsPerLevel = [1, 1, 1, 1, 1, 1, 1, 1]
 suitsPerDept = 8
-goonTypes = [
-    'pg',
-    'sg']
+goonTypes = ['pg', 'sg']
 
 
 def getSuitBodyType(name):
@@ -166,7 +94,6 @@ def getRandomSuitByDept(dept):
 
 
 class SuitDNA(AvatarDNA.AvatarDNA):
-
     def __init__(self, str=None, type=None, dna=None, r=None, b=None, g=None):
         if str is not None:
             self.makeFromNetString(str)

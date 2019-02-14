@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_11/models/lawbotHQ/LB_Zone04a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     100016: {
         'type': 'beanBarrel',
         'name': '<unnamed>',
@@ -34,7 +37,8 @@ GlobalEntities = {
         'hpr': Vec3(0, 0, 0),
         'scale': Vec3(1, 1, 1),
         'rewardPerGrab': 42,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     100017: {
         'type': 'gagBarrel',
         'name': '<unnamed>',
@@ -47,7 +51,8 @@ GlobalEntities = {
         'gagLevelMax': 5,
         'gagTrack': 'random',
         'rewardPerGrab': 3,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     100018: {
         'type': 'gagBarrel',
         'name': '<unnamed>',
@@ -60,7 +65,8 @@ GlobalEntities = {
         'gagLevelMax': 5,
         'gagTrack': 'random',
         'rewardPerGrab': 3,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     100011: {
         'type': 'mover',
         'name': '<unnamed>',
@@ -78,7 +84,8 @@ GlobalEntities = {
         'pos1Move': 60.0,
         'pos1Wait': 10.0,
         'startOn': 1,
-        'switchId': 0},
+        'switchId': 0
+    },
     100000: {
         'type': 'nodepath',
         'name': 'cameraRing',
@@ -86,7 +93,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     100006: {
         'type': 'nodepath',
         'name': 'centerTarget',
@@ -94,7 +102,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     100007: {
         'type': 'nodepath',
         'name': 'sidetarget1',
@@ -102,7 +111,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(8.3984799999999993, 43.782800000000002, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100008: {
         'type': 'nodepath',
         'name': 'sidetarget2',
@@ -110,7 +120,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(7.5471599999999999, -38.451500000000003, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100009: {
         'type': 'nodepath',
         'name': 'sidetarget3',
@@ -118,7 +129,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(-39.466799999999999, 1.83033, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100010: {
         'type': 'nodepath',
         'name': 'sidetarget4',
@@ -126,7 +138,8 @@ GlobalEntities = {
         'parentEntId': 100000,
         'pos': Point3(39.469999999999999, 1.83033, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100012: {
         'type': 'nodepath',
         'name': 'moverTarget',
@@ -134,7 +147,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Point3(360, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     100013: {
         'type': 'nodepath',
         'name': 'target exit',
@@ -142,7 +156,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.53563300000000003, 68.068200000000004, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100014: {
         'type': 'nodepath',
         'name': 'targetoff1',
@@ -150,7 +165,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(47.174199999999999, 5.53207, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100015: {
         'type': 'nodepath',
         'name': 'targetoff2',
@@ -158,7 +174,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(-47.170000000000002, 5.53207, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100001: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -177,7 +194,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 100006,
         'trackTarget2': 100013,
-        'trackTarget3': 100008},
+        'trackTarget3': 100008
+    },
     100002: {
         'type': 'securityCamera',
         'name': 'copy of <unnamed>',
@@ -196,7 +214,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 100006,
         'trackTarget2': 100008,
-        'trackTarget3': 100013},
+        'trackTarget3': 100013
+    },
     100003: {
         'type': 'securityCamera',
         'name': 'copy of <unnamed>',
@@ -215,7 +234,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 100006,
         'trackTarget2': 100009,
-        'trackTarget3': 100014},
+        'trackTarget3': 100014
+    },
     100004: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -234,7 +254,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 100006,
         'trackTarget2': 100010,
-        'trackTarget3': 100007},
+        'trackTarget3': 100007
+    },
     100005: {
         'type': 'securityCamera',
         'name': 'copy of <unnamed> (2)',
@@ -253,9 +274,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 100006,
         'trackTarget2': 100007,
-        'trackTarget3': 100015}}
+        'trackTarget3': 100015
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

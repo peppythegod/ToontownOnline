@@ -1,16 +1,8 @@
 from pandac.PandaModules import ColorBlendAttrib
 ModelPhase = 5
-ModelTypes = {
-    'animation': 'a',
-    'model': 'm',
-    'rig': 'r'}
-ModelGroups = {
-    'area': 'ara',
-    'gui': 'gui'}
-Games = {
-    'flying': 'cfg',
-    'maze': 'cmg',
-    'shared': 'csa'}
+ModelTypes = {'animation': 'a', 'model': 'm', 'rig': 'r'}
+ModelGroups = {'area': 'ara', 'gui': 'gui'}
+Games = {'flying': 'cfg', 'maze': 'cmg', 'shared': 'csa'}
 
 
 def loadFlyingModel(baseName, type='model', group='area'):
@@ -27,7 +19,8 @@ def getModelPath(baseName, game='shared', type='model', group='area'):
         extension = '.bam'
 
     return 'phase_%i/models/cogdominium/tt_%s_%s_%s_%s%s' % (
-        ModelPhase, ModelTypes[type], ModelGroups[group], Games[game], baseName, extension)
+        ModelPhase, ModelTypes[type], ModelGroups[group], Games[game],
+        baseName, extension)
 
 
 def loadModel(baseName, game='shared', type='model', group='area'):
@@ -39,7 +32,6 @@ class VariableContainer:
 
 
 class DevVariableContainer:
-
     def __init__(self, name):
         self.__dict__['_enabled'] = config.GetBool('%s-dev' % name, False)
 
@@ -54,7 +46,6 @@ def getRandomDialogueLine(lineList, rng):
 
 
 class CogdoGameMovie:
-
     def __init__(self):
         self._ival = None
         self._task = None
@@ -74,9 +65,7 @@ class CogdoGameMovie:
         textNode.setFont(ToontownGlobals.getToonFont())
         self._dialogueLabel = aspect2d.attachNewNode(textNode)
         self._dialogueLabel.setScale(
-            0.059999999999999998,
-            0.059999999999999998,
-            0.059999999999999998)
+            0.059999999999999998, 0.059999999999999998, 0.059999999999999998)
         self._dialogueLabel.setPos(0.32000000000000001, 0, -0.75)
         self._dialogueLabel.reparentTo(hidden)
 
@@ -96,8 +85,8 @@ class CogdoGameMovie:
         self._ival.start(elapsedTime)
 
     def _startUpdateTask(self):
-        self._task = taskMgr.add(
-            self._updateTask, 'CogdoGameMovie_updateTask', 45)
+        self._task = taskMgr.add(self._updateTask, 'CogdoGameMovie_updateTask',
+                                 45)
 
     def _stopUpdateTask(self):
         if self._task is not None:
@@ -113,10 +102,9 @@ class CogdoGameMovie:
 
 def initializeLightCone(np, bin='fixed', sorting=3):
     np.node().setAttrib(
-        ColorBlendAttrib.make(
-            ColorBlendAttrib.MAdd,
-            ColorBlendAttrib.OIncomingAlpha,
-            ColorBlendAttrib.OOne))
+        ColorBlendAttrib.make(ColorBlendAttrib.MAdd,
+                              ColorBlendAttrib.OIncomingAlpha,
+                              ColorBlendAttrib.OOne))
     if bin:
         np.setBin(bin, sorting)
 

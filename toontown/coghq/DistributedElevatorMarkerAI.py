@@ -8,11 +8,8 @@ from otp.level import BasicEntities
 from direct.directnotify import DirectNotifyGlobal
 
 
-class DistributedElevatorMarkerAI(
-        DistributedEntityAI.DistributedEntityAI,
-        NodePath,
-        BasicEntities.NodePathAttribs):
-
+class DistributedElevatorMarkerAI(DistributedEntityAI.DistributedEntityAI,
+                                  NodePath, BasicEntities.NodePathAttribs):
     def __init__(self, level, entId):
         DistributedEntityAI.DistributedEntityAI.__init__(self, level, entId)
         node = hidden.attachNewNode('DistributedElevatorMarkerAI')

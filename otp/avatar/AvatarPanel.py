@@ -39,9 +39,8 @@ class AvatarPanel(DirectObject.DirectObject):
             self.avHpChangeName = None
             self.avId = None
         if self.avDisableName:
-            self.accept(
-                self.avDisableName,
-                self._AvatarPanel__handleDisableAvatar)
+            self.accept(self.avDisableName,
+                        self._AvatarPanel__handleDisableAvatar)
 
     def cleanup(self):
         if AvatarPanel.currentAvatarPanel != self:

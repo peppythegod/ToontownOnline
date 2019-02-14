@@ -1,5 +1,3 @@
-
-
 from direct.showbase.DirectObject import DirectObject
 from toontown.toonbase.ToontownGlobals import *
 from direct.directnotify import DirectNotifyGlobal
@@ -30,28 +28,30 @@ class DivingFishSpawn(DirectObject):
     def createFish(self, fishcode):
         loadBase = 'phase_4/models/char/'
         if fishcode is 0:
-            fish = Actor.Actor('phase_4/models/char/clownFish-zero.bam', {
-                'anim': loadBase + 'clownFish-swim.bam'})
+            fish = Actor.Actor('phase_4/models/char/clownFish-zero.bam',
+                               {'anim': loadBase + 'clownFish-swim.bam'})
             fish.name = 'clown'
         elif fishcode is 1:
-            fish = Actor.Actor('phase_4/models/char/PBJfish-zero.bam', {
-                'anim': 'phase_4/models/char/PBJfish-swim.bam'})
+            fish = Actor.Actor(
+                'phase_4/models/char/PBJfish-zero.bam',
+                {'anim': 'phase_4/models/char/PBJfish-swim.bam'})
             fish.name = 'pbj'
         elif fishcode is 2:
-            fish = Actor.Actor('phase_4/models/char/BearAcuda-zero.bam', {
-                'anim': 'phase_4/models/char/BearAcuda-swim.bam'})
+            fish = Actor.Actor(
+                'phase_4/models/char/BearAcuda-zero.bam',
+                {'anim': 'phase_4/models/char/BearAcuda-swim.bam'})
             fish.name = 'bear'
         elif fishcode is 3:
-            fish = Actor.Actor(loadBase + 'balloonFish-zero.bam', {
-                'anim': loadBase + 'balloonFish-swim.bam'})
+            fish = Actor.Actor(loadBase + 'balloonFish-zero.bam',
+                               {'anim': loadBase + 'balloonFish-swim.bam'})
             fish.name = 'balloon'
         elif fishcode is 4:
-            fish = Actor.Actor(loadBase + 'nurseShark-zero.bam', {
-                'anim': loadBase + 'nurseShark-swim.bam'})
+            fish = Actor.Actor(loadBase + 'nurseShark-zero.bam',
+                               {'anim': loadBase + 'nurseShark-swim.bam'})
             fish.name = 'nurse'
         elif fishcode is 5:
-            fish = Actor.Actor(loadBase + 'pianoTuna-zero.bam', {
-                'anim': loadBase + 'pianoTuna-swim.bam'})
+            fish = Actor.Actor(loadBase + 'pianoTuna-zero.bam',
+                               {'anim': loadBase + 'pianoTuna-swim.bam'})
             fish.name = 'piano'
         else:
             return None
@@ -111,8 +111,8 @@ class DivingFishSpawn(DirectObject):
                     self._DivingFishSpawn__handleFishCollide)
         fish.moveloop = Sequence(
             Wait(4), LerpScaleInterval(
-                fish, startScale=1, scale=3, duration=1), Wait(1.5), LerpScaleInterval(
-                fish, startScale=3, scale=1, duration=0.5))
+                fish, startScale=1, scale=3, duration=1), Wait(1.5),
+            LerpScaleInterval(fish, startScale=3, scale=1, duration=0.5))
         return fish
 
     def destroy(self):
@@ -130,5 +130,4 @@ class DivingFishSpawn(DirectObject):
             del fish
 
     def _DivingFishSpawn__handleFishCollide(self, collEntry):
-        messenger.send('FishHit', [
-            collEntry])
+        messenger.send('FishHit', [collEntry])

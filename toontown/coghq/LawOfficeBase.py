@@ -4,7 +4,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class LawOfficeBase:
-
     def __init__(self):
         pass
 

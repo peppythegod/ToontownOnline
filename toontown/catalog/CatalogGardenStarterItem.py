@@ -9,7 +9,6 @@ from toontown.estate import GardenTutorial
 
 
 class CatalogGardenStarterItem(CatalogItem.CatalogItem):
-
     def makeNewItem(self):
         CatalogItem.CatalogItem.makeNewItem(self)
 
@@ -17,8 +16,11 @@ class CatalogGardenStarterItem(CatalogItem.CatalogItem):
         return 0
 
     def reachedPurchaseLimit(self, avatar):
-        if (self in avatar.onOrder and self in avatar.mailboxContents and self in avatar.onGiftOrder and self in avatar.awardMailboxContents and self in avatar.onAwardOrder or hasattr(
-                avatar, 'gardenStarted')) and avatar.getGardenStarted():
+        if (self in avatar.onOrder and self in avatar.mailboxContents
+                and self in avatar.onGiftOrder
+                and self in avatar.awardMailboxContents
+                and self in avatar.onAwardOrder or hasattr(
+                    avatar, 'gardenStarted')) and avatar.getGardenStarted():
             return 1
 
         return 0
@@ -90,11 +92,8 @@ class CatalogGardenStarterItem(CatalogItem.CatalogItem):
         self.confirmGarden = TTDialog.TTGlobalDialog(
             doneEvent='confirmGarden',
             message=TTLocalizer.MessageConfirmGarden,
-            command=Functor(
-                self.handleGardenConfirm,
-                mailbox,
-                index,
-                callback),
+            command=Functor(self.handleGardenConfirm, mailbox, index,
+                            callback),
             style=TTDialog.TwoChoice)
         self.confirmGarden.show()
 

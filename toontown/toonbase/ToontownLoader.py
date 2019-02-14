@@ -67,6 +67,8 @@ class ToontownLoader(Loader.Loader):
 
                 try:
                     base.cr.considerHeartbeat()
+                except:
+                    pass
 
     def loadModel(self, *args, **kw):
         ret = Loader.Loader.loadModel(self, *args, **args)

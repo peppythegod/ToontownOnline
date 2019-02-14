@@ -11,7 +11,6 @@ NUM_ST_TYPES = 4
 
 
 class CatalogSurfaceItem(CatalogAtticItem.CatalogAtticItem):
-
     def makeNewItem(self):
         CatalogAtticItem.CatalogAtticItem.makeNewItem(self)
 

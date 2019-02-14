@@ -36,8 +36,8 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         DistributedLawnDecor.DistributedLawnDecor.delete(self)
 
     def announceGenerate(self):
-        self.plotType = GardenGlobals.whatCanBePlanted(
-            self.ownerIndex, self.plot)
+        self.plotType = GardenGlobals.whatCanBePlanted(self.ownerIndex,
+                                                       self.plot)
         self.stickUp = 0.0
         if self.getOwnerId() != localAvatar.doId:
             self.defaultModel = None
@@ -146,20 +146,17 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         if willPlant:
             recipeKey = GardenGlobals.getRecipeKey(recipeStr, special)
             if recipeKey >= 0:
-                (species, variety) = GardenGlobals.getSpeciesVarietyGivenRecipe(recipeKey)
+                (species, variety
+                 ) = GardenGlobals.getSpeciesVarietyGivenRecipe(recipeKey)
                 if species >= 0 and variety >= 0:
-                    self.sendUpdate('plantFlower', [
-                        species,
-                        variety])
+                    self.sendUpdate('plantFlower', [species, variety])
                     successPlanting = True
 
             else:
                 self.notify.debug(
-                    '%s %d is not a valid recipe' %
-                    (recipeStr, special))
+                    '%s %d is not a valid recipe' % (recipeStr, special))
                 burntBeans = len(recipeStr)
-                self.sendUpdate('plantNothing', [
-                    burntBeans])
+                self.sendUpdate('plantNothing', [burntBeans])
 
         if successPlanting:
             flowerName = GardenGlobals.getFlowerVarietyName(species, variety)
@@ -178,9 +175,8 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         self.acceptOnce(self.plantingGuiDoneEvent,
                         self._DistributedGardenPlot__handleFlowerPlantingDone)
         self.plantingGui = PlantingGUI.PlantingGUI(self.plantingGuiDoneEvent)
-        self.accept(
-            'stoppedAsleep',
-            self._DistributedGardenPlot__handleFlowerPlantingDone)
+        self.accept('stoppedAsleep',
+                    self._DistributedGardenPlot__handleFlowerPlantingDone)
 
     def resultsCallback(self, value):
         self.notify.debug('value=%d' % value)
@@ -200,8 +196,10 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         self.resultDialog = None
         self.popupItemPlantingGui()
 
-    def _DistributedGardenPlot__handleItemPlantingDone(
-            self, willPlant=0, recipeStr='', selectedSpecial=-1):
+    def _DistributedGardenPlot__handleItemPlantingDone(self,
+                                                       willPlant=0,
+                                                       recipeStr='',
+                                                       selectedSpecial=-1):
         self.ignore(self.plantingGuiDoneEvent)
         self.ignore('stoppedAsleep')
         self.plantingGui.destroy()
@@ -218,23 +216,22 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         if willPlant:
             recipeKey = GardenGlobals.getRecipeKey(recipeStr, special)
             if recipeKey >= 0:
-                (species, variety) = GardenGlobals.getSpeciesVarietyGivenRecipe(recipeKey)
+                (species, variety
+                 ) = GardenGlobals.getSpeciesVarietyGivenRecipe(recipeKey)
                 if species >= 0 and variety >= 0:
-                    if GardenGlobals.PlantAttributes[species]['plantType'] == GardenGlobals.STATUARY_TYPE:
+                    if GardenGlobals.PlantAttributes[species][
+                            'plantType'] == GardenGlobals.STATUARY_TYPE:
                         successPlanting = True
                         if species >= 205 and species <= 208:
                             successToonStatue = True
                         else:
-                            self.sendUpdate('plantStatuary', [
-                                species])
+                            self.sendUpdate('plantStatuary', [species])
 
             else:
                 self.notify.debug(
-                    '%s %d is not a valid recipe' %
-                    (recipeStr, special))
+                    '%s %d is not a valid recipe' % (recipeStr, special))
                 burntBeans = len(recipeStr)
-                self.sendUpdate('plantNothing', [
-                    burntBeans])
+                self.sendUpdate('plantNothing', [burntBeans])
 
         if successPlanting:
             itemName = GardenGlobals.PlantAttributes[species]['name']
@@ -254,12 +251,11 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         base.localAvatar.hideGardeningGui()
         self.acceptOnce(self.plantingGuiDoneEvent,
                         self._DistributedGardenPlot__handleItemPlantingDone)
-        self.plantingGui = PlantingGUI.PlantingGUI(
-            self.plantingGuiDoneEvent, True)
+        self.plantingGui = PlantingGUI.PlantingGUI(self.plantingGuiDoneEvent,
+                                                   True)
         self.plantingGui.showFirstSpecial()
-        self.accept(
-            'stoppedAsleep',
-            self._DistributedGardenPlot__handleItemPlantingDone)
+        self.accept('stoppedAsleep',
+                    self._DistributedGardenPlot__handleItemPlantingDone)
 
     def popupToonStatueSelectionGui(self, species):
         base.localAvatar.hideGardeningGui()
@@ -269,9 +265,8 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
             extraArgs=[species])
         self.toonStatueSelectionGui = ToonStatueSelectionGUI.ToonStatueSelectionGUI(
             self.toonStatueSelectionDoneEvent, True)
-        self.accept(
-            'stoppedAsleep',
-            self._DistributedGardenPlot__handleToonStatueSelectionDone)
+        self.accept('stoppedAsleep',
+                    self._DistributedGardenPlot__handleToonStatueSelectionDone)
 
     def popupToonStatueSelectionGuiAgain(self, species):
         self.resultDialog.destroy()
@@ -287,9 +282,7 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         base.localAvatar.showGardeningGui()
         base.localAvatar.removeShovelRelatedDoId(self.doId)
         if willPlant:
-            self.sendUpdate('plantToonStatuary', [
-                species,
-                dnaCode])
+            self.sendUpdate('plantToonStatuary', [species, dnaCode])
         else:
             self.popupItemPlantingGui()
 
@@ -298,12 +291,13 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         self.acceptOnce(self.plantingGuiDoneEvent,
                         self._DistributedGardenPlot__handleTreePlantingDone)
         self.plantingGui = PlantTreeGUI.PlantTreeGUI(self.plantingGuiDoneEvent)
-        self.accept(
-            'stoppedAsleep',
-            self._DistributedGardenPlot__handleTreePlantingDone)
+        self.accept('stoppedAsleep',
+                    self._DistributedGardenPlot__handleTreePlantingDone)
 
-    def _DistributedGardenPlot__handleTreePlantingDone(
-            self, willPlant=False, gagTrack=None, gagLevel=None):
+    def _DistributedGardenPlot__handleTreePlantingDone(self,
+                                                       willPlant=False,
+                                                       gagTrack=None,
+                                                       gagLevel=None):
         self.ignore(self.plantingGuiDoneEvent)
         self.ignore('stoppedAsleep')
         self.plantingGui.destroy()
@@ -311,9 +305,7 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         base.localAvatar.showGardeningGui()
         base.localAvatar.removeShovelRelatedDoId(self.doId)
         if willPlant:
-            self.sendUpdate('plantGagTree', [
-                gagTrack,
-                gagLevel])
+            self.sendUpdate('plantGagTree', [gagTrack, gagLevel])
         else:
             self.finishInteraction()
 
@@ -379,8 +371,8 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         moveTrack = self.generateToonMoveTrack(toon)
         placeItemTrack = self.generatePlaceItemTrack(toon, item)
         self.movie = Sequence(
-            self.startCamIval(avId), moveTrack, Func(
-                shovel.show), placeItemTrack)
+            self.startCamIval(avId), moveTrack, Func(shovel.show),
+            placeItemTrack)
         if avId == localAvatar.doId:
             self.expectingReplacement = 1
             self.movie.append(Func(self.movieDone))
@@ -393,40 +385,22 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         placeItemTrack = Parallel()
         placeItemTrack.append(
             Sequence(
-                ActorInterval(
-                    toon,
-                    'start-dig'),
+                ActorInterval(toon, 'start-dig'),
                 Parallel(
                     ActorInterval(
-                        toon,
-                        'loop-dig',
-                        loop=1,
-                        duration=5.1299999999999999),
+                        toon, 'loop-dig', loop=1, duration=5.1299999999999999),
                     Sequence(
                         Wait(0.25),
                         SoundInterval(
-                            sound,
-                            node=toon,
-                            duration=0.55000000000000004),
+                            sound, node=toon, duration=0.55000000000000004),
                         Wait(0.80000000000000004),
                         SoundInterval(
-                            sound,
-                            node=toon,
-                            duration=0.55000000000000004),
+                            sound, node=toon, duration=0.55000000000000004),
                         Wait(1.3500000000000001),
                         SoundInterval(
-                            sound,
-                            node=toon,
-                            duration=0.55000000000000004))),
-                ActorInterval(
-                    toon,
-                    'start-dig',
-                    playRate=-1),
-                Func(
-                    toon.loop,
-                    'neutral'),
-                Func(
-                    toon.detachShovel)))
+                            sound, node=toon, duration=0.55000000000000004))),
+                ActorInterval(toon, 'start-dig', playRate=-1),
+                Func(toon.loop, 'neutral'), Func(toon.detachShovel)))
         if self.model:
             pos = self.model.getPos()
             pos.setZ(pos[2] - 1)
@@ -439,13 +413,18 @@ class DistributedGardenPlot(DistributedLawnDecor.DistributedLawnDecor):
         if item:
             placeItemTrack.append(
                 Sequence(
-                    Func(
-                        item.reparentTo, toon.rightHand), Wait(0.55000000000000004), Func(
-                        item.wrtReparentTo, render), Parallel(
+                    Func(item.reparentTo, toon.rightHand),
+                    Wait(0.55000000000000004), Func(item.wrtReparentTo,
+                                                    render),
+                    Parallel(
                         LerpHprInterval(
-                            item, hpr=self.getHpr(render), duration=1.2), ProjectileInterval(
-                            item, endPos=self.getPos(render), duration=1.2, gravityMult=0.45000000000000001)), Func(
-                                item.removeNode)))
+                            item, hpr=self.getHpr(render), duration=1.2),
+                        ProjectileInterval(
+                            item,
+                            endPos=self.getPos(render),
+                            duration=1.2,
+                            gravityMult=0.45000000000000001)),
+                    Func(item.removeNode)))
 
         return placeItemTrack
 

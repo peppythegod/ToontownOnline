@@ -1,5 +1,3 @@
-
-
 from direct.showbase.RandomNumGen import RandomNumGen
 import CatchGameGlobals
 import DropScheduler
@@ -7,7 +5,6 @@ from toontown.parties.PartyGlobals import CatchActivityDuration as PartyCatchDur
 
 
 class DropPlacer:
-
     def __init__(self, game, numPlayers, dropTypes, startTime=None):
         self.game = game
         self.numPlayers = numPlayers
@@ -58,938 +55,102 @@ class DropPlacer:
     def getRandomColRow(self):
         col = self.rng.randrange(0, self.game.DropColumns)
         row = self.rng.randrange(0, self.game.DropRows)
-        return [
-            col,
-            row]
+        return [col, row]
 
     def getNextDrop(self):
         raise RuntimeError('DropPlacer.getNextDrop should never be called')
 
 
 class RandomDropPlacer(DropPlacer):
-
     def __init__(self, game, numPlayers, dropTypes, startTime=None):
         DropPlacer.__init__(
-            self,
-            game,
-            numPlayers,
-            dropTypes,
-            startTime=startTime)
+            self, game, numPlayers, dropTypes, startTime=startTime)
 
     def getNextDrop(self):
         (col, row) = self.getRandomColRow()
-        drop = [
-            self.getT(),
-            self.getNextDropTypeName(),
-            [
-                col,
-                row]]
+        drop = [self.getT(), self.getNextDropTypeName(), [col, row]]
         self.stepT()
         return drop
 
 
 class RegionDropPlacer(DropPlacer):
-    DropRegionTables = [
-        [
-            [
-                1,
-                1,
-                2,
-                3,
-                3],
-            [
-                1,
-                1,
-                2,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                3,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                3,
-                3,
-                4],
-            [
-                1,
-                1,
-                2,
-                3,
-                4,
-                4],
-            [
-                1,
-                1,
-                2,
-                3,
-                4,
-                4],
-            [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5],
-            [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5],
-            [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5]],
-        [
-            [
-                1,
-                1,
-                2,
-                2,
-                2,
-                3,
-                3],
-            [
-                1,
-                1,
-                2,
-                2,
-                2,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                2,
-                2,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                2,
-                2,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                2,
-                2,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                2,
-                2,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                2,
-                2,
-                3,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                5,
-                6,
-                7,
-                7,
-                3],
-            [
-                1,
-                1,
-                2,
-                5,
-                6,
-                7,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                5,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                0,
-                1,
-                5,
-                6,
-                3,
-                4,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                5,
-                8,
-                6,
-                7,
-                7,
-                3],
-            [
-                1,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                0,
-                1,
-                5,
-                8,
-                6,
-                3,
-                4,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                7,
-                3],
-            [
-                1,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                8,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                0,
-                1,
-                5,
-                8,
-                8,
-                6,
-                3,
-                4,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                7,
-                3],
-            [
-                1,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                0,
-                1,
-                5,
-                8,
-                10,
-                9,
-                6,
-                3,
-                4,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                7,
-                3],
-            [
-                1,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                0,
-                1,
-                5,
-                8,
-                10,
-                10,
-                9,
-                6,
-                3,
-                4,
-                4]],
-        [
-            [
-                1,
-                2,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                7,
-                3],
-            [
-                1,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                3],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                1,
-                2,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                7,
-                3,
-                4],
-            [
-                0,
-                0,
-                1,
-                5,
-                8,
-                10,
-                11,
-                12,
-                9,
-                6,
-                3,
-                4,
-                4]]]
+    DropRegionTables = [[[1, 1, 2, 3, 3], [1, 1, 2, 3, 3], [0, 1, 2, 3, 4],
+                         [0, 1, 2, 3, 4], [0, 1, 2, 3, 4]],
+                        [[1, 2, 2, 3, 3, 4], [1, 1, 2, 3, 4, 4],
+                         [1, 1, 2, 3, 4, 4], [0, 1, 2, 3, 4, 5],
+                         [0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 5]],
+                        [[1, 1, 2, 2, 2, 3, 3], [1, 1, 2, 2, 2, 3, 3],
+                         [0, 1, 2, 2, 2, 3, 4], [0, 1, 2, 2, 2, 3, 4],
+                         [0, 1, 2, 2, 2, 3, 4], [0, 1, 2, 2, 2, 3, 4],
+                         [0, 1, 2, 2, 2, 3, 4]],
+                        [[1, 2, 2, 5, 6, 7, 7, 3], [1, 1, 2, 5, 6, 7, 3, 3],
+                         [0, 1, 2, 5, 6, 7, 3, 4], [0, 1, 2, 5, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 6, 7, 3, 4], [0, 1, 2, 5, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 6, 7, 3, 4], [0, 0, 1, 5, 6, 3, 4, 4]],
+                        [[1, 2, 2, 5, 8, 6, 7, 7, 3],
+                         [1, 1, 2, 5, 8, 6, 7, 3, 3],
+                         [0, 1, 2, 5, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 6, 7, 3, 4],
+                         [0, 0, 1, 5, 8, 6, 3, 4, 4]],
+                        [[1, 2, 2, 5, 8, 8, 6, 7, 7, 3],
+                         [1, 1, 2, 5, 8, 8, 6, 7, 3, 3],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 8, 6, 7, 3, 4],
+                         [0, 0, 1, 5, 8, 8, 6, 3, 4, 4]],
+                        [[1, 2, 2, 5, 8, 10, 9, 6, 7, 7, 3],
+                         [1, 1, 2, 5, 8, 10, 9, 6, 7, 3, 3],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 9, 6, 7, 3, 4],
+                         [0, 0, 1, 5, 8, 10, 9, 6, 3, 4, 4]],
+                        [[1, 2, 2, 5, 8, 10, 10, 9, 6, 7, 7, 3],
+                         [1, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 3],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 10, 9, 6, 7, 3, 4],
+                         [0, 0, 1, 5, 8, 10, 10, 9, 6, 3, 4, 4]],
+                        [[1, 2, 2, 5, 8, 10, 11, 12, 9, 6, 7, 7, 3],
+                         [1, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 3],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 1, 2, 5, 8, 10, 11, 12, 9, 6, 7, 3, 4],
+                         [0, 0, 1, 5, 8, 10, 11, 12, 9, 6, 3, 4, 4]]]
     Players2dropTable = [
-        DropRegionTables[0],
-        DropRegionTables[0],
-        DropRegionTables[0],
-        DropRegionTables[1],
-        DropRegionTables[1],
-        DropRegionTables[2],
-        DropRegionTables[3],
-        DropRegionTables[3],
-        DropRegionTables[4],
-        DropRegionTables[4],
-        DropRegionTables[5],
-        DropRegionTables[5],
-        DropRegionTables[5],
-        DropRegionTables[6],
-        DropRegionTables[6],
-        DropRegionTables[7],
-        DropRegionTables[7],
-        DropRegionTables[7],
-        DropRegionTables[8],
-        DropRegionTables[8]]
+        DropRegionTables[0], DropRegionTables[0], DropRegionTables[0],
+        DropRegionTables[1], DropRegionTables[1], DropRegionTables[2],
+        DropRegionTables[3], DropRegionTables[3], DropRegionTables[4],
+        DropRegionTables[4], DropRegionTables[5], DropRegionTables[5],
+        DropRegionTables[5], DropRegionTables[6], DropRegionTables[6],
+        DropRegionTables[7], DropRegionTables[7], DropRegionTables[7],
+        DropRegionTables[8], DropRegionTables[8]
+    ]
 
     def getDropRegionTable(cls, numPlayers):
         return cls.Players2dropTable[min(
@@ -999,11 +160,7 @@ class RegionDropPlacer(DropPlacer):
 
     def __init__(self, game, numPlayers, dropTypes, startTime=None):
         DropPlacer.__init__(
-            self,
-            game,
-            numPlayers,
-            dropTypes,
-            startTime=startTime)
+            self, game, numPlayers, dropTypes, startTime=startTime)
         self.DropRegionTable = self.getDropRegionTable(self.numPlayers)
         self.DropRegion2GridCoordList = {}
         for row in range(len(self.DropRegionTable)):
@@ -1013,9 +170,7 @@ class RegionDropPlacer(DropPlacer):
                 if region not in self.DropRegion2GridCoordList:
                     self.DropRegion2GridCoordList[region] = []
 
-                self.DropRegion2GridCoordList[region].append([
-                    row,
-                    column])
+                self.DropRegion2GridCoordList[region].append([row, column])
 
         self.DropRegions = self.DropRegion2GridCoordList.keys()
         self.DropRegions.sort()
@@ -1040,16 +195,9 @@ class RegionDropPlacer(DropPlacer):
         dropRegion = self.rng.choice(candidates)
         (row, col) = self.rng.choice(self.DropRegion2GridCoordList[dropRegion])
         dropTypeName = self.getNextDropTypeName()
-        drop = [
-            t,
-            dropTypeName,
-            [
-                row,
-                col]]
+        drop = [t, dropTypeName, [row, col]]
         duration = self.game.BaselineDropDuration
-        self.fallingObjs.append([
-            t + duration,
-            dropRegion])
+        self.fallingObjs.append([t + duration, dropRegion])
         if dropRegion in self.emptyDropRegions:
             self.emptyDropRegions.remove(dropRegion)
 
@@ -1058,21 +206,15 @@ class RegionDropPlacer(DropPlacer):
 
 
 class PartyRegionDropPlacer(RegionDropPlacer):
-
-    def __init__(
-            self,
-            game,
-            numPlayers,
-            generationId,
-            dropTypes,
-            startTime=None):
+    def __init__(self,
+                 game,
+                 numPlayers,
+                 generationId,
+                 dropTypes,
+                 startTime=None):
         self.generationId = generationId
         RegionDropPlacer.__init__(
-            self,
-            game,
-            numPlayers,
-            dropTypes,
-            startTime=startTime)
+            self, game, numPlayers, dropTypes, startTime=startTime)
 
     def _createRng(self):
         self.rng = RandomNumGen(self.generationId + self.game.doId)
@@ -1091,137 +233,34 @@ class PartyRegionDropPlacer(RegionDropPlacer):
 
 
 class PathDropPlacer(DropPlacer):
-
     def __init__(self, game, numPlayers, dropTypes, startTime=None):
         DropPlacer.__init__(
-            self,
-            game,
-            numPlayers,
-            dropTypes,
-            startTime=startTime)
-        self.moves = [
-            [
-                0,
-                -1],
-            [
-                1,
-                -1],
-            [
-                1,
-                0],
-            [
-                1,
-                1],
-            [
-                0,
-                1],
-            [
-                -1,
-                1],
-            [
-                -1,
-                0],
-            [
-                -1,
-                -1]]
+            self, game, numPlayers, dropTypes, startTime=startTime)
+        self.moves = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1],
+                      [-1, 0], [-1, -1]]
         self.paths = []
         for i in xrange(self.numPlayers):
             dir = self.rng.randrange(0, len(self.moves))
             (col, row) = self.getRandomColRow()
-            path = {
-                'direction': dir,
-                'location': [
-                    col,
-                    row]}
+            path = {'direction': dir, 'location': [col, row]}
             self.paths.append(path)
 
         self.curPathIndex = 0
 
     def getValidDirection(self, col, row, dir):
-        redirectTop = [
-            (6, 2),
-            2,
-            2,
-            3,
-            4,
-            5,
-            6,
-            6]
-        redirectRight = [
-            0,
-            0,
-            (0, 4),
-            4,
-            4,
-            5,
-            6,
-            7]
-        redirectBottom = [
-            0,
-            1,
-            2,
-            2,
-            (2, 6),
-            6,
-            6,
-            7]
-        redirectLeft = [
-            0,
-            1,
-            2,
-            3,
-            4,
-            4,
-            (4, 0),
-            0]
-        redirectTopRight = [
-            6,
-            (6, 4),
-            4,
-            4,
-            4,
-            5,
-            6,
-            6]
-        redirectBottomRight = [
-            0,
-            0,
-            0,
-            (0, 6),
-            6,
-            6,
-            6,
-            7]
-        redirectBottomLeft = [
-            0,
-            1,
-            2,
-            2,
-            2,
-            (2, 0),
-            0,
-            0]
-        redirectTopLeft = [
-            2,
-            2,
-            2,
-            3,
-            4,
-            4,
-            4,
-            (4, 2)]
+        redirectTop = [(6, 2), 2, 2, 3, 4, 5, 6, 6]
+        redirectRight = [0, 0, (0, 4), 4, 4, 5, 6, 7]
+        redirectBottom = [0, 1, 2, 2, (2, 6), 6, 6, 7]
+        redirectLeft = [0, 1, 2, 3, 4, 4, (4, 0), 0]
+        redirectTopRight = [6, (6, 4), 4, 4, 4, 5, 6, 6]
+        redirectBottomRight = [0, 0, 0, (0, 6), 6, 6, 6, 7]
+        redirectBottomLeft = [0, 1, 2, 2, 2, (2, 0), 0, 0]
+        redirectTopLeft = [2, 2, 2, 3, 4, 4, 4, (4, 2)]
         tables = [
-            None,
-            redirectTop,
-            redirectBottom,
-            None,
-            redirectLeft,
-            redirectTopLeft,
-            redirectBottomLeft,
-            None,
-            redirectRight,
-            redirectTopRight,
-            redirectBottomRight]
+            None, redirectTop, redirectBottom, None, redirectLeft,
+            redirectTopLeft, redirectBottomLeft, None, redirectRight,
+            redirectTopRight, redirectBottomRight
+        ]
         if col == 0:
             colIndex = 1
         elif col == self.game.DropColumns - 1:
@@ -1249,11 +288,7 @@ class PathDropPlacer(DropPlacer):
         path = self.paths[self.curPathIndex]
         (col, row) = path['location']
         dir = path['direction']
-        turns = [
-            -1,
-            0,
-            0,
-            1]
+        turns = [-1, 0, 0, 1]
         turn = self.rng.choice(turns)
         if turn:
             dir = (dir + turn) % len(self.moves)
@@ -1264,16 +299,9 @@ class PathDropPlacer(DropPlacer):
         row += dRow
         col = min(max(col, 0), self.game.DropColumns - 1)
         row = min(max(row, 0), self.game.DropRows - 1)
-        path['location'] = [
-            col,
-            row]
+        path['location'] = [col, row]
         path['direction'] = dir
         self.curPathIndex = (self.curPathIndex + 1) % len(self.paths)
-        drop = [
-            self.getT(),
-            self.getNextDropTypeName(),
-            [
-                col,
-                row]]
+        drop = [self.getT(), self.getNextDropTypeName(), [col, row]]
         self.stepT()
         return drop

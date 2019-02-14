@@ -12,16 +12,19 @@ colors = {
     YELLOW: Vec4(1, 1, 0.20000000000000001, 1),
     GREEN: Vec4(0.20000000000000001, 1, 0.20000000000000001, 1),
     PINK: Vec4(1, 0.5, 0.5, 1),
-    PEACH: Vec4(0.90000000000000002, 0.59999999999999998, 0.40000000000000002, 1),
+    PEACH: Vec4(0.90000000000000002, 0.59999999999999998, 0.40000000000000002,
+                1),
     PURPLE: Vec4(1, 0.10000000000000001, 1, 1),
-    CYAN: Vec4(0.20000000000000001, 1, 1, 1)}
+    CYAN: Vec4(0.20000000000000001, 1, 1, 1)
+}
 textures = {
     SNOWFLAKE: 'phase_8/models/props/snowflake_treasure',
     MUSICNOTE: 'phase_6/models/props/music_treasure',
     FLOWER: 'phase_8/models/props/flower_treasure',
     ICECREAM: 'phase_4/models/props/icecream',
     STARFISH: 'phase_6/models/props/starfish_treasure',
-    ZZZ: 'phase_8/models/props/zzz_treasure'}
+    ZZZ: 'phase_8/models/props/zzz_treasure'
+}
 fireworkId = 0
 
 
@@ -78,26 +81,12 @@ def shootFireworkRing(x, y, z, color1, color2, amp):
     p0.emitter.setAmplitudeSpread(0)
     f0 = ForceGroup.ForceGroup('gravity')
     force0 = LinearSourceForce(
-        Point3(
-            x,
-            y,
-            z),
-        LinearDistanceForce.FTONEOVERR,
-        0.10000000000000001,
-        1.1000000000000001 *
-        amp,
-        1)
+        Point3(x, y, z), LinearDistanceForce.FTONEOVERR, 0.10000000000000001,
+        1.1000000000000001 * amp, 1)
     force0.setActive(1)
     f0.addForce(force0)
     force1 = LinearSinkForce(
-        Point3(
-            x,
-            y,
-            z),
-        LinearDistanceForce.FTONEOVERR,
-        0.5,
-        2.0 * amp,
-        1)
+        Point3(x, y, z), LinearDistanceForce.FTONEOVERR, 0.5, 2.0 * amp, 1)
     force1.setActive(1)
     f0.addForce(force1)
     f.addForceGroup(f0)
@@ -107,11 +96,13 @@ def shootFireworkRing(x, y, z, color1, color2, amp):
     f.setHpr(0, random.random() * 180, random.random() * 180)
     sfx = loader.loadSfx('phase_4/audio/sfx/firework_distance_03.mp3')
     t = Sequence(
-        Func(
-            f.start, render, render), Func(
-            sfx.play), Wait(0.5), Func(
-                p0.setBirthRate, 3), Wait(1.5), Func(
-                    f.cleanup), name=getNextSequenceName('shootFireworkRing'))
+        Func(f.start, render, render),
+        Func(sfx.play),
+        Wait(0.5),
+        Func(p0.setBirthRate, 3),
+        Wait(1.5),
+        Func(f.cleanup),
+        name=getNextSequenceName('shootFireworkRing'))
     t.start()
 
 
@@ -149,44 +140,28 @@ def shootFireworkRocket(x, y, z, color1, color2, amp):
     gravityForceGroup.addForce(force0)
     f.addForceGroup(gravityForceGroup)
     f.setPos(x, y, z)
-    sfxName = random.choice(
-        ('phase_4/audio/sfx/firework_whistle_01.mp3',
-         'phase_4/audio/sfx/firework_whistle_02.mp3'))
+    sfxName = random.choice(('phase_4/audio/sfx/firework_whistle_01.mp3',
+                             'phase_4/audio/sfx/firework_whistle_02.mp3'))
     sfx = loader.loadSfx(sfxName)
     t = Sequence(
-        Func(
-            f.start,
-            render,
-            render),
-        Func(
-            sfx.play),
+        Func(f.start, render, render),
+        Func(sfx.play),
         LerpPosInterval(
-            f,
-            2.0,
-            Vec3(
-                x,
-                y,
-                z + 20 * amp),
-            blendType='easeInOut'),
-        Func(
-            p0.setBirthRate,
-            3),
+            f, 2.0, Vec3(x, y, z + 20 * amp), blendType='easeInOut'),
+        Func(p0.setBirthRate, 3),
         Wait(0.5),
-        Func(
-            f.cleanup),
+        Func(f.cleanup),
         name=getNextSequenceName('shootFirework'))
     t.start()
 
 
 def shootPop(x, y, z, color1, color2, amp):
-    sfxName = random.choice(
-        ('phase_4/audio/sfx/firework_distance_01.mp3',
-         'phase_4/audio/sfx/firework_distance_02.mp3',
-         'phase_4/audio/sfx/firework_distance_03.mp3'))
+    sfxName = random.choice(('phase_4/audio/sfx/firework_distance_01.mp3',
+                             'phase_4/audio/sfx/firework_distance_02.mp3',
+                             'phase_4/audio/sfx/firework_distance_03.mp3'))
     sfx = loader.loadSfx(sfxName)
     t = Sequence(
-        Func(
-            sfx.play),
+        Func(sfx.play),
         Wait(3),
         name=getNextSequenceName('shootFireworkRocket'))
     t.start()
@@ -231,34 +206,27 @@ def shootFireworkCircleGeneric(x, y, z, color1, color2, amp, poolSize):
     f.addParticles(p0)
     circleForceGroup = ForceGroup.ForceGroup('gravity')
     force1 = LinearSinkForce(
-        Point3(
-            x,
-            y,
-            z -
-            100),
-        LinearDistanceForce.FTONEOVERRSQUARED,
-        2.0,
-        0.29999999999999999 *
-        amp *
-        0.10000000000000001,
-        1)
+        Point3(x, y, z - 100), LinearDistanceForce.FTONEOVERRSQUARED, 2.0,
+        0.29999999999999999 * amp * 0.10000000000000001, 1)
     force1.setActive(1)
     circleForceGroup.addForce(force1)
     f.addForceGroup(circleForceGroup)
     f.setPos(x, y, z)
-    sfxName = random.choice(
-        ('phase_4/audio/sfx/firework_explosion_01.mp3',
-         'phase_4/audio/sfx/firework_explosion_02.mp3',
-         'phase_4/audio/sfx/firework_explosion_03.mp3'))
+    sfxName = random.choice(('phase_4/audio/sfx/firework_explosion_01.mp3',
+                             'phase_4/audio/sfx/firework_explosion_02.mp3',
+                             'phase_4/audio/sfx/firework_explosion_03.mp3'))
     sfx = loader.loadSfx(sfxName)
     t = Sequence(
-        Func(
-            f.start, render, render), Func(
-            sfx.play), Wait(0.5), Func(
-                p0.setBirthRate, 3), Wait(0.5), Func(
-                    p0.renderer.setCenterColor, color2), Func(
-                        p0.renderer.setEdgeColor, color2), Wait(1.5), Func(
-                            f.cleanup), name=getNextSequenceName('shootFireworkCircle'))
+        Func(f.start, render, render),
+        Func(sfx.play),
+        Wait(0.5),
+        Func(p0.setBirthRate, 3),
+        Wait(0.5),
+        Func(p0.renderer.setCenterColor, color2),
+        Func(p0.renderer.setEdgeColor, color2),
+        Wait(1.5),
+        Func(f.cleanup),
+        name=getNextSequenceName('shootFireworkCircle'))
     t.start()
 
 
@@ -292,32 +260,24 @@ def shootFireworkCircleSprite(x, y, z, color, texture, amp):
     f.addParticles(p0)
     circleForceGroup = ForceGroup.ForceGroup('gravity')
     force1 = LinearSinkForce(
-        Point3(
-            x,
-            y,
-            z -
-            100),
-        LinearDistanceForce.FTONEOVERRSQUARED,
-        2.0,
-        0.29999999999999999 *
-        amp *
-        0.10000000000000001,
-        1)
+        Point3(x, y, z - 100), LinearDistanceForce.FTONEOVERRSQUARED, 2.0,
+        0.29999999999999999 * amp * 0.10000000000000001, 1)
     force1.setActive(1)
     circleForceGroup.addForce(force1)
     f.addForceGroup(circleForceGroup)
     f.setPos(x, y, z)
-    sfxName = random.choice(
-        ('phase_4/audio/sfx/firework_explosion_01.mp3',
-         'phase_4/audio/sfx/firework_explosion_02.mp3',
-         'phase_4/audio/sfx/firework_explosion_03.mp3'))
+    sfxName = random.choice(('phase_4/audio/sfx/firework_explosion_01.mp3',
+                             'phase_4/audio/sfx/firework_explosion_02.mp3',
+                             'phase_4/audio/sfx/firework_explosion_03.mp3'))
     sfx = loader.loadSfx(sfxName)
     t = Sequence(
-        Func(
-            f.start, render, render), Func(
-            sfx.play), Wait(0.5), Func(
-                p0.setBirthRate, 3), Wait(2.0), Func(
-                    f.cleanup), name=getNextSequenceName('shootFireworkSprite'))
+        Func(f.start, render, render),
+        Func(sfx.play),
+        Wait(0.5),
+        Func(p0.setBirthRate, 3),
+        Wait(2.0),
+        Func(f.cleanup),
+        name=getNextSequenceName('shootFireworkSprite'))
     t.start()
 
 
@@ -328,4 +288,5 @@ style2shootFunc = {
     CIRCLESPRITE: shootFireworkCircleSprite,
     ROCKET: shootFireworkRocket,
     RING: shootFireworkRing,
-    POP: shootPop}
+    POP: shootPop
+}

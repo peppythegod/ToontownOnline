@@ -18,38 +18,13 @@ from toontown.toonbase import TTLocalizer
 class QuickLauncher(LauncherBase):
     GameName = 'Toontown'
     ArgCount = 3
-    LauncherPhases = [
-        1,
-        2,
-        3,
-        3.5,
-        4,
-        5,
-        5.5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13]
+    LauncherPhases = [1, 2, 3, 3.5, 4, 5, 5.5, 6, 7, 8, 9, 10, 11, 12, 13]
     TmpOverallMap = [
-        0.01,
-        0.01,
-        0.23000000000000001,
-        0.14999999999999999,
-        0.12,
-        0.17000000000000001,
-        0.080000000000000002,
-        0.070000000000000007,
-        0.050000000000000003,
-        0.050000000000000003,
-        0.017000000000000001,
-        0.010999999999999999,
-        0.01,
-        0.012,
-        0.01]
+        0.01, 0.01, 0.23000000000000001, 0.14999999999999999, 0.12,
+        0.17000000000000001, 0.080000000000000002, 0.070000000000000007,
+        0.050000000000000003, 0.050000000000000003, 0.017000000000000001,
+        0.010999999999999999, 0.01, 0.012, 0.01
+    ]
     ForegroundSleepTime = 0.001
     Localizer = TTLocalizer
     DecompressMultifiles = True
@@ -114,15 +89,15 @@ class QuickLauncher(LauncherBase):
             required = directions.getBit(1)
             optionalDownload = directions.getBit(2)
             self.notify.info(
-                'fileName: %s, flag:=%s directions=%s, extract=%s required=%s optDownload=%s' %
-                (fileName, flag, directions, extract, required, optionalDownload))
+                'fileName: %s, flag:=%s directions=%s, extract=%s required=%s optDownload=%s'
+                % (fileName, flag, directions, extract, required,
+                   optionalDownload))
             if required:
                 self.requiredInstallFiles.append(fileName)
                 continue
 
         self.notify.info(
-            'requiredInstallFiles: %s' %
-            self.requiredInstallFiles)
+            'requiredInstallFiles: %s' % self.requiredInstallFiles)
         self.mfDetails = {}
         for mfName in self.requiredInstallFiles:
             currentVer = settings['FILE_%s.current' % mfName]
@@ -130,8 +105,7 @@ class QuickLauncher(LauncherBase):
             (size, hash) = details.split()
             self.mfDetails[mfName] = (currentVer, int(size), hash)
             self.notify.info(
-                'mfDetails[%s] = %s' %
-                (mfName, self.mfDetails[mfName]))
+                'mfDetails[%s] = %s' % (mfName, self.mfDetails[mfName]))
 
         self.resumeInstall()
 
@@ -139,40 +113,32 @@ class QuickLauncher(LauncherBase):
         (curVer, expectedSize,
          expectedMd5) = self.mfDetails[self.currentMfname]
         localFilename = Filename(
-            self.topDir, Filename(
-                '_%s.%s.%s' %
-                (self.currentMfname, curVer, self.CompressionExt)))
-        serverFilename = '%s%s.%s.%s' % (
-            self.contentDir, self.currentMfname, curVer, self.CompressionExt)
+            self.topDir,
+            Filename('_%s.%s.%s' % (self.currentMfname, curVer,
+                                    self.CompressionExt)))
+        serverFilename = '%s%s.%s.%s' % (self.contentDir, self.currentMfname,
+                                         curVer, self.CompressionExt)
         if localFilename.exists():
             fileSize = localFilename.getFileSize()
-            self.notify.info(
-                'Previous partial download exists for: %s size=%s' %
-                (localFilename.cStr(), fileSize))
-            self.downloadMultifile(
-                serverFilename,
-                localFilename,
-                self.currentMfname,
-                self.downloadMultifileDone,
-                0,
-                fileSize,
-                self.downloadMultifileWriteToDisk)
+            self.notify.info('Previous partial download exists for: %s size=%s'
+                             % (localFilename.cStr(), fileSize))
+            self.downloadMultifile(serverFilename, localFilename,
+                                   self.currentMfname,
+                                   self.downloadMultifileDone, 0, fileSize,
+                                   self.downloadMultifileWriteToDisk)
         else:
-            self.downloadMultifile(
-                serverFilename,
-                localFilename,
-                self.currentMfname,
-                self.downloadMultifileDone,
-                0,
-                0,
-                self.downloadMultifileWriteToDisk)
+            self.downloadMultifile(serverFilename, localFilename,
+                                   self.currentMfname,
+                                   self.downloadMultifileDone, 0, 0,
+                                   self.downloadMultifileWriteToDisk)
 
     def resumeInstall(self):
         for (curVer, expectedSize, expectedMd5) in range(
                 len(self.LauncherPhases)):
             self.currentPhaseIndex = None
             self.currentPhase = self.LauncherPhases[self.currentPhaseIndex]
-            self.currentPhaseName = self.Localizer.LauncherPhaseNames[self.currentPhase]
+            self.currentPhaseName = self.Localizer.LauncherPhaseNames[
+                self.currentPhase]
             self.currentMfname = 'phase_%s.mf' % self.currentPhase
             if sys.platform == 'darwin':
                 if self.currentMfname == 'phase_1.mf' or self.currentMfname == 'phase_2.mf':
@@ -183,9 +149,8 @@ class QuickLauncher(LauncherBase):
             else:
                 self.notify.warning(
                     'avoiding crash ValueError: list.remove(x): x not in list')
-            self.curPhaseFile = Filename(
-                self.topDir, Filename(
-                    self.currentMfname))
+            self.curPhaseFile = Filename(self.topDir,
+                                         Filename(self.currentMfname))
             self.notify.info('working on: %s' % self.curPhaseFile)
             if self.curPhaseFile.exists():
                 self.notify.info('file exists')
@@ -193,12 +158,11 @@ class QuickLauncher(LauncherBase):
                 clientMd5 = HashVal()
                 clientMd5.hashFile(self.curPhaseFile)
                 self.notify.info(
-                    'clientMd5: %s expectedMd5: %s' %
-                    (clientMd5, expectedMd5))
-                self.notify.info(
-                    'clientSize: %s expectedSize: %s' %
-                    (fileSize, expectedSize))
-                if fileSize == expectedSize and clientMd5.asHex() == expectedMd5:
+                    'clientMd5: %s expectedMd5: %s' % (clientMd5, expectedMd5))
+                self.notify.info('clientSize: %s expectedSize: %s' %
+                                 (fileSize, expectedSize))
+                if fileSize == expectedSize and clientMd5.asHex(
+                ) == expectedMd5:
                     self.notify.info('file is up to date')
                     self.finalizePhase()
                     continue
@@ -223,29 +187,28 @@ class QuickLauncher(LauncherBase):
         if not self.DecompressMultifiles:
             self.decompressMultifileDone()
         else:
-            self.notify.info(
-                'decompressMultifile: Decompressing multifile: ' + mfname)
+            self.notify.info('decompressMultifile: Decompressing multifile: ' +
+                             mfname)
             (curVer, expectedSize,
              expectedMd5) = self.mfDetails[self.currentMfname]
             localFilename = Filename(
-                self.topDir, Filename(
-                    '_%s.%s.%s' %
-                    (mfname, curVer, self.CompressionExt)))
-            self.decompressMultifile(
-                mfname, localFilename, self.decompressMultifileDone)
+                self.topDir,
+                Filename('_%s.%s.%s' % (mfname, curVer, self.CompressionExt)))
+            self.decompressMultifile(mfname, localFilename,
+                                     self.decompressMultifileDone)
         self.notify.info(
-            'decompressMultifile: Multifile already decompressed: %s' %
-            mfname)
+            'decompressMultifile: Multifile already decompressed: %s' % mfname)
         self.decompressMultifileDone()
 
     def decompressMultifile(self, mfname, localFilename, callback):
-        self.notify.info(
-            'decompressMultifile: request: ' +
-            localFilename.cStr())
-        self.launcherMessage(self.Localizer.LauncherDecompressingFile % {
-            'name': self.currentPhaseName,
-            'current': self.currentPhaseIndex,
-            'total': self.numPhases})
+        self.notify.info('decompressMultifile: request: ' +
+                         localFilename.cStr())
+        self.launcherMessage(
+            self.Localizer.LauncherDecompressingFile % {
+                'name': self.currentPhaseName,
+                'current': self.currentPhaseIndex,
+                'total': self.numPhases
+            })
         task = Task(self.decompressMultifileTask)
         task.mfname = mfname
         task.mfFilename = Filename(self.topDir, Filename('_' + task.mfname))
@@ -272,13 +235,10 @@ class QuickLauncher(LauncherBase):
                         'name': self.currentPhaseName,
                         'current': self.currentPhaseIndex,
                         'total': self.numPhases,
-                        'percent': int(
-                            round(
-                                progress * 100))})
+                        'percent': int(round(progress * 100))
+                    })
                 percentProgress = int(
-                    round(
-                        progress *
-                        self.decompressPercentage))
+                    round(progress * self.decompressPercentage))
                 totalPercent = self.downloadPercentage + percentProgress
                 self.setPercentPhaseComplete(self.currentPhase, totalPercent)
 
@@ -290,22 +250,21 @@ class QuickLauncher(LauncherBase):
             unlinked = task.localFilename.unlink()
             if not unlinked:
                 self.notify.warning(
-                    'unlink failed on file: %s' %
-                    task.localFilename.cStr())
+                    'unlink failed on file: %s' % task.localFilename.cStr())
 
             realMf = Filename(self.topDir, Filename(self.currentMfname))
             renamed = task.mfFilename.renameTo(realMf)
             if not renamed:
                 self.notify.warning(
-                    'rename failed on file: %s' %
-                    task.mfFilename.cStr())
+                    'rename failed on file: %s' % task.mfFilename.cStr())
 
             self.launcherMessage(
                 self.Localizer.LauncherDecompressingPercent % {
                     'name': self.currentPhaseName,
                     'current': self.currentPhaseIndex,
                     'total': self.numPhases,
-                    'percent': 100})
+                    'percent': 100
+                })
             totalPercent = self.downloadPercentage + self.decompressPercentage
             self.setPercentPhaseComplete(self.currentPhase, totalPercent)
             self.notify.info(
@@ -321,11 +280,12 @@ class QuickLauncher(LauncherBase):
 
     def decompressMultifileDone(self):
         self.finalizePhase()
-        self.notify.info('Done updating multifiles in phase: ' + `self.currentPhase`)
+        self.notify.info('Done updating multifiles in phase: ' +
+                         ` self.currentPhase `)
         self.progressSoFar += int(
             round(self.phaseOverallMap[self.currentPhase] * 100))
-        self.notify.info('progress so far ' + `self.progressSoFar`)
-        messenger.send('phaseComplete-' + `self.currentPhase`)
+        self.notify.info('progress so far ' + ` self.progressSoFar `)
+        messenger.send('phaseComplete-' + ` self.currentPhase `)
         self.resumeInstall()
 
     def finalizePhase(self):
@@ -375,10 +335,10 @@ class QuickLauncher(LauncherBase):
                 continue
 
         if dict.has_key('secretsNeedsParentPassword'):
-            self.secretNeedsParentPasswordKey = dict['secretsNeedsParentPassword']
-            self.notify.info(
-                'secretNeedsParentPassword = %d' %
-                self.secretNeedsParentPasswordKey)
+            self.secretNeedsParentPasswordKey = dict[
+                'secretsNeedsParentPassword']
+            self.notify.info('secretNeedsParentPassword = %d' %
+                             self.secretNeedsParentPasswordKey)
         else:
             self.notify.warning(
                 'no secretNeedsParentPassword token in webAcctParams')
@@ -408,7 +368,7 @@ class QuickLauncher(LauncherBase):
         pass
 
     def getRegistry(self, name, missingValue=None):
-        self.notify.info('getRegistry %s' % ((name, missingValue),))
+        self.notify.info('getRegistry %s' % ((name, missingValue), ))
         self.notify.info('self.VISTA = %s' % self.VISTA)
         self.notify.info('checking env' % os.environ)
         if missingValue is None:
@@ -424,9 +384,7 @@ class QuickLauncher(LauncherBase):
         return value
 
     def getCDDownloadPath(self, origPath, serverFilePath):
-        return '%s/%s/CD_%d/%s' % (origPath,
-                                   self.ServerVersion,
-                                   self.fromCD,
+        return '%s/%s/CD_%d/%s' % (origPath, self.ServerVersion, self.fromCD,
                                    serverFilePath)
 
     def getDownloadPath(self, origPath, serverFilePath):
@@ -450,7 +408,8 @@ class QuickLauncher(LauncherBase):
                     return True
                 else:
                     return False
-            return True
+            except:
+                return True
 
         else:
             return self.secretNeedsParentPasswordKey
@@ -464,7 +423,8 @@ class QuickLauncher(LauncherBase):
                     return True
                 else:
                     return False
-            return False
+            except:
+                return False
 
         else:
             return self.chatEligibleKey

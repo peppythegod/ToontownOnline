@@ -20,292 +20,66 @@ class PartyEditorGrid:
         self.lastActivityIdPlaced = None
 
     def initGrid(self):
-        self.grid = [
-            [
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                None],
-            [
-                None,
-                None,
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None,
-                None,
-                None,
-                None,
-                None],
-            [
-                None,
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None,
-                None,
-                None,
-                None],
-            [
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None,
-                None,
-                None],
-            [
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
-            [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
-            [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
-            [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
-            [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
-            [
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True],
-            [
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None],
-            [
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None],
-            [
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None],
-            [
-                None,
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None,
-                None],
-            [
-                None,
-                None,
-                None,
-                None,
-                None,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                None,
-                None,
-                None]]
+        self.grid = [[
+            None, None, None, None, None, None, True, True, True, True, True,
+            None, None, None, None, None, None, None
+        ],
+                     [
+                         None, None, None, None, None, True, True, True, True,
+                         True, True, True, None, None, None, None, None, None
+                     ],
+                     [
+                         None, None, None, None, True, True, True, True, True,
+                         True, True, True, True, None, None, None, None, None
+                     ],
+                     [
+                         None, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, None, None, None, None
+                     ],
+                     [
+                         None, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, True
+                     ],
+                     [
+                         True, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, True
+                     ],
+                     [
+                         True, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, True
+                     ],
+                     [
+                         True, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, True
+                     ],
+                     [
+                         True, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, True
+                     ],
+                     [
+                         None, True, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, True
+                     ],
+                     [
+                         None, None, True, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, True, None
+                     ],
+                     [
+                         None, None, None, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, None, None
+                     ],
+                     [
+                         None, None, None, True, True, True, True, True, True,
+                         True, True, True, True, True, True, True, None, None
+                     ],
+                     [
+                         None, None, None, None, True, True, True, True, True,
+                         True, True, True, True, True, True, None, None, None
+                     ],
+                     [
+                         None, None, None, None, None, True, True, True, True,
+                         True, True, True, True, True, True, None, None, None
+                     ]]
         for y in range(len(self.grid)):
             for x in range(len(self.grid[0])):
                 if self.grid[y][x]:
@@ -318,8 +92,8 @@ class PartyEditorGrid:
             for x in range(len(self.grid[0])):
                 if self.grid[y][x] and self.grid[y][x].gridElement:
                     if not self.grid[y][x].gridElement.isDecoration:
-                        activityTuple = self.grid[y][x].gridElement.getActivityTuple(
-                            x, y)
+                        activityTuple = self.grid[y][
+                            x].gridElement.getActivityTuple(x, y)
                         if activityTuple not in activities:
                             activities.append(activityTuple)
 
@@ -332,8 +106,8 @@ class PartyEditorGrid:
             for x in range(len(self.grid[0])):
                 if self.grid[y][x] and self.grid[y][x].gridElement:
                     if not self.grid[y][x].gridElement.isDecoration:
-                        activityTuple = self.grid[y][x].gridElement.getActivityTuple(
-                            x, y)
+                        activityTuple = self.grid[y][
+                            x].gridElement.getActivityTuple(x, y)
                         if activityTuple not in activities:
                             activities.append(activityTuple)
                             activityElems.append(self.grid[y][x].gridElement)
@@ -346,8 +120,8 @@ class PartyEditorGrid:
             for x in range(len(self.grid[0])):
                 if self.grid[y][x] and self.grid[y][x].gridElement:
                     if self.grid[y][x].gridElement.isDecoration:
-                        decorationTuple = self.grid[y][x].gridElement.getDecorationTuple(
-                            x, y)
+                        decorationTuple = self.grid[y][
+                            x].gridElement.getDecorationTuple(x, y)
                         if decorationTuple not in decorations:
                             decorations.append(decorationTuple)
 
@@ -364,19 +138,12 @@ class PartyEditorGrid:
 
     def checkGridSquareForAvailability(self, gridSquare, size):
         (xOffsetLow, xOffsetHigh, yOffset) = self.getXYOffsets(size)
-        for y in range(int(gridSquare.y -
-                           size[1] /
-                           2), int(gridSquare.y +
-                                   size[1] /
-                                   2) +
-                       yOffset):
-            for x in range(int(gridSquare.x -
-                               size[0] /
-                               2) +
-                           xOffsetLow, int(gridSquare.x +
-                                           size[0] /
-                                           2) +
-                           xOffsetHigh):
+        for y in range(
+                int(gridSquare.y - size[1] / 2),
+                int(gridSquare.y + size[1] / 2) + yOffset):
+            for x in range(
+                    int(gridSquare.x - size[0] / 2) + xOffsetLow,
+                    int(gridSquare.x + size[0] / 2) + xOffsetHigh):
                 testGridSquare = self.getGridSquare(x, y)
                 if testGridSquare is None:
                     return False
@@ -419,19 +186,12 @@ class PartyEditorGrid:
 
     def registerNewElement(self, gridElement, centerGridSquare, size):
         (xOffsetLow, xOffsetHigh, yOffset) = self.getXYOffsets(size)
-        for y in range(int(centerGridSquare.y -
-                           size[1] /
-                           2), int(centerGridSquare.y +
-                                   size[1] /
-                                   2) +
-                       yOffset):
-            for x in range(int(centerGridSquare.x -
-                               size[0] /
-                               2) +
-                           xOffsetLow, int(centerGridSquare.x +
-                                           size[0] /
-                                           2) +
-                           xOffsetHigh):
+        for y in range(
+                int(centerGridSquare.y - size[1] / 2),
+                int(centerGridSquare.y + size[1] / 2) + yOffset):
+            for x in range(
+                    int(centerGridSquare.x - size[0] / 2) + xOffsetLow,
+                    int(centerGridSquare.x + size[0] / 2) + xOffsetHigh):
                 testGridSquare = self.getGridSquare(x, y)
                 if testGridSquare is None:
                     return False
@@ -446,19 +206,12 @@ class PartyEditorGrid:
 
     def removeElement(self, centerGridSquare, size):
         (xOffsetLow, xOffsetHigh, yOffset) = self.getXYOffsets(size)
-        for y in range(int(centerGridSquare.y -
-                           size[1] /
-                           2), int(centerGridSquare.y +
-                                   size[1] /
-                                   2) +
-                       yOffset):
-            for x in range(int(centerGridSquare.x -
-                               size[0] /
-                               2) +
-                           xOffsetLow, int(centerGridSquare.x +
-                                           size[0] /
-                                           2) +
-                           xOffsetHigh):
+        for y in range(
+                int(centerGridSquare.y - size[1] / 2),
+                int(centerGridSquare.y + size[1] / 2) + yOffset):
+            for x in range(
+                    int(centerGridSquare.x - size[0] / 2) + xOffsetLow,
+                    int(centerGridSquare.x + size[0] / 2) + xOffsetHigh):
                 testGridSquare = self.getGridSquare(x, y)
                 if testGridSquare is None:
                     return False

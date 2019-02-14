@@ -1,5 +1,3 @@
-
-
 from DistributedMinigameAI import *
 from direct.distributed.ClockDelta import *
 from direct.fsm import ClassicFSM, State
@@ -12,8 +10,8 @@ import types
 def checkPlace(placeX, placeY, fillSize, placeList):
     goodPlacement = 1
     for place in placeList:
-        distance = math.sqrt(
-            (place[0] - placeX) * (place[0] - placeX) + (place[1] - placeY) * (place[1] - placeY))
+        distance = math.sqrt((place[0] - placeX) * (place[0] - placeX) +
+                             (place[1] - placeY) * (place[1] - placeY))
         distance = distance - fillSize + place[2]
         if distance <= 0.0:
             goodPlacement = 0
@@ -24,7 +22,6 @@ def checkPlace(placeX, placeY, fillSize, placeList):
 
 
 class DistributedTargetGameAI(DistributedMinigameAI):
-
     def __init__(self, air, minigameId):
 
         try:
@@ -33,16 +30,15 @@ class DistributedTargetGameAI(DistributedMinigameAI):
             self.DistributedTargetGameAI_initialized = 1
             DistributedMinigameAI.__init__(self, air, minigameId)
             self.gameFSM = ClassicFSM.ClassicFSM('DistributedTargetGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive, [
-                    'fly']),
-                State.State('fly', self.enterFly, self.exitFly, [
-                    'cleanup',
-                    'resetRound']),
-                State.State('resetRound', self.enterResetRound, self.exitResetRound, [
-                    'cleanup',
-                    'fly']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup, [
-                    'inactive'])], 'inactive', 'inactive')
+                State.State('inactive', self.enterInactive, self.exitInactive,
+                            ['fly']),
+                State.State('fly', self.enterFly, self.exitFly,
+                            ['cleanup', 'resetRound']),
+                State.State('resetRound', self.enterResetRound,
+                            self.exitResetRound, ['cleanup', 'fly']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
             self.addChildGameFSM(self.gameFSM)
             self._DistributedTargetGameAI__timeBase = globalClockDelta.localToNetworkTime(
                 globalClock.getRealTime())
@@ -63,22 +59,20 @@ class DistributedTargetGameAI(DistributedMinigameAI):
 
     def setGameReady(self):
         self.notify.debug('setGameReady')
-        self.sendUpdate('setTrolleyZone', [
-            self.trolleyZone])
+        self.sendUpdate('setTrolleyZone', [self.trolleyZone])
         DistributedMinigameAI.setGameReady(self)
         import time as time
         random.seed(time.time())
         seed = int(random.random() * 4000.0)
-        self.sendUpdate('setTargetSeed', [
-            seed])
+        self.sendUpdate('setTargetSeed', [seed])
         random.seed(seed)
         self.setupTargets()
 
     def setupTargets(self):
         fieldWidth = TargetGameGlobals.ENVIRON_WIDTH * 3
         fieldLength = TargetGameGlobals.ENVIRON_LENGTH * 3.7000000000000002
-        self.pattern = TargetGameGlobals.difficultyPatterns[self.getSafezoneId(
-        )]
+        self.pattern = TargetGameGlobals.difficultyPatterns[
+            self.getSafezoneId()]
         self.targetList = self.pattern[0]
         self.targetValue = self.pattern[1]
         self.targetSize = self.pattern[2]
@@ -99,11 +93,13 @@ class DistributedTargetGameAI(DistributedMinigameAI):
                 while not goodPlacement:
                     placeX = random.random() * fieldWidth * 0.59999999999999998 - \
                         fieldWidth * 0.59999999999999998 * 0.5
-                    placeY = (random.random() * 0.59999999999999998 + 0.0 + 0.40000000000000002 * (
-                        self.placeValue * 1.0 / highestValue * 1.0)) * fieldLength
+                    placeY = (random.random() * 0.59999999999999998 + 0.0 +
+                              0.40000000000000002 *
+                              (self.placeValue * 1.0 / highestValue * 1.0)
+                              ) * fieldLength
                     fillSize = self.targetSize[typeIndex]
-                    goodPlacement = checkPlace(
-                        placeX, placeY, fillSize, placeList)
+                    goodPlacement = checkPlace(placeX, placeY, fillSize,
+                                               placeList)
                 placeList.append((placeX, placeY, fillSize))
                 subIndex = self.targetSubParts[typeIndex]
                 while subIndex:
@@ -122,8 +118,8 @@ class DistributedTargetGameAI(DistributedMinigameAI):
     def setScore(self, scoreX, scoreY, other=None):
         avId = self.air.getAvatarIdFromSender()
         if avId not in self.avIdList:
-            self.air.writeServerEvent(
-                'suspicious', avId, 'RingGameAI.setScore: invalid avId')
+            self.air.writeServerEvent('suspicious', avId,
+                                      'RingGameAI.setScore: invalid avId')
             return None
 
         topValue = 0
@@ -145,9 +141,7 @@ class DistributedTargetGameAI(DistributedMinigameAI):
 
         if self.scoreDict[avId] < topValue:
             self.scoreDict[avId] = topValue
-            self.sendUpdate('setSingleScore', [
-                topValue,
-                avId])
+            self.sendUpdate('setSingleScore', [topValue, avId])
 
     def setGameAbort(self):
         self.notify.debug('setGameAbort')
@@ -173,12 +167,8 @@ class DistributedTargetGameAI(DistributedMinigameAI):
     def enterFly(self):
         self.notify.debug('enterFly')
         self.barrierScore = ToonBarrier(
-            'waitClientsScore',
-            self.uniqueName('waitClientsScore'),
-            self.avIdList,
-            120,
-            self.allAvatarsScore,
-            self.handleTimeout)
+            'waitClientsScore', self.uniqueName('waitClientsScore'),
+            self.avIdList, 120, self.allAvatarsScore, self.handleTimeout)
 
     def exitFly(self):
         pass
@@ -194,16 +184,8 @@ class DistributedTargetGameAI(DistributedMinigameAI):
             self.gameFSM.request('resetRound')
 
     def getScoreList(self):
-        scoreList = [
-            0,
-            0,
-            0,
-            0]
-        avList = [
-            0,
-            0,
-            0,
-            0]
+        scoreList = [0, 0, 0, 0]
+        avList = [0, 0, 0, 0]
         scoreIndex = 0
         for avId in self.scoreDict.keys():
             scoreList[scoreIndex] = self.scoreDict[avId]
@@ -218,10 +200,8 @@ class DistributedTargetGameAI(DistributedMinigameAI):
         self.sendUpdate('setRoundDone', [])
         self.barrierScore.cleanup()
         del self.barrierScore
-        taskMgr.doMethodLater(
-            0.10000000000000001,
-            self.gotoFly,
-            self.taskName('roundReset'))
+        taskMgr.doMethodLater(0.10000000000000001, self.gotoFly,
+                              self.taskName('roundReset'))
 
     def exitResetRound(self):
         pass

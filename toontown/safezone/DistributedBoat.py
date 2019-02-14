@@ -10,7 +10,6 @@ from toontown.toonbase import ToontownGlobals
 
 
 class DistributedBoat(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.eastWestMopath = Mopath.Mopath()
@@ -18,41 +17,34 @@ class DistributedBoat(DistributedObject.DistributedObject):
         self.eastWestMopathInterval = None
         self.westEastMopathInterval = None
         self.fsm = ClassicFSM.ClassicFSM('DistributedBoat', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'DockedEast',
-                'SailingWest',
-                'DockedWest',
-                'SailingEast']),
-            State.State('DockedEast', self.enterDockedEast, self.exitDockedEast, [
-                'SailingWest',
-                'SailingEast',
-                'DockedWest']),
-            State.State('SailingWest', self.enterSailingWest, self.exitSailingWest, [
-                'DockedWest',
-                'SailingEast',
-                'DockedEast']),
-            State.State('DockedWest', self.enterDockedWest, self.exitDockedWest, [
-                'SailingEast',
-                'SailingWest',
-                'DockedEast']),
-            State.State('SailingEast', self.enterSailingEast, self.exitSailingEast, [
-                'DockedEast',
-                'DockedWest',
-                'SailingWest'])], 'off', 'off')
+            State.State(
+                'off', self.enterOff, self.exitOff,
+                ['DockedEast', 'SailingWest', 'DockedWest', 'SailingEast']),
+            State.State('DockedEast', self.enterDockedEast,
+                        self.exitDockedEast,
+                        ['SailingWest', 'SailingEast', 'DockedWest']),
+            State.State('SailingWest', self.enterSailingWest,
+                        self.exitSailingWest,
+                        ['DockedWest', 'SailingEast', 'DockedEast']),
+            State.State('DockedWest', self.enterDockedWest,
+                        self.exitDockedWest,
+                        ['SailingEast', 'SailingWest', 'DockedEast']),
+            State.State('SailingEast', self.enterSailingEast,
+                        self.exitSailingEast,
+                        ['DockedEast', 'DockedWest', 'SailingWest'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
         DistributedObject.DistributedObject.generate(self)
         self.boat = base.cr.playGame.hood.loader.boat
-        base.cr.parentMgr.registerParent(
-            ToontownGlobals.SPDonaldsBoat, self.boat)
+        base.cr.parentMgr.registerParent(ToontownGlobals.SPDonaldsBoat,
+                                         self.boat)
         self.setupTracks()
-        self.accept(
-            'enterdonalds_boat_floor',
-            self._DistributedBoat__handleOnFloor)
-        self.accept(
-            'exitdonalds_boat_floor',
-            self._DistributedBoat__handleOffFloor)
+        self.accept('enterdonalds_boat_floor',
+                    self._DistributedBoat__handleOnFloor)
+        self.accept('exitdonalds_boat_floor',
+                    self._DistributedBoat__handleOffFloor)
 
     def setupTracks(self):
         boat = self.boat
@@ -63,17 +55,17 @@ class DistributedBoat(DistributedObject.DistributedObject):
         self.eastWestMopath.loadFile('phase_6/paths/dd-e-w')
         self.eastWestMopathInterval = MopathInterval(self.eastWestMopath, boat)
         ewBoatTrack = ParallelEndTogether(
-            Parallel(
-                self.eastWestMopathInterval, SoundInterval(
-                    bellSound, node=boat)), SoundInterval(
-                foghornSound, node=boat), name='ew-boat')
+            Parallel(self.eastWestMopathInterval,
+                     SoundInterval(bellSound, node=boat)),
+            SoundInterval(foghornSound, node=boat),
+            name='ew-boat')
         self.westEastMopath.loadFile('phase_6/paths/dd-w-e')
         self.westEastMopathInterval = MopathInterval(self.westEastMopath, boat)
         weBoatTrack = ParallelEndTogether(
-            Parallel(
-                self.westEastMopathInterval, SoundInterval(
-                    bellSound, node=boat)), SoundInterval(
-                foghornSound, node=boat), name='we-boat')
+            Parallel(self.westEastMopathInterval,
+                     SoundInterval(bellSound, node=boat)),
+            SoundInterval(foghornSound, node=boat),
+            name='we-boat')
         PIER_TIME = 5.0
         eastPier = self.cr.playGame.hood.loader.geom.find('**/east_pier')
         ePierHpr = VBase3(90, -44.260100000000001, 0)
@@ -82,55 +74,27 @@ class DistributedBoat(DistributedObject.DistributedObject):
         wPierHpr = VBase3(-90, -44.260100000000001, 0)
         wPierTargetHpr = VBase3(-90, 0.25, 0)
         ePierDownTrack = Parallel(
-            LerpHprInterval(
-                eastPier,
-                PIER_TIME,
-                ePierHpr,
-                ePierTargetHpr),
-            SoundInterval(
-                dockSound,
-                node=eastPier),
+            LerpHprInterval(eastPier, PIER_TIME, ePierHpr, ePierTargetHpr),
+            SoundInterval(dockSound, node=eastPier),
             name='e-pier-down')
         ePierUpTrack = Parallel(
-            LerpHprInterval(
-                eastPier,
-                PIER_TIME,
-                ePierTargetHpr,
-                ePierHpr),
-            SoundInterval(
-                dockSound,
-                node=eastPier),
+            LerpHprInterval(eastPier, PIER_TIME, ePierTargetHpr, ePierHpr),
+            SoundInterval(dockSound, node=eastPier),
             name='e-pier-up')
         wPierDownTrack = Parallel(
-            LerpHprInterval(
-                westPier,
-                PIER_TIME,
-                wPierHpr,
-                wPierTargetHpr),
-            SoundInterval(
-                dockSound,
-                node=westPier),
+            LerpHprInterval(westPier, PIER_TIME, wPierHpr, wPierTargetHpr),
+            SoundInterval(dockSound, node=westPier),
             name='w-pier-down')
         wPierUpTrack = Parallel(
-            LerpHprInterval(
-                westPier,
-                PIER_TIME,
-                wPierTargetHpr,
-                wPierHpr),
-            SoundInterval(
-                dockSound,
-                node=westPier),
+            LerpHprInterval(westPier, PIER_TIME, wPierTargetHpr, wPierHpr),
+            SoundInterval(dockSound, node=westPier),
             name='w-pier-up')
         self.ewTrack = ParallelEndTogether(
-            Parallel(
-                ewBoatTrack,
-                ePierDownTrack),
+            Parallel(ewBoatTrack, ePierDownTrack),
             wPierUpTrack,
             name='ew-track')
         self.weTrack = ParallelEndTogether(
-            Parallel(
-                weBoatTrack,
-                wPierDownTrack),
+            Parallel(weBoatTrack, wPierDownTrack),
             ePierUpTrack,
             name='we-track')
 
@@ -160,8 +124,7 @@ class DistributedBoat(DistributedObject.DistributedObject):
         DistributedObject.DistributedObject.delete(self)
 
     def setState(self, state, timestamp):
-        self.fsm.request(state, [
-            globalClockDelta.localElapsedTime(timestamp)])
+        self.fsm.request(state, [globalClockDelta.localElapsedTime(timestamp)])
 
     def _DistributedBoat__handleOnFloor(self, collEntry):
         self.cr.playGame.getPlace().activityFsm.request('OnBoat')

@@ -97,9 +97,8 @@ class CogdoBarrelRoom:
             base.camLens.setFar(self.defaultFar)
 
     def activate(self):
-        self.notify.info(
-            'Activating barrel room: %d sec timer.' %
-            CogdoBarrelRoomConsts.CollectionTime)
+        self.notify.info('Activating barrel room: %d sec timer.' %
+                         CogdoBarrelRoomConsts.CollectionTime)
         self.timer.unstash()
         self.timer.posAboveShtikerBook()
         self.timer.countdown(CogdoBarrelRoomConsts.CollectionTime)
@@ -137,24 +136,29 @@ class CogdoBarrelRoom:
         track.append(self._CogdoBarrelRoom__stomperIntervals())
         track.append(
             Sequence(
-                Func(
-                    camera.reparentTo, render), Func(
-                    camera.setPosHpr, self.model, -20.0, -87.900000000000006, 12.0, -30, 0, 0), Func(
-                    base.transitions.irisIn, 0.5), Wait(1.0), LerpHprInterval(
-                        camera, duration=2.0, startHpr=Vec3(
-                            -30, 0, 0), hpr=Vec3(
-                                0, 0, 0), blendType='easeInOut'), Wait(2.5), LerpHprInterval(
-                                    camera, duration=3.0, startHpr=Vec3(
-                                        0, 0, 0), hpr=Vec3(
-                                            -45, 0, 0), blendType='easeInOut'), Wait(2.5)))
-        track.delayDelete = DelayDelete.DelayDelete(
-            avatar, 'introBarrelRoomTrack')
+                Func(camera.reparentTo, render),
+                Func(camera.setPosHpr, self.model, -20.0, -87.900000000000006,
+                     12.0, -30, 0, 0), Func(base.transitions.irisIn, 0.5),
+                Wait(1.0),
+                LerpHprInterval(
+                    camera,
+                    duration=2.0,
+                    startHpr=Vec3(-30, 0, 0),
+                    hpr=Vec3(0, 0, 0),
+                    blendType='easeInOut'), Wait(2.5),
+                LerpHprInterval(
+                    camera,
+                    duration=3.0,
+                    startHpr=Vec3(0, 0, 0),
+                    hpr=Vec3(-45, 0, 0),
+                    blendType='easeInOut'), Wait(2.5)))
+        track.delayDelete = DelayDelete.DelayDelete(avatar,
+                                                    'introBarrelRoomTrack')
         track.setDoneEvent(trackName)
         return (track, trackName)
 
     def _CogdoBarrelRoom__stomperIntervals(self):
-        ivals = [
-            SoundInterval(self.stomperSfx)]
+        ivals = [SoundInterval(self.stomperSfx)]
         i = 0
         for stomperDef in CogdoBarrelRoomConsts.StomperProps:
             stomperNode = render.find(stomperDef['path'])
@@ -172,10 +176,7 @@ class CogdoBarrelRoom:
                     LerpPosInterval(
                         stomperNode,
                         CogdoBarrelRoomConsts.StomperHaltTime,
-                        Point3(
-                            0,
-                            0,
-                            destZ),
+                        Point3(0, 0, destZ),
                         blendType='easeOut'))
 
             i += 1
@@ -190,10 +191,10 @@ class CogdoBarrelRoom:
     def _CogdoBarrelRoom__rewardCamera(self):
         trackName = 'cogdoBarrelRoom-RewardCamera'
         track = Sequence(
-            Func(
-                camera.reparentTo, render), Func(
-                camera.setPosHpr, self.model, 0, 0, 11.0, 0, -14, 0), Func(
-                self.showBattleAreaLight, False), name=trackName)
+            Func(camera.reparentTo, render),
+            Func(camera.setPosHpr, self.model, 0, 0, 11.0, 0, -14, 0),
+            Func(self.showBattleAreaLight, False),
+            name=trackName)
         return (track, trackName)
 
     def showRewardUi(self, results, callback=None):

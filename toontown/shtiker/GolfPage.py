@@ -53,10 +53,7 @@ class GolfPage(ShtikerPage):
             relief=None,
             text='',
             text_scale=0.10000000000000001,
-            pos=(
-                0,
-                0,
-                0.65000000000000002))
+            pos=(0, 0, 0.65000000000000002))
         normalColor = (1, 1, 1, 1)
         clickColor = (0.80000000000000004, 0.80000000000000004, 0, 1)
         rolloverColor = (0.14999999999999999, 0.81999999999999995, 1.0, 1)
@@ -69,58 +66,38 @@ class GolfPage(ShtikerPage):
             text_scale=TTLocalizer.GPrecordsTab,
             text_align=TextNode.ALeft,
             image=gui.find('**/tabs/polySurface2'),
-            image_pos=(
-                0.12,
-                1,
-                -0.91000000000000003),
-            image_hpr=(
-                0,
-                0,
-                -90),
-            image_scale=(
-                0.033000000000000002,
-                0.033000000000000002,
-                0.035000000000000003),
+            image_pos=(0.12, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
             image_color=normalColor,
             image1_color=clickColor,
             image2_color=rolloverColor,
             image3_color=diabledColor,
-            text_fg=Vec4(
-                0.20000000000000001,
-                0.10000000000000001,
-                0,
-                1),
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
             command=self.setMode,
-            extraArgs=[
-                PageMode.Records],
+            extraArgs=[PageMode.Records],
             pos=TTLocalizer.GPrecordsTabPos)
-        self.trophyTab = DirectButton(parent=self,
-                                      relief=None,
-                                      text=TTLocalizer.GolfPageTrophyTab,
-                                      text_scale=TTLocalizer.GPtrophyTab,
-                                      text_pos=TTLocalizer.GPtrophyTabTextPos,
-                                      text_align=TextNode.ALeft,
-                                      image=gui.find('**/tabs/polySurface3'),
-                                      image_pos=(-0.28000000000000003,
-                                                 1,
-                                                 -0.91000000000000003),
-                                      image_hpr=(0,
-                                                 0,
-                                                 -90),
-                                      image_scale=(0.033000000000000002,
-                                                   0.033000000000000002,
-                                                   0.035000000000000003),
-                                      image_color=normalColor,
-                                      image1_color=clickColor,
-                                      image2_color=rolloverColor,
-                                      image3_color=diabledColor,
-                                      text_fg=Vec4(0.20000000000000001,
-                                                   0.10000000000000001,
-                                                   0,
-                                                   1),
-                                      command=self.setMode,
-                                      extraArgs=[PageMode.Trophy],
-                                      pos=TTLocalizer.GPtrophyTabPos)
+        self.trophyTab = DirectButton(
+            parent=self,
+            relief=None,
+            text=TTLocalizer.GolfPageTrophyTab,
+            text_scale=TTLocalizer.GPtrophyTab,
+            text_pos=TTLocalizer.GPtrophyTabTextPos,
+            text_align=TextNode.ALeft,
+            image=gui.find('**/tabs/polySurface3'),
+            image_pos=(-0.28000000000000003, 1, -0.91000000000000003),
+            image_hpr=(0, 0, -90),
+            image_scale=(0.033000000000000002, 0.033000000000000002,
+                         0.035000000000000003),
+            image_color=normalColor,
+            image1_color=clickColor,
+            image2_color=rolloverColor,
+            image3_color=diabledColor,
+            text_fg=Vec4(0.20000000000000001, 0.10000000000000001, 0, 1),
+            command=self.setMode,
+            extraArgs=[PageMode.Trophy],
+            pos=TTLocalizer.GPtrophyTabPos)
         self.recordsTab.setPos(-0.13, 0, 0.77500000000000002)
         self.trophyTab.setPos(0.28000000000000003, 0, 0.77500000000000002)
         adjust = -0.20000000000000001
@@ -161,8 +138,7 @@ class GolfPage(ShtikerPage):
             self.golfRecords.hide()
         else:
             raise Exception(
-                'GolfPage::updatePage - Invalid Mode %s' %
-                self.mode)
+                'GolfPage::updatePage - Invalid Mode %s' % self.mode)
 
 
 class GolfingRecordsUI(DirectFrame):
@@ -175,9 +151,11 @@ class GolfingRecordsUI(DirectFrame):
         self.lastCourseBest = []
         self.scrollList = None
         DirectFrame.__init__(
-            self, parent=parent, relief=None, pos=(
-                0.0, 0.0, 0.0), scale=(
-                1.0, 1.0, 1.0))
+            self,
+            parent=parent,
+            relief=None,
+            pos=(0.0, 0.0, 0.0),
+            scale=(1.0, 1.0, 1.0))
 
     def destroy(self):
         self.gui.removeNode()
@@ -202,68 +180,36 @@ class GolfingRecordsUI(DirectFrame):
         self.scrollList = DirectScrolledList(
             parent=self,
             relief=None,
-            pos=(
-                0,
-                0,
-                0),
-            incButton_image=(
-                self.gui.find('**/FndsLst_ScrollUp'),
-                self.gui.find('**/FndsLst_ScrollDN'),
-                self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                self.gui.find('**/FndsLst_ScrollUp')),
+            pos=(0, 0, 0),
+            incButton_image=(self.gui.find('**/FndsLst_ScrollUp'),
+                             self.gui.find('**/FndsLst_ScrollDN'),
+                             self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             self.gui.find('**/FndsLst_ScrollUp')),
             incButton_relief=None,
-            incButton_scale=(
-                self.arrowButtonScale,
-                self.arrowButtonScale,
-                -(
-                    self.arrowButtonScale)),
-            incButton_pos=(
-                self.labelXstart,
-                0,
-                self.itemFrameZorigin - 0.999),
-            incButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
-            decButton_image=(
-                self.gui.find('**/FndsLst_ScrollUp'),
-                self.gui.find('**/FndsLst_ScrollDN'),
-                self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
-                self.gui.find('**/FndsLst_ScrollUp')),
+            incButton_scale=(self.arrowButtonScale, self.arrowButtonScale,
+                             -(self.arrowButtonScale)),
+            incButton_pos=(self.labelXstart, 0, self.itemFrameZorigin - 0.999),
+            incButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
+            decButton_image=(self.gui.find('**/FndsLst_ScrollUp'),
+                             self.gui.find('**/FndsLst_ScrollDN'),
+                             self.gui.find('**/FndsLst_ScrollUp_Rllvr'),
+                             self.gui.find('**/FndsLst_ScrollUp')),
             decButton_relief=None,
-            decButton_scale=(
-                self.arrowButtonScale,
-                self.arrowButtonScale,
-                self.arrowButtonScale),
-            decButton_pos=(
-                self.labelXstart,
-                0,
-                self.itemFrameZorigin + 0.22700000000000001),
-            decButton_image3_color=Vec4(
-                1,
-                1,
-                1,
-                0.20000000000000001),
-            itemFrame_pos=(
-                self.itemFrameXorigin,
-                0,
-                self.itemFrameZorigin),
+            decButton_scale=(self.arrowButtonScale, self.arrowButtonScale,
+                             self.arrowButtonScale),
+            decButton_pos=(self.labelXstart, 0,
+                           self.itemFrameZorigin + 0.22700000000000001),
+            decButton_image3_color=Vec4(1, 1, 1, 0.20000000000000001),
+            itemFrame_pos=(self.itemFrameXorigin, 0, self.itemFrameZorigin),
             itemFrame_scale=1.0,
             itemFrame_relief=DGG.SUNKEN,
-            itemFrame_frameSize=(
-                self.listXorigin,
-                self.listXorigin + self.listFrameSizeX,
-                self.listZorigin,
-                self.listZorigin + self.listFrameSizeZ),
-            itemFrame_frameColor=(
-                0.84999999999999998,
-                0.94999999999999996,
-                1,
-                1),
-            itemFrame_borderWidth=(
-                0.01,
-                0.01),
+            itemFrame_frameSize=(self.listXorigin,
+                                 self.listXorigin + self.listFrameSizeX,
+                                 self.listZorigin,
+                                 self.listZorigin + self.listFrameSizeZ),
+            itemFrame_frameColor=(0.84999999999999998, 0.94999999999999996, 1,
+                                  1),
+            itemFrame_borderWidth=(0.01, 0.01),
             numItemsVisible=12,
             forceHeight=0.083000000000000004,
             items=[])
@@ -273,38 +219,20 @@ class GolfingRecordsUI(DirectFrame):
             courseNameDisplay = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    -0.47499999999999998,
-                    0,
-                    0.050000000000000003),
+                pos=(-0.47499999999999998, 0, 0.050000000000000003),
                 text=courseName,
                 text_align=TextNode.ALeft,
                 text_scale=0.074999999999999997,
-                text_fg=(
-                    0.84999999999999998,
-                    0.64000000000000001,
-                    0.13,
-                    1.0),
-                text_shadow=(
-                    0,
-                    0,
-                    0,
-                    1),
+                text_fg=(0.84999999999999998, 0.64000000000000001, 0.13, 1.0),
+                text_shadow=(0, 0, 0, 1),
                 text_font=ToontownGlobals.getSignFont())
             bestScoreDisplay = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.90000000000000002,
-                    0,
-                    0.050000000000000003),
+                pos=(0.90000000000000002, 0, 0.050000000000000003),
                 text=TTLocalizer.KartRace_Unraced,
                 text_scale=0.059999999999999998,
-                text_fg=(
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0),
+                text_fg=(0.0, 0.0, 0.0, 1.0),
                 text_font=ToontownGlobals.getToonFont())
             self.bestDisplayList.append(bestScoreDisplay)
             self.scrollList.addItem(frame)
@@ -315,38 +243,20 @@ class GolfingRecordsUI(DirectFrame):
             holeNameDisplay = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    -0.47499999999999998,
-                    0,
-                    0.050000000000000003),
+                pos=(-0.47499999999999998, 0, 0.050000000000000003),
                 text=holeName,
                 text_align=TextNode.ALeft,
                 text_scale=0.074999999999999997,
-                text_fg=(
-                    0.94999999999999996,
-                    0.94999999999999996,
-                    0.0,
-                    1.0),
-                text_shadow=(
-                    0,
-                    0,
-                    0,
-                    1),
+                text_fg=(0.94999999999999996, 0.94999999999999996, 0.0, 1.0),
+                text_shadow=(0, 0, 0, 1),
                 text_font=ToontownGlobals.getSignFont())
             bestScoreDisplay = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.90000000000000002,
-                    0,
-                    0.050000000000000003),
+                pos=(0.90000000000000002, 0, 0.050000000000000003),
                 text=TTLocalizer.KartRace_Unraced,
                 text_scale=0.059999999999999998,
-                text_fg=(
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0),
+                text_fg=(0.0, 0.0, 0.0, 1.0),
                 text_font=ToontownGlobals.getToonFont())
             self.bestDisplayList.append(bestScoreDisplay)
             self.scrollList.addItem(frame)
@@ -360,7 +270,7 @@ class GolfingRecordsUI(DirectFrame):
             for i in xrange(numCourse):
                 score = bestCourses[i]
                 if score != 0:
-                    self.bestDisplayList[i]['text'] = (str(score),)
+                    self.bestDisplayList[i]['text'] = (str(score), )
                     continue
                 self.bestDisplayList[i]['text'] = TTLocalizer.KartRace_Unraced
 
@@ -369,8 +279,8 @@ class GolfingRecordsUI(DirectFrame):
                 if score != 0:
                     self.bestDisplayList[i + numCourse]['text'] = str(score)
                     continue
-                self.bestDisplayList[i +
-                                     numCourse]['text'] = TTLocalizer.KartRace_Unraced
+                self.bestDisplayList[
+                    i + numCourse]['text'] = TTLocalizer.KartRace_Unraced
 
         self.lastHoleBest = bestHoles[:]
         self.lastCourseBest = bestCourses[:]
@@ -401,9 +311,11 @@ class GolfTrophiesUI(DirectFrame):
         self.cups = None
         self.trophyTextDisplay = None
         DirectFrame.__init__(
-            self, parent=parent, relief=None, pos=(
-                0.0, 0.0, 0.0), scale=(
-                1.0, 1.0, 1.0))
+            self,
+            parent=parent,
+            relief=None,
+            pos=(0.0, 0.0, 0.0),
+            scale=(1.0, 1.0, 1.0))
 
     def destroy(self):
         for panel in self.trophyPanels:
@@ -435,32 +347,16 @@ class GolfTrophiesUI(DirectFrame):
                 trophyPanel = DirectLabel(
                     parent=self,
                     relief=None,
-                    pos=(
-                        xStart + i * xOffset,
-                        0.0,
-                        yStart - j * yOffset),
+                    pos=(xStart + i * xOffset, 0.0, yStart - j * yOffset),
                     state=DGG.NORMAL,
                     image=DGG.getDefaultDialogGeom(),
-                    image_scale=(
-                        0.75,
-                        1,
-                        1),
-                    image_color=(
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        0.80000000000000004,
-                        1),
+                    image_scale=(0.75, 1, 1),
+                    image_color=(0.80000000000000004, 0.80000000000000004,
+                                 0.80000000000000004, 1),
                     text=TTLocalizer.SuitPageMystery[0],
                     text_scale=0.45000000000000001,
-                    text_fg=(
-                        0,
-                        0,
-                        0,
-                        1),
-                    text_pos=(
-                        0,
-                        0,
-                        -0.25),
+                    text_fg=(0, 0, 0, 1),
+                    text_pos=(0, 0, -0.25),
                     text_font=ToontownGlobals.getInterfaceFont(),
                     text_wordwrap=5.5)
                 trophyPanel.scale = 0.20000000000000001
@@ -474,32 +370,16 @@ class GolfTrophiesUI(DirectFrame):
             cupPanel = DirectLabel(
                 parent=self,
                 relief=None,
-                pos=(
-                    xStart + i * xOffset,
-                    0.0,
-                    yStart),
+                pos=(xStart + i * xOffset, 0.0, yStart),
                 state=DGG.NORMAL,
                 image=DGG.getDefaultDialogGeom(),
-                image_scale=(
-                    0.75,
-                    1,
-                    1),
-                image_color=(
-                    0.80000000000000004,
-                    0.80000000000000004,
-                    0.80000000000000004,
-                    1),
+                image_scale=(0.75, 1, 1),
+                image_color=(0.80000000000000004, 0.80000000000000004,
+                             0.80000000000000004, 1),
                 text=TTLocalizer.SuitPageMystery[0],
                 text_scale=0.45000000000000001,
-                text_fg=(
-                    0,
-                    0,
-                    0,
-                    1),
-                text_pos=(
-                    0,
-                    0,
-                    -0.25),
+                text_fg=(0, 0, 0, 1),
+                text_pos=(0, 0, -0.25),
                 text_font=ToontownGlobals.getInterfaceFont(),
                 text_wordwrap=5.5)
             cupPanel.scale = 0.29999999999999999
@@ -507,28 +387,41 @@ class GolfTrophiesUI(DirectFrame):
             self.cupPanels.append(cupPanel)
 
         self.currentHistory = DirectLabel(
-            parent=self, relief=None, text='', text_scale=0.050000000000000003, text_fg=(
-                0, 0, 0.94999999999999996, 1.0), text_pos=(
-                0, -0.65000000000000002))
+            parent=self,
+            relief=None,
+            text='',
+            text_scale=0.050000000000000003,
+            text_fg=(0, 0, 0.94999999999999996, 1.0),
+            text_pos=(0, -0.65000000000000002))
         self.trophyTextDisplay = DirectLabel(
-            parent=self, relief=None, text='', text_scale=0.070000000000000007, text_fg=(
-                1, 0, 0, 1), text_shadow=(
-                0, 0, 0, 0), text_pos=(
-                0.0, -0.17499999999999999), text_font=ToontownGlobals.getInterfaceFont())
+            parent=self,
+            relief=None,
+            text='',
+            text_scale=0.070000000000000007,
+            text_fg=(1, 0, 0, 1),
+            text_shadow=(0, 0, 0, 0),
+            text_pos=(0.0, -0.17499999999999999),
+            text_font=ToontownGlobals.getInterfaceFont())
         self.updateTrophies()
 
     def grow(self, index, pos):
         self.trophyPanels[index]['image_color'] = Vec4(
             1.0, 1.0, 0.80000000000000004, 1.0)
         if index < GolfGlobals.NumTrophies:
-            self.trophyTextDisplay['text'] = TTLocalizer.GolfTrophyTextDisplay % {
-                'number': index + 1,
-                'desc': TTLocalizer.GolfTrophyDescriptions[index]}
+            self.trophyTextDisplay[
+                'text'] = TTLocalizer.GolfTrophyTextDisplay % {
+                    'number': index + 1,
+                    'desc': TTLocalizer.GolfTrophyDescriptions[index]
+                }
             historyIndex = GolfGlobals.getHistoryIndexForTrophy(index)
             if historyIndex >= 0:
-                self.currentHistory['text'] = TTLocalizer.GolfCurrentHistory % {
-                    'historyDesc': TTLocalizer.GolfHistoryDescriptions[historyIndex],
-                    'num': self.avatar.getGolfHistory()[historyIndex]}
+                self.currentHistory[
+                    'text'] = TTLocalizer.GolfCurrentHistory % {
+                        'historyDesc':
+                        TTLocalizer.GolfHistoryDescriptions[historyIndex],
+                        'num':
+                        self.avatar.getGolfHistory()[historyIndex]
+                    }
 
     def shrink(self, index, pos):
         self.trophyPanels[index]['image_color'] = Vec4(1.0, 1.0, 1.0, 1.0)
@@ -536,12 +429,13 @@ class GolfTrophiesUI(DirectFrame):
         self.currentHistory['text'] = ''
 
     def growCup(self, index, pos):
-        self.cupPanels[index]['image_color'] = Vec4(
-            1.0, 1.0, 0.80000000000000004, 1.0)
+        self.cupPanels[index]['image_color'] = Vec4(1.0, 1.0,
+                                                    0.80000000000000004, 1.0)
         if index < GolfGlobals.NumTrophies:
             self.trophyTextDisplay['text'] = TTLocalizer.GolfCupTextDisplay % {
                 'number': index + 1,
-                'desc': TTLocalizer.GolfCupDescriptions[index]}
+                'desc': TTLocalizer.GolfCupDescriptions[index]
+            }
 
     def shrinkCup(self, index, pos):
         self.cupPanels[index]['image_color'] = Vec4(1.0, 1.0, 1.0, 1.0)
@@ -569,10 +463,8 @@ class GolfTrophiesUI(DirectFrame):
                     trophyModel.setPos(0, 0, -0.40000000000000002)
 
                 trophyPanel['image_color'] = Vec4(1.0, 1.0, 1.0, 1.0)
-                trophyPanel.bind(DGG.ENTER, self.grow, extraArgs=[
-                    t])
-                trophyPanel.bind(DGG.EXIT, self.shrink, extraArgs=[
-                    t])
+                trophyPanel.bind(DGG.ENTER, self.grow, extraArgs=[t])
+                trophyPanel.bind(DGG.EXIT, self.shrink, extraArgs=[t])
                 continue
             trophyPanel = self.trophyPanels[t]
             toBeNukedGolfTrophy = trophyPanel.find('**/*GolfTrophy*')
@@ -580,8 +472,9 @@ class GolfTrophiesUI(DirectFrame):
                 toBeNukedGolfTrophy.removeNode()
 
             trophyPanel['text'] = TTLocalizer.SuitPageMystery[0]
-            trophyPanel['image_color'] = Vec4(
-                0.80000000000000004, 0.80000000000000004, 0.80000000000000004, 1)
+            trophyPanel['image_color'] = Vec4(0.80000000000000004,
+                                              0.80000000000000004,
+                                              0.80000000000000004, 1)
             trophyPanel.unbind(DGG.ENTER)
             trophyPanel.unbind(DGG.EXIT)
 
@@ -597,10 +490,8 @@ class GolfTrophiesUI(DirectFrame):
                     cupModel.setPos(0, 0, -0.40000000000000002)
 
                 cupPanel['image_color'] = Vec4(1.0, 1.0, 1.0, 1.0)
-                cupPanel.bind(DGG.ENTER, self.growCup, extraArgs=[
-                    t])
-                cupPanel.bind(DGG.EXIT, self.shrinkCup, extraArgs=[
-                    t])
+                cupPanel.bind(DGG.ENTER, self.growCup, extraArgs=[t])
+                cupPanel.bind(DGG.EXIT, self.shrinkCup, extraArgs=[t])
                 continue
             cupPanel = self.cupPanels[t]
             toBeNukedGolfCup = cupPanel.find('**/*GolfTrophy*')
@@ -608,11 +499,9 @@ class GolfTrophiesUI(DirectFrame):
                 toBeNukedGolfCup.removeNode()
 
             cupPanel['text'] = TTLocalizer.SuitPageMystery[0]
-            cupPanel['image_color'] = Vec4(
-                0.80000000000000004,
-                0.80000000000000004,
-                0.80000000000000004,
-                1)
+            cupPanel['image_color'] = Vec4(0.80000000000000004,
+                                           0.80000000000000004,
+                                           0.80000000000000004, 1)
             cupPanel.unbind(DGG.ENTER)
             cupPanel.unbind(DGG.EXIT)
 
@@ -621,8 +510,7 @@ class GolfTrophy(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('GolfTrophy')
 
     def __init__(self, level, *args, **kwargs):
-        opts = {
-            'relief': None}
+        opts = {'relief': None}
         opts.update(kwargs)
         DirectFrame.__init__(self, *args, **args)
         self.trophy = loader.loadModel('phase_6/models/golf/golfTrophy')
@@ -648,22 +536,19 @@ class GolfTrophy(DirectFrame):
         self.goldBowlBase = self.goldBowl.find('**/fishingTrophyBase')
         self.goldBowlBase.hide()
         self.nameLabel = DirectLabel(
-            parent=self, relief=None, pos=(
-                0, 0, -0.14999999999999999), text='', text_scale=0.125, text_fg=Vec4(
-                0.90000000000000002, 0.90000000000000002, 0.40000000000000002, 1))
+            parent=self,
+            relief=None,
+            pos=(0, 0, -0.14999999999999999),
+            text='',
+            text_scale=0.125,
+            text_fg=Vec4(0.90000000000000002, 0.90000000000000002,
+                         0.40000000000000002, 1))
         self.shadow = loader.loadModel('phase_3/models/props/drop_shadow')
         self.shadow.reparentTo(self)
         self.shadow.setColor(1, 1, 1, 0.20000000000000001)
-        self.shadow.setPosHprScale(
-            0,
-            1,
-            0.34999999999999998,
-            0,
-            90,
-            0,
-            0.10000000000000001,
-            0.14000000000000001,
-            0.10000000000000001)
+        self.shadow.setPosHprScale(0, 1, 0.34999999999999998, 0, 90, 0,
+                                   0.10000000000000001, 0.14000000000000001,
+                                   0.10000000000000001)
         self.setLevel(level)
 
     def setLevel(self, level):
@@ -685,17 +570,13 @@ class GolfTrophy(DirectFrame):
                 self.goldBowl.hide()
                 self.greyBowl.hide()
             if level == 30:
-                self.goldBowl.setScale(
-                    4.4000000000000004,
-                    3.1000000000000001,
-                    3.1000000000000001)
+                self.goldBowl.setScale(4.4000000000000004, 3.1000000000000001,
+                                       3.1000000000000001)
             elif level == 31:
                 self.goldBowl.setScale(3.6000000000000001, 3.5, 3.5)
             elif level >= 32:
-                self.goldBowl.setScale(
-                    5.5999999999999996,
-                    3.8999999999999999,
-                    3.8999999999999999)
+                self.goldBowl.setScale(5.5999999999999996, 3.8999999999999999,
+                                       3.8999999999999999)
 
             if level % 3 == 0:
                 self.column.setScale(1.3229, 1.26468, 1.1187800000000001)
@@ -720,34 +601,31 @@ class GolfTrophy(DirectFrame):
                 self._GolfTrophy__redColumn()
 
     def _GolfTrophy__bronze(self):
-        self.statue.setColorScale(
-            0.90000000000000002,
-            0.59999999999999998,
-            0.33000000000000002,
-            1)
+        self.statue.setColorScale(0.90000000000000002, 0.59999999999999998,
+                                  0.33000000000000002, 1)
 
     def _GolfTrophy__silver(self):
-        self.statue.setColorScale(
-            0.90000000000000002, 0.90000000000000002, 1, 1)
+        self.statue.setColorScale(0.90000000000000002, 0.90000000000000002, 1,
+                                  1)
 
     def _GolfTrophy__gold(self):
-        self.statue.setColorScale(
-            1, 0.94999999999999996, 0.10000000000000001, 1)
+        self.statue.setColorScale(1, 0.94999999999999996, 0.10000000000000001,
+                                  1)
 
     def _GolfTrophy__platinum(self):
-        self.statue.setColorScale(
-            1, 0.94999999999999996, 0.10000000000000001, 1)
+        self.statue.setColorScale(1, 0.94999999999999996, 0.10000000000000001,
+                                  1)
 
     def _GolfTrophy__tealColumn(self):
         self.column.setColorScale(0.5, 1.2, 0.84999999999999998, 1)
 
     def _GolfTrophy__purpleColumn(self):
-        self.column.setColorScale(
-            1, 0.69999999999999996, 0.94999999999999996, 1)
+        self.column.setColorScale(1, 0.69999999999999996, 0.94999999999999996,
+                                  1)
 
     def _GolfTrophy__redColumn(self):
-        self.column.setColorScale(
-            1.2, 0.59999999999999998, 0.59999999999999998, 1)
+        self.column.setColorScale(1.2, 0.59999999999999998,
+                                  0.59999999999999998, 1)
 
     def _GolfTrophy__yellowColumn(self):
         self.column.setColorScale(1, 1, 0.80000000000000004, 1)

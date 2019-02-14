@@ -9,53 +9,36 @@ from direct.showbase import PythonUtil
 from direct.showbase.DirectObject import DirectObject
 from otp.login import LeaveToPayDialog
 Pages = {
-    'otherHoods': (TTLocalizer.TeaserOtherHoods,),
-    'typeAName': (TTLocalizer.TeaserTypeAName,),
-    'sixToons': (TTLocalizer.TeaserSixToons,),
-    'otherGags': (TTLocalizer.TeaserOtherGags,),
-    'clothing': (TTLocalizer.TeaserClothing,),
-    'cogHQ': (TTLocalizer.TeaserCogHQ,),
-    'secretChat': (TTLocalizer.TeaserSecretChat,),
-    'quests': (TTLocalizer.TeaserQuests,),
-    'emotions': (TTLocalizer.TeaserEmotions,),
-    'minigames': (TTLocalizer.TeaserMinigames,),
-    'karting': (TTLocalizer.TeaserKarting,),
-    'kartingAccessories': (TTLocalizer.TeaserKartingAccessories,),
-    'gardening': (TTLocalizer.TeaserGardening,),
-    'tricks': (TTLocalizer.TeaserTricks,),
-    'species': (TTLocalizer.TeaserSpecies,),
-    'golf': (TTLocalizer.TeaserGolf,),
-    'fishing': (TTLocalizer.TeaserFishing,),
-    'parties': (TTLocalizer.TeaserParties,),
-    'plantGags': (TTLocalizer.TeaserPlantGags,),
-    'pickGags': (TTLocalizer.TeaserPickGags,),
-    'restockGags': (TTLocalizer.TeaserRestockGags,),
-    'getGags': (TTLocalizer.TeaserGetGags,),
-    'useGags': (TTLocalizer.TeaserUseGags,)}
+    'otherHoods': (TTLocalizer.TeaserOtherHoods, ),
+    'typeAName': (TTLocalizer.TeaserTypeAName, ),
+    'sixToons': (TTLocalizer.TeaserSixToons, ),
+    'otherGags': (TTLocalizer.TeaserOtherGags, ),
+    'clothing': (TTLocalizer.TeaserClothing, ),
+    'cogHQ': (TTLocalizer.TeaserCogHQ, ),
+    'secretChat': (TTLocalizer.TeaserSecretChat, ),
+    'quests': (TTLocalizer.TeaserQuests, ),
+    'emotions': (TTLocalizer.TeaserEmotions, ),
+    'minigames': (TTLocalizer.TeaserMinigames, ),
+    'karting': (TTLocalizer.TeaserKarting, ),
+    'kartingAccessories': (TTLocalizer.TeaserKartingAccessories, ),
+    'gardening': (TTLocalizer.TeaserGardening, ),
+    'tricks': (TTLocalizer.TeaserTricks, ),
+    'species': (TTLocalizer.TeaserSpecies, ),
+    'golf': (TTLocalizer.TeaserGolf, ),
+    'fishing': (TTLocalizer.TeaserFishing, ),
+    'parties': (TTLocalizer.TeaserParties, ),
+    'plantGags': (TTLocalizer.TeaserPlantGags, ),
+    'pickGags': (TTLocalizer.TeaserPickGags, ),
+    'restockGags': (TTLocalizer.TeaserRestockGags, ),
+    'getGags': (TTLocalizer.TeaserGetGags, ),
+    'useGags': (TTLocalizer.TeaserUseGags, )
+}
 PageOrder = [
-    'sixToons',
-    'typeAName',
-    'species',
-    'otherHoods',
-    'otherGags',
-    'clothing',
-    'parties',
-    'tricks',
-    'cogHQ',
-    'secretChat',
-    'quests',
-    'emotions',
-    'minigames',
-    'karting',
-    'kartingAccessories',
-    'gardening',
-    'golf',
-    'fishing',
-    'plantGags',
-    'pickGags',
-    'restockGags',
-    'getGags',
-    'useGags']
+    'sixToons', 'typeAName', 'species', 'otherHoods', 'otherGags', 'clothing',
+    'parties', 'tricks', 'cogHQ', 'secretChat', 'quests', 'emotions',
+    'minigames', 'karting', 'kartingAccessories', 'gardening', 'golf',
+    'fishing', 'plantGags', 'pickGags', 'restockGags', 'getGags', 'useGags'
+]
 
 
 class TeaserPanel(DirectObject):
@@ -143,15 +126,13 @@ class TeaserPanel(DirectObject):
             topPad=-0.14999999999999999,
             midPad=1.25,
             sidePad=0.25,
-            pad=(
-                0.25,
-                0.25),
+            pad=(0.25, 0.25),
             command=self._TeaserPanel__handleDone,
             fadeScreen=0.5,
             style=TTDialog.TwoChoice,
             buttonTextList=[
-                TTLocalizer.TeaserSubscribe,
-                TTLocalizer.TeaserContinue],
+                TTLocalizer.TeaserSubscribe, TTLocalizer.TeaserContinue
+            ],
             button_text_scale=TTLocalizer.TPbuttonTextList,
             buttonPadSF=5.5,
             sortOrder=NO_FADE_SORT_INDEX,
@@ -189,11 +170,10 @@ class TeaserPanel(DirectObject):
 
 
 class FeatureBrowser(DirectScrolledList):
-
     def __init__(self, parent=aspect2dp, **kw):
         self.parent = parent
-        optiondefs = (('parent', self.parent, None), ('relief', None,
-                                                      None), ('numItemsVisible', 1, None), ('items', [], None))
+        optiondefs = (('parent', self.parent, None), ('relief', None, None),
+                      ('numItemsVisible', 1, None), ('items', [], None))
         self.defineoptions(kw, optiondefs)
         DirectScrolledList.__init__(self, parent)
         self.incButton.hide()
@@ -234,14 +214,9 @@ class FeatureBrowser(DirectScrolledList):
                 parent=self,
                 relief=None,
                 image=guiModel,
-                image_scale=(
-                    0.65000000000000002,
-                    0.65000000000000002,
-                    0.65000000000000002),
-                image_pos=(
-                    0,
-                    0,
-                    0.0),
+                image_scale=(0.65000000000000002, 0.65000000000000002,
+                             0.65000000000000002),
+                image_pos=(0, 0, 0.0),
                 text_align=TextNode.ACenter,
                 text=textInfo,
                 text_scale=TTLocalizer.TPpanel,

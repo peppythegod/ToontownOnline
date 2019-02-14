@@ -6,17 +6,16 @@ from direct.distributed import DistributedObject
 
 
 class DistributedAnimatedProp(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.fsm = ClassicFSM.ClassicFSM('DistributedAnimatedProp', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'playing',
-                'attract']),
-            State.State('attract', self.enterAttract, self.exitAttract, [
-                'playing']),
-            State.State('playing', self.enterPlaying, self.exitPlaying, [
-                'attract'])], 'off', 'off')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['playing', 'attract']),
+            State.State('attract', self.enterAttract, self.exitAttract,
+                        ['playing']),
+            State.State('playing', self.enterPlaying, self.exitPlaying,
+                        ['attract'])
+        ], 'off', 'off')
         self.fsm.enterInitialState()
 
     def generate(self):
@@ -47,8 +46,8 @@ class DistributedAnimatedProp(DistributedObject.DistributedObject):
 
     def setState(self, state, timestamp):
         if self.isGenerated():
-            self.fsm.request(state, [
-                globalClockDelta.localElapsedTime(timestamp)])
+            self.fsm.request(state,
+                             [globalClockDelta.localElapsedTime(timestamp)])
         else:
             self.initialState = state
             self.initialStateTimestamp = timestamp

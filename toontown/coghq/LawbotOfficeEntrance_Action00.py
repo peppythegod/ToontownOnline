@@ -9,7 +9,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_11/models/lawbotHQ/LB_Zone03a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -17,7 +18,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -25,7 +27,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10000: {
         'type': 'entrancePoint',
         'name': '<unnamed>',
@@ -36,7 +39,8 @@ GlobalEntities = {
         'scale': 1,
         'entranceId': 0,
         'radius': 15,
-        'theta': 20},
+        'theta': 20
+    },
     100000: {
         'type': 'model',
         'name': '<unnamed>',
@@ -48,7 +52,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'
+    },
     100001: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -60,7 +65,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'
+    },
     100004: {
         'type': 'model',
         'name': '<unnamed>',
@@ -72,7 +78,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'
+    },
     100006: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -84,7 +91,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_torch_lampB'
+    },
     100008: {
         'type': 'model',
         'name': '<unnamed>',
@@ -96,7 +104,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_paper_twist_stacks'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_paper_twist_stacks'
+    },
     100010: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -108,7 +117,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_paper_twist_stacks'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_paper_twist_stacks'
+    },
     100012: {
         'type': 'model',
         'name': '<unnamed>',
@@ -120,7 +130,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'
+    },
     100013: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -132,7 +143,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_CardBoardBox'
+    },
     100016: {
         'type': 'model',
         'name': '<unnamed>',
@@ -144,7 +156,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_couchA'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_couchA'
+    },
     100017: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -156,7 +169,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_11/models/lawbotHQ/LB_couchA'},
+        'modelPath': 'phase_11/models/lawbotHQ/LB_couchA'
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -164,7 +178,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10004: {
         'type': 'nodepath',
         'name': 'lamp',
@@ -172,7 +187,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(-10.1845, 16.343900000000001, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100003: {
         'type': 'nodepath',
         'name': 'lamp2',
@@ -180,7 +196,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(10.3093, 14.779400000000001, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100007: {
         'type': 'nodepath',
         'name': 'paper',
@@ -188,7 +205,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(14.390700000000001, 11.4389, 0),
         'hpr': Vec3(300.37900000000002, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100011: {
         'type': 'nodepath',
         'name': 'box',
@@ -196,7 +214,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(-18.531300000000002, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100015: {
         'type': 'nodepath',
         'name': 'couch',
@@ -204,7 +223,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(14.358499999999999, -9.4367099999999997, 0),
         'hpr': Vec3(270.69900000000001, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     100002: {
         'type': 'rendering',
         'name': '<unnamed>',
@@ -219,7 +239,8 @@ GlobalEntities = {
         'colorG': 1.0,
         'colorR': 1.0,
         'fogOn': 0,
-        'renderBin': 'default'},
+        'renderBin': 'default'
+    },
     100005: {
         'type': 'rendering',
         'name': '<unnamed>',
@@ -234,7 +255,8 @@ GlobalEntities = {
         'colorG': 1.0,
         'colorR': 1.0,
         'fogOn': 0,
-        'renderBin': 'default'},
+        'renderBin': 'default'
+    },
     100009: {
         'type': 'rendering',
         'name': '<unnamed>',
@@ -249,7 +271,8 @@ GlobalEntities = {
         'colorG': 1.0,
         'colorR': 1.0,
         'fogOn': 0,
-        'renderBin': 'default'},
+        'renderBin': 'default'
+    },
     100014: {
         'type': 'rendering',
         'name': '<unnamed>',
@@ -264,7 +287,8 @@ GlobalEntities = {
         'colorG': 1.0,
         'colorR': 1.0,
         'fogOn': 0,
-        'renderBin': 'default'},
+        'renderBin': 'default'
+    },
     100018: {
         'type': 'rendering',
         'name': '<unnamed>',
@@ -279,10 +303,13 @@ GlobalEntities = {
         'colorG': 1.0,
         'colorR': 1.0,
         'fogOn': 0,
-        'renderBin': 'default'}}
+        'renderBin': 'default'
+    }
+}
 Scenario0 = {}
 levelSpec = {
     'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0],
-    'titleString': 'MemTag: LawbotOfficeEntrance_Action00 %s' % random.random()}
+    'scenarios': [Scenario0],
+    'titleString':
+    'MemTag: LawbotOfficeEntrance_Action00 %s' % random.random()
+}

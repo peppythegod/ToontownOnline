@@ -2,7 +2,6 @@ from toontown.building.DistributedElevatorExt import DistributedElevatorExt
 
 
 class DistributedCogdoElevatorExt(DistributedElevatorExt):
-
     def setupElevator(self):
         DistributedElevatorExt.setupElevator(self)
         self.elevatorSphereNodePath.setY(-1.0)

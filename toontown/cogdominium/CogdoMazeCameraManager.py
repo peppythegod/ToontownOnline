@@ -34,8 +34,8 @@ class CogdoMazeCameraManager:
         self.shakeTime = 0.0
         self.defaultHeight = 0.0
         self.minPos = self.maze.tile2world(3, 5)
-        self.maxPos = self.maze.tile2world(
-            self.maze.width - 3, self.maze.height - 3)
+        self.maxPos = self.maze.tile2world(self.maze.width - 3,
+                                           self.maze.height - 3)
         self._camAngle = Globals.CameraAngle
         self._camDistance = Globals.CameraMinDistance
         self._camTargetDistance = self._camDistance
@@ -61,9 +61,9 @@ class CogdoMazeCameraManager:
     def update(self, dt):
         toonPos = self.toon.getPos()
         self.parent.setPos(
-            self.toon.getParent(), clamp(
-                toonPos.getX(), self.minPos[0], self.maxPos[0]), clamp(
-                toonPos.getY(), self.minPos[1], self.maxPos[1]), 0)
+            self.toon.getParent(),
+            clamp(toonPos.getX(), self.minPos[0], self.maxPos[0]),
+            clamp(toonPos.getY(), self.minPos[1], self.maxPos[1]), 0)
         if self._camDistance != self._camTargetDistance:
             self._updateCameraDistance()
 
@@ -74,13 +74,15 @@ class CogdoMazeCameraManager:
 
     def _updateCameraDistance(self):
         if self._camDistance < self._camTargetDistance:
-            self._camDistance += min(0.40000000000000002 *
-                                     (self._camDistance /
-                                      self._camTargetDistance), self._camTargetDistance -
-                                     self._camDistance)
+            self._camDistance += min(
+                0.40000000000000002 *
+                (self._camDistance / self._camTargetDistance),
+                self._camTargetDistance - self._camDistance)
         elif self._camDistance > self._camTargetDistance:
-            self._camDistance += max(-0.40000000000000002 * (self._camDistance /
-                                                             self._camTargetDistance), self._camTargetDistance - self._camDistance)
+            self._camDistance += max(
+                -0.40000000000000002 *
+                (self._camDistance / self._camTargetDistance),
+                self._camTargetDistance - self._camDistance)
 
         self.camera.setY(self._camDistance)
 

@@ -65,13 +65,14 @@ TAILOR_COUNTDOWN_TIME = 300
 RTDNAFile = '/RTDNAFile.txt'
 saveDNA = False
 
+
 def getRandomDNA(seed, gender):
     randomDNA = ToonDNA.ToonDNA()
     randomDNA.newToonRandom(seed, gender, 1)
     return randomDNA.asTuple()
 
 
-def createNPC(air, npcId, desc, zoneId, posIndex = 0, questCallback = None):
+def createNPC(air, npcId, desc, zoneId, posIndex=0, questCallback=None):
     import DistributedNPCToonAI as DistributedNPCToonAI
     import DistributedNPCClerkAI as DistributedNPCClerkAI
     import DistributedNPCTailorAI as DistributedNPCTailorAI
@@ -85,9 +86,11 @@ def createNPC(air, npcId, desc, zoneId, posIndex = 0, questCallback = None):
     import DistributedNPCScientistAI as DistributedNPCScientistAI
     (canonicalZoneId, name, dnaType, gender, protected, type) = desc
     if type == NPC_REGULAR:
-        npc = DistributedNPCToonAI.DistributedNPCToonAI(air, npcId, questCallback = questCallback)
+        npc = DistributedNPCToonAI.DistributedNPCToonAI(
+            air, npcId, questCallback=questCallback)
     elif type == NPC_HQ:
-        npc = DistributedNPCToonAI.DistributedNPCToonAI(air, npcId, questCallback = questCallback, hq = 1)
+        npc = DistributedNPCToonAI.DistributedNPCToonAI(
+            air, npcId, questCallback=questCallback, hq=1)
     elif type == NPC_CLERK:
         npc = DistributedNPCClerkAI.DistributedNPCClerkAI(air, npcId)
     elif type == NPC_TAILOR:
@@ -101,11 +104,14 @@ def createNPC(air, npcId, desc, zoneId, posIndex = 0, questCallback = None):
     elif type == NPC_KARTCLERK:
         npc = DistributedNPCKartClerkAI.DistributedNPCKartClerkAI(air, npcId)
     elif type == NPC_PARTYPERSON:
-        npc = DistributedNPCPartyPersonAI.DistributedNPCPartyPersonAI(air, npcId)
+        npc = DistributedNPCPartyPersonAI.DistributedNPCPartyPersonAI(
+            air, npcId)
     elif type == NPC_SPECIALQUESTGIVER:
-        npc = DistributedNPCSpecialQuestGiverAI.DistributedNPCSpecialQuestGiverAI(air, npcId)
+        npc = DistributedNPCSpecialQuestGiverAI.DistributedNPCSpecialQuestGiverAI(
+            air, npcId)
     elif type == NPC_FLIPPYTOONHALL:
-        npc = DistributedNPCFlippyInToonHallAI.DistributedNPCFlippyInToonHallAI(air, npcId)
+        npc = DistributedNPCFlippyInToonHallAI.DistributedNPCFlippyInToonHallAI(
+            air, npcId)
     elif type == NPC_SCIENTIST:
         npc = DistributedNPCScientistAI.DistributedNPCScientistAI(air, npcId)
     else:
@@ -130,7 +136,7 @@ def createNPC(air, npcId, desc, zoneId, posIndex = 0, questCallback = None):
                 strList.append(str(item))
             count += 1
             strList.append(' ,')
-        
+
         strList.append(')')
         rtDNA = ''.join(strList)
         if os.path.isfile(RTDNAFile):
@@ -141,7 +147,7 @@ def createNPC(air, npcId, desc, zoneId, posIndex = 0, questCallback = None):
             rtDnaFile = open(RTDNAFile, 'w')
             rtDnaFile.writelines(rtDNA)
         rtDnaFile.close()
-    
+
     dna.newToonFromProperties(*dnaList)
     npc.setDNAString(dna.makeNetString())
     npc.setHp(15)
@@ -162,8 +168,8 @@ def createNpcsInZone(air, zoneId):
     for i in range(len(npcIdList)):
         npcId = npcIdList[i]
         npcDesc = NPCToonDict.get(npcId)
-        npcs.append(createNPC(air, npcId, npcDesc, zoneId, posIndex = i))
-    
+        npcs.append(createNPC(air, npcId, npcDesc, zoneId, posIndex=i))
+
     return npcs
 
 
@@ -171,7 +177,7 @@ def createLocalNPC(npcId):
     import Toon as Toon
     if not NPCToonDict.has_key(npcId):
         return None
-    
+
     desc = NPCToonDict[npcId]
     (canonicalZoneId, name, dnaType, gender, protected, type) = desc
     npc = Toon.Toon()
@@ -197,8 +203,9 @@ def isZoneProtected(zoneId):
         if npcDesc[4]:
             return 1
             continue
-    
+
     return 0
+
 
 lnames = TTLocalizer.NPCToonNames
 NPCToonDict = {
@@ -852,20 +859,27 @@ NPCToonDict = {
     7007: (-1, lnames[7007], ('pls', 'ls', 's', 'm', 11, 0, 11, 11, 46, 0, 0, 0, 5, 16), 'm', 0, NPC_REGULAR),
     7008: (-1, lnames[7008], ('bls', 'ld', 's', 'f', 23, 0, 23, 23, 15, 6, 0, 0, 0, 18), 'f', 0, NPC_REGULAR),
     7009: (-1, lnames[7009], ('sll', 'ss', 's', 'm', 1, 0, 1, 1, 1, 6, 0, 0, 0, 6), 'm', 0, NPC_REGULAR) }
-
+    
 try:
     config = simbase.config
 except:
     config = base.config
 
 if config.GetBool('want-new-toonhall', 1):
-    NPCToonDict[2001] = (2513, lnames[2001], ('dss', 'ms', 'm', 'm', 17, 0, 17, 17, 3, 3, 3, 3, 7, 2), 'm', 1, NPC_FLIPPYTOONHALL)
+    NPCToonDict[2001] = (2513, lnames[2001], ('dss', 'ms', 'm', 'm', 17, 0, 17,
+                                              17, 3, 3, 3, 3, 7, 2), 'm', 1,
+                         NPC_FLIPPYTOONHALL)
 else:
-    NPCToonDict[2001] = (2513, lnames[2001], ('dss', 'ms', 'm', 'm', 17, 0, 17, 17, 3, 3, 3, 3, 7, 2), 'm', 1, NPC_REGULAR)
+    NPCToonDict[2001] = (2513, lnames[2001], ('dss', 'ms', 'm', 'm', 17, 0, 17,
+                                              17, 3, 3, 3, 3, 7, 2), 'm', 1,
+                         NPC_REGULAR)
 del lnames
 BlockerPositions = {
-    TTLocalizer.Flippy: (Point3(207.40000000000001, 18.809999999999999, -0.47499999999999998), 90.0) }
-zone2NpcDict = { }
+    TTLocalizer.Flippy: (Point3(207.40000000000001, 18.809999999999999,
+                                -0.47499999999999998), 90.0)
+}
+zone2NpcDict = {}
+
 
 def generateZone2NpcDict():
     for (id, npcDesc) in NPCToonDict.items():
@@ -873,9 +887,7 @@ def generateZone2NpcDict():
         if zone2NpcDict.has_key(zoneId):
             zone2NpcDict[zoneId].append(id)
             continue
-        zone2NpcDict[zoneId] = [
-            id]
-    
+        zone2NpcDict[zoneId] = [id]
 
 
 def getNPCName(npcId):
@@ -901,6 +913,7 @@ def getBuildingArticle(zoneId):
 def getBuildingTitle(zoneId):
     return TTLocalizer.zone2TitleDict.get(zoneId, 'Toon Building')[0]
 
+
 HQnpcFriends = {
     2001: (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit, 5),
     2132: (ToontownBattleGlobals.HEAL_TRACK, 5, 70, 4),
@@ -924,13 +937,21 @@ HQnpcFriends = {
     2208: (ToontownBattleGlobals.NPC_TOONS_HIT, 0, 0, 4),
     5124: (ToontownBattleGlobals.NPC_TOONS_HIT, 0, 0, 4),
     2003: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, -1, 0, 5),
-    2126: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.HEAL_TRACK, 0, 3),
-    4007: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.TRAP_TRACK, 0, 3),
-    1315: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.LURE_TRACK, 0, 3),
-    5207: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.SQUIRT_TRACK, 0, 3),
-    3129: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.THROW_TRACK, 0, 3),
-    4125: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.SOUND_TRACK, 0, 3),
-    1329: (ToontownBattleGlobals.NPC_RESTOCK_GAGS, ToontownBattleGlobals.DROP_TRACK, 0, 3) }
+    2126: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.HEAL_TRACK, 0, 3),
+    4007: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.TRAP_TRACK, 0, 3),
+    1315: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.LURE_TRACK, 0, 3),
+    5207: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.SQUIRT_TRACK, 0, 3),
+    3129: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.THROW_TRACK, 0, 3),
+    4125: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.SOUND_TRACK, 0, 3),
+    1329: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+           ToontownBattleGlobals.DROP_TRACK, 0, 3)
+}
 FOnpcFriends = {
     9310: (ToontownBattleGlobals.LURE_TRACK, 1, 0, 0),
     9311: (ToontownBattleGlobals.LURE_TRACK, 1, 0, 1),
@@ -943,14 +964,15 @@ FOnpcFriends = {
     9306: (ToontownBattleGlobals.DROP_TRACK, 3, 50, 2),
     9301: (ToontownBattleGlobals.HEAL_TRACK, 3, 10, 0),
     9302: (ToontownBattleGlobals.HEAL_TRACK, 3, 20, 1),
-    9303: (ToontownBattleGlobals.HEAL_TRACK, 3, 30, 2) }
+    9303: (ToontownBattleGlobals.HEAL_TRACK, 3, 30, 2)
+}
 npcFriends = dict(HQnpcFriends)
 npcFriends.update(FOnpcFriends)
+
 
 def getNPCName(npcId):
     if NPCToonDict.has_key(npcId):
         return NPCToonDict[npcId][1]
-    
 
 
 def npcFriendsMinMaxStars(minStars, maxStars):
@@ -961,14 +983,13 @@ def npcFriendsMinMaxStars(minStars, maxStars):
 def getNPCTrack(npcId):
     if npcFriends.has_key(npcId):
         return npcFriends[npcId][0]
-    
 
 
 def getNPCTrackHp(npcId):
     if npcFriends.has_key(npcId):
         (track, level, hp, rarity) = npcFriends[npcId]
         return (track, hp)
-    
+
     return (None, None)
 
 
@@ -976,13 +997,12 @@ def getNPCTrackLevelHp(npcId):
     if npcFriends.has_key(npcId):
         (track, level, hp, rarity) = npcFriends[npcId]
         return (track, level, hp)
-    
+
     return (None, None, None)
 
 
 def getNPCTrackLevelHpRarity(npcId):
     if npcFriends.has_key(npcId):
         return npcFriends[npcId]
-    
-    return (None, None, None, None)
 
+    return (None, None, None, None)

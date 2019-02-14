@@ -13,8 +13,8 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
     WhitelistBaseDir = config.GetString('whitelist-base-dir', '')
     WhitelistStageDir = config.GetString('whitelist-stage-dir', 'whitelist')
     WhitelistOverHttp = config.GetBool('whitelist-over-http', True)
-    WhitelistFileName = config.GetString(
-        'whitelist-filename', 'twhitelist.dat')
+    WhitelistFileName = config.GetString('whitelist-filename',
+                                         'twhitelist.dat')
 
     def __init__(self):
         self.redownloadingWhitelist = False
@@ -39,8 +39,7 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
                 Filename.fromOsSpecific(
                     os.path.expandvars('toontown/src/chat')))
             searchPath.appendDirectory(
-                Filename.fromOsSpecific(
-                    os.path.expandvars('toontown/chat')))
+                Filename.fromOsSpecific(os.path.expandvars('toontown/chat')))
         found = vfs.resolveFilename(filename, searchPath)
         if not found:
             self.notify.info("Couldn't find whitelist data file!")
@@ -97,8 +96,7 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
         override = base.config.GetString('whitelist-url', '')
         if override:
             self.notify.info(
-                'got an override url,  using %s for the whitelist' %
-                override)
+                'got an override url,  using %s for the whitelist' % override)
             result = override
         else:
 
@@ -115,15 +113,15 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
                         result)
             except BaseException:
                 self.notify.warning(
-                    'got exception getting GAME_WHITELIST_URL from launcher, using %s' %
-                    result)
+                    'got exception getting GAME_WHITELIST_URL from launcher, using %s'
+                    % result)
 
         return result
 
     def addDownloadingTextTask(self):
         self.removeDownloadingTextTask()
-        task = taskMgr.doMethodLater(
-            1, self.loadingTextTask, 'WhitelistDownloadingTextTask')
+        task = taskMgr.doMethodLater(1, self.loadingTextTask,
+                                     'WhitelistDownloadingTextTask')
         task.startTime = globalClock.getFrameTime()
         self.loadingTextTask(task)
 
@@ -132,10 +130,9 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
 
     def loadingTextTask(self, task):
         timeIndex = int(globalClock.getFrameTime() - task.startTime) % 3
-        timeStrs = (
-            TTLocalizer.NewsPageDownloadingNews0,
-            TTLocalizer.NewsPageDownloadingNews1,
-            TTLocalizer.NewsPageDownloadingNews2)
+        timeStrs = (TTLocalizer.NewsPageDownloadingNews0,
+                    TTLocalizer.NewsPageDownloadingNews1,
+                    TTLocalizer.NewsPageDownloadingNews2)
         textToDisplay = timeStrs[timeIndex] % int(self.percentDownloaded * 100)
         return task.again
 
@@ -151,20 +148,15 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
             pass
         basePath = './ttmodels'
         searchPath.appendDirectory(
-            Filename.fromOsSpecific(
-                basePath +
-                '/built/' +
-                self.NewsBaseDir))
+            Filename.fromOsSpecific(basePath + '/built/' + self.NewsBaseDir))
         searchPath.appendDirectory(Filename(self.NewsBaseDir))
         pfile = Filename(self.WhitelistFileName)
         found = vfs.resolveFilename(pfile, searchPath)
         if not found:
             self.notify.warning(
-                'findWhitelistDir - no path: %s' %
-                self.WhitelistFileName)
-            self.setErrorMessage(
-                TTLocalizer.NewsPageErrorDownloadingFile %
-                self.WhitelistFileName)
+                'findWhitelistDir - no path: %s' % self.WhitelistFileName)
+            self.setErrorMessage(TTLocalizer.NewsPageErrorDownloadingFile %
+                                 self.WhitelistFileName)
             return None
 
         self.notify.debug('found whitelist file %s' % pfile)

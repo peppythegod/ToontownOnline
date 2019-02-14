@@ -11,7 +11,6 @@ import CogDisguiseGlobals
 
 class DistributedMintElevatorExtAI(
         DistributedElevatorExtAI.DistributedElevatorExtAI):
-
     def __init__(self, air, bldg, mintId, antiShuffle=0, minLaff=0):
         DistributedElevatorExtAI.DistributedElevatorExtAI.__init__(
             self, air, bldg, antiShuffle=antiShuffle, minLaff=minLaff)
@@ -25,8 +24,7 @@ class DistributedMintElevatorExtAI(
 
     def avIsOKToBoard(self, av):
         if not DistributedElevatorExtAI.DistributedElevatorExtAI.avIsOKToBoard(
-                self,
-                av):
+                self, av):
             return False
 
         return True
@@ -36,9 +34,7 @@ class DistributedMintElevatorExtAI(
         if numPlayers > 0:
             players = []
             for i in self.seats:
-                if i not in [
-                        None,
-                        0]:
+                if i not in [None, 0]:
                     players.append(i)
                     continue
 
@@ -46,8 +42,8 @@ class DistributedMintElevatorExtAI(
             for seatIndex in range(len(self.seats)):
                 avId = self.seats[seatIndex]
                 if avId:
-                    self.sendUpdateToAvatarId(avId, 'setMintInteriorZone', [
-                        mintZone])
+                    self.sendUpdateToAvatarId(avId, 'setMintInteriorZone',
+                                              [mintZone])
                     self.clearFullNow(seatIndex)
                     continue
 
@@ -64,6 +60,6 @@ class DistributedMintElevatorExtAI(
             mintZone = self.bldg.createMint(self.mintId, avIdList)
             for avId in avIdList:
                 if avId:
-                    self.sendUpdateToAvatarId(
-                        avId, 'setMintInteriorZoneForce', [mintZone])
+                    self.sendUpdateToAvatarId(avId, 'setMintInteriorZoneForce',
+                                              [mintZone])
                     continue

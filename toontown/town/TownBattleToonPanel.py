@@ -19,45 +19,36 @@ class TownBattleToonPanel(DirectFrame):
             self,
             relief=None,
             image=gui.find('**/ToonBtl_Status_BG'),
-            image_color=Vec4(
-                0.5,
-                0.90000000000000002,
-                0.5,
-                0.69999999999999996))
+            image_color=Vec4(0.5, 0.90000000000000002, 0.5,
+                             0.69999999999999996))
         self.setScale(0.80000000000000004)
         self.initialiseoptions(TownBattleToonPanel)
         self.avatar = None
         self.sosText = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0.10000000000000001,
-                0,
-                0.014999999999999999),
+            pos=(0.10000000000000001, 0, 0.014999999999999999),
             text=TTLocalizer.TownBattleToonSOS,
             text_scale=0.059999999999999998)
         self.sosText.hide()
         self.fireText = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0.10000000000000001,
-                0,
-                0.014999999999999999),
+            pos=(0.10000000000000001, 0, 0.014999999999999999),
             text=TTLocalizer.TownBattleToonFire,
             text_scale=0.059999999999999998)
         self.fireText.hide()
         self.undecidedText = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0.10000000000000001,
-                0,
-                0.014999999999999999),
+            pos=(0.10000000000000001, 0, 0.014999999999999999),
             text=TTLocalizer.TownBattleUndecided,
             text_scale=0.10000000000000001)
         self.healthText = DirectLabel(
-            parent=self, text='', pos=(-0.059999999999999998, 0, -0.074999999999999997), text_scale=0.055)
+            parent=self,
+            text='',
+            pos=(-0.059999999999999998, 0, -0.074999999999999997),
+            text_scale=0.055)
         self.hpChangeEvent = None
         self.gagNode = self.attachNewNode('gag')
         self.gagNode.setPos(0.10000000000000001, 0, 0.029999999999999999)
@@ -70,25 +61,27 @@ class TownBattleToonPanel(DirectFrame):
         passGui.reparentTo(self.passNode)
         self.passNode.hide()
         self.laffMeter = None
-        self.whichText = DirectLabel(parent=self, text='', pos=(
-            0.10000000000000001, 0, -0.080000000000000002), text_scale=0.050000000000000003)
+        self.whichText = DirectLabel(
+            parent=self,
+            text='',
+            pos=(0.10000000000000001, 0, -0.080000000000000002),
+            text_scale=0.050000000000000003)
         self.hide()
         gui.removeNode()
 
     def setLaffMeter(self, avatar):
         self.notify.debug('setLaffMeter: new avatar %s' % avatar.doId)
         if self.avatar == avatar:
-            messenger.send(self.avatar.uniqueName('hpChange'), [
-                avatar.hp,
-                avatar.maxHp,
-                1])
+            messenger.send(
+                self.avatar.uniqueName('hpChange'),
+                [avatar.hp, avatar.maxHp, 1])
             return None
         elif self.avatar:
             self.cleanupLaffMeter()
 
         self.avatar = avatar
-        self.laffMeter = LaffMeter.LaffMeter(
-            avatar.style, avatar.hp, avatar.maxHp)
+        self.laffMeter = LaffMeter.LaffMeter(avatar.style, avatar.hp,
+                                             avatar.maxHp)
         self.laffMeter.setAvatar(self.avatar)
         self.laffMeter.reparentTo(self)
         self.laffMeter.setPos(-0.059999999999999998, 0, 0.050000000000000003)
@@ -101,7 +94,8 @@ class TownBattleToonPanel(DirectFrame):
     def setHealthText(self, hp, maxHp, quietly=0):
         self.healthText['text'] = TTLocalizer.TownBattleHealthText % {
             'hitPoints': hp,
-            'maxHit': maxHp}
+            'maxHit': maxHp
+        }
 
     def show(self):
         DirectFrame.show(self)
@@ -119,17 +113,16 @@ class TownBattleToonPanel(DirectFrame):
 
         self.setHealthText(hp, maxHp)
 
-    def setValues(
-            self,
-            index,
-            track,
-            level=None,
-            numTargets=None,
-            targetIndex=None,
-            localNum=None):
+    def setValues(self,
+                  index,
+                  track,
+                  level=None,
+                  numTargets=None,
+                  targetIndex=None,
+                  localNum=None):
         self.notify.debug(
-            'Toon Panel setValues: index=%s track=%s level=%s numTargets=%s targetIndex=%s localNum=%s' %
-            (index, track, level, numTargets, targetIndex, localNum))
+            'Toon Panel setValues: index=%s track=%s level=%s numTargets=%s targetIndex=%s localNum=%s'
+            % (index, track, level, numTargets, targetIndex, localNum))
         self.undecidedText.hide()
         self.sosText.hide()
         self.fireText.hide()

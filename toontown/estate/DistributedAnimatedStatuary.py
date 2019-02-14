@@ -19,17 +19,14 @@ class DistributedAnimatedStatuary(DistributedStatuary.DistributedStatuary):
         self.model = Actor.Actor()
         animPath = self.modelPath + self.anims[1]
         self.model.loadModel(self.modelPath + self.anims[0])
-        self.model.loadAnims(dict([
-            [
-                self.anims[1],
-                animPath]]))
+        self.model.loadAnims(dict([[self.anims[1], animPath]]))
         colNode = self.model.find('**/+CollisionNode')
         if self.typeIndex == 234:
             colNode.setScale(0.5)
 
         if not colNode.isEmpty():
-            (score,
-             multiplier) = ToontownGlobals.PinballScoring[ToontownGlobals.PinballStatuary]
+            (score, multiplier) = ToontownGlobals.PinballScoring[
+                ToontownGlobals.PinballStatuary]
             if self.pinballScore:
                 score = self.pinballScore[0]
                 multiplier = self.pinballScore[1]

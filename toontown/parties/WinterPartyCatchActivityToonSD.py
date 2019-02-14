@@ -14,8 +14,7 @@ class WinterPartyCatchActivityToonSD(
 
     def __init__(self, avId, activity):
         WinterPartyCatchActivityToonSD.notify.debug(
-            'init : avId = %s, activity = %s ' %
-            (avId, activity))
+            'init : avId = %s, activity = %s ' % (avId, activity))
         PartyCatchActivityToonSD.PartyCatchActivityToonSD.__init__(
             self, avId, activity)
 
@@ -35,17 +34,9 @@ class WinterPartyCatchActivityToonSD(
             Parallel(
                 WaitInterval(duration),
                 Sequence(
-                    LerpColorScaleInterval(
-                        fruitModel,
-                        duration / 2.0,
-                        Vec4(
-                            1.0,
-                            1.0,
-                            1.0,
-                            0.0)))),
-            Func(
-                self.fsm.request,
-                'normal'),
+                    LerpColorScaleInterval(fruitModel, duration / 2.0,
+                                           Vec4(1.0, 1.0, 1.0, 0.0)))),
+            Func(self.fsm.request, 'normal'),
             name=self.toon.uniqueName('eatingIval'))
         self.eatIval.start()
 

@@ -5,7 +5,6 @@ from toontown.effects import DistributedFireworkShowAI
 
 
 class HolidayBaseAI:
-
     def __init__(self, air, holidayId):
         self.air = air
         self.holidayId = holidayId

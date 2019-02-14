@@ -7,7 +7,6 @@ import random
 
 
 class FishAnimatedProp(AnimatedProp.AnimatedProp):
-
     def __init__(self, node):
         AnimatedProp.AnimatedProp.__init__(self, node)
         parent = node.getParent()
@@ -17,7 +16,8 @@ class FishAnimatedProp(AnimatedProp.AnimatedProp):
         node.clearMat()
         self.fish.loadAnims({
             'jump': 'phase_4/models/props/SZ_fish-jump',
-            'swim': 'phase_4/models/props/SZ_fish-swim'})
+            'swim': 'phase_4/models/props/SZ_fish-swim'
+        })
         self.splashSfxList = (
             loader.loadSfx('phase_4/audio/sfx/TT_splash1.mp3'),
             loader.loadSfx('phase_4/audio/sfx/TT_splash2.mp3'))
@@ -25,38 +25,30 @@ class FishAnimatedProp(AnimatedProp.AnimatedProp):
         self.geom = self.fish.getGeomNode()
         self.exitRipples = Ripples(self.geom)
         self.exitRipples.setBin('fixed', 25, 1)
-        self.exitRipples.setPosHprScale(-0.29999999999999999,
-                                        0.0,
-                                        1.24,
-                                        0.0,
-                                        0.0,
-                                        0.0,
-                                        0.69999999999999996,
-                                        0.69999999999999996,
-                                        0.69999999999999996)
+        self.exitRipples.setPosHprScale(
+            -0.29999999999999999, 0.0, 1.24, 0.0, 0.0, 0.0,
+            0.69999999999999996, 0.69999999999999996, 0.69999999999999996)
         self.splash = Splash(self.geom, wantParticles=0)
-        self.splash.setPosHprScale(-1,
-                                   0.0,
-                                   1.23,
-                                   0.0,
-                                   0.0,
-                                   0.0,
-                                   0.69999999999999996,
-                                   0.69999999999999996,
+        self.splash.setPosHprScale(-1, 0.0, 1.23, 0.0, 0.0, 0.0,
+                                   0.69999999999999996, 0.69999999999999996,
                                    0.69999999999999996)
         randomSplash = random.choice(self.splashSfxList)
         self.track = Sequence(
-            FunctionInterval(
-                self.randomizePosition), Func(
-                self.node.unstash), Parallel(
-                self.fish.actorInterval('jump'), Sequence(
-                    Wait(0.25), Func(
-                        self.exitRipples.play, 0.75)), Sequence(
-                            Wait(1.1399999999999999), Func(
-                                self.splash.play), SoundInterval(
-                                    randomSplash, volume=0.80000000000000004, node=self.node))), Wait(1), Func(
-                                        self.node.stash), Wait(
-                                            4 + 10 * random.random()), name=self.uniqueName('Fish'))
+            FunctionInterval(self.randomizePosition),
+            Func(self.node.unstash),
+            Parallel(
+                self.fish.actorInterval('jump'),
+                Sequence(Wait(0.25), Func(self.exitRipples.play, 0.75)),
+                Sequence(
+                    Wait(1.1399999999999999), Func(self.splash.play),
+                    SoundInterval(
+                        randomSplash,
+                        volume=0.80000000000000004,
+                        node=self.node))),
+            Wait(1),
+            Func(self.node.stash),
+            Wait(4 + 10 * random.random()),
+            name=self.uniqueName('Fish'))
 
     def delete(self):
         self.exitRipples.destroy()

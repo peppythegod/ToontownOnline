@@ -78,8 +78,7 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
         anim = node.getTag('DNAAnim')
         self.trashcan = Actor.Actor(node, copy=0)
         self.trashcan.reparentTo(node)
-        self.trashcan.loadAnims({
-            'anim': '%s/%s' % (self.path, anim)})
+        self.trashcan.loadAnims({'anim': '%s/%s' % (self.path, anim)})
         self.trashcan.pose('anim', 0)
         self.node = self.trashcan
 
@@ -93,14 +92,12 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
             self.visId = visId
             self.hoodId = ZoneUtil.getCanonicalHoodId(visId)
             self.notify.debug(
-                'calcHoodId %d from %s' %
-                (self.hoodId, fullString))
+                'calcHoodId %d from %s' % (self.hoodId, fullString))
         except Exception:
             generic = None
             if 'Editor' not in fullString:
                 self.notify.warning(
-                    "calcHoodId couldn't parse %s using 0" %
-                    fullString)
+                    "calcHoodId couldn't parse %s using 0" % fullString)
 
             self.hoodId = 0
             self.visId = 0
@@ -131,8 +128,8 @@ class GenericAnimatedProp(AnimatedProp.AnimatedProp):
                 if base.config.GetBool('interactive-prop-info', False):
                     if self.visId == localAvatar.zoneId and origAnimName != 'tt_a_ara_dga_hydrant_idleIntoFight':
                         self.notify.warning(
-                            'anim %s had duration of %s while sound  has duration of %s' %
-                            (origAnimName, maximumDuration, soundDur))
+                            'anim %s had duration of %s while sound  has duration of %s'
+                            % (origAnimName, maximumDuration, soundDur))
 
                 soundDur = maximumDuration
 

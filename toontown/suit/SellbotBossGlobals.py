@@ -15,7 +15,8 @@ BarrelDefs = {
         'pos': Point3(15, 23, 0),
         'hpr': Vec3(-45, 0, 0),
         'rewardPerGrab': 50,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     8001: {
         'type': DistributedGagBarrelAI.DistributedGagBarrelAI,
         'pos': Point3(15, -23, 0),
@@ -24,7 +25,8 @@ BarrelDefs = {
         'gagLevelMax': 0,
         'gagTrack': 3,
         'rewardPerGrab': 10,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     8002: {
         'type': DistributedGagBarrelAI.DistributedGagBarrelAI,
         'pos': Point3(21, 20, 0),
@@ -33,7 +35,8 @@ BarrelDefs = {
         'gagLevelMax': 0,
         'gagTrack': 4,
         'rewardPerGrab': 10,
-        'rewardPerGrabMax': 0},
+        'rewardPerGrabMax': 0
+    },
     8003: {
         'type': DistributedGagBarrelAI.DistributedGagBarrelAI,
         'pos': Point3(21, -20, 0),
@@ -42,7 +45,9 @@ BarrelDefs = {
         'gagLevelMax': 0,
         'gagTrack': 5,
         'rewardPerGrab': 10,
-        'rewardPerGrabMax': 0}}
+        'rewardPerGrabMax': 0
+    }
+}
 
 
 def setBarrelAttr(barrel, entId):

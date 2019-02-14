@@ -48,8 +48,7 @@ class DistributedStartingBlockAI(DistributedObjectAI.DistributedObjectAI):
         if self.isActive and self.avId == 0:
             success = self.kartPad.addAvBlock(avId, self, paid)
             self.notify.debug(
-                'requestEnter: avId %s wants to enter the kart block.' %
-                avId)
+                'requestEnter: avId %s wants to enter the kart block.' % avId)
             if success == KartGlobals.ERROR_CODE.success:
                 self.avId = avId
                 self.isActive = False
@@ -58,25 +57,21 @@ class DistributedStartingBlockAI(DistributedObjectAI.DistributedObjectAI):
                 self.d_setOccupied(self.avId)
                 self.d_setMovie(KartGlobals.ENTER_MOVIE)
             else:
-                self.sendUpdateToAvatarId(avId, 'rejectEnter', [
-                    success])
+                self.sendUpdateToAvatarId(avId, 'rejectEnter', [success])
         elif hasattr(self.kartPad, 'state') and self.kartPad.state in [
-            'WaitBoarding',
-                'AllAboard']:
+                'WaitBoarding', 'AllAboard'
+        ]:
             errorCode = KartGlobals.ERROR_CODE.eBoardOver
         else:
             errorCode = KartGlobals.ERROR_CODE.eOccupied
-        self.sendUpdateToAvatarId(avId, 'rejectEnter', [
-            errorCode])
+        self.sendUpdateToAvatarId(avId, 'rejectEnter', [errorCode])
 
     def requestExit(self):
         avId = self.air.getAvatarIdFromSender()
         self.notify.debug(
-            'requestExit: avId %s wants to exit the Kart Block.' %
-            avId)
+            'requestExit: avId %s wants to exit the Kart Block.' % avId)
         success = self.validate(
-            avId,
-            self.avId == avId,
+            avId, self.avId == avId,
             'requestExit: avId is not occupying this kart block.')
         if not success:
             return None
@@ -110,13 +105,11 @@ class DistributedStartingBlockAI(DistributedObjectAI.DistributedObjectAI):
         self.unexpectedEvent = None
 
     def d_setOccupied(self, avId):
-        self.sendUpdate('setOccupied', [
-            avId])
+        self.sendUpdate('setOccupied', [avId])
 
     def d_setMovie(self, mode):
         self.currentMovie = mode
-        self.sendUpdate('setMovie', [
-            mode])
+        self.sendUpdate('setMovie', [mode])
 
 
 class DistributedViewingBlockAI(DistributedStartingBlockAI):
@@ -124,8 +117,8 @@ class DistributedViewingBlockAI(DistributedStartingBlockAI):
         'DistributedViewingBlockAI')
 
     def __init__(self, air, kartPad, x, y, z, h, p, r, padLocationId):
-        DistributedStartingBlockAI.__init__(
-            self, air, kartPad, x, y, z, h, p, r, padLocationId)
+        DistributedStartingBlockAI.__init__(self, air, kartPad, x, y, z, h, p,
+                                            r, padLocationId)
 
     def delete(self):
         DistributedStartingBlockAI.delete(self)

@@ -38,75 +38,35 @@ class GenderShop(StateData.StateData):
         guiGirlDown = gui.find('**/tt_t_gui_mat_girlDown')
         self.boyButton = DirectButton(
             relief=None,
-            image=(
-                guiBoyUp,
-                guiBoyDown,
-                guiBoyUp,
-                guiBoyDown),
+            image=(guiBoyUp, guiBoyDown, guiBoyUp, guiBoyDown),
             image_scale=halfButtonScale,
             image1_scale=halfButtonHoverScale,
             image2_scale=halfButtonHoverScale,
-            pos=(
-                -0.40000000000000002,
-                0,
-                -0.80000000000000004),
+            pos=(-0.40000000000000002, 0, -0.80000000000000004),
             command=self.createRandomBoy,
-            text=(
-                '',
-                TTLocalizer.GenderShopBoyButtonText,
-                TTLocalizer.GenderShopBoyButtonText,
-                ''),
+            text=('', TTLocalizer.GenderShopBoyButtonText,
+                  TTLocalizer.GenderShopBoyButtonText, ''),
             text_font=ToontownGlobals.getInterfaceFont(),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                0.19),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_pos=(0, 0.19),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.boyButton.hide()
         self.girlButton = DirectButton(
             relief=None,
-            image=(
-                guiGirlUp,
-                guiGirlDown,
-                guiGirlUp,
-                guiGirlDown),
+            image=(guiGirlUp, guiGirlDown, guiGirlUp, guiGirlDown),
             image_scale=halfButtonScale,
             image1_scale=halfButtonHoverScale,
             image2_scale=halfButtonHoverScale,
-            pos=(
-                0.40000000000000002,
-                0,
-                -0.80000000000000004),
+            pos=(0.40000000000000002, 0, -0.80000000000000004),
             command=self.createRandomGirl,
-            text=(
-                '',
-                TTLocalizer.GenderShopGirlButtonText,
-                TTLocalizer.GenderShopGirlButtonText,
-                ''),
+            text=('', TTLocalizer.GenderShopGirlButtonText,
+                  TTLocalizer.GenderShopGirlButtonText, ''),
             text_font=ToontownGlobals.getInterfaceFont(),
             text_scale=0.080000000000000002,
-            text_pos=(
-                0,
-                0.19),
-            text_fg=(
-                1,
-                1,
-                1,
-                1),
-            text_shadow=(
-                0,
-                0,
-                0,
-                1))
+            text_pos=(0, 0.19),
+            text_fg=(1, 1, 1, 1),
+            text_shadow=(0, 0, 0, 1))
         self.girlButton.hide()
         gui.removeNode()
         del gui

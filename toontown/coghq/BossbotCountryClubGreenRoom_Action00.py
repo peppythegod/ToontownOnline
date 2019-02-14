@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_12/models/bossbotHQ/BossbotGreenRoom_A',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     110301: {
         'type': 'door',
         'name': '<unnamed>',
@@ -45,7 +48,8 @@ GlobalEntities = {
         'unlock0Event': 0,
         'unlock1Event': 110302,
         'unlock2Event': 0,
-        'unlock3Event': 0},
+        'unlock3Event': 0
+    },
     110302: {
         'type': 'golfGreenGame',
         'name': '<unnamed>',
@@ -58,7 +62,8 @@ GlobalEntities = {
         'puzzleBase': 3,
         'puzzlePerPlayer': 1,
         'switchId': 0,
-        'timeToPlay': 120},
+        'timeToPlay': 120
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -66,7 +71,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     110303: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -74,9 +80,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(40.963500000000003, 2, 0),
         'hpr': Vec3(270, 0, 0),
-        'scale': Vec3(1, 1, 1)}}
+        'scale': Vec3(1, 1, 1)
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

@@ -13,36 +13,21 @@ from toontown.catalog import CatalogWallpaperItem
 from toontown.catalog import CatalogFlooringItem
 from toontown.catalog import CatalogMouldingItem
 from toontown.catalog import CatalogWainscotingItem
-WindowPlugNames = (
-    '**/windowcut_a*',
-    '**/windowcut_b*',
-    '**/windowcut_c*',
-    '**/windowcut_d*',
-    '**/windowcut_e*',
-    '**/windowcut_f*')
+WindowPlugNames = ('**/windowcut_a*', '**/windowcut_b*', '**/windowcut_c*',
+                   '**/windowcut_d*', '**/windowcut_e*', '**/windowcut_f*')
 RoomNames = ('**/group2', '**/group1')
-WallNames = (
-    'ceiling*',
-    'wall_side_middle*',
-    'wall_front_middle*',
-    'windowcut_*')
+WallNames = ('ceiling*', 'wall_side_middle*', 'wall_front_middle*',
+             'windowcut_*')
 MouldingNames = ('wall_side_top*', 'wall_front_top*')
-FloorNames = ('floor*',)
+FloorNames = ('floor*', )
 WainscotingNames = ('wall_side_bottom*', 'wall_front_bottom*')
-BorderNames = (
-    'wall_side_middle*_border',
-    'wall_front_middle*_border',
-    'windowcut_*_border')
-WallpaperPieceNames = (
-    WallNames,
-    MouldingNames,
-    FloorNames,
-    WainscotingNames,
-    BorderNames)
+BorderNames = ('wall_side_middle*_border', 'wall_front_middle*_border',
+               'windowcut_*_border')
+WallpaperPieceNames = (WallNames, MouldingNames, FloorNames, WainscotingNames,
+                       BorderNames)
 
 
 class DistributedHouseInterior(DistributedObject.DistributedObject):
-
     def __init__(self, cr):
         DistributedObject.DistributedObject.__init__(self, cr)
         self.houseId = 0
@@ -75,16 +60,14 @@ class DistributedHouseInterior(DistributedObject.DistributedObject):
         door = dnaStore.findNode(doorModelName)
         door_origin = self.interior.find('**/door_origin')
         door_origin.setHpr(180, 0, 0)
-        door_origin.setScale(
-            0.80000000000000004,
-            0.80000000000000004,
-            0.80000000000000004)
+        door_origin.setScale(0.80000000000000004, 0.80000000000000004,
+                             0.80000000000000004)
         door_origin.setPos(door_origin, 0, -0.025000000000000001, 0)
         doorNP = door.copyTo(door_origin)
         houseColor = HouseGlobals.atticWood
         color = Vec4(houseColor[0], houseColor[1], houseColor[2], 1)
-        DNADoor.setupDoor(doorNP, door_origin, door_origin,
-                          dnaStore, str(self.houseId), color)
+        DNADoor.setupDoor(doorNP, door_origin, door_origin, dnaStore,
+                          str(self.houseId), color)
         doorFrame = doorNP.find('door_*_flat')
         doorFrame.setColor(color)
         self.interior.flattenMedium()
@@ -101,10 +84,10 @@ class DistributedHouseInterior(DistributedObject.DistributedObject):
             plug.flattenLight()
             self.windowSlots.append((plug, viewBase))
 
-        self.windowSlots[2][1].setPosHpr(
-            16.0, -12.0, 5.5099999999999998, -90, 0, 0)
-        self.windowSlots[4][1].setPosHpr(-12.0,
-                                         26.0, 5.5099999999999998, 0, 0, 0)
+        self.windowSlots[2][1].setPosHpr(16.0, -12.0, 5.5099999999999998, -90,
+                                         0, 0)
+        self.windowSlots[4][1].setPosHpr(-12.0, 26.0, 5.5099999999999998, 0, 0,
+                                         0)
         self._DistributedHouseInterior__colorWalls()
         self._DistributedHouseInterior__setupWindows()
         messenger.send('houseInteriorLoaded-%d' % self.zoneId)
@@ -144,7 +127,8 @@ class DistributedHouseInterior(DistributedObject.DistributedObject):
                             node.setColorScale(*color)
                             node.setTexture(texture, 1)
 
-                        if wallpaper.getSurfaceType() == CatalogSurfaceItem.STWallpaper:
+                        if wallpaper.getSurfaceType(
+                        ) == CatalogSurfaceItem.STWallpaper:
                             color2 = wallpaper.getBorderColor()
                             texture2 = wallpaper.loadBorderTexture()
                             nodes = roomNode.findAllMatches(
@@ -155,7 +139,7 @@ class DistributedHouseInterior(DistributedObject.DistributedObject):
 
         nodes = self.interior.findAllMatches('**/arch*')
         for node in nodes:
-            node.setColorScale(*HouseGlobals.archWood + (1,))
+            node.setColorScale(*HouseGlobals.archWood + (1, ))
 
     def _DistributedHouseInterior__setupWindows(self):
         for (plug, viewBase) in self.windowSlots:
@@ -211,22 +195,15 @@ class DistributedHouseInterior(DistributedObject.DistributedObject):
 
     def setWindows(self, items):
         self.windows = CatalogItemList.CatalogItemList(
-            items, store=CatalogItem.Customization | CatalogItem.WindowPlacement)
+            items,
+            store=CatalogItem.Customization | CatalogItem.WindowPlacement)
         if self.interior:
             self._DistributedHouseInterior__setupWindows()
 
     def testWallpaperCombo(
-            self,
-            wallpaperType,
-            wallpaperColorIndex,
-            borderIndex,
-            borderColorIndex,
-            mouldingType,
-            mouldingColorIndex,
-            flooringType,
-            flooringColorIndex,
-            wainscotingType,
-            wainscotingColorIndex):
+            self, wallpaperType, wallpaperColorIndex, borderIndex,
+            borderColorIndex, mouldingType, mouldingColorIndex, flooringType,
+            flooringColorIndex, wainscotingType, wainscotingColorIndex):
         wallpaperItem = CatalogWallpaperItem.CatalogWallpaperItem(
             wallpaperType, wallpaperColorIndex, borderIndex, borderColorIndex)
         mouldingItem = CatalogMouldingItem.CatalogMouldingItem(
@@ -235,14 +212,11 @@ class DistributedHouseInterior(DistributedObject.DistributedObject):
             flooringType, flooringColorIndex)
         wainscotingItem = CatalogWainscotingItem.CatalogWainscotingItem(
             wainscotingType, wainscotingColorIndex)
-        self.wallpaper = CatalogItemList.CatalogItemList([
-            wallpaperItem,
-            mouldingItem,
-            flooringItem,
-            wainscotingItem,
-            wallpaperItem,
-            mouldingItem,
-            flooringItem,
-            wainscotingItem], store=CatalogItem.Customization)
+        self.wallpaper = CatalogItemList.CatalogItemList(
+            [
+                wallpaperItem, mouldingItem, flooringItem, wainscotingItem,
+                wallpaperItem, mouldingItem, flooringItem, wainscotingItem
+            ],
+            store=CatalogItem.Customization)
         if self.interior:
             self._DistributedHouseInterior__colorWalls()

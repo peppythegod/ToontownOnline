@@ -41,8 +41,7 @@ class EffectController:
             except TypeError:
                 e = None
                 raise TypeError(
-                    'Error loading %s effect.' %
-                    self.__class__.__name__)
+                    'Error loading %s effect.' % self.__class__.__name__)
 
         self.createTrack()
         self.track.start()
@@ -83,8 +82,7 @@ class EffectController:
             except TypeError:
                 e = None
                 raise TypeError(
-                    'Error loading %s effect.' %
-                    self.__class__.__name__)
+                    'Error loading %s effect.' % self.__class__.__name__)
 
         self.createTrack()
         if self.startEffect:

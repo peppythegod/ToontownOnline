@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_12/models/bossbotHQ/BossbotMazex2_straight_C',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     110000: {
         'type': 'battleBlocker',
         'name': '<unnamed>',
@@ -34,7 +37,8 @@ GlobalEntities = {
         'hpr': Point3(270, 0, 0),
         'scale': Vec3(1, 1, 1),
         'cellId': 0,
-        'radius': 10},
+        'radius': 10
+    },
     110202: {
         'type': 'door',
         'name': '<unnamed>',
@@ -55,7 +59,8 @@ GlobalEntities = {
         'unlock0Event': 0,
         'unlock1Event': 110000,
         'unlock2Event': 0,
-        'unlock3Event': 0},
+        'unlock3Event': 0
+    },
     110002: {
         'type': 'maze',
         'name': '<unnamed>',
@@ -64,7 +69,8 @@ GlobalEntities = {
         'pos': Point3(-141.56299999999999, -78.835300000000004, 0),
         'hpr': Vec3(0, 0, 0),
         'scale': Vec3(1, 1, 1),
-        'numSections': 2},
+        'numSections': 2
+    },
     10002: {
         'type': 'nodepath',
         'name': 'props',
@@ -72,7 +78,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     110001: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -80,9 +87,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(61.310000000000002, 82.008300000000006, 0),
         'hpr': Point3(270, 0, 0),
-        'scale': Vec3(1, 1, 1)}}
+        'scale': Vec3(1, 1, 1)
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

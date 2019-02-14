@@ -47,8 +47,7 @@ class EntityTypeDesc:
 
         c = entTypeClass
         EntityTypeDesc.notify.debug(
-            'compiling attrib descriptors for %s' %
-            c.__name__)
+            'compiling attrib descriptors for %s' % c.__name__)
         for base in c.__bases__:
             EntityTypeDesc.privCompileAttribDescs(base)
 
@@ -73,7 +72,8 @@ class EntityTypeDesc:
         if 'attribs' in c.__dict__:
             for attrib in c.attribs:
                 desc = AttribDesc.AttribDesc(*attrib)
-                if desc.getName() == 'type' and entTypeClass.__name__ != 'Entity':
+                if desc.getName(
+                ) == 'type' and entTypeClass.__name__ != 'Entity':
                     EntityTypeDesc.notify.error(
                         "(%s): '%s' is a reserved attribute name" %
                         (entTypeClass.__name__, desc.getName()))

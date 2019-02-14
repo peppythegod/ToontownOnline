@@ -27,15 +27,14 @@ def iterateCashbotMints(func):
     ToontownGlobals = ToontownGlobals
     import toontown.toonbase
     for mintId in [
-            ToontownGlobals.CashbotMintIntA,
-            ToontownGlobals.CashbotMintIntB,
-            ToontownGlobals.CashbotMintIntC]:
+            ToontownGlobals.CashbotMintIntA, ToontownGlobals.CashbotMintIntB,
+            ToontownGlobals.CashbotMintIntC
+    ]:
         for floorNum in xrange(ToontownGlobals.MintNumFloors[mintId]):
             func(MintLayout(mintId, floorNum))
 
 
 def printMintInfo():
-
     def func(ml):
         print ml
 
@@ -43,7 +42,6 @@ def printMintInfo():
 
 
 def printMintRoomIds():
-
     def func(ml):
         print ml.getMintId(), ml.getFloorNum(), ml.getRoomIds()
 
@@ -51,7 +49,6 @@ def printMintRoomIds():
 
 
 def printMintRoomNames():
-
     def func(ml):
         print ml.getMintId(), ml.getFloorNum(), ml.getRoomNames()
 
@@ -59,7 +56,6 @@ def printMintRoomNames():
 
 
 def printNumRooms():
-
     def func(ml):
         print ml.getMintId(), ml.getFloorNum(), ml.getNumRooms()
 
@@ -67,7 +63,6 @@ def printNumRooms():
 
 
 def printNumBattles():
-
     def func(ml):
         print ml.getMintId(), ml.getFloorNum(), ml.getNumBattles()
 
@@ -95,7 +90,8 @@ BakedFloorLayouts = {
         16: (0, 5, 8, 10, 6, 3, 15, 14, 7, 25),
         17: (0, 12, 13, 5, 8, 14, 11, 7, 16, 10, 22),
         18: (0, 11, 3, 15, 7, 16, 14, 6, 1, 5, 18),
-        19: (0, 10, 16, 11, 3, 5, 12, 13, 7, 14, 24)},
+        19: (0, 10, 16, 11, 3, 5, 12, 13, 7, 14, 24)
+    },
     12600: {
         0: (0, 8, 1, 6, 14, 2, 5, 9, 17),
         1: (0, 4, 14, 7, 2, 13, 8, 9, 18),
@@ -116,7 +112,8 @@ BakedFloorLayouts = {
         16: (0, 3, 6, 1, 7, 5, 10, 9, 4, 13, 15, 25),
         17: (0, 3, 6, 14, 4, 13, 16, 12, 8, 5, 7, 18),
         18: (0, 11, 13, 4, 1, 15, 6, 3, 8, 9, 16, 20),
-        19: (0, 11, 5, 8, 7, 2, 6, 13, 3, 14, 9, 21)},
+        19: (0, 11, 5, 8, 7, 2, 6, 13, 3, 14, 9, 21)
+    },
     12700: {
         0: (0, 16, 14, 6, 1, 5, 9, 2, 15, 8, 17),
         1: (0, 3, 2, 12, 14, 8, 13, 6, 10, 7, 23),
@@ -137,7 +134,9 @@ BakedFloorLayouts = {
         16: (0, 6, 3, 10, 4, 1, 2, 13, 11, 5, 15, 16, 17),
         17: (0, 6, 16, 5, 12, 11, 1, 8, 14, 15, 9, 10, 24),
         18: (0, 15, 8, 12, 10, 1, 7, 11, 9, 16, 4, 5, 21),
-        19: (0, 10, 2, 16, 5, 6, 11, 13, 7, 12, 1, 3, 19)}}
+        19: (0, 10, 2, 16, 5, 6, 11, 13, 7, 12, 1, 3, 19)
+    }
+}
 
 
 class MintLayout:
@@ -181,8 +180,8 @@ class MintLayout:
 
         while None:
             allBattleRoomIds = list(allBattleRooms)
-            battleRoomIds = self._chooseBattleRooms(
-                numBattlesLeft, allBattleRoomIds)
+            battleRoomIds = self._chooseBattleRooms(numBattlesLeft,
+                                                    allBattleRoomIds)
             if battleRoomIds is not None:
                 break
 
@@ -242,12 +241,11 @@ class MintLayout:
     def getRng(self):
         return random.Random(self.mintId * self.floorNum)
 
-    def _chooseBattleRooms(
-            self,
-            numBattlesLeft,
-            allBattleRoomIds,
-            baseIndex=0,
-            chosenBattleRooms=None):
+    def _chooseBattleRooms(self,
+                           numBattlesLeft,
+                           allBattleRoomIds,
+                           baseIndex=0,
+                           chosenBattleRooms=None):
         if chosenBattleRooms is None:
             chosenBattleRooms = []
 
@@ -263,11 +261,9 @@ class MintLayout:
                 return chosenBattleRooms
 
             chosenBattleRooms.append(nextRoomId)
-            result = self._chooseBattleRooms(
-                newNumBattlesLeft,
-                allBattleRoomIds,
-                baseIndex,
-                chosenBattleRooms)
+            result = self._chooseBattleRooms(newNumBattlesLeft,
+                                             allBattleRoomIds, baseIndex,
+                                             chosenBattleRooms)
             if result is not None:
                 return result
                 continue
@@ -276,7 +272,8 @@ class MintLayout:
 
     def __str__(self):
         return 'MintLayout: id=%s, floor=%s, numRooms=%s, numBattles=%s' % (
-            self.mintId, self.floorNum, self.getNumRooms(), self.getNumBattles())
+            self.mintId, self.floorNum, self.getNumRooms(),
+            self.getNumBattles())
 
     def __repr__(self):
         return str(self)

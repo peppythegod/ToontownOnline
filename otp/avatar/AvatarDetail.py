@@ -42,8 +42,7 @@ class AvatarDetail:
     def _AvatarDetail__handleResponse(self, gotData, avatar, dclass):
         if avatar != self.avatar:
             self.notify.warning(
-                'Ignoring unexpected request for avatar %s' %
-                avatar.doId)
+                'Ignoring unexpected request for avatar %s' % avatar.doId)
             return None
 
         if gotData:

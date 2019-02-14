@@ -21,26 +21,26 @@ class EstateHood(Hood.Hood):
     def __init__(self, parentFSM, doneEvent, dnaStore, hoodId):
         Hood.Hood.__init__(self, parentFSM, doneEvent, dnaStore, hoodId)
         self.fsm = ClassicFSM.ClassicFSM('Hood', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'safeZoneLoader']),
-            State.State('safeZoneLoader', self.enterSafeZoneLoader, self.exitSafeZoneLoader, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'safeZoneLoader']),
-            State.State('final', self.enterFinal, self.exitFinal, [])], 'start', 'final')
+            State.State('start', self.enterStart, self.exitStart,
+                        ['safeZoneLoader']),
+            State.State('safeZoneLoader', self.enterSafeZoneLoader,
+                        self.exitSafeZoneLoader, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['safeZoneLoader']),
+            State.State('final', self.enterFinal, self.exitFinal, [])
+        ], 'start', 'final')
         self.fsm.enterInitialState()
         self.id = MyEstate
         self.safeZoneLoaderClass = EstateLoader.EstateLoader
         self.storageDNAFile = 'phase_5.5/dna/storage_estate.dna'
         self.holidayStorageDNADict = {
-            WINTER_DECORATIONS: [
-                'phase_5.5/dna/winter_storage_estate.dna'],
-            WACKY_WINTER_DECORATIONS: [
-                'phase_5.5/dna/winter_storage_estate.dna'],
-            HALLOWEEN_PROPS: [
-                'phase_5.5/dna/halloween_props_storage_estate.dna'],
-            SPOOKY_PROPS: [
-                'phase_5.5/dna/halloween_props_storage_estate.dna']}
+            WINTER_DECORATIONS: ['phase_5.5/dna/winter_storage_estate.dna'],
+            WACKY_WINTER_DECORATIONS:
+            ['phase_5.5/dna/winter_storage_estate.dna'],
+            HALLOWEEN_PROPS:
+            ['phase_5.5/dna/halloween_props_storage_estate.dna'],
+            SPOOKY_PROPS: ['phase_5.5/dna/halloween_props_storage_estate.dna']
+        }
         self.skyFile = 'phase_3.5/models/props/TT_sky'
         self.spookySkyFile = 'phase_3.5/models/props/BR_sky'
         self.popupInfo = None
@@ -60,8 +60,7 @@ class EstateHood(Hood.Hood):
         hoodId = requestStatus['hoodId']
         zoneId = requestStatus['zoneId']
         self.accept('kickToPlayground', self.kickToPlayground)
-        self.fsm.request(requestStatus['loader'], [
-            requestStatus])
+        self.fsm.request(requestStatus['loader'], [requestStatus])
 
     def exit(self):
         if self.loader:
@@ -75,7 +74,8 @@ class EstateHood(Hood.Hood):
         loaderName = requestStatus['loader']
         if loaderName == 'safeZoneLoader':
             self.loader = self.safeZoneLoaderClass(
-                self, self.fsm.getStateNamed('safeZoneLoader'), self.loaderDoneEvent)
+                self, self.fsm.getStateNamed('safeZoneLoader'),
+                self.loaderDoneEvent)
             self.loader.load()
 
     def spawnTitleText(self, zoneId):
@@ -97,7 +97,8 @@ class EstateHood(Hood.Hood):
                 'hoodId': zoneId,
                 'zoneId': zoneId,
                 'shardId': None,
-                'avId': -1}
+                'avId': -1
+            }
             messenger.send(self.doneEvent)
         elif retCode == 2:
             zoneId = base.localAvatar.lastHood
@@ -108,7 +109,8 @@ class EstateHood(Hood.Hood):
                 'hoodId': zoneId,
                 'zoneId': zoneId,
                 'shardId': None,
-                'avId': -1}
+                'avId': -1
+            }
             messenger.send(self.doneEvent)
         else:
             self.notify.error('unknown reason for exiting estate')
@@ -119,49 +121,31 @@ class EstateHood(Hood.Hood):
             self.popupInfo = None
 
         buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
-        okButtonImage = (
-            buttons.find('**/ChtBx_OKBtn_UP'),
-            buttons.find('**/ChtBx_OKBtn_DN'),
-            buttons.find('**/ChtBx_OKBtn_Rllvr'))
+        okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'),
+                         buttons.find('**/ChtBx_OKBtn_DN'),
+                         buttons.find('**/ChtBx_OKBtn_Rllvr'))
         self.popupInfo = DirectFrame(
             parent=hidden,
             relief=None,
             state='normal',
             text=msg,
-            frameSize=(
-                -1,
-                1,
-                -1,
-                1),
+            frameSize=(-1, 1, -1, 1),
             text_wordwrap=10,
             geom=DGG.getDefaultDialogGeom(),
             geom_color=GlobalDialogColor,
-            geom_scale=(
-                0.88,
-                1,
-                0.75),
-            geom_pos=(
-                0,
-                0,
-                -0.080000000000000002),
+            geom_scale=(0.88, 1, 0.75),
+            geom_pos=(0, 0, -0.080000000000000002),
             text_scale=TTLocalizer.EHpopupInfo,
-            text_pos=(
-                0,
-                0.10000000000000001))
+            text_pos=(0, 0.10000000000000001))
         DirectButton(
             self.popupInfo,
             image=okButtonImage,
             relief=None,
             text=TTLocalizer.EstatePopupOK,
             text_scale=0.050000000000000003,
-            text_pos=(
-                0.0,
-                -0.10000000000000001),
+            text_pos=(0.0, -0.10000000000000001),
             textMayChange=0,
-            pos=(
-                0.0,
-                0.0,
-                -0.29999999999999999),
+            pos=(0.0, 0.0, -0.29999999999999999),
             command=self._EstateHood__handleKickoutOk)
         buttons.removeNode()
         self.popupInfo.reparentTo(aspect2d)
@@ -200,9 +184,10 @@ class EstateHood(Hood.Hood):
         self.sky.reparentTo(camera)
         self.sky.setTransparency(TransparencyAttrib.MDual, 1)
         fadeIn = self.sky.colorScaleInterval(
-            1.5, Vec4(
-                1, 1, 1, 1), startColorScale=Vec4(
-                1, 1, 1, 0.25), blendType='easeInOut')
+            1.5,
+            Vec4(1, 1, 1, 1),
+            startColorScale=Vec4(1, 1, 1, 0.25),
+            blendType='easeInOut')
         fadeIn.start()
         self.sky.setZ(0.0)
         self.sky.setHpr(0.0, 0.0, 0.0)

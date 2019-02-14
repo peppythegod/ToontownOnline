@@ -45,5 +45,4 @@ class PetSphere(Impulse.Impulse):
         return 'petSphereColl-%s' % self.serialNum
 
     def _handleCollision(self, collEntry):
-        messenger.send(self.mover.getCollisionEventName(), [
-            collEntry])
+        messenger.send(self.mover.getCollisionEventName(), [collEntry])

@@ -1,10 +1,7 @@
-
-
 from toontown.safezone import DistributedTreasure
 
 
 class DistributedTagTreasure(DistributedTreasure.DistributedTreasure):
-
     def __init__(self, cr):
         DistributedTreasure.DistributedTreasure.__init__(self, cr)
         self.modelPath = 'phase_4/models/props/icecream'

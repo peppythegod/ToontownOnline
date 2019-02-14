@@ -17,15 +17,14 @@ from direct.distributed import DistributedObjectAI
 from toontown.ai.ToonBarrier import *
 
 
-class DistributedLawOfficeFloorAI(
-        DistributedLevelAI.DistributedLevelAI,
-        LawOfficeBase.LawOfficeBase):
+class DistributedLawOfficeFloorAI(DistributedLevelAI.DistributedLevelAI,
+                                  LawOfficeBase.LawOfficeBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedLawOfficeAI')
 
     def __init__(self, air, lawOfficeId, zoneId, entranceId, avIds, spec):
-        DistributedLevelAI.DistributedLevelAI.__init__(
-            self, air, zoneId, entranceId, avIds)
+        DistributedLevelAI.DistributedLevelAI.__init__(self, air, zoneId,
+                                                       entranceId, avIds)
         LawOfficeBase.LawOfficeBase.__init__(self)
         self.setLawOfficeId(lawOfficeId)
         self.layout = None
@@ -61,12 +60,9 @@ class DistributedLawOfficeFloorAI(
         self.notify.info('creating cogs')
         cogSpecModule = FactorySpecs.getCogSpecModule(self.lawOfficeId)
         self.planner = LevelSuitPlannerAI.LevelSuitPlannerAI(
-            self.air,
-            self,
-            DistributedFactorySuitAI.DistributedFactorySuitAI,
+            self.air, self, DistributedFactorySuitAI.DistributedFactorySuitAI,
             DistributedBattleFactoryAI.DistributedBattleFactoryAI,
-            cogSpecModule.CogData,
-            cogSpecModule.ReserveCogData,
+            cogSpecModule.CogData, cogSpecModule.ReserveCogData,
             cogSpecModule.BattleCells)
         suitHandles = self.planner.genSuits()
         messenger.send('plannerCreated-' + str(self.doId))
@@ -74,14 +70,13 @@ class DistributedLawOfficeFloorAI(
         self.reserveSuits = suitHandles['reserveSuits']
         self.d_setSuits()
         scenario = 0
-        description = '%s|%s|%s|%s' % (
-            self.lawOfficeId, self.entranceId, scenario, self.avIdList)
+        description = '%s|%s|%s|%s' % (self.lawOfficeId, self.entranceId,
+                                       scenario, self.avIdList)
         for avId in self.avIdList:
             self.air.writeServerEvent('DAOffice Entered', avId, description)
 
         self.notify.info(
-            'finish factory %s %s creation' %
-            (self.lawOfficeId, self.doId))
+            'finish factory %s %s creation' % (self.lawOfficeId, self.doId))
 
     def delete(self):
         self.notify.info('delete: %s' % self.doId)
@@ -114,8 +109,7 @@ class DistributedLawOfficeFloorAI(
 
     def d_setForemanConfronted(self, avId):
         if avId in self.avIdList:
-            self.sendUpdate('setForemanConfronted', [
-                avId])
+            self.sendUpdate('setForemanConfronted', [avId])
         else:
             self.notify.warning(
                 '%s: d_setForemanConfronted: av %s not in av list %s' %
@@ -132,8 +126,8 @@ class DistributedLawOfficeFloorAI(
                 continue
 
         scenario = 0
-        description = '%s|%s|%s|%s' % (
-            self.lawOfficeId, self.entranceId, scenario, activeVictorIds)
+        description = '%s|%s|%s|%s' % (self.lawOfficeId, self.entranceId,
+                                       scenario, activeVictorIds)
         for avId in activeVictorIds:
             self.air.writeServerEvent('DAOffice Defeated', avId, description)
 
@@ -155,9 +149,7 @@ class DistributedLawOfficeFloorAI(
         return self.cogLevel
 
     def d_setSuits(self):
-        self.sendUpdate('setSuits', [
-            self.getSuits(),
-            self.getReserveSuits()])
+        self.sendUpdate('setSuits', [self.getSuits(), self.getReserveSuits()])
 
     def getSuits(self):
         suitIds = []

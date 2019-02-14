@@ -28,11 +28,8 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
             self, cr, townBattle)
         self.streetBattle = 0
         self.fsm.addState(
-            State.State(
-                'BuildingReward',
-                self.enterBuildingReward,
-                self.exitBuildingReward,
-                ['Resume']))
+            State.State('BuildingReward', self.enterBuildingReward,
+                        self.exitBuildingReward, ['Resume']))
         offState = self.fsm.getStateNamed('Off')
         offState.addTransition('BuildingReward')
         playMovieState = self.fsm.getStateNamed('PlayMovie')
@@ -106,10 +103,7 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
                     taunt = SuitBattleGlobals.getFaceoffTaunt(
                         suit.getStyleName(), suit.doId)
                 oneSuitTrack.append(
-                    Func(
-                        suit.setChatAbsolute,
-                        taunt,
-                        CFSpeech | CFTimeout))
+                    Func(suit.setChatAbsolute, taunt, CFSpeech | CFTimeout))
 
             (destPos, destHpr) = self.getActorPosHpr(suit, self.suits)
             oneSuitTrack.append(Wait(delay))
@@ -117,8 +111,7 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
                 oneSuitTrack.append(Func(suit.clearChat))
 
             oneSuitTrack.append(
-                self.createAdjustInterval(
-                    suit, destPos, destHpr))
+                self.createAdjustInterval(suit, destPos, destHpr))
             suitTrack.append(oneSuitTrack)
 
         toonTrack = Parallel()
@@ -149,11 +142,7 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
         TauntCamX = 0
         TauntCamHeight = random.choice((MidTauntCamHeight, 1, 11))
         camTrack.append(
-            Func(
-                camera.setPos,
-                TauntCamX,
-                TauntCamY,
-                TauntCamHeight))
+            Func(camera.setPos, TauntCamX, TauntCamY, TauntCamHeight))
         camTrack.append(Func(camera.lookAt, suitLeader, suitOffsetPnt))
         camTrack.append(Wait(delay))
         camPos = Point3(0, -6, 4)
@@ -169,12 +158,13 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
 
     def enterFaceOff(self, ts):
         if len(self.toons) > 0 and base.localAvatar == self.toons[0]:
-            Emote.globalEmote.disableAll(
-                self.toons[0], 'dbattlebldg, enterFaceOff')
+            Emote.globalEmote.disableAll(self.toons[0],
+                                         'dbattlebldg, enterFaceOff')
 
         self.delayDeleteMembers()
         self._DistributedBattleBldg__faceOff(
-            ts, self.faceOffName, self._DistributedBattleBldg__handleFaceOffDone)
+            ts, self.faceOffName,
+            self._DistributedBattleBldg__handleFaceOffDone)
 
     def _DistributedBattleBldg__handleFaceOffDone(self):
         self.notify.debug('FaceOff done')
@@ -183,8 +173,8 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
     def exitFaceOff(self):
         self.notify.debug('exitFaceOff()')
         if len(self.toons) > 0 and base.localAvatar == self.toons[0]:
-            Emote.globalEmote.releaseAll(
-                self.toons[0], 'dbattlebldg exitFaceOff')
+            Emote.globalEmote.releaseAll(self.toons[0],
+                                         'dbattlebldg exitFaceOff')
 
         self.clearInterval(self.faceOffName)
         self._removeMembersKeep()
@@ -196,13 +186,8 @@ class DistributedBattleBldg(DistributedBattleBase.DistributedBattleBase):
         for toon in self.toons:
             toonTracks.append(
                 Sequence(
-                    Func(
-                        toon.loop,
-                        'victory'),
-                    Wait(FLOOR_REWARD_TIMEOUT),
-                    Func(
-                        toon.loop,
-                        'neutral')))
+                    Func(toon.loop, 'victory'), Wait(FLOOR_REWARD_TIMEOUT),
+                    Func(toon.loop, 'neutral')))
 
         name = self.uniqueName('floorReward')
         track = Sequence(toonTracks, Func(callback), name=name)

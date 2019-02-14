@@ -11,11 +11,10 @@ class ToontownTimeManager(DistributedObject.DistributedObject):
     ClockFormat = '%I:%M:%S %p'
     formatStr = '%Y-%m-%d %H:%M:%S'
 
-    def __init__(
-            self,
-            serverTimeUponLogin=0,
-            clientTimeUponLogin=0,
-            globalClockRealTimeUponLogin=0):
+    def __init__(self,
+                 serverTimeUponLogin=0,
+                 clientTimeUponLogin=0,
+                 globalClockRealTimeUponLogin=0):
 
         try:
             self.serverTimeZoneString = base.config.GetString(
@@ -25,47 +24,47 @@ class ToontownTimeManager(DistributedObject.DistributedObject):
             try:
                 self.serverTimeZoneString = simbase.config.GetString(
                     'server-timezone', TTLocalizer.TimeZone)
-            notify.error(
-                'ToontownTimeManager does not have access to base or simbase.')
+            except:
+                notify.error(
+                    'ToontownTimeManager does not have access to base or simbase.'
+                )
 
         self.serverTimeZone = pytz.timezone(self.serverTimeZoneString)
-        self.updateLoginTimes(
-            serverTimeUponLogin,
-            clientTimeUponLogin,
-            globalClockRealTimeUponLogin)
+        self.updateLoginTimes(serverTimeUponLogin, clientTimeUponLogin,
+                              globalClockRealTimeUponLogin)
         self.debugSecondsAdded = 0
 
-    def updateLoginTimes(
-            self,
-            serverTimeUponLogin,
-            clientTimeUponLogin,
-            globalClockRealTimeUponLogin):
+    def updateLoginTimes(self, serverTimeUponLogin, clientTimeUponLogin,
+                         globalClockRealTimeUponLogin):
         self.serverTimeUponLogin = serverTimeUponLogin
         self.clientTimeUponLogin = clientTimeUponLogin
         self.globalClockRealTimeUponLogin = globalClockRealTimeUponLogin
         naiveTime = datetime.utcfromtimestamp(self.serverTimeUponLogin)
         self.utcServerDateTime = naiveTime.replace(tzinfo=pytz.utc)
-        self.serverDateTime = datetime.fromtimestamp(
-            self.serverTimeUponLogin, self.serverTimeZone)
+        self.serverDateTime = datetime.fromtimestamp(self.serverTimeUponLogin,
+                                                     self.serverTimeZone)
 
     def getCurServerDateTime(self):
-        secondsPassed = (globalClock.getRealTime(
-        ) - self.globalClockRealTimeUponLogin) + self.debugSecondsAdded
+        secondsPassed = (
+            globalClock.getRealTime() -
+            self.globalClockRealTimeUponLogin) + self.debugSecondsAdded
         curDateTime = self.serverTimeZone.normalize(
             self.serverDateTime + timedelta(seconds=secondsPassed))
         return curDateTime
 
     def getRelativeServerDateTime(self, timeOffset):
-        secondsPassed = (globalClock.getRealTime(
-        ) - self.globalClockRealTimeUponLogin) + self.debugSecondsAdded
+        secondsPassed = (
+            globalClock.getRealTime() -
+            self.globalClockRealTimeUponLogin) + self.debugSecondsAdded
         secondsPassed += timeOffset
         curDateTime = self.serverTimeZone.normalize(
             self.serverDateTime + timedelta(seconds=secondsPassed))
         return curDateTime
 
     def getCurServerDateTimeForComparison(self):
-        secondsPassed = (globalClock.getRealTime(
-        ) - self.globalClockRealTimeUponLogin) + self.debugSecondsAdded
+        secondsPassed = (
+            globalClock.getRealTime() -
+            self.globalClockRealTimeUponLogin) + self.debugSecondsAdded
         curDateTime = self.serverDateTime + timedelta(seconds=secondsPassed)
         curDateTime = curDateTime.replace(tzinfo=self.serverTimeZone)
         return curDateTime
@@ -96,22 +95,17 @@ class ToontownTimeManager(DistributedObject.DistributedObject):
         self.notify.info('startTime1MinAgo < serverTime %s' % result2)
         serverTimeForComparison = self.getCurServerDateTimeForComparison()
         self.notify.info(
-            'serverTimeForComparison = %s' %
-            serverTimeForComparison)
+            'serverTimeForComparison = %s' % serverTimeForComparison)
         result3 = startTime1MinAgo <= serverTimeForComparison
         self.notify.info(
-            'startTime1MinAgo < serverTimeForComparison %s' %
-            result3)
+            'startTime1MinAgo < serverTimeForComparison %s' % result3)
 
     def convertStrToToontownTime(self, dateStr):
         curDateTime = self.getCurServerDateTime()
 
         try:
             curDateTime = datetime.fromtimestamp(
-                time.mktime(
-                    time.strptime(
-                        dateStr,
-                        self.formatStr)),
+                time.mktime(time.strptime(dateStr, self.formatStr)),
                 self.serverTimeZone)
             curDateTime = self.serverTimeZone.normalize(curDateTime)
         except BaseException:
@@ -125,15 +119,9 @@ class ToontownTimeManager(DistributedObject.DistributedObject):
 
         try:
             timeTuple = time.strptime(dateStr, self.formatStr)
-            utcDateTime = datetime(
-                timeTuple[0],
-                timeTuple[1],
-                timeTuple[2],
-                timeTuple[3],
-                timeTuple[4],
-                timeTuple[5],
-                timeTuple[6],
-                pytz.utc)
+            utcDateTime = datetime(timeTuple[0], timeTuple[1], timeTuple[2],
+                                   timeTuple[3], timeTuple[4], timeTuple[5],
+                                   timeTuple[6], pytz.utc)
             curDateTime = utcDateTime.astimezone(self.serverTimeZone)
             curDateTime = self.serverTimeZone.normalize(curDateTime)
         except BaseException:

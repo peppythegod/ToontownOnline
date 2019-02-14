@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_11/models/lawbotHQ/LB_Zone13a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10005: {
         'type': 'attribModifier',
         'name': 'stomperDamage',
@@ -33,7 +36,8 @@ GlobalEntities = {
         'attribName': 'damage',
         'recursive': 1,
         'typeName': 'stomper',
-        'value': '10'},
+        'value': '10'
+    },
     10009: {
         'type': 'attribModifier',
         'name': 'spotlightDamage',
@@ -42,7 +46,8 @@ GlobalEntities = {
         'attribName': 'damPow',
         'recursive': 1,
         'typeName': 'securityCamera',
-        'value': '10'},
+        'value': '10'
+    },
     10032: {
         'type': 'attribModifier',
         'name': 'radius',
@@ -51,7 +56,8 @@ GlobalEntities = {
         'attribName': 'radius',
         'recursive': 1,
         'typeName': 'securityCamera',
-        'value': '7'},
+        'value': '7'
+    },
     10036: {
         'type': 'attribModifier',
         'name': 'accel',
@@ -60,7 +66,8 @@ GlobalEntities = {
         'attribName': 'accel',
         'recursive': 1,
         'typeName': 'securityCamera',
-        'value': '2'},
+        'value': '2'
+    },
     10066: {
         'type': 'attribModifier',
         'name': 'maxVel',
@@ -69,7 +76,8 @@ GlobalEntities = {
         'attribName': 'maxVel',
         'recursive': 1,
         'typeName': 'securityCamera',
-        'value': '10'},
+        'value': '10'
+    },
     10000: {
         'type': 'nodepath',
         'name': 'front',
@@ -77,7 +85,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(-80, -1.5, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10001: {
         'type': 'nodepath',
         'name': 'left',
@@ -85,7 +94,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, 40, 0.050000000000000003),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10002: {
         'type': 'nodepath',
         'name': 'right',
@@ -93,7 +103,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0, -40, 0.050000000000000003),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10003: {
         'type': 'nodepath',
         'name': 'back',
@@ -101,7 +112,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(80, 0, 0.050000000000000003),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     10007: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -109,7 +121,8 @@ GlobalEntities = {
         'parentEntId': 10006,
         'pos': Point3(0, -10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10008: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -117,7 +130,8 @@ GlobalEntities = {
         'parentEntId': 10006,
         'pos': Point3(0, 10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10011: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -125,7 +139,8 @@ GlobalEntities = {
         'parentEntId': 10010,
         'pos': Point3(0, 10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10012: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -133,7 +148,8 @@ GlobalEntities = {
         'parentEntId': 10010,
         'pos': Point3(0, -10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10017: {
         'type': 'nodepath',
         'name': 'stompers',
@@ -141,7 +157,8 @@ GlobalEntities = {
         'parentEntId': 10000,
         'pos': Point3(0, -6, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10019: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -149,7 +166,8 @@ GlobalEntities = {
         'parentEntId': 10018,
         'pos': Point3(0, 10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10020: {
         'type': 'nodepath',
         'name': '<unnamed>',
@@ -157,7 +175,8 @@ GlobalEntities = {
         'parentEntId': 10018,
         'pos': Point3(0, -10, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10021: {
         'type': 'nodepath',
         'name': 'leftFront',
@@ -165,7 +184,8 @@ GlobalEntities = {
         'parentEntId': 10001,
         'pos': Point3(-29.5779, 0, 0),
         'hpr': Point3(27, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     10026: {
         'type': 'nodepath',
         'name': 'projectors',
@@ -173,7 +193,8 @@ GlobalEntities = {
         'parentEntId': 10021,
         'pos': Point3(-15, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10027: {
         'type': 'nodepath',
         'name': 'left',
@@ -181,7 +202,8 @@ GlobalEntities = {
         'parentEntId': 10026,
         'pos': Point3(0, 8, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10028: {
         'type': 'nodepath',
         'name': 'middle',
@@ -189,7 +211,8 @@ GlobalEntities = {
         'parentEntId': 10026,
         'pos': Point3(0, -15, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10029: {
         'type': 'nodepath',
         'name': 'right',
@@ -197,7 +220,8 @@ GlobalEntities = {
         'parentEntId': 10026,
         'pos': Point3(0, -28, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10031: {
         'type': 'nodepath',
         'name': 'nodepaths',
@@ -205,7 +229,8 @@ GlobalEntities = {
         'parentEntId': 10057,
         'pos': Point3(0, -2, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10033: {
         'type': 'nodepath',
         'name': 'backLeft',
@@ -213,7 +238,8 @@ GlobalEntities = {
         'parentEntId': 10031,
         'pos': Point3(0, 20, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10034: {
         'type': 'nodepath',
         'name': 'backCenter',
@@ -221,7 +247,8 @@ GlobalEntities = {
         'parentEntId': 10031,
         'pos': Point3(0, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     10035: {
         'type': 'nodepath',
         'name': 'backRight',
@@ -229,7 +256,8 @@ GlobalEntities = {
         'parentEntId': 10031,
         'pos': Point3(0, -20, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10037: {
         'type': 'nodepath',
         'name': 'rightFront',
@@ -237,7 +265,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(-20.750499999999999, 15.069800000000001, 0),
         'hpr': Point3(333, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     10038: {
         'type': 'nodepath',
         'name': 'projectors',
@@ -245,7 +274,8 @@ GlobalEntities = {
         'parentEntId': 10037,
         'pos': Point3(-15, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10043: {
         'type': 'nodepath',
         'name': 'left',
@@ -253,7 +283,8 @@ GlobalEntities = {
         'parentEntId': 10038,
         'pos': Point3(0, 8, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10044: {
         'type': 'nodepath',
         'name': 'middle',
@@ -261,7 +292,8 @@ GlobalEntities = {
         'parentEntId': 10038,
         'pos': Point3(0, -15, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10045: {
         'type': 'nodepath',
         'name': 'frontLeft',
@@ -269,7 +301,8 @@ GlobalEntities = {
         'parentEntId': 10031,
         'pos': Point3(-15, 20, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10046: {
         'type': 'nodepath',
         'name': 'frontCenter',
@@ -277,7 +310,8 @@ GlobalEntities = {
         'parentEntId': 10031,
         'pos': Point3(-15, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10047: {
         'type': 'nodepath',
         'name': 'frontRight',
@@ -285,7 +319,8 @@ GlobalEntities = {
         'parentEntId': 10031,
         'pos': Point3(-15, -20, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10048: {
         'type': 'nodepath',
         'name': 'right',
@@ -293,7 +328,8 @@ GlobalEntities = {
         'parentEntId': 10038,
         'pos': Point3(0, -28, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10049: {
         'type': 'nodepath',
         'name': 'rightBack',
@@ -301,7 +337,8 @@ GlobalEntities = {
         'parentEntId': 10002,
         'pos': Point3(20, 4, 0),
         'hpr': Point3(21, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10050: {
         'type': 'nodepath',
         'name': 'leftBack',
@@ -309,7 +346,8 @@ GlobalEntities = {
         'parentEntId': 10001,
         'pos': Point3(20, -7, 0),
         'hpr': Point3(334, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10057: {
         'type': 'nodepath',
         'name': 'discoFloor',
@@ -317,7 +355,8 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(36.353999999999999, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': Vec3(1, 1, 1)},
+        'scale': Vec3(1, 1, 1)
+    },
     10059: {
         'type': 'nodepath',
         'name': 'cameras',
@@ -325,7 +364,8 @@ GlobalEntities = {
         'parentEntId': 10057,
         'pos': Point3(-7, 0, 0),
         'hpr': Vec3(0, 0, 0),
-        'scale': 1},
+        'scale': 1
+    },
     10006: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -344,7 +384,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10007,
         'trackTarget2': 10008,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10010: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -363,7 +404,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10011,
         'trackTarget2': 10012,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10018: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -382,7 +424,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10019,
         'trackTarget2': 10020,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10024: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -401,7 +444,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10027,
         'trackTarget2': 10028,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10025: {
         'type': 'securityCamera',
         'name': 'copy of <unnamed>',
@@ -420,7 +464,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10028,
         'trackTarget2': 10029,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10041: {
         'type': 'securityCamera',
         'name': '<unnamed>',
@@ -439,7 +484,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10043,
         'trackTarget2': 10044,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10042: {
         'type': 'securityCamera',
         'name': 'copy of <unnamed>',
@@ -458,7 +504,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10044,
         'trackTarget2': 10048,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10060: {
         'type': 'securityCamera',
         'name': 'backRow',
@@ -477,7 +524,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10033,
         'trackTarget2': 10034,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10062: {
         'type': 'securityCamera',
         'name': 'frontRow',
@@ -496,7 +544,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 10045,
         'trackTarget2': 10046,
-        'trackTarget3': 0},
+        'trackTarget3': 0
+    },
     10063: {
         'type': 'securityCamera',
         'name': 'backRow2',
@@ -515,7 +564,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 0,
         'trackTarget2': 10034,
-        'trackTarget3': 10035},
+        'trackTarget3': 10035
+    },
     10065: {
         'type': 'securityCamera',
         'name': 'frontRow2',
@@ -534,7 +584,8 @@ GlobalEntities = {
         'switchId': 0,
         'trackTarget1': 0,
         'trackTarget2': 10046,
-        'trackTarget3': 10047},
+        'trackTarget3': 10047
+    },
     10004: {
         'type': 'stomper',
         'name': '3',
@@ -563,7 +614,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10013: {
         'type': 'stomper',
         'name': '2',
@@ -592,7 +644,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10014: {
         'type': 'stomper',
         'name': '1',
@@ -621,7 +674,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10015: {
         'type': 'stomper',
         'name': 'copy of 4 (2)',
@@ -650,7 +704,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10016: {
         'type': 'stomper',
         'name': '4',
@@ -679,7 +734,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10022: {
         'type': 'stomper',
         'name': 'copy of 3',
@@ -708,7 +764,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10023: {
         'type': 'stomper',
         'name': 'copy of 3 (2)',
@@ -737,7 +794,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10030: {
         'type': 'stomper',
         'name': 'copy of 4 (3)',
@@ -766,7 +824,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10039: {
         'type': 'stomper',
         'name': 'copy of 3',
@@ -795,7 +854,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10040: {
         'type': 'stomper',
         'name': 'copy of 3 (2)',
@@ -824,7 +884,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10051: {
         'type': 'stomper',
         'name': 'copy of 4 (4)',
@@ -853,7 +914,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10052: {
         'type': 'stomper',
         'name': 'copy of 4 (5)',
@@ -882,7 +944,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10053: {
         'type': 'stomper',
         'name': 'copy of 4',
@@ -911,7 +974,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10054: {
         'type': 'stomper',
         'name': 'copy of 4 (2)',
@@ -940,7 +1004,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10055: {
         'type': 'stomper',
         'name': 'copy of 4 (3)',
@@ -969,7 +1034,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0},
+        'zOffset': 0
+    },
     10056: {
         'type': 'stomper',
         'name': 'copy of 4 (4)',
@@ -998,9 +1064,8 @@ GlobalEntities = {
         'switchId': 0,
         'wantShadow': 1,
         'wantSmoke': 1,
-        'zOffset': 0}}
+        'zOffset': 0
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

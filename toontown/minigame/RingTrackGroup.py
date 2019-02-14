@@ -1,18 +1,12 @@
-
-
-
 class RingTrackGroup:
-
-    def __init__(
-            self,
-            tracks,
-            period,
-            trackTOffsets=None,
-            reverseFlag=0,
-            tOffset=0.0):
+    def __init__(self,
+                 tracks,
+                 period,
+                 trackTOffsets=None,
+                 reverseFlag=0,
+                 tOffset=0.0):
         if trackTOffsets is None:
-            trackTOffsets = [
-                0] * len(tracks)
+            trackTOffsets = [0] * len(tracks)
 
         self.tracks = tracks
         self.period = period

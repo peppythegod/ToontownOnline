@@ -7,13 +7,12 @@ GlowCameraBitmask = BitMask32.bit(4)
 EnviroCameraBitmask = BitMask32.bit(5)
 
 
-def setCameraBitmask(
-        default,
-        node_path,
-        camera_bitmask,
-        tag=None,
-        tag_function=None,
-        context=None):
+def setCameraBitmask(default,
+                     node_path,
+                     camera_bitmask,
+                     tag=None,
+                     tag_function=None,
+                     context=None):
     if node_path:
         show = default
         if tag_function:
@@ -25,77 +24,52 @@ def setCameraBitmask(
             node_path.hide(camera_bitmask)
 
 
-def renderReflection(
-        default,
-        node_path,
-        tag=None,
-        tag_function=None,
-        context=None):
-    setCameraBitmask(
-        default,
-        node_path,
-        ReflectionCameraBitmask,
-        tag,
-        tag_function,
-        context)
+def renderReflection(default,
+                     node_path,
+                     tag=None,
+                     tag_function=None,
+                     context=None):
+    setCameraBitmask(default, node_path, ReflectionCameraBitmask, tag,
+                     tag_function, context)
 
 
-def renderShadow(
-        default,
-        node_path,
-        tag=None,
-        tag_function=None,
-        context=None):
-    setCameraBitmask(
-        default,
-        node_path,
-        ShadowCameraBitmask,
-        tag,
-        tag_function,
-        context)
+def renderShadow(default, node_path, tag=None, tag_function=None,
+                 context=None):
+    setCameraBitmask(default, node_path, ShadowCameraBitmask, tag,
+                     tag_function, context)
 
 
-def renderSkyReflection(
-        default,
-        node_path,
-        tag=None,
-        tag_function=None,
-        context=None):
-    setCameraBitmask(
-        default,
-        node_path,
-        SkyReflectionCameraBitmask,
-        tag,
-        tag_function,
-        context)
+def renderSkyReflection(default,
+                        node_path,
+                        tag=None,
+                        tag_function=None,
+                        context=None):
+    setCameraBitmask(default, node_path, SkyReflectionCameraBitmask, tag,
+                     tag_function, context)
 
 
 def renderGlow(default, node_path, tag=None, tag_function=None, context=None):
-    setCameraBitmask(
-        default,
-        node_path,
-        GlowCameraBitmask,
-        tag,
-        tag_function,
-        context)
+    setCameraBitmask(default, node_path, GlowCameraBitmask, tag, tag_function,
+                     context)
 
 
-def setAdditiveEffect(
-        node_path,
-        tag=None,
-        bin_name=None,
-        lighting_on=False,
-        reflect=False):
+def setAdditiveEffect(node_path,
+                      tag=None,
+                      bin_name=None,
+                      lighting_on=False,
+                      reflect=False):
     if node_path:
         node_path.setTransparency(True)
         node_path.setDepthWrite(False)
-        node_path.node().setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
+        node_path.node().setAttrib(
+            ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
         if not lighting_on:
             node_path.setLightOff()
 
         node_path.setAttrib(
-            ColorWriteAttrib.make(
-                ColorWriteAttrib.CRed | ColorWriteAttrib.CGreen | ColorWriteAttrib.CBlue))
+            ColorWriteAttrib.make(ColorWriteAttrib.CRed
+                                  | ColorWriteAttrib.CGreen
+                                  | ColorWriteAttrib.CBlue))
         if not reflect:
             renderReflection(False, node_path, tag, None)
 

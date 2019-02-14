@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import Quat
 from pandac.PandaModules import OdeWorld, OdeSimpleSpace, OdeJointGroup, OdeUtil
 from direct.directnotify import DirectNotifyGlobal
@@ -101,9 +99,8 @@ class MinigamePhysicsWorldBase:
                 self.jointMarkers.append(testMarker)
 
     def startSim(self):
-        taskMgr.add(
-            self._MinigamePhysicsWorldBase__simulationTask,
-            'simulation task')
+        taskMgr.add(self._MinigamePhysicsWorldBase__simulationTask,
+                    'simulation task')
 
     def stopSim(self):
         taskMgr.remove('simulation task')
@@ -137,12 +134,9 @@ class MinigamePhysicsWorldBase:
                 pandaNodePathGeom = self.jointMarkers[count]
                 if count < self.colCount:
                     pandaNodePathGeom.setPos(
-                        self.space.getContactData(
-                            count * 3 + 0),
-                        self.space.getContactData(
-                            count * 3 + 1),
-                        self.space.getContactData(
-                            count * 3 + 2))
+                        self.space.getContactData(count * 3 + 0),
+                        self.space.getContactData(count * 3 + 1),
+                        self.space.getContactData(count * 3 + 2))
                     continue
                 pandaNodePathGeom.setPos(0.0, 0.0, -100.0)
 
@@ -169,11 +163,10 @@ class MinigamePhysicsWorldBase:
             if pandaNodePathGeom:
                 pandaNodePathGeom.setPos(odeBody.getPosition())
                 pandaNodePathGeom.setQuat(
-                    Quat(
-                        odeBody.getQuaternion()[0],
-                        odeBody.getQuaternion()[1],
-                        odeBody.getQuaternion()[2],
-                        odeBody.getQuaternion()[3]))
+                    Quat(odeBody.getQuaternion()[0],
+                         odeBody.getQuaternion()[1],
+                         odeBody.getQuaternion()[2],
+                         odeBody.getQuaternion()[3]))
                 continue
 
     def getOrderedContacts(self, count):

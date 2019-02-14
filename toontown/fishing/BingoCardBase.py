@@ -8,11 +8,10 @@ from math import ceil, pow
 class BingoCardBase:
     notify = DirectNotifyGlobal.directNotify.newCategory('BingoCardBase')
 
-    def __init__(
-            self,
-            cardSize=BingoGlobals.CARD_SIZE,
-            rowSize=BingoGlobals.CARD_ROWS,
-            colSize=BingoGlobals.CARD_COLS):
+    def __init__(self,
+                 cardSize=BingoGlobals.CARD_SIZE,
+                 rowSize=BingoGlobals.CARD_ROWS,
+                 colSize=BingoGlobals.CARD_COLS):
         self.rowSize = rowSize
         self.colSize = colSize
         self.cardSize = cardSize
@@ -70,7 +69,8 @@ class BingoCardBase:
     def cellUpdateCheck(self, id, genus, species):
         if id >= self.cardSize:
             self.notify.warning(
-                'cellUpdateCheck: Invalid Cell Id %s. Id greater than Card Size.')
+                'cellUpdateCheck: Invalid Cell Id %s. Id greater than Card Size.'
+            )
             return None
         elif id < 0:
             self.notify.warning(

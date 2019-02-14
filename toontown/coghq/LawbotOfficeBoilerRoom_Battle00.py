@@ -8,7 +8,8 @@ GlobalEntities = {
         'cogLevel': 0,
         'farPlaneDistance': 1500,
         'modelFilename': 'phase_11/models/lawbotHQ/LB_Zone8a',
-        'wantDoors': 1},
+        'wantDoors': 1
+    },
     1001: {
         'type': 'editMgr',
         'name': 'EditMgr',
@@ -16,7 +17,8 @@ GlobalEntities = {
         'insertEntity': None,
         'removeEntity': None,
         'requestNewEntity': None,
-        'requestSave': None},
+        'requestSave': None
+    },
     0: {
         'type': 'zone',
         'name': 'UberZone',
@@ -24,7 +26,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'scale': 1,
         'description': '',
-        'visibility': []},
+        'visibility': []
+    },
     10001: {
         'type': 'battleBlocker',
         'name': '<unnamed>',
@@ -34,17 +37,20 @@ GlobalEntities = {
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'cellId': 0,
-        'radius': 10.0},
+        'radius': 10.0
+    },
     10006: {
         'type': 'battleBlocker',
         'name': 'copy of <unnamed>',
         'comment': '',
         'parentEntId': 10011,
-        'pos': Point3(-60.906524658199999, -3.2690579891199998, 0.117109239101),
+        'pos': Point3(-60.906524658199999, -3.2690579891199998,
+                      0.117109239101),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'cellId': 1,
-        'radius': 15.0},
+        'radius': 15.0
+    },
     10047: {
         'type': 'battleBlocker',
         'name': '<unnamed>',
@@ -54,7 +60,8 @@ GlobalEntities = {
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': Point3(1.0, 0.20000000298000001, 1.0),
         'cellId': 2,
-        'radius': 20.0},
+        'radius': 20.0
+    },
     10041: {
         'type': 'gagBarrel',
         'name': '<unnamed>',
@@ -67,7 +74,8 @@ GlobalEntities = {
         'gagLevelMax': 0,
         'gagTrack': 'random',
         'rewardPerGrab': 4,
-        'rewardPerGrabMax': 6},
+        'rewardPerGrabMax': 6
+    },
     10034: {
         'type': 'healBarrel',
         'name': '<unnamed>',
@@ -77,7 +85,8 @@ GlobalEntities = {
         'hpr': Vec3(163.30075073200001, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'rewardPerGrab': 7,
-        'rewardPerGrabMax': 9},
+        'rewardPerGrabMax': 9
+    },
     10004: {
         'type': 'model',
         'name': '<unnamed>',
@@ -89,43 +98,51 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'strong',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10009: {
         'type': 'model',
         'name': '<unnamed>',
         'comment': '',
         'parentEntId': 10008,
-        'pos': Point3(-3.9962117672000002, 0.69507884979199996, 0.0113303475082),
+        'pos': Point3(-3.9962117672000002, 0.69507884979199996,
+                      0.0113303475082),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.2000000476799999, 1.2000000476799999, 1.2000000476799999),
+        'scale': Vec3(1.2000000476799999, 1.2000000476799999,
+                      1.2000000476799999),
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'
+    },
     10010: {
         'type': 'model',
         'name': '<unnamed>',
         'comment': '',
         'parentEntId': 10008,
-        'pos': Point3(48.053001403800003, -0.531660735607, -0.32707867026300003),
+        'pos': Point3(48.053001403800003, -0.531660735607,
+                      -0.32707867026300003),
         'hpr': Vec3(0.0, 0.0, 0.0),
         'scale': Vec3(1.0, 1.0, 1.0),
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_C1.bam'
+    },
     10012: {
         'type': 'model',
         'name': 'rightCrates',
         'comment': '',
         'parentEntId': 10007,
-        'pos': Point3(36.037338256799998, 71.354698181200007, 9.9983558654800007),
+        'pos': Point3(36.037338256799998, 71.354698181200007,
+                      9.9983558654800007),
         'hpr': Vec3(315.0, 0.0, 0.0),
         'scale': Vec3(1.5, 1.5, 1.5),
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'
+    },
     10024: {
         'type': 'model',
         'name': '<unnamed>',
@@ -137,7 +154,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10027: {
         'type': 'model',
         'name': '<unnamed>',
@@ -149,7 +167,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10029: {
         'type': 'model',
         'name': 'crate',
@@ -161,7 +180,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10030: {
         'type': 'model',
         'name': '<unnamed>',
@@ -173,7 +193,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10031: {
         'type': 'model',
         'name': 'copy of crate',
@@ -185,7 +206,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10032: {
         'type': 'model',
         'name': 'copy of <unnamed>',
@@ -197,7 +219,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10039: {
         'type': 'model',
         'name': '<unnamed>',
@@ -209,7 +232,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_F1.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_F1.bam'
+    },
     10042: {
         'type': 'model',
         'name': 'copy of <unnamed> (2)',
@@ -221,7 +245,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'},
+        'modelPath': 'phase_10/models/cogHQ/CBMetalCrate2.bam'
+    },
     10048: {
         'type': 'model',
         'name': 'cratesAgainstWall',
@@ -233,7 +258,8 @@ GlobalEntities = {
         'collisionsOnly': 0,
         'flattenType': 'light',
         'loadType': 'loadModelCopy',
-        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'},
+        'modelPath': 'phase_10/models/cashbotHQ/crates_E.bam'
+    },
     10000: {
         'type': 'nodepath',
         'name': 'cogs',
@@ -241,7 +267,8 @@ GlobalEntities = {
         'parentEntId': 10011,
         'pos': Point3(0.0, 66.120002746599994, 10.183324813800001),
         'hpr': Point3(270.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10002: {
         'type': 'nodepath',
         'name': 'battle',
@@ -249,7 +276,8 @@ GlobalEntities = {
         'parentEntId': 10000,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Point3(90.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10003: {
         'type': 'nodepath',
         'name': 'cogs2',
@@ -257,7 +285,8 @@ GlobalEntities = {
         'parentEntId': 10011,
         'pos': Point3(-53.924674987800003, -22.761619567899999, 0.0),
         'hpr': Point3(45.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10005: {
         'type': 'nodepath',
         'name': 'battle',
@@ -265,7 +294,8 @@ GlobalEntities = {
         'parentEntId': 10003,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10007: {
         'type': 'nodepath',
         'name': 'props',
@@ -273,7 +303,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10008: {
         'type': 'nodepath',
         'name': 'topWall',
@@ -281,7 +312,8 @@ GlobalEntities = {
         'parentEntId': 10007,
         'pos': Point3(0.0, 48.029998779300001, 10.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10011: {
         'type': 'nodepath',
         'name': 'cogs',
@@ -289,7 +321,8 @@ GlobalEntities = {
         'parentEntId': 0,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10013: {
         'type': 'nodepath',
         'name': 'frontCogs',
@@ -297,7 +330,8 @@ GlobalEntities = {
         'parentEntId': 10011,
         'pos': Point3(25.395730972300001, -12.300574302699999, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10014: {
         'type': 'nodepath',
         'name': 'frontPalletWall',
@@ -305,7 +339,8 @@ GlobalEntities = {
         'parentEntId': 10007,
         'pos': Point3(45.549438476600002, 38.2237281799, 0.0),
         'hpr': Point3(180.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10021: {
         'type': 'nodepath',
         'name': 'middlePalletWallLeft',
@@ -313,15 +348,18 @@ GlobalEntities = {
         'parentEntId': 10046,
         'pos': Point3(6.0, -37.992866516100001, 0.0),
         'hpr': Point3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10023: {
         'type': 'nodepath',
         'name': 'crateIsland',
         'comment': '',
         'parentEntId': 10007,
-        'pos': Point3(-23.1813278198, 7.0875844955399998, 0.0099999997764800008),
+        'pos': Point3(-23.1813278198, 7.0875844955399998,
+                      0.0099999997764800008),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(2.0, 2.0, 2.0)},
+        'scale': Vec3(2.0, 2.0, 2.0)
+    },
     10028: {
         'type': 'nodepath',
         'name': 'rewardCulDeSac',
@@ -329,7 +367,8 @@ GlobalEntities = {
         'parentEntId': 10045,
         'pos': Point3(-8.2617206573500006, 38.377407073999997, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10033: {
         'type': 'nodepath',
         'name': 'barrels',
@@ -337,7 +376,8 @@ GlobalEntities = {
         'parentEntId': 10028,
         'pos': Point3(-4.7507796287500001, 34.142520904500003, 0.0),
         'hpr': Point3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10035: {
         'type': 'nodepath',
         'name': 'backPalletWall',
@@ -345,7 +385,8 @@ GlobalEntities = {
         'parentEntId': 10007,
         'pos': Point3(-47.650173187299998, 40.006893157999997, 0.0),
         'hpr': Point3(180.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10040: {
         'type': 'nodepath',
         'name': 'centerCogs',
@@ -353,7 +394,8 @@ GlobalEntities = {
         'parentEntId': 10011,
         'pos': Point3(-23.937574386600001, 28.353269576999999, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': Vec3(1.0, 1.0, 1.0)},
+        'scale': Vec3(1.0, 1.0, 1.0)
+    },
     10045: {
         'type': 'nodepath',
         'name': 'middlePalletWallRight',
@@ -361,7 +403,8 @@ GlobalEntities = {
         'parentEntId': 10046,
         'pos': Point3(17.420000076299999, -38.299999237100003, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1},
+        'scale': 1
+    },
     10046: {
         'type': 'nodepath',
         'name': 'middlePalletWall',
@@ -369,9 +412,8 @@ GlobalEntities = {
         'parentEntId': 10007,
         'pos': Point3(0.0, 0.0, 0.0),
         'hpr': Vec3(0.0, 0.0, 0.0),
-        'scale': 1}}
+        'scale': 1
+    }
+}
 Scenario0 = {}
-levelSpec = {
-    'globalEntities': GlobalEntities,
-    'scenarios': [
-        Scenario0]}
+levelSpec = {'globalEntities': GlobalEntities, 'scenarios': [Scenario0]}

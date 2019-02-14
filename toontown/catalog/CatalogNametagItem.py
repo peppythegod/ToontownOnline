@@ -67,16 +67,21 @@ class CatalogNametagItem(CatalogItem.CatalogItem):
         else:
             inFont = ToontownGlobals.getNametagFont(self.nametagStyle)
         nameTagDemo = DirectLabel(
-            parent=frame, relief=None, pos=(
-                0, 0, 0.23999999999999999), scale=0.5, text=localAvatar.getName(), text_fg=(
-                1.0, 1.0, 1.0, 1), text_shadow=(
-                0, 0, 0, 1), text_font=inFont, text_wordwrap=9)
+            parent=frame,
+            relief=None,
+            pos=(0, 0, 0.23999999999999999),
+            scale=0.5,
+            text=localAvatar.getName(),
+            text_fg=(1.0, 1.0, 1.0, 1),
+            text_shadow=(0, 0, 0, 1),
+            text_font=inFont,
+            text_wordwrap=9)
         self.hasPicture = True
         return (frame, None)
 
     def output(self, store=-1):
-        return 'CatalogNametagItem(%s%s)' % (
-            self.nametagStyle, self.formatOptionalData(store))
+        return 'CatalogNametagItem(%s%s)' % (self.nametagStyle,
+                                             self.formatOptionalData(store))
 
     def compareTo(self, other):
         return self.nametagStyle - other.nametagStyle

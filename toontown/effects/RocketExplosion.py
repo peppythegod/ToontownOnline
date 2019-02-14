@@ -7,7 +7,6 @@ import os
 
 
 class RocketExplosion(NodePath):
-
     def __init__(self, parent, smokeParent):
         NodePath.__init__(self)
         notify = DirectNotifyGlobal.directNotify.newCategory(
@@ -28,8 +27,7 @@ class RocketExplosion(NodePath):
             pass
         basePath = './toontown'
         particleSearchPath.appendDirectory(
-            Filename.fromOsSpecific(
-                basePath + '/src/effects'))
+            Filename.fromOsSpecific(basePath + '/src/effects'))
         particleSearchPath.appendDirectory(Filename('phase_3.5/etc'))
         particleSearchPath.appendDirectory(Filename('phase_4/etc'))
         particleSearchPath.appendDirectory(Filename('phase_5/etc'))
@@ -47,8 +45,8 @@ class RocketExplosion(NodePath):
         notify.debug('Loading particle file: %s' % pfile)
         self.effect.loadConfig(pfile)
         ren = self.effect.getParticlesNamed('particles-1').getRenderer()
-        ren.setTextureFromNode(
-            'phase_4/models/props/tt_m_efx_fireball', '**/*')
+        ren.setTextureFromNode('phase_4/models/props/tt_m_efx_fireball',
+                               '**/*')
         pfile = Filename('tt_p_efx_rocketLaunchSmoke.ptf')
         found = vfs.resolveFilename(pfile, particleSearchPath)
         if not found:
@@ -76,10 +74,9 @@ class RocketExplosion(NodePath):
 
     def end(self):
         self.endSeq = Sequence(
-            LerpColorScaleInterval(
-                self.smokeEffectNode, 2.0, Vec4(
-                    1, 1, 1, 0)), Func(
-                self.destroy))
+            LerpColorScaleInterval(self.smokeEffectNode, 2.0, Vec4(1, 1, 1,
+                                                                   0)),
+            Func(self.destroy))
         self.endSeq.start()
 
     def destroy(self):

@@ -38,7 +38,7 @@ NAMETAG_ITEM = 16
 TOON_STATUE_ITEM = 17
 ANIMATED_FURNITURE_ITEM = 18
 ACCESSORY_ITEM = 19
-NonPermanentItemTypes = (RENTAL_ITEM,)
+NonPermanentItemTypes = (RENTAL_ITEM, )
 CatalogItemTypes = {
     CatalogInvalidItem.CatalogInvalidItem: INVALID_ITEM,
     CatalogFurnitureItem.CatalogFurnitureItem: FURNITURE_ITEM,
@@ -58,8 +58,10 @@ CatalogItemTypes = {
     CatalogGardenStarterItem.CatalogGardenStarterItem: GARDENSTARTER_ITEM,
     CatalogNametagItem.CatalogNametagItem: NAMETAG_ITEM,
     CatalogToonStatueItem.CatalogToonStatueItem: TOON_STATUE_ITEM,
-    CatalogAnimatedFurnitureItem.CatalogAnimatedFurnitureItem: ANIMATED_FURNITURE_ITEM,
-    CatalogAccessoryItem.CatalogAccessoryItem: ACCESSORY_ITEM}
+    CatalogAnimatedFurnitureItem.CatalogAnimatedFurnitureItem:
+    ANIMATED_FURNITURE_ITEM,
+    CatalogAccessoryItem.CatalogAccessoryItem: ACCESSORY_ITEM
+}
 CatalogItemType2multipleAllowed = {
     INVALID_ITEM: False,
     FURNITURE_ITEM: True,
@@ -80,8 +82,9 @@ CatalogItemType2multipleAllowed = {
     NAMETAG_ITEM: False,
     TOON_STATUE_ITEM: False,
     ANIMATED_FURNITURE_ITEM: True,
-    ACCESSORY_ITEM: False}
-SingleCodeRedemption = (BEAN_ITEM,)
+    ACCESSORY_ITEM: False
+}
+SingleCodeRedemption = (BEAN_ITEM, )
 CatalogItemTypeMask = 31
 CatalogItemSaleFlag = 128
 CatalogItemGiftTag = 64

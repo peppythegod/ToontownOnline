@@ -8,7 +8,6 @@ from toontown.toontowngui import TTDialog
 
 
 class CatalogRentalItem(CatalogItem.CatalogItem):
-
     def makeNewItem(self, typeIndex, duration, cost):
         self.typeIndex = typeIndex
         self.duration = duration
@@ -39,13 +38,11 @@ class CatalogRentalItem(CatalogItem.CatalogItem):
     def getName(self):
         hours = int(self.duration / 60)
         if self.typeIndex == ToontownGlobals.RentalCannon:
-            return '%s %s %s %s' % (hours,
-                                    TTLocalizer.RentalHours,
+            return '%s %s %s %s' % (hours, TTLocalizer.RentalHours,
                                     TTLocalizer.RentalOf,
                                     TTLocalizer.RentalCannon)
         elif self.typeIndex == ToontownGlobals.RentalGameTable:
-            return '%s %s %s' % (hours,
-                                 TTLocalizer.RentalHours,
+            return '%s %s %s' % (hours, TTLocalizer.RentalHours,
                                  TTLocalizer.RentalGameTable)
         else:
             return TTLocalizer.RentalTypeName
@@ -81,8 +78,8 @@ class CatalogRentalItem(CatalogItem.CatalogItem):
         return self.makeFrameModel(model, spin)
 
     def output(self, store=-1):
-        return 'CatalogRentalItem(%s%s)' % (
-            self.typeIndex, self.formatOptionalData(store))
+        return 'CatalogRentalItem(%s%s)' % (self.typeIndex,
+                                            self.formatOptionalData(store))
 
     def compareTo(self, other):
         return self.typeIndex - other.typeIndex
@@ -123,11 +120,7 @@ class CatalogRentalItem(CatalogItem.CatalogItem):
         self.confirmRent = TTDialog.TTGlobalDialog(
             doneEvent='confirmRent',
             message=TTLocalizer.MessageConfirmRent,
-            command=Functor(
-                self.handleRentConfirm,
-                mailbox,
-                index,
-                callback),
+            command=Functor(self.handleRentConfirm, mailbox, index, callback),
             style=TTDialog.TwoChoice)
         self.confirmRent.show()
 
@@ -143,7 +136,7 @@ class CatalogRentalItem(CatalogItem.CatalogItem):
 
 def getAllRentalItems():
     list = []
-    for rentalType in (ToontownGlobals.RentalCannon,):
+    for rentalType in (ToontownGlobals.RentalCannon, ):
         list.append(CatalogRentalItem(rentalType, 2880, 1000))
 
     return list

@@ -41,8 +41,7 @@ class BattleBlocker(BasicEntities.DistributedNodePathEntity):
     def initCollisionGeom(self):
         self.cSphere = CollisionSphere(0, 0, 0, self.radius)
         self.cSphereNode = CollisionNode(
-            'battleBlocker-%s-%s' %
-            (self.level.getLevelId(), self.entId))
+            'battleBlocker-%s-%s' % (self.level.getLevelId(), self.entId))
         self.cSphereNode.addSolid(self.cSphere)
         self.cSphereNodePath = self.attachNewNode(self.cSphereNode)
         self.cSphereNode.setCollideMask(ToontownGlobals.WallBitmask)
@@ -71,8 +70,7 @@ class BattleBlocker(BasicEntities.DistributedNodePathEntity):
             battle = base.cr.doId2do.get(self.battleId)
             if battle:
                 self.notify.debug(
-                    'act like we collided with battle %d' %
-                    self.battleId)
+                    'act like we collided with battle %d' % self.battleId)
                 callback = battle.handleBattleBlockerCollision
 
         elif len(self.suitIds) > 0:

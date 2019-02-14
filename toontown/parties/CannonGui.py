@@ -30,118 +30,65 @@ class CannonGui(DirectObject):
         guiModel = 'phase_4/models/gui/cannon_game_gui'
         guiNode = loader.loadModel(guiModel)
         self._CannonGui__aimPad = DirectFrame(
-            image=guiNode.find('**/CannonFire_PAD'), relief=None, pos=(
-                0.69999999999999996, 0, -0.55333299999999996), scale=0.80000000000000004)
+            image=guiNode.find('**/CannonFire_PAD'),
+            relief=None,
+            pos=(0.69999999999999996, 0, -0.55333299999999996),
+            scale=0.80000000000000004)
         guiNode.removeNode()
         self.fireButton = DirectButton(
             parent=self._CannonGui__aimPad,
-            image=(
-                (guiModel,
-                 '**/Fire_Btn_UP'),
-                (guiModel,
-                 '**/Fire_Btn_DN'),
-                (guiModel,
-                 '**/Fire_Btn_RLVR')),
+            image=((guiModel, '**/Fire_Btn_UP'), (guiModel, '**/Fire_Btn_DN'),
+                   (guiModel, '**/Fire_Btn_RLVR')),
             relief=None,
-            pos=(
-                0.0115741,
-                0,
-                0.0050505100000000002),
+            pos=(0.0115741, 0, 0.0050505100000000002),
             scale=1.0,
             command=self._CannonGui__firePressed)
         self.upButton = DirectButton(
             parent=self._CannonGui__aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                0.0115741,
-                0,
-                0.221717))
+            pos=(0.0115741, 0, 0.221717))
         self.downButton = DirectButton(
             parent=self._CannonGui__aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                0.0136112,
-                0,
-                -0.21010100000000001),
-            image_hpr=(
-                0,
-                0,
-                180))
+            pos=(0.0136112, 0, -0.21010100000000001),
+            image_hpr=(0, 0, 180))
         self.leftButton = DirectButton(
             parent=self._CannonGui__aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                -0.199352,
-                0,
-                -0.00050526900000000003),
-            image_hpr=(
-                0,
-                0,
-                -90))
+            pos=(-0.199352, 0, -0.00050526900000000003),
+            image_hpr=(0, 0, -90))
         self.rightButton = DirectButton(
             parent=self._CannonGui__aimPad,
-            image=(
-                (guiModel,
-                 '**/Cannon_Arrow_UP'),
-                (guiModel,
-                 '**/Cannon_Arrow_DN'),
-                (guiModel,
-                 '**/Cannon_Arrow_RLVR')),
+            image=((guiModel, '**/Cannon_Arrow_UP'),
+                   (guiModel, '**/Cannon_Arrow_DN'), (guiModel,
+                                                      '**/Cannon_Arrow_RLVR')),
             relief=None,
-            pos=(
-                0.219167,
-                0,
-                -0.0010102399999999999),
-            image_hpr=(
-                0,
-                0,
-                90))
+            pos=(0.219167, 0, -0.0010102399999999999),
+            image_hpr=(0, 0, 90))
         self._CannonGui__aimPad.setColor(1, 1, 1, 0.90000000000000002)
 
         def bindButton(button, upHandler, downHandler):
             button.bind(DGG.B1PRESS, lambda x, handler=upHandler: handler())
             button.bind(
-                DGG.B1RELEASE,
-                lambda x,
-                handler=downHandler: handler())
+                DGG.B1RELEASE, lambda x, handler=downHandler: handler())
 
-        bindButton(
-            self.upButton,
-            self._CannonGui__upPressed,
-            self._CannonGui__upReleased)
-        bindButton(
-            self.downButton,
-            self._CannonGui__downPressed,
-            self._CannonGui__downReleased)
-        bindButton(
-            self.leftButton,
-            self._CannonGui__leftPressed,
-            self._CannonGui__leftReleased)
-        bindButton(
-            self.rightButton,
-            self._CannonGui__rightPressed,
-            self._CannonGui__rightReleased)
+        bindButton(self.upButton, self._CannonGui__upPressed,
+                   self._CannonGui__upReleased)
+        bindButton(self.downButton, self._CannonGui__downPressed,
+                   self._CannonGui__downReleased)
+        bindButton(self.leftButton, self._CannonGui__leftPressed,
+                   self._CannonGui__leftReleased)
+        bindButton(self.rightButton, self._CannonGui__rightPressed,
+                   self._CannonGui__rightReleased)
         self._CannonGui__loaded = True
 
     def unload(self):
@@ -172,11 +119,8 @@ class CannonGui(DirectObject):
 
     def enable(self, timer=0):
         self._CannonGui__aimPad.show()
-        base.setCellsAvailable([
-            base.bottomCells[3],
-            base.bottomCells[4]], 0)
-        base.setCellsAvailable([
-            base.rightCells[1]], 0)
+        base.setCellsAvailable([base.bottomCells[3], base.bottomCells[4]], 0)
+        base.setCellsAvailable([base.rightCells[1]], 0)
         if timer > 0:
             self._CannonGui__timerPad.setTime(timer)
             self._CannonGui__timerPad.countdown(timer)
@@ -186,11 +130,8 @@ class CannonGui(DirectObject):
 
     def disable(self):
         self._CannonGui__aimPad.hide()
-        base.setCellsAvailable([
-            base.bottomCells[3],
-            base.bottomCells[4]], 1)
-        base.setCellsAvailable([
-            base.rightCells[1]], 1)
+        base.setCellsAvailable([base.bottomCells[3], base.bottomCells[4]], 1)
+        base.setCellsAvailable([base.rightCells[1]], 1)
         self._CannonGui__timerPad.hide()
         self.disableKeys()
 

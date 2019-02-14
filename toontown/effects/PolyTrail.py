@@ -4,13 +4,11 @@ import random
 
 
 class PolyTrail(NodePath):
-
-    def __init__(
-            self,
-            root_node_path=None,
-            vertex_list=None,
-            color_list=None,
-            time_window=0.25):
+    def __init__(self,
+                 root_node_path=None,
+                 vertex_list=None,
+                 color_list=None,
+                 time_window=0.25):
         NodePath.__init__(self, 'PolyTrail')
         self.time_window = time_window
         self.root_node_path = root_node_path
@@ -21,18 +19,16 @@ class PolyTrail(NodePath):
         if not self.vertex_list:
             self.vertex_list = [
                 Vec4(0.0, 0.40000000000000002, 0.0, 1.0),
-                Vec4(0.0, 2.0, 0.0, 1.0)]
+                Vec4(0.0, 2.0, 0.0, 1.0)
+            ]
 
         self.color_list = color_list
         if not self.color_list:
             self.color_list = []
             for i in self.vertex_list:
                 self.color_list.append(
-                    Vec4(
-                        0.10000000000000001,
-                        0.20000000000000001,
-                        0.40000000000000002,
-                        1.0))
+                    Vec4(0.10000000000000001, 0.20000000000000001,
+                         0.40000000000000002, 1.0))
 
         self.motion_trail = None
         self.motion_trail_vertex = None
@@ -152,11 +148,7 @@ class PolyTrail(NodePath):
     def setVertexColors(self, color_list):
         if self.motion_trail:
             black = Vec4(0.0, 0.0, 0.0, 1.0)
-            scale_array = [
-                0.25,
-                0.40000000000000002,
-                0.69999999999999996,
-                1.0]
+            scale_array = [0.25, 0.40000000000000002, 0.69999999999999996, 1.0]
             total_scales = len(scale_array)
             for index in range(len(color_list)):
                 color = color_list[index]
@@ -164,11 +156,8 @@ class PolyTrail(NodePath):
                     scale = scale_array[index] * 0.75
                 else:
                     scale = 1.0
-                scaled_color = Vec4(
-                    color[0] * scale,
-                    color[1] * scale,
-                    color[2] * scale,
-                    1.0)
+                scaled_color = Vec4(color[0] * scale, color[1] * scale,
+                                    color[2] * scale, 1.0)
                 self.motion_trail.set_vertex_color(index, scaled_color, black)
 
     def setUnmodifiedVertexColors(self, color_list):
@@ -191,10 +180,9 @@ class PolyTrail(NodePath):
     def setBlendModeOn(self):
         if self.motion_trail:
             self.motion_trail.geom_node_path.node().setAttrib(
-                ColorBlendAttrib.make(
-                    ColorBlendAttrib.MAdd,
-                    ColorBlendAttrib.OIncomingAlpha,
-                    ColorBlendAttrib.OOne))
+                ColorBlendAttrib.make(ColorBlendAttrib.MAdd,
+                                      ColorBlendAttrib.OIncomingAlpha,
+                                      ColorBlendAttrib.OOne))
 
     def setBlendModeOff(self):
         if self.motion_trail:

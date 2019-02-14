@@ -35,9 +35,7 @@ class DistributedStomperPair(BasicEntities.DistributedNodePathEntity):
         if self.stomperIds:
             for entId in self.stomperIds:
                 self.accept(
-                    self.getUniqueName(
-                        'crushMsg',
-                        entId),
+                    self.getUniqueName('crushMsg', entId),
                     self.checkSquashedToon)
 
     def checkSquashedToon(self):

@@ -2,7 +2,6 @@ import DateObject
 
 
 class TTDateObject(DateObject.DateObject):
-
     def __init__(self, accountServerDate):
         self.accountServerDate = accountServerDate
 
@@ -15,14 +14,13 @@ class TTDateObject(DateObject.DateObject):
     def getDay(self):
         return self.accountServerDate.getDay()
 
-    def getDetailedAge(
-            self,
-            dobMonth,
-            dobYear,
-            dobDay=None,
-            curMonth=None,
-            curYear=None,
-            curDay=None):
+    def getDetailedAge(self,
+                       dobMonth,
+                       dobYear,
+                       dobDay=None,
+                       curMonth=None,
+                       curYear=None,
+                       curDay=None):
         return DateObject.DateObject.getDetailedAge(
             self,
             dobMonth,
@@ -32,14 +30,13 @@ class TTDateObject(DateObject.DateObject):
             curYear=self.getYear(),
             curDay=self.getDay())
 
-    def getAge(
-            self,
-            dobMonth,
-            dobYear,
-            dobDay=None,
-            curMonth=None,
-            curYear=None,
-            curDay=None):
+    def getAge(self,
+               dobMonth,
+               dobYear,
+               dobDay=None,
+               curMonth=None,
+               curYear=None,
+               curDay=None):
         return TTDateObject.getDetailedAge(
             self,
             dobMonth,

@@ -17,8 +17,8 @@ class BattleBlockerAI(DistributedEntityAI.DistributedEntityAI):
 
     def generate(self):
         DistributedEntityAI.DistributedEntityAI.generate(self)
-        self.accept('plannerCreated-' +
-                    str(self.level.doId), self.registerBlocker)
+        self.accept('plannerCreated-' + str(self.level.doId),
+                    self.registerBlocker)
 
     def registerBlocker(self):
         if hasattr(self.level, 'planner'):
@@ -29,8 +29,7 @@ class BattleBlockerAI(DistributedEntityAI.DistributedEntityAI):
             return None
 
         self.active = 0
-        self.sendUpdate('setActive', [
-            self.active])
+        self.sendUpdate('setActive', [self.active])
 
     def getActive(self):
         return self.active
@@ -48,16 +47,14 @@ class BattleBlockerAI(DistributedEntityAI.DistributedEntityAI):
             self.notify.debug("didn't have suitId %d" % suit.doId)
 
     def d_setSuits(self):
-        self.sendUpdate('setSuits', [
-            self.suitIds])
+        self.sendUpdate('setSuits', [self.suitIds])
 
     def b_setBattle(self, battleId):
         self.battle = battleId
         self.d_setBattle(battleId)
 
     def d_setBattle(self, battleId):
-        self.sendUpdate('setBattle', [
-            battleId])
+        self.sendUpdate('setBattle', [battleId])
 
     def b_setBattleFinished(self):
         self.deactivate()
@@ -67,8 +64,7 @@ class BattleBlockerAI(DistributedEntityAI.DistributedEntityAI):
     def setBattleFinished(self):
         self.notify.debug('setBattleFinished: %s' % self.entId)
         messenger.send('battleBlockerFinished-' + str(self.entId))
-        messenger.send(self.getOutputEventName(), [
-            1])
+        messenger.send(self.getOutputEventName(), [1])
 
     def d_setBattleFinished(self):
         self.sendUpdate('setBattleFinished', [])

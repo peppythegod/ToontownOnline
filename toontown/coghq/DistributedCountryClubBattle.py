@@ -21,11 +21,8 @@ class DistributedCountryClubBattle(
     def __init__(self, cr):
         DistributedLevelBattle.DistributedLevelBattle.__init__(self, cr)
         self.fsm.addState(
-            State.State(
-                'CountryClubReward',
-                self.enterCountryClubReward,
-                self.exitCountryClubReward,
-                ['Resume']))
+            State.State('CountryClubReward', self.enterCountryClubReward,
+                        self.exitCountryClubReward, ['Resume']))
         offState = self.fsm.getStateNamed('Off')
         offState.addTransition('CountryClubReward')
         playMovieState = self.fsm.getStateNamed('PlayMovie')
@@ -41,8 +38,7 @@ class DistributedCountryClubBattle(
                 messenger.send('localToonConfrontedCountryClubBoss')
 
         self.movie.playReward(
-            ts,
-            self.uniqueName('building-reward'),
+            ts, self.uniqueName('building-reward'),
             self._DistributedCountryClubBattle__handleCountryClubRewardDone)
 
     def _DistributedCountryClubBattle__handleCountryClubRewardDone(self):

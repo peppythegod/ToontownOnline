@@ -4,7 +4,6 @@ SCGMTextMsgEvent = 'SCGMTextMsg'
 
 
 class SCGMTextTerminal(SCTerminal):
-
     def __init__(self, textId):
         SCTerminal.__init__(self)
         gmHandler = SpeedChatGMHandler.SpeedChatGMHandler()
@@ -13,5 +12,4 @@ class SCGMTextTerminal(SCTerminal):
 
     def handleSelect(self):
         SCTerminal.handleSelect(self)
-        messenger.send(self.getEventName(SCGMTextMsgEvent), [
-            self.textId])
+        messenger.send(self.getEventName(SCGMTextMsgEvent), [self.textId])

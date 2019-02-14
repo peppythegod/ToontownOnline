@@ -69,8 +69,7 @@ class DistributedFurnitureManager(DistributedObject.DistributedObject):
             self.setDirector(0)
 
     def d_suggestDirector(self, avId):
-        self.sendUpdate('suggestDirector', [
-            avId])
+        self.sendUpdate('suggestDirector', [avId])
 
     def setDirector(self, avId):
         self.notify.info('Furniture director is now %s' % avId)
@@ -84,153 +83,93 @@ class DistributedFurnitureManager(DistributedObject.DistributedObject):
         self.sendUpdate('avatarExit', [])
 
     def moveItemToAttic(self, dfitem, callback):
-        context = self.getCallbackContext(callback, [
-            dfitem.item])
-        self.sendUpdate('moveItemToAtticMessage', [
-            dfitem.doId,
-            context])
+        context = self.getCallbackContext(callback, [dfitem.item])
+        self.sendUpdate('moveItemToAtticMessage', [dfitem.doId, context])
 
     def moveItemFromAttic(self, index, posHpr, callback):
-        context = self.getCallbackContext(callback, [
-            index])
+        context = self.getCallbackContext(callback, [index])
         self.sendUpdate('moveItemFromAtticMessage', [
-            index,
-            posHpr[0],
-            posHpr[1],
-            posHpr[2],
-            posHpr[3],
-            posHpr[4],
-            posHpr[5],
-            context])
+            index, posHpr[0], posHpr[1], posHpr[2], posHpr[3], posHpr[4],
+            posHpr[5], context
+        ])
 
     def deleteItemFromAttic(self, item, index, callback):
-        context = self.getCallbackContext(callback, [
-            item,
-            index])
+        context = self.getCallbackContext(callback, [item, index])
         blob = item.getBlob(store=CatalogItem.Customization)
-        self.sendUpdate('deleteItemFromAtticMessage', [
-            blob,
-            index,
-            context])
+        self.sendUpdate('deleteItemFromAtticMessage', [blob, index, context])
 
     def deleteItemFromRoom(self, dfitem, callback):
-        context = self.getCallbackContext(callback, [
-            dfitem.item])
+        context = self.getCallbackContext(callback, [dfitem.item])
         blob = dfitem.item.getBlob(store=CatalogItem.Customization)
-        self.sendUpdate('deleteItemFromRoomMessage', [
-            blob,
-            dfitem.doId,
-            context])
+        self.sendUpdate('deleteItemFromRoomMessage',
+                        [blob, dfitem.doId, context])
 
     def moveWallpaperFromAttic(self, index, room, callback):
-        context = self.getCallbackContext(callback, [
-            index,
-            room])
-        self.sendUpdate('moveWallpaperFromAtticMessage', [
-            index,
-            room,
-            context])
+        context = self.getCallbackContext(callback, [index, room])
+        self.sendUpdate('moveWallpaperFromAtticMessage',
+                        [index, room, context])
 
     def deleteWallpaperFromAttic(self, item, index, callback):
-        context = self.getCallbackContext(callback, [
-            item,
-            index])
+        context = self.getCallbackContext(callback, [item, index])
         blob = item.getBlob(store=CatalogItem.Customization)
-        self.sendUpdate('deleteWallpaperFromAtticMessage', [
-            blob,
-            index,
-            context])
+        self.sendUpdate('deleteWallpaperFromAtticMessage',
+                        [blob, index, context])
 
     def moveWindowToAttic(self, slot, callback):
-        context = self.getCallbackContext(callback, [
-            slot])
-        self.sendUpdate('moveWindowToAtticMessage', [
-            slot,
-            context])
+        context = self.getCallbackContext(callback, [slot])
+        self.sendUpdate('moveWindowToAtticMessage', [slot, context])
 
     def moveWindowFromAttic(self, index, slot, callback):
-        context = self.getCallbackContext(callback, [
-            index,
-            slot])
-        self.sendUpdate('moveWindowFromAtticMessage', [
-            index,
-            slot,
-            context])
+        context = self.getCallbackContext(callback, [index, slot])
+        self.sendUpdate('moveWindowFromAtticMessage', [index, slot, context])
 
     def moveWindow(self, fromSlot, toSlot, callback):
-        context = self.getCallbackContext(callback, [
-            fromSlot,
-            toSlot])
-        self.sendUpdate('moveWindowMessage', [
-            fromSlot,
-            toSlot,
-            context])
+        context = self.getCallbackContext(callback, [fromSlot, toSlot])
+        self.sendUpdate('moveWindowMessage', [fromSlot, toSlot, context])
 
     def deleteWindowFromAttic(self, item, index, callback):
-        context = self.getCallbackContext(callback, [
-            item,
-            index])
+        context = self.getCallbackContext(callback, [item, index])
         blob = item.getBlob(store=CatalogItem.Customization)
-        self.sendUpdate('deleteWindowFromAtticMessage', [
-            blob,
-            index,
-            context])
+        self.sendUpdate('deleteWindowFromAtticMessage', [blob, index, context])
 
     def recoverDeletedItem(self, item, index, callback):
-        context = self.getCallbackContext(callback, [
-            item,
-            index])
+        context = self.getCallbackContext(callback, [item, index])
         blob = item.getBlob(store=CatalogItem.Customization)
-        self.sendUpdate('recoverDeletedItemMessage', [
-            blob,
-            index,
-            context])
+        self.sendUpdate('recoverDeletedItemMessage', [blob, index, context])
 
     def moveItemToAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def moveItemFromAtticResponse(self, retcode, objectId, context):
         if retcode >= 0:
             dfitem = base.cr.doId2do[objectId]
         else:
             dfitem = None
-        self.doCallbackContext(context, [
-            retcode,
-            dfitem])
+        self.doCallbackContext(context, [retcode, dfitem])
 
     def deleteItemFromAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def deleteItemFromRoomResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def moveWallpaperFromAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def deleteWallpaperFromAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def moveWindowToAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def moveWindowFromAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def moveWindowResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def deleteWindowFromAtticResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])
 
     def recoverDeletedItemResponse(self, retcode, context):
-        self.doCallbackContext(context, [
-            retcode])
+        self.doCallbackContext(context, [retcode])

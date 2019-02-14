@@ -1,5 +1,3 @@
-
-
 from direct.gui.DirectGui import *
 from pandac.PandaModules import *
 from direct.task import Task
@@ -8,7 +6,6 @@ import PlayingCardGlobals
 
 
 class PlayingCardBase:
-
     def __init__(self, value):
         self.faceUp = 1
         self.setValue(value)
@@ -55,7 +52,6 @@ class PlayingCardBase:
 
 
 class PlayingCardNodePath(NodePath, PlayingCardBase):
-
     def __init__(self, style, value):
         self.image = None
         self.style = style
@@ -64,8 +60,8 @@ class PlayingCardNodePath(NodePath, PlayingCardBase):
 
     def setImage(self):
         if self.faceUp:
-            image = PlayingCardGlobals.getImage(
-                self.style, self.suit, self.rank)
+            image = PlayingCardGlobals.getImage(self.style, self.suit,
+                                                self.rank)
         else:
             image = PlayingCardGlobals.getBack(self.style)
         if self.image:
@@ -75,7 +71,6 @@ class PlayingCardNodePath(NodePath, PlayingCardBase):
 
 
 class PlayingCardButton(PlayingCardBase, DirectButton):
-
     def __init__(self, style, value):
         PlayingCardBase.__init__(self, value)
         self.style = style
@@ -86,8 +81,8 @@ class PlayingCardButton(PlayingCardBase, DirectButton):
 
     def setImage(self):
         if self.faceUp:
-            image = PlayingCardGlobals.getImage(
-                self.style, self.suit, self.rank)
+            image = PlayingCardGlobals.getImage(self.style, self.suit,
+                                                self.rank)
         else:
             image = PlayingCardGlobals.getBack(self.style)
         self['image'] = image
@@ -111,8 +106,7 @@ class PlayingCardButton(PlayingCardBase, DirectButton):
 
     def dragStop(self, event):
         taskMgr.remove(self.taskName('dragTask'))
-        messenger.send('PlayingCardDrop', sentArgs=[
-            self])
+        messenger.send('PlayingCardDrop', sentArgs=[self])
 
     def destroy(self):
         taskMgr.remove(self.taskName('dragTask'))

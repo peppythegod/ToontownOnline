@@ -16,7 +16,6 @@ def __findToonReward(rewards, toon):
 
 
 class ToonVictorySkipper(DirectObject):
-
     def __init__(self, numToons, noSkip):
         self._numToons = numToons
         self._noSkip = noSkip
@@ -70,17 +69,16 @@ class ToonVictorySkipper(DirectObject):
                 ival.setT(self._startTimes[nextIndex])
 
 
-def doToonVictory(
-        localToonActive,
-        toons,
-        rewardToonIds,
-        rewardDicts,
-        deathList,
-        rpanel,
-        allowGroupShot=1,
-        uberList=[],
-        helpfulToonsList=[],
-        noSkip=False):
+def doToonVictory(localToonActive,
+                  toons,
+                  rewardToonIds,
+                  rewardDicts,
+                  deathList,
+                  rpanel,
+                  allowGroupShot=1,
+                  uberList=[],
+                  helpfulToonsList=[],
+                  noSkip=False):
     track = Sequence()
     if localToonActive == 1:
         track.append(Func(rpanel.show))

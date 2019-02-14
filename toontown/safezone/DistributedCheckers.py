@@ -18,7 +18,6 @@ from direct.showbase import PythonUtil
 
 
 class DistributedCheckers(DistributedNode.DistributedNode):
-
     def __init__(self, cr):
         NodePath.__init__(self, 'DistributedCheckers')
         DistributedNode.DistributedNode.__init__(self, cr)
@@ -65,64 +64,36 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         self.clockNode.setPos(1.1599999999999999, 0, -0.82999999999999996)
         self.clockNode.setScale(0.29999999999999999)
         self.clockNode.hide()
-        self.playerColors = [
-            Vec4(0, 0, 1, 1),
-            Vec4(0, 1, 0, 1)]
+        self.playerColors = [Vec4(0, 0, 1, 1), Vec4(0, 1, 0, 1)]
         self.tintConstant = Vec4(0.25, 0.25, 0.25, 0.5)
         self.ghostConstant = Vec4(0, 0, 0, 0.80000000000000004)
-        self.startingPositions = [
-            [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11],
-            [
-                20,
-                21,
-                22,
-                23,
-                24,
-                25,
-                26,
-                27,
-                28,
-                29,
-                30,
-                31]]
+        self.startingPositions = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                                  [
+                                      20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+                                      30, 31
+                                  ]]
         self.knockSound = base.loadSfx('phase_5/audio/sfx/GUI_knock_1.mp3')
         self.clickSound = base.loadSfx(
             'phase_3/audio/sfx/GUI_balloon_popup.mp3')
         self.moveSound = base.loadSfx('phase_6/audio/sfx/CC_move.mp3')
         self.accept('stoppedAsleep', self.handleSleep)
         self.fsm = ClassicFSM.ClassicFSM('ChineseCheckers', [
-            State.State('waitingToBegin', self.enterWaitingToBegin, self.exitWaitingToBegin, [
-                'playing',
-                'gameOver']),
-            State.State('playing', self.enterPlaying, self.exitPlaying, [
-                'gameOver']),
-            State.State('gameOver', self.enterGameOver, self.exitGameOver, [
-                'waitingToBegin'])], 'waitingToBegin', 'waitingToBegin')
+            State.State('waitingToBegin', self.enterWaitingToBegin,
+                        self.exitWaitingToBegin, ['playing', 'gameOver']),
+            State.State('playing', self.enterPlaying, self.exitPlaying,
+                        ['gameOver']),
+            State.State('gameOver', self.enterGameOver, self.exitGameOver,
+                        ['waitingToBegin'])
+        ], 'waitingToBegin', 'waitingToBegin')
         x = self.boardNode.find('**/locator*')
         self.locatorList = x.getChildren()
         tempList = []
         for x in range(0, 32):
             self.locatorList[x].setTag('GamePeiceLocator', '%d' % x)
-            tempList.append(
-                self.locatorList[x].attachNewNode(
-                    CollisionNode(
-                        'picker%d' %
-                        x)))
+            tempList.append(self.locatorList[x].attachNewNode(
+                CollisionNode('picker%d' % x)))
             tempList[x].node().addSolid(
-                CollisionSphere(
-                    0, 0, 0, 0.39000000000000001))
+                CollisionSphere(0, 0, 0, 0.39000000000000001))
 
         for z in self.locatorList:
             y = loader.loadModel(
@@ -203,8 +174,9 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         self.sendUpdate('requestTimer', [])
 
     def setTimer(self, timerEnd):
-        if self.fsm.getCurrentState() is not None and self.fsm.getCurrentState().getName(
-        ) == 'waitingToBegin' and not (self.table.fsm.getCurrentState().getName() == 'observing'):
+        if self.fsm.getCurrentState() is not None and self.fsm.getCurrentState(
+        ).getName() == 'waitingToBegin' and not (
+                self.table.fsm.getCurrentState().getName() == 'observing'):
             self.clockNode.stop()
             time = globalClockDelta.networkToLocalTime(timerEnd)
             timeLeft = int(time - globalClock.getRealTime())
@@ -212,8 +184,8 @@ class DistributedCheckers(DistributedNode.DistributedNode):
                 if timeLeft > 60:
                     timeLeft = 60
 
-                self.clockNode.setPos(
-                    1.1599999999999999, 0, -0.82999999999999996)
+                self.clockNode.setPos(1.1599999999999999, 0,
+                                      -0.82999999999999996)
                 self.clockNode.countdown(timeLeft, self.startButtonPushed)
                 self.clockNode.show()
             else:
@@ -221,14 +193,14 @@ class DistributedCheckers(DistributedNode.DistributedNode):
                 self.clockNode.hide()
 
     def setTurnTimer(self, turnEnd):
-        if self.fsm.getCurrentState(
-        ) is not None and self.fsm.getCurrentState().getName() == 'playing':
+        if self.fsm.getCurrentState() is not None and self.fsm.getCurrentState(
+        ).getName() == 'playing':
             self.clockNode.stop()
             time = globalClockDelta.networkToLocalTime(turnEnd)
             timeLeft = int(time - globalClock.getRealTime())
             if timeLeft > 0:
-                self.clockNode.setPos(-0.73999999999999999,
-                                      0, -0.20000000000000001)
+                self.clockNode.setPos(-0.73999999999999999, 0,
+                                      -0.20000000000000001)
                 if self.isMyTurn:
                     self.clockNode.countdown(timeLeft, self.doNothing)
                 else:
@@ -282,12 +254,8 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             self.isRotated = True
 
         int = LerpHprInterval(
-            self.boardNode,
-            4.2000000000000002,
-            Vec3(
-                rotation,
-                self.boardNode.getP(),
-                self.boardNode.getR()),
+            self.boardNode, 4.2000000000000002,
+            Vec3(rotation, self.boardNode.getP(), self.boardNode.getR()),
             self.boardNode.getHpr())
         int.start()
 
@@ -347,32 +315,13 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         self.exitButton = DirectButton(
             relief=None,
             text=TTLocalizer.ChineseCheckersGetUpButton,
-            text_fg=(
-                1,
-                1,
-                0.65000000000000002,
-                1),
-            text_pos=(
-                0,
-                -0.23000000000000001),
+            text_fg=(1, 1, 0.65000000000000002, 1),
+            text_pos=(0, -0.23000000000000001),
             text_scale=0.80000000000000004,
-            image=(
-                self.upButton,
-                self.downButton,
-                self.rolloverButton),
-            image_color=(
-                1,
-                0,
-                0,
-                1),
-            image_scale=(
-                20,
-                1,
-                11),
-            pos=(
-                0.92000000000000004,
-                0,
-                0.40000000000000002),
+            image=(self.upButton, self.downButton, self.rolloverButton),
+            image_color=(1, 0, 0, 1),
+            image_scale=(20, 1, 11),
+            pos=(0.92000000000000004, 0, 0.40000000000000002),
             scale=0.14999999999999999,
             command=lambda self=self: self.exitButtonPushed())
 
@@ -400,32 +349,13 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         self.startButton = DirectButton(
             relief=None,
             text=TTLocalizer.ChineseCheckersStartButton,
-            text_fg=(
-                1,
-                1,
-                0.65000000000000002,
-                1),
-            text_pos=(
-                0,
-                -0.23000000000000001),
+            text_fg=(1, 1, 0.65000000000000002, 1),
+            text_pos=(0, -0.23000000000000001),
             text_scale=0.59999999999999998,
-            image=(
-                self.upButton,
-                self.downButton,
-                self.rolloverButton),
-            image_color=(
-                1,
-                0,
-                0,
-                1),
-            image_scale=(
-                20,
-                1,
-                11),
-            pos=(
-                0.92000000000000004,
-                0,
-                0.10000000000000001),
+            image=(self.upButton, self.downButton, self.rolloverButton),
+            image_color=(1, 0, 0, 1),
+            image_scale=(20, 1, 11),
+            pos=(0.92000000000000004, 0, 0.10000000000000001),
             scale=0.14999999999999999,
             command=lambda self=self: self.startButtonPushed())
 
@@ -433,43 +363,18 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         self.leaveButton = DirectButton(
             relief=None,
             text=TTLocalizer.ChineseCheckersQuitButton,
-            text_fg=(
-                1,
-                1,
-                0.65000000000000002,
-                1),
-            text_pos=(
-                0,
-                -0.13),
+            text_fg=(1, 1, 0.65000000000000002, 1),
+            text_pos=(0, -0.13),
             text_scale=0.5,
-            image=(
-                self.upButton,
-                self.downButton,
-                self.rolloverButton),
-            image_color=(
-                1,
-                0,
-                0,
-                1),
-            image_scale=(
-                20,
-                1,
-                11),
-            pos=(
-                0.92000000000000004,
-                0,
-                0.40000000000000002),
+            image=(self.upButton, self.downButton, self.rolloverButton),
+            image_color=(1, 0, 0, 1),
+            image_scale=(20, 1, 11),
+            pos=(0.92000000000000004, 0, 0.40000000000000002),
             scale=0.14999999999999999,
             command=lambda self=self: self.exitButtonPushed())
 
     def enableTurnScreenText(self, player):
-        playerOrder = [
-            1,
-            4,
-            2,
-            5,
-            3,
-            6]
+        playerOrder = [1, 4, 2, 5, 3, 6]
         message1 = TTLocalizer.CheckersIts
         if self.turnText is not None:
             self.turnText.destroy()
@@ -484,8 +389,13 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             message2 = TTLocalizer.CheckersBlackTurn
             color = (0, 0, 0, 1)
 
-        self.turnText = OnscreenText(text=message1 + message2, pos=(-0.80000000000000004, -0.5),
-                                     scale=0.091999999999999998, fg=color, align=TextNode.ACenter, mayChange=1)
+        self.turnText = OnscreenText(
+            text=message1 + message2,
+            pos=(-0.80000000000000004, -0.5),
+            scale=0.091999999999999998,
+            fg=color,
+            align=TextNode.ACenter,
+            mayChange=1)
 
     def startButtonPushed(self):
         self.sendUpdate('requestBegin')
@@ -528,17 +438,11 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             self.blinker = Sequence()
             col = self.locatorList[index].getColor()
             self.blinker.append(
-                LerpColorInterval(
-                    self.locatorList[index],
-                    0.69999999999999996,
-                    self.tintConstant,
-                    col))
+                LerpColorInterval(self.locatorList[index], 0.69999999999999996,
+                                  self.tintConstant, col))
             self.blinker.append(
-                LerpColorInterval(
-                    self.locatorList[index],
-                    0.69999999999999996,
-                    col,
-                    self.tintConstant))
+                LerpColorInterval(self.locatorList[index], 0.69999999999999996,
+                                  col, self.tintConstant))
             self.blinker.loop()
             self.sound.start()
         elif index in self.mySquares or index in self.myKings:
@@ -550,17 +454,11 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             self.blinker = Sequence()
             col = self.locatorList[index].getColor()
             self.blinker.append(
-                LerpColorInterval(
-                    self.locatorList[index],
-                    0.69999999999999996,
-                    self.tintConstant,
-                    col))
+                LerpColorInterval(self.locatorList[index], 0.69999999999999996,
+                                  self.tintConstant, col))
             self.blinker.append(
-                LerpColorInterval(
-                    self.locatorList[index],
-                    0.69999999999999996,
-                    col,
-                    self.tintConstant))
+                LerpColorInterval(self.locatorList[index], 0.69999999999999996,
+                                  col, self.tintConstant))
             self.blinker.loop()
             self.sound.start()
             self.locatorList[self.moveList[0]].show()
@@ -573,8 +471,8 @@ class DistributedCheckers(DistributedNode.DistributedNode):
                 self.moverType = 'normal'
         else:
             self.currentMove = index
-            lastItem = self.board.squareList[self.moveList[len(
-                self.moveList) - 1]]
+            lastItem = self.board.squareList[self.moveList[len(self.moveList) -
+                                                           1]]
             thisItem = self.board.squareList[index]
             if self.mustJump:
                 if lastItem.getNum() == index:
@@ -588,8 +486,8 @@ class DistributedCheckers(DistributedNode.DistributedNode):
                     col = self.locatorList[index].getColor()
                     self.locatorList[index].show()
                     self.sound.start()
-                    if self.existsLegalJumpsFrom(
-                            index, self.moverType) == False:
+                    if self.existsLegalJumpsFrom(index,
+                                                 self.moverType) == False:
                         self.moveList.append(index)
                         self.blinker.finish()
                         self.d_requestMove(self.moveList)
@@ -623,17 +521,20 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         if peice == 'king':
             for x in range(4):
                 if self.board.squareList[index].getAdjacent(
-                )[x] is not None and self.board.squareList[index].getJumps()[x] is not None:
-                    adj = self.board.squareList[self.board.squareList[index].getAdjacent()[
-                        x]]
-                    jump = self.board.squareList[self.board.squareList[index].getJumps()[
-                        x]]
+                )[x] is not None and self.board.squareList[index].getJumps(
+                )[x] is not None:
+                    adj = self.board.squareList[
+                        self.board.squareList[index].getAdjacent()[x]]
+                    jump = self.board.squareList[
+                        self.board.squareList[index].getJumps()[x]]
                     if adj.getState() == 0:
                         pass
-                    elif adj.getState() == self.playerNum or adj.getState() == self.playerNum + 2:
+                    elif adj.getState() == self.playerNum or adj.getState(
+                    ) == self.playerNum + 2:
                         pass
                     elif jump.getState() == 0:
-                        if index not in self.moveList and jump.getNum() not in self.moveList:
+                        if index not in self.moveList and jump.getNum(
+                        ) not in self.moveList:
                             return True
 
                 adj.getState() == self.playerNum + 2
@@ -641,24 +542,22 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             return False
         elif peice == 'normal':
             if self.playerNum == 1:
-                moveForward = [
-                    1,
-                    2]
+                moveForward = [1, 2]
             elif self.playerNum == 2:
-                moveForward = [
-                    0,
-                    3]
+                moveForward = [0, 3]
 
             for x in moveForward:
                 if self.board.squareList[index].getAdjacent(
-                )[x] is not None and self.board.squareList[index].getJumps()[x] is not None:
-                    adj = self.board.squareList[self.board.squareList[index].getAdjacent()[
-                        x]]
-                    jump = self.board.squareList[self.board.squareList[index].getJumps()[
-                        x]]
+                )[x] is not None and self.board.squareList[index].getJumps(
+                )[x] is not None:
+                    adj = self.board.squareList[
+                        self.board.squareList[index].getAdjacent()[x]]
+                    jump = self.board.squareList[
+                        self.board.squareList[index].getJumps()[x]]
                     if adj.getState() == 0:
                         pass
-                    elif adj.getState() == self.playerNum or adj.getState() == self.playerNum + 2:
+                    elif adj.getState() == self.playerNum or adj.getState(
+                    ) == self.playerNum + 2:
                         pass
                     elif jump.getState() == 0:
                         if index not in self.moveList:
@@ -680,18 +579,14 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             return False
         elif peice == 'normal':
             if self.playerNum == 1:
-                moveForward = [
-                    1,
-                    2]
+                moveForward = [1, 2]
             elif self.playerNum == 2:
-                moveForward = [
-                    0,
-                    3]
+                moveForward = [0, 3]
 
             for x in moveForward:
                 if self.board.squareList[index].getAdjacent()[x] is not None:
-                    adj = self.board.squareList[self.board.squareList[index].getAdjacent()[
-                        x]]
+                    adj = self.board.squareList[
+                        self.board.squareList[index].getAdjacent()[x]]
                     if adj.getState() == 0:
                         return True
 
@@ -700,22 +595,20 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             return False
 
     def checkLegalMove(self, firstSquare, secondSquare, peice):
-        if firstSquare.getNum() not in self.mySquares and firstSquare.getNum() not in self.myKings:
+        if firstSquare.getNum() not in self.mySquares and firstSquare.getNum(
+        ) not in self.myKings:
             return False
 
         if self.playerNum == 1:
-            moveForward = [
-                1,
-                2]
+            moveForward = [1, 2]
         else:
-            moveForward = [
-                0,
-                3]
+            moveForward = [0, 3]
         if peice == 'king':
             for x in range(4):
                 if firstSquare.getAdjacent()[x] is not None:
-                    if self.board.squareList[firstSquare.getAdjacent()[x]].getState(
-                    ) == 0 and secondSquare.getNum() in firstSquare.getAdjacent():
+                    if self.board.squareList[firstSquare.getAdjacent(
+                    )[x]].getState() == 0 and secondSquare.getNum(
+                    ) in firstSquare.getAdjacent():
                         return True
 
                 secondSquare.getNum() in firstSquare.getAdjacent()
@@ -723,10 +616,12 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             return False
         elif peice == 'normal':
             for x in moveForward:
-                if firstSquare.getAdjacent()[x] is not None and secondSquare.getNum(
+                if firstSquare.getAdjacent(
+                )[x] is not None and secondSquare.getNum(
                 ) in firstSquare.getAdjacent():
-                    if self.board.squareList[firstSquare.getAdjacent()[x]].getState(
-                    ) == 0 and firstSquare.getAdjacent().index(secondSquare.getNum()) == x:
+                    if self.board.squareList[firstSquare.getAdjacent(
+                    )[x]].getState() == 0 and firstSquare.getAdjacent().index(
+                            secondSquare.getNum()) == x:
                         return True
 
                 firstSquare.getAdjacent().index(secondSquare.getNum()) == x
@@ -739,24 +634,16 @@ class DistributedCheckers(DistributedNode.DistributedNode):
             return False
 
         if self.playerNum == 1:
-            moveForward = [
-                1,
-                2]
-            opposingPeices = [
-                2,
-                4]
+            moveForward = [1, 2]
+            opposingPeices = [2, 4]
         else:
-            moveForward = [
-                0,
-                3]
-            opposingPeices = [
-                1,
-                3]
+            moveForward = [0, 3]
+            opposingPeices = [1, 3]
         if peice == 'king':
             if secondSquare.getNum() in firstSquare.getJumps():
                 index = firstSquare.getJumps().index(secondSquare.getNum())
-                if self.board.squareList[firstSquare.getAdjacent(
-                )[index]].getState() in opposingPeices:
+                if self.board.squareList[firstSquare.getAdjacent()
+                                         [index]].getState() in opposingPeices:
                     return True
                 else:
                     return False
@@ -776,8 +663,7 @@ class DistributedCheckers(DistributedNode.DistributedNode):
                 return False
 
     def d_requestMove(self, moveList):
-        self.sendUpdate('requestMove', [
-            moveList])
+        self.sendUpdate('requestMove', [moveList])
 
     def setGameState(self, tableState, moveList):
         if moveList != []:
@@ -924,8 +810,13 @@ class DistributedCheckers(DistributedNode.DistributedNode):
         checkersPeiceTrack = Sequence()
         length = len(moveList)
         for x in range(length - 1):
-            checkersPeiceTrack.append(Parallel(SoundInterval(self.moveSound), ProjectileInterval(
-                gamePeiceForAnimation, endPos=self.locatorList[moveList[x + 1]].getPos(), duration=0.5)))
+            checkersPeiceTrack.append(
+                Parallel(
+                    SoundInterval(self.moveSound),
+                    ProjectileInterval(
+                        gamePeiceForAnimation,
+                        endPos=self.locatorList[moveList[x + 1]].getPos(),
+                        duration=0.5)))
 
         checkersPeiceTrack.append(Func(gamePeiceForAnimation.removeNode))
         checkersPeiceTrack.append(Func(self.updateGameState, tableState))

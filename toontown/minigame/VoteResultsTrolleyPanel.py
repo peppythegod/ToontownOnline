@@ -1,5 +1,3 @@
-
-
 from direct.gui.DirectGui import DirectFrame, DGG, DirectLabel
 from direct.directnotify import DirectNotifyGlobal
 from toontown.toonbase import ToontownGlobals
@@ -14,25 +12,19 @@ class VoteResultsTrolleyPanel(DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'VoteResultsTrolleyPanel')
 
-    def __init__(
-            self,
-            numPlayers,
-            avIdList,
-            votes,
-            directions,
-            namesList,
-            disconnectedList,
-            directionToGo,
-            directionReason,
-            directionTotals,
-            *args,
-            **kwargs):
+    def __init__(self, numPlayers, avIdList, votes, directions, namesList,
+                 disconnectedList, directionToGo, directionReason,
+                 directionTotals, *args, **kwargs):
         opts = {
-            'relief': None,
-            'geom': DGG.getDefaultDialogGeom(),
-            'geom_color': ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004,),
+            'relief':
+            None,
+            'geom':
+            DGG.getDefaultDialogGeom(),
+            'geom_color':
+            ToontownGlobals.GlobalDialogColor[:3] + (0.80000000000000004, ),
             'geom_scale': (1.75, 1, 0.25),
-            'pos': (0, 0, 0.82499999999999996)}
+            'pos': (0, 0, 0.82499999999999996)
+        }
         opts.update(kwargs)
         DirectFrame.__init__(self, *args, **args)
         self.initialiseoptions(VoteResultsTrolleyPanel)
@@ -53,113 +45,80 @@ class VoteResultsTrolleyPanel(DirectFrame):
         self.rowFrame = []
         self.upDownFrame = DirectFrame(
             parent=self, relief=None, pos=self.getRowPos(-1))
-        self.upLabel = DirectLabel(parent=self,
-                                   relief=None,
-                                   pos=(-0.5,
-                                        0,
-                                        0.059999999999999998),
-                                   text=TTLocalizer.TravelGameDirections[0] + ':',
-                                   text_fg=(0.0,
-                                            0.0,
-                                            1.0,
-                                            1.0),
-                                   text_scale=0.050000000000000003,
-                                   text_align=TextNode.ARight)
+        self.upLabel = DirectLabel(
+            parent=self,
+            relief=None,
+            pos=(-0.5, 0, 0.059999999999999998),
+            text=TTLocalizer.TravelGameDirections[0] + ':',
+            text_fg=(0.0, 0.0, 1.0, 1.0),
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ARight)
         self.downLabel = DirectLabel(
             parent=self,
             relief=None,
-            pos=(
-                0.5,
-                0,
-                0.059999999999999998),
-            text=TTLocalizer.TravelGameDirections[1] +
-            ':',
-            text_fg=(
-                1.0,
-                0.0,
-                0.0,
-                1.0),
+            pos=(0.5, 0, 0.059999999999999998),
+            text=TTLocalizer.TravelGameDirections[1] + ':',
+            text_fg=(1.0, 0.0, 0.0, 1.0),
             text_scale=0.050000000000000003,
             text_align=TextNode.ARight)
         self.totalVotesUpLabel = DirectLabel(
-            parent=self.upLabel, relief=None, pos=(
-                0.20000000000000001, 0, 0.0), text='0', text_fg=(
-                0.0, 0.0, 1.0, 1.0), text_scale=0.050000000000000003, text_align=TextNode.ARight)
-        self.totalVotesDownLabel = DirectLabel(
-            parent=self.downLabel, relief=None, pos=(
-                0.20000000000000001, 0, 0.0), text='0', text_fg=(
-                1.0, 0.0, 0.0, 1.0), text_scale=0.050000000000000003, text_align=TextNode.ARight)
-        self.totalFrame = DirectFrame(
-            parent=self,
+            parent=self.upLabel,
             relief=None,
-            pos=self.getRowPos(
-                self.numPlayers))
+            pos=(0.20000000000000001, 0, 0.0),
+            text='0',
+            text_fg=(0.0, 0.0, 1.0, 1.0),
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ARight)
+        self.totalVotesDownLabel = DirectLabel(
+            parent=self.downLabel,
+            relief=None,
+            pos=(0.20000000000000001, 0, 0.0),
+            text='0',
+            text_fg=(1.0, 0.0, 0.0, 1.0),
+            text_scale=0.050000000000000003,
+            text_align=TextNode.ARight)
+        self.totalFrame = DirectFrame(
+            parent=self, relief=None, pos=self.getRowPos(self.numPlayers))
         self.totalVotesLabels = [
-            self.totalVotesUpLabel,
-            self.totalVotesDownLabel]
+            self.totalVotesUpLabel, self.totalVotesDownLabel
+        ]
         self.resultFrame = DirectFrame(
             parent=self, relief=None, pos=self.getRowPos(0.5))
         self.resultLabel = DirectLabel(
             parent=self.resultFrame,
             text='',
             text_scale=0.059999999999999998,
-            pos=(
-                0.69999999999999996,
-                0,
-                0.0),
+            pos=(0.69999999999999996, 0, 0.0),
             text_align=TextNode.ACenter)
         self.setupResultLabel()
         for index in range(self.numPlayers):
             frame = DirectFrame(
-                parent=self,
-                relief=None,
-                pos=self.getRowPos(index))
+                parent=self, relief=None, pos=self.getRowPos(index))
             self.rowFrame.append(frame)
             nameLabel = DirectFrame(
                 parent=frame,
                 relief=None,
-                pos=(
-                    0.46000000000000002,
-                    0.0,
-                    0.0),
+                pos=(0.46000000000000002, 0.0, 0.0),
                 text=self.namesList[index],
-                text_fg=(
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0),
+                text_fg=(0.0, 0.0, 0.0, 1.0),
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ACenter,
                 text_font=DGG.getDefaultFont())
             votesUpLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.2,
-                    0.0,
-                    0.0),
+                pos=(1.2, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    0,
-                    0,
-                    1,
-                    1),
+                text_fg=(0, 0, 1, 1),
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ARight,
                 text_font=DGG.getDefaultFont())
             votesDownLabel = DirectLabel(
                 parent=frame,
                 relief=None,
-                pos=(
-                    1.4299999999999999,
-                    0.0,
-                    0.0),
+                pos=(1.4299999999999999, 0.0, 0.0),
                 text='',
-                text_fg=(
-                    1,
-                    0,
-                    0,
-                    1),
+                text_fg=(1, 0, 0, 1),
                 text_scale=0.050000000000000003,
                 text_align=TextNode.ARight,
                 text_font=DGG.getDefaultFont())
@@ -214,41 +173,25 @@ class VoteResultsTrolleyPanel(DirectFrame):
                         relief=None,
                         pos=labelPos,
                         text='test',
-                        text_fg=(
-                            1,
-                            1,
-                            1,
-                            1),
+                        text_fg=(1, 1, 1, 1),
                         text_scale=0.10000000000000001,
                         text_align=TextNode.ACenter,
                         text_font=ToontownGlobals.getSignFont(),
-                        text_pos=(
-                            0,
-                            -0.01,
-                            0))
+                        text_pos=(0, -0.01, 0))
                 else:
                     newLabel = DirectLabel(
                         parent=aspect2d,
                         geom=DGG.getDefaultDialogGeom(),
-                        geom_scale=(
-                            0.20000000000000001,
-                            1,
-                            0.20000000000000001),
+                        geom_scale=(0.20000000000000001, 1,
+                                    0.20000000000000001),
                         relief=None,
                         pos=labelPos,
                         text='test',
-                        text_fg=(
-                            0.5,
-                            0.5,
-                            0.5,
-                            1),
+                        text_fg=(0.5, 0.5, 0.5, 1),
                         text_scale=0.10000000000000001,
                         text_align=TextNode.ACenter,
                         text_font=ToontownGlobals.getSignFont(),
-                        text_pos=(
-                            0,
-                            -0.035000000000000003,
-                            0))
+                        text_pos=(0, -0.035000000000000003, 0))
                 newLabel.wrtReparentTo(self.resultFrame)
                 newLabel.hide()
                 self.avVotesLabel[index] = newLabel
@@ -260,9 +203,11 @@ class VoteResultsTrolleyPanel(DirectFrame):
         self.downArrowSfx = []
         for i in range(5):
             self.upArrowSfx.append(
-                base.loadSfx('phase_4/audio/sfx/MG_sfx_travel_game_blue_arrow.mp3'))
+                base.loadSfx(
+                    'phase_4/audio/sfx/MG_sfx_travel_game_blue_arrow.mp3'))
             self.downArrowSfx.append(
-                base.loadSfx('phase_4/audio/sfx/MG_sfx_travel_game_red_arrow.mp3'))
+                base.loadSfx(
+                    'phase_4/audio/sfx/MG_sfx_travel_game_red_arrow.mp3'))
 
         self.winVoteSfx = base.loadSfx(
             'phase_4/audio/sfx/MG_sfx_travel_game_win_vote.mp3')
@@ -301,20 +246,26 @@ class VoteResultsTrolleyPanel(DirectFrame):
                 self.directionTotals[losingDirection]
             if diffVotes > 1:
                 reasonStr = TTLocalizer.TravelGameReasonVotesPlural % {
-                    'dir': TTLocalizer.TravelGameDirections[self.directionToGo],
-                    'numVotes': diffVotes}
+                    'dir':
+                    TTLocalizer.TravelGameDirections[self.directionToGo],
+                    'numVotes': diffVotes
+                }
             else:
                 reasonStr = TTLocalizer.TravelGameReasonVotesSingular % {
-                    'dir': TTLocalizer.TravelGameDirections[self.directionToGo],
-                    'numVotes': diffVotes}
+                    'dir':
+                    TTLocalizer.TravelGameDirections[self.directionToGo],
+                    'numVotes': diffVotes
+                }
         elif self.directionReason == TravelGameGlobals.ReasonRandom:
             reasonStr = TTLocalizer.TravelGameReasonRandom % {
                 'dir': TTLocalizer.TravelGameDirections[self.directionToGo],
-                'numVotes': self.directionTotals[self.directionToGo]}
+                'numVotes': self.directionTotals[self.directionToGo]
+            }
         elif self.directionReason == TravelGameGlobals.ReasonPlaceDecider:
             reasonStr = TravelGameReasonPlace % {
                 'name': 'TODO NAME',
-                'dir': TTLocalizer.TravelGameDirections[self.directionToGo]}
+                'dir': TTLocalizer.TravelGameDirections[self.directionToGo]
+            }
 
         self.resultLabel['text'] = reasonStr
         self.resultLabel.hide()
@@ -336,27 +287,22 @@ class VoteResultsTrolleyPanel(DirectFrame):
                 startVotes += self.votes[prev]
                 continue
 
-        def totalTicker(
-                t,
-                label=self.totalVotesLabels[direction],
-                startVotes=startVotes,
-                additionalVotes=numVotes):
+        def totalTicker(t,
+                        label=self.totalVotesLabels[direction],
+                        startVotes=startVotes,
+                        additionalVotes=numVotes):
             label['text'] = str(int(t * additionalVotes + startVotes))
 
         track.append(
             LerpFunc(
-                totalTicker,
-                duration=duration,
-                name='countTotal %d' %
-                index))
+                totalTicker, duration=duration, name='countTotal %d' % index))
         if index in self.avVotesLabel:
 
-            def avVotesTicker(
-                    t,
-                    label=self.avVotesLabel[index],
-                    startVotes=0,
-                    endVotes=numVotes,
-                    direction=direction):
+            def avVotesTicker(t,
+                              label=self.avVotesLabel[index],
+                              startVotes=0,
+                              endVotes=numVotes,
+                              direction=direction):
                 oldValue = label['text']
                 newValue = int(t * endVotes + startVotes)
                 label['text'] = str(newValue)
@@ -373,15 +319,12 @@ class VoteResultsTrolleyPanel(DirectFrame):
             label = self.avVotesLabel[index]
             track.append(
                 Func(
-                    self.avVotesLabel[index].show,
-                    name='showName %d' %
-                    index))
+                    self.avVotesLabel[index].show, name='showName %d' % index))
             if index in self.avArrows:
                 track.append(
                     Func(
                         self.avArrows[index].show,
-                        name='showArrow %d' %
-                        index))
+                        name='showArrow %d' % index))
 
             if direction == 0 and numVotes:
                 pass
@@ -394,8 +337,7 @@ class VoteResultsTrolleyPanel(DirectFrame):
                 LerpFunc(
                     avVotesTicker,
                     duration=duration,
-                    name='countAvVotes %d' %
-                    index))
+                    name='countAvVotes %d' % index))
 
         return track
 
@@ -413,9 +355,7 @@ class VoteResultsTrolleyPanel(DirectFrame):
             soundAndWait.append(SoundInterval(self.winVoteSfx))
         elif self.localAvatarLost:
             soundAndWait.append(
-                SoundInterval(
-                    self.loseVoteSfx,
-                    duration=0.42999999999999999))
+                SoundInterval(self.loseVoteSfx, duration=0.42999999999999999))
 
         self.movie.append(soundAndWait)
         self.movie.start()

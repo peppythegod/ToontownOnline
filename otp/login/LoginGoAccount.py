@@ -6,7 +6,6 @@ from direct.distributed.PyDatagram import PyDatagram
 
 
 class LoginGoAccount(LoginBase.LoginBase):
-
     def __init__(self, cr):
         LoginBase.LoginBase.__init__(self, cr)
 
@@ -50,12 +49,11 @@ class LoginGoAccount(LoginBase.LoginBase):
     def supportsAuthenticateDelete(self):
         return 0
 
-    def enableSecretFriends(
-            self,
-            loginName,
-            password,
-            parentPassword,
-            enable=1):
+    def enableSecretFriends(self,
+                            loginName,
+                            password,
+                            parentPassword,
+                            enable=1):
         return (0, None)
 
     def _LoginGoAccount__addTokenType(self, datagram):

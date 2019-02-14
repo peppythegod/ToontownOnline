@@ -20,7 +20,7 @@ class TTPickANamePattern(PickANamePatternTwoPartLastName):
     def _getLastNameCapPrefixes(self):
         if TTPickANamePattern.LastNamePrefixesCapped is None:
             ng = NameGenerator()
-            TTPickANamePattern.LastNamePrefixesCapped = ng.getLastNamePrefixesCapped()[
-                :]
+            TTPickANamePattern.LastNamePrefixesCapped = ng.getLastNamePrefixesCapped(
+            )[:]
 
         return TTPickANamePattern.LastNamePrefixesCapped

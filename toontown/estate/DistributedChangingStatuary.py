@@ -18,8 +18,8 @@ class DistributedChangingStatuary(DistributedStatuary.DistributedStatuary):
         self.model = loader.loadModel(self.modelPath)
         colNode = self.model.find('**/+CollisionNode')
         if not colNode.isEmpty():
-            (score,
-             multiplier) = ToontownGlobals.PinballScoring[ToontownGlobals.PinballStatuary]
+            (score, multiplier) = ToontownGlobals.PinballScoring[
+                ToontownGlobals.PinballStatuary]
             if self.pinballScore:
                 score = self.pinballScore[0]
                 multiplier = self.pinballScore[1]

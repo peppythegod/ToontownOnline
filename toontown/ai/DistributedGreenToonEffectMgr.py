@@ -32,8 +32,5 @@ class DistributedGreenToonEffectMgr(DistributedObject.DistributedObject):
         av = base.localAvatar
         self.sendUpdate('addGreenToonEffect', [])
         msgTrack = Sequence(
-            Func(
-                av.setSystemMessage,
-                0,
-                TTLocalizer.GreenToonEffectMsg))
+            Func(av.setSystemMessage, 0, TTLocalizer.GreenToonEffectMsg))
         msgTrack.start()

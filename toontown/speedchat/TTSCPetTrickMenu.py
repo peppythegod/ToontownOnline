@@ -11,9 +11,8 @@ class TTSCPetTrickMenu(SCMenu):
 
     def __init__(self):
         SCMenu.__init__(self)
-        self.accept(
-            'petTrickPhrasesChanged',
-            self._TTSCPetTrickMenu__phrasesChanged)
+        self.accept('petTrickPhrasesChanged',
+                    self._TTSCPetTrickMenu__phrasesChanged)
         self._TTSCPetTrickMenu__phrasesChanged()
 
     def destroy(self):

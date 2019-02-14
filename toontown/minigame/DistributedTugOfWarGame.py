@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from toontown.toonbase.ToonBaseGlobal import *
 from direct.interval.IntervalGlobal import *
@@ -30,19 +28,13 @@ from direct.task.Task import Task
 class DistributedTugOfWarGame(DistributedMinigame):
     bgm = 'phase_4/audio/bgm/MG_tug_o_war.mid'
     toonAnimNames = [
-        'neutral',
-        'tug-o-war',
-        'slip-forward',
-        'slip-backward',
-        'victory',
-        'sad-neutral']
+        'neutral', 'tug-o-war', 'slip-forward', 'slip-backward', 'victory',
+        'sad-neutral'
+    ]
     suitAnimNames = [
-        'neutral',
-        'tug-o-war',
-        'slip-forward',
-        'slip-backward',
-        'flail',
-        'victory']
+        'neutral', 'tug-o-war', 'slip-forward', 'slip-backward', 'flail',
+        'victory'
+    ]
     UPDATE_TIMER_TASK = 'TugOfWarGameUpdateTimerTask'
     UPDATE_KEY_PRESS_RATE_TASK = 'TugOfWarGameUpdateKeyPressRateTask'
     UPDATE_ROPE_TASK = 'TugOfWarGameUpdateRopeTask'
@@ -52,17 +44,16 @@ class DistributedTugOfWarGame(DistributedMinigame):
     def __init__(self, cr):
         DistributedMinigame.__init__(self, cr)
         self.gameFSM = ClassicFSM.ClassicFSM('DistributedTugOfWarGame', [
-            State.State('off', self.enterOff, self.exitOff, [
-                'waitForGoSignal']),
-            State.State('waitForGoSignal', self.enterWaitForGoSignal, self.exitWaitForGoSignal, [
-                'tug',
-                'cleanup']),
-            State.State('tug', self.enterTug, self.exitTug, [
-                'gameDone',
-                'cleanup']),
-            State.State('gameDone', self.enterGameDone, self.exitGameDone, [
-                'cleanup']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
+            State.State('off', self.enterOff, self.exitOff,
+                        ['waitForGoSignal']),
+            State.State('waitForGoSignal', self.enterWaitForGoSignal,
+                        self.exitWaitForGoSignal, ['tug', 'cleanup']),
+            State.State('tug', self.enterTug, self.exitTug,
+                        ['gameDone', 'cleanup']),
+            State.State('gameDone', self.enterGameDone, self.exitGameDone,
+                        ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
+        ], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
         self.gameType = TugOfWarGameGlobals.TOON_VS_TOON
         self.suit = None
@@ -70,12 +61,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.suitType = 'f'
         self.suitLevel = 1
         self.sides = {}
-        self.avList = [
-            [],
-            []]
-        self.buttons = [
-            0,
-            1]
+        self.avList = [[], []]
+        self.buttons = [0, 1]
         self.mouseMode = 0
         self.mouseSide = 0
         self.fallenList = []
@@ -97,30 +84,14 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.keyRate = 0
         self.allOutMode = 0
         self.rateMatchAward = 0
-        self.targetRateList = [
-            [
-                8,
-                6],
-            [
-                5,
-                7],
-            [
-                6,
-                8],
-            [
-                6,
-                10],
-            [
-                7,
-                11],
-            [
-                8,
-                12]]
+        self.targetRateList = [[8, 6], [5, 7], [6, 8], [6, 10], [7, 11],
+                               [8, 12]]
         self.nextRateIndex = 0
         self.drinkPositions = []
         for k in range(4):
             self.drinkPositions.append(
-                VBase3(-0.20000000000000001 + 0.20000000000000001 * k, 16 + 2 * k, 0.0))
+                VBase3(-0.20000000000000001 + 0.20000000000000001 * k,
+                       16 + 2 * k, 0.0))
 
         self.rng = RandomNumGen.RandomNumGen(1000)
         self.introTrack = None
@@ -160,29 +131,27 @@ class DistributedTugOfWarGame(DistributedMinigame):
             'phase_4/audio/sfx/AA_sound_whistle.mp3')
         self.music = base.loadMusic(self.bgm)
         self.roundText = DirectLabel(
-            text='     ', text_fg=(
-                0, 1, 0, 1), frameColor=(
-                1, 1, 1, 0), text_font=ToontownGlobals.getSignFont(), pos=(
-                0.014, 0, -0.83999999999999997), scale=0.20000000000000001)
+            text='     ',
+            text_fg=(0, 1, 0, 1),
+            frameColor=(1, 1, 1, 0),
+            text_font=ToontownGlobals.getSignFont(),
+            pos=(0.014, 0, -0.83999999999999997),
+            scale=0.20000000000000001)
         self.powerMeter = MinigamePowerMeter.MinigamePowerMeter(17)
         self.powerMeter.reparentTo(aspect2d)
         self.powerMeter.setPos(0, 0, 0.40000000000000002)
         self.powerMeter.setPower(8)
         self.powerMeter.setTarget(8)
-        self.arrows = [
-            None] * 2
+        self.arrows = [None] * 2
         for x in range(len(self.arrows)):
             self.arrows[x] = loader.loadModel('phase_3/models/props/arrow')
             self.arrows[x].reparentTo(self.powerMeter)
             self.arrows[x].hide()
             self.arrows[x].setScale(
-                0.20000000000000001 -
-                0.40000000000000002 *
-                x,
-                0.20000000000000001,
-                0.20000000000000001)
-            self.arrows[x].setPos(
-                0.12 - 0.23999999999999999 * x, 0, -0.26000000000000001)
+                0.20000000000000001 - 0.40000000000000002 * x,
+                0.20000000000000001, 0.20000000000000001)
+            self.arrows[x].setPos(0.12 - 0.23999999999999999 * x, 0,
+                                  -0.26000000000000001)
             self.disableArrow(self.arrows[x])
 
         self.splash = Splash.Splash(render)
@@ -305,15 +274,15 @@ class DistributedTugOfWarGame(DistributedMinigame):
         NametagGlobals.setGlobalNametagScale(1)
         self.arrowKeys = ArrowKeys.ArrowKeys()
         self.room.reparentTo(render)
-        self.room.setPosHpr(0.0, 18.390000000000001, -
-                            (ToontownGlobals.FloorOffset), 0.0, 0.0, 0.0)
+        self.room.setPosHpr(0.0, 18.390000000000001,
+                            -(ToontownGlobals.FloorOffset), 0.0, 0.0, 0.0)
         self.room.setScale(0.40000000000000002)
         self.sky.setZ(-5)
         self.sky.reparentTo(render)
         self.dropShadow.setColor(0, 0, 0, 0.5)
         camera.reparentTo(render)
-        camera.setPosHpr(-11.4427, 9.0355899999999991, 2.8009400000000002, -
-                         49.103999999999999, -0.89000000000000001, 0)
+        camera.setPosHpr(-11.4427, 9.0355899999999991, 2.8009400000000002,
+                         -49.103999999999999, -0.89000000000000001, 0)
         self.dropShadow.setBin('fixed', 0, 1)
         self.splash.reparentTo(render)
         self.suitSplash.reparentTo(render)
@@ -351,9 +320,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
             self.setupTrack = None
 
         base.camLens.setFov(ToontownGlobals.DefaultCameraFov)
-        base.camLens.setNearFar(
-            ToontownGlobals.DefaultCameraNear,
-            ToontownGlobals.DefaultCameraFar)
+        base.camLens.setNearFar(ToontownGlobals.DefaultCameraNear,
+                                ToontownGlobals.DefaultCameraFar)
         NametagGlobals.setGlobalNametagScale(1.0)
         if self.arrowKeys:
             self.arrowKeys.setPressHandlers(self.arrowKeys.NULL_HANDLERS)
@@ -398,25 +366,23 @@ class DistributedTugOfWarGame(DistributedMinigame):
 
     def initCamera(self):
         birdseyePosHpr = [
-            1.95461,
-            18.489100000000001,
-            38.464599999999997,
-            1.1818500000000001,
-            -87.530799999999999,
-            0]
-        introPosHpr = [
-            None] * 2
+            1.95461, 18.489100000000001, 38.464599999999997,
+            1.1818500000000001, -87.530799999999999, 0
+        ]
+        introPosHpr = [None] * 2
         introPosHpr[0] = [
             VBase3(-11.4427, 9.0355899999999991, 2.8009400000000002),
-            VBase3(-49.103999999999999, -0.73237399999999997, 0)]
+            VBase3(-49.103999999999999, -0.73237399999999997, 0)
+        ]
         introPosHpr[1] = [
             VBase3(16.929099999999998, 13.930199999999999, 2.6428199999999999),
-            VBase3(66.968500000000006, -6.1950000000000003, 0)]
+            VBase3(66.968500000000006, -6.1950000000000003, 0)
+        ]
         gameCamHpr = VBase3(-1.1299999999999999, 1.042, 0)
         gameCamPos = VBase3(0, 1.0838000000000001, 2.7450000000000001)
         camera.reparentTo(render)
-        camera.setPosHpr(introPosHpr[self.sides[self.localAvId]]
-                         [0], introPosHpr[self.sides[self.localAvId]][1])
+        camera.setPosHpr(introPosHpr[self.sides[self.localAvId]][0],
+                         introPosHpr[self.sides[self.localAvId]][1])
         lerpDur = 8
         self.introTrack = LerpPosHprInterval(
             camera,
@@ -493,306 +459,154 @@ class DistributedTugOfWarGame(DistributedMinigame):
             suitRightHand = self.suit.getRightHand()
             toonRightHand = self.rightHandDict[self.avIdList[0]]
             if notTaut:
-                self.tugRopes[0].setup(3, ((toonRightHand, (0, 0, 0)), (
-                    render, (0, 18, -1)), (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                self.tugRopes[0].setup(
+                    3, ((toonRightHand, (0, 0, 0)), (render, (0, 18, -1)),
+                        (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
             else:
                 midPt = (suitRightHand.getPos() - toonRightHand.getPos()) / 2.0
                 self.tugRopes[0].setup(
-                    3, ((toonRightHand, (0, 0, 0)), (toonRightHand, (0, 0, 0)), (suitRightHand, (0, 0, 0))), [
-                        0, 0, 0, 1, 1, 1])
+                    3, ((toonRightHand, (0, 0, 0)), (toonRightHand, (0, 0, 0)),
+                        (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
             self.tugRopes[0].reparentTo(render)
         elif self.numPlayers == 2:
             if self.gameType == TugOfWarGameGlobals.TOON_VS_COG:
-                self.tugRopes[0].setup(3,
-                                       ((self.rightHandDict[self.avIdList[0]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[0]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
+                self.tugRopes[0].setup(
+                    3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[0]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[1]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                 suitRightHand = self.suit.getRightHand()
                 toonRightHand = self.rightHandDict[self.avIdList[1]]
                 if notTaut:
-                    self.tugRopes[1].setup(3, ((toonRightHand, (0, 0, 0)), (
-                        render, (0, 18, -1)), (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
-                else:
-                    midPt = (suitRightHand.getPos() -
-                             toonRightHand.getPos()) / 2.0
                     self.tugRopes[1].setup(
-                        3, ((toonRightHand, (0, 0, 0)), (toonRightHand, (0, 0, 0)), (suitRightHand, (0, 0, 0))), [
-                            0, 0, 0, 1, 1, 1])
+                        3, ((toonRightHand, (0, 0, 0)), (render, (0, 18, -1)),
+                            (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                else:
+                    midPt = (
+                        suitRightHand.getPos() - toonRightHand.getPos()) / 2.0
+                    self.tugRopes[1].setup(3, ((toonRightHand, (0, 0, 0)),
+                                               (toonRightHand, (0, 0, 0)),
+                                               (suitRightHand, (0, 0, 0))),
+                                           [0, 0, 0, 1, 1, 1])
                 self.tugRopes[0].reparentTo(render)
                 self.tugRopes[1].reparentTo(render)
             elif notTaut:
-                self.tugRopes[0].setup(3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)), (render, (
-                    0, 18, -1)), (self.rightHandDict[self.avIdList[1]], (0, 0, 0))), [0, 0, 0, 1, 1, 1])
-            else:
                 self.tugRopes[0].setup(3,
                                        ((self.rightHandDict[self.avIdList[0]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[0]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
+                                         (0, 0, 0)), (render, (0, 18, -1)),
+                                        (self.rightHandDict[self.avIdList[1]],
+                                         (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+            else:
+                self.tugRopes[0].setup(
+                    3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[0]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[1]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
             self.tugRopes[0].reparentTo(render)
         elif self.numPlayers == 3:
             if self.gameType == TugOfWarGameGlobals.TOON_VS_COG:
-                self.tugRopes[1].setup(3,
-                                       ((self.rightHandDict[self.avIdList[1]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[2]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
-                self.tugRopes[0].setup(3,
-                                       ((self.rightHandDict[self.avIdList[0]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[0]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
+                self.tugRopes[1].setup(
+                    3, ((self.rightHandDict[self.avIdList[1]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[1]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[2]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                self.tugRopes[0].setup(
+                    3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[0]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[1]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                 suitRightHand = self.suit.getRightHand()
                 toonRightHand = self.rightHandDict[self.avIdList[2]]
                 if notTaut:
-                    self.tugRopes[2].setup(3, ((toonRightHand, (0, 0, 0)), (
-                        render, (0, 18, -1)), (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
-                else:
-                    midPt = (suitRightHand.getPos() -
-                             toonRightHand.getPos()) / 2.0
                     self.tugRopes[2].setup(
-                        3, ((toonRightHand, (0, 0, 0)), (toonRightHand, (0, 0, 0)), (suitRightHand, (0, 0, 0))), [
-                            0, 0, 0, 1, 1, 1])
+                        3, ((toonRightHand, (0, 0, 0)), (render, (0, 18, -1)),
+                            (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                else:
+                    midPt = (
+                        suitRightHand.getPos() - toonRightHand.getPos()) / 2.0
+                    self.tugRopes[2].setup(3, ((toonRightHand, (0, 0, 0)),
+                                               (toonRightHand, (0, 0, 0)),
+                                               (suitRightHand, (0, 0, 0))),
+                                           [0, 0, 0, 1, 1, 1])
                 self.tugRopes[0].reparentTo(render)
                 self.tugRopes[1].reparentTo(render)
                 self.tugRopes[2].reparentTo(render)
             elif notTaut:
-                self.tugRopes[1].setup(3, ((self.rightHandDict[self.avIdList[1]], (0, 0, 0)), (render, (
-                    0, 18, -1)), (self.rightHandDict[self.avIdList[2]], (0, 0, 0))), [0, 0, 0, 1, 1, 1])
-            else:
                 self.tugRopes[1].setup(3,
                                        ((self.rightHandDict[self.avIdList[1]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[2]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
-            self.tugRopes[0].setup(3,
-                                   ((self.rightHandDict[self.avIdList[0]],
-                                     (0,
-                                      0,
-                                      0)),
-                                       (self.rightHandDict[self.avIdList[0]],
-                                        (0,
-                                         0,
-                                         0)),
-                                       (self.rightHandDict[self.avIdList[1]],
-                                        (0,
-                                         0,
-                                         0))),
-                                   [0,
-                                       0,
-                                       0,
-                                       1,
-                                       1,
-                                       1])
+                                         (0, 0, 0)), (render, (0, 18, -1)),
+                                        (self.rightHandDict[self.avIdList[2]],
+                                         (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+            else:
+                self.tugRopes[1].setup(
+                    3, ((self.rightHandDict[self.avIdList[1]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[1]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[2]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+            self.tugRopes[0].setup(
+                3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)),
+                    (self.rightHandDict[self.avIdList[0]],
+                     (0, 0, 0)), (self.rightHandDict[self.avIdList[1]],
+                                  (0, 0, 0))), [0, 0, 0, 1, 1, 1])
             self.tugRopes[0].reparentTo(render)
             self.tugRopes[1].reparentTo(render)
         elif self.numPlayers == 4:
             if self.gameType == TugOfWarGameGlobals.TOON_VS_COG:
-                self.tugRopes[2].setup(3,
-                                       ((self.rightHandDict[self.avIdList[2]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[2]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[3]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
-                self.tugRopes[1].setup(3,
-                                       ((self.rightHandDict[self.avIdList[1]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[2]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
-                self.tugRopes[0].setup(3,
-                                       ((self.rightHandDict[self.avIdList[0]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[0]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
+                self.tugRopes[2].setup(
+                    3, ((self.rightHandDict[self.avIdList[2]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[2]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[3]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                self.tugRopes[1].setup(
+                    3, ((self.rightHandDict[self.avIdList[1]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[1]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[2]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                self.tugRopes[0].setup(
+                    3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[0]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[1]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                 suitRightHand = self.suit.getRightHand()
                 toonRightHand = self.rightHandDict[self.avIdList[3]]
                 if notTaut:
-                    self.tugRopes[3].setup(3, ((toonRightHand, (0, 0, 0)), (
-                        render, (0, 18, -1)), (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
-                else:
-                    midPt = (suitRightHand.getPos() -
-                             toonRightHand.getPos()) / 2.0
                     self.tugRopes[3].setup(
-                        3, ((toonRightHand, (0, 0, 0)), (toonRightHand, (0, 0, 0)), (suitRightHand, (0, 0, 0))), [
-                            0, 0, 0, 1, 1, 1])
+                        3, ((toonRightHand, (0, 0, 0)), (render, (0, 18, -1)),
+                            (suitRightHand, (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                else:
+                    midPt = (
+                        suitRightHand.getPos() - toonRightHand.getPos()) / 2.0
+                    self.tugRopes[3].setup(3, ((toonRightHand, (0, 0, 0)),
+                                               (toonRightHand, (0, 0, 0)),
+                                               (suitRightHand, (0, 0, 0))),
+                                           [0, 0, 0, 1, 1, 1])
                 self.tugRopes[0].reparentTo(render)
                 self.tugRopes[1].reparentTo(render)
                 self.tugRopes[2].reparentTo(render)
                 self.tugRopes[3].reparentTo(render)
             else:
-                self.tugRopes[2].setup(3,
-                                       ((self.rightHandDict[self.avIdList[2]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[2]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[3]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
-                self.tugRopes[0].setup(3,
-                                       ((self.rightHandDict[self.avIdList[0]],
-                                         (0,
-                                          0,
-                                          0)),
-                                           (self.rightHandDict[self.avIdList[0]],
-                                            (0,
-                                             0,
-                                             0)),
-                                           (self.rightHandDict[self.avIdList[1]],
-                                            (0,
-                                             0,
-                                             0))),
-                                       [0,
-                                           0,
-                                           0,
-                                           1,
-                                           1,
-                                           1])
+                self.tugRopes[2].setup(
+                    3, ((self.rightHandDict[self.avIdList[2]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[2]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[3]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                self.tugRopes[0].setup(
+                    3, ((self.rightHandDict[self.avIdList[0]], (0, 0, 0)),
+                        (self.rightHandDict[self.avIdList[0]],
+                         (0, 0, 0)), (self.rightHandDict[self.avIdList[1]],
+                                      (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                 if notTaut:
-                    self.tugRopes[1].setup(3, ((self.rightHandDict[self.avIdList[1]], (0, 0, 0)), (render, (
-                        0, 18, -1)), (self.rightHandDict[self.avIdList[2]], (0, 0, 0))), [0, 0, 0, 1, 1, 1])
+                    self.tugRopes[1].setup(
+                        3, ((self.rightHandDict[self.avIdList[1]],
+                             (0, 0, 0)), (render, (0, 18, -1)),
+                            (self.rightHandDict[self.avIdList[2]],
+                             (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                 else:
-                    self.tugRopes[1].setup(3,
-                                           ((self.rightHandDict[self.avIdList[1]],
-                                             (0,
-                                              0,
-                                              0)),
-                                               (self.rightHandDict[self.avIdList[1]],
-                                                (0,
-                                                 0,
-                                                 0)),
-                                               (self.rightHandDict[self.avIdList[2]],
-                                                (0,
-                                                 0,
-                                                 0))),
-                                           [0,
-                                               0,
-                                               0,
-                                               1,
-                                               1,
-                                               1])
+                    self.tugRopes[1].setup(
+                        3, ((self.rightHandDict[self.avIdList[1]], (0, 0, 0)),
+                            (self.rightHandDict[self.avIdList[1]],
+                             (0, 0, 0)), (self.rightHandDict[self.avIdList[2]],
+                                          (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                 self.tugRopes[0].reparentTo(render)
                 self.tugRopes[1].reparentTo(render)
                 self.tugRopes[2].reparentTo(render)
@@ -818,9 +632,7 @@ class DistributedTugOfWarGame(DistributedMinigame):
                 continue
 
     def calculatePositions(self):
-        hprPositions = [
-            VBase3(240, 0, 0),
-            VBase3(120, 0, 0)]
+        hprPositions = [VBase3(240, 0, 0), VBase3(120, 0, 0)]
         dockPositions = []
         for k in range(5):
             dockPositions.append(
@@ -829,8 +641,7 @@ class DistributedTugOfWarGame(DistributedMinigame):
         for k in range(5):
             dockPositions.append(VBase3(3 + 1.5 * k, 18, 0.10000000000000001))
 
-        self.sendUpdate('sendNewAvIdList', [
-            self.avIdList])
+        self.sendUpdate('sendNewAvIdList', [self.avIdList])
         if self.numPlayers == 1:
             if self.gameType == TugOfWarGameGlobals.TOON_VS_COG:
                 self.posDict[self.suitId] = dockPositions[7]
@@ -913,8 +724,12 @@ class DistributedTugOfWarGame(DistributedMinigame):
     def arrangeByHeight(self, avIdList, order, iStart, iFin):
         for i in range(iStart, iFin + 1):
             for j in range(i + 1, iFin + 1):
-                if (order == self.H_TO_L or self.rightHandDict[avIdList[i]].getZ() < self.rightHandDict[avIdList[j]].getZ(
-                ) or order == self.L_TO_H) and self.rightHandDict[avIdList[i]].getZ() > self.rightHandDict[avIdList[j]].getZ():
+                if (order == self.H_TO_L
+                        or self.rightHandDict[avIdList[i]].getZ() <
+                        self.rightHandDict[avIdList[j]].getZ()
+                        or order == self.L_TO_H
+                    ) and self.rightHandDict[avIdList[i]].getZ(
+                    ) > self.rightHandDict[avIdList[j]].getZ():
                     temp = avIdList[i]
                     avIdList[i] = avIdList[j]
                     avIdList[j] = temp
@@ -972,13 +787,11 @@ class DistributedTugOfWarGame(DistributedMinigame):
     def enterWaitForGoSignal(self):
         self.notify.debug('enterWaitForGoSignal')
         self.powerMeter.show()
-        self.sendUpdate('reportPlayerReady', [
-            self.sides[self.localAvId]])
+        self.sendUpdate('reportPlayerReady', [self.sides[self.localAvId]])
         self.roundText.show()
-        taskMgr.doMethodLater(
-            TugOfWarGameGlobals.WAIT_FOR_GO_TIMEOUT,
-            self.waitForGoTimeoutTask,
-            self.taskName('wait-for-go-timeout'))
+        taskMgr.doMethodLater(TugOfWarGameGlobals.WAIT_FOR_GO_TIMEOUT,
+                              self.waitForGoTimeoutTask,
+                              self.taskName('wait-for-go-timeout'))
 
     def exitWaitForGoSignal(self):
         taskMgr.remove(self.taskName('wait-for-go-timeout'))
@@ -989,8 +802,7 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self._DistributedTugOfWarGame__spawnUpdateTimerTask()
         self._DistributedTugOfWarGame__spawnUpdateKeyPressRateTask()
         taskMgr.doMethodLater(
-            TugOfWarGameGlobals.TUG_TIMEOUT,
-            self.tugTimeoutTask,
+            TugOfWarGameGlobals.TUG_TIMEOUT, self.tugTimeoutTask,
             self.taskName('tug-timeout'))
         if self.suit:
             self.suit.loop('tug-o-war')
@@ -1066,9 +878,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
             return Task.done
 
         self.currentForce = self.computeForce(self.keyRate)
-        self.sendUpdate('reportCurrentKeyRate', [
-            self.keyRate,
-            self.currentForce])
+        self.sendUpdate('reportCurrentKeyRate',
+                        [self.keyRate, self.currentForce])
         self.setSpeedGauge()
         self.setAnimState(self.localAvId, self.keyRate)
         self._DistributedTugOfWarGame__spawnUpdateTimerTask()
@@ -1076,11 +887,9 @@ class DistributedTugOfWarGame(DistributedMinigame):
 
     def _DistributedTugOfWarGame__spawnUpdateTimerTask(self):
         taskMgr.remove(self.taskName(self.UPDATE_TIMER_TASK))
-        taskMgr.doMethodLater(
-            TugOfWarGameGlobals.SEND_UPDATE,
-            self._DistributedTugOfWarGame__updateTimerTask,
-            self.taskName(
-                self.UPDATE_TIMER_TASK))
+        taskMgr.doMethodLater(TugOfWarGameGlobals.SEND_UPDATE,
+                              self._DistributedTugOfWarGame__updateTimerTask,
+                              self.taskName(self.UPDATE_TIMER_TASK))
 
     def _DistributedTugOfWarGame__killUpdateTimerTask(self):
         taskMgr.remove(self.taskName(self.UPDATE_TIMER_TASK))
@@ -1090,8 +899,7 @@ class DistributedTugOfWarGame(DistributedMinigame):
         taskMgr.doMethodLater(
             0.10000000000000001,
             self._DistributedTugOfWarGame__updateKeyPressRateTask,
-            self.taskName(
-                self.UPDATE_KEY_PRESS_RATE_TASK))
+            self.taskName(self.UPDATE_KEY_PRESS_RATE_TASK))
 
     def _DistributedTugOfWarGame__killUpdateKeyPressRateTask(self):
         taskMgr.remove(self.taskName(self.UPDATE_KEY_PRESS_RATE_TASK))
@@ -1100,9 +908,10 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.idealRate = self.targetRateList[self.nextRateIndex][1]
         self.idealForce = self.advantage * \
             (4 + 0.40000000000000002 * self.idealRate)
-        taskMgr.doMethodLater(self.targetRateList[self.nextRateIndex][0],
-                              self._DistributedTugOfWarGame__updateIdealRateTask,
-                              self.taskName('targetRateTimer'))
+        taskMgr.doMethodLater(
+            self.targetRateList[self.nextRateIndex][0],
+            self._DistributedTugOfWarGame__updateIdealRateTask,
+            self.taskName('targetRateTimer'))
 
     def _DistributedTugOfWarGame__updateIdealRateTask(self, task):
         self.nextRateIndex = self.nextRateIndex + 1
@@ -1113,9 +922,10 @@ class DistributedTugOfWarGame(DistributedMinigame):
             self.idealRate = self.targetRateList[self.nextRateIndex][1]
             self.idealForce = self.advantage * \
                 (4 + 0.40000000000000002 * self.idealRate)
-            taskMgr.doMethodLater(self.targetRateList[self.nextRateIndex][0],
-                                  self._DistributedTugOfWarGame__updateIdealRateTask,
-                                  self.taskName('targetRateTimer'))
+            taskMgr.doMethodLater(
+                self.targetRateList[self.nextRateIndex][0],
+                self._DistributedTugOfWarGame__updateIdealRateTask,
+                self.taskName('targetRateTimer'))
 
         return Task.done
 
@@ -1141,7 +951,6 @@ class DistributedTugOfWarGame(DistributedMinigame):
                 self._DistributedTugOfWarGame__gameTimerExpired)
 
         def enableKeys(self=self):
-
             def keyPress(self, index):
                 self._DistributedTugOfWarGame__pressHandler(index)
 
@@ -1149,15 +958,17 @@ class DistributedTugOfWarGame(DistributedMinigame):
                 self._DistributedTugOfWarGame__releaseHandler(index)
 
             self.arrowKeys.setPressHandlers([
-                lambda self=self, keyPress=keyPress: keyPress(self, 2),
-                lambda self=self, keyPress=keyPress: keyPress(self, 3),
-                lambda self=self, keyPress=keyPress: keyPress(self, 1),
-                lambda self=self, keyPress=keyPress: keyPress(self, 0)])
+                lambda self=self, keyPress=keyPress: keyPress(self, 2), lambda
+                self=self, keyPress=keyPress: keyPress(self, 3), lambda self=
+                self, keyPress=keyPress: keyPress(self, 1), lambda self=self,
+                keyPress=keyPress: keyPress(self, 0)
+            ])
             self.arrowKeys.setReleaseHandlers([
                 lambda self=self, keyRelease=keyRelease: keyRelease(self, 2),
                 lambda self=self, keyRelease=keyRelease: keyRelease(self, 3),
                 lambda self=self, keyRelease=keyRelease: keyRelease(self, 1),
-                lambda self=self, keyRelease=keyRelease: keyRelease(self, 0)])
+                lambda self=self, keyRelease=keyRelease: keyRelease(self, 0)
+            ])
             for x in index:
                 self.enableArrow(self.arrows[x])
 
@@ -1166,14 +977,14 @@ class DistributedTugOfWarGame(DistributedMinigame):
             self.introTrack = None
 
         self.setupTrack = Sequence(
-            Func(
-                self.setText, self.roundText, TTLocalizer.TugOfWarGameReady), Wait(1.5), Func(
-                base.playSfx, self.whistleSound), Func(
-                self.setText, self.roundText, TTLocalizer.TugOfWarGameGo), Func(
-                    self.roundText.setScale, 0.29999999999999999), Wait(1.5), Func(startTimer), Func(enableKeys), Func(
-                        self.gameFSM.request, 'tug'), Func(
-                            self.setText, self.roundText, ' '), Func(
-                                self.roundText.setScale, 0.20000000000000001))
+            Func(self.setText, self.roundText, TTLocalizer.TugOfWarGameReady),
+            Wait(1.5), Func(base.playSfx, self.whistleSound),
+            Func(self.setText, self.roundText, TTLocalizer.TugOfWarGameGo),
+            Func(self.roundText.setScale, 0.29999999999999999), Wait(1.5),
+            Func(startTimer), Func(enableKeys),
+            Func(self.gameFSM.request, 'tug'),
+            Func(self.setText, self.roundText, ' '),
+            Func(self.roundText.setScale, 0.20000000000000001))
         self.setupTrack.start()
 
     def sendStopSignal(self, winners, losers, tieers):
@@ -1186,7 +997,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
         reactSeq = Sequence()
         exitSeq = Sequence()
         suitSlipTime = 0
-        if self.gameFSM.getCurrentState().getName() == 'cleanup' or not (self.randomNumGen):
+        if self.gameFSM.getCurrentState().getName() == 'cleanup' or not (
+                self.randomNumGen):
             return None
 
         if self.suit:
@@ -1207,22 +1019,24 @@ class DistributedTugOfWarGame(DistributedMinigame):
                     destHpr = startHpr + VBase3(0, 0, -30)
                     oopsTrack = Sequence(
                         Parallel(
-                            Func(
-                                self.suit.play, 'flail', None, 26, 38), LerpHprInterval(
-                                self.suit, 0.5, destHpr, startHpr=startHpr)), Parallel(
-                            Func(
-                                self.suit.play, 'slip-forward'), LerpPosInterval(
-                                self.suit, duration=1, pos=waterPos), Sequence(
-                                Wait(0.55000000000000004), Func(
-                                    base.playSfx, self.sndHitWater), Func(
-                                        self.suitSplash.play), Func(
-                                            self.ripples.play))))
+                            Func(self.suit.play, 'flail', None, 26, 38),
+                            LerpHprInterval(
+                                self.suit, 0.5, destHpr, startHpr=startHpr)),
+                        Parallel(
+                            Func(self.suit.play, 'slip-forward'),
+                            LerpPosInterval(
+                                self.suit, duration=1, pos=waterPos),
+                            Sequence(
+                                Wait(0.55000000000000004),
+                                Func(base.playSfx, self.sndHitWater),
+                                Func(self.suitSplash.play),
+                                Func(self.ripples.play))))
                     reactSeq.append(
                         Sequence(
-                            Func(
-                                self.suit.loop, 'victory'), Wait(2.6000000000000001), LerpPosInterval(
-                                self.suit, duration=2, pos=newPos), oopsTrack, Func(
-                                self.suit.loop, 'neutral')))
+                            Func(self.suit.loop, 'victory'),
+                            Wait(2.6000000000000001),
+                            LerpPosInterval(self.suit, duration=2, pos=newPos),
+                            oopsTrack, Func(self.suit.loop, 'neutral')))
 
         for avId in self.avIdList:
             toon = self.getAvatar(avId)
@@ -1237,24 +1051,18 @@ class DistributedTugOfWarGame(DistributedMinigame):
 
         if self.localAvId in winners:
             exitSeq.append(
-                Func(
-                    self.setText,
-                    self.roundText,
-                    TTLocalizer.TugOfWarGameEnd))
+                Func(self.setText, self.roundText,
+                     TTLocalizer.TugOfWarGameEnd))
             exitSeq.append(Wait(5.0))
         elif self.localAvId in losers:
             exitSeq.append(
-                Func(
-                    self.setText,
-                    self.roundText,
-                    TTLocalizer.TugOfWarGameEnd))
+                Func(self.setText, self.roundText,
+                     TTLocalizer.TugOfWarGameEnd))
             exitSeq.append(Wait(4.7999999999999998 + suitSlipTime))
         else:
             exitSeq.append(
-                Func(
-                    self.setText,
-                    self.roundText,
-                    TTLocalizer.TugOfWarGameTie))
+                Func(self.setText, self.roundText,
+                     TTLocalizer.TugOfWarGameTie))
             exitSeq.append(Wait(2.5))
         exitSeq.append(Func(self.gameOver))
         self.showTrack = Parallel(reactSeq, exitSeq)
@@ -1303,7 +1111,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
             self.suit = Suit.Suit()
             self.origSuitPosHpr = [
                 VBase3(6.0, 18, 0.10000000000000001),
-                VBase3(120, 0, 0)]
+                VBase3(120, 0, 0)
+            ]
             self.suitOffset = 0
             d = SuitDNA.SuitDNA()
             d.newSuit(self.suitType)
@@ -1379,8 +1188,11 @@ class DistributedTugOfWarGame(DistributedMinigame):
                 self.checkIfFallen()
 
         if self.suitId not in self.fallenList:
-            self.animTracks[self.suitId] = Sequence(LerpPosInterval(
-                self.suit, duration=TugOfWarGameGlobals.SEND_UPDATE, pos=newPos), Func(self.checkIfFallen))
+            self.animTracks[self.suitId] = Sequence(
+                LerpPosInterval(
+                    self.suit,
+                    duration=TugOfWarGameGlobals.SEND_UPDATE,
+                    pos=newPos), Func(self.checkIfFallen))
             self.animTracks[self.suitId].start()
 
     def moveToons(self):
@@ -1391,11 +1203,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
                     origPos = self.posDict[avId]
                     curPos = toon.getPos()
                     newPos = VBase3(
-                        origPos[0] +
-                        self.offsetDict[avId] /
-                        self.handycap,
-                        curPos[1],
-                        curPos[2])
+                        origPos[0] + self.offsetDict[avId] / self.handycap,
+                        curPos[1], curPos[2])
                     if self.animTracks[avId] is not None:
                         if self.animTracks[avId].isPlaying():
                             self.animTracks[avId].finish()
@@ -1404,28 +1213,28 @@ class DistributedTugOfWarGame(DistributedMinigame):
                     if avId not in self.fallenList:
                         self.animTracks[avId] = Sequence(
                             LerpPosInterval(
-                                toon, duration=TugOfWarGameGlobals.SEND_UPDATE, pos=newPos), Func(
-                                self.checkIfFallen, avId))
+                                toon,
+                                duration=TugOfWarGameGlobals.SEND_UPDATE,
+                                pos=newPos), Func(self.checkIfFallen, avId))
                         self.animTracks[avId].start()
 
     def checkIfFallen(self, avId=None):
         if avId is None:
             if self.suitId not in self.fallenList:
                 curPos = self.suit.getPos()
-                if (curPos[0] < 0 or curPos[0] > -
-                        2 or curPos[0] > 0) and curPos[0] < 2:
+                if (curPos[0] < 0 or curPos[0] > -2
+                        or curPos[0] > 0) and curPos[0] < 2:
                     self.hideControls()
                     self.throwInWater()
                     losingSide = 1
-                    self.sendUpdate('reportEndOfContest', [
-                        losingSide])
+                    self.sendUpdate('reportEndOfContest', [losingSide])
 
         elif avId not in self.fallenList:
             toon = self.getAvatar(avId)
             if toon:
                 curPos = toon.getPos()
-                if (curPos[0] < 0 or curPos[0] > -
-                        2 or curPos[0] > 0) and curPos[0] < 2:
+                if (curPos[0] < 0 or curPos[0] > -2
+                        or curPos[0] > 0) and curPos[0] < 2:
                     self.hideControls()
                     losingSide = self.sides[avId]
                     for avId in self.avIdList:
@@ -1433,19 +1242,14 @@ class DistributedTugOfWarGame(DistributedMinigame):
                             self.throwInWater(avId)
                             continue
 
-                    self.sendUpdate('reportEndOfContest', [
-                        losingSide])
+                    self.sendUpdate('reportEndOfContest', [losingSide])
 
     def throwInWater(self, avId=None):
         if avId is None:
             self.fallenList.append(self.suitId)
             waterPos = self.drinkPositions.pop()
-            newPos = VBase3(
-                waterPos[0],
-                waterPos[1],
-                waterPos[2] -
-                self.suit.getHeight() /
-                1.5)
+            newPos = VBase3(waterPos[0], waterPos[1],
+                            waterPos[2] - self.suit.getHeight() / 1.5)
             self.suit.loop('neutral')
             self.dropShadowDict[self.suitId].reparentTo(hidden)
             loser = self.suit
@@ -1454,11 +1258,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
             self.fallenList.append(avId)
             toon = self.getAvatar(avId)
             waterPos = self.drinkPositions.pop()
-            newPos = VBase3(
-                waterPos[0],
-                waterPos[1],
-                waterPos[2] -
-                toon.getHeight())
+            newPos = VBase3(waterPos[0], waterPos[1],
+                            waterPos[2] - toon.getHeight())
             toon.loop('neutral')
             self.dropShadowDict[avId].reparentTo(hidden)
             loser = toon
@@ -1474,26 +1275,14 @@ class DistributedTugOfWarGame(DistributedMinigame):
         self.animTracks[animId] = Sequence(
             Parallel(
                 ActorInterval(
-                    actor=loser,
-                    animName='slip-forward',
-                    duration=2.0),
-                LerpPosInterval(
-                    loser,
-                    duration=2.0,
-                    pos=newPos),
+                    actor=loser, animName='slip-forward', duration=2.0),
+                LerpPosInterval(loser, duration=2.0, pos=newPos),
                 Sequence(
                     Wait(1.0),
                     Parallel(
-                        Func(
-                            base.playSfx,
-                            self.sndHitWater),
-                        Func(
-                            self.splash.play),
-                        Func(
-                            self.ripples.play)))),
-            Func(
-                loser.loop,
-                'neutral'))
+                        Func(base.playSfx, self.sndHitWater),
+                        Func(self.splash.play), Func(self.ripples.play)))),
+            Func(loser.loop, 'neutral'))
         self.animTracks[animId].start()
 
     def computeForce(self, keyRate):
@@ -1502,8 +1291,11 @@ class DistributedTugOfWarGame(DistributedMinigame):
             F = 0.75 * keyRate
         else:
             stdDev = 0.25 * self.idealRate
-            F = self.advantage * (self.rateMatchAward + 4 + 0.40000000000000002 * self.idealRate) * math.pow(
-                math.e, -math.pow(keyRate - self.idealRate, 2) / 2.0 * math.pow(stdDev, 2))
+            F = self.advantage * (
+                self.rateMatchAward + 4 +
+                0.40000000000000002 * self.idealRate) * math.pow(
+                    math.e, -math.pow(keyRate - self.idealRate, 2) / 2.0 *
+                    math.pow(stdDev, 2))
         return F
 
     def initRopes(self):
@@ -1520,11 +1312,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
                 rope.ropeNode.setUvMode(RopeNode.UVDistance)
                 rope.ropeNode.setUvDirection(1)
                 rope.setTransparency(1)
-                rope.setColor(
-                    0.89000000000000001,
-                    0.89000000000000001,
-                    0.59999999999999998,
-                    1)
+                rope.setColor(0.89000000000000001, 0.89000000000000001,
+                              0.59999999999999998, 1)
 
             self.tugRopes.append(rope)
 
@@ -1532,10 +1321,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
 
     def _DistributedTugOfWarGame__spawnUpdateRopeTask(self):
         taskMgr.remove(self.taskName(self.UPDATE_ROPE_TASK))
-        taskMgr.add(
-            self._DistributedTugOfWarGame__updateRopeTask,
-            self.taskName(
-                self.UPDATE_ROPE_TASK))
+        taskMgr.add(self._DistributedTugOfWarGame__updateRopeTask,
+                    self.taskName(self.UPDATE_ROPE_TASK))
 
     def _DistributedTugOfWarGame__updateRopeTask(self, task):
         if self.tugRopes is not None:
@@ -1561,9 +1348,8 @@ class DistributedTugOfWarGame(DistributedMinigame):
 
     def _DistributedTugOfWarGame__spawnMouseSpeedTask(self):
         taskMgr.remove(self.taskName('mouseSpeed'))
-        taskMgr.add(
-            self._DistributedTugOfWarGame__mouseSpeedTask,
-            self.taskName('mouseSpeed'))
+        taskMgr.add(self._DistributedTugOfWarGame__mouseSpeedTask,
+                    self.taskName('mouseSpeed'))
 
     def _DistributedTugOfWarGame__killMouseSpeedTask(self):
         taskMgr.remove(self.taskName('mouseSpeed'))

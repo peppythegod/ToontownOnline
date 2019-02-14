@@ -15,9 +15,8 @@ from direct.interval.IntervalGlobal import *
 from toontown.battle import MovieUtil
 
 
-class DistributedMoleField(
-        DistributedNodePathEntity,
-        MoleFieldBase.MoleFieldBase):
+class DistributedMoleField(DistributedNodePathEntity,
+                           MoleFieldBase.MoleFieldBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedMoleField')
     ScheduleTaskName = 'moleFieldScheduler'
@@ -73,14 +72,12 @@ class DistributedMoleField(
         self.loadModel()
         self.loadGui()
         self.detectName = 'moleField %s' % self.doId
-        taskMgr.doMethodLater(
-            0.10000000000000001,
-            self._DistributedMoleField__detect,
-            self.detectName)
+        taskMgr.doMethodLater(0.10000000000000001,
+                              self._DistributedMoleField__detect,
+                              self.detectName)
         self.calcDimensions()
         self.notify.debug(
-            'announceGenerate doId=%d entId=%d' %
-            (self.doId, self.entId))
+            'announceGenerate doId=%d entId=%d' % (self.doId, self.entId))
 
     def setNumSquaresX(self, num):
         self.numSquaresX = num
@@ -128,31 +125,29 @@ class DistributedMoleField(
         self.soundIUpDown = Sequence(upInterval, downInterval)
 
     def centerCenterNode(self):
-        self.centerNode.setPos(
-            self.dimensionX * 0.5,
-            self.dimensionY * 0.5,
-            0.0)
+        self.centerNode.setPos(self.dimensionX * 0.5, self.dimensionY * 0.5,
+                               0.0)
 
     def loadGui(self):
-        self.frame2D = DirectFrame(scale=1.0,
-                                   pos=(0.0,
-                                        0,
-                                        0.90000000000000002),
-                                   relief=DGG.FLAT,
-                                   parent=aspect2d,
-                                   frameSize=(-0.29999999999999999,
-                                              0.29999999999999999,
-                                              -0.050000000000000003,
-                                              0.050000000000000003),
-                                   frameColor=(0.73699999999999999,
-                                               0.57299999999999995,
-                                               0.34499999999999997,
-                                               0.29999999999999999))
+        self.frame2D = DirectFrame(
+            scale=1.0,
+            pos=(0.0, 0, 0.90000000000000002),
+            relief=DGG.FLAT,
+            parent=aspect2d,
+            frameSize=(-0.29999999999999999, 0.29999999999999999,
+                       -0.050000000000000003, 0.050000000000000003),
+            frameColor=(0.73699999999999999, 0.57299999999999995,
+                        0.34499999999999997, 0.29999999999999999))
         self.scoreLabel = DirectLabel(
-            parent=self.frame2D, relief=None, pos=(
-                0, 0, 0), scale=1.0, text='', text_font=ToontownGlobals.getSignFont(), text0_fg=(
-                1, 1, 1, 1), text_scale=0.074999999999999997, text_pos=(
-                0, -0.02))
+            parent=self.frame2D,
+            relief=None,
+            pos=(0, 0, 0),
+            scale=1.0,
+            text='',
+            text_font=ToontownGlobals.getSignFont(),
+            text0_fg=(1, 1, 1, 1),
+            text_scale=0.074999999999999997,
+            text_pos=(0, -0.02))
         self.updateGuiScore()
         self.frame2D.hide()
 
@@ -205,22 +200,15 @@ class DistributedMoleField(
 
     def scheduleTask(self, task):
         curTime = self.getCurrentGameTime()
-        while self.schedule and self.schedule[0][0] <= curTime and self.activeField:
+        while self.schedule and self.schedule[0][
+                0] <= curTime and self.activeField:
             popupInfo = self.schedule[0]
             self.schedule = self.schedule[1:]
-            (startTime,
-             moleIndex,
-             curMoveUpTime,
-             curStayUpTime,
-             curMoveDownTime,
-             moleType) = popupInfo
+            (startTime, moleIndex, curMoveUpTime, curStayUpTime,
+             curMoveDownTime, moleType) = popupInfo
             hill = self.moleHills[moleIndex]
-            hill.doMolePop(
-                startTime,
-                curMoveUpTime,
-                curStayUpTime,
-                curMoveDownTime,
-                moleType)
+            hill.doMolePop(startTime, curMoveUpTime, curStayUpTime,
+                           curMoveDownTime, moleType)
         if self.schedule:
             return task.cont
         else:
@@ -247,18 +235,13 @@ class DistributedMoleField(
         if moleHill.hillType == MoleFieldBase.HILL_MOLE:
             timestamp = globalClockDelta.getFrameNetworkTime()
             moleHill.setHillType(MoleFieldBase.HILL_WHACKED)
-            self.sendUpdate('whackedBomb', [
-                moleIndex,
-                popupNum,
-                timestamp])
+            self.sendUpdate('whackedBomb', [moleIndex, popupNum, timestamp])
             self._DistributedMoleField__showToonHitByBomb(
                 localAvatar.doId, moleIndex, timestamp)
         elif moleHill.hillType == MoleFieldBase.HILL_BOMB:
             moleHill.setHillType(MoleFieldBase.HILL_COGWHACKED)
             self.soundCog.play()
-            self.sendUpdate('whackedMole', [
-                moleIndex,
-                popupNum])
+            self.sendUpdate('whackedMole', [moleIndex, popupNum])
 
     def updateMole(self, moleIndex, status):
         if status == self.WHACKED:
@@ -332,10 +315,9 @@ class DistributedMoleField(
         elif self.isToonInRange:
             self.doToonOutOfRange()
 
-        taskMgr.doMethodLater(
-            0.10000000000000001,
-            self._DistributedMoleField__detect,
-            self.detectName)
+        taskMgr.doMethodLater(0.10000000000000001,
+                              self._DistributedMoleField__detect,
+                              self.detectName)
         return Task.done
 
     def doToonInRange(self):
@@ -373,8 +355,10 @@ class DistributedMoleField(
 
             moleHill.doMoleDown()
 
-    def _DistributedMoleField__showToonHitByBomb(
-            self, avId, moleIndex, timestamp=0):
+    def _DistributedMoleField__showToonHitByBomb(self,
+                                                 avId,
+                                                 moleIndex,
+                                                 timestamp=0):
         toon = base.cr.doId2do.get(avId)
         moleHill = self.moleHills[moleIndex]
         if toon is None:
@@ -397,30 +381,23 @@ class DistributedMoleField(
         dropShadow = toon.dropShadow.copyTo(parentNode)
         dropShadow.setScale(toon.dropShadow.getScale(render))
         trajectory = Trajectory.Trajectory(
-            0, Point3(
-                0, 0, 0), Point3(
-                0, 0, 50), gravMult=1.0)
+            0, Point3(0, 0, 0), Point3(0, 0, 50), gravMult=1.0)
         flyDur = trajectory.calcTimeOfImpactOnPlane(0.0)
         endTile = [
             rng.randint(0, self.numSquaresX - 1),
-            rng.randint(0, self.numSquaresY - 1)]
-        endWorldCoords = (
-            self.getX(render) +
-            endTile[0] *
-            self.spacingX,
-            self.getY(render) +
-            endTile[1] *
-            self.spacingY)
+            rng.randint(0, self.numSquaresY - 1)
+        ]
+        endWorldCoords = (self.getX(render) + endTile[0] * self.spacingX,
+                          self.getY(render) + endTile[1] * self.spacingY)
         endPos = Point3(endWorldCoords[0], endWorldCoords[1], startPos[2])
 
-        def flyFunc(
-                t,
-                trajectory,
-                startPos=startPos,
-                endPos=endPos,
-                dur=flyDur,
-                moveNode=parentNode,
-                flyNode=toon):
+        def flyFunc(t,
+                    trajectory,
+                    startPos=startPos,
+                    endPos=endPos,
+                    dur=flyDur,
+                    moveNode=parentNode,
+                    flyNode=toon):
             u = t / dur
             moveNode.setX(startPos[0] + u * (endPos[0] - startPos[0]))
             moveNode.setY(startPos[1] + u * (endPos[1] - startPos[1]))
@@ -455,13 +432,11 @@ class DistributedMoleField(
             destCamPos.setZ(zenith * 1.3)
             destCamPos.setY(destCamPos[1] * 0.29999999999999999)
 
-            def camTask(
-                    task,
-                    zenith=zenith,
-                    flyNode=toon,
-                    startCamPos=startCamPos,
-                    camOffset=destCamPos -
-                    startCamPos):
+            def camTask(task,
+                        zenith=zenith,
+                        flyNode=toon,
+                        startCamPos=startCamPos,
+                        camOffset=destCamPos - startCamPos):
                 u = flyNode.getZ() / zenith
                 camera.lookAt(toon)
                 return Task.cont
@@ -469,11 +444,10 @@ class DistributedMoleField(
             camTaskName = 'mazeToonFlyCam-' + repr(avId)
             taskMgr.add(camTask, camTaskName, priority=20)
 
-            def cleanupCamTask(
-                    self=self,
-                    toon=toon,
-                    camTaskName=camTaskName,
-                    startCamPos=startCamPos):
+            def cleanupCamTask(self=self,
+                               toon=toon,
+                               camTaskName=camTaskName,
+                               startCamPos=startCamPos):
                 taskMgr.remove(camTaskName)
                 self.camParent.reparentTo(toon)
                 camera.setPos(startCamPos)
@@ -490,22 +464,13 @@ class DistributedMoleField(
         startHpr = geomNode.getHpr()
         destHpr = Point3(startHpr)
         hRot = rng.randrange(1, 8)
-        if rng.choice([
-                0,
-                1]):
+        if rng.choice([0, 1]):
             hRot = -hRot
 
         destHpr.setX(destHpr[0] + hRot * 360)
         spinHTrack = Sequence(
-            LerpHprInterval(
-                geomNode,
-                flyDur,
-                destHpr,
-                startHpr=startHpr),
-            Func(
-                safeSetHpr,
-                geomNode,
-                startHpr),
+            LerpHprInterval(geomNode, flyDur, destHpr, startHpr=startHpr),
+            Func(safeSetHpr, geomNode, startHpr),
             name=toon.uniqueName('hitBySuit-spinH'))
         parent = geomNode.getParent()
         rotNode = parent.attachNewNode('rotNode')
@@ -516,22 +481,13 @@ class DistributedMoleField(
         startHpr = rotNode.getHpr()
         destHpr = Point3(startHpr)
         pRot = rng.randrange(1, 3)
-        if rng.choice([
-                0,
-                1]):
+        if rng.choice([0, 1]):
             pRot = -pRot
 
         destHpr.setY(destHpr[1] + pRot * 360)
         spinPTrack = Sequence(
-            LerpHprInterval(
-                rotNode,
-                flyDur,
-                destHpr,
-                startHpr=startHpr),
-            Func(
-                safeSetHpr,
-                rotNode,
-                startHpr),
+            LerpHprInterval(rotNode, flyDur, destHpr, startHpr=startHpr),
+            Func(safeSetHpr, rotNode, startHpr),
             name=toon.uniqueName('hitBySuit-spinP'))
         soundTrack = Sequence()
 
@@ -548,12 +504,11 @@ class DistributedMoleField(
 
             toon.dropShadow.hide()
 
-        def postFunc(
-                self=self,
-                avId=avId,
-                oldGeomNodeZ=oldGeomNodeZ,
-                dropShadow=dropShadow,
-                parentNode=parentNode):
+        def postFunc(self=self,
+                     avId=avId,
+                     oldGeomNodeZ=oldGeomNodeZ,
+                     dropShadow=dropShadow,
+                     parentNode=parentNode):
             if avId == localAvatar.doId:
                 base.localAvatar.setPos(endPos)
                 if hasattr(self, 'orthoWalk'):
@@ -586,20 +541,10 @@ class DistributedMoleField(
 
         preFunc()
         hitTrack = Sequence(
-            Func(
-                toon.setPos,
-                Point3(
-                    0.0,
-                    0.0,
-                    0.0)),
+            Func(toon.setPos, Point3(0.0, 0.0, 0.0)),
             Wait(0.25),
-            Parallel(
-                flyTrack,
-                cameraTrack,
-                self.soundIUpDown,
-                spinHTrack,
-                spinPTrack,
-                soundTrack),
+            Parallel(flyTrack, cameraTrack, self.soundIUpDown, spinHTrack,
+                     spinPTrack, soundTrack),
             Func(postFunc),
             name=toon.uniqueName('hitBySuit'))
         self.toonHitTracks[avId] = hitTrack

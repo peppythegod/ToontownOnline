@@ -76,11 +76,7 @@ class DistributedFishingTarget(DistributedNode.DistributedNode):
 
         self.track = Sequence(
             LerpPosInterval(
-                self,
-                time - ts,
-                Point3(
-                    *pos),
-                blendType='easeInOut'))
+                self, time - ts, Point3(*pos), blendType='easeInOut'))
         self.track.start()
 
     def getRadius(self):

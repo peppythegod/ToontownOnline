@@ -13,15 +13,14 @@ from toontown.toonbase import ToontownGlobals, ToontownBattleGlobals
 from toontown.coghq import DistributedBattleFactoryAI
 
 
-class DistributedFactoryAI(
-        DistributedLevelAI.DistributedLevelAI,
-        FactoryBase.FactoryBase):
+class DistributedFactoryAI(DistributedLevelAI.DistributedLevelAI,
+                           FactoryBase.FactoryBase):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedFactoryAI')
 
     def __init__(self, air, factoryId, zoneId, entranceId, avIds):
-        DistributedLevelAI.DistributedLevelAI.__init__(
-            self, air, zoneId, entranceId, avIds)
+        DistributedLevelAI.DistributedLevelAI.__init__(self, air, zoneId,
+                                                       entranceId, avIds)
         FactoryBase.FactoryBase.__init__(self)
         self.setFactoryId(factoryId)
 
@@ -52,12 +51,9 @@ class DistributedFactoryAI(
         self.notify.info('creating cogs')
         cogSpecModule = FactorySpecs.getCogSpecModule(self.factoryId)
         self.planner = LevelSuitPlannerAI.LevelSuitPlannerAI(
-            self.air,
-            self,
-            DistributedFactorySuitAI.DistributedFactorySuitAI,
+            self.air, self, DistributedFactorySuitAI.DistributedFactorySuitAI,
             DistributedBattleFactoryAI.DistributedBattleFactoryAI,
-            cogSpecModule.CogData,
-            cogSpecModule.ReserveCogData,
+            cogSpecModule.CogData, cogSpecModule.ReserveCogData,
             cogSpecModule.BattleCells)
         suitHandles = self.planner.genSuits()
         messenger.send('plannerCreated-' + str(self.doId))
@@ -65,14 +61,13 @@ class DistributedFactoryAI(
         self.reserveSuits = suitHandles['reserveSuits']
         self.d_setSuits()
         scenario = 0
-        description = '%s|%s|%s|%s' % (
-            self.factoryId, self.entranceId, scenario, self.avIdList)
+        description = '%s|%s|%s|%s' % (self.factoryId, self.entranceId,
+                                       scenario, self.avIdList)
         for avId in self.avIdList:
             self.air.writeServerEvent('factoryEntered', avId, description)
 
         self.notify.info(
-            'finish factory %s %s creation' %
-            (self.factoryId, self.doId))
+            'finish factory %s %s creation' % (self.factoryId, self.doId))
 
     def delete(self):
         self.notify.info('delete: %s' % self.doId)
@@ -102,8 +97,7 @@ class DistributedFactoryAI(
 
     def d_setForemanConfronted(self, avId):
         if avId in self.avIdList:
-            self.sendUpdate('setForemanConfronted', [
-                avId])
+            self.sendUpdate('setForemanConfronted', [avId])
         else:
             self.notify.warning(
                 '%s: d_setForemanConfronted: av %s not in av list %s' %
@@ -120,8 +114,8 @@ class DistributedFactoryAI(
                 continue
 
         scenario = 0
-        description = '%s|%s|%s|%s' % (
-            self.factoryId, self.entranceId, scenario, activeVictorIds)
+        description = '%s|%s|%s|%s' % (self.factoryId, self.entranceId,
+                                       scenario, activeVictorIds)
         for avId in activeVictorIds:
             self.air.writeServerEvent('factoryDefeated', avId, description)
 
@@ -143,9 +137,7 @@ class DistributedFactoryAI(
         return self.cogLevel
 
     def d_setSuits(self):
-        self.sendUpdate('setSuits', [
-            self.getSuits(),
-            self.getReserveSuits()])
+        self.sendUpdate('setSuits', [self.getSuits(), self.getReserveSuits()])
 
     def getSuits(self):
         suitIds = []

@@ -131,7 +131,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
                 'warning': NSWarning,
                 'info': NSInfo,
                 'debug': NSDebug,
-                'spam': NSSpam}[args[2]])
+                'spam': NSSpam
+            }[args[2]])
         elif wordIs('~stress'):
             factor = word[7:]
             if factor:
@@ -209,7 +210,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
             if self.cr.periodTimerExpired:
                 response = 'Period timer has expired.'
             elif self.cr.periodTimerStarted:
-                elapsed = globalClock.getFrameTime() - self.cr.periodTimerStarted
+                elapsed = globalClock.getFrameTime(
+                ) - self.cr.periodTimerStarted
                 secondsRemaining = self.cr.periodTimerSecondsRemaining - elapsed
                 response = 'Period timer expires in %s seconds.' % int(
                     secondsRemaining)
@@ -331,7 +333,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
             report = ObjectReport.ObjectReport('client ~objects')
             if 'all' in args:
                 self.notify.info('printing full object set...')
-                report.getObjectPool().printObjsByType(printReferrers='ref' in args)
+                report.getObjectPool().printObjsByType(
+                    printReferrers='ref' in args)
 
             if hasattr(self, 'baselineObjReport'):
                 self.notify.info(
@@ -355,8 +358,7 @@ class MagicWordManager(DistributedObject.DistributedObject):
                 self.setMagicWordResponse('object count logged')
 
             oc = ObjectCount(
-                '~objectcount',
-                doneCallback=handleObjectCountDone)
+                '~objectcount', doneCallback=handleObjectCountDone)
         elif wordIs('~objecthg'):
             import gc as gc
             objs = gc.get_objects()
@@ -408,8 +410,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
             leakTask = None
         elif wordIs('~leakmessage'):
             MessengerLeakDetector._leakMessengerObject()
-            self.down_setMagicWordResponse(
-                senderId, 'messenger leak object created')
+            self.down_setMagicWordResponse(senderId,
+                                           'messenger leak object created')
         elif wordIs('~pstats'):
             args = word.split()
             hostname = None
@@ -450,11 +452,9 @@ class MagicWordManager(DistributedObject.DistributedObject):
             else:
                 setting = not wasOn
             taskMgr.setProfileFrames(setting)
-            self.setMagicWordResponse(
-                'frame profiling %s%s' %
-                (choice(
-                    setting, 'ON', 'OFF'), choice(
-                    wasOn == setting, ' already', '')))
+            self.setMagicWordResponse('frame profiling %s%s' % (choice(
+                setting, 'ON', 'OFF'), choice(wasOn == setting, ' already',
+                                              '')))
         elif wordIs('~taskprofile'):
             args = word.split()
             wasOn = bool(taskMgr.getProfileTasks())
@@ -463,11 +463,9 @@ class MagicWordManager(DistributedObject.DistributedObject):
             else:
                 setting = not wasOn
             taskMgr.setProfileTasks(setting)
-            self.setMagicWordResponse(
-                'task profiling %s%s' %
-                (choice(
-                    setting, 'ON', 'OFF'), choice(
-                    wasOn == setting, ' already', '')))
+            self.setMagicWordResponse('task profiling %s%s' % (choice(
+                setting, 'ON', 'OFF'), choice(wasOn == setting, ' already',
+                                              '')))
         elif wordIs('~taskspikethreshold'):
             args = word.split()
             if len(args) > 1:
@@ -526,10 +524,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
         elif wordIs('~detectleaks'):
             started = self.cr.startLeakDetector()
             self.setMagicWordResponse(
-                choice(
-                    started,
-                    'leak detector started',
-                    'leak detector already started'))
+                choice(started, 'leak detector started',
+                       'leak detector already started'))
         elif wordIs('~taskthreshold'):
             args = word.split()
             if len(args) > 1.0:
@@ -549,20 +545,15 @@ class MagicWordManager(DistributedObject.DistributedObject):
             self.setMagicWordResponse('logging client messenger...')
         elif wordIs('~clientcrash'):
             DelayedCall(
-                Functor(
-                    self.notify.error,
-                    '~clientcrash: simulating a client crash'))
+                Functor(self.notify.error,
+                        '~clientcrash: simulating a client crash'))
         elif wordIs('~badDelete'):
             doId = 0
             while doId in base.cr.doId2do:
                 doId += 1
             DelayedCall(
-                Functor(
-                    base.cr.deleteObjectLocation,
-                    ScratchPad(
-                        doId=doId),
-                    1,
-                    1))
+                Functor(base.cr.deleteObjectLocation, ScratchPad(doId=doId), 1,
+                        1))
             self.setMagicWordResponse('doing bad delete')
         elif wordIs('~idTags'):
             messenger.send('nameTagShowAvId', [])
@@ -601,14 +592,16 @@ class MagicWordManager(DistributedObject.DistributedObject):
             args = word.split()
             if len(args) > 1.0 and hasattr(self.cr, 'leakDetector'):
                 gptcJob = self.cr.leakDetector.getPathsToContainers(
-                    '~gptc', args[1], Functor(self._handleGPTCfinished, args[1]))
+                    '~gptc', args[1], Functor(self._handleGPTCfinished,
+                                              args[1]))
             else:
                 self.setMagicWordResponse('error')
         elif wordIs('~gptcn'):
             args = word.split()
             if len(args) > 1.0 and hasattr(self.cr, 'leakDetector'):
                 gptcnJob = self.cr.leakDetector.getPathsToContainersNamed(
-                    '~gptcn', args[1], Functor(self._handleGPTCNfinished, args[1]))
+                    '~gptcn', args[1],
+                    Functor(self._handleGPTCNfinished, args[1]))
             else:
                 self.setMagicWordResponse('error')
         else:
@@ -617,16 +610,12 @@ class MagicWordManager(DistributedObject.DistributedObject):
 
     def toggleRun(self):
         if config.GetBool('want-running', 1):
-            inputState.set(
-                'debugRunning',
-                inputState.isSet('debugRunning') != True)
+            inputState.set('debugRunning',
+                           inputState.isSet('debugRunning') != True)
 
     def d_setMagicWord(self, magicWord, avId, zoneId):
-        self.sendUpdate('setMagicWord', [
-            magicWord,
-            avId,
-            zoneId,
-            base.cr.userSignature])
+        self.sendUpdate('setMagicWord',
+                        [magicWord, avId, zoneId, base.cr.userSignature])
 
     def b_setMagicWord(self, magicWord, avId=None, zoneId=None):
         if self.cr.wantMagicWords:
@@ -651,8 +640,7 @@ class MagicWordManager(DistributedObject.DistributedObject):
                     errorCode = int(args[1])
 
                 self.notify.info(
-                    'Simulating client crash: exit error = %s' %
-                    errorCode)
+                    'Simulating client crash: exit error = %s' % errorCode)
                 base.exitShow(errorCode)
 
             if magicWord.count('~exception'):
@@ -670,8 +658,7 @@ class MagicWordManager(DistributedObject.DistributedObject):
         base.talkAssistant.receiveDeveloperMessage(response)
 
     def d_setWho(self, avIds):
-        self.sendUpdate('setWho', [
-            avIds])
+        self.sendUpdate('setWho', [avIds])
 
     def _handleGPTCfinished(self, ct, gptcJob):
         self.setMagicWordResponse('gptc(%s) finished' % ct)
@@ -711,7 +698,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
                 name = className
 
             if string.lower(name) == lowerName and string.lower(
-                    className) == lowerName or string.lower(className) == 'distributed' + lowerName:
+                    className) == lowerName or string.lower(
+                        className) == 'distributed' + lowerName:
                 result.append((name, obj))
                 continue
 
@@ -787,7 +775,7 @@ class MagicWordManager(DistributedObject.DistributedObject):
             try:
                 bitmask |= BitMask32.bit(int(w))
                 print bitmask
-            continue
+                continue
             except ValueError:
                 invalid += ' ' + w
                 continue
@@ -839,8 +827,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
             tn.setCardTexture(page)
             np = self.shownFontNode.attachNewNode(tn.generate())
             np.setScale(pageScale)
-            (np.setPos(((float(x) / numXPages) * 2 - 1) + pageMargin,
-                       0, 1 - (float(y) / numYPages) * 2 - pageMargin),)
+            (np.setPos(((float(x) / numXPages) * 2 - 1) + pageMargin, 0,
+                       1 - (float(y) / numYPages) * 2 - pageMargin), )
             x += 1
             if x >= numXPages:
                 y += 1
@@ -945,10 +933,8 @@ class MagicWordManager(DistributedObject.DistributedObject):
 
         lowerName = string.lower(name)
         for av in Avatar.Avatar.ActiveAvatars:
-            if isinstance(
-                av, self.GameAvatarClass) and string.strip(
-                string.lower(
-                    av.getName())) == lowerName:
+            if isinstance(av, self.GameAvatarClass) and string.strip(
+                    string.lower(av.getName())) == lowerName:
                 return av.doId
                 continue
 
@@ -968,13 +954,11 @@ class MagicWordManager(DistributedObject.DistributedObject):
 
     def garbageReportDone(self, garbageReport):
         self.setMagicWordResponse(
-            '%s garbage cycles' %
-            garbageReport.getNumCycles())
+            '%s garbage cycles' % garbageReport.getNumCycles())
 
 
 def magicWord(mw):
-    messenger.send('magicWord', [
-        mw])
+    messenger.send('magicWord', [mw])
 
 
 __builtin__.magicWord = magicWord

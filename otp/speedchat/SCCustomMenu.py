@@ -4,7 +4,6 @@ from otp.otpbase.OTPLocalizer import CustomSCStrings
 
 
 class SCCustomMenu(SCMenu):
-
     def __init__(self):
         SCMenu.__init__(self)
         self.accept('customMessagesChanged',

@@ -73,14 +73,10 @@ class HtmlView(DirectObject):
         if self.useHalfTexture:
             self.setupHalfTextures()
 
-        self.accept('mouse1', self.mouseDown, [
-            AwWebView.LEFTMOUSEBTN])
-        self.accept('mouse3', self.mouseDown, [
-            AwWebView.RIGHTMOUSEBTN])
-        self.accept('mouse1-up', self.mouseUp, [
-            AwWebView.LEFTMOUSEBTN])
-        self.accept('mouse3-up', self.mouseUp, [
-            AwWebView.RIGHTMOUSEBTN])
+        self.accept('mouse1', self.mouseDown, [AwWebView.LEFTMOUSEBTN])
+        self.accept('mouse3', self.mouseDown, [AwWebView.RIGHTMOUSEBTN])
+        self.accept('mouse1-up', self.mouseUp, [AwWebView.LEFTMOUSEBTN])
+        self.accept('mouse3-up', self.mouseUp, [AwWebView.RIGHTMOUSEBTN])
 
     def getInGameNewsUrl(self):
         result = base.config.GetString(
@@ -89,14 +85,13 @@ class HtmlView(DirectObject):
         override = base.config.GetString('in-game-news-url', '')
         if override:
             self.notify.info(
-                'got an override url,  using %s for in a game news' %
-                override)
+                'got an override url,  using %s for in a game news' % override)
             result = override
         else:
 
             try:
-                launcherUrl = base.launcher.getValue(
-                    'GAME_IN_GAME_NEWS_URL', '')
+                launcherUrl = base.launcher.getValue('GAME_IN_GAME_NEWS_URL',
+                                                     '')
                 if launcherUrl:
                     result = launcherUrl
                     self.notify.info(
@@ -108,8 +103,8 @@ class HtmlView(DirectObject):
                         result)
             except BaseException:
                 self.notify.warning(
-                    'got exception getting GAME_IN_GAME_NEWS_URL from launcher, using %s' %
-                    result)
+                    'got exception getting GAME_IN_GAME_NEWS_URL from launcher, using %s'
+                    % result)
 
         return result
 
@@ -119,8 +114,8 @@ class HtmlView(DirectObject):
         aspect = base.camLens.getAspectRatio()
         htmlWidth = 2.0 * aspect * WEB_WIDTH_PIXELS / float(WIN_WIDTH)
         htmlHeight = 2.0 * float(WEB_HEIGHT_PIXELS) / float(WIN_HEIGHT)
-        cm.setFrame(-htmlWidth / 2.0, htmlWidth / 2.0, -
-                    htmlHeight / 2.0, htmlHeight / 2.0)
+        cm.setFrame(-htmlWidth / 2.0, htmlWidth / 2.0, -htmlHeight / 2.0,
+                    htmlHeight / 2.0)
         bottomRightX = WEB_WIDTH_PIXELS / float(WEB_WIDTH + 1)
         bottomRightY = WEB_HEIGHT_PIXELS / float(WEB_HEIGHT + 1)
         cm.setUvRange(Point2(0, 1 - bottomRightY), Point2(bottomRightX, 1))
@@ -128,13 +123,8 @@ class HtmlView(DirectObject):
         self.quad = NodePath(card)
         self.quad.reparentTo(self.parent)
         self.guiTex = Texture('guiTex')
-        self.guiTex.setupTexture(
-            Texture.TT2dTexture,
-            WEB_WIDTH,
-            WEB_HEIGHT,
-            1,
-            Texture.TUnsignedByte,
-            Texture.FRgba)
+        self.guiTex.setupTexture(Texture.TT2dTexture, WEB_WIDTH, WEB_HEIGHT, 1,
+                                 Texture.TUnsignedByte, Texture.FRgba)
         self.guiTex.setMinfilter(Texture.FTLinear)
         self.guiTex.setKeepRamImage(True)
         self.guiTex.makeRamImage()
@@ -166,13 +156,9 @@ class HtmlView(DirectObject):
         self.leftQuad = NodePath(card)
         self.leftQuad.reparentTo(self.parent)
         self.leftGuiTex = Texture('guiTex')
-        self.leftGuiTex.setupTexture(
-            Texture.TT2dTexture,
-            WEB_HALF_WIDTH,
-            WEB_HEIGHT,
-            1,
-            Texture.TUnsignedByte,
-            Texture.FRgba)
+        self.leftGuiTex.setupTexture(Texture.TT2dTexture, WEB_HALF_WIDTH,
+                                     WEB_HEIGHT, 1, Texture.TUnsignedByte,
+                                     Texture.FRgba)
         self.leftGuiTex.setKeepRamImage(True)
         self.leftGuiTex.makeRamImage()
         self.leftGuiTex.setWrapU(Texture.WMClamp)
@@ -195,13 +181,9 @@ class HtmlView(DirectObject):
         self.rightQuad = NodePath(card)
         self.rightQuad.reparentTo(self.parent)
         self.rightGuiTex = Texture('guiTex')
-        self.rightGuiTex.setupTexture(
-            Texture.TT2dTexture,
-            WEB_HALF_WIDTH,
-            WEB_HEIGHT,
-            1,
-            Texture.TUnsignedByte,
-            Texture.FRgba)
+        self.rightGuiTex.setupTexture(Texture.TT2dTexture, WEB_HALF_WIDTH,
+                                      WEB_HEIGHT, 1, Texture.TUnsignedByte,
+                                      Texture.FRgba)
         self.rightGuiTex.setKeepRamImage(True)
         self.rightGuiTex.makeRamImage()
         self.rightGuiTex.setWrapU(Texture.WMClamp)
@@ -225,15 +207,12 @@ class HtmlView(DirectObject):
         self.notify.debug('new LL=%s, UR=%s' % (ll, ur))
         relPointll = self.quad.getRelativePoint(aspect2d, ll)
         self.notify.debug('relPoint = %s' % relPointll)
-        self.mouseLL = (
-            aspect2d.getScale()[0] * ll[0],
-            aspect2d.getScale()[2] * ll[2])
-        self.mouseUR = (
-            aspect2d.getScale()[0] * ur[0],
-            aspect2d.getScale()[2] * ur[2])
+        self.mouseLL = (aspect2d.getScale()[0] * ll[0],
+                        aspect2d.getScale()[2] * ll[2])
+        self.mouseUR = (aspect2d.getScale()[0] * ur[0],
+                        aspect2d.getScale()[2] * ur[2])
         self.notify.debug(
-            'original mouseLL=%s, mouseUR=%s' %
-            (self.mouseLL, self.mouseUR))
+            'original mouseLL=%s, mouseUR=%s' % (self.mouseLL, self.mouseUR))
 
     def writeTex(self, filename='guiText.png'):
         self.notify.debug('writing texture')
@@ -269,24 +248,27 @@ class HtmlView(DirectObject):
     def update(self, task):
         if base.mouseWatcherNode.hasMouse():
             (x, y) = self._translateRelativeCoordinates(
-                base.mouseWatcherNode.getMouseX(), base.mouseWatcherNode.getMouseY())
+                base.mouseWatcherNode.getMouseX(),
+                base.mouseWatcherNode.getMouseY())
             if self.mx - x != 0 or self.my - y != 0:
                 self.webView.injectMouseMove(x, y)
                 self.mx = x
                 self.my = y
 
             if self.webView.isDirty():
-                self.webView.render(
-                    self.imgBuffer.buffer_info()[0], WEB_WIDTH * 4, 4)
+                self.webView.render(self.imgBuffer.buffer_info()[0],
+                                    WEB_WIDTH * 4, 4)
                 Texture.setTexturesPower2(2)
                 textureBuffer = self.guiTex.modifyRamImage()
                 textureBuffer.setData(self.imgBuffer.tostring())
                 if self.useHalfTexture:
                     self.guiTex.store(self.fullPnmImage)
-                    self.leftPnmImage.copySubImage(
-                        self.fullPnmImage, 0, 0, 0, 0, WEB_HALF_WIDTH, WEB_HEIGHT)
-                    self.rightPnmImage.copySubImage(
-                        self.fullPnmImage, 0, 0, WEB_HALF_WIDTH, 0, WEB_HALF_WIDTH, WEB_HEIGHT)
+                    self.leftPnmImage.copySubImage(self.fullPnmImage, 0, 0, 0,
+                                                   0, WEB_HALF_WIDTH,
+                                                   WEB_HEIGHT)
+                    self.rightPnmImage.copySubImage(self.fullPnmImage, 0, 0,
+                                                    WEB_HALF_WIDTH, 0,
+                                                    WEB_HALF_WIDTH, WEB_HEIGHT)
                     self.leftGuiTex.load(self.leftPnmImage)
                     self.rightGuiTex.load(self.rightPnmImage)
                     self.quad.hide()
@@ -298,11 +280,8 @@ class HtmlView(DirectObject):
         return Task.cont
 
     def _translateRelativeCoordinates(self, x, y):
-        sx = int(((x -
-                   self.mouseLL[0]) /
-                  (self.mouseUR[0] -
-                   self.mouseLL[0])) *
-                 WEB_WIDTH_PIXELS)
+        sx = int(((x - self.mouseLL[0]) / (self.mouseUR[0] - self.mouseLL[0]))
+                 * WEB_WIDTH_PIXELS)
         sy = WEB_HEIGHT_PIXELS - \
             int(((y - self.mouseLL[1]) / (self.mouseUR[1] - self.mouseLL[1])) * WEB_HEIGHT_PIXELS)
         return (sx, sy)

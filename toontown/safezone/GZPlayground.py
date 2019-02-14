@@ -11,17 +11,13 @@ from toontown.safezone import GolfKart
 
 
 class GZPlayground(Playground.Playground):
-
     def __init__(self, loader, parentFSM, doneEvent):
         Playground.Playground.__init__(self, loader, parentFSM, doneEvent)
         self.parentFSM = parentFSM
         self.golfKartBlockDoneEvent = 'golfKartBlockDone'
         self.fsm.addState(
-            State.State(
-                'golfKartBlock',
-                self.enterGolfKartBlock,
-                self.exitGolfKartBlock,
-                ['walk']))
+            State.State('golfKartBlock', self.enterGolfKartBlock,
+                        self.exitGolfKartBlock, ['walk']))
         state = self.fsm.getStateNamed('walk')
         state.addTransition('golfKartBlock')
         self.golfKartDoneEvent = 'golfKartDone'
@@ -64,18 +60,15 @@ class GZPlayground(Playground.Playground):
             self.rotateBlimp.finish()
 
     def doRequestLeave(self, requestStatus):
-        self.fsm.request('trialerFA', [
-            requestStatus])
+        self.fsm.request('trialerFA', [requestStatus])
 
     def enterDFA(self, requestStatus):
         doneEvent = 'dfaDoneEvent'
-        self.accept(doneEvent, self.enterDFACallback, [
-            requestStatus])
+        self.accept(doneEvent, self.enterDFACallback, [requestStatus])
         self.dfa = DownloadForceAcknowledge.DownloadForceAcknowledge(doneEvent)
         if requestStatus['hoodId'] == ToontownGlobals.MyEstate:
             self.dfa.enter(
-                base.cr.hoodMgr.getPhaseFromHood(
-                    ToontownGlobals.MyEstate))
+                base.cr.hoodMgr.getPhaseFromHood(ToontownGlobals.MyEstate))
         else:
             self.dfa.enter(5)
 
@@ -108,15 +101,15 @@ class GZPlayground(Playground.Playground):
             self.dialog = None
 
         if hasattr(self, 'fsm'):
-            self.fsm.request('walk', [
-                1])
+            self.fsm.request('walk', [1])
 
     def enterGolfKartBlock(self, golfKart):
         base.localAvatar.laffMeter.start()
         base.localAvatar.b_setAnimState('off', 1)
         self.accept(self.golfKartDoneEvent, self.handleGolfKartDone)
-        self.trolley = GolfKart.GolfKart(
-            self, self.fsm, self.golfKartDoneEvent, golfKart.getDoId())
+        self.trolley = GolfKart.GolfKart(self, self.fsm,
+                                         self.golfKartDoneEvent,
+                                         golfKart.getDoId())
         self.trolley.load()
         self.trolley.enter()
 
@@ -129,8 +122,7 @@ class GZPlayground(Playground.Playground):
 
     def detectedGolfKartCollision(self, golfKart):
         self.notify.debug('detectedGolfkartCollision()')
-        self.fsm.request('golfKartBlock', [
-            golfKart])
+        self.fsm.request('golfKartBlock', [golfKart])
 
     def handleStartingBlockDone(self, doneStatus):
         self.notify.debug('handling StartingBlock done event')
@@ -144,10 +136,8 @@ class GZPlayground(Playground.Playground):
             self.doneStatus = doneStatus
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                where +
-                ' in handleStartingBlockDone')
+            self.notify.error('Unknown mode: ' + where +
+                              ' in handleStartingBlockDone')
 
     def handleGolfKartDone(self, doneStatus):
         self.notify.debug('handling golf kart  done event')
@@ -163,10 +153,9 @@ class GZPlayground(Playground.Playground):
                 'hoodId': self.loader.hood.id,
                 'zoneId': doneStatus['zoneId'],
                 'shardId': None,
-                'courseId': doneStatus['courseId']}
+                'courseId': doneStatus['courseId']
+            }
             messenger.send(self.doneEvent)
         else:
-            self.notify.error(
-                'Unknown mode: ' +
-                mode +
-                ' in handleGolfKartDone')
+            self.notify.error('Unknown mode: ' + mode +
+                              ' in handleGolfKartDone')

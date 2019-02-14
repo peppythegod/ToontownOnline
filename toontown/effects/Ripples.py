@@ -22,24 +22,14 @@ class Ripples(NodePath):
     def createTrack(self, rate=1):
         tflipDuration = self.seqNode.getNumChildren() / float(rate) * 24
         self.track = Sequence(
-            Func(
-                self.show),
-            Func(
-                self.seqNode.play,
-                0,
-                self.seqNode.getNumFrames() -
-                1),
-            Func(
-                self.seqNode.setPlayRate,
-                rate),
+            Func(self.show),
+            Func(self.seqNode.play, 0,
+                 self.seqNode.getNumFrames() - 1),
+            Func(self.seqNode.setPlayRate, rate),
             Wait(tflipDuration),
-            Func(
-                self.seqNode.setPlayRate,
-                0),
-            Func(
-                self.hide),
-            name='ripples-track-%d' %
-            self.trackId)
+            Func(self.seqNode.setPlayRate, 0),
+            Func(self.hide),
+            name='ripples-track-%d' % self.trackId)
 
     def play(self, rate=1):
         self.stop()

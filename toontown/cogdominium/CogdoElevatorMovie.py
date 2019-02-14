@@ -61,37 +61,34 @@ class CogdoElevatorMovie(CogdoGameMovie):
         self.bg.reparentTo(aspect2d)
         self.chatBubble.reparentTo(aspect2d)
         self.frame = DirectFrame(
-            geom=self.bg, relief=None, pos=(
-                0.20000000000000001, 0, -0.66669999999999996))
+            geom=self.bg,
+            relief=None,
+            pos=(0.20000000000000001, 0, -0.66669999999999996))
         self.bg.wrtReparentTo(self.frame)
         self.gameTitleText = DirectLabel(
             parent=self.frame,
             text=TTLocalizer.CogdoExecutiveSuiteTitle,
-            scale=TTLocalizer.MRPgameTitleText *
-            0.80000000000000004,
+            scale=TTLocalizer.MRPgameTitleText * 0.80000000000000004,
             text_align=TextNode.ACenter,
             text_font=getSignFont(),
-            text_fg=(
-                1.0,
-                0.33000000000000002,
-                0.33000000000000002,
-                1.0),
+            text_fg=(1.0, 0.33000000000000002, 0.33000000000000002, 1.0),
             pos=TTLocalizer.MRgameTitleTextPos,
             relief=None)
         self.chatBubble.wrtReparentTo(self.frame)
         self.frame.hide()
         backgroundGui.removeNode()
         self.toonDNA = ToonDNA.ToonDNA()
-        self.toonDNA.newToonFromProperties(
-            'dss', 'ss', 'm', 'm', 2, 0, 2, 2, 1, 8, 1, 8, 1, 14)
+        self.toonDNA.newToonFromProperties('dss', 'ss', 'm', 'm', 2, 0, 2, 2,
+                                           1, 8, 1, 8, 1, 14)
         self.toonHead = Toon.Toon()
         self.toonHead.setDNA(self.toonDNA)
         self.makeSuit('sc')
         self.toonHead.getGeomNode().setDepthWrite(1)
         self.toonHead.getGeomNode().setDepthTest(1)
         self.toonHead.loop('neutral')
-        self.toonHead.setPosHprScale(-0.72999999999999998, 0, -1.27, 180, 0,
-                                     0, 0.17999999999999999, 0.17999999999999999, 0.17999999999999999)
+        self.toonHead.setPosHprScale(-0.72999999999999998, 0, -1.27, 180, 0, 0,
+                                     0.17999999999999999, 0.17999999999999999,
+                                     0.17999999999999999)
         self.toonHead.reparentTo(hidden)
         self.toonHead.startBlink()
         self.clipPlane = self.toonHead.attachNewNode(PlaneNode('clip'))
@@ -106,26 +103,19 @@ class CogdoElevatorMovie(CogdoGameMovie):
         def start():
             self.frame.show()
             base.setCellsAvailable(
-                base.bottomCells +
-                base.leftCells +
-                base.rightCells,
-                0)
+                base.bottomCells + base.leftCells + base.rightCells, 0)
 
         def end():
             self._dialogueLabel.reparentTo(hidden)
             self.toonHead.reparentTo(hidden)
             self.frame.hide()
             base.setCellsAvailable(
-                base.bottomCells +
-                base.leftCells +
-                base.rightCells,
-                1)
+                base.bottomCells + base.leftCells + base.rightCells, 1)
             self._stopUpdateTask()
 
         self._ival = Sequence(
-            Func(start), Func(
-                self.displayLine, dialogue), Wait(
-                self.elevatorDuration), Func(end))
+            Func(start), Func(self.displayLine, dialogue),
+            Wait(self.elevatorDuration), Func(end))
         self._startUpdateTask()
 
     def _updateTask(self, task):

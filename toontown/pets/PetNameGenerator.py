@@ -28,11 +28,13 @@ class PetNameGenerator:
         else:
             searchPath.appendDirectory(Filename('phase_3/etc'))
             if os.path.expandvars('$TOONTOWN') != '':
-                searchPath.appendDirectory(Filename.fromOsSpecific(
-                    os.path.expandvars('$TOONTOWN/src/configfiles')))
+                searchPath.appendDirectory(
+                    Filename.fromOsSpecific(
+                        os.path.expandvars('$TOONTOWN/src/configfiles')))
             else:
-                searchPath.appendDirectory(Filename.fromOsSpecific(
-                    os.path.expandvars('toontown/src/configfiles')))
+                searchPath.appendDirectory(
+                    Filename.fromOsSpecific(
+                        os.path.expandvars('toontown/src/configfiles')))
             searchPath.appendDirectory(Filename('.'))
         filename = Filename(TTLocalizer.PetNameMaster)
         found = vfs.resolveFilename(filename, searchPath)
@@ -47,13 +49,11 @@ class PetNameGenerator:
                 a1 = currentLine.find('*')
                 a2 = currentLine.find('*', a1 + 1)
                 self.nameDictionary[int(currentLine[0:a1])] = (
-                    int(currentLine[a1 + 1:a2]), currentLine[a2 + 1:len(currentLine) - 1].strip())
+                    int(currentLine[a1 + 1:a2]),
+                    currentLine[a2 + 1:len(currentLine) - 1].strip())
 
             currentLine = input.readline()
-        masterList = [
-            self.boyFirsts,
-            self.girlFirsts,
-            self.neutralFirsts]
+        masterList = [self.boyFirsts, self.girlFirsts, self.neutralFirsts]
         for tu in self.nameDictionary.values():
             masterList[tu[0]].append(tu[1])
 
@@ -67,10 +67,7 @@ class PetNameGenerator:
             return self.nameDictionary[0][1]
 
     def returnUniqueID(self, name):
-        newtu = [
-            (),
-            (),
-            ()]
+        newtu = [(), (), ()]
         newtu[0] = (0, name)
         newtu[1] = (1, name)
         newtu[2] = (2, name)
@@ -88,9 +85,7 @@ class PetNameGenerator:
             random.seed(seed)
 
         if gender is None:
-            gender = random.choice([
-                0,
-                1])
+            gender = random.choice([0, 1])
 
         retString = ''
         firstList = self.neutralFirsts[:]

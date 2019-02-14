@@ -9,12 +9,11 @@ from toontown.parties.TeamActivityGui import TeamActivityGui
 class DistributedPartyTeamActivity(DistributedPartyActivity):
     notify = directNotify.newCategory('DistributedPartyTeamActivity')
 
-    def __init__(
-            self,
-            cr,
-            activityId,
-            startDelay=PartyGlobals.TeamActivityStartDelay,
-            balanceTeams=False):
+    def __init__(self,
+                 cr,
+                 activityId,
+                 startDelay=PartyGlobals.TeamActivityStartDelay,
+                 balanceTeams=False):
         DistributedPartyActivity.__init__(
             self,
             cr,
@@ -55,8 +54,8 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
 
     def handleToonShifted(self, toonId):
         self.notify.error(
-            'handleToonShifted( toonId=%d ) must be overriden by child class.' %
-            toonId)
+            'handleToonShifted( toonId=%d ) must be overriden by child class.'
+            % toonId)
 
     def handleToonSwitchedTeams(self, toonId):
         if toonId == base.localAvatar.doId and self._canSwitchTeams:
@@ -66,8 +65,8 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
 
     def handleToonDisabled(self, toonId):
         self.notify.error(
-            'handleToonDisabled( toonId=%d ) must be overriden by child class.' %
-            toonId)
+            'handleToonDisabled( toonId=%d ) must be overriden by child class.'
+            % toonId)
 
     def setPlayersPerTeam(self, min, max):
         self._minPlayersPerTeam = min
@@ -84,12 +83,11 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
             return None
 
         if self.activityFSM.state in [
-            'WaitForEnough',
-                'WaitToStart'] and self._localToonRequestStatus is None:
+                'WaitForEnough', 'WaitToStart'
+        ] and self._localToonRequestStatus is None:
             base.cr.playGame.getPlace().fsm.request('activity')
             self.localToonJoining()
-            self.sendUpdate('toonJoinRequest', [
-                team])
+            self.sendUpdate('toonJoinRequest', [team])
 
     def d_toonExitRequest(self):
         toonId = base.localAvatar.doId
@@ -97,8 +95,7 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
         if team is not None:
             if self._localToonRequestStatus is None:
                 self.localToonExiting()
-                self.sendUpdate('toonExitRequest', [
-                    team])
+                self.sendUpdate('toonExitRequest', [team])
 
         else:
             self.notify.warning(
@@ -111,15 +108,13 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
             self.showMessage(TTLocalizer.PartyTeamActivityTeamFull)
         elif reason == PartyGlobals.DenialReasons.Default:
             self.showMessage(
-                TTLocalizer.PartyTeamActivityJoinDenied %
-                self.getTitle())
+                TTLocalizer.PartyTeamActivityJoinDenied % self.getTitle())
 
     def exitRequestDenied(self, reason):
         DistributedPartyActivity.exitRequestDenied(self, reason)
         if reason == PartyGlobals.DenialReasons.Default:
             self.showMessage(
-                TTLocalizer.PartyTeamActivityExitDenied %
-                self.getTitle())
+                TTLocalizer.PartyTeamActivityExitDenied % self.getTitle())
 
         if self.isLocalToonPlaying:
             if self.isState('WaitToStart') or self.isState('WaitForEnough'):
@@ -137,31 +132,25 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
         self.notify.debug('switchTeamRequestDenied')
         if reason == PartyGlobals.DenialReasons.Full:
             self.showMessage(
-                TTLocalizer.PartyTeamActivityTeamFull,
-                endState='activity')
+                TTLocalizer.PartyTeamActivityTeamFull, endState='activity')
         elif reason == PartyGlobals.DenialReasons.Default:
             self.showMessage(
-                TTLocalizer.PartyTeamActivitySwitchDenied,
-                endState='activity')
+                TTLocalizer.PartyTeamActivitySwitchDenied, endState='activity')
 
         if self.isLocalToonPlaying:
-            if (self.isState('WaitToStart') or self.isState(
-                    'WaitForEnough')) and self._canSwitchTeams:
+            if (self.isState('WaitToStart')
+                    or self.isState('WaitForEnough')) and self._canSwitchTeams:
                 self.teamActivityGui.enableSwitchButton()
 
     def setToonsPlaying(self, leftTeamToonIds, rightTeamToonIds):
-        newToonIds = [
-            leftTeamToonIds,
-            rightTeamToonIds]
-        (exitedToons, joinedToons, shifters, switchers) = self.getToonsPlayingChanges(
-            self.toonIds, newToonIds)
+        newToonIds = [leftTeamToonIds, rightTeamToonIds]
+        (exitedToons, joinedToons, shifters,
+         switchers) = self.getToonsPlayingChanges(self.toonIds, newToonIds)
         if base.localAvatar.doId in exitedToons:
             self.localToonExiting()
 
         self._processExitedToons(exitedToons)
-        self.setToonIds([
-            leftTeamToonIds,
-            rightTeamToonIds])
+        self.setToonIds([leftTeamToonIds, rightTeamToonIds])
         self._processJoinedToons(joinedToons)
         for toonId in shifters:
             self.handleToonShifted(toonId)
@@ -310,7 +299,8 @@ class DistributedPartyTeamActivity(DistributedPartyActivity):
     def showWaitToStartCountdown(self):
         if self.waitToStartTimestamp is None:
             self.notify.warning(
-                'showWaitToStartCountdown was called when self.waitToStartTimestamp was None')
+                'showWaitToStartCountdown was called when self.waitToStartTimestamp was None'
+            )
             return None
 
         self.teamActivityGui.showWaitToStartCountdown(

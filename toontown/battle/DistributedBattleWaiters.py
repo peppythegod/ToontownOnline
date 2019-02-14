@@ -36,9 +36,7 @@ class DistributedBattleWaiters(DistributedBattleFinal.DistributedBattleFinal):
         if self.hasLocalToon():
             self.notify.debug('parenting camera to distributed battle waiters')
             camera.reparentTo(self)
-            if random.choice([
-                    0,
-                    1]):
+            if random.choice([0, 1]):
                 camera.setPosHpr(20, -4, 7, 60, 0, 0)
             else:
                 camera.setPosHpr(-20, -4, 7, -60, 0, 0)
@@ -83,20 +81,12 @@ class DistributedBattleWaiters(DistributedBattleFinal.DistributedBattleFinal):
             suit.headsUp(self)
             flyIval = suit.beginSupaFlyMove(destPos, True, 'flyIn')
             suitTrack.append(
-                Track(
-                    (delay,
-                     Sequence(
-                         flyIval,
-                         Func(
-                             suit.loop,
-                             'neutral')))))
+                Track((delay, Sequence(flyIval, Func(suit.loop, 'neutral')))))
             delay += 1
 
         if self.hasLocalToon():
             camera.reparentTo(self)
-            if random.choice([
-                    0,
-                    1]):
+            if random.choice([0, 1]):
                 camera.setPosHpr(20, -4, 7, 60, 0, 0)
             else:
                 camera.setPosHpr(-20, -4, 7, -60, 0, 0)

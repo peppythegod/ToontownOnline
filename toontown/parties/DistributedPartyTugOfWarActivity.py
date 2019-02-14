@@ -33,9 +33,7 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             cr,
             PartyGlobals.ActivityIds.PartyTugOfWar,
             startDelay=PartyGlobals.TugOfWarStartDelay)
-        self.buttons = [
-            0,
-            1]
+        self.buttons = [0, 1]
         self.arrowKeys = None
         self.keyTTL = []
         self.idealRate = 0.0
@@ -47,11 +45,7 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
         self.toonIdsToRightHands = {}
         self.fallenToons = []
         self.fallenPositions = []
-        self.unusedFallenPositionsIndices = [
-            0,
-            1,
-            2,
-            3]
+        self.unusedFallenPositionsIndices = [0, 1, 2, 3]
         self.toonIdsToAnimIntervals = {}
         self.tugRopes = []
 
@@ -59,10 +53,9 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
         DistributedPartyTeamActivity.generate(self)
         self._hopOffFinishedSV = StateVar(True)
         self._rewardFinishedSV = StateVar(True)
-        self._isWalkStateReadyFC = FunctionCall(
-            self._testWalkStateReady,
-            self._hopOffFinishedSV,
-            self._rewardFinishedSV)
+        self._isWalkStateReadyFC = FunctionCall(self._testWalkStateReady,
+                                                self._hopOffFinishedSV,
+                                                self._rewardFinishedSV)
 
     def delete(self):
         self._isWalkStateReadyFC.destroy()
@@ -83,29 +76,33 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                 PartyGlobals.TugOfWarCameraInitialHpr,
                 other=self.root)
             self.cameraMoveIval.start()
-            self.localToonPosIndex = self.getIndex(
-                base.localAvatar.doId, self.localToonTeam)
+            self.localToonPosIndex = self.getIndex(base.localAvatar.doId,
+                                                   self.localToonTeam)
             self.notify.debug('posIndex: %d' % self.localToonPosIndex)
             toon = self.getAvatar(toonId)
-            targetPos = self.dockPositions[self.localToonTeam][self.localToonPosIndex]
+            targetPos = self.dockPositions[self.localToonTeam][
+                self.localToonPosIndex]
             if toon.getZ(self.root) < PartyGlobals.TugOfWarToonPositionZ:
                 toon.setZ(self.root, PartyGlobals.TugOfWarToonPositionZ)
 
-            targetH = fitDestAngle2Src(toon.getH(
-                self.root), PartyGlobals.TugOfWarHeadings[self.localToonTeam])
+            targetH = fitDestAngle2Src(
+                toon.getH(self.root),
+                PartyGlobals.TugOfWarHeadings[self.localToonTeam])
             travelVector = targetPos - toon.getPos(self.root)
             duration = travelVector.length() / 5.0
             if self.toonIdsToAnimIntervals[toonId] is not None:
                 self.toonIdsToAnimIntervals[toonId].finish()
 
             self.toonIdsToAnimIntervals[toonId] = Sequence(
-                Func(
-                    toon.startPosHprBroadcast, 0.10000000000000001), Func(
-                    toon.b_setAnimState, 'run'), LerpPosHprInterval(
-                    toon, duration, targetPos, VBase3(
-                        targetH, 0.0, 0.0), other=self.root), Func(
-                        toon.stopPosHprBroadcast), Func(
-                            toon.b_setAnimState, 'neutral'))
+                Func(toon.startPosHprBroadcast, 0.10000000000000001),
+                Func(toon.b_setAnimState, 'run'),
+                LerpPosHprInterval(
+                    toon,
+                    duration,
+                    targetPos,
+                    VBase3(targetH, 0.0, 0.0),
+                    other=self.root), Func(toon.stopPosHprBroadcast),
+                Func(toon.b_setAnimState, 'neutral'))
             self.toonIdsToAnimIntervals[toonId].start()
 
     def handleToonExited(self, toonId):
@@ -119,18 +116,20 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
 
                 toon = self.getAvatar(toonId)
                 targetH = fitDestAngle2Src(toon.getH(self.root), 180.0)
-                targetPos = self.hopOffPositions[self.getTeam(
-                    toonId)][self.getIndex(toonId, self.getTeam(toonId))]
+                targetPos = self.hopOffPositions[self.getTeam(toonId)][
+                    self.getIndex(toonId, self.getTeam(toonId))]
                 hopOffAnim = Sequence(
-                    Func(
-                        toon.startPosHprBroadcast, 0.10000000000000001), toon.hprInterval(
-                        0.20000000000000001, VBase3(
-                            targetH, 0.0, 0.0), other=self.root), Func(
-                        toon.b_setAnimState, 'jump', 1.0), Wait(0.40000000000000002), PartyUtils.arcPosInterval(
-                        0.75, toon, targetPos, 5.0, self.root), Func(
-                            toon.stopPosHprBroadcast), Func(
-                                toon.sendCurrentPosition), Func(
-                                    self.hopOffFinished, toonId))
+                    Func(toon.startPosHprBroadcast, 0.10000000000000001),
+                    toon.hprInterval(
+                        0.20000000000000001,
+                        VBase3(targetH, 0.0, 0.0),
+                        other=self.root), Func(toon.b_setAnimState, 'jump',
+                                               1.0), Wait(0.40000000000000002),
+                    PartyUtils.arcPosInterval(0.75, toon, targetPos, 5.0,
+                                              self.root),
+                    Func(toon.stopPosHprBroadcast),
+                    Func(toon.sendCurrentPosition),
+                    Func(self.hopOffFinished, toonId))
                 self.toonIdsToAnimIntervals[toonId] = hopOffAnim
                 self._hopOffFinishedSV.set(False)
                 self.toonIdsToAnimIntervals[toonId].start()
@@ -146,9 +145,8 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             DistributedPartyTeamActivity.handleRewardDone(self)
 
     def hopOffFinished(self, toonId):
-        if hasattr(
-                self,
-                'toonIdsToAnimIntervals') and toonId in self.toonIdsToAnimIntervals:
+        if hasattr(self, 'toonIdsToAnimIntervals'
+                   ) and toonId in self.toonIdsToAnimIntervals:
             del self.toonIdsToAnimIntervals[toonId]
 
         if toonId == base.localAvatar.doId:
@@ -157,20 +155,21 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
 
     def handleToonShifted(self, toonId):
         if toonId == base.localAvatar.doId:
-            self.localToonPosIndex = self.getIndex(
-                base.localAvatar.doId, self.localToonTeam)
+            self.localToonPosIndex = self.getIndex(base.localAvatar.doId,
+                                                   self.localToonTeam)
             if self.toonIdsToAnimIntervals[toonId] is not None:
                 self.toonIdsToAnimIntervals[toonId].finish()
 
             toon = self.getAvatar(toonId)
-            targetPos = self.dockPositions[self.localToonTeam][self.localToonPosIndex]
+            targetPos = self.dockPositions[self.localToonTeam][
+                self.localToonPosIndex]
             self.toonIdsToAnimIntervals[toonId] = Sequence(
-                Wait(0.59999999999999998), Func(
-                    toon.startPosHprBroadcast, 0.10000000000000001), Func(
-                    toon.b_setAnimState, 'run'), toon.posInterval(
-                    0.5, targetPos, other=self.root), Func(
-                    toon.stopPosHprBroadcast), Func(
-                        toon.b_setAnimState, 'neutral'))
+                Wait(0.59999999999999998),
+                Func(toon.startPosHprBroadcast, 0.10000000000000001),
+                Func(toon.b_setAnimState, 'run'),
+                toon.posInterval(0.5, targetPos, other=self.root),
+                Func(toon.stopPosHprBroadcast),
+                Func(toon.b_setAnimState, 'neutral'))
             self.toonIdsToAnimIntervals[toonId].start()
 
     def handleToonDisabled(self, toonId):
@@ -181,12 +180,11 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
 
             else:
                 self.notify.debug(
-                    'self.toonIdsToAnimIntervals[%d] is none' %
-                    toonId)
+                    'self.toonIdsToAnimIntervals[%d] is none' % toonId)
 
     def setToonsPlaying(self, leftTeamToonIds, rightTeamToonIds):
-        DistributedPartyTeamActivity.setToonsPlaying(
-            self, leftTeamToonIds, rightTeamToonIds)
+        DistributedPartyTeamActivity.setToonsPlaying(self, leftTeamToonIds,
+                                                     rightTeamToonIds)
         self.toonIdsToRightHands.clear()
         for toonId in self.getToonIdsAsList():
             toon = self.getAvatar(toonId)
@@ -207,30 +205,31 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             'phase_13/models/parties/partyTugOfWar')
         self.playArea.reparentTo(self.root)
         self.sign.reparentTo(self.playArea.find('**/TugOfWar_sign_locator'))
-        self.dockPositions = [
-            [],
-            []]
+        self.dockPositions = [[], []]
         for i in range(4):
-            self.dockPositions[0].append(Point3(-(PartyGlobals.TugOfWarInitialToonPositionsXOffset) -
-                                                PartyGlobals.TugOfWarToonPositionXSeparation * i, 0.0, PartyGlobals.TugOfWarToonPositionZ))
+            self.dockPositions[0].append(
+                Point3(
+                    -(PartyGlobals.TugOfWarInitialToonPositionsXOffset) -
+                    PartyGlobals.TugOfWarToonPositionXSeparation * i, 0.0,
+                    PartyGlobals.TugOfWarToonPositionZ))
 
         for i in range(4):
             self.dockPositions[1].append(
                 Point3(
                     PartyGlobals.TugOfWarInitialToonPositionsXOffset +
-                    PartyGlobals.TugOfWarToonPositionXSeparation *
-                    i,
-                    0.0,
+                    PartyGlobals.TugOfWarToonPositionXSeparation * i, 0.0,
                     PartyGlobals.TugOfWarToonPositionZ))
 
-        self.hopOffPositions = [
-            [],
-            []]
+        self.hopOffPositions = [[], []]
         for i in range(1, 5):
-            self.hopOffPositions[PartyGlobals.TeamActivityTeams.LeftTeam].append(
-                self.playArea.find('**/leftTeamHopOff%d_locator' % i).getPos())
-            self.hopOffPositions[PartyGlobals.TeamActivityTeams.RightTeam].append(
-                self.playArea.find('**/rightTeamHopOff%d_locator' % i).getPos())
+            self.hopOffPositions[
+                PartyGlobals.TeamActivityTeams.LeftTeam].append(
+                    self.playArea.find(
+                        '**/leftTeamHopOff%d_locator' % i).getPos())
+            self.hopOffPositions[
+                PartyGlobals.TeamActivityTeams.RightTeam].append(
+                    self.playArea.find(
+                        '**/rightTeamHopOff%d_locator' % i).getPos())
 
         for i in range(1, 5):
             pos = self.playArea.find('**/fallenToon%d_locator' % i).getPos()
@@ -245,9 +244,7 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                 PartyGlobals.TugOfWarJoinCollisionRadius)
             collShape.setTangible(True)
             self.joinCollision.append(
-                CollisionNode(
-                    'TugOfWarJoinCollision%d' %
-                    i))
+                CollisionNode('TugOfWarJoinCollision%d' % i))
             self.joinCollision[i].addSolid(collShape)
             tubeNp = self.playArea.attachNewNode(self.joinCollision[i])
             tubeNp.node().setCollideMask(ToontownGlobals.WallBitmask)
@@ -269,11 +266,8 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                 rope.ropeNode.setUvMode(RopeNode.UVDistance)
                 rope.ropeNode.setUvDirection(1)
                 rope.setTransparency(1)
-                rope.setColor(
-                    0.89000000000000001,
-                    0.89000000000000001,
-                    0.59999999999999998,
-                    1.0)
+                rope.setColor(0.89000000000000001, 0.89000000000000001,
+                              0.59999999999999998, 1.0)
                 rope.reparentTo(self.root)
                 rope.stash()
 
@@ -291,19 +285,15 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
         self.powerMeter.reparentTo(aspect2d)
         self.powerMeter.setPos(0.0, 0.0, 0.59999999999999998)
         self.powerMeter.hide()
-        self.arrows = [
-            None] * 2
+        self.arrows = [None] * 2
         for x in range(len(self.arrows)):
             self.arrows[x] = loader.loadModel('phase_3/models/props/arrow')
             self.arrows[x].reparentTo(self.powerMeter)
             self.arrows[x].setScale(
-                0.20000000000000001 -
-                0.40000000000000002 *
-                x,
-                0.20000000000000001,
-                0.20000000000000001)
-            self.arrows[x].setPos(
-                0.12 - 0.23999999999999999 * x, 0, -0.26000000000000001)
+                0.20000000000000001 - 0.40000000000000002 * x,
+                0.20000000000000001, 0.20000000000000001)
+            self.arrows[x].setPos(0.12 - 0.23999999999999999 * x, 0,
+                                  -0.26000000000000001)
 
     def loadSounds(self):
         self.splashSound = base.loadSfx(
@@ -327,37 +317,26 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             self.updateIdealRateInterval.append(Wait(duration))
 
         self.updateKeyPressRateInterval = Sequence(
-            Wait(
-                PartyGlobals.TugOfWarKeyPressUpdateRate), Func(
-                self.updateKeyPressRate))
+            Wait(PartyGlobals.TugOfWarKeyPressUpdateRate),
+            Func(self.updateKeyPressRate))
         self.reportToServerInterval = Sequence(
-            Wait(
-                PartyGlobals.TugOfWarKeyPressReportRate), Func(
-                self.reportToServer))
+            Wait(PartyGlobals.TugOfWarKeyPressReportRate),
+            Func(self.reportToServer))
         self.setupInterval = Parallel()
         self.globalSetupInterval = Sequence(
-            Wait(
-                PartyGlobals.TugOfWarReadyDuration +
-                PartyGlobals.TugOfWarGoDuration),
-            Func(
-                self.tightenRopes))
+            Wait(PartyGlobals.TugOfWarReadyDuration +
+                 PartyGlobals.TugOfWarGoDuration), Func(self.tightenRopes))
         self.localSetupInterval = Sequence(
-            Func(
-                self.setStatus, TTLocalizer.PartyTugOfWarReady), Func(
-                self.showStatus), Wait(
-                PartyGlobals.TugOfWarReadyDuration), Func(
-                    base.playSfx, self.whistleSound), Func(
-                        self.setStatus, TTLocalizer.PartyTugOfWarGo), Wait(
-                            PartyGlobals.TugOfWarGoDuration), Func(
-                                self.enableKeys), Func(
-                                    self.hideStatus), Func(
-                                        self.updateIdealRateInterval.start), Func(
-                                            self.updateKeyPressRateInterval.loop), Func(
-                                                self.reportToServerInterval.loop))
+            Func(self.setStatus, TTLocalizer.PartyTugOfWarReady),
+            Func(self.showStatus), Wait(PartyGlobals.TugOfWarReadyDuration),
+            Func(base.playSfx, self.whistleSound),
+            Func(self.setStatus, TTLocalizer.PartyTugOfWarGo),
+            Wait(PartyGlobals.TugOfWarGoDuration), Func(self.enableKeys),
+            Func(self.hideStatus), Func(self.updateIdealRateInterval.start),
+            Func(self.updateKeyPressRateInterval.loop),
+            Func(self.reportToServerInterval.loop))
         self.splashInterval = Sequence(
-            Func(
-                base.playSfx, self.splashSound), Func(
-                self.splash.play))
+            Func(base.playSfx, self.splashSound), Func(self.splash.play))
 
     def unload(self):
         DistributedPartyTeamActivity.unload(self)
@@ -443,12 +422,10 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
     def _DistributedPartyTugOfWarActivity__enableCollisions(self):
         for i in range(len(PartyGlobals.TeamActivityTeams)):
             self.accept(
-                'enterTugOfWarJoinCollision%d' %
-                i,
+                'enterTugOfWarJoinCollision%d' % i,
                 getattr(
                     self,
-                    '_join%s' %
-                    PartyGlobals.TeamActivityTeams.getString(i)))
+                    '_join%s' % PartyGlobals.TeamActivityTeams.getString(i)))
 
     def _DistributedPartyTugOfWarActivity__disableCollisions(self):
         for i in range(len(PartyGlobals.TeamActivityTeams)):
@@ -499,15 +476,10 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                 self.toonIdsToStartPositions[toonId] = toon.getPos(self.root)
                 continue
             self.notify.warning(
-                "couldn't find toon %d assigning 0,0,0 to startPos" %
-                toonId)
+                "couldn't find toon %d assigning 0,0,0 to startPos" % toonId)
             self.toonIdsToStartPositions[toonId] = Point3(0, 0, 0)
 
-        self.unusedFallenPositionsIndices = [
-            0,
-            1,
-            2,
-            3]
+        self.unusedFallenPositionsIndices = [0, 1, 2, 3]
         self.setupInterval = Parallel(self.globalSetupInterval)
         if self.isLocalToonPlaying:
             self.keyTTL = []
@@ -590,38 +562,27 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
         ropeIndex = 0
         leftToonId = -1
         if self.toonIds[PartyGlobals.TeamActivityTeams.LeftTeam]:
-            leftToonId = self.toonIds[PartyGlobals.TeamActivityTeams.LeftTeam][0]
+            leftToonId = self.toonIds[
+                PartyGlobals.TeamActivityTeams.LeftTeam][0]
 
         rightToonId = -1
         if self.toonIds[PartyGlobals.TeamActivityTeams.RightTeam]:
-            rightToonId = self.toonIds[PartyGlobals.TeamActivityTeams.RightTeam][0]
+            rightToonId = self.toonIds[
+                PartyGlobals.TeamActivityTeams.RightTeam][0]
 
         if leftToonId in self.toonIdsToRightHands and rightToonId in self.toonIdsToRightHands:
-            self.tugRopes[ropeIndex].setup(3,
-                                           ((self.toonIdsToRightHands[leftToonId],
-                                             (0,
-                                              0,
-                                              0)),
-                                               (self.root,
-                                                (0.0,
-                                                 0.0,
-                                                 2.5)),
-                                               (self.toonIdsToRightHands[rightToonId],
-                                                (0,
-                                                 0,
-                                                 0))),
-                                           [0,
-                                               0,
-                                               0,
-                                               1,
-                                               1,
-                                               1])
+            self.tugRopes[ropeIndex].setup(
+                3, ((self.toonIdsToRightHands[leftToonId],
+                     (0, 0, 0)), (self.root, (0.0, 0.0, 2.5)),
+                    (self.toonIdsToRightHands[rightToonId],
+                     (0, 0, 0))), [0, 0, 0, 1, 1, 1])
             self.tugRopes[ropeIndex].unstash()
             ropeIndex += 1
 
         teams = [
             PartyGlobals.TeamActivityTeams.LeftTeam,
-            PartyGlobals.TeamActivityTeams.RightTeam]
+            PartyGlobals.TeamActivityTeams.RightTeam
+        ]
         for currTeam in teams:
             numToons = len(self.toonIds[currTeam])
             if numToons > 1:
@@ -630,60 +591,35 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                     toon2 = self.toonIds[currTeam][i - 1]
                     if toon1 not in self.toonIdsToRightHands:
                         self.notify.warning(
-                            'Toon in tug of war activity but not properly setup:  %s' %
-                            toon1)
+                            'Toon in tug of war activity but not properly setup:  %s'
+                            % toon1)
                         continue
                     if toon2 not in self.toonIdsToRightHands:
                         self.notify.warning(
-                            'Toon in tug of war activity but not properly setup:  %s' %
-                            toon2)
+                            'Toon in tug of war activity but not properly setup:  %s'
+                            % toon2)
                         continue
                     self.notify.debug(
-                        'Connecting rope between toon %d and toon %d of team %d.' %
-                        (i, i - 1, currTeam))
-                    self.tugRopes[ropeIndex].setup(3,
-                                                   ((self.toonIdsToRightHands[toon1],
-                                                     (0,
-                                                      0,
-                                                      0)),
-                                                       (self.toonIdsToRightHands[toon1],
-                                                        (0,
-                                                         0,
-                                                         0)),
-                                                       (self.toonIdsToRightHands[toon2],
-                                                        (0,
-                                                         0,
-                                                         0))),
-                                                   [0,
-                                                       0,
-                                                       0,
-                                                       1,
-                                                       1,
-                                                       1])
+                        'Connecting rope between toon %d and toon %d of team %d.'
+                        % (i, i - 1, currTeam))
+                    self.tugRopes[ropeIndex].setup(
+                        3, ((self.toonIdsToRightHands[toon1], (0, 0, 0)),
+                            (self.toonIdsToRightHands[toon1],
+                             (0, 0, 0)), (self.toonIdsToRightHands[toon2],
+                                          (0, 0, 0))), [0, 0, 0, 1, 1, 1])
                     self.tugRopes[ropeIndex].unstash()
                     ropeIndex += 1
 
     def tightenRopes(self):
         self.notify.debug('tightenRopes')
-        self.tugRopes[0].setup(3,
-                               ((self.toonIdsToRightHands[self.toonIds[PartyGlobals.TeamActivityTeams.LeftTeam][0]],
-                                 (0,
-                                  0,
-                                  0)),
-                                   (self.toonIdsToRightHands[self.toonIds[PartyGlobals.TeamActivityTeams.LeftTeam][0]],
-                                    (0,
-                                     0,
-                                     0)),
-                                   (self.toonIdsToRightHands[self.toonIds[PartyGlobals.TeamActivityTeams.RightTeam][0]],
-                                    (0,
-                                     0,
-                                     0))),
-                               [0,
-                                   0,
-                                   0,
-                                   1,
-                                   1,
-                                   1])
+        self.tugRopes[0].setup(
+            3, ((self.toonIdsToRightHands[self.toonIds[
+                PartyGlobals.TeamActivityTeams.LeftTeam][0]],
+                 (0, 0, 0)), (self.toonIdsToRightHands[self.toonIds[
+                     PartyGlobals.TeamActivityTeams.LeftTeam][0]], (0, 0, 0)),
+                (self.toonIdsToRightHands[self.toonIds[
+                    PartyGlobals.TeamActivityTeams.RightTeam][0]],
+                 (0, 0, 0))), [0, 0, 0, 1, 1, 1])
 
     def hideRopes(self):
         self.notify.debug('hideRopes')
@@ -719,9 +655,8 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
 
     def reportToServer(self):
         self.currentForce = self.computeForce(self.keyRate)
-        self.sendUpdate('reportKeyRateForce', [
-            self.keyRate,
-            self.currentForce])
+        self.sendUpdate('reportKeyRateForce',
+                        [self.keyRate, self.currentForce])
         self.setSpeedGauge()
         self.setAnimState(base.localAvatar.doId, self.keyRate)
 
@@ -731,8 +666,11 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             F = 0.75 * keyRate
         else:
             stdDev = 0.25 * self.idealRate
-            F = self.advantage * (self.rateMatchAward + 4 + 0.40000000000000002 * self.idealRate) * math.pow(
-                math.e, -math.pow(keyRate - self.idealRate, 2) / 2.0 * math.pow(stdDev, 2))
+            F = self.advantage * (
+                self.rateMatchAward + 4 +
+                0.40000000000000002 * self.idealRate) * math.pow(
+                    math.e, -math.pow(keyRate - self.idealRate, 2) / 2.0 *
+                    math.pow(stdDev, 2))
         return F
 
     def setSpeedGauge(self):
@@ -763,13 +701,13 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
         if toonId not in self.toonIdsToIsPullingFlags:
             if self.getTeam(toonId) is None:
                 self.notify.warning(
-                    "setAnimState called with toonId (%d) that wasn't in self.toonIds" %
-                    toonId)
+                    "setAnimState called with toonId (%d) that wasn't in self.toonIds"
+                    % toonId)
                 return None
             else:
                 self.notify.warning(
-                    'setAnimState called with toonId (%d) that was in self.toonIds but not in self.toonIdsToIsPullingFlags. Adding it.' %
-                    toonId)
+                    'setAnimState called with toonId (%d) that was in self.toonIds but not in self.toonIdsToIsPullingFlags. Adding it.'
+                    % toonId)
                 self.toonIdsToIsPullingFlags[toonId] = False
 
         if keyRate > 0 and not self.toonIdsToIsPullingFlags[toonId]:
@@ -777,8 +715,7 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                 toon.loop('tug-o-war')
             else:
                 self.notify.warning(
-                    'toon %d is None, skipping toon.loop(tugowar)' %
-                    toonId)
+                    'toon %d is None, skipping toon.loop(tugowar)' % toonId)
             self.toonIdsToIsPullingFlags[toonId] = True
 
         if keyRate <= 0 and self.toonIdsToIsPullingFlags[toonId]:
@@ -787,8 +724,7 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                 toon.startLookAround()
             else:
                 self.notify.warning(
-                    'toon %d is None, skipping toon.startLookAround' %
-                    toonId)
+                    'toon %d is None, skipping toon.startLookAround' % toonId)
             self.toonIdsToIsPullingFlags[toonId] = False
 
     def enableKeys(self):
@@ -797,12 +733,14 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             lambda: self._DistributedPartyTugOfWarActivity__pressHandler(2),
             lambda: self._DistributedPartyTugOfWarActivity__pressHandler(3),
             lambda: self._DistributedPartyTugOfWarActivity__pressHandler(1),
-            lambda: self._DistributedPartyTugOfWarActivity__pressHandler(0)])
+            lambda: self._DistributedPartyTugOfWarActivity__pressHandler(0)
+        ])
         self.arrowKeys.setReleaseHandlers([
             lambda: self._DistributedPartyTugOfWarActivity__releaseHandler(2),
             lambda: self._DistributedPartyTugOfWarActivity__releaseHandler(3),
             lambda: self._DistributedPartyTugOfWarActivity__releaseHandler(1),
-            lambda: self._DistributedPartyTugOfWarActivity__releaseHandler(0)])
+            lambda: self._DistributedPartyTugOfWarActivity__releaseHandler(0)
+        ])
         for arrow in self.arrows:
             arrow.setColor(PartyGlobals.TugOfWarEnabledArrowColor)
 
@@ -826,11 +764,8 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             return None
 
         if self.isLocalToonPlaying:
-            camera.lookAt(
-                self.root,
-                offset,
-                0.0,
-                PartyGlobals.TugOfWarCameraLookAtHeightOffset)
+            camera.lookAt(self.root, offset, 0.0,
+                          PartyGlobals.TugOfWarCameraLookAtHeightOffset)
 
         for toonId in self.getToonIdsAsList():
             if hasattr(self, 'fallenToons') and toonId not in self.fallenToons:
@@ -848,12 +783,11 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                         self.toonIdsToAnimIntervals[toonId] = Sequence(
                             LerpPosInterval(
                                 toon,
-                                duration=PartyGlobals.TugOfWarKeyPressReportRate,
+                                duration=PartyGlobals.
+                                TugOfWarKeyPressReportRate,
                                 pos=newPos,
                                 other=self.root),
-                            Func(
-                                self.checkIfFallen,
-                                toonId))
+                            Func(self.checkIfFallen, toonId))
                         self.toonIdsToAnimIntervals[toonId].start()
 
             toon is not None
@@ -864,13 +798,13 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             if toon:
                 curPos = toon.getPos(self.root)
                 team = self.getTeam(toonId)
-                if (
-                        team == PartyGlobals.TeamActivityTeams.LeftTeam or curPos[0] > -
-                        2.0 or team == PartyGlobals.TeamActivityTeams.RightTeam) and curPos[0] < 2.0:
+                if (team == PartyGlobals.TeamActivityTeams.LeftTeam
+                        or curPos[0] > -2.0
+                        or team == PartyGlobals.TeamActivityTeams.RightTeam
+                    ) and curPos[0] < 2.0:
                     losingTeam = self.getTeam(toonId)
                     self.throwTeamInWater(losingTeam)
-                    self.sendUpdate('reportFallIn', [
-                        losingTeam])
+                    self.sendUpdate('reportFallIn', [losingTeam])
 
     def throwTeamInWater(self, losingTeam):
         self.notify.debug('throwTeamInWater( %s )' %
@@ -892,18 +826,12 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
             if toon:
                 parallel = Parallel(
                     ActorInterval(
-                        actor=toon,
-                        animName='slip-forward',
-                        duration=2.0),
+                        actor=toon, animName='slip-forward', duration=2.0),
                     LerpPosInterval(
-                        toon,
-                        duration=2.0,
-                        pos=newPos,
-                        other=self.root))
+                        toon, duration=2.0, pos=newPos, other=self.root))
             else:
                 self.notify.warning(
-                    'toon %d is none, skipping slip-forward' %
-                    toonId)
+                    'toon %d is none, skipping slip-forward' % toonId)
                 parallel = Parallel()
             if not splashSet:
                 splashSet = True
@@ -914,8 +842,7 @@ class DistributedPartyTugOfWarActivity(DistributedPartyTeamActivity):
                     parallel, Func(toon.loop, 'neutral'))
             else:
                 self.notify.warning(
-                    'toon %d is none, skipping toon.loop(neutral)' %
-                    toonId)
+                    'toon %d is none, skipping toon.loop(neutral)' % toonId)
                 self.toonIdsToAnimIntervals[toonId] = parallel
             self.toonIdsToAnimIntervals[toonId].start()
 

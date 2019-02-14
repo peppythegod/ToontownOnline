@@ -50,20 +50,16 @@ class PartyCogActivity(DirectObject):
         self.rightEntranceLocator = self.arena.find('**/rightEntrance_locator')
         self.leftExitLocator = self.arena.find('**/leftExit_locator')
         self.rightExitLocator = self.arena.find('**/rightExit_locator')
-        self.teamCamPosLocators = (
-            self.arena.find('**/team0CamPos_locator'),
-            self.arena.find('**/team1CamPos_locator'))
-        self.teamCamAimLocators = (
-            self.arena.find('**/team0CamAim_locator'),
-            self.arena.find('**/team1CamAim_locator'))
+        self.teamCamPosLocators = (self.arena.find('**/team0CamPos_locator'),
+                                   self.arena.find('**/team1CamPos_locator'))
+        self.teamCamAimLocators = (self.arena.find('**/team0CamAim_locator'),
+                                   self.arena.find('**/team1CamAim_locator'))
         leftTeamLocator = NodePath(
-            'TeamLocator-%d' %
-            PartyGlobals.TeamActivityTeams.LeftTeam)
+            'TeamLocator-%d' % PartyGlobals.TeamActivityTeams.LeftTeam)
         leftTeamLocator.reparentTo(self.root)
         leftTeamLocator.setH(90)
         rightTeamLocator = NodePath(
-            'TeamLocator-%d' %
-            PartyGlobals.TeamActivityTeams.RightTeam)
+            'TeamLocator-%d' % PartyGlobals.TeamActivityTeams.RightTeam)
         rightTeamLocator.reparentTo(self.root)
         rightTeamLocator.setH(-90)
         self.teamLocators = (leftTeamLocator, rightTeamLocator)
@@ -72,21 +68,21 @@ class PartyCogActivity(DirectObject):
         self._skyCollisionsCollection = self.arena.findAllMatches(
             '**/cogPieArena_sky*_collision')
         if len(self._skyCollisionsCollection) > 0:
-            self._skyCollisionParent = self._skyCollisionsCollection[0].getParent(
-            )
+            self._skyCollisionParent = self._skyCollisionsCollection[
+                0].getParent()
         else:
             self._skyCollisionParent = self.arena
         self._wallCollisionsCollection = self.arena.findAllMatches(
             '**/cogPieArena_wall*_collision')
-        self._arenaFlagGroups = (
-            self.arena.find('**/flagsL_grp'),
-            self.arena.find('**/flagsR_grp'))
+        self._arenaFlagGroups = (self.arena.find('**/flagsL_grp'),
+                                 self.arena.find('**/flagsR_grp'))
         self._initArenaDoors()
         self.cogManager = PartyCogManager()
         self.arrows = []
         self.distanceLabels = []
         self.teamColors = list(PartyGlobals.CogActivityColors) + [
-            PartyGlobals.TeamActivityStatusColor]
+            PartyGlobals.TeamActivityStatusColor
+        ]
         for i in range(3):
             start = self.arena.find('**/cog%d_start_locator' % (i + 1))
             end = self.arena.find('**/cog%d_end_locator' % (i + 1))
@@ -96,16 +92,12 @@ class PartyCogActivity(DirectObject):
             arrow2 = StretchingArrow(self.arena, useColor='blue')
             arrow1.setZ(0.10000000000000001)
             arrow2.setZ(0.10000000000000001)
-            self.arrows.append([
-                arrow1,
-                arrow2])
+            self.arrows.append([arrow1, arrow2])
             distanceLabel = self.createDistanceLabel(0, self.teamColors[1])
             distanceLabel[0].stash()
             distanceLabel2 = self.createDistanceLabel(0, self.teamColors[0])
             distanceLabel2[0].stash()
-            self.distanceLabels.append([
-                distanceLabel,
-                distanceLabel2])
+            self.distanceLabels.append([distanceLabel, distanceLabel2])
 
         self.winText = []
         text1 = self.createText(0, Point3(-0.5, 0.0, -0.5), self.teamColors[1])
@@ -126,22 +118,18 @@ class PartyCogActivity(DirectObject):
         self.enable()
 
     def _initArenaDoors(self):
-        self._arenaDoors = (
-            self.arena.find('**/doorL'),
-            self.arena.find('**/doorR'))
-        arenaDoorLocators = (
-            self.arena.find('**/doorL_locator'),
-            self.arena.find('**/doorR_locator'))
+        self._arenaDoors = (self.arena.find('**/doorL'),
+                            self.arena.find('**/doorR'))
+        arenaDoorLocators = (self.arena.find('**/doorL_locator'),
+                             self.arena.find('**/doorR_locator'))
         for i in range(len(arenaDoorLocators)):
             arenaDoorLocators[i].wrtReparentTo(self._arenaDoors[i])
 
-        self._arenaDoorTimers = (
-            self.createDoorTimer(
-                PartyGlobals.TeamActivityTeams.LeftTeam), self.createDoorTimer(
-                PartyGlobals.TeamActivityTeams.RightTeam))
-        self._arenaDoorIvals = [
-            None,
-            None]
+        self._arenaDoorTimers = (self.createDoorTimer(
+            PartyGlobals.TeamActivityTeams.LeftTeam),
+                                 self.createDoorTimer(
+                                     PartyGlobals.TeamActivityTeams.RightTeam))
+        self._arenaDoorIvals = [None, None]
         self._doorStartPos = []
         for i in range(len(self._arenaDoors)):
             door = self._arenaDoors[i]
@@ -302,7 +290,7 @@ class PartyCogActivity(DirectObject):
         if not opening:
             pos = self._doorStartPos[team]
         else:
-            pos = (self._doorStartPos[team] + Point3(0, 0, -7.0),)
+            pos = (self._doorStartPos[team] + Point3(0, 0, -7.0), )
         ival = self._arenaDoors[team].posInterval(
             0.75, pos, blendType='easeIn')
         self._arenaDoorIvals[team] = ival
@@ -335,12 +323,10 @@ class PartyCogActivity(DirectObject):
             timer.hide()
 
     def enableEnterGateCollision(self):
-        self.acceptOnce(
-            'entercogPieArena_entranceLeft_collision',
-            self.handleEnterLeftEntranceTrigger)
-        self.acceptOnce(
-            'entercogPieArena_entranceRight_collision',
-            self.handleEnterRightEntranceTrigger)
+        self.acceptOnce('entercogPieArena_entranceLeft_collision',
+                        self.handleEnterLeftEntranceTrigger)
+        self.acceptOnce('entercogPieArena_entranceRight_collision',
+                        self.handleEnterRightEntranceTrigger)
 
     def disableEnterGateCollision(self):
         self.ignore('entercogPieArena_entranceLeft_collision')
@@ -386,12 +372,11 @@ class PartyCogActivity(DirectObject):
         return pos
 
     def handleToonJoined(self, toon, team, lateEntry=False):
-        pos = self.getPlayerStartPos(
-            team, self.activity.getIndex(
-                toon.doId, team))
+        pos = self.getPlayerStartPos(team,
+                                     self.activity.getIndex(toon.doId, team))
         if toon == base.localAvatar:
-            player = PartyCogActivityLocalPlayer(
-                self.activity, pos, team, self.handleToonExited)
+            player = PartyCogActivityLocalPlayer(self.activity, pos, team,
+                                                 self.handleToonExited)
             player.entersActivity()
             self.player = player
             self.disableSkyCollisions()
@@ -409,8 +394,7 @@ class PartyCogActivity(DirectObject):
         player = self.players.get(toonId)
         if player is None:
             self.notify.warning(
-                'handleToonSwitchedTeams: toonId %s not found' %
-                toonId)
+                'handleToonSwitchedTeams: toonId %s not found' % toonId)
             return None
 
         team = self.activity.getTeam(toonId)
@@ -429,9 +413,8 @@ class PartyCogActivity(DirectObject):
             pos = self.getPlayerStartPos(player.team, spot)
             player.setToonStartPosition(pos)
             if self.player is not None and toon == self.player.toon:
-                self.playToonIval(
-                    base.localAvatar.doId,
-                    self.player.getRunToStartPositionIval())
+                self.playToonIval(base.localAvatar.doId,
+                                  self.player.getRunToStartPositionIval())
 
     def handleToonDisabled(self, toonId):
         self.finishToonIval(toonId)
@@ -453,34 +436,26 @@ class PartyCogActivity(DirectObject):
             ival.getName().find(str(toonId)) != -1
 
     def playPlayerEnterIval(self):
-
         def conditionallyShowSwitchButton(self=self, enable=True):
             if enable and self.activity.activityFSM.state in [
-                'WaitForEnough',
-                    'WaitToStart']:
+                    'WaitForEnough', 'WaitToStart'
+            ]:
                 self.activity.teamActivityGui.enableSwitchButton()
             else:
                 self.activity.teamActivityGui.disableSwitchButton()
 
         ival = Sequence(
-            Func(
-                self.disableWallCollisions),
-            Func(
-                conditionallyShowSwitchButton,
-                self,
-                False),
+            Func(self.disableWallCollisions),
+            Func(conditionallyShowSwitchButton, self, False),
             self.player.getRunToStartPositionIval(),
-            Func(
-                conditionallyShowSwitchButton,
-                self,
-                True),
-            Func(
-                self.enableWallCollisions))
+            Func(conditionallyShowSwitchButton, self, True),
+            Func(self.enableWallCollisions))
         self.playToonIval(base.localAvatar.doId, ival)
 
     def finishToonIval(self, toonId):
         if self.toonIdsToAnimIntervals.get(
-                toonId) is not None and self.toonIdsToAnimIntervals[toonId].isPlaying():
+                toonId
+        ) is not None and self.toonIdsToAnimIntervals[toonId].isPlaying():
             self.toonIdsToAnimIntervals[toonId].finish()
 
     def playToonIval(self, toonId, ival):
@@ -553,9 +528,8 @@ class PartyCogActivity(DirectObject):
             collNP = flyPie.attachNewNode(collNode)
             base.cTrav.addCollider(collNP, self.pieHandler)
             self.toonPieEventNames[collNP] = 'pieHit-' + collSphereName
-            self.accept(
-                self.toonPieEventNames[collNP],
-                self.handlePieCollision)
+            self.accept(self.toonPieEventNames[collNP],
+                        self.handlePieCollision)
         else:
             player = self.players.get(avId)
             if player is not None:
@@ -567,8 +541,9 @@ class PartyCogActivity(DirectObject):
 
         newTossTrack = Sequence(tossTrack, Func(matchRunningAnim))
         pieTrack = Parallel(
-            newTossTrack, pieTrack, name='PartyCogActivity.pieTrack-%d-%s' %
-            (avId, timestamp))
+            newTossTrack,
+            pieTrack,
+            name='PartyCogActivity.pieTrack-%d-%s' % (avId, timestamp))
         elapsedTime = globalClockDelta.localElapsedTime(timestamp)
         if elapsedTime < 16.0 / 24.0:
             elapsedTime = 16.0 / 24.0
@@ -577,17 +552,16 @@ class PartyCogActivity(DirectObject):
         self.pieIvals.append(pieTrack)
         self.toonPieTracks[avId] = pieTrack
 
-    def getTossPieInterval(
-            self,
-            toon,
-            x,
-            y,
-            z,
-            h,
-            p,
-            r,
-            power,
-            beginFlyIval=Sequence()):
+    def getTossPieInterval(self,
+                           toon,
+                           x,
+                           y,
+                           z,
+                           h,
+                           p,
+                           r,
+                           power,
+                           beginFlyIval=Sequence()):
         ToontownBattleGlobals = ToontownBattleGlobals
         import toontown.toonbase
         BattleProps = BattleProps
@@ -607,9 +581,10 @@ class PartyCogActivity(DirectObject):
                     PartyGlobals.CogActivityPieMaxDist, t)
         time = lerp(1.0, 1.5, t)
         proj = ProjectileInterval(
-            None, startPos=Point3(
-                0, 0, 0), endPos=Point3(
-                0, dist, 0), duration=time)
+            None,
+            startPos=Point3(0, 0, 0),
+            endPos=Point3(0, dist, 0),
+            duration=time)
         relVel = proj.startVel
 
         def getVelocity(toon=toon, relVel=relVel):
@@ -623,42 +598,32 @@ class PartyCogActivity(DirectObject):
                     'The toon is being destroyed. No attribute animState.')
 
         toss = Track(
-            (0, Sequence(
-                Func(
-                    toon.setPosHpr, x, y, z, h, p, r), Func(
-                    pie.reparentTo, toon.rightHand), Func(
-                    pie.setPosHpr, 0, 0, 0, 0, 0, 0), animPie, Parallel(
-                        ActorInterval(
-                            toon, 'throw', startFrame=48, playRate=1.5, partName='torso'), animPie), Func(
-                                _PartyCogActivity__safeSetAnimState, toon, 'Happy'))), (16.0 / 24.0, Func(
-                                    pie.detachNode)))
+            (0,
+             Sequence(
+                 Func(toon.setPosHpr, x, y, z, h, p, r),
+                 Func(pie.reparentTo, toon.rightHand),
+                 Func(pie.setPosHpr, 0, 0, 0, 0, 0, 0), animPie,
+                 Parallel(
+                     ActorInterval(
+                         toon,
+                         'throw',
+                         startFrame=48,
+                         playRate=1.5,
+                         partName='torso'), animPie),
+                 Func(_PartyCogActivity__safeSetAnimState, toon, 'Happy'))),
+            (16.0 / 24.0, Func(pie.detachNode)))
         fly = Track(
             (14.0 / 24.0,
              SoundInterval(
-                 sound,
-                 node=toon,
-                 cutOff=PartyGlobals.PARTY_COG_CUTOFF)),
+                 sound, node=toon, cutOff=PartyGlobals.PARTY_COG_CUTOFF)),
             (16.0 / 24.0,
              Sequence(
-                 Func(
-                     flyPie.reparentTo,
-                     render),
-                 Func(
-                     flyPie.setPosHpr,
-                     toon,
-                     0.52000000000000002,
-                     0.96999999999999997,
-                     2.2400000000000002,
-                     0,
-                     -45,
-                     0),
+                 Func(flyPie.reparentTo, render),
+                 Func(flyPie.setPosHpr, toon, 0.52000000000000002,
+                      0.96999999999999997, 2.2400000000000002, 0, -45, 0),
                  beginFlyIval,
-                 ProjectileInterval(
-                     flyPie,
-                     startVel=getVelocity,
-                     duration=6),
-                 Func(
-                     flyPie.detachNode))))
+                 ProjectileInterval(flyPie, startVel=getVelocity, duration=6),
+                 Func(flyPie.detachNode))))
         return (toss, fly, flyPie)
 
     def handlePieCollision(self, colEntry):
@@ -683,12 +648,13 @@ class PartyCogActivity(DirectObject):
                 pass
             hitHead = not parts[2].startswith('Arm')
             if self.activity.getTeam(
-                    base.localAvatar.doId) == PartyGlobals.TeamActivityTeams.LeftTeam:
+                    base.localAvatar.doId
+            ) == PartyGlobals.TeamActivityTeams.LeftTeam:
                 direction = -1.0
             else:
                 direction = 1.0
-            self.activity.b_pieHitsCog(
-                timestamp, cogID, point, direction, hitHead)
+            self.activity.b_pieHitsCog(timestamp, cogID, point, direction,
+                                       hitHead)
             if hitHead:
                 hitPoints = self.player.hitHead()
             else:
@@ -740,22 +706,29 @@ class PartyCogActivity(DirectObject):
 
         base.localAvatar.showName()
         self.resultsIval = Sequence(
-            Wait(0.10000000000000001), Func(
-                self.activity.setStatus, TTLocalizer.PartyCogTimeUp), Func(
-                self.activity.showStatus), Wait(2.0), Func(
-                self.activity.hideStatus), Wait(0.5), Func(
-                    self.player.lookAtArena), Func(
-                        self.showTeamFlags, self.activity.getTeam(
-                            base.localAvatar.doId)), Wait(1.0), Func(
-                                self.showArrow, 0), Wait(1.3), Func(
-                                    self.showArrow, 1), Wait(1.3), Func(
-                                        self.showArrow, 2), Wait(1.3), Func(
-                                            self.showTotals, totals), Wait(1.0), Func(
-                                                self.showWinner, resultsText, winner), Func(
-                                                    self._cleanupResultsIval), name='PartyCog-conclusionSequence')
-        self.accept(
-            'DistributedPartyActivity-showJellybeanReward',
-            self._cleanupResultsIval)
+            Wait(0.10000000000000001),
+            Func(self.activity.setStatus, TTLocalizer.PartyCogTimeUp),
+            Func(self.activity.showStatus),
+            Wait(2.0),
+            Func(self.activity.hideStatus),
+            Wait(0.5),
+            Func(self.player.lookAtArena),
+            Func(self.showTeamFlags,
+                 self.activity.getTeam(base.localAvatar.doId)),
+            Wait(1.0),
+            Func(self.showArrow, 0),
+            Wait(1.3),
+            Func(self.showArrow, 1),
+            Wait(1.3),
+            Func(self.showArrow, 2),
+            Wait(1.3),
+            Func(self.showTotals, totals),
+            Wait(1.0),
+            Func(self.showWinner, resultsText, winner),
+            Func(self._cleanupResultsIval),
+            name='PartyCog-conclusionSequence')
+        self.accept('DistributedPartyActivity-showJellybeanReward',
+                    self._cleanupResultsIval)
         self.resultsIval.start()
 
     def _cleanupResultsIval(self):
@@ -768,15 +741,10 @@ class PartyCogActivity(DirectObject):
         self.ignore('DistributedPartyActivity-showJellybeanReward')
 
     def showTotals(self, totals):
-        newtotals = ((totals[1] -
-                      totals[0]) +
-                     (PartyGlobals.CogActivityArenaLength /
-                      2.0) *
-                     3, (totals[0] -
-                         totals[1]) +
-                     (PartyGlobals.CogActivityArenaLength /
-                      2.0) *
-                     3)
+        newtotals = ((totals[1] - totals[0]) +
+                     (PartyGlobals.CogActivityArenaLength / 2.0) * 3,
+                     (totals[0] - totals[1]) +
+                     (PartyGlobals.CogActivityArenaLength / 2.0) * 3)
         self.winText[0][0].setText(TTLocalizer.PartyCogDistance % newtotals[0])
         self.winText[1][0].setText(TTLocalizer.PartyCogDistance % newtotals[1])
         for textPair in self.winText:
@@ -801,7 +769,8 @@ class PartyCogActivity(DirectObject):
         cog = self.cogManager.cogs[arrowNum]
         points = [
             self.arena.find('**/cog%d_start_locator' % (arrowNum + 1)),
-            self.arena.find('**/cog%d_end_locator' % (arrowNum + 1))]
+            self.arena.find('**/cog%d_end_locator' % (arrowNum + 1))
+        ]
         Y = cog.root.getY()
         for point in points:
             point.setY(Y)

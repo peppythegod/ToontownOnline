@@ -23,82 +23,52 @@ class FactoryInterior(BattlePlace.BattlePlace):
 
     def load(self):
         self.fsm = ClassicFSM.ClassicFSM('FactoryInterior', [
-            State.State('start', self.enterStart, self.exitStart, [
-                'walk',
-                'teleportIn',
-                'fallDown']),
+            State.State('start', self.enterStart, self.exitStart,
+                        ['walk', 'teleportIn', 'fallDown']),
             State.State('walk', self.enterWalk, self.exitWalk, [
-                'push',
-                'sit',
-                'stickerBook',
-                'WaitForBattle',
-                'battle',
-                'died',
-                'teleportOut',
-                'squished',
-                'DFA',
-                'fallDown',
-                'elevator']),
-            State.State('stopped', self.enterStopped, self.exitStopped, [
-                'walk',
-                'teleportOut']),
-            State.State('sit', self.enterSit, self.exitSit, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('push', self.enterPush, self.exitPush, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('stickerBook', self.enterStickerBook, self.exitStickerBook, [
-                'walk',
-                'battle',
-                'DFA',
-                'WaitForBattle',
-                'died',
-                'teleportOut']),
-            State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, [
-                'battle',
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('battle', self.enterBattle, self.exitBattle, [
-                'walk',
-                'teleportOut',
-                'died']),
-            State.State('fallDown', self.enterFallDown, self.exitFallDown, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('squished', self.enterSquished, self.exitSquished, [
-                'walk',
-                'died',
-                'teleportOut']),
-            State.State('teleportIn', self.enterTeleportIn, self.exitTeleportIn, [
-                'walk',
-                'teleportOut',
-                'quietZone',
-                'died']),
-            State.State('teleportOut', self.enterTeleportOut, self.exitTeleportOut, [
-                'teleportIn',
-                'FLA',
-                'quietZone',
-                'WaitForBattle']),
-            State.State('DFA', self.enterDFA, self.exitDFA, [
-                'DFAReject',
-                'teleportOut']),
-            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject, [
-                'walkteleportOut']),
-            State.State('died', self.enterDied, self.exitDied, [
-                'teleportOut']),
-            State.State('FLA', self.enterFLA, self.exitFLA, [
-                'quietZone']),
-            State.State('quietZone', self.enterQuietZone, self.exitQuietZone, [
-                'teleportIn']),
-            State.State('elevator', self.enterElevator, self.exitElevator, [
-                'walk']),
-            State.State('final', self.enterFinal, self.exitFinal, [
-                'start'])], 'start', 'final')
+                'push', 'sit', 'stickerBook', 'WaitForBattle', 'battle',
+                'died', 'teleportOut', 'squished', 'DFA', 'fallDown',
+                'elevator'
+            ]),
+            State.State('stopped', self.enterStopped, self.exitStopped,
+                        ['walk', 'teleportOut']),
+            State.State('sit', self.enterSit, self.exitSit,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('push', self.enterPush, self.exitPush,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('stickerBook', self.enterStickerBook,
+                        self.exitStickerBook, [
+                            'walk', 'battle', 'DFA', 'WaitForBattle', 'died',
+                            'teleportOut'
+                        ]),
+            State.State('WaitForBattle', self.enterWaitForBattle,
+                        self.exitWaitForBattle,
+                        ['battle', 'walk', 'died', 'teleportOut']),
+            State.State('battle', self.enterBattle, self.exitBattle,
+                        ['walk', 'teleportOut', 'died']),
+            State.State('fallDown', self.enterFallDown, self.exitFallDown,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('squished', self.enterSquished, self.exitSquished,
+                        ['walk', 'died', 'teleportOut']),
+            State.State('teleportIn', self.enterTeleportIn,
+                        self.exitTeleportIn,
+                        ['walk', 'teleportOut', 'quietZone', 'died']),
+            State.State('teleportOut', self.enterTeleportOut,
+                        self.exitTeleportOut,
+                        ['teleportIn', 'FLA', 'quietZone', 'WaitForBattle']),
+            State.State('DFA', self.enterDFA, self.exitDFA,
+                        ['DFAReject', 'teleportOut']),
+            State.State('DFAReject', self.enterDFAReject, self.exitDFAReject,
+                        ['walkteleportOut']),
+            State.State('died', self.enterDied, self.exitDied,
+                        ['teleportOut']),
+            State.State('FLA', self.enterFLA, self.exitFLA, ['quietZone']),
+            State.State('quietZone', self.enterQuietZone, self.exitQuietZone,
+                        ['teleportIn']),
+            State.State('elevator', self.enterElevator, self.exitElevator,
+                        ['walk']),
+            State.State('final', self.enterFinal, self.exitFinal, ['start'])
+        ], 'start', 'final')
         self.parentFSM.getStateNamed('factoryInterior').addChild(self.fsm)
         BattlePlace.BattlePlace.load(self)
         self.music = base.loadMusic('phase_9/audio/bgm/CHQ_FACT_bg.mid')
@@ -116,8 +86,7 @@ class FactoryInterior(BattlePlace.BattlePlace):
 
         def commence(self=self):
             NametagGlobals.setMasterArrowsOn(1)
-            self.fsm.request(requestStatus['how'], [
-                requestStatus])
+            self.fsm.request(requestStatus['how'], [requestStatus])
             base.playMusic(self.music, looping=1, volume=0.80000000000000004)
             base.transitions.irisIn()
 
@@ -235,8 +204,9 @@ class FactoryInterior(BattlePlace.BattlePlace):
 
         def enterElevator(self, distElevator):
             self.accept(self.elevatorDoneEvent, self.handleElevatorDone)
-            self.elevator = Elevator.Elevator(self.fsm.getStateNamed(
-                'elevator'), self.elevatorDoneEvent, distElevator)
+            self.elevator = Elevator.Elevator(
+                self.fsm.getStateNamed('elevator'), self.elevatorDoneEvent,
+                distElevator)
             distElevator.elevatorFSM = self.elevator
             self.elevator.load()
             self.elevator.enter()
@@ -251,8 +221,8 @@ class FactoryInterior(BattlePlace.BattlePlace):
             where = doneStatus['where']
             if where == 'reject':
                 if hasattr(
-                        base.localAvatar,
-                        'elevatorNotifier') and base.localAvatar.elevatorNotifier.isNotifierOpen():
+                        base.localAvatar, 'elevatorNotifier'
+                ) and base.localAvatar.elevatorNotifier.isNotifierOpen():
                     pass
                 else:
                     self.fsm.request('walk')
@@ -263,15 +233,14 @@ class FactoryInterior(BattlePlace.BattlePlace):
                 self.doneEvent = 'lawOfficeFloorDone'
                 messenger.send(self.doneEvent)
             else:
-                self.notify.error(
-                    'Unknown mode: ' +
-                    where +
-                    ' in handleElevatorDone')
+                self.notify.error('Unknown mode: ' + where +
+                                  ' in handleElevatorDone')
 
         def handleFactoryWinEvent(self):
             FactoryInterior.notify.info('handleFactoryWinEvent')
 
-            if base.cr.playGame.getPlace().fsm.getCurrentState().getName() == 'died':
+            if base.cr.playGame.getPlace().fsm.getCurrentState().getName(
+            ) == 'died':
                 return
 
             self.factoryDefeated = 1
@@ -281,15 +250,16 @@ class FactoryInterior(BattlePlace.BattlePlace):
             else:
                 zoneId = ZoneUtil.getSafeZoneId(base.localAvatar.defaultZone)
 
-            self.fsm.request('teleportOut', [{
-                'loader': ZoneUtil.getLoaderName(zoneId),
-                'where': ZoneUtil.getToonWhereName(zoneId),
-                'how': 'teleportIn',
-                'hoodId': zoneId,
-                'zoneId': zoneId,
-                'shardId': None,
-                'avId': -1,
-            }])
+            self.fsm.request('teleportOut',
+                             [{
+                                 'loader': ZoneUtil.getLoaderName(zoneId),
+                                 'where': ZoneUtil.getToonWhereName(zoneId),
+                                 'how': 'teleportIn',
+                                 'hoodId': zoneId,
+                                 'zoneId': zoneId,
+                                 'shardId': None,
+                                 'avId': -1,
+                             }])
 
         def enterDied(self, requestStatus, callback=None):
             FactoryInterior.notify.info('enterDied')

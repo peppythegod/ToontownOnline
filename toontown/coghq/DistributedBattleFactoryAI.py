@@ -12,43 +12,29 @@ class DistributedBattleFactoryAI(
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedBattleFactoryAI')
 
-    def __init__(
-            self,
-            air,
-            battleMgr,
-            pos,
-            suit,
-            toonId,
-            zoneId,
-            level,
-            battleCellId,
-            roundCallback=None,
-            finishCallback=None,
-            maxSuits=4):
+    def __init__(self,
+                 air,
+                 battleMgr,
+                 pos,
+                 suit,
+                 toonId,
+                 zoneId,
+                 level,
+                 battleCellId,
+                 roundCallback=None,
+                 finishCallback=None,
+                 maxSuits=4):
         DistributedLevelBattleAI.DistributedLevelBattleAI.__init__(
-            self,
-            air,
-            battleMgr,
-            pos,
-            suit,
-            toonId,
-            zoneId,
-            level,
-            battleCellId,
-            'FactoryReward',
-            roundCallback,
-            finishCallback,
+            self, air, battleMgr, pos, suit, toonId, zoneId, level,
+            battleCellId, 'FactoryReward', roundCallback, finishCallback,
             maxSuits)
         self.battleCalc.setSkillCreditMultiplier(1)
         if self.bossBattle:
             self.level.d_setForemanConfronted(toonId)
 
         self.fsm.addState(
-            State.State(
-                'FactoryReward',
-                self.enterFactoryReward,
-                self.exitFactoryReward,
-                ['Resume']))
+            State.State('FactoryReward', self.enterFactoryReward,
+                        self.exitFactoryReward, ['Resume']))
         playMovieState = self.fsm.getStateNamed('PlayMovie')
         playMovieState.addTransition('FactoryReward')
 
@@ -62,21 +48,18 @@ class DistributedBattleFactoryAI(
             self.toonItems[toon.doId][0].extend(recovered)
             self.toonItems[toon.doId][1].extend(notRecovered)
             meritArray = self.air.promotionMgr.recoverMerits(
-                toon,
-                self.suitsKilled,
-                self.getTaskZoneId(),
-                getFactoryMeritMultiplier(
-                    self.getTaskZoneId()))
+                toon, self.suitsKilled, self.getTaskZoneId(),
+                getFactoryMeritMultiplier(self.getTaskZoneId()))
             if toon.doId in self.helpfulToons:
                 self.toonMerits[toon.doId] = addListsByValue(
                     self.toonMerits[toon.doId], meritArray)
             else:
                 self.notify.debug(
-                    'toon %d not helpful, skipping merits' %
-                    toon.doId)
+                    'toon %d not helpful, skipping merits' % toon.doId)
             if self.bossBattle:
                 self.toonParts[toon.doId] = self.air.cogSuitMgr.recoverPart(
-                    toon, self.level.factoryType, self.suitTrack, self.getTaskZoneId(), toons)
+                    toon, self.level.factoryType, self.suitTrack,
+                    self.getTaskZoneId(), toons)
                 self.notify.debug('toonParts = %s' % self.toonParts)
                 continue
 
@@ -87,9 +70,8 @@ class DistributedBattleFactoryAI(
         self.assignRewards()
         self.bossDefeated = 1
         self.level.setVictors(self.activeToons[:])
-        self.timer.startCallback(
-            BUILDING_REWARD_TIMEOUT,
-            self.serverRewardDone)
+        self.timer.startCallback(BUILDING_REWARD_TIMEOUT,
+                                 self.serverRewardDone)
 
     def exitFactoryReward(self):
         pass

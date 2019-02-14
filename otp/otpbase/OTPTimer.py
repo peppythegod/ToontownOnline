@@ -15,10 +15,17 @@ class OTPTimer(DirectFrame):
         else:
             image = None
         DirectFrame.__init__(
-            self, state=DGG.DISABLED, relief=None, scale=0.45000000000000001, image=image, image_pos=(
-                0, 0, 0), text='0', text_fg=(
-                0, 0, 0, 1), text_font=OTPGlobals.getInterfaceFont(), text_pos=(
-                -0.01, -0.14999999999999999), text_scale=0.34999999999999998)
+            self,
+            state=DGG.DISABLED,
+            relief=None,
+            scale=0.45000000000000001,
+            image=image,
+            image_pos=(0, 0, 0),
+            text='0',
+            text_fg=(0, 0, 0, 1),
+            text_font=OTPGlobals.getInterfaceFont(),
+            text_pos=(-0.01, -0.14999999999999999),
+            text_scale=0.34999999999999998)
         self.initialiseoptions(OTPTimer)
         self.timerId = OTPTimer.TimerId
         OTPTimer.TimerId += 1
@@ -59,7 +66,8 @@ class OTPTimer(DirectFrame):
         if timeStrLen == 1:
             if time <= 5 and self.highlightNearEnd:
                 self.setTimeStr(timeStr, 0.34000000000000002,
-                                (-0.025000000000000001, -0.125), Vec4(1, 0, 0, 1))
+                                (-0.025000000000000001, -0.125),
+                                Vec4(1, 0, 0, 1))
             else:
                 self.setTimeStr(timeStr, 0.34000000000000002,
                                 (-0.025000000000000001, -0.125))
@@ -70,8 +78,11 @@ class OTPTimer(DirectFrame):
             self.setTimeStr(timeStr, 0.20000000000000001,
                             (-0.01, -0.080000000000000002))
 
-    def setTimeStr(self, timeStr, scale=0.20000000000000001,
-                   pos=(-0.01, -0.080000000000000002), fg=None):
+    def setTimeStr(self,
+                   timeStr,
+                   scale=0.20000000000000001,
+                   pos=(-0.01, -0.080000000000000002),
+                   fg=None):
         self['text'] = ''
         if not fg:
             pass

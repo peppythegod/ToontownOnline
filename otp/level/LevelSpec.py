@@ -10,10 +10,8 @@ if __dev__:
 
 class LevelSpec:
     notify = DirectNotifyGlobal.directNotify.newCategory('LevelSpec')
-    SystemEntIds = (
-        LevelConstants.UberZoneEntId,
-        LevelConstants.LevelMgrEntId,
-        LevelConstants.EditMgrEntId)
+    SystemEntIds = (LevelConstants.UberZoneEntId, LevelConstants.LevelMgrEntId,
+                    LevelConstants.EditMgrEntId)
 
     def __init__(self, spec=None, scenario=0):
         newSpec = 0
@@ -30,16 +28,12 @@ class LevelSpec:
         elif spec is None:
             if __dev__:
                 newSpec = 1
-                self.specDict = {
-                    'globalEntities': {},
-                    'scenarios': [
-                        {}]}
+                self.specDict = {'globalEntities': {}, 'scenarios': [{}]}
 
         self.entId2specDict = {}
         self.entId2specDict.update(
             list2dict(
-                self.getGlobalEntIds(),
-                value=self.privGetGlobalEntityDict()))
+                self.getGlobalEntIds(), value=self.privGetGlobalEntityDict()))
         for i in range(self.getNumScenarios()):
             self.entId2specDict.update(
                 list2dict(
@@ -108,7 +102,8 @@ class LevelSpec:
     def getCopyOfSpec(self, spec):
         specCopy = {}
         if not isClient():
-            print 'EXECWARNING LevelSpec exec: %s' % self.getSpecImportsModuleName()
+            print 'EXECWARNING LevelSpec exec: %s' % self.getSpecImportsModuleName(
+            )
             printStack()
 
         exec 'from %s import *' % self.getSpecImportsModuleName()
@@ -192,17 +187,15 @@ class LevelSpec:
             specDict[entId][attrib] = value
 
         def setAttribChange(self, entId, attrib, value, username):
-            LevelSpec.notify.info(
-                'setAttribChange(%s): %s, %s = %s' %
-                (username, entId, attrib, repr(value)))
+            LevelSpec.notify.info('setAttribChange(%s): %s, %s = %s' %
+                                  (username, entId, attrib, repr(value)))
             self.doSetAttrib(entId, attrib, value)
             if self.hasLevel():
                 self.level.handleAttribChange(entId, attrib, value, username)
 
         def insertEntity(self, entId, entType, parentEntId='unspecified'):
             LevelSpec.notify.info(
-                'inserting entity %s (%s)' %
-                (entId, entType))
+                'inserting entity %s (%s)' % (entId, entType))
             globalEnts = self.privGetGlobalEntityDict()
             self.entId2specDict[entId] = globalEnts
             globalEnts[entId] = {}
@@ -312,7 +305,6 @@ class LevelSpec:
             topLevelName = 'levelSpec'
 
             def getPrettyEntityDictStr(name, dict, tabs=0):
-
                 def t(n):
                     return (tabs + n) * tab
 
@@ -330,25 +322,9 @@ class LevelSpec:
                     return result
 
                 firstTypes = ('levelMgr', 'editMgr', 'zone')
-                firstAttribs = (
-                    'type',
-                    'name',
-                    'comment',
-                    'parentEntId',
-                    'pos',
-                    'x',
-                    'y',
-                    'z',
-                    'hpr',
-                    'h',
-                    'p',
-                    'r',
-                    'scale',
-                    'sx',
-                    'sy',
-                    'sz',
-                    'color',
-                    'model')
+                firstAttribs = ('type', 'name', 'comment', 'parentEntId',
+                                'pos', 'x', 'y', 'z', 'hpr', 'h', 'p', 'r',
+                                'scale', 'sx', 'sy', 'sz', 'color', 'model')
                 str = t(0) + '%s = {\n' % name
                 entIds = dict.keys()
                 entType2ids = self.getEntType2ids(entIds)
@@ -370,7 +346,6 @@ class LevelSpec:
                 return str
 
             def getPrettyTopLevelDictStr(tabs=0):
-
                 def t(n):
                     return (tabs + n) * tab
 
@@ -391,8 +366,8 @@ class LevelSpec:
             str += '\n'
             numScenarios = self.getNumScenarios()
             for i in range(numScenarios):
-                str += getPrettyEntityDictStr('Scenario%s' %
-                                              i, self.privGetScenarioEntityDict(i))
+                str += getPrettyEntityDictStr(
+                    'Scenario%s' % i, self.privGetScenarioEntityDict(i))
                 str += '\n'
 
             str += getPrettyTopLevelDictStr()
@@ -406,11 +381,8 @@ class LevelSpec:
                 return 0
 
             for key in dict1:
-                if isinstance(
-                    dict1[key], type(
-                        {})) and isinstance(
-                    dict2[key], type(
-                        {})):
+                if isinstance(dict1[key], type({})) and isinstance(
+                        dict2[key], type({})):
                     if not self._recurKeyTest(dict1[key], dict2[key]):
                         return 0
 
@@ -458,8 +430,8 @@ class LevelSpec:
                     for attrib in spec.keys():
                         if attrib not in attribNames:
                             LevelSpec.notify.warning(
-                                "entId %s (%s): unknown attrib '%s', omitting" %
-                                (entId, spec['type'], attrib))
+                                "entId %s (%s): unknown attrib '%s', omitting"
+                                % (entId, spec['type'], attrib))
                             del spec[attrib]
                             continue
 

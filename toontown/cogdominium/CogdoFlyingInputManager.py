@@ -3,7 +3,6 @@ from toontown.minigame import ArrowKeys
 
 
 class CogdoFlyingInputManager:
-
     def __init__(self):
         self.arrowKeys = ArrowKeys.ArrowKeys()
         self.arrowKeys.disable()
@@ -14,7 +13,8 @@ class CogdoFlyingInputManager:
             self._CogdoFlyingInputManager__downArrowPressed,
             self._CogdoFlyingInputManager__leftArrowPressed,
             self._CogdoFlyingInputManager__rightArrowPressed,
-            self._CogdoFlyingInputManager__controlPressed])
+            self._CogdoFlyingInputManager__controlPressed
+        ])
         self.arrowKeys.enable()
 
     def disable(self):

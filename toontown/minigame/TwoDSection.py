@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase.DirectObject import DirectObject
@@ -85,8 +83,8 @@ class TwoDSection(DirectObject):
             blockIndex = int(fileName[-1])
             blockType = self.sectionMgr.game.assetMgr.blockTypes[blockIndex]
             sectionizedId = self.getSectionizedId(index)
-            newBlock = TwoDBlock.TwoDBlock(
-                blockType, sectionizedId, blockAttribs)
+            newBlock = TwoDBlock.TwoDBlock(blockType, sectionizedId,
+                                           blockAttribs)
             newBlock.model.reparentTo(self.blocksNP)
             self.blocks.append(newBlock)
 
@@ -124,7 +122,6 @@ class TwoDSection(DirectObject):
         self.stomperMgr.exitPause()
 
     def getSectionizedId(self, num):
-
         def getTwoDigitString(index):
             if index < 10:
                 output = '0' + str(index)

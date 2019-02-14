@@ -29,9 +29,7 @@ class CogdoFlyingGame(DirectObject):
         self.index2LegalEagle = {}
         self.legalEagles = []
         self.isGameComplete = False
-        self._hints = {
-            'targettedByEagle': False,
-            'invulnerable': False}
+        self._hints = {'targettedByEagle': False, 'invulnerable': False}
 
     def _initLegalEagles(self):
         nestIndex = 1
@@ -49,8 +47,8 @@ class CogdoFlyingGame(DirectObject):
             i = self.distGame.getToonIds().index(toon.doId)
             if toon is not None:
                 if toon.isLocal():
-                    player = CogdoFlyingLocalPlayer(
-                        toon, self, self.level, self.guiMgr)
+                    player = CogdoFlyingLocalPlayer(toon, self, self.level,
+                                                    self.guiMgr)
                     self.localPlayer = player
                     self.localPlayer.setPlayerNumber(i)
                 else:
@@ -66,9 +64,8 @@ class CogdoFlyingGame(DirectObject):
         elevator.setPos(render, offset)
 
     def load(self):
-        self.accept(
-            self.distGame.getRemoteActionEventName(),
-            self.handleRemoteAction)
+        self.accept(self.distGame.getRemoteActionEventName(),
+                    self.handleRemoteAction)
         self.audioMgr = CogdoGameAudioManager(
             Globals.Audio.MusicFiles,
             Globals.Audio.SfxFiles,
@@ -79,8 +76,7 @@ class CogdoFlyingGame(DirectObject):
             Globals.Level.QuadLengthUnits,
             Globals.Level.QuadVisibilityAhead,
             Globals.Level.QuadVisibilityBehind,
-            rng=RandomNumGen(
-                self.distGame.doId))
+            rng=RandomNumGen(self.distGame.doId))
         self.level = factory.createLevel(self.distGame.getSafezoneId())
         self.level.setCamera(camera)
         self.guiMgr = CogdoFlyingGuiManager(self.level)
@@ -128,8 +124,8 @@ class CogdoFlyingGame(DirectObject):
         self.levelFog.setVisible(False)
 
     def startIntro(self):
-        self._movie = CogdoFlyingGameIntro(
-            self.level, RandomNumGen(self.distGame.doId))
+        self._movie = CogdoFlyingGameIntro(self.level,
+                                           RandomNumGen(self.distGame.doId))
         self._movie.load()
         self._movie.play()
         self.audioMgr.playMusic('normal')
@@ -155,62 +151,45 @@ class CogdoFlyingGame(DirectObject):
 
     def start(self):
         self.level.start(self.distGame.getStartTime())
-        self.accept(
-            CogdoFlyingObstacle.EnterEventName,
-            self.handleLocalToonEnterObstacle)
-        self.accept(
-            CogdoFlyingObstacle.ExitEventName,
-            self.handleLocalToonExitObstacle)
-        self.accept(
-            CogdoFlyingGatherable.EnterEventName,
-            self.handleLocalToonEnterGatherable)
+        self.accept(CogdoFlyingObstacle.EnterEventName,
+                    self.handleLocalToonEnterObstacle)
+        self.accept(CogdoFlyingObstacle.ExitEventName,
+                    self.handleLocalToonExitObstacle)
+        self.accept(CogdoFlyingGatherable.EnterEventName,
+                    self.handleLocalToonEnterGatherable)
         self.accept(CogdoFlyingLegalEagle.RequestAddTargetEventName,
                     self.handleLocalToonEnterLegalEagleInterest)
-        self.accept(
-            CogdoFlyingLegalEagle.RequestAddTargetAgainEventName,
-            self.handleLocalToonAgainLegalEagleInterest)
-        self.accept(
-            CogdoFlyingLegalEagle.RequestRemoveTargetEventName,
-            self.handleLocalToonExitLegalEagleInterest)
-        self.accept(
-            CogdoFlyingLegalEagle.EnterLegalEagle,
-            self.handleLocalToonEnterLegalEagle)
-        self.accept(
-            CogdoFlyingLegalEagle.ChargingToAttackEventName,
-            self.handlePlayerBackpackAttacked)
-        self.accept(
-            CogdoFlyingLegalEagle.LockOnToonEventName,
-            self.handlePlayerBackpackTargeted)
-        self.accept(
-            CogdoFlyingLegalEagle.CooldownEventName,
-            self.handlePlayerBackpackNormal)
-        self.accept(
-            CogdoFlyingGuiManager.EagleTargetingLocalPlayerEventName,
-            self.handleLocalPlayerTargetedByEagle)
-        self.accept(
-            CogdoFlyingGuiManager.EagleAttackingLocalPlayerEventName,
-            self.handleLocalPlayerAttackedByEagle)
-        self.accept(
-            CogdoFlyingGuiManager.ClearMessageDisplayEventName,
-            self.handleClearGuiMessage)
-        self.accept(
-            CogdoFlyingGuiManager.InvulnerableEventName,
-            self.handleLocalPlayerInvulnerable)
-        self.acceptOnce(
-            CogdoFlyingGuiManager.FirstPressOfCtrlEventName,
-            self.handleLocalPlayerFirstPressOfCtrl)
-        self.acceptOnce(
-            CogdoFlyingGuiManager.PickedUpFirstPropellerEventName,
-            self.handleLocalPlayerPickedUpFirstPropeller)
+        self.accept(CogdoFlyingLegalEagle.RequestAddTargetAgainEventName,
+                    self.handleLocalToonAgainLegalEagleInterest)
+        self.accept(CogdoFlyingLegalEagle.RequestRemoveTargetEventName,
+                    self.handleLocalToonExitLegalEagleInterest)
+        self.accept(CogdoFlyingLegalEagle.EnterLegalEagle,
+                    self.handleLocalToonEnterLegalEagle)
+        self.accept(CogdoFlyingLegalEagle.ChargingToAttackEventName,
+                    self.handlePlayerBackpackAttacked)
+        self.accept(CogdoFlyingLegalEagle.LockOnToonEventName,
+                    self.handlePlayerBackpackTargeted)
+        self.accept(CogdoFlyingLegalEagle.CooldownEventName,
+                    self.handlePlayerBackpackNormal)
+        self.accept(CogdoFlyingGuiManager.EagleTargetingLocalPlayerEventName,
+                    self.handleLocalPlayerTargetedByEagle)
+        self.accept(CogdoFlyingGuiManager.EagleAttackingLocalPlayerEventName,
+                    self.handleLocalPlayerAttackedByEagle)
+        self.accept(CogdoFlyingGuiManager.ClearMessageDisplayEventName,
+                    self.handleClearGuiMessage)
+        self.accept(CogdoFlyingGuiManager.InvulnerableEventName,
+                    self.handleLocalPlayerInvulnerable)
+        self.acceptOnce(CogdoFlyingGuiManager.FirstPressOfCtrlEventName,
+                        self.handleLocalPlayerFirstPressOfCtrl)
+        self.acceptOnce(CogdoFlyingGuiManager.PickedUpFirstPropellerEventName,
+                        self.handleLocalPlayerPickedUpFirstPropeller)
         self.acceptOnce(
             CogdoFlyingGuiManager.StartRunningOutOfTimeMusicEventName,
             self.handleTimeRunningOut)
-        self.acceptOnce(
-            CogdoFlyingLocalPlayer.PlayWaitingMusicEventName,
-            self.handlePlayWaitingMusic)
-        self.acceptOnce(
-            CogdoFlyingLocalPlayer.RanOutOfTimeEventName,
-            self.handleLocalPlayerRanOutOfTime)
+        self.acceptOnce(CogdoFlyingLocalPlayer.PlayWaitingMusicEventName,
+                        self.handlePlayWaitingMusic)
+        self.acceptOnce(CogdoFlyingLocalPlayer.RanOutOfTimeEventName,
+                        self.handleLocalPlayerRanOutOfTime)
         self._CogdoFlyingGame__startUpdateTask()
         self.isGameComplete = False
         if __debug__ and base.config.GetBool('schellgames-dev', True):
@@ -269,8 +248,10 @@ class CogdoFlyingGame(DirectObject):
         self.players.append(player)
         self.toonId2Player[player.toon.doId] = player
         toon = player.toon
-        self.accept(toon.uniqueName('disable'), self._removePlayer, extraArgs=[
-            toon.doId])
+        self.accept(
+            toon.uniqueName('disable'),
+            self._removePlayer,
+            extraArgs=[toon.doId])
 
     def _removePlayer(self, toonId):
         if toonId in self.toonId2Player:
@@ -301,8 +282,7 @@ class CogdoFlyingGame(DirectObject):
     def handleRemoteAction(self, action, data):
         if data != self.localPlayer.toon.doId:
             if action == Globals.AI.GameActions.GotoWinState:
-                if self.localPlayer.state in [
-                        'WaitingForWin']:
+                if self.localPlayer.state in ['WaitingForWin']:
                     self.localPlayer.request('Win')
 
     def toonDied(self, toonId, elapsedTime):
@@ -334,47 +314,49 @@ class CogdoFlyingGame(DirectObject):
         if gatherable.wasPickedUp():
             return None
 
-        if gatherable.isPowerUp() and gatherable.wasPickedUpByToon(self.localPlayer.toon):
+        if gatherable.isPowerUp() and gatherable.wasPickedUpByToon(
+                self.localPlayer.toon):
             return None
 
         if gatherable.type in [
                 Globals.Level.GatherableTypes.LaffPowerup,
-                Globals.Level.GatherableTypes.InvulPowerup]:
-            self.distGame.d_sendRequestPickup(
-                gatherable.serialNum, gatherable.type)
+                Globals.Level.GatherableTypes.InvulPowerup
+        ]:
+            self.distGame.d_sendRequestPickup(gatherable.serialNum,
+                                              gatherable.type)
         elif gatherable.type == Globals.Level.GatherableTypes.Memo:
-            self.distGame.d_sendRequestPickup(
-                gatherable.serialNum, gatherable.type)
+            self.distGame.d_sendRequestPickup(gatherable.serialNum,
+                                              gatherable.type)
             gatherable.disable()
         elif gatherable.type == Globals.Level.GatherableTypes.Propeller and self.localPlayer.fuel < 1.0:
-            self.distGame.d_sendRequestPickup(
-                gatherable.serialNum, gatherable.type)
+            self.distGame.d_sendRequestPickup(gatherable.serialNum,
+                                              gatherable.type)
 
     def pickUp(self, toonId, pickupNum, elapsedTime=0.0):
         self.notify.debugCall()
         player = self.toonId2Player[toonId]
         gatherable = self.level.getGatherable(pickupNum)
         if gatherable is not None:
-            if (not gatherable.isPowerUp() or not gatherable.wasPickedUp(
-            ) or gatherable.isPowerUp()) and not gatherable.wasPickedUpByToon(player.toon):
+            if (not gatherable.isPowerUp() or not gatherable.wasPickedUp()
+                    or gatherable.isPowerUp()
+                ) and not gatherable.wasPickedUpByToon(player.toon):
                 gatherable.pickUp(player.toon, elapsedTime)
                 player.handleEnterGatherable(gatherable, elapsedTime)
                 if gatherable.type in [
-                        Globals.Level.GatherableTypes.InvulPowerup]:
+                        Globals.Level.GatherableTypes.InvulPowerup
+                ]:
                     if player.toon.isLocal():
                         self.audioMgr.playMusic('invul')
 
         else:
             self.notify.warning(
-                'Trying to pickup gatherable nonetype:%s' %
-                pickupNum)
+                'Trying to pickup gatherable nonetype:%s' % pickupNum)
 
     def debuffPowerup(self, toonId, pickupType, elapsedTime):
         self.notify.debugCall()
         player = self.toonId2Player[toonId]
         if player.isBuffActive(pickupType):
-            if pickupType in [
-                    Globals.Level.GatherableTypes.InvulPowerup]:
+            if pickupType in [Globals.Level.GatherableTypes.InvulPowerup]:
                 if self.guiMgr.isTimeRunningOut():
                     self.audioMgr.playMusic('timeRunningOut')
                 else:
@@ -382,7 +364,8 @@ class CogdoFlyingGame(DirectObject):
                 player.handleDebuffPowerup(pickupType, elapsedTime)
 
     def handleLocalToonEnterLegalEagle(self, eagle, collEntry):
-        if not self.localPlayer.isEnemyHitting() and not self.localPlayer.isInvulnerable():
+        if not self.localPlayer.isEnemyHitting(
+        ) and not self.localPlayer.isInvulnerable():
             collPos = collEntry.getSurfacePoint(render)
             self.localPlayer.handleEnterEnemyHit(eagle, collPos)
             self.distGame.d_sendRequestAction(
@@ -420,8 +403,7 @@ class CogdoFlyingGame(DirectObject):
         taskMgr.remove(CogdoFlyingGame.UpdateTaskName)
 
     def handleTimeRunningOut(self):
-        if self.localPlayer.state not in [
-                'WaitingForWin']:
+        if self.localPlayer.state not in ['WaitingForWin']:
             self.audioMgr.playMusic('timeRunningOut')
 
         self.guiMgr.presentTimerGui()
@@ -489,9 +471,7 @@ class CogdoFlyingGame(DirectObject):
             legalEagle = self.index2LegalEagle[index]
             if not self.localPlayer.isLegalEagleInterestRequestSent(
                     index) and not self.localPlayer.isLegalEagleTarget():
-                if self.localPlayer.state in [
-                    'WaitingForWin',
-                        'Win']:
+                if self.localPlayer.state in ['WaitingForWin', 'Win']:
                     return None
 
                 self.localPlayer.setLegalEagleInterestRequest(index)
@@ -500,8 +480,7 @@ class CogdoFlyingGame(DirectObject):
 
         else:
             self.notify.warning(
-                "Legal eagle %i isn't in index2LegalEagle dict" %
-                index)
+                "Legal eagle %i isn't in index2LegalEagle dict" % index)
 
     def handleLocalToonAgainLegalEagleInterest(self, index):
         self.handleLocalToonEnterLegalEagleInterest(index)
@@ -516,8 +495,7 @@ class CogdoFlyingGame(DirectObject):
 
         else:
             self.notify.warning(
-                "Legal eagle %i isn't in index2LegalEagle dict" %
-                index)
+                "Legal eagle %i isn't in index2LegalEagle dict" % index)
 
     def forceClearLegalEagleInterestInToon(self, toonId):
         player = self.toonId2Player[toonId]
@@ -528,7 +506,8 @@ class CogdoFlyingGame(DirectObject):
                     if self.localPlayer.isLegalEagleInterestRequestSent(index):
                         self.localPlayer.clearLegalEagleInterestRequest(index)
                         self.distGame.d_sendRequestAction(
-                            Globals.AI.GameActions.RequestExitEagleInterest, index)
+                            Globals.AI.GameActions.RequestExitEagleInterest,
+                            index)
 
                 self.toonClearAsEagleTarget(toonId, index, 0)
 

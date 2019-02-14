@@ -1,5 +1,3 @@
-
-
 from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.task.Task import Task
@@ -27,8 +25,7 @@ class TwoDCamera(DistributedObject.DistributedObject):
         self.camera.setPosHpr(render, p[0], p[1], p[2], p[3], p[4], p[5])
         self.camera.setX(
             render,
-            base.localAvatar.getX(render) +
-            self.threeQuarterOffset)
+            base.localAvatar.getX(render) + self.threeQuarterOffset)
 
     def destroy(self):
         self.ignore('avatarOrientationChanged')
@@ -37,8 +34,9 @@ class TwoDCamera(DistributedObject.DistributedObject):
 
     def update(self):
         if not self.ivalControllingCamera:
-            camX = base.localAvatar.getX(
-                render) - math.sin(base.localAvatar.getH(render) * math.pi / 180) * self.threeQuarterOffset
+            camX = base.localAvatar.getX(render) - math.sin(
+                base.localAvatar.getH(render) * math.pi /
+                180) * self.threeQuarterOffset
             self.camera.setX(render, camX)
 
     def clearChangeFacingInterval(self):
@@ -56,8 +54,8 @@ class TwoDCamera(DistributedObject.DistributedObject):
 
     def myLerpPos(self, t):
         self.ivalControllingCamera = True
-        finalCamX = base.localAvatar.getX(
-            render) - math.sin(self.newHeading * math.pi / 180) * self.threeQuarterOffset
+        finalCamX = base.localAvatar.getX(render) - math.sin(
+            self.newHeading * math.pi / 180) * self.threeQuarterOffset
         diffX = finalCamX - self.camera.getX(render)
         self.camera.setX(render, self.camera.getX(render) + diffX * t)
         if math.fabs(self.camera.getX(render) - finalCamX) < 0.01:

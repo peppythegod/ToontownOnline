@@ -6,9 +6,8 @@ from toontown.distributed.DelayDeletable import DelayDeletable
 import DistributedSuitBase
 
 
-class DistributedTutorialSuit(
-        DistributedSuitBase.DistributedSuitBase,
-        DelayDeletable):
+class DistributedTutorialSuit(DistributedSuitBase.DistributedSuitBase,
+                              DelayDeletable):
     notify = DirectNotifyGlobal.directNotify.newCategory(
         'DistributedTutorialSuit')
 
@@ -20,15 +19,14 @@ class DistributedTutorialSuit(
             self.DistributedSuit_initialized = 1
             DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
             self.fsm = ClassicFSM.ClassicFSM('DistributedSuit', [
-                State.State('Off', self.enterOff, self.exitOff, [
-                    'Walk',
-                    'Battle']),
-                State.State('Walk', self.enterWalk, self.exitWalk, [
-                    'WaitForBattle',
-                    'Battle']),
+                State.State('Off', self.enterOff, self.exitOff,
+                            ['Walk', 'Battle']),
+                State.State('Walk', self.enterWalk, self.exitWalk,
+                            ['WaitForBattle', 'Battle']),
                 State.State('Battle', self.enterBattle, self.exitBattle, []),
-                State.State('WaitForBattle', self.enterWaitForBattle, self.exitWaitForBattle, [
-                    'Battle'])], 'Off', 'Off')
+                State.State('WaitForBattle', self.enterWaitForBattle,
+                            self.exitWaitForBattle, ['Battle'])
+            ], 'Off', 'Off')
             self.fsm.enterInitialState()
 
     def generate(self):
@@ -55,20 +53,13 @@ class DistributedTutorialSuit(
 
     def d_requestBattle(self, pos, hpr):
         self.cr.playGame.getPlace().setState('WaitForBattle')
-        self.sendUpdate('requestBattle', [
-            pos[0],
-            pos[1],
-            pos[2],
-            hpr[0],
-            hpr[1],
-            hpr[2]])
+        self.sendUpdate('requestBattle',
+                        [pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2]])
 
     def _DistributedTutorialSuit__handleToonCollision(self, collEntry):
         toonId = base.localAvatar.getDoId()
-        self.notify.debug(
-            'Distributed suit: requesting a Battle with ' +
-            'toon: %d' %
-            toonId)
+        self.notify.debug('Distributed suit: requesting a Battle with ' +
+                          'toon: %d' % toonId)
         self.d_requestBattle(self.getPos(), self.getHpr())
         self.setState('WaitForBattle')
 
@@ -81,9 +72,10 @@ class DistributedTutorialSuit(
             Vec3(55, 25, -0.5),
             Vec3(25, 25, -0.5),
             Vec3(25, 15, -0.5),
-            Vec3(55, 15, -0.5)]
-        self.tutWalkTrack = self.makePathTrack(
-            self, pathPoints, 4.5, 'tutFlunkyWalk')
+            Vec3(55, 15, -0.5)
+        ]
+        self.tutWalkTrack = self.makePathTrack(self, pathPoints, 4.5,
+                                               'tutFlunkyWalk')
         self.tutWalkTrack.loop()
 
     def exitWalk(self):

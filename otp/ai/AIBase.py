@@ -72,8 +72,8 @@ class AIBase:
         if __dev__:
             defaultValue = 0
 
-        wantFakeTextures = self.config.GetBool(
-            'want-fake-textures-ai', defaultValue)
+        wantFakeTextures = self.config.GetBool('want-fake-textures-ai',
+                                               defaultValue)
         if wantFakeTextures:
             loadPrcFileData('aibase', 'textures-header-only 1')
 
@@ -91,7 +91,8 @@ class AIBase:
                 self.petMovePeriod = self.config.GetFloat(
                     'pet-move-period', PetConstants.MovePeriod)
                 self.petPosBroadcastPeriod = self.config.GetFloat(
-                    'pet-pos-broadcast-period', PetConstants.PosBroadcastPeriod)
+                    'pet-pos-broadcast-period',
+                    PetConstants.PosBroadcastPeriod)
 
         self.wantBingo = self.config.GetBool('want-fish-bingo', 1)
         self.wantKarts = self.config.GetBool('wantKarts', 1)
@@ -197,9 +198,7 @@ class AIBase:
         if self.AISleep >= 0:
             if not (self.AIRunningNetYield) or self.AIForceSleep:
                 self.taskMgr.add(
-                    self._AIBase__sleepCycleTask,
-                    'aiSleep',
-                    priority=55)
+                    self._AIBase__sleepCycleTask, 'aiSleep', priority=55)
 
         self.eventMgr.restart()
 

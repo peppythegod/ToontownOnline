@@ -7,7 +7,6 @@ import random
 
 
 class DistributedEFlyingTreasure(DistributedSZTreasure.DistributedSZTreasure):
-
     def __init__(self, cr):
         DistributedSZTreasure.DistributedSZTreasure.__init__(self, cr)
         self.modelPath = 'phase_5.5/models/props/popsicle_treasure'
