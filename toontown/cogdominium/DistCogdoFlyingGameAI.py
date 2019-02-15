@@ -1,27 +1,43 @@
-from toontown.minigame.DistributedMinigameAI import DistributedMinigameAI
-from toontown.minigame.DistributedMinigameAI import EXITED, EXPECTED, JOINED, READY
+from direct.directnotify import DirectNotifyGlobal
+from toontown.cogdominium.DistCogdoGameAI import DistCogdoGameAI
 
 
-class DistCogdoFlyingGameAI(DistributedMinigameAI):
-    notify = directNotify.newCategory('DistCogdoFlyingGameAI')
+class DistCogdoFlyingGameAI(DistCogdoGameAI):
+    notify = DirectNotifyGlobal.directNotify.newCategory(
+        "DistCogdoFlyingGameAI")
 
-    def __init__(self, air, id):
+    def requestAction(self, todo0, todo1):
+        pass
 
-        try:
-            pass
-        except BaseException:
-            self.DistCogdoFlyingGameAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, id)
-            print 'FLYING COGDO GAME AI CREATED!'
+    def requestPickUp(self, todo0, todo1):
+        pass
 
-    def areAllPlayersReady(self):
-        ready = True
-        for avId in self.avIdList:
-            if ready:
-                pass
-            ready = self.stateDict[avId] == READY
+    def pickUp(self, todo0, todo1, todo2):
+        pass
 
-        return ready
+    def debuffPowerup(self, todo0, todo1, todo2):
+        pass
 
-    def setAvatarReady(self):
-        DistributedMinigameAI.setAvatarReady(self)
+    def doAction(self, todo0, todo1):
+        pass
+
+    def eagleExitCooldown(self, todo0, todo1):
+        pass
+
+    def toonSetAsEagleTarget(self, todo0, todo1, todo2):
+        pass
+
+    def toonClearAsEagleTarget(self, todo0, todo1, todo2):
+        pass
+
+    def toonDied(self, todo0, todo1):
+        pass
+
+    def toonSpawn(self, todo0, todo1):
+        pass
+
+    def toonSetBlades(self, todo0, todo1):
+        pass
+
+    def toonBladeLost(self, todo0):
+        pass
