@@ -11,7 +11,7 @@ from otp.friends.FriendSecret import AccountSecret
 from otp.friends.FriendSecret import AvatarSecret
 from otp.friends.FriendSecret import BothSecrets
 from otp.friends import FriendSecret
-globalFriendSecret = globalFriendSecret
+globalFriendSecret = None
 
 
 def openFriendSecret(secretType):

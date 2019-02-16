@@ -103,7 +103,6 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
 
     def setRoomDoIds(self, roomDoIds):
         self.roomDoIds = roomDoIds
-        continue
         self.roomWatcher = [](_[1], [
             DistributedCountryClubRoom.getCountryClubRoomReadyPostName(doId)
             for doId in self.roomDoIds

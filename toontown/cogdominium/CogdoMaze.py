@@ -232,7 +232,6 @@ class CogdoMazeFactory:
         self._data['originX'] = int(self._data['width'] / 2)
         self._data['originY'] = int(self._data['height'] / 2)
         collisionTable = []
-        continue
         horizontalWall = [1 for x in range(self._data['width'])]
         collisionTable.append(horizontalWall)
         for i in range(0, len(self.quadrantData), self.width):

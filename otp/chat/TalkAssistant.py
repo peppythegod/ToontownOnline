@@ -217,7 +217,7 @@ class TalkAssistant(DirectObject.DirectObject):
             if word == '' or base.whiteList.isWord(word):
                 newwords.append(word)
                 continue
-            newwords.append('\x1WLRed\x1' + word + '\x2')
+            newwords.append('\x01WLRed\x01' + word + '\x02')
 
         newText = ' '.join(newwords)
         return newText

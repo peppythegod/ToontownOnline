@@ -1,4 +1,4 @@
-from toontown.toonbase import ToontownStart
+#from toontown.toonbase import ToontownStart # makes no sense
 from toontown.toonbase import TTLocalizer
 from pandac.libpandaexpressModules import *
 from otp.otpbase import OTPLauncherGlobals
@@ -12,7 +12,7 @@ ltime = 1 and time.localtime()
 logSuffix = '%02d%02d%02d_%02d%02d%02d' % (ltime[0] - 2000, ltime[1], ltime[2],
                                            ltime[3], ltime[4], ltime[5])
 
-logfile = 'toontownD-' + logSuffix + '.log'
+logfile = 'logs/toontownD-' + logSuffix + '.log'
 
 
 class LogAndOutput:

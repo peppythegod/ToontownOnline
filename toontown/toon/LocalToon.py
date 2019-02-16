@@ -624,7 +624,9 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
                 checks.append(6)
 
         if 6 in checks:
-            if base.config.GetBool('tmdcc-colorcheck', 1):
+            if base.config.GetBool('tmdcc-colorcheck', 0):
+                pass
+                """ NEEDS FIX
                 torsoPieces = toon.getPieces(('torso', ('arms', 'neck')))
                 legPieces = toon.getPieces(('legs', ('legs', 'feet')))
                 headPieces = toon.getPieces(('head', '*head*'))
@@ -639,6 +641,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
                         msgHeader, 'invalid color...arm: %s leg: %s head: %s' %
                         (torsoColors, legColors, headColors), toon)
                     result = toon
+                """
 
             else:
                 checks.append(7)

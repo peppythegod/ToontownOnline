@@ -2750,7 +2750,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
         for mod in mods:
             index = mod[0]
             length = (mod[1] - mod[0]) + 1
-            newText = text[0:index] + length * '\x7' + text[index + length:]
+            newText = text[0:index] + length * '\x07' + text[index + length:]
             text = newText
 
         words = text.split(' ')
@@ -2759,11 +2759,11 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
             if word == '':
                 newwords.append(word)
                 continue
-            if (word[0] == '\x7'
-                    or len(word) > 1) and word[0] == '.' and word[1] == '\x7':
-                newwords.append('\x1WLDisplay\x1' +
+            if (word[0] == '\x07'
+                    or len(word) > 1) and word[0] == '.' and word[1] == '\x07':
+                newwords.append('\x01WLDisplay\x01' +
                                 self.chatGarbler.garbleSingle(self, word) +
-                                '\x2')
+                                '\x02')
                 scrubbed = 1
                 continue
             if base.whiteList.isWord(word):
@@ -2777,7 +2777,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
 
             if flag:
                 scrubbed = 1
-                newwords.append('\x1WLDisplay\x1' + word + '\x2')
+                newwords.append('\x01WLDisplay\x01' + word + '\x02')
                 continue
             newwords.append(word)
 
@@ -2791,15 +2791,15 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
             if word == '':
                 newwords.append(word)
                 continue
-            if word[0] == '\x7':
-                newwords.append('\x1WLRed\x1' +
+            if word[0] == '\x07':
+                newwords.append('\x01WLRed\x01' +
                                 self.chatGarbler.garbleSingle(self, word) +
-                                '\x2')
+                                '\x02')
                 continue
             if base.whiteList.isWord(word):
                 newwords.append(word)
                 continue
-            newwords.append('\x1WLRed\x1' + word + '\x2')
+            newwords.append('\x01WLRed\x01' + word + '\x02')
 
         newText = ' '.join(newwords)
         return newText

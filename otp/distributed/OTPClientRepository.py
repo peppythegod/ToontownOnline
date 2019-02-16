@@ -2146,7 +2146,7 @@ class OTPClientRepository(ClientRepositoryBase):
         return list
 
     def getPlayerAvatars(self):
-        continue
+        #continue #?
         return _[1]
 
     def queryObjectField(self, dclassName, fieldName, doId, context=0):

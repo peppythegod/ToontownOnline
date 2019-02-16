@@ -427,7 +427,6 @@ class DistributedVehicle(DistributedSmoothNode.DistributedSmoothNode,
                 Vec4(1.0, 1.0, 1.0, 1.0)), Func(backLeft.hide),
             Func(backRight.hide))
         self.driftSeqStarted = False
-        continue
         self.driftParticleForces = [
             x.effect.getParticlesNamed('particles-1').getLinearForce(0)
             for x in self.drifts

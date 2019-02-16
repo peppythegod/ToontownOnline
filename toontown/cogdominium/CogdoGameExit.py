@@ -179,7 +179,6 @@ class CogdoGameExit(NodePath):
         track.start()
 
     def _cleanToonTracks(self):
-        continue
         toons = [toon for toon in self._toon2track]
         for toon in toons:
             self._clearToonTrack(toon)

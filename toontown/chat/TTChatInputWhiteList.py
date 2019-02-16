@@ -261,9 +261,9 @@ class TTChatInputWhiteList(ChatInputWhiteListFrame):
                 else:
                     self.okayToSubmit = True
                 if flag:
-                    newwords.append('\x1WLDisplay\x1' + word + '\x2')
+                    newwords.append('\x01WLDisplay\x01' + word + '\x02')
                     continue
-                newwords.append('\x1WLEnter\x1' + word + '\x2')
+                newwords.append('\x01WLEnter\x01' + word + '\x02')
 
             if not strict:
                 lastword = words[-1]
@@ -271,9 +271,9 @@ class TTChatInputWhiteList(ChatInputWhiteListFrame):
                         lastword) or not (base.cr.whiteListChatEnabled):
                     newwords[-1] = lastword
                 elif flag:
-                    newwords[-1] = '\x1WLDisplay\x1' + lastword + '\x2'
+                    newwords[-1] = '\x01WLDisplay\x01' + lastword + '\x02'
                 else:
-                    newwords[-1] = '\x1WLEnter\x1' + lastword + '\x2'
+                    newwords[-1] = '\x01WLEnter\x01' + lastword + '\x02'
 
             newtext = ' '.join(newwords)
             self.chatEntry.set(newtext)

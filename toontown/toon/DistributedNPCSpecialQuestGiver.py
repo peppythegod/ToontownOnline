@@ -198,16 +198,16 @@ class DistributedNPCSpecialQuestGiver(DistributedNPCToonBase):
 
             greetingString = Quests.chooseQuestDialog(questId, Quests.GREETING)
             if greetingString:
-                fullString += greetingString + '\x7'
+                fullString += greetingString + '\x07'
 
             fullString += Quests.chooseQuestDialog(questId,
-                                                   Quests.COMPLETE) + '\x7'
+                                                   Quests.COMPLETE) + '\x07'
             if rewardId:
                 fullString += Quests.getReward(rewardId).getString()
 
             leavingString = Quests.chooseQuestDialog(questId, Quests.LEAVING)
             if leavingString:
-                fullString += '\x7' + leavingString
+                fullString += '\x07' + leavingString
 
         elif mode == NPCToons.QUEST_MOVIE_QUEST_CHOICE_CANCEL:
             fullString = TTLocalizer.QuestMovieQuestChoiceCancel
@@ -232,12 +232,12 @@ class DistributedNPCSpecialQuestGiver(DistributedNPCToonBase):
 
             greetingString = Quests.chooseQuestDialog(questId, Quests.GREETING)
             if greetingString:
-                fullString += greetingString + '\x7'
+                fullString += greetingString + '\x07'
 
             fullString += Quests.chooseQuestDialog(questId, completeStatus)
             leavingString = Quests.chooseQuestDialog(questId, Quests.LEAVING)
             if leavingString:
-                fullString += '\x7' + leavingString
+                fullString += '\x07' + leavingString
 
         elif mode == NPCToons.QUEST_MOVIE_ASSIGN:
             (questId, rewardId, toNpcId) = quests
@@ -259,7 +259,7 @@ class DistributedNPCSpecialQuestGiver(DistributedNPCToonBase):
             fullString += Quests.chooseQuestDialog(questId, Quests.QUEST)
             leavingString = Quests.chooseQuestDialog(questId, Quests.LEAVING)
             if leavingString:
-                fullString += '\x7' + leavingString
+                fullString += '\x07' + leavingString
 
         elif mode == NPCToons.QUEST_MOVIE_QUEST_CHOICE:
             if isLocalToon:

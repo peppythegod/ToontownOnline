@@ -315,7 +315,6 @@ def getDefaultAccessory(category):
 
 
 def getAccessoryItemList(accessoryType):
-    continue
     return [
         AccessoryDict[itemId] for itemId in AccessoryTypeDict[accessoryType]
     ]

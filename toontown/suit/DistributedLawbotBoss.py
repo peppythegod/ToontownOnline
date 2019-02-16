@@ -1949,7 +1949,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         return bossTrack
 
     def _DistributedLawbotBoss__makeWitnessToon(self):
-        dnaNetString = 't\x1b\x0\x1\x1\x0\x3\x0\x3\x1\x10\x13\x0\x13\x13'
+        dnaNetString = 't\x01b\x00\x01\x01\x00\x03\x00\x03\x01\x010\x013\x00\x013\x013'
         npc = Toon.Toon()
         npc.setDNAString(dnaNetString)
         npc.setName(TTLocalizer.WitnessToonName)
@@ -2079,7 +2079,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
             juryResult = TTLocalizer.WitnessToonAllJurors
         else:
             juryResult = TTLocalizer.WitnessToonSomeJurors % self.numToonJurorsSeated
-        juryResult += '\x7'
+        juryResult += '\x07'
         trialSpeech = juryResult
         trialSpeech += TTLocalizer.WitnessToonPrepareBattleThree
         diffSettings = ToontownGlobals.LawbotBossDifficultySettings[
@@ -2098,7 +2098,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 if juryWeightBonus:
                     weightBonusText = juryWeightBonus % (
                         self.numJurorsLocalToonSeated, self.bonusWeight)
-                    trialSpeech += '\x7'
+                    trialSpeech += '\x07'
                     trialSpeech += weightBonusText
 
         self.witnessToon.setLocalPageChat(trialSpeech, 0)

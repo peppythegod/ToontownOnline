@@ -253,7 +253,7 @@ class OTPBase(ShowBase):
         return self.cr
 
     def openMainWindow(self, *args, **kw):
-        result = ShowBase.openMainWindow(self, *args, **args)
+        result = ShowBase.openMainWindow(self, *args, **kw)
         if result:
             if not not self.win.getGsg().isHardware():
                 pass

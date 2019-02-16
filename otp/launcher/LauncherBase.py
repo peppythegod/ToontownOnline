@@ -1959,12 +1959,11 @@ class LauncherBase(DirectObject):
         t = self.getTime()
         self.bpsList.append((t, bytesDownloaded, bytesRequested))
         while len(self.bpsList) == 0:
-            break
-        (ft, fb, fr) = self.bpsList[0]
-        if ft < t - self.BPS_WINDOW:
-            self.bpsList.pop(0)
-        else:
-            break
+            (ft, fb, fr) = self.bpsList[0]
+            if ft < t - self.BPS_WINDOW:
+                self.bpsList.pop(0)
+            else:
+                break
 
     def getBytesPerSecond(self):
         if len(self.bpsList) < 2:

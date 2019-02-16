@@ -430,7 +430,7 @@ QuestsStreetLocationNamedStreet = 'on %(toStreetName)s in %(toHoodName)s'
 QuestsLocationString = '%(string)s%(location)s'
 QuestsLocationBuilding = "%s's building is called"
 QuestsLocationBuildingVerb = 'which is'
-QuestsLocationParagraph = '\x7%(building)s "%(buildingName)s"...\x7...%(buildingVerb)s %(street)s.'
+QuestsLocationParagraph = '\x007%(building)s "%(buildingName)s"...\x007...%(buildingVerb)s %(street)s.'
 QuestsGenericFinishSCString = 'I need to finish a ToonTask.'
 QuestsMediumPouch = 'Medium Pouch'
 QuestsLargePouch = 'Large Pouch'
@@ -581,7 +581,7 @@ LEAVING = 6
 TheBrrrghTrackQuestDict = {
     GREETING: '',
     QUEST:
-    'Now you are ready.\x7Go out and walk the earth until you know which track you would like to choose.\x7Choose wisely, because this is your final track.\x7When you are certain, return to me.',
+    'Now you are ready.\x007Go out and walk the earth until you know which track you would like to choose.\x007Choose wisely, because this is your final track.\x007When you are certain, return to me.',
     INCOMPLETE_PROGRESS: 'Choose wisely.',
     INCOMPLETE_WRONG_NPC: 'Choose wisely.',
     COMPLETE: 'Very wise choice!',
@@ -589,17 +589,17 @@ TheBrrrghTrackQuestDict = {
 }
 QuestDialog_3225 = {
     QUEST:
-    "Oh, thanks for coming, _avName_!\x7The Cogs in the neighborhood frightened away my delivery person.\x7I don't have anyone to deliver this salad to _toNpcName_!\x7Can you do it for me? Thanks so much!_where_"
+    "Oh, thanks for coming, _avName_!\x007The Cogs in the neighborhood frightened away my delivery person.\x007I don't have anyone to deliver this salad to _toNpcName_!\x007Can you do it for me? Thanks so much!_where_"
 }
 QuestDialog_2910 = {
     QUEST:
-    'Back so soon?\x7Great job on the spring.\x7The final item is a counter weight.\x7Stop by and see _toNpcName_ and bring back whatever you can get._where_'
+    'Back so soon?\x007Great job on the spring.\x07The final item is a counter weight.\x07Stop by and see _toNpcName_ and bring back whatever you can get._where_'
 }
 QuestDialogDict = {
     160: {
         GREETING: '',
         QUEST:
-        "Ok, now I think you are ready for something more rewarding.\x7If you can defeat 3 Bossbots I'll give you a little bonus.",
+        "Ok, now I think you are ready for something more rewarding.\x07If you can defeat 3 Bossbots I'll give you a little bonus.",
         INCOMPLETE_PROGRESS:
         TheCogs + ' are out in the streets, through the tunnels.',
         INCOMPLETE_WRONG_NPC:
@@ -610,7 +610,7 @@ QuestDialogDict = {
     161: {
         GREETING: '',
         QUEST:
-        "Ok, now I think you are ready for something more rewarding.\x7Come back after you defeat 3 Lawbots and I'll have a little something for you.",
+        "Ok, now I think you are ready for something more rewarding.\x07Come back after you defeat 3 Lawbots and I'll have a little something for you.",
         INCOMPLETE_PROGRESS:
         TheCogs + ' are out in the streets, through the tunnels.',
         INCOMPLETE_WRONG_NPC:
@@ -621,7 +621,7 @@ QuestDialogDict = {
     162: {
         GREETING: '',
         QUEST:
-        'Ok, now I think you are ready for something more rewarding.\x7Defeat 3 Cashbots and come back here to claim the bounty.',
+        'Ok, now I think you are ready for something more rewarding.\x07Defeat 3 Cashbots and come back here to claim the bounty.',
         INCOMPLETE_PROGRESS:
         TheCogs + ' are out in the streets, through the tunnels.',
         INCOMPLETE_WRONG_NPC:
@@ -632,7 +632,7 @@ QuestDialogDict = {
     163: {
         GREETING: '',
         QUEST:
-        "Ok, now I think you are ready for something more rewarding.\x7Come see us after you defeat 3 Sellbots and we'll hook you up.",
+        "Ok, now I think you are ready for something more rewarding.\x07Come see us after you defeat 3 Sellbots and we'll hook you up.",
         INCOMPLETE_PROGRESS:
         TheCogs + ' are out in the streets, through the tunnels.',
         INCOMPLETE_WRONG_NPC:
@@ -642,58 +642,58 @@ QuestDialogDict = {
     },
     164: {
         QUEST:
-        'You look like you could use some new gags.\x7Go see %s, maybe he can help you out._where_'
+        'You look like you could use some new gags.\x07Go see %s, maybe he can help you out._where_'
         % Flippy
     },
     165: {
         QUEST:
-        'Hi there.\x7Looks like you need to practice training your gags.\x7Every time you hit a Cog with one of your gags, your experience increases.\x7When you get enough experience, you will be able to use an even better gag.\x7Go practice your gags by defeating 4 Cogs.'
+        'Hi there.\x07Looks like you need to practice training your gags.\x07Every time you hit a Cog with one of your gags, your experience increases.\x07When you get enough experience, you will be able to use an even better gag.\x07Go practice your gags by defeating 4 Cogs.'
     },
     166: {
         QUEST:
-        'Nice work defeating those Cogs.\x7You know, the Cogs come in four different types.\x7They are Lawbots, Cashbots, Sellbots, and Bossbots.\x7You can tell them apart by their coloring and their name labels.\x7For practice go defeat 4 Bossbots.'
+        'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Bossbots.'
     },
     167: {
         QUEST:
-        'Nice work defeating those Cogs.\x7You know, the Cogs come in four different types.\x7They are Lawbots, Cashbots, Sellbots, and Bossbots.\x7You can tell them apart by their coloring and their name labels.\x7For practice go defeat 4 Lawbots.'
+        'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Lawbots.'
     },
     168: {
         QUEST:
-        'Nice work defeating those Cogs.\x7You know, the Cogs come in four different types.\x7They are Lawbots, Cashbots, Sellbots, and Bossbots.\x7You can tell them apart by their coloring and their name labels.\x7For practice go defeat 4 Sellbots.'
+        'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Sellbots.'
     },
     169: {
         QUEST:
-        'Nice work defeating those Cogs.\x7You know, the Cogs come in four different types.\x7They are Lawbots, Cashbots, Sellbots, and Bossbots.\x7You can tell them apart by their coloring and their name labels.\x7For practice go defeat 4 Cashbots.'
+        'Nice work defeating those Cogs.\x07You know, the Cogs come in four different types.\x07They are Lawbots, Cashbots, Sellbots, and Bossbots.\x07You can tell them apart by their coloring and their name labels.\x07For practice go defeat 4 Cashbots.'
     },
     170: {
         QUEST:
-        'Nice work, now you know the difference between the 4 types of Cogs.\x7I think you are ready to start training for your third gag track.\x7Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'
+        'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'
     },
     171: {
         QUEST:
-        'Nice work, now you know the difference between the 4 types of Cogs.\x7I think you are ready to start training for your third gag track.\x7Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'
+        'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - he can give you some expert advice._where_'
     },
     172: {
         QUEST:
-        'Nice work, now you know the difference between the 4 types of Cogs.\x7I think you are ready to start training for your third gag track.\x7Go talk to _toNpcName_ to choose your next gag track - she can give you some expert advice._where_'
+        'Nice work, now you know the difference between the 4 types of Cogs.\x07I think you are ready to start training for your third gag track.\x07Go talk to _toNpcName_ to choose your next gag track - she can give you some expert advice._where_'
     },
     175: {
         GREETING: '',
         QUEST:
-        "Did you know you have your very own Toon house?\x7Clarabelle Cow runs a phone catalog where you can order furniture to decorate your house.\x7You can also buy SpeedChat phrases, clothing, and other fun things!\x7I'll tell Clarabelle to send you your first catalog now.\x7You get a catalog with new items every week!\x7Go to your home and use your phone to call Clarabelle.",
+        "Did you know you have your very own Toon house?\x07Clarabelle Cow runs a phone catalog where you can order furniture to decorate your house.\x07You can also buy SpeedChat phrases, clothing, and other fun things!\x07I'll tell Clarabelle to send you your first catalog now.\x07You get a catalog with new items every week!\x07Go to your home and use your phone to call Clarabelle.",
         INCOMPLETE_PROGRESS: 'Go home and use your phone to call Clarabelle.',
         COMPLETE:
-        'Hope you have fun ordering things from Clarabelle!\x7I just finished redecorating my house. It looks Toontastic!\x7Keep doing ToonTasks to get more rewards!',
+        'Hope you have fun ordering things from Clarabelle!\x07I just finished redecorating my house. It looks Toontastic!\x07Keep doing ToonTasks to get more rewards!',
         LEAVING: QuestsDefaultLeaving
     },
     400: {
         GREETING: '',
         QUEST:
-        'Throw and Squirt are great, but you will need more gags to fight higher level Cogs.\x7When you team up with other Toons against the Cogs, you can combine attacks for even more damage.\x7Try different combinations of gags to see what works best.\x7For your next track, choose between Sound and Toonup.\x7Sound is special because when it hits, it damages all Cogs.\x7Toonup lets you heal other Toons in battle.\x7When you are ready to decide, come back here and choose.',
+        'Throw and Squirt are great, but you will need more gags to fight higher level Cogs.\x07When you team up with other Toons against the Cogs, you can combine attacks for even more damage.\x07Try different combinations of gags to see what works best.\x07For your next track, choose between Sound and Toonup.\x07Sound is special because when it hits, it damages all Cogs.\x07Toonup lets you heal other Toons in battle.\x07When you are ready to decide, come back here and choose.',
         INCOMPLETE_PROGRESS: 'Back so soon?  Okay, are you ready to choose?',
         INCOMPLETE_WRONG_NPC: 'Think about your decision before choosing.',
         COMPLETE:
-        'Good decision.  Now before you can use those gags, you must train for them.\x7You must complete a series of ToonTasks for training.\x7Each task will give you a single frame of your gag attack animation.\x7When you collect all 15, you can get the Final Gag Training task that will allow you to use your new gags.\x7You can check your progress in the Shticker Book.',
+        'Good decision.  Now before you can use those gags, you must train for them.\x07You must complete a series of ToonTasks for training.\x07Each task will give you a single frame of your gag attack animation.\x07When you collect all 15, you can get the Final Gag Training task that will allow you to use your new gags.\x07You can check your progress in the Shticker Book.',
         LEAVING: QuestsDefaultLeaving
     },
     1039: {
@@ -706,76 +706,76 @@ QuestDialogDict = {
     },
     1041: {
         QUEST:
-        'Hi!  What brings you here?\x7Everybody uses their portable hole to travel around Toontown.\x7Why, you can teleport to your friends using the Friends List, or to any neighborhood using the map in the Shticker Book.\x7Of course, you have to earn that!\x7Say, I can turn on your teleport access to '
+        'Hi!  What brings you here?\x07Everybody uses their portable hole to travel around Toontown.\x07Why, you can teleport to your friends using the Friends List, or to any neighborhood using the map in the Shticker Book.\x07Of course, you have to earn that!\x07Say, I can turn on your teleport access to '
         + lToontownCentral +
-        ' if you help out a friend of mine.\x7Seems the Cogs are causing trouble over on Loopy Lane.  Go visit _toNpcName_._where_'
+        ' if you help out a friend of mine.\x07Seems the Cogs are causing trouble over on Loopy Lane.  Go visit _toNpcName_._where_'
     },
     1042: {
         QUEST:
-        'Hi!  What brings you here?\x7Everybody uses their portable hole to travel around Toontown.\x7Why, you can teleport to your friends using the Friends List, or to any neighborhood using the map in the Shticker Book.\x7Of course, you have to earn that!\x7Say, I can turn on your teleport access to '
+        'Hi!  What brings you here?\x07Everybody uses their portable hole to travel around Toontown.\x07Why, you can teleport to your friends using the Friends List, or to any neighborhood using the map in the Shticker Book.\x07Of course, you have to earn that!\x07Say, I can turn on your teleport access to '
         + lToontownCentral +
-        ' if you help out a friend of mine.\x7Seems the Cogs are causing trouble over on Loopy Lane.  Go visit _toNpcName_._where_'
+        ' if you help out a friend of mine.\x07Seems the Cogs are causing trouble over on Loopy Lane.  Go visit _toNpcName_._where_'
     },
     1043: {
         QUEST:
-        'Hi!  What brings you here?\x7Everybody uses their portable hole to travel around Toontown.\x7Why, you can teleport to your friends using the Friends List, or to any neighborhood using the map in the Shticker Book.\x7Of course, you have to earn that!\x7Say, I can turn on your teleport access to '
+        'Hi!  What brings you here?\x07Everybody uses their portable hole to travel around Toontown.\x07Why, you can teleport to your friends using the Friends List, or to any neighborhood using the map in the Shticker Book.\x07Of course, you have to earn that!\x07Say, I can turn on your teleport access to '
         + lToontownCentral +
-        ' if you help out a friend of mine.\x7Seems the Cogs are causing trouble over on Loopy Lane.  Go visit _toNpcName_._where_'
+        ' if you help out a friend of mine.\x07Seems the Cogs are causing trouble over on Loopy Lane.  Go visit _toNpcName_._where_'
     },
     1044: {
         QUEST:
-        'Oh, thanks for stopping by.  I really need some help.\x7As you can see, I have no customers.\x7My secret recipe book is lost and nobody comes to my restaurant anymore.\x7I last saw it just before those Cogs took over my building.\x7Can you help me by recovering four of my famous recipes?',
+        'Oh, thanks for stopping by.  I really need some help.\x07As you can see, I have no customers.\x07My secret recipe book is lost and nobody comes to my restaurant anymore.\x07I last saw it just before those Cogs took over my building.\x07Can you help me by recovering four of my famous recipes?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck finding my recipes?'
     },
     1045: {
         QUEST:
-        'Thank you so much!\x7Before long I will have the entire collection and can reopen my restaurant.\x7Oh, I have a note here for you - something about teleport access?\x7It says thanks for helping my friend and to deliver this to Toon Headquarters.\x7Well, thanks indeed - bye!',
+        'Thank you so much!\x07Before long I will have the entire collection and can reopen my restaurant.\x07Oh, I have a note here for you - something about teleport access?\x07It says thanks for helping my friend and to deliver this to Toon Headquarters.\x07Well, thanks indeed - bye!',
         LEAVING:
         '',
         COMPLETE:
-        'Ah, yes, says here you have been a great help to some of the fine folks out on Loopy Lane.\x7Says you need teleport access to '
+        'Ah, yes, says here you have been a great help to some of the fine folks out on Loopy Lane.\x07Says you need teleport access to '
         + lToontownCentral +
-        '.\x7Well, consider it done.\x7Now you can teleport back to the playground from almost anywhere in Toontown.\x7Just open your map and click on '
+        '.\x07Well, consider it done.\x07Now you can teleport back to the playground from almost anywhere in Toontown.\x07Just open your map and click on '
         + lToontownCentral + '.'
     },
     1046: {
         QUEST:
-        'The Cashbots have really been bothering the Funny Money Savings and Loan.\x7Stop by there and see if there is anything you can do._where_'
+        'The Cashbots have really been bothering the Funny Money Savings and Loan.\x07Stop by there and see if there is anything you can do._where_'
     },
     1047: {
         QUEST:
-        'Cashbots have been sneaking into the bank and stealing our machines.\x7Please recover 5 adding machines from Cashbots.\x7To save you from running back and forth, just bring them all back at once.',
+        'Cashbots have been sneaking into the bank and stealing our machines.\x07Please recover 5 adding machines from Cashbots.\x07To save you from running back and forth, just bring them all back at once.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Still looking for adding machines?'
     },
     1048: {
         QUEST:
-        'Wow!  Thanks for finding our adding machines.\x7Hm... They look a little damaged.\x7Say, could you take them over to _toNpcName_ over at her shop, "Tickle Machines" on this street?\x7See if she can fix them.',
+        'Wow!  Thanks for finding our adding machines.\x07Hm... They look a little damaged.\x07Say, could you take them over to _toNpcName_ over at her shop, "Tickle Machines" on this street?\x07See if she can fix them.',
         LEAVING: ''
     },
     1049: {
         QUEST:
-        "What's that?  Broken adding machines?\x7Cashbots you say?\x7Well, let's have a look see...\x7Yep, gears are stripped, but I'm out of that part...\x7You know what might work - some Cog gears, large ones, from larger Cogs...\x7Level 3 Cog gears should do the trick.  I'll need 2 for each machine, so 10 total.\x7Bring them back all at once and I'll fix em up!",
+        "What's that?  Broken adding machines?\x07Cashbots you say?\x07Well, let's have a look see...\x07Yep, gears are stripped, but I'm out of that part...\x07You know what might work - some Cog gears, large ones, from larger Cogs...\x07Level 3 Cog gears should do the trick.  I'll need 2 for each machine, so 10 total.\x07Bring them back all at once and I'll fix em up!",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Remember, I need 10 gears to fix the machines.'
     },
     1053: {
         QUEST:
-        "Ah yes, that should do the trick indeedy.\x7All fixed now, free of charge.\x7Take these back to Funny Money, and tell 'im I said howdy.",
+        "Ah yes, that should do the trick indeedy.\x07All fixed now, free of charge.\x07Take these back to Funny Money, and tell 'im I said howdy.",
         LEAVING:
         '',
         COMPLETE:
-        "Adding machines all fixed up?\x7Nice work.  I'm sure I've got something around here to reward you with..."
+        "Adding machines all fixed up?\x07Nice work.  I'm sure I've got something around here to reward you with..."
     },
     1054: {
         QUEST: '_toNpcName_ needs some help with his clown cars._where_'
     },
     1055: {
         QUEST:
-        "Yowza!  I can't find the tires to this here clown car anywhere!\x7Do ya think you could help me out?\x7I think Loopy Bob may have tossed them in the pond in the "
+        "Yowza!  I can't find the tires to this here clown car anywhere!\x07Do ya think you could help me out?\x07I think Loopy Bob may have tossed them in the pond in the "
         + lToontownCentral +
-        ' playground.\x7If you stand on one of the docks there you can try and fish out the tires for me.',
+        ' playground.\x07If you stand on one of the docks there you can try and fish out the tires for me.',
         GREETING:
         'Woohoo!',
         LEAVING:
@@ -785,24 +785,24 @@ QuestDialogDict = {
     },
     1056: {
         QUEST:
-        'Fan-flying-tastic!  Now I can get this old clown car on the road again!\x7Hey, I thought I had an air pump around here to inflate these tires...\x7Maybe _toNpcName_ borrowed it?\x7Could you go ask for it back for me?_where_',
+        'Fan-flying-tastic!  Now I can get this old clown car on the road again!\x07Hey, I thought I had an air pump around here to inflate these tires...\x07Maybe _toNpcName_ borrowed it?\x07Could you go ask for it back for me?_where_',
         LEAVING: ''
     },
     1057: {
         QUEST:
-        "Hi there.\x7A tire pump you say?\x7I'll tell you what - you help clean up the streets of some of those high level Cogs for me...\x7And I'll let you have the tire pump.",
+        "Hi there.\x07A tire pump you say?\x07I'll tell you what - you help clean up the streets of some of those high level Cogs for me...\x07And I'll let you have the tire pump.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Is that the best you can do?'
     },
     1058: {
         QUEST:
-        "Good job - I knew you could do it.\x7Here's the pump.  I'm sure _toNpcName_ will be glad to get it back.",
+        "Good job - I knew you could do it.\x07Here's the pump.  I'm sure _toNpcName_ will be glad to get it back.",
         LEAVING:
         '',
         GREETING:
         '',
         COMPLETE:
-        "Yeehaw!  Now I'm good to go!\x7By the way, thanks for helping me out.\x7Here, take this."
+        "Yeehaw!  Now I'm good to go!\x07By the way, thanks for helping me out.\x07Here, take this."
     },
     1059: {
         QUEST:
@@ -810,13 +810,13 @@ QuestDialogDict = {
     },
     1060: {
         QUEST:
-        "Thanks for stopping by!\x7Those Cogs have been stealing my ink, so I'm running very low.\x7Could you fish some octopus ink out of the pond for me?\x7Just stand on a dock near the pond to fish.",
+        "Thanks for stopping by!\x07Those Cogs have been stealing my ink, so I'm running very low.\x07Could you fish some octopus ink out of the pond for me?\x07Just stand on a dock near the pond to fish.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Are you having trouble fishing?'
     },
     1061: {
         QUEST:
-        "Great - thanks for the ink!\x7You know what, maybe if you cleared away some of those Pencil Pushers...\x7I wouldn't run out of ink again so quickly.\x7Defeat 6 Pencil Pushers in "
+        "Great - thanks for the ink!\x07You know what, maybe if you cleared away some of those Pencil Pushers...\x07I wouldn't run out of ink again so quickly.\x07Defeat 6 Pencil Pushers in "
         + lToontownCentral + ' for your reward.',
         LEAVING:
         '',
@@ -827,7 +827,7 @@ QuestDialogDict = {
     },
     1062: {
         QUEST:
-        "Great - thanks for the ink!\x7You know what, maybe if you cleared away some of those Bloodsuckers...\x7I wouldn't run out of ink again so quickly.\x7Defeat 6 Bloodsuckers in "
+        "Great - thanks for the ink!\x07You know what, maybe if you cleared away some of those Bloodsuckers...\x07I wouldn't run out of ink again so quickly.\x07Defeat 6 Bloodsuckers in "
         + lToontownCentral + ' for your reward.',
         LEAVING:
         '',
@@ -841,18 +841,18 @@ QuestDialogDict = {
     },
     1063: {
         QUEST:
-        'Hi - thanks for coming in.\x7A Cog stole a very important package from right under my nose.\x7Please see if you can get it back.  I think he was a level 3...\x7So, defeat level 3 Cogs until you find my package.',
+        'Hi - thanks for coming in.\x07A Cog stole a very important package from right under my nose.\x07Please see if you can get it back.  I think he was a level 3...\x07So, defeat level 3 Cogs until you find my package.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding the package, huh?'
     },
     1067: {
         QUEST:
-        "That's it, all right!\x7Hey, the address is smudged...\x7All I can read is that it's for a Dr. - the rest is all blurry.\x7Maybe it's for _toNpcName_?  Could you take it to him?_where_",
+        "That's it, all right!\x07Hey, the address is smudged...\x07All I can read is that it's for a Dr. - the rest is all blurry.\x07Maybe it's for _toNpcName_?  Could you take it to him?_where_",
         LEAVING: ''
     },
     1068: {
         QUEST:
-        "I wasn't expecting a package.  Maybe it's for Dr. I.M. Euphoric?\x7My assistant was going over there today anyway, so I'll have him check for you.\x7In the meantime, would you mind getting rid of some of the Cogs on my street?\x7Defeat 10 Cogs in "
+        "I wasn't expecting a package.  Maybe it's for Dr. I.M. Euphoric?\x07My assistant was going over there today anyway, so I'll have him check for you.\x07In the meantime, would you mind getting rid of some of the Cogs on my street?\x07Defeat 10 Cogs in "
         + lToontownCentral + '.',
         LEAVING:
         '',
@@ -861,84 +861,84 @@ QuestDialogDict = {
     },
     1069: {
         QUEST:
-        "Dr. Euphoric says he wasn't expecting a package either.\x7Unfortunately, a Cashbot stole it from my assistant on the way back.\x7Could you try and get it back?",
+        "Dr. Euphoric says he wasn't expecting a package either.\x07Unfortunately, a Cashbot stole it from my assistant on the way back.\x07Could you try and get it back?",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding the package, huh?'
     },
     1070: {
         QUEST:
-        "Dr. Euphoric says he wasn't expecting a package either.\x7Unfortunately, a Sellbot stole the package from my assistant on the way back.\x7I'm sorry, but you'll have to find that Sellbot and get it back.",
+        "Dr. Euphoric says he wasn't expecting a package either.\x07Unfortunately, a Sellbot stole the package from my assistant on the way back.\x07I'm sorry, but you'll have to find that Sellbot and get it back.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding the package, huh?'
     },
     1071: {
         QUEST:
-        "Dr. Euphoric says he wasn't expecting a package either.\x7Unfortunately, a Bossbot stole it from my assistant on the way back.\x7Could you try and get it back?",
+        "Dr. Euphoric says he wasn't expecting a package either.\x07Unfortunately, a Bossbot stole it from my assistant on the way back.\x07Could you try and get it back?",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding the package, huh?'
     },
     1072: {
         QUEST:
-        'Great - you got it back!\x7Maybe you should try _toNpcName_, it could be for him._where_',
+        'Great - you got it back!\x07Maybe you should try _toNpcName_, it could be for him._where_',
         LEAVING: ''
     },
     1073: {
         QUEST:
-        'Oh, thanks for bringing me my packages.\x7Wait a second, I was expecting two.  Could you check with _toNpcName_ and see if he has the other one?',
+        'Oh, thanks for bringing me my packages.\x07Wait a second, I was expecting two.  Could you check with _toNpcName_ and see if he has the other one?',
         INCOMPLETE: 'Were you able to find my other package?',
         LEAVING: ''
     },
     1074: {
         QUEST:
-        'He said there was another package?  Maybe the Cogs stole it too.\x7Defeat Cogs until you find the second package.',
+        'He said there was another package?  Maybe the Cogs stole it too.\x07Defeat Cogs until you find the second package.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding the other package, huh?'
     },
     1075: {
         QUEST:
-        'I guess there was a second package after all!\x7Hurry and take it over to _toNpcName_ with my apologies.',
+        'I guess there was a second package after all!\x07Hurry and take it over to _toNpcName_ with my apologies.',
         COMPLETE:
-        'Hey, my package is here!\x7Since you seem to be such a helpful Toon, this should come in handy.',
+        'Hey, my package is here!\x07Since you seem to be such a helpful Toon, this should come in handy.',
         LEAVING: ''
     },
     1076: {
         QUEST:
-        "There's been some trouble over at 14 Karat Goldfish.\x7_toNpcName_ could probably use a hand._where_"
+        "There's been some trouble over at 14 Karat Goldfish.\x07_toNpcName_ could probably use a hand._where_"
     },
     1077: {
         QUEST:
-        "Thanks for coming - the Cogs stole all my goldfish.\x7I think the Cogs want to sell them to make a quick buck.\x7Those 5 fish have been my only companions in this tiny store for so many years...\x7If you could get them back for me I'd really appreciate it.\x7I'm sure one of the Cogs has my fish.\x7Defeat Cogs until you find my goldfish.",
+        "Thanks for coming - the Cogs stole all my goldfish.\x07I think the Cogs want to sell them to make a quick buck.\x07Those 5 fish have been my only companions in this tiny store for so many years...\x07If you could get them back for me I'd really appreciate it.\x07I'm sure one of the Cogs has my fish.\x07Defeat Cogs until you find my goldfish.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Please return my goldfish to me.'
     },
     1078: {
         QUEST:
-        "Oh, you have my fish!\x7Huh?  What's this - a receipt?\x7Sigh, I guess they are Cogs, after all.\x7I can't make heads or tails out of this receipt.  Could you take it to _toNpcName_ and see if he can read it?_where_",
+        "Oh, you have my fish!\x07Huh?  What's this - a receipt?\x07Sigh, I guess they are Cogs, after all.\x07I can't make heads or tails out of this receipt.  Could you take it to _toNpcName_ and see if he can read it?_where_",
         INCOMPLETE: 'What did _toNpcName_ have to say about the receipt?',
         LEAVING: ''
     },
     1079: {
         QUEST:
-        "Mmm, let me see that receipt.\x7...Ah Yes, it says that 1 goldfish was sold to a Flunky.\x7It doesn't seem to mention what happened to the other 4 fish.\x7Maybe you should try and find that Flunky.",
+        "Mmm, let me see that receipt.\x07...Ah Yes, it says that 1 goldfish was sold to a Flunky.\x07It doesn't seem to mention what happened to the other 4 fish.\x07Maybe you should try and find that Flunky.",
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
-        "I don't think there's anything else I can help you with.\x7Why don't you try and find that goldfish?"
+        "I don't think there's anything else I can help you with.\x07Why don't you try and find that goldfish?"
     },
     1092: {
         QUEST:
-        "Mmm, let me see that receipt.\x7...Ah Yes, it says that 1 goldfish was sold to a Short Change.\x7It doesn't seem to mention what happened to the other 4 fish.\x7Maybe you should try and find that Short Change.",
+        "Mmm, let me see that receipt.\x07...Ah Yes, it says that 1 goldfish was sold to a Short Change.\x07It doesn't seem to mention what happened to the other 4 fish.\x07Maybe you should try and find that Short Change.",
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
-        "I don't think there's anything else I can help you with.\x7Why don't you try and find that goldfish?"
+        "I don't think there's anything else I can help you with.\x07Why don't you try and find that goldfish?"
     },
     1080: {
         QUEST:
-        "Oh thank heavens!  You found Oscar - he's my favorite.\x7What's that, Oscar?  Uh huh... they did? ... they are?\x7Oscar says the other 4 escaped into the pond in the playground.\x7Could you go round them up for me?\x7Just fish them out of the pond.",
+        "Oh thank heavens!  You found Oscar - he's my favorite.\x07What's that, Oscar?  Uh huh... they did? ... they are?\x07Oscar says the other 4 escaped into the pond in the playground.\x07Could you go round them up for me?\x07Just fish them out of the pond.",
         LEAVING: '',
         COMPLETE:
-        'Ahh, I am sooo happy!  To be reunited with my little buddies!\x7You deserve a handsome reward for this!',
+        'Ahh, I am sooo happy!  To be reunited with my little buddies!\x07You deserve a handsome reward for this!',
         INCOMPLETE_PROGRESS: 'Are you having trouble finding those fish?'
     },
     1081: {
@@ -947,40 +947,40 @@ QuestDialogDict = {
     },
     1082: {
         QUEST:
-        "I spilled quick dry glue and I'm stuck - stuck cold!\x7If there were a way out, I sure would be sold.\x7That gives me an idea, if you are feeling loyal.\x7Defeat some Sellbots and bring back some oil.",
+        "I spilled quick dry glue and I'm stuck - stuck cold!\x07If there were a way out, I sure would be sold.\x07That gives me an idea, if you are feeling loyal.\x07Defeat some Sellbots and bring back some oil.",
         LEAVING: '',
         GREETING: '',
         INCOMPLETE_PROGRESS: 'Can you help me get un-stuck?'
     },
     1083: {
         QUEST:
-        "Well, oil helped a little, but I still cannot budge,\x7What else would help?  It's hard to judge.\x7That gives me an idea; it's worth a try at least.\x7Defeat some Lawbots and bring back some grease.",
+        "Well, oil helped a little, but I still cannot budge,\x07What else would help?  It's hard to judge.\x07That gives me an idea; it's worth a try at least.\x07Defeat some Lawbots and bring back some grease.",
         LEAVING: '',
         GREETING: '',
         INCOMPLETE_PROGRESS: 'Can you help me get un-stuck?'
     },
     1084: {
         QUEST:
-        "Nope, that didn't help.  This is really not funny.\x7I put the grease right there on the money,\x7That gives me an idea, before I forget it.\x7Defeat some Cashbots; bring back water to wet it.",
+        "Nope, that didn't help.  This is really not funny.\x07I put the grease right there on the money,\x07That gives me an idea, before I forget it.\x07Defeat some Cashbots; bring back water to wet it.",
         LEAVING: '',
         GREETING: '',
         COMPLETE:
-        "Hooray, I'm free of this quick drying glue,\x7As a reward I give this gift to you,\x7You can laugh a little longer while battling and then...\x7Oh, no!  I'm already stuck here again!",
+        "Hooray, I'm free of this quick drying glue,\x07As a reward I give this gift to you,\x07You can laugh a little longer while battling and then...\x07Oh, no!  I'm already stuck here again!",
         INCOMPLETE_PROGRESS: 'Can you help me get un-stuck?'
     },
     1085: {
         QUEST:
-        '_toNpcName_ is conducting some research on the Cogs.\x7Go talk to him if you want to help out._where_'
+        '_toNpcName_ is conducting some research on the Cogs.\x07Go talk to him if you want to help out._where_'
     },
     1086: {
         QUEST:
-        "That's right, I'm conducting a study of the Cogs.\x7I want to know what makes them tick.\x7It sure would help me if you could gather some gears from Cogs.\x7Make sure they're from at least level 2 Cogs so they're big enough to examine.",
+        "That's right, I'm conducting a study of the Cogs.\x07I want to know what makes them tick.\x07It sure would help me if you could gather some gears from Cogs.\x07Make sure they're from at least level 2 Cogs so they're big enough to examine.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: "Can't find enough gears?"
     },
     1089: {
         QUEST:
-        "Okay, let's take a look.  These are excellent specimens!\x7Mmmm...\x7Okay, here's my report.  Take this back to Toon Headquarters right away.",
+        "Okay, let's take a look.  These are excellent specimens!\x07Mmmm...\x07Okay, here's my report.  Take this back to Toon Headquarters right away.",
         INCOMPLETE: 'Have you delivered my report to Headquarters?',
         COMPLETE: "Good work _avName_, we'll take this one from here.",
         LEAVING: ''
@@ -990,14 +990,14 @@ QuestDialogDict = {
     },
     1091: {
         QUEST:
-        'I hear that Toon Headquarters is working on a sort of Cog Radar.\x7It will let you see where the Cogs are so that it will be easier to find them.\x7That Cog Page in your Shticker Book is the key.\x7By defeating enough Cogs, you can tune in to their signals and actually track where they are.\x7Keep defeating Cogs, so you will be ready.',
+        'I hear that Toon Headquarters is working on a sort of Cog Radar.\x07It will let you see where the Cogs are so that it will be easier to find them.\x07That Cog Page in your Shticker Book is the key.\x07By defeating enough Cogs, you can tune in to their signals and actually track where they are.\x07Keep defeating Cogs, so you will be ready.',
         COMPLETE: 'Good work!  You could probably use this...',
         LEAVING: ''
     },
     401: {
         GREETING: '',
         QUEST:
-        'Now you get to choose the next gag track you want to learn.\x7Take your time deciding, and come back here when you are ready to choose.',
+        'Now you get to choose the next gag track you want to learn.\x07Take your time deciding, and come back here when you are ready to choose.',
         INCOMPLETE_PROGRESS: 'Think about your decision before choosing.',
         INCOMPLETE_WRONG_NPC: 'Think about your decision before choosing.',
         COMPLETE: 'A wise decision...',
@@ -1005,11 +1005,11 @@ QuestDialogDict = {
     },
     2201: {
         QUEST:
-        'Those sneaky Cogs are at it again.\x7_toNpcName_ has reported another missing item. Stop by and see if you can straighten it out._where_'
+        'Those sneaky Cogs are at it again.\x07_toNpcName_ has reported another missing item. Stop by and see if you can straighten it out._where_'
     },
     2202: {
         QUEST:
-        "Hi, _avName_. Thank goodness you're here. A mean looking Penny Pincher was just in here and he made off with an inner tube.\x7I fear they may use it for their vile purposes.\x7Please see if you can find him and bring it back.",
+        "Hi, _avName_. Thank goodness you're here. A mean looking Penny Pincher was just in here and he made off with an inner tube.\x07I fear they may use it for their vile purposes.\x07Please see if you can find him and bring it back.",
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
@@ -1020,91 +1020,91 @@ QuestDialogDict = {
     2203: {
         QUEST:
         TheCogs +
-        ' are wreaking havoc over at the bank.\x7Go see Captain Carl and see what you can do._where_'
+        ' are wreaking havoc over at the bank.\x07Go see Captain Carl and see what you can do._where_'
     },
     2204: {
         QUEST:
-        "Welcome aboard, matey.\x7Argh! Those rapscallion Cogs smashed my monocle and I can't sort me change without it.\x7Be a good landlubber and take this prescription to _toNpcName_ and fetch me a new one._where_",
+        "Welcome aboard, matey.\x07Argh! Those rapscallion Cogs smashed my monocle and I can't sort me change without it.\x07Be a good landlubber and take this prescription to _toNpcName_ and fetch me a new one._where_",
         GREETING: '',
         LEAVING: ''
     },
     2205: {
         QUEST:
-        "What's this?\x7Oh, I'd love to fill this prescription but the Cogs have been pilfering my supplies.\x7If you can get me the eyeglass frames off a flunky I can probably help you out.",
+        "What's this?\x07Oh, I'd love to fill this prescription but the Cogs have been pilfering my supplies.\x07If you can get me the eyeglass frames off a flunky I can probably help you out.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Sorry. No flunky frames, no monocle.'
     },
     2206: {
         QUEST:
-        'Excellent!\x7Just a second...\x7Your prescription is filled. Please take this monocle straight to Captain Carl._where_',
+        'Excellent!\x07Just a second...\x07Your prescription is filled. Please take this monocle straight to Captain Carl._where_',
         GREETING:
         '',
         LEAVING:
         '',
         COMPLETE:
-        "Avast Ye!\x7You're gonna earn your sea legs after all.\x7Here ye be."
+        "Avast Ye!\x07You're gonna earn your sea legs after all.\x07Here ye be."
     },
     2207: {
         QUEST:
-        "Barnacle Barbara has a Cog in her shop!\x7You'd better get over there pronto._where_"
+        "Barnacle Barbara has a Cog in her shop!\x07You'd better get over there pronto._where_"
     },
     2208: {
         QUEST:
-        "Gosh! You just missed him, sweetie.\x7There was a Back Stabber in here. He took my big white wig.\x7He said it was for his boss and something about 'legal precedent.'\x7If you can get it back I'd be forever grateful.",
+        "Gosh! You just missed him, sweetie.\x07There was a Back Stabber in here. He took my big white wig.\x07He said it was for his boss and something about 'legal precedent.'\x07If you can get it back I'd be forever grateful.",
         LEAVING:
         '',
         GREETING:
         '',
         INCOMPLETE_PROGRESS:
-        "Still haven't found him?\x7He's tall and has a pointy head",
+        "Still haven't found him?\x07He's tall and has a pointy head",
         COMPLETE:
-        "You found it!?!?\x7Aren't you a darling!\x7You've more than earned this..."
+        "You found it!?!?\x07Aren't you a darling!\x07You've more than earned this..."
     },
     2209: {
         QUEST:
-        'Melville is preparing for an important voyage.\x7Pop in and see what you can do to help sort him out._where_'
+        'Melville is preparing for an important voyage.\x07Pop in and see what you can do to help sort him out._where_'
     },
     2210: {
         QUEST:
-        "I can use your help.\x7I've been asked by Toon HQ to take a voyage and see if I can find where the Cogs are coming from.\x7I'll need a few things for my ship but I don't have many jellybeans.\x7Stop by and pick up some ballast from Alice. You'll have to do a favor for her to get it._where_",
+        "I can use your help.\x07I've been asked by Toon HQ to take a voyage and see if I can find where the Cogs are coming from.\x07I'll need a few things for my ship but I don't have many jellybeans.\x07Stop by and pick up some ballast from Alice. You'll have to do a favor for her to get it._where_",
         GREETING: 'Howdy, _avName_',
         LEAVING: ''
     },
     2211: {
         QUEST:
-        "So Melville wants ballast, does he?\x7He still owes me for the last bushel.\x7I'll give it to you if you can clear five Micromanagers off my street.",
+        "So Melville wants ballast, does he?\x07He still owes me for the last bushel.\x07I'll give it to you if you can clear five Micromanagers off my street.",
         INCOMPLETE_PROGRESS: 'No, silly! I said FIVE micromanagers...',
         GREETING: 'What can I do for you?',
         LEAVING: ''
     },
     2212: {
         QUEST:
-        "A deal's a deal.\x7Here's your ballast for that cheapskate Melville._where_",
+        "A deal's a deal.\x07Here's your ballast for that cheapskate Melville._where_",
         GREETING: 'Well, look what the cat dragged in...',
         LEAVING: ''
     },
     2213: {
         QUEST:
-        "Excellent work. I knew she'd be reasonable.\x7Next I'll need a sailing chart from Art.\x7I don't think my credit is good there either so you'll have to work something out with him._where_",
+        "Excellent work. I knew she'd be reasonable.\x07Next I'll need a sailing chart from Art.\x07I don't think my credit is good there either so you'll have to work something out with him._where_",
         GREETING: '',
         LEAVING: ''
     },
     2214: {
         QUEST:
-        "Yes, I have the sea chart Melville wants.\x7And if you're willing to work for it I'll let you have it.\x7I'm trying to build an astrolabe to navigate by the stars.\x7I could use three Cog gears to build it.\x7Come back when you've found them.",
+        "Yes, I have the sea chart Melville wants.\x07And if you're willing to work for it I'll let you have it.\x07I'm trying to build an astrolabe to navigate by the stars.\x07I could use three Cog gears to build it.\x07Come back when you've found them.",
         INCOMPLETE_PROGRESS: "How's it coming with those Cog gears?",
         GREETING: 'Welcome!',
         LEAVING: 'Good luck!'
     },
     2215: {
         QUEST:
-        "Ooh! These gears will do rather nicely.\x7Here's the chart. Give it to Melville with my compliments._where_",
+        "Ooh! These gears will do rather nicely.\x07Here's the chart. Give it to Melville with my compliments._where_",
         GREETING:
         '',
         LEAVING:
         '',
         COMPLETE:
-        "Well, that just about does it. I'm ready to sail!\x7I'd take you with me if you weren't so green. Take this instead."
+        "Well, that just about does it. I'm ready to sail!\x07I'd take you with me if you weren't so green. Take this instead."
     },
     901: {
         QUEST:
@@ -1112,53 +1112,53 @@ QuestDialogDict = {
     },
     2902: {
         QUEST:
-        "Are you the new recruit?\x7Good, good. Maybe you can help me.\x7I'm building a giant prefab crab to confuse the Cogs.\x7I could use a clovis though. Go see Claggart and bring one back, please._where_"
+        "Are you the new recruit?\x07Good, good. Maybe you can help me.\x07I'm building a giant prefab crab to confuse the Cogs.\x07I could use a clovis though. Go see Claggart and bring one back, please._where_"
     },
     2903: {
         QUEST:
-        "Hi there!\x7Yes, I heard about the giant crab Ahab's working on.\x7The best clovis I have is a little on the dirty side though.\x7Be a sport and run it by the cleaners for me before you drop it off._where_",
+        "Hi there!\x07Yes, I heard about the giant crab Ahab's working on.\x07The best clovis I have is a little on the dirty side though.\x07Be a sport and run it by the cleaners for me before you drop it off._where_",
         LEAVING: 'Thanks!'
     },
     2904: {
         QUEST:
-        'You must be the one that Claggart sent over.\x7I think I can clean that up in short order.\x7Just a minute...\x7There you are. Good as new!\x7Tell Ahab I said hello._where_'
+        'You must be the one that Claggart sent over.\x07I think I can clean that up in short order.\x07Just a minute...\x07There you are. Good as new!\x07Tell Ahab I said hello._where_'
     },
     2905: {
         QUEST:
-        "Ah, now this is exactly what I was looking for.\x7While you're here, I'm also going to need a very large clock spring.\x7Take a walk over to Hook's place and see if he has one._where_"
+        "Ah, now this is exactly what I was looking for.\x07While you're here, I'm also going to need a very large clock spring.\x07Take a walk over to Hook's place and see if he has one._where_"
     },
     2906: {
         QUEST:
-        "A large spring, eh?\x7I'm sorry but the largest spring I have is still quite small.\x7Perhaps I could assemble one out of squirt gun trigger springs.\x7Bring me three of these gags and I'll see what I can do."
+        "A large spring, eh?\x07I'm sorry but the largest spring I have is still quite small.\x07Perhaps I could assemble one out of squirt gun trigger springs.\x07Bring me three of these gags and I'll see what I can do."
     },
     2907: {
         QUEST:
-        "Let's have a look then...\x7Smashing. Simply Smashing.\x7Sometimes I even surprise myself.\x7Here you go: one large spring for Ahab!_where_",
+        "Let's have a look then...\x07Smashing. Simply Smashing.\x07Sometimes I even surprise myself.\x07Here you go: one large spring for Ahab!_where_",
         LEAVING: 'Bon Voyage!'
     },
     2911: {
         QUEST:
-        "I'd be happy to help the cause, _avName_.\x7But I'm afraid the streets are no longer safe.\x7Why don't you go take out some Cashbot Cogs and we'll talk.",
+        "I'd be happy to help the cause, _avName_.\x07But I'm afraid the streets are no longer safe.\x07Why don't you go take out some Cashbot Cogs and we'll talk.",
         INCOMPLETE_PROGRESS:
         'I still think you need to make the streets safer.'
     },
     2916: {
         QUEST:
-        'Yes, I have a weight that Ahab can have.\x7I think it would be safer if you defeated a couple sellbots first though.',
+        'Yes, I have a weight that Ahab can have.\x07I think it would be safer if you defeated a couple sellbots first though.',
         INCOMPLETE_PROGRESS: 'Not yet. Defeat some more sellbots.'
     },
     2921: {
         QUEST:
-        "Hmmm, I suppose I could give up a weight.\x7I'd feel a lot better about it if there weren't so many Bossbot Cogs creeping around.\x7Defeat six and then come see me.",
+        "Hmmm, I suppose I could give up a weight.\x07I'd feel a lot better about it if there weren't so many Bossbot Cogs creeping around.\x07Defeat six and then come see me.",
         INCOMPLETE_PROGRESS: "I don't think its safe yet..."
     },
     2925: {
         QUEST:
-        "All done?\x7Well, I guess it's safe enough now.\x7Here's the counter weight for Ahab._where_"
+        "All done?\x07Well, I guess it's safe enough now.\x07Here's the counter weight for Ahab._where_"
     },
     2926: {
         QUEST:
-        "Well, that's everything.\x7Let's see if it works.\x7Hmmm, one small problem.\x7I'm not getting any power because that Cog building is blocking my solar panel.\x7Could you retake it for me?",
+        "Well, that's everything.\x07Let's see if it works.\x07Hmmm, one small problem.\x07I'm not getting any power because that Cog building is blocking my solar panel.\x07Could you retake it for me?",
         INCOMPLETE_PROGRESS:
         'Still no power. How about that building?',
         COMPLETE:
@@ -1166,40 +1166,40 @@ QuestDialogDict = {
     },
     3200: {
         QUEST:
-        "I just got a call in from _toNpcName_.\x7He's having a hard day. Maybe you can help him out!\x7Drop by and see what he needs._where_"
+        "I just got a call in from _toNpcName_.\x07He's having a hard day. Maybe you can help him out!\x07Drop by and see what he needs._where_"
     },
     3201: {
         QUEST:
-        'Oh, thanks for coming!\x7I need someone to take this new silk tie to _toNpcName_.\x7Would you be able to do that for me?_where_'
+        'Oh, thanks for coming!\x07I need someone to take this new silk tie to _toNpcName_.\x07Would you be able to do that for me?_where_'
     },
     3203: {
         QUEST:
-        'Oh, this must be the tie I ordered! Thanks!\x7It matches a pinstripe suit I just finished, right over here.\x7Hey, what happened to that suit?\x7Oh no! The Cogs must have stolen my new suit!\x7Defeat Cogs until you find my suit, and bring it back to me.',
+        'Oh, this must be the tie I ordered! Thanks!\x07It matches a pinstripe suit I just finished, right over here.\x07Hey, what happened to that suit?\x07Oh no! The Cogs must have stolen my new suit!\x07Defeat Cogs until you find my suit, and bring it back to me.',
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
         "Have you found my suit yet? I'm sure the Cogs took it!",
         COMPLETE:
-        'Hooray! You found my new suit!\x7See, I told you the Cogs had it! Here is your reward...'
+        'Hooray! You found my new suit!\x07See, I told you the Cogs had it! Here is your reward...'
     },
     3204: {
         QUEST:
-        "_toNpcName_ just called to report a theft.\x7Why don't you stop by and see if you can sort things out?_where_"
+        "_toNpcName_ just called to report a theft.\x07Why don't you stop by and see if you can sort things out?_where_"
     },
     3205: {
         QUEST:
-        "Hello, _avName_! Have you come to help me?\x7I just chased a Bloodsucker out of my shop. Whew! That was scary.\x7But now I can't find my scissors anywhere! I'm sure that Bloodsucker took them.\x7Find that Bloodsucker, and recover my scissors for me.",
+        "Hello, _avName_! Have you come to help me?\x07I just chased a Bloodsucker out of my shop. Whew! That was scary.\x07But now I can't find my scissors anywhere! I'm sure that Bloodsucker took them.\x07Find that Bloodsucker, and recover my scissors for me.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Are you still looking for my scissors?',
         COMPLETE: 'My scissors! Thank you so much! Here is your reward...'
     },
     3206: {
         QUEST:
-        'It sounds like _toNpcName_ is having problems with some Cogs.\x7Go see if you can help him out._where_'
+        'It sounds like _toNpcName_ is having problems with some Cogs.\x07Go see if you can help him out._where_'
     },
     3207: {
         QUEST:
-        'Hi, _avName_! Thanks for coming by!\x7A bunch of Double Talkers just broke in and stole a stack of postcards from my counter.\x7Please go out and defeat all those Double Talkers to get my postcards back!',
+        'Hi, _avName_! Thanks for coming by!\x07A bunch of Double Talkers just broke in and stole a stack of postcards from my counter.\x07Please go out and defeat all those Double Talkers to get my postcards back!',
         INCOMPLETE_PROGRESS:
         "That's not enough postcards! Keep looking!",
         COMPLETE:
@@ -1207,22 +1207,22 @@ QuestDialogDict = {
     },
     3208: {
         QUEST:
-        "We've been getting complaints from the residents lately about all of the Cold Callers.\x7See if you can defeat 10 Cold Callers to help out your fellow Toons in "
+        "We've been getting complaints from the residents lately about all of the Cold Callers.\x07See if you can defeat 10 Cold Callers to help out your fellow Toons in "
         + lDaisyGardens + '.'
     },
     3209: {
         QUEST:
-        'Thanks for taking care of those Cold Callers!\x7But now the Telemarketers have gotten out of hand.\x7Defeat 10 Telemarketers in '
+        'Thanks for taking care of those Cold Callers!\x07But now the Telemarketers have gotten out of hand.\x07Defeat 10 Telemarketers in '
         + lDaisyGardens + ' and come back here for your reward.'
     },
     3247: {
         QUEST:
-        "We've been getting complaints from the residents lately about all of the Bloodsuckers.\x7See if you can defeat 20 Bloodsuckers to help out your fellow Toons in "
+        "We've been getting complaints from the residents lately about all of the Bloodsuckers.\x07See if you can defeat 20 Bloodsuckers to help out your fellow Toons in "
         + lDaisyGardens + '.'
     },
     3210: {
         QUEST:
-        'Oh no, The Squirting Flower on Maple Street just ran out of flowers!\x7Take them ten of your own squirting flowers to help out.\x7Make sure you have 10 squirting flowers in your inventory first.',
+        'Oh no, The Squirting Flower on Maple Street just ran out of flowers!\x07Take them ten of your own squirting flowers to help out.\x07Make sure you have 10 squirting flowers in your inventory first.',
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
@@ -1230,33 +1230,33 @@ QuestDialogDict = {
     },
     3211: {
         QUEST:
-        "Oh, thank you so much! Those squirting flowers will save the day.\x7But I'm scared of the Cogs outside.\x7Can you help me out and defeat some of those Cogs?\x7Come back to me after you have defeated 20 Cogs on this street.",
+        "Oh, thank you so much! Those squirting flowers will save the day.\x07But I'm scared of the Cogs outside.\x07Can you help me out and defeat some of those Cogs?\x07Come back to me after you have defeated 20 Cogs on this street.",
         INCOMPLETE_PROGRESS:
         'There are still Cogs out there to defeat!  Keep it up!',
         COMPLETE: 'Oh, thank you! That helps a lot. Your reward is...'
     },
     3212: {
         QUEST:
-        '_toNpcName_ needs some help looking for something she lost.\x7Go visit her and see what you can do._where_'
+        '_toNpcName_ needs some help looking for something she lost.\x07Go visit her and see what you can do._where_'
     },
     3213: {
         QUEST:
-        'Hi, _avName_. Can you help me?\x7I seem to have misplaced my pen. I think maybe some Cogs took it.\x7Defeat Cogs to find my stolen pen.',
+        'Hi, _avName_. Can you help me?\x07I seem to have misplaced my pen. I think maybe some Cogs took it.\x07Defeat Cogs to find my stolen pen.',
         INCOMPLETE_PROGRESS: 'Have you found my pen yet?'
     },
     3214: {
         QUEST:
-        "Yes, that's my pen! Thanks so much!\x7But while you were gone I realized my inkwell was missing too.\x7Defeat Cogs to find my inkwell.",
+        "Yes, that's my pen! Thanks so much!\x07But while you were gone I realized my inkwell was missing too.\x07Defeat Cogs to find my inkwell.",
         INCOMPLETE_PROGRESS: "I'm still looking for my inkwell!"
     },
     3215: {
         QUEST:
-        "Great! Now I have my pen and my inkwell back!\x7But wouldn't you know it?\x7My notepad is gone! They must have stolen it too!\x7Defeat Cogs to find my stolen notepad, and then bring it back for your reward.",
+        "Great! Now I have my pen and my inkwell back!\x07But wouldn't you know it?\x07My notepad is gone! They must have stolen it too!\x07Defeat Cogs to find my stolen notepad, and then bring it back for your reward.",
         INCOMPLETE_PROGRESS: 'Any word on that notepad yet?'
     },
     3216: {
         QUEST:
-        "That's my notepad! Hooray! Your reward is...\x7Hey! Where did it go?\x7I had your reward right here in my office lockbox. But the whole lockbox is gone!\x7Can you believe it? Those Cogs stole your reward!\x7Defeat Cogs to recover my lockbox.\x7When you bring it back to me I'll give you your reward.",
+        "That's my notepad! Hooray! Your reward is...\x07Hey! Where did it go?\x07I had your reward right here in my office lockbox. But the whole lockbox is gone!\x07Can you believe it? Those Cogs stole your reward!\x07Defeat Cogs to recover my lockbox.\x07When you bring it back to me I'll give you your reward.",
         INCOMPLETE_PROGRESS:
         'Keep looking for that lockbox!  It has your reward inside it!',
         COMPLETE:
@@ -1264,178 +1264,178 @@ QuestDialogDict = {
     },
     3217: {
         QUEST:
-        "We've been performing some studies on Sellbot mechanics.\x7We still need to study some pieces more closely.\x7Bring us a sprocket from a Name Dropper.\x7You can catch one when the Cog is exploding."
+        "We've been performing some studies on Sellbot mechanics.\x07We still need to study some pieces more closely.\x07Bring us a sprocket from a Name Dropper.\x07You can catch one when the Cog is exploding."
     },
     3218: {
         QUEST:
-        'Good job! Now we need a sprocket from a Glad Hander for comparison.\x7These sprockets are harder to catch, so keep trying.'
+        'Good job! Now we need a sprocket from a Glad Hander for comparison.\x07These sprockets are harder to catch, so keep trying.'
     },
     3219: {
         QUEST:
-        'Great! Now we need just one more sprocket.\x7This time, we need a sprocket from a Mover & Shaker.\x7You might need to look inside some Sellbot buildings to find these Cogs.\x7When you catch one, bring it back for your reward.'
+        'Great! Now we need just one more sprocket.\x07This time, we need a sprocket from a Mover & Shaker.\x07You might need to look inside some Sellbot buildings to find these Cogs.\x07When you catch one, bring it back for your reward.'
     },
     3244: {
         QUEST:
-        "We've been performing some studies on Lawbot mechanics.\x7We still need to study some pieces more closely.\x7Bring us a sprocket from an Ambulance Chaser.\x7You can catch one when the Cog is exploding."
+        "We've been performing some studies on Lawbot mechanics.\x07We still need to study some pieces more closely.\x07Bring us a sprocket from an Ambulance Chaser.\x07You can catch one when the Cog is exploding."
     },
     3245: {
         QUEST:
-        'Good job! Now we need a sprocket from a Back Stabber for comparison.\x7These sprockets are harder to catch, so keep trying.'
+        'Good job! Now we need a sprocket from a Back Stabber for comparison.\x07These sprockets are harder to catch, so keep trying.'
     },
     3246: {
         QUEST:
-        'Great! Now we need just one more sprocket.\x7This time, we need a sprocket from a Spin Doctor.\x7When you catch one, bring it back for your reward.'
+        'Great! Now we need just one more sprocket.\x07This time, we need a sprocket from a Spin Doctor.\x07When you catch one, bring it back for your reward.'
     },
     3220: {
         QUEST:
-        "I just heard that _toNpcName_ was asking around for you.\x7Why don't you drop by and see what she wants?_where_"
+        "I just heard that _toNpcName_ was asking around for you.\x07Why don't you drop by and see what she wants?_where_"
     },
     3221: {
         QUEST:
-        'Hi, _avName_! There you are!\x7I heard you were quite an expert in squirt attacks.\x7I need someone to set a good example for all the Toons in '
+        'Hi, _avName_! There you are!\x07I heard you were quite an expert in squirt attacks.\x07I need someone to set a good example for all the Toons in '
         + lDaisyGardens +
-        '.\x7Use your squirt attacks to defeat a bunch of Cogs.\x7Encourage your friends to use squirt too.\x7When you have defeated 20 Cogs, come back here for a reward!'
+        '.\x07Use your squirt attacks to defeat a bunch of Cogs.\x07Encourage your friends to use squirt too.\x07When you have defeated 20 Cogs, come back here for a reward!'
     },
     3222: {
         QUEST:
-        "It's time to demonstrate your Toonmanship.\x7If you successfully reclaim a number of Cog buildings, you'll earn the right to carry three quests.\x7First, defeat any two Cog buildings.\x7Feel free to call on your friends to help you out."
+        "It's time to demonstrate your Toonmanship.\x07If you successfully reclaim a number of Cog buildings, you'll earn the right to carry three quests.\x07First, defeat any two Cog buildings.\x07Feel free to call on your friends to help you out."
     },
     3223: {
         QUEST:
-        'Great job on those buildings!\x7Now, defeat two more buildings.\x7These buildings must be at least two stories high, or higher.'
+        'Great job on those buildings!\x07Now, defeat two more buildings.\x07These buildings must be at least two stories high, or higher.'
     },
     3224: {
         QUEST:
-        'Fantastic!\x7Now just defeat two more buildings.\x7These buildings must be at least three stories high.\x7When you finish, come back for your reward!',
+        'Fantastic!\x07Now just defeat two more buildings.\x07These buildings must be at least three stories high.\x07When you finish, come back for your reward!',
         COMPLETE:
-        'You did it, _avName_!\x7You demonstrated your superior Toonmanship.',
+        'You did it, _avName_!\x07You demonstrated your superior Toonmanship.',
         GREETING: ''
     },
     3225: {
         QUEST:
-        "_toNpcName_ says she needs some help.\x7Why don't you go see what you can do to help out?_where_"
+        "_toNpcName_ says she needs some help.\x07Why don't you go see what you can do to help out?_where_"
     },
     3235: {
         QUEST:
-        "Oh, this is the salad I ordered!\x7Thank you for bringing it to me.\x7All those Cogs must have frightened away _toNpcName_'s regular delivery person again.\x7Why don't you do us a favor and defeat some of the Cogs out there?\x7Defeat 10 Cogs in "
+        "Oh, this is the salad I ordered!\x07Thank you for bringing it to me.\x07All those Cogs must have frightened away _toNpcName_'s regular delivery person again.\x07Why don't you do us a favor and defeat some of the Cogs out there?\x07Defeat 10 Cogs in "
         + lDaisyGardens + ' and then report back to _toNpcName_.',
         INCOMPLETE_PROGRESS:
-        "You're working on defeating Cogs for me?\x7That's wonderful! Keep up the good work!",
+        "You're working on defeating Cogs for me?\x07That's wonderful! Keep up the good work!",
         COMPLETE:
-        'Oh, thank you so much for defeating those Cogs!\x7Now maybe I can keep my regular delivery schedule.\x7Your reward is...',
+        'Oh, thank you so much for defeating those Cogs!\x07Now maybe I can keep my regular delivery schedule.\x07Your reward is...',
         INCOMPLETE_WRONG_NPC:
         "Go tell _toNpcName_ about the Cogs you've defeated._where_"
     },
     3236: {
         QUEST:
-        'There are far too many Lawbots out there.\x7You can do your part to help!\x7Defeat 3 Lawbot buildings.'
+        'There are far too many Lawbots out there.\x07You can do your part to help!\x07Defeat 3 Lawbot buildings.'
     },
     3237: {
         QUEST:
-        'Great job on those Lawbot buildings!\x7But now there are too many Sellbots!\x7Defeat 3 Sellbot buildings, then come back for your reward.'
+        'Great job on those Lawbot buildings!\x07But now there are too many Sellbots!\x07Defeat 3 Sellbot buildings, then come back for your reward.'
     },
     3238: {
         QUEST:
         'Oh no! A "Mingler" Cog has stolen the Key to ' + lDaisyGardens +
-        '!\x7See if you can recover it.\x7Remember, The Mingler can be found only inside Sellbot buildings.'
+        '!\x07See if you can recover it.\x07Remember, The Mingler can be found only inside Sellbot buildings.'
     },
     3239: {
         QUEST:
-        "You found a key all right, but it isn't the right one!\x7We need the Key to "
-        + lDaisyGardens + '.\x7Keep looking! A "Mingler" Cog still has it!'
+        "You found a key all right, but it isn't the right one!\x07We need the Key to "
+        + lDaisyGardens + '.\x07Keep looking! A "Mingler" Cog still has it!'
     },
     3242: {
         QUEST:
         'Oh no! A Legal Eagle Cog has stolen the Key to ' + lDaisyGardens +
-        '!\x7See if you can recover it.\x7Remember, Legal Eagles can be found only inside Lawbot buildings.'
+        '!\x07See if you can recover it.\x07Remember, Legal Eagles can be found only inside Lawbot buildings.'
     },
     3243: {
         QUEST:
-        "You found a key all right, but it isn't the right one!\x7We need the Key to "
-        + lDaisyGardens + '.\x7Keep looking! A Legal Eagle Cog still has it!'
+        "You found a key all right, but it isn't the right one!\x07We need the Key to "
+        + lDaisyGardens + '.\x07Keep looking! A Legal Eagle Cog still has it!'
     },
     3240: {
         QUEST:
-        "I've just heard from _toNpcName_ that a Legal Eagle stole a bag of his bird seed.\x7Defeat Legal Eagles until you recover Bud's bird seed, and take it to him.\x7Legal Eagles are only found inside Lawbot buildings._where_",
+        "I've just heard from _toNpcName_ that a Legal Eagle stole a bag of his bird seed.\x07Defeat Legal Eagles until you recover Bud's bird seed, and take it to him.\x07Legal Eagles are only found inside Lawbot buildings._where_",
         COMPLETE:
-        'Oh, thank you so much for finding my bird seed!\x7Your reward is...',
+        'Oh, thank you so much for finding my bird seed!\x07Your reward is...',
         INCOMPLETE_WRONG_NPC:
-        'Good job getting that bird seed back!\x7Now take it to _toNpcName_._where_'
+        'Good job getting that bird seed back!\x07Now take it to _toNpcName_._where_'
     },
     3241: {
         QUEST:
-        'Some of the Cog buildings out there are getting too tall for our comfort.\x7See if you can bring down some of the tallest buildings.\x7Rescue 5 3-story buildings or taller and come back for your reward.'
+        'Some of the Cog buildings out there are getting too tall for our comfort.\x07See if you can bring down some of the tallest buildings.\x07Rescue 5 3-story buildings or taller and come back for your reward.'
     },
     3250: {
         QUEST:
-        'Detective Lima over on Oak Street has heard some reports of a Sellbot Headquarters.\x7Head over there and help her investigate.'
+        'Detective Lima over on Oak Street has heard some reports of a Sellbot Headquarters.\x07Head over there and help her investigate.'
     },
     3251: {
         QUEST:
-        "There is something strange going on around here.\x7There are so many Sellbots!\x7I've heard they have organized their own headquarters at the end of this street.\x7Head down the street and see if you can get to the bottom of this.\x7Find Sellbot Cogs in their headquarters, defeat 5 of them, and report back."
+        "There is something strange going on around here.\x07There are so many Sellbots!\x07I've heard they have organized their own headquarters at the end of this street.\x07Head down the street and see if you can get to the bottom of this.\x07Find Sellbot Cogs in their headquarters, defeat 5 of them, and report back."
     },
     3252: {
         QUEST:
-        "Ok, spill the beans.\x7What's that you say?\x7Sellbot Headquarters?? Oh no!!! Something must be done.\x7We must notify Judge McIntosh - she'll know what to do.\x7Go at once and tell her what you have found out. She's just down the street."
+        "Ok, spill the beans.\x07What's that you say?\x07Sellbot Headquarters?? Oh no!!! Something must be done.\x07We must notify Judge McIntosh - she'll know what to do.\x07Go at once and tell her what you have found out. She's just down the street."
     },
     3253: {
         QUEST:
-        "Yes, can I help you? I'm very busy.\x7Eh? Cog Headquarters?\x7Eh? Nonsense. That could never happen.\x7You must be mistaken. Preposterous.\x7Eh? Don't argue with me.\x7Ok then, bring back some proof.\x7If Sellbots really are building this Cog HQ, any Cog there will be carrying blueprints.\x7Cogs love paperwork, you know?\x7Defeat Sellbots in there until you find blueprints.\x7Bring them back here and maybe I'll believe you."
+        "Yes, can I help you? I'm very busy.\x07Eh? Cog Headquarters?\x07Eh? Nonsense. That could never happen.\x07You must be mistaken. Preposterous.\x07Eh? Don't argue with me.\x07Ok then, bring back some proof.\x07If Sellbots really are building this Cog HQ, any Cog there will be carrying blueprints.\x07Cogs love paperwork, you know?\x07Defeat Sellbots in there until you find blueprints.\x07Bring them back here and maybe I'll believe you."
     },
     3254: {
         QUEST:
-        "You again, eh? Blueprints? You have them?\x7Let me see those! Hmmm... A factory?\x7That must be where they are building the Sellbots... And what's this?\x7Yes, just what I suspected. I knew it all along.\x7They are building a Sellbot Cog Headquarters.\x7This is not good. Must make some phone calls. Very busy. Goodbye!\x7Eh? Oh yes, take these blueprints back to Detective Lima.\x7She can make more sense of them.",
+        "You again, eh? Blueprints? You have them?\x07Let me see those! Hmmm... A factory?\x07That must be where they are building the Sellbots... And what's this?\x07Yes, just what I suspected. I knew it all along.\x07They are building a Sellbot Cog Headquarters.\x07This is not good. Must make some phone calls. Very busy. Goodbye!\x07Eh? Oh yes, take these blueprints back to Detective Lima.\x07She can make more sense of them.",
         COMPLETE:
-        "What did Judge McIntosh say?\x7We were right? Oh no. Let's see those blueprints.\x7Hmmm... Looks like Sellbots constructed a factory with machinery for building Cogs.\x7Sounds very dangerous. Stay out until you have more Laff points.\x7When you have more Laff points, we have much more to learn about Sellbot HQ.\x7For now, nice work, here is your reward."
+        "What did Judge McIntosh say?\x07We were right? Oh no. Let's see those blueprints.\x07Hmmm... Looks like Sellbots constructed a factory with machinery for building Cogs.\x07Sounds very dangerous. Stay out until you have more Laff points.\x07When you have more Laff points, we have much more to learn about Sellbot HQ.\x07For now, nice work, here is your reward."
     },
     3255: {
         QUEST:
-        '_toNpcName_ is investigating Sellbot Headquarters.\x7Go see if you can help._where_'
+        '_toNpcName_ is investigating Sellbot Headquarters.\x07Go see if you can help._where_'
     },
     3256: {
         QUEST:
-        '_toNpcName_ is investigating Sellbot Headquarters.\x7Go see if you can help._where_'
+        '_toNpcName_ is investigating Sellbot Headquarters.\x07Go see if you can help._where_'
     },
     3257: {
         QUEST:
-        '_toNpcName_ is investigating Sellbot Headquarters.\x7Go see if you can help._where_'
+        '_toNpcName_ is investigating Sellbot Headquarters.\x07Go see if you can help._where_'
     },
     3258: {
         QUEST:
-        'There is much confusion about what the Cogs are up to in their new headquarters.\x7I need you to bring back some information directly from them.\x7If we can get four internal memos from Sellbots inside their HQ, that will clear things up.\x7Bring back your first memo to me so we can learn more.'
+        'There is much confusion about what the Cogs are up to in their new headquarters.\x07I need you to bring back some information directly from them.\x07If we can get four internal memos from Sellbots inside their HQ, that will clear things up.\x07Bring back your first memo to me so we can learn more.'
     },
     3259: {
         QUEST:
-        'Great! This let\'s see what the memo says....\x7"Attn Sellbots:"\x7"I\'ll be in my office at the top of Sellbot Towers promoting Cogs to higher levels."\x7"When you earn enough merits enter the elevator in the lobby to see me."\x7"Break time\'s over - back to work!"\x7"Signed, Sellbot V.P."\x7Aha.... Flippy will want to see this. I\'ll send it to him right now.\x7Please go get your second memo and bring it back.'
+        'Great! This let\'s see what the memo says....\x07"Attn Sellbots:"\x07"I\'ll be in my office at the top of Sellbot Towers promoting Cogs to higher levels."\x07"When you earn enough merits enter the elevator in the lobby to see me."\x07"Break time\'s over - back to work!"\x07"Signed, Sellbot V.P."\x07Aha.... Flippy will want to see this. I\'ll send it to him right now.\x07Please go get your second memo and bring it back.'
     },
     3260: {
         QUEST:
-        'Oh good, you\'re back. Let\'s see what you found....\x7"Attn Sellbots:"\x7"Sellbot Towers has installed a new security system to keep all Toons out."\x7"Toons caught in Sellbot Towers will be detained for questioning."\x7"Please meet in the lobby for appetizers to discuss."\x7"Signed, Mingler"\x7Very interesting... I\'ll pass on this information immediately.\x7Please bring a third memo back.'
+        'Oh good, you\'re back. Let\'s see what you found....\x07"Attn Sellbots:"\x07"Sellbot Towers has installed a new security system to keep all Toons out."\x07"Toons caught in Sellbot Towers will be detained for questioning."\x07"Please meet in the lobby for appetizers to discuss."\x07"Signed, Mingler"\x07Very interesting... I\'ll pass on this information immediately.\x07Please bring a third memo back.'
     },
     3261: {
         QUEST:
-        'Excellent job _avName_! What does the memo say?\x7"Attn Sellbots:"\x7"Toons have somehow found a way to infiltrate Sellbot Towers."\x7"I\'ll call you tonight during dinner to give you the details."\x7"Signed, Telemarketer"\x7Hmmm... I wonder how Toons are breaking in....\x7Please bring back one more memo and I think we\'ll have enough info for now.',
+        'Excellent job _avName_! What does the memo say?\x07"Attn Sellbots:"\x07"Toons have somehow found a way to infiltrate Sellbot Towers."\x07"I\'ll call you tonight during dinner to give you the details."\x07"Signed, Telemarketer"\x07Hmmm... I wonder how Toons are breaking in....\x07Please bring back one more memo and I think we\'ll have enough info for now.',
         COMPLETE:
-        'I knew you could do it! Ok, the memo says....\x7"Attn Sellbots:"\x7"I was having lunch with Mr. Hollywood yesterday."\x7"He reports that the V.P. is very busy these days."\x7"He will only be taking appointments from Cogs that deserve a promotion."\x7"Forgot to mention, Gladhander is golfing with me on Sunday."\x7"Signed, Name Dropper"\x7Well... _avName_, this has been very helpful.\x7Here is your reward.'
+        'I knew you could do it! Ok, the memo says....\x07"Attn Sellbots:"\x07"I was having lunch with Mr. Hollywood yesterday."\x07"He reports that the V.P. is very busy these days."\x07"He will only be taking appointments from Cogs that deserve a promotion."\x07"Forgot to mention, Gladhander is golfing with me on Sunday."\x07"Signed, Name Dropper"\x07Well... _avName_, this has been very helpful.\x07Here is your reward.'
     },
     3262: {
         QUEST:
-        "_toNpcName_ has some new information about the Sellbot HQ Factory.\x7Go see what he's got._where_"
+        "_toNpcName_ has some new information about the Sellbot HQ Factory.\x07Go see what he's got._where_"
     },
     3263: {
         GREETING:
         'Hi buddy!',
         QUEST:
-        'I\'m Coach Zucchini, but you can just call me Coach Z.\x7I put the "squash" in squash and stretch, if you know what I mean.\x7Listen, Sellbots have finished an enormous factory to pump out Sellbots 24 hours a day.\x7Get a group of Toon buddies together and squash the factory!\x7Inside Sellbot HQ, look for the tunnel to the Factory then board the Factory elevator.\x7Make sure you have full gags, full Laff points, and some strong Toons as guides.\x7Defeat the Foreman inside the factory to slow the Sellbot progress.\x7Sounds like a real workout, if you know what I mean.',
+        'I\'m Coach Zucchini, but you can just call me Coach Z.\x07I put the "squash" in squash and stretch, if you know what I mean.\x07Listen, Sellbots have finished an enormous factory to pump out Sellbots 24 hours a day.\x07Get a group of Toon buddies together and squash the factory!\x07Inside Sellbot HQ, look for the tunnel to the Factory then board the Factory elevator.\x07Make sure you have full gags, full Laff points, and some strong Toons as guides.\x07Defeat the Foreman inside the factory to slow the Sellbot progress.\x07Sounds like a real workout, if you know what I mean.',
         LEAVING:
         'See ya buddy!',
         COMPLETE:
-        'Hey buddy, nice work on that Factory!\x7Looks like you found part of a Cog suit.\x7It must be left over from their Cog manufacturing process.\x7That may come in handy. Keep collecting these when you have spare time.\x7Maybe when you collect an entire Cog suit it could be useful for something....'
+        'Hey buddy, nice work on that Factory!\x07Looks like you found part of a Cog suit.\x07It must be left over from their Cog manufacturing process.\x07That may come in handy. Keep collecting these when you have spare time.\x07Maybe when you collect an entire Cog suit it could be useful for something....'
     },
     4001: {
         GREETING: '',
         QUEST:
-        'Now you get to choose the next gag track you want to learn.\x7Take your time deciding, and come back here when you are ready to choose.',
+        'Now you get to choose the next gag track you want to learn.\x07Take your time deciding, and come back here when you are ready to choose.',
         INCOMPLETE_PROGRESS: 'Think about your decision before choosing.',
         INCOMPLETE_WRONG_NPC: 'Think about your decision before choosing.',
         COMPLETE: 'A wise decision...',
@@ -1444,7 +1444,7 @@ QuestDialogDict = {
     4002: {
         GREETING: '',
         QUEST:
-        'Now you get to choose the next gag track you want to learn.\x7Take your time deciding, and come back here when you are ready to choose.',
+        'Now you get to choose the next gag track you want to learn.\x07Take your time deciding, and come back here when you are ready to choose.',
         INCOMPLETE_PROGRESS: 'Think about your decision before choosing.',
         INCOMPLETE_WRONG_NPC: 'Think about your decision before choosing.',
         COMPLETE: 'A wise decision...',
@@ -1458,56 +1458,56 @@ QuestDialogDict = {
         GREETING:
         'Howdy!',
         QUEST:
-        "I'm very concerned about a rash of musical instrument theft.\x7I'm conducting a survey among my fellow merchants.\x7Perhaps I can find a pattern to help me crack this case.\x7Stop by and ask Tina for a concertina inventory._where_"
+        "I'm very concerned about a rash of musical instrument theft.\x07I'm conducting a survey among my fellow merchants.\x07Perhaps I can find a pattern to help me crack this case.\x07Stop by and ask Tina for a concertina inventory._where_"
     },
     4202: {
         QUEST:
-        'Yes, I talked to Tom this morning.\x7I have the inventory right here.\x7Bring it right back to him, ok?_where_'
+        'Yes, I talked to Tom this morning.\x07I have the inventory right here.\x07Bring it right back to him, ok?_where_'
     },
     4203: {
-        QUEST: "Great! One down...\x7Now swing by and get Yuki's._where_"
+        QUEST: "Great! One down...\x07Now swing by and get Yuki's._where_"
     },
     4204: {
         QUEST:
-        'Oh! The inventory!\x7I forgot all about it.\x7I bet I can have it done by the time you defeat 10 Cogs.\x7Stop in after that and I promise it will be ready.',
-        INCOMPLETE_PROGRESS: '31, 32... DOH!\x7You made me lose count!',
+        'Oh! The inventory!\x07I forgot all about it.\x07I bet I can have it done by the time you defeat 10 Cogs.\x07Stop in after that and I promise it will be ready.',
+        INCOMPLETE_PROGRESS: '31, 32... DOH!\x07You made me lose count!',
         GREETING: ''
     },
     4205: {
         QUEST:
-        'Ah, there you are.\x7Thanks for giving me some time.\x7Take this to Tom and tell him I said Hello._where_'
+        'Ah, there you are.\x07Thanks for giving me some time.\x07Take this to Tom and tell him I said Hello._where_'
     },
     4206: {
         QUEST:
-        "Hmmm, very interesting.\x7Now we are getting somewhere.\x7Ok, the last inventory is Fifi's._where_"
+        "Hmmm, very interesting.\x07Now we are getting somewhere.\x07Ok, the last inventory is Fifi's._where_"
     },
     4207: {
         QUEST:
-        "Inventory?\x7How can I do an inventory if I don't have the form?\x7Go see Cleff and see if he has one for me._where_",
+        "Inventory?\x07How can I do an inventory if I don't have the form?\x07Go see Cleff and see if he has one for me._where_",
         INCOMPLETE_PROGRESS: 'Any sign of that form yet?'
     },
     4208: {
         QUEST:
-        "Sure I got an inventory form, mon!\x7But dey ain't free, you know.\x7I'll tell you woht. I trade you for a whole cream pie.",
+        "Sure I got an inventory form, mon!\x07But dey ain't free, you know.\x07I'll tell you woht. I trade you for a whole cream pie.",
         GREETING:
         'Hey, mon!',
         LEAVING:
         'Cool runnings...',
         INCOMPLETE_PROGRESS:
-        "A slice won't do.\x7I be hungry, mon. I need de WHOLE pie."
+        "A slice won't do.\x07I be hungry, mon. I need de WHOLE pie."
     },
     4209: {
         GREETING: '',
         QUEST:
-        'Mmmm...\x7Dem mighty nice!\x7Here be your form for Fifi._where_'
+        'Mmmm...\x07Dem mighty nice!\x07Here be your form for Fifi._where_'
     },
     4210: {
         GREETING:
         '',
         QUEST:
-        "Thank you. That's a big help.\x7Let's see...Fiddles: 2\x7All done! Off you go!_where_",
+        "Thank you. That's a big help.\x07Let's see...Fiddles: 2\x07All done! Off you go!_where_",
         COMPLETE:
-        "Great work, _avName_.\x7I'm sure I'll get to the bottom of these thefts now.\x7Why don't you get to the bottom of this!"
+        "Great work, _avName_.\x07I'm sure I'll get to the bottom of these thefts now.\x07Why don't you get to the bottom of this!"
     },
     4211: {
         QUEST:
@@ -1515,12 +1515,12 @@ QuestDialogDict = {
     },
     4212: {
         QUEST:
-        "Whew! I'm glad Toon HQ finally sent somebody.\x7I haven't had a customer in days.\x7It's these darned Number Crunchers every where.\x7I think they are teaching our residents bad oral hygiene.\x7Defeat ten of them and let's see if business picks up.",
+        "Whew! I'm glad Toon HQ finally sent somebody.\x07I haven't had a customer in days.\x07It's these darned Number Crunchers every where.\x07I think they are teaching our residents bad oral hygiene.\x07Defeat ten of them and let's see if business picks up.",
         INCOMPLETE_PROGRESS: 'Still no customers. But keep it up!'
     },
     4213: {
         QUEST:
-        "You know maybe it wasn't the Number Crunchers after all.\x7Maybe it's just the Cashbots in general.\x7Take out twenty of them and hopefully someone will come in for at least a checkup.",
+        "You know maybe it wasn't the Number Crunchers after all.\x07Maybe it's just the Cashbots in general.\x07Take out twenty of them and hopefully someone will come in for at least a checkup.",
         INCOMPLETE_PROGRESS:
         "I know twenty is a lot. But I'm sure it's going to pay off in spades."
     },
@@ -1530,37 +1530,37 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "I just don't understand it!\x7Still not a SINGLE customer.\x7Maybe we need to go to the source.\x7Try reclaiming a Cashbot Cog building.\x7That Should do the trick...",
+        "I just don't understand it!\x07Still not a SINGLE customer.\x07Maybe we need to go to the source.\x07Try reclaiming a Cashbot Cog building.\x07That Should do the trick...",
         INCOMPLETE_PROGRESS:
         'Oh, please! Just one little building...',
         COMPLETE:
-        "Still not a soul in here.\x7But you know, come to think of it.\x7I didn't have any customers before the Cogs invaded either!\x7I really appreciate all your help though.\x7This should help you get around."
+        "Still not a soul in here.\x07But you know, come to think of it.\x07I didn't have any customers before the Cogs invaded either!\x07I really appreciate all your help though.\x07This should help you get around."
     },
     4215: {
         QUEST:
-        "Anna desperately needs someone to help her.\x7Why don't you drop in and see what you can do._where_"
+        "Anna desperately needs someone to help her.\x07Why don't you drop in and see what you can do._where_"
     },
     4216: {
         QUEST:
-        "Thanks for coming so quickly!\x7Seems like the Cogs have made off with several of my customers' cruise tickets.\x7Yuki said she saw a Glad Hander leaving here with his glad hands full of them.\x7See if you can get Lumber Jack's ticket to Alaska back.",
+        "Thanks for coming so quickly!\x07Seems like the Cogs have made off with several of my customers' cruise tickets.\x07Yuki said she saw a Glad Hander leaving here with his glad hands full of them.\x07See if you can get Lumber Jack's ticket to Alaska back.",
         INCOMPLETE_PROGRESS: 'Those Glad Handers could be anywhere now...'
     },
     4217: {
         QUEST:
-        "Oh, great. You found it!\x7Now be a trooper and run in by Jack's for me, would you?_where_"
+        "Oh, great. You found it!\x07Now be a trooper and run in by Jack's for me, would you?_where_"
     },
     4218: {
         QUEST:
-        "Great Googely Moogely!\x7Alaska here I come!\x7I can't take these infernal Cogs anymore.\x7Say, I think Anna needs you again._where_"
+        "Great Googely Moogely!\x07Alaska here I come!\x07I can't take these infernal Cogs anymore.\x07Say, I think Anna needs you again._where_"
     },
     4219: {
         QUEST:
-        "Yup, you guessed it.\x7I need you to shake down those pesky Glad Handers for Tabitha's ticket to Jazzfest.\x7You know the procedure...",
+        "Yup, you guessed it.\x07I need you to shake down those pesky Glad Handers for Tabitha's ticket to Jazzfest.\x07You know the procedure...",
         INCOMPLETE_PROGRESS: "There's more out there somewhere..."
     },
     4220: {
         QUEST:
-        'Sweet!\x7Could you swing this one by his place for me too?_where_'
+        'Sweet!\x07Could you swing this one by his place for me too?_where_'
     },
     4221: {
         GREETING:
@@ -1568,12 +1568,12 @@ QuestDialogDict = {
         LEAVING:
         'Be cool...',
         QUEST:
-        "Cool, daddio!\x7Now I'm in fat city, _avName_.\x7Before you split, you better go check out Anna Banana again..._where_"
+        "Cool, daddio!\x07Now I'm in fat city, _avName_.\x07Before you split, you better go check out Anna Banana again..._where_"
     },
     4222: {
         QUEST:
-        "This is the last one, I promise!\x7Now you are looking for Barry's ticket to the big singing contest.",
-        INCOMPLETE_PROGRESS: "C'mon, _avName_.\x7Barry is counting on you."
+        "This is the last one, I promise!\x07Now you are looking for Barry's ticket to the big singing contest.",
+        INCOMPLETE_PROGRESS: "C'mon, _avName_.\x07Barry is counting on you."
     },
     4223: {
         QUEST: "This should put a smile on Barry's face._where_"
@@ -1584,21 +1584,21 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Hello, Hello, HELLO!\x7Terrific!\x7I just know me and the boys are going to clean up this year.\x7Anna says to swing back by and get your reward._where_\x7Goodbye, Goodbye, GOODBYE!',
+        'Hello, Hello, HELLO!\x07Terrific!\x07I just know me and the boys are going to clean up this year.\x07Anna says to swing back by and get your reward._where_\x07Goodbye, Goodbye, GOODBYE!',
         COMPLETE:
-        'Thanks for all your help, _avName_.\x7You really are an asset here in Toontown.\x7Speaking of assets...'
+        'Thanks for all your help, _avName_.\x07You really are an asset here in Toontown.\x07Speaking of assets...'
     },
     902: {
         QUEST:
-        'Go see Leo.\x7He needs someone to deliver a message for him._where_'
+        'Go see Leo.\x07He needs someone to deliver a message for him._where_'
     },
     4903: {
         QUEST:
-        'Dude!\x7My castanets are all cloudy and I have a big show tonight.\x7Take them to Carlos and see if he can polish them up._where_'
+        'Dude!\x07My castanets are all cloudy and I have a big show tonight.\x07Take them to Carlos and see if he can polish them up._where_'
     },
     4904: {
         QUEST:
-        'Jes, I tink I can polish dees.\x7But I need soma de blue ink from de squid.',
+        'Jes, I tink I can polish dees.\x07But I need soma de blue ink from de squid.',
         GREETING: 'Hola!',
         LEAVING: 'Adios!',
         INCOMPLETE_PROGRESS:
@@ -1606,39 +1606,39 @@ QuestDialogDict = {
     },
     4905: {
         QUEST:
-        "Jes! Dat's it!\x7Now I need a leetle time to polish dees.\x7Why don juo go takeover a one story beelding while I work?",
+        "Jes! Dat's it!\x07Now I need a leetle time to polish dees.\x07Why don juo go takeover a one story beelding while I work?",
         GREETING: 'Hola!',
         LEAVING: 'Adios!',
         INCOMPLETE_PROGRESS: 'Jest anodder minute...'
     },
     4906: {
-        QUEST: 'Bery good!\x7Here are de castanets for Leo._where_'
+        QUEST: 'Bery good!\x07Here are de castanets for Leo._where_'
     },
     4907: {
         GREETING:
         '',
         QUEST:
-        "Cool, dude!\x7They look awesome!\x7Now I need you to get a copy of the lyrics to 'A Beat Christmas' from Hedy._where_"
+        "Cool, dude!\x07They look awesome!\x07Now I need you to get a copy of the lyrics to 'A Beat Christmas' from Hedy._where_"
     },
     4908: {
         QUEST:
-        "Hello there!\x7Hmmm, I don't have a copy of that song handy.\x7If you give me a little while I could transcribe it from memory.\x7Why don't you run along and reclaim a two story building while I write?"
+        "Hello there!\x07Hmmm, I don't have a copy of that song handy.\x07If you give me a little while I could transcribe it from memory.\x07Why don't you run along and reclaim a two story building while I write?"
     },
     4909: {
         QUEST:
-        "I'm sorry.\x7My memory is getting a little fuzzy.\x7If you go reclaim a three story building I'm sure I'll be done when you get back..."
+        "I'm sorry.\x07My memory is getting a little fuzzy.\x07If you go reclaim a three story building I'm sure I'll be done when you get back..."
     },
     4910: {
         QUEST:
-        'All done!\x7Sorry it took so long.\x7Take this back to Leo._where_',
+        'All done!\x07Sorry it took so long.\x07Take this back to Leo._where_',
         GREETING:
         '',
         COMPLETE:
-        'Awesome, dude!\x7My concert is gonna rock!\x7Speaking of rock, you can rock some Cogs with this...'
+        'Awesome, dude!\x07My concert is gonna rock!\x07Speaking of rock, you can rock some Cogs with this...'
     },
     5247: {
         QUEST:
-        'This neighborhood is pretty tough...\x7You might want to learn some new tricks.\x7_toNpcName_ taught me everything I know, so maybe he can help you too._where_'
+        'This neighborhood is pretty tough...\x07You might want to learn some new tricks.\x07_toNpcName_ taught me everything I know, so maybe he can help you too._where_'
     },
     5248: {
         GREETING:
@@ -1648,13 +1648,13 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'You appear to be struggling with my assignment.',
         QUEST:
-        'Ahh, so welcome, new apprentice.\x7I know all there is to know about the pie game.\x7But before we can begin your training, a small demonstration is necessary.\x7Go out and defeat ten of the largest Cogs.'
+        'Ahh, so welcome, new apprentice.\x07I know all there is to know about the pie game.\x07But before we can begin your training, a small demonstration is necessary.\x07Go out and defeat ten of the largest Cogs.'
     },
     5249: {
         GREETING:
         'Mmmmm.',
         QUEST:
-        'Excellent!\x7Now demonstrate your skill as a fisherman.\x7I dropped three fuzzy dice in the pond yesterday.\x7Fish them out and bring them to me.',
+        'Excellent!\x07Now demonstrate your skill as a fisherman.\x07I dropped three fuzzy dice in the pond yesterday.\x07Fish them out and bring them to me.',
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
@@ -1664,76 +1664,76 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x7Now, show me that you can tell your enemies from one another.\x7Return when you have restored two of the tallest Lawbot buildings.',
+        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x07Now, show me that you can tell your enemies from one another.\x07Return when you have restored two of the tallest Lawbot buildings.',
         INCOMPLETE_PROGRESS: 'Do the buildings give you trouble?'
     },
     5258: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x7Now, show me that you can tell your enemies from one another.\x7Return when you have restored two of the tallest Bossbot buildings.',
+        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x07Now, show me that you can tell your enemies from one another.\x07Return when you have restored two of the tallest Bossbot buildings.',
         INCOMPLETE_PROGRESS: 'Do the buildings give you trouble?'
     },
     5259: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x7Now, show me that you can tell your enemies from one another.\x7Return when you have restored two of the tallest Cashbot buildings.',
+        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x07Now, show me that you can tell your enemies from one another.\x07Return when you have restored two of the tallest Cashbot buildings.',
         INCOMPLETE_PROGRESS: 'Do the buildings give you trouble?'
     },
     5260: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x7Now, show me that you can tell your enemies from one another.\x7Return when you have restored two of the tallest Sellbot buildings.',
+        'Aha!  These dice will look great hanging from the rearview mirror of my ox cart!\x07Now, show me that you can tell your enemies from one another.\x07Return when you have restored two of the tallest Sellbot buildings.',
         INCOMPLETE_PROGRESS: 'Do the buildings give you trouble?'
     },
     5200: {
         QUEST:
-        'Those sneaky Cogs are at it again.\x7_toNpcName_ has reported another missing item. Stop by and see if you can straighten it out._where_'
+        'Those sneaky Cogs are at it again.\x07_toNpcName_ has reported another missing item. Stop by and see if you can straighten it out._where_'
     },
     5201: {
         GREETING: '',
         QUEST:
-        'Hi, _avName_.  I reckon I should thank you for coming.\x7A group of those Head Hunters came in and stole my soccer ball.\x7The leader told me that I had to make some cutbacks and just grabbed it away from me!\x7Can you get my ball back?',
+        'Hi, _avName_.  I reckon I should thank you for coming.\x07A group of those Head Hunters came in and stole my soccer ball.\x07The leader told me that I had to make some cutbacks and just grabbed it away from me!\x07Can you get my ball back?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck finding my soccer ball?',
-        COMPLETE: 'Yeehaw! You found it!\x7 Here, take your reward...'
+        COMPLETE: 'Yeehaw! You found it!\x07 Here, take your reward...'
     },
     5261: {
         GREETING: '',
         QUEST:
-        'Hi, _avName_.  I reckon I should thank you for coming.\x7A group of those Two-Faces came in and stole my soccer ball.\x7The leader told me that I had to make some cutbacks and just grabbed it away from me!\x7Can you get my ball back?',
+        'Hi, _avName_.  I reckon I should thank you for coming.\x07A group of those Two-Faces came in and stole my soccer ball.\x07The leader told me that I had to make some cutbacks and just grabbed it away from me!\x07Can you get my ball back?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck finding my soccer ball?',
-        COMPLETE: 'Yeehaw! You found it!\x7 Here, take your reward...'
+        COMPLETE: 'Yeehaw! You found it!\x07 Here, take your reward...'
     },
     5262: {
         GREETING: '',
         QUEST:
-        'Hi, _avName_.  I reckon I should thank you for coming.\x7A group of those Money Bags came in and stole my soccer ball.\x7The leader told me that I had to make some cutbacks and just grabbed it away from me!\x7Can you get my ball back?',
+        'Hi, _avName_.  I reckon I should thank you for coming.\x07A group of those Money Bags came in and stole my soccer ball.\x07The leader told me that I had to make some cutbacks and just grabbed it away from me!\x07Can you get my ball back?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck finding my soccer ball?',
-        COMPLETE: 'Yeehaw! You found it!\x7 Here, take your reward...'
+        COMPLETE: 'Yeehaw! You found it!\x07 Here, take your reward...'
     },
     5263: {
         GREETING: '',
         QUEST:
-        'Hi, _avName_.  I reckon I should thank you for coming.\x7A group of those Spin Doctors came in and stole my soccer ball.\x7The leader told me that I had to make some cutbacks and just grabbed it away from me!\x7Can you get my ball back?',
+        'Hi, _avName_.  I reckon I should thank you for coming.\x07A group of those Spin Doctors came in and stole my soccer ball.\x07The leader told me that I had to make some cutbacks and just grabbed it away from me!\x07Can you get my ball back?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck finding my soccer ball?',
-        COMPLETE: 'Yeehaw! You found it!\x7 Here, take your reward...'
+        COMPLETE: 'Yeehaw! You found it!\x07 Here, take your reward...'
     },
     5202: {
         QUEST:
         lTheBrrrgh +
-        " has been overrun with some of the toughest Cogs we've seen yet.\x7You will probably want to carry more gags around here.\x7I hear _toNpcName_ may have a large bag you can use to carry more gags._where_"
+        " has been overrun with some of the toughest Cogs we've seen yet.\x07You will probably want to carry more gags around here.\x07I hear _toNpcName_ may have a large bag you can use to carry more gags._where_"
     },
     5203: {
         GREETING:
         'Huh?  Are you on my sledding team?',
         QUEST:
-        "What's that?  You want a bag?\x7I had one somewhere around here... maybe it's in my toboggan?\x7Only... I haven't seen my toboggan since the big race!\x7Maybe one of those Cogs took it?",
+        "What's that?  You want a bag?\x07I had one somewhere around here... maybe it's in my toboggan?\x07Only... I haven't seen my toboggan since the big race!\x07Maybe one of those Cogs took it?",
         LEAVING:
         'Have you seen my toboggan?',
         INCOMPLETE_PROGRESS:
@@ -1745,13 +1745,13 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Is that my toboggan?  I don't see any bag here.\x7I think Bumpy Noggin was on the team... maybe he has it?_where_"
+        "Is that my toboggan?  I don't see any bag here.\x07I think Bumpy Noggin was on the team... maybe he has it?_where_"
     },
     5205: {
         GREETING: 'Ohhh, my head!',
         LEAVING: '',
         QUEST:
-        "Huh?  Ted who?  A bag?\x7Oh, maybe he was on our toboggan team?\x7My head hurts so much I can't think straight.\x7Could you fish me out some ice cubes from the frozen pond for my head?",
+        "Huh?  Ted who?  A bag?\x07Oh, maybe he was on our toboggan team?\x07My head hurts so much I can't think straight.\x07Could you fish me out some ice cubes from the frozen pond for my head?",
         INCOMPLETE_PROGRESS: "Oww, my head's killing me!  Got any ice?"
     },
     5206: {
@@ -1760,20 +1760,20 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Ahhh, that feels much better!\x7So you're looking for Ted's bag, huh?\x7I think it ended up on Sam Simian's head after the crash._where_"
+        "Ahhh, that feels much better!\x07So you're looking for Ted's bag, huh?\x07I think it ended up on Sam Simian's head after the crash._where_"
     },
     5207: {
         GREETING: 'Eeeep!',
         LEAVING: '',
         QUEST:
-        'What is bag?  Who is Bompy?\x7Me scared of buildings!  You beat buildings, I give you bag!',
+        'What is bag?  Who is Bompy?\x07Me scared of buildings!  You beat buildings, I give you bag!',
         INCOMPLETE_PROGRESS: 'More buildings!  Me still scared!',
         COMPLETE: 'Ooooh!  Me like you!'
     },
     5208: {
         GREETING: '',
         LEAVING: 'Eeeek!',
-        QUEST: 'Ooooh!  Me like you!\x7Go to Ski Clinic. Bag there.'
+        QUEST: 'Ooooh!  Me like you!\x07Go to Ski Clinic. Bag there.'
     },
     5209: {
         GREETING:
@@ -1781,47 +1781,47 @@ QuestDialogDict = {
         LEAVING:
         'Later!',
         QUEST:
-        "Man, that Simian Sam is crazy!\x7If you're wild like Sam, I'll give you your bag, man.\x7Go bag some Cogs for your bag, man! Hey now!",
+        "Man, that Simian Sam is crazy!\x07If you're wild like Sam, I'll give you your bag, man.\x07Go bag some Cogs for your bag, man! Hey now!",
         INCOMPLETE_PROGRESS:
         "Are you sure you're extreme enough?  Go bag some more Cogs.",
         COMPLETE:
-        "Hey, you are pretty wild!  That was a heap of Cogs you bagged!\x7Here's your bag!"
+        "Hey, you are pretty wild!  That was a heap of Cogs you bagged!\x07Here's your bag!"
     },
     5210: {
         QUEST:
-        '_toNpcName_ is secretly in love with someone in the neighborhood.\x7If you help her, she may reward you handsomely._where_'
+        '_toNpcName_ is secretly in love with someone in the neighborhood.\x07If you help her, she may reward you handsomely._where_'
     },
     5211: {
         GREETING: 'Boo hoo.',
         QUEST:
-        'I spent all last night writing a letter to the dog I love.\x7But before I could deliver it, one of those nasty Cogs with a beak came in and took it.\x7Can you get it back for me?',
+        'I spent all last night writing a letter to the dog I love.\x07But before I could deliver it, one of those nasty Cogs with a beak came in and took it.\x07Can you get it back for me?',
         LEAVING: 'Boo hoo.',
         INCOMPLETE_PROGRESS: 'Please find my letter.'
     },
     5264: {
         GREETING: 'Boo hoo.',
         QUEST:
-        'I spent all last night writing a letter to the dog I love.\x7But before I could deliver it, one of those nasty Cogs with a fin came in and took it.\x7Can you get it back for me?',
+        'I spent all last night writing a letter to the dog I love.\x07But before I could deliver it, one of those nasty Cogs with a fin came in and took it.\x07Can you get it back for me?',
         LEAVING: 'Boo hoo.',
         INCOMPLETE_PROGRESS: 'Please find my letter.'
     },
     5265: {
         GREETING: 'Boo hoo.',
         QUEST:
-        'I spent all last night writing a letter to the dog I love.\x7But before I could deliver it, one of those nasty Mingler Cogs came in and took it.\x7Can you get it back for me?',
+        'I spent all last night writing a letter to the dog I love.\x07But before I could deliver it, one of those nasty Mingler Cogs came in and took it.\x07Can you get it back for me?',
         LEAVING: 'Boo hoo.',
         INCOMPLETE_PROGRESS: 'Please find my letter.'
     },
     5266: {
         GREETING: 'Boo hoo.',
         QUEST:
-        'I spent all last night writing a letter to the dog I love.\x7But before I could deliver it, one of those nasty Corporate Raiders came in and took it.\x7Can you get it back for me?',
+        'I spent all last night writing a letter to the dog I love.\x07But before I could deliver it, one of those nasty Corporate Raiders came in and took it.\x07Can you get it back for me?',
         LEAVING: 'Boo hoo.',
         INCOMPLETE_PROGRESS: 'Please find my letter.'
     },
     5212: {
         QUEST:
-        'Oh, thank you for finding my letter!\x7Please, please, please could you deliver it to the most handsome dog in the neighborhood?',
+        'Oh, thank you for finding my letter!\x07Please, please, please could you deliver it to the most handsome dog in the neighborhood?',
         GREETING: '',
         LEAVING: '',
         INCOMPLETE_PROGRESS: "You didn't deliver my letter, did you?"
@@ -1829,7 +1829,7 @@ QuestDialogDict = {
     5213: {
         GREETING: "Charmed, I'm sure.",
         QUEST:
-        "I can't be bothered with your letter, you see.\x7All my doggies have been taken from me!\x7If you bring them back, maybe we can talk then.",
+        "I can't be bothered with your letter, you see.\x07All my doggies have been taken from me!\x07If you bring them back, maybe we can talk then.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'My poor little doggies!'
     },
@@ -1839,7 +1839,7 @@ QuestDialogDict = {
         LEAVING:
         'Toodleloo!',
         QUEST:
-        "Thank you for bringing back my little beauties.\x7Let's take a look at your letter now...\nMmmm, it seems I have yet another secret admirer.\x7This calls for a trip to my dear friend Carl.\x7I'm sure you'll like him immensely._where_"
+        "Thank you for bringing back my little beauties.\x07Let's take a look at your letter now...\nMmmm, it seems I have yet another secret admirer.\x07This calls for a trip to my dear friend Carl.\x07I'm sure you'll like him immensely._where_"
     },
     5215: {
         GREETING:
@@ -1849,11 +1849,11 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "There are still some big ones around.  Comes back to us when they're gone.",
         QUEST:
-        "Who sent you to us?  We don't like Snootsies much, we don't...\x7But we likes Cogs even less...\x7Run the big ones off and we'll helps you we will."
+        "Who sent you to us?  We don't like Snootsies much, we don't...\x07But we likes Cogs even less...\x07Run the big ones off and we'll helps you we will."
     },
     5216: {
         QUEST:
-        'We told you we would helps you.\x7So take this ring to the girl.',
+        'We told you we would helps you.\x07So take this ring to the girl.',
         GREETING:
         '',
         LEAVING:
@@ -1861,7 +1861,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'You still haves the ring???',
         COMPLETE:
-        'Oh darrrling!!! Thank you!!!\x7Oh, and I have something special for you as well.'
+        'Oh darrrling!!! Thank you!!!\x07Oh, and I have something special for you as well.'
     },
     5217: {
         QUEST: 'It sounds like _toNpcName_ could use some help._where_'
@@ -1874,7 +1874,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "I'm sure there are more Minglers around somewhere.",
         QUEST:
-        "Help!!! Help!!! I can't take it anymore!\x7Those Minglers are driving me batty!!!"
+        "Help!!! Help!!! I can't take it anymore!\x07Those Minglers are driving me batty!!!"
     },
     5219: {
         GREETING:
@@ -1884,7 +1884,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "That can't be all of them.  I just saw one!!!",
         QUEST:
-        "Oh, thanks, but now it's the Corporate Raiders!!!\x7You've got to help me!!!"
+        "Oh, thanks, but now it's the Corporate Raiders!!!\x07You've got to help me!!!"
     },
     5220: {
         GREETING:
@@ -1894,7 +1894,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'No, no, no there was one just here!',
         QUEST:
-        "I realize now that it's those Loan Sharks!!!\x7I thought you were going to save me!!!"
+        "I realize now that it's those Loan Sharks!!!\x07I thought you were going to save me!!!"
     },
     5221: {
         GREETING:
@@ -1902,17 +1902,17 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "You know what, maybe it isn't the Cogs at all!\x7Could you ask Fanny to make me a soothing potion?  Maybe that would help...._where_"
+        "You know what, maybe it isn't the Cogs at all!\x07Could you ask Fanny to make me a soothing potion?  Maybe that would help...._where_"
     },
     5222: {
         LEAVING: '',
         QUEST:
-        "Oh, that Harry, he sure is a card!\x7I'll whip up something that will fix him right up!\x7Oh, I appear to be out of sardine whiskers...\x7Be a dear and run down to the pond and catch some for me.",
+        "Oh, that Harry, he sure is a card!\x07I'll whip up something that will fix him right up!\x07Oh, I appear to be out of sardine whiskers...\x07Be a dear and run down to the pond and catch some for me.",
         INCOMPLETE_PROGRESS: 'Got those whiskers for me yet?'
     },
     5223: {
         QUEST:
-        'Okay.  Thanks, hon.\x7Here, now take this to Harry.  It should calm him right down.',
+        'Okay.  Thanks, hon.\x07Here, now take this to Harry.  It should calm him right down.',
         GREETING: '',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Go on now, take the potion to Harry.'
@@ -1925,17 +1925,17 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Go get those Legal Eagles for me, will you?',
         QUEST:
-        "Oh thank goodness you're back!\x7Give me the potion, quick!!!\x7Glug, glug, glug...\x7That tasted awful!\x7You know, what, though?  I feel much calmer.  Now that I can think clearly, I realize that...\x7It was the Legal Eagles that were driving me crazy all this time!!!",
+        "Oh thank goodness you're back!\x07Give me the potion, quick!!!\x07Glug, glug, glug...\x07That tasted awful!\x07You know, what, though?  I feel much calmer.  Now that I can think clearly, I realize that...\x07It was the Legal Eagles that were driving me crazy all this time!!!",
         COMPLETE:
-        "Oh boy!  Now I can relax!\x7I'm sure there's something here I can give you.  Oh, take this!"
+        "Oh boy!  Now I can relax!\x07I'm sure there's something here I can give you.  Oh, take this!"
     },
     5225: {
         QUEST:
-        'Ever since the incident with the turnip bread, Grumpy Phil has been mad at _toNpcName_.\x7Maybe you could help Gus fix things between them?_where_'
+        'Ever since the incident with the turnip bread, Grumpy Phil has been mad at _toNpcName_.\x07Maybe you could help Gus fix things between them?_where_'
     },
     5226: {
         QUEST:
-        'Yeah, you probably heard Grumpy Phil is mad at me...\x7I was just trying to be nice with that turnip bread.\x7Maybe you can help cheer him up.\x7Phil really hates those Cashbot Cogs, especially their buildings.\x7If you reclaim some Cashbot buildings, it might help.',
+        'Yeah, you probably heard Grumpy Phil is mad at me...\x07I was just trying to be nice with that turnip bread.\x07Maybe you can help cheer him up.\x07Phil really hates those Cashbot Cogs, especially their buildings.\x07If you reclaim some Cashbot buildings, it might help.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Maybe a few more buildings?'
     },
@@ -1944,7 +1944,7 @@ QuestDialogDict = {
     },
     5228: {
         QUEST:
-        'Oh he did, did he?\x7That Gus thinks he can get off so easy, does he?\x7Only broke my tooth, he did, with that turnip bread of his!\x7Maybe if you took my tooth to Dr. Mumbleface for me he could fix it.',
+        'Oh he did, did he?\x07That Gus thinks he can get off so easy, does he?\x07Only broke my tooth, he did, with that turnip bread of his!\x07Maybe if you took my tooth to Dr. Mumbleface for me he could fix it.',
         GREETING:
         'Mmmmrrphh.',
         LEAVING:
@@ -1960,7 +1960,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "I'm still working on the tooth.  It will be a bit longer.",
         QUEST:
-        "Yes, that tooth looks pretty bad, alrighty.\x7Maybe I can do something, but it will be a little while.\x7Maybe you could clear some of those Cashbot Cogs off the streets while you're waiting?\x7They're scaring off my customers."
+        "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Cashbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."
     },
     5267: {
         GREETING:
@@ -1970,7 +1970,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "I'm still working on the tooth.  It will be a bit longer.",
         QUEST:
-        "Yes, that tooth looks pretty bad, alrighty.\x7Maybe I can do something, but it will be a little while.\x7Maybe you could clear some of those Sellbot Cogs off the streets while you're waiting?\x7They're scaring off my customers."
+        "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Sellbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."
     },
     5268: {
         GREETING:
@@ -1980,7 +1980,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "I'm still working on the tooth.  It will be a bit longer.",
         QUEST:
-        "Yes, that tooth looks pretty bad, alrighty.\x7Maybe I can do something, but it will be a little while.\x7Maybe you could clear some of those Lawbot Cogs off the streets while you're waiting?\x7They're scaring off my customers."
+        "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Lawbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."
     },
     5269: {
         GREETING:
@@ -1990,52 +1990,52 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "I'm still working on the tooth.  It will be a bit longer.",
         QUEST:
-        "Yes, that tooth looks pretty bad, alrighty.\x7Maybe I can do something, but it will be a little while.\x7Maybe you could clear some of those Bossbot Cogs off the streets while you're waiting?\x7They're scaring off my customers."
+        "Yes, that tooth looks pretty bad, alrighty.\x07Maybe I can do something, but it will be a little while.\x07Maybe you could clear some of those Bossbot Cogs off the streets while you're waiting?\x07They're scaring off my customers."
     },
     5230: {
         GREETING: '',
         QUEST:
-        "I'm glad you're back!\x7I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x7Unfortunately a Robber Baron came in and took it from me.\x7Maybe you can catch him if you hurry.",
+        "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately a Robber Baron came in and took it from me.\x07Maybe you can catch him if you hurry.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'
     },
     5270: {
         GREETING: '',
         QUEST:
-        "I'm glad you're back!\x7I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x7Unfortunately a Big Cheese came in and took it from me.\x7Maybe you can catch him if you hurry.",
+        "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately a Big Cheese came in and took it from me.\x07Maybe you can catch him if you hurry.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'
     },
     5271: {
         GREETING: '',
         QUEST:
-        "I'm glad you're back!\x7I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x7Unfortunately Mr. Hollywood came in and took it from me.\x7Maybe you can catch him if you hurry.",
+        "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately Mr. Hollywood came in and took it from me.\x07Maybe you can catch him if you hurry.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'
     },
     5272: {
         GREETING: '',
         QUEST:
-        "I'm glad you're back!\x7I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x7Unfortunately a Big Wig came in and took it from me.\x7Maybe you can catch him if you hurry.",
+        "I'm glad you're back!\x07I gave up trying to fix that old tooth, and made a new gold tooth for Phil instead.\x07Unfortunately a Big Wig came in and took it from me.\x07Maybe you can catch him if you hurry.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find that tooth yet?'
     },
     5231: {
         QUEST:
-        "Great, that's the tooth alrighty!\x7Why don't you just run it over to Phil for me?",
+        "Great, that's the tooth alrighty!\x07Why don't you just run it over to Phil for me?",
         GREETING: '',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'I bet Phil would like to see his new tooth.'
     },
     5232: {
         QUEST:
-        "Oh, thanks.\x7Mmmrrrphhhh\x7How's that look, huh?\x7Okay, you can tell Gus that I forgive him.",
+        "Oh, thanks.\x07Mmmrrrphhhh\x07How's that look, huh?\x07Okay, you can tell Gus that I forgive him.",
         LEAVING: '',
         GREETING: ''
     },
     5233: {
         QUEST:
-        "Oh, that's great to hear.\x7I figured old Phil couldn't stay mad at me.\x7As a gesture of goodwill, I baked him this Pine cone bread.\x7Could you run it over to him for me?",
+        "Oh, that's great to hear.\x07I figured old Phil couldn't stay mad at me.\x07As a gesture of goodwill, I baked him this Pine cone bread.\x07Could you run it over to him for me?",
         GREETING:
         '',
         LEAVING:
@@ -2043,7 +2043,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "Better hurry.  Pine cone bread is better when it's hot.",
         COMPLETE:
-        "Oh, what's this?  For me?\x7Munch, munch...\x7Owwww!  My tooth!  That Gus Gooseburger!\x7Oh well, it wasn't your fault.  Here, you can have this for your trouble."
+        "Oh, what's this?  For me?\x07Munch, munch...\x07Owwww!  My tooth!  That Gus Gooseburger!\x07Oh well, it wasn't your fault.  Here, you can have this for your trouble."
     },
     903: {
         QUEST:
@@ -2052,35 +2052,35 @@ QuestDialogDict = {
     5234: {
         GREETING: '',
         QUEST:
-        'Aha, you are back.\x7Before we begin, we must eat.\x7Bring us some lumpy cheese for our broth.\x7Lumpy cheese can only be gathered from Big Cheese Cogs.',
+        'Aha, you are back.\x07Before we begin, we must eat.\x07Bring us some lumpy cheese for our broth.\x07Lumpy cheese can only be gathered from Big Cheese Cogs.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'We still need lumpy cheese'
     },
     5278: {
         GREETING: '',
         QUEST:
-        'Aha, you are back.\x7Before we begin, we must eat.\x7Bring us some caviar for our broth.\x7Caviar can only be gathered from Mr. Hollywood Cogs.',
+        'Aha, you are back.\x07Before we begin, we must eat.\x07Bring us some caviar for our broth.\x07Caviar can only be gathered from Mr. Hollywood Cogs.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'We still need caviar'
     },
     5235: {
         GREETING: '',
         QUEST:
-        'A simple man eats with a simple spoon.\x7A Cog took my simple spoon, so I simply can not eat.\x7Return my spoon to me.  I think a Robber Baron took it.',
+        'A simple man eats with a simple spoon.\x07A Cog took my simple spoon, so I simply can not eat.\x07Return my spoon to me.  I think a Robber Baron took it.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'I simply must have my spoon.'
     },
     5279: {
         GREETING: '',
         QUEST:
-        'A simple man eats with a simple spoon.\x7A Cog took my simple spoon, so I can not eat.\x7Return my spoon to me.  I think a Big Wig took it.',
+        'A simple man eats with a simple spoon.\x07A Cog took my simple spoon, so I can not eat.\x07Return my spoon to me.  I think a Big Wig took it.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'I simply must have my spoon.'
     },
     5236: {
         GREETING: '',
         QUEST:
-        'Many thanks.\x7Slurp, slurp...\x7Ahhh, now you must catch a talking toad.  Try fishing in the pond.',
+        'Many thanks.\x07Slurp, slurp...\x07Ahhh, now you must catch a talking toad.  Try fishing in the pond.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Where is that talking toad?'
     },
@@ -2092,25 +2092,25 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'You have not yet obtained dessert.',
         QUEST:
-        "Oh, that is certainly a talking toad.  Give him to me.\x7What's that you say, toad?\x7Uh huh.\x7Uh huh...\x7The toad has spoken.  We need dessert.\x7Bring us some ice cream cones from _toNpcName_.\x7The toad likes red bean flavored ice cream for some reason._where_"
+        "Oh, that is certainly a talking toad.  Give him to me.\x07What's that you say, toad?\x07Uh huh.\x07Uh huh...\x07The toad has spoken.  We need dessert.\x07Bring us some ice cream cones from _toNpcName_.\x07The toad likes red bean flavored ice cream for some reason._where_"
     },
     5238: {
         GREETING: '',
         QUEST:
-        "So the wizard sent you.  I'm sad to say we're fresh out of red bean ice cream cones.\x7You see, a bunch of Cogs came in and just took them.\x7They said they were for Mr. Hollywood, or some such nonsense.\x7I'd sure appreciate if you could round them back up for me.",
+        "So the wizard sent you.  I'm sad to say we're fresh out of red bean ice cream cones.\x07You see, a bunch of Cogs came in and just took them.\x07They said they were for Mr. Hollywood, or some such nonsense.\x07I'd sure appreciate if you could round them back up for me.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Have you found all my ice cream cones yet?'
     },
     5280: {
         GREETING: '',
         QUEST:
-        "So the wizard sent you.  I'm sad to say we're fresh out of red bean ice cream cones.\x7You see, a bunch of Cogs came in and just took them.\x7They said they were for The Big Cheese, or some such nonsense.\x7I'd sure appreciate if you could round them back up for me.",
+        "So the wizard sent you.  I'm sad to say we're fresh out of red bean ice cream cones.\x07You see, a bunch of Cogs came in and just took them.\x07They said they were for The Big Cheese, or some such nonsense.\x07I'd sure appreciate if you could round them back up for me.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Have you found all my ice cream cones yet?'
     },
     5239: {
         QUEST:
-        "Thanks for bringing back my ice cream cones!\x7Here's one for Lil Oldman.",
+        "Thanks for bringing back my ice cream cones!\x07Here's one for Lil Oldman.",
         GREETING:
         '',
         LEAVING:
@@ -2121,20 +2121,20 @@ QuestDialogDict = {
     5240: {
         GREETING: '',
         QUEST:
-        'Very good.  Here you go toad...\x7Slurp, slurp...\x7Okay, now we are almost ready.\x7If you can just bring me some powder to dry my hands.\x7I think those Big Wig Cogs sometimes have powder from their wigs.',
+        'Very good.  Here you go toad...\x07Slurp, slurp...\x07Okay, now we are almost ready.\x07If you can just bring me some powder to dry my hands.\x07I think those Big Wig Cogs sometimes have powder from their wigs.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find any powder?'
     },
     5281: {
         GREETING: '',
         QUEST:
-        'Very good.  Here you go toad...\x7Slurp, slurp...\x7Okay, now we are almost ready.\x7If you can just bring me some powder to dry my hands.\x7I think those Mr. Hollywood Cogs sometimes keep powder for their noses.',
+        'Very good.  Here you go toad...\x07Slurp, slurp...\x07Okay, now we are almost ready.\x07If you can just bring me some powder to dry my hands.\x07I think those Mr. Hollywood Cogs sometimes keep powder for their noses.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Did you find any powder?'
     },
     5241: {
         QUEST:
-        'Okay.\x7As I once said, to truly throw a pie, you must throw not with the hand...\x7...but with the soul.\x7I know not what that means, so I will sit and contemplate while you restore buildings.\x7Return when you have completed your task.',
+        'Okay.\x07As I once said, to truly throw a pie, you must throw not with the hand...\x07...but with the soul.\x07I know not what that means, so I will sit and contemplate while you restore buildings.\x07Return when you have completed your task.',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Your task is not yet complete.'
     },
@@ -2142,35 +2142,35 @@ QuestDialogDict = {
         GREETING:
         '',
         QUEST:
-        'Although I still know not what I am talking about, you truly are worthy.\x7I give you a final task...\x7The talking toad would like a girlfriend.\x7Find another talking toad.  The toad has spoken.',
+        'Although I still know not what I am talking about, you truly are worthy.\x07I give you a final task...\x07The talking toad would like a girlfriend.\x07Find another talking toad.  The toad has spoken.',
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
         'Where is that other talking toad?',
         COMPLETE:
-        'Whew!  I am tired from all this effort.  I must rest now.\x7Here, take your reward and be off.'
+        'Whew!  I am tired from all this effort.  I must rest now.\x07Here, take your reward and be off.'
     },
     5243: {
         QUEST:
-        'Sweaty Pete is starting to stink up the street.\x7Can you talk him into taking a shower or something?_where_'
+        'Sweaty Pete is starting to stink up the street.\x07Can you talk him into taking a shower or something?_where_'
     },
     5244: {
         GREETING: '',
         QUEST:
-        "Yeah, I guess I do work up quite a sweat in here.\x7Mmmm, maybe if I could fix that leaky pipe in my shower...\x7I figure a gear from one of those tiny Cogs would do the trick.\x7Go find a gear from a Micromanager and we'll try it.",
+        "Yeah, I guess I do work up quite a sweat in here.\x07Mmmm, maybe if I could fix that leaky pipe in my shower...\x07I figure a gear from one of those tiny Cogs would do the trick.\x07Go find a gear from a Micromanager and we'll try it.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: "Where's that gear you were going to get?"
     },
     5245: {
         GREETING: '',
         QUEST:
-        'Yup, that seemed to do the trick.\x7But I get lonely when I shower...\x7Could you go fish me up a rubber ducky to keep me company?',
+        'Yup, that seemed to do the trick.\x07But I get lonely when I shower...\x07Could you go fish me up a rubber ducky to keep me company?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'Any luck with that duck?'
     },
     5246: {
         QUEST:
-        "The ducky's great, but...\x7All those buildings around here make me nervous.\x7I'd feel a lot more relaxed if there were fewer buildings around.",
+        "The ducky's great, but...\x07All those buildings around here make me nervous.\x07I'd feel a lot more relaxed if there were fewer buildings around.",
         LEAVING: '',
         COMPLETE:
         "Okay, I'll shower up now.  And here's something for you too.",
@@ -2178,82 +2178,82 @@ QuestDialogDict = {
     },
     5251: {
         QUEST:
-        'Lounge Lassard is supposed to be playing a gig tonight.\x7I hear he might be having some trouble with his equipment._where_'
+        'Lounge Lassard is supposed to be playing a gig tonight.\x07I hear he might be having some trouble with his equipment._where_'
     },
     5252: {
         GREETING: '',
         QUEST:
-        'Oh yeah!  I could sure use some help.\x7Those Cogs came in and swiped all my gear while I was unloading the van.\x7Can you give me a hand and get back my microphone?',
+        'Oh yeah!  I could sure use some help.\x07Those Cogs came in and swiped all my gear while I was unloading the van.\x07Can you give me a hand and get back my microphone?',
         LEAVING: '',
         INCOMPLETE_PROGRESS: "Hey man, I can't sing without my microphone."
     },
     5253: {
         GREETING: '',
         QUEST:
-        "Yeah, that's my microphone all right.\x7Thanks for getting it for me, but...\x7I really need my keyboard so I can tickle the ivories.\x7I think one of those Corporate Raiders got my keyboard.",
+        "Yeah, that's my microphone all right.\x07Thanks for getting it for me, but...\x07I really need my keyboard so I can tickle the ivories.\x07I think one of those Corporate Raiders got my keyboard.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding my keboard?'
     },
     5273: {
         GREETING: '',
         QUEST:
-        "Yeah, that's my microphone all right.\x7Thanks for getting it for me, but...\x7I really need my keyboard so I can tickle the ivories.\x7I think one of those Minglers got my keyboard.",
+        "Yeah, that's my microphone all right.\x07Thanks for getting it for me, but...\x07I really need my keyboard so I can tickle the ivories.\x07I think one of those Minglers got my keyboard.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding my keboard?'
     },
     5274: {
         GREETING: '',
         QUEST:
-        "Yeah, that's my microphone all right.\x7Thanks for getting it for me, but...\x7I really need my keyboard so I can tickle the ivories.\x7I think one of those Loan Sharks got my keyboard.",
+        "Yeah, that's my microphone all right.\x07Thanks for getting it for me, but...\x07I really need my keyboard so I can tickle the ivories.\x07I think one of those Loan Sharks got my keyboard.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding my keboard?'
     },
     5275: {
         GREETING: '',
         QUEST:
-        "Yeah, that's my microphone all right.\x7Thanks for getting it for me, but...\x7I really need my keyboard so I can tickle the ivories.\x7I think one of those Legal Eagles got my keyboard.",
+        "Yeah, that's my microphone all right.\x07Thanks for getting it for me, but...\x07I really need my keyboard so I can tickle the ivories.\x07I think one of those Legal Eagles got my keyboard.",
         LEAVING: '',
         INCOMPLETE_PROGRESS: 'No luck finding my keboard?'
     },
     5254: {
         GREETING: '',
         QUEST:
-        "All right!  Now I'm in business.\x7If only they hadn't taken my platform shoes...\x7Those shoes probably ended up with a Mr. Hollywood, if I had to guess.",
+        "All right!  Now I'm in business.\x07If only they hadn't taken my platform shoes...\x07Those shoes probably ended up with a Mr. Hollywood, if I had to guess.",
         LEAVING: '',
         COMPLETE:
-        "Allright!!  I'm ready now.\x7Hello Brrrgh!!!\x7Huh?  Where is everyone?\x7Okay, take this and round me up some fans, huh?",
+        "Allright!!  I'm ready now.\x07Hello Brrrgh!!!\x07Huh?  Where is everyone?\x07Okay, take this and round me up some fans, huh?",
         INCOMPLETE_PROGRESS: "I can't perform barefoot, can I?"
     },
     5282: {
         GREETING: '',
         QUEST:
-        "All right!  Now I'm in business.\x7If only they hadn't taken my platform shoes...\x7Those shoes probably ended up with a Big Cheese, if I had to guess.",
+        "All right!  Now I'm in business.\x07If only they hadn't taken my platform shoes...\x07Those shoes probably ended up with a Big Cheese, if I had to guess.",
         LEAVING: '',
         COMPLETE:
-        "Allright!!  I'm ready now.\x7Hello Brrrgh!!!\x7Huh?  Where is everyone?\x7Okay, take this and round me up some fans, huh?",
+        "Allright!!  I'm ready now.\x07Hello Brrrgh!!!\x07Huh?  Where is everyone?\x07Okay, take this and round me up some fans, huh?",
         INCOMPLETE_PROGRESS: "I can't perform barefoot, can I?"
     },
     5283: {
         GREETING: '',
         QUEST:
-        "All right!  Now I'm in business.\x7If only they hadn't taken my platform shoes...\x7Those shoes probably ended up with a Robber Baron, if I had to guess.",
+        "All right!  Now I'm in business.\x07If only they hadn't taken my platform shoes...\x07Those shoes probably ended up with a Robber Baron, if I had to guess.",
         LEAVING: '',
         COMPLETE:
-        "Allright!!  I'm ready now.\x7Hello Brrrgh!!!\x7Huh?  Where is everyone?\x7Okay, take this and round me up some fans, huh?",
+        "Allright!!  I'm ready now.\x07Hello Brrrgh!!!\x07Huh?  Where is everyone?\x07Okay, take this and round me up some fans, huh?",
         INCOMPLETE_PROGRESS: "I can't perform barefoot, can I?"
     },
     5284: {
         GREETING: '',
         QUEST:
-        "All right!  Now I'm in business.\x7If only they hadn't taken my platform shoes...\x7Those shoes probably ended up with a Big Wig, if I had to guess.",
+        "All right!  Now I'm in business.\x07If only they hadn't taken my platform shoes...\x07Those shoes probably ended up with a Big Wig, if I had to guess.",
         LEAVING: '',
         COMPLETE:
-        "Allright!!  I'm ready now.\x7Hello Brrrgh!!!\x7Huh?  Where is everyone?\x7Okay, take this and round me up some fans, huh?",
+        "Allright!!  I'm ready now.\x07Hello Brrrgh!!!\x07Huh?  Where is everyone?\x07Okay, take this and round me up some fans, huh?",
         INCOMPLETE_PROGRESS: "I can't perform barefoot, can I?"
     },
     5255: {
         QUEST:
-        'You look like you could use more Laff points.\x7Maybe _toNpcName_ could sort you out._where_'
+        'You look like you could use more Laff points.\x07Maybe _toNpcName_ could sort you out._where_'
     },
     5256: {
         GREETING:
@@ -2263,7 +2263,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "A deal's a deal.",
         QUEST:
-        "So you're looking for Laff points, huh?\x7Have I got a deal for you!\x7Simply take care of a few Bossbot Cogs for me...\x7And I'll make it worth your while."
+        "So you're looking for Laff points, huh?\x07Have I got a deal for you!\x07Simply take care of a few Bossbot Cogs for me...\x07And I'll make it worth your while."
     },
     5276: {
         GREETING:
@@ -2273,7 +2273,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "A deal's a deal.",
         QUEST:
-        "So you're looking for Laff points, huh?\x7Have I got a deal for you!\x7Simply take care of a few Lawbot Cogs for me...\x7And I'll make it worth your while."
+        "So you're looking for Laff points, huh?\x07Have I got a deal for you!\x07Simply take care of a few Lawbot Cogs for me...\x07And I'll make it worth your while."
     },
     5257: {
         GREETING:
@@ -2281,11 +2281,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         COMPLETE:
-        "Okay, but I'm certain I told you to round up some Lawbot Cogs.\x7Well, if you say so, but you owe me one.",
+        "Okay, but I'm certain I told you to round up some Lawbot Cogs.\x07Well, if you say so, but you owe me one.",
         INCOMPLETE_PROGRESS:
         "I don't think you're done yet.",
         QUEST:
-        "You say you're done?  Defeated all the Cogs?\x7You must have misunderstood, our deal was for Sellbot Cogs.\x7I'm sure I told you to defeat some Sellbot Cogs for me."
+        "You say you're done?  Defeated all the Cogs?\x07You must have misunderstood, our deal was for Sellbot Cogs.\x07I'm sure I told you to defeat some Sellbot Cogs for me."
     },
     5277: {
         GREETING:
@@ -2293,15 +2293,15 @@ QuestDialogDict = {
         LEAVING:
         '',
         COMPLETE:
-        "Okay, but I'm certain I told you to round up some Lawbot Cogs.\x7Well, if you say so, but you owe me one.",
+        "Okay, but I'm certain I told you to round up some Lawbot Cogs.\x07Well, if you say so, but you owe me one.",
         INCOMPLETE_PROGRESS:
         "I don't think you're done yet.",
         QUEST:
-        "You say you're done?  Defeated all the Cogs?\x7You must have misunderstood, our deal was for Cashbot Cogs.\x7I'm sure I told you to defeat some Cashbot Cogs for me."
+        "You say you're done?  Defeated all the Cogs?\x07You must have misunderstood, our deal was for Cashbot Cogs.\x07I'm sure I told you to defeat some Cashbot Cogs for me."
     },
     5301: {
         QUEST:
-        "I can't help you with Laff points, but maybe _toNpcName_ will cut you a deal.\x7He's a little on tempermental side though..._where_"
+        "I can't help you with Laff points, but maybe _toNpcName_ will cut you a deal.\x07He's a little on tempermental side though..._where_"
     },
     5302: {
         GREETING:
@@ -2309,16 +2309,16 @@ QuestDialogDict = {
         LEAVING:
         '',
         COMPLETE:
-        "I told you what?!?!\x7Thanks a bunch! Here's your Laff point!",
+        "I told you what?!?!\x07Thanks a bunch! Here's your Laff point!",
         INCOMPLETE_PROGRESS:
-        'Hi!\x7What are you doing in here again!',
+        'Hi!\x07What are you doing in here again!',
         QUEST:
-        'A Laff point? I dont think so!\x7Sure, but only if you clear out some of these pesky Lawbots first.'
+        'A Laff point? I dont think so!\x07Sure, but only if you clear out some of these pesky Lawbots first.'
     },
     5303: {
         QUEST:
         lTheBrrrgh +
-        " is teeming with very dangerous Cogs.\x7If I were you, I'd carry more gags around here.\x7I hear _toNpcName_ can make you a large bag if you are willing to do the legwork._where_"
+        " is teeming with very dangerous Cogs.\x07If I were you, I'd carry more gags around here.\x07I hear _toNpcName_ can make you a large bag if you are willing to do the legwork._where_"
     },
     5304: {
         GREETING:
@@ -2326,9 +2326,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
-        'There should be plenty of Lawbots out there.\x7So get to it!',
+        'There should be plenty of Lawbots out there.\x07So get to it!',
         QUEST:
-        "A bigger bag?\x7I could probably whip one up for ya.\x7I'll need some yarn though.\x7Some Lawbots made off with mine yesterday morning."
+        "A bigger bag?\x07I could probably whip one up for ya.\x07I'll need some yarn though.\x07Some Lawbots made off with mine yesterday morning."
     },
     5305: {
         GREETING:
@@ -2336,9 +2336,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         INCOMPLETE_PROGRESS:
-        "Go get some more cogs.\x7This color hasn't taken yet.",
+        "Go get some more cogs.\x07This color hasn't taken yet.",
         QUEST:
-        "That there's some fine yarn!\x7Not my first choice of color though.\x7Tell you what...\x7You go out there and beat up some of the tougher cogs...\x7And I'll get to work dyeing this yarn."
+        "That there's some fine yarn!\x07Not my first choice of color though.\x07Tell you what...\x07You go out there and beat up some of the tougher cogs...\x07And I'll get to work dyeing this yarn."
     },
     5306: {
         GREETING:
@@ -2348,7 +2348,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'They gotta be down there somewhere...',
         QUEST:
-        "Well, the yarn is all dyed. But we've got a small problem.\x7I can't find my knitting needles anywhere.\x7Last place I saw them was down at the pond."
+        "Well, the yarn is all dyed. But we've got a small problem.\x07I can't find my knitting needles anywhere.\x07Last place I saw them was down at the pond."
     },
     5307: {
         GREETING:
@@ -2358,9 +2358,9 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "Rome wasn't knit in a day!",
         QUEST:
-        "Those are my needles alright.\x7While I'm knitting, why don't you go clear some of them big buildings?",
+        "Those are my needles alright.\x07While I'm knitting, why don't you go clear some of them big buildings?",
         COMPLETE:
-        "Great work!\x7And speaking of great work...\x7Here's your new bag!"
+        "Great work!\x07And speaking of great work...\x07Here's your new bag!"
     },
     5308: {
         GREETING:
@@ -2368,7 +2368,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'I hear _toNpcName_ is having some legal troubles.\x7Can you stop by and check it out?_where_'
+        'I hear _toNpcName_ is having some legal troubles.\x07Can you stop by and check it out?_where_'
     },
     5309: {
         GREETING:
@@ -2378,7 +2378,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Please hurry! The street is crawling with them!',
         QUEST:
-        "The Lawbots have really taken over out there.\x7I'm afraid they are going to take me to court.\x7Do you think you could help get them off of this street?"
+        "The Lawbots have really taken over out there.\x07I'm afraid they are going to take me to court.\x07Do you think you could help get them off of this street?"
     },
     5310: {
         GREETING:
@@ -2388,7 +2388,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'I think I hear them coming for me...',
         QUEST:
-        "Thanks. I feel a little better now.\x7 But there is one more thing...\x7Could you drop by _toNpcName_'s and get me an alibi?_where_"
+        "Thanks. I feel a little better now.\x07 But there is one more thing...\x07Could you drop by _toNpcName_'s and get me an alibi?_where_"
     },
     5311: {
         GREETING:
@@ -2398,14 +2398,14 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "I can't help him if you can't find it!",
         QUEST:
-        "Alibi?! Why that's a great idea!\x7You'd better make it two!\x7I bet a Legal Eagle would have some..."
+        "Alibi?! Why that's a great idea!\x07You'd better make it two!\x07I bet a Legal Eagle would have some..."
     },
     5312: {
         GREETING: 'Finally!',
         LEAVING: '',
         INCOMPLETE_PROGRESS: '',
         COMPLETE:
-        "Whew! Am I ever relieved to have this.\x7Here's your reward...",
+        "Whew! Am I ever relieved to have this.\x07Here's your reward...",
         QUEST: "Super! You'd better run these back to _toNpcName_!"
     },
     6201: {
@@ -2418,15 +2418,15 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Oh, a customer! Great! What can I do for you?\x7What do you mean, what can you do for me? OH! You're not a customer.\x7I remember now. You're here to help with those dreadful Cogs.\x7Well I could certainly use the help even if you're not a customer.\x7If you clean up the streets a bit, I'll have a little something for you.",
+        "Oh, a customer! Great! What can I do for you?\x07What do you mean, what can you do for me? OH! You're not a customer.\x07I remember now. You're here to help with those dreadful Cogs.\x07Well I could certainly use the help even if you're not a customer.\x07If you clean up the streets a bit, I'll have a little something for you.",
         INCOMPLETE_PROGRESS:
         "If you don't want electricity, I can't help you until you defeat those Cogs.",
         COMPLETE:
-        "Good job on those Cogs, _avName_.\x7Now, are you sure I can't interest you in some electricity? Might come in handy....\x7No? OK, suit yourself.\x7Hunh? Oh yeah, I remember. Here ya go. This is sure to help with those nasty Cogs.\x7Keep up the good work!"
+        "Good job on those Cogs, _avName_.\x07Now, are you sure I can't interest you in some electricity? Might come in handy....\x07No? OK, suit yourself.\x07Hunh? Oh yeah, I remember. Here ya go. This is sure to help with those nasty Cogs.\x07Keep up the good work!"
     },
     6206: {
         QUEST:
-        "Well, _avName_, I don't have anything for you right now.\x7Wait! I think Susan Siesta was looking for help. Why don't you go see her?_where_"
+        "Well, _avName_, I don't have anything for you right now.\x07Wait! I think Susan Siesta was looking for help. Why don't you go see her?_where_"
     },
     6207: {
         GREETING:
@@ -2434,28 +2434,28 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "I'll never get rich with those darn Cogs driving away all my business!\x7You've got to help me, _avName_.\x7Clear out a few Cog buildings for the sake of the neighborhood and I'll add to your riches.",
+        "I'll never get rich with those darn Cogs driving away all my business!\x07You've got to help me, _avName_.\x07Clear out a few Cog buildings for the sake of the neighborhood and I'll add to your riches.",
         INCOMPLETE_PROGRESS:
         "Poor me! Can't you get rid of those buildings?",
         COMPLETE:
-        "Now I'll be in the money! I can see it now!\x7I'll spend all my time fishing. Now, let me enrich your life a little.\x7There you go!"
+        "Now I'll be in the money! I can see it now!\x07I'll spend all my time fishing. Now, let me enrich your life a little.\x07There you go!"
     },
     6211: {
         QUEST:
-        'Hey _avName_! I heard Lawful Linda was looking for you.\x7You should stop by and pay her a visit._where_'
+        'Hey _avName_! I heard Lawful Linda was looking for you.\x07You should stop by and pay her a visit._where_'
     },
     6212: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Hi there! Wow, am I glad to see you!\x7I've been working on this answering machine in my spare time but I'm short a couple of parts.\x7I need three more rods and the ones from Bean Counters seem to work pretty well.\x7Could you see if you could find some rods for me?",
+        "Hi there! Wow, am I glad to see you!\x07I've been working on this answering machine in my spare time but I'm short a couple of parts.\x07I need three more rods and the ones from Bean Counters seem to work pretty well.\x07Could you see if you could find some rods for me?",
         INCOMPLETE_PROGRESS: 'Still trying to find those rods?'
     },
     6213: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Oh, those will do nicely.\x7That's funny. I was sure I had a spare drive belt around here but I can't find it.\x7Could you please get one from a Money Bags for me? Thanks!",
+        "Oh, those will do nicely.\x07That's funny. I was sure I had a spare drive belt around here but I can't find it.\x07Could you please get one from a Money Bags for me? Thanks!",
         INCOMPLETE: "Well, I can't help you until I get that drive belt."
     },
     6214: {
@@ -2464,11 +2464,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Ah, that's it. Now it should run like a charm.\x7Where'd my pliers go? I can't tighten this up without the pliers.\x7Maybe pincers from a Penny Pincher would do the job?\x7If you'd go find one, I could give you a little something to help you with those Cogs.",
+        "Ah, that's it. Now it should run like a charm.\x07Where'd my pliers go? I can't tighten this up without the pliers.\x07Maybe pincers from a Penny Pincher would do the job?\x07If you'd go find one, I could give you a little something to help you with those Cogs.",
         INCOMPLETE_PROGRESS:
         'No pincers yet, hunh? Keep looking.',
         COMPLETE:
-        "Great! Now I'll just tighten this up.\x7It seems to be working now. Back in business!\x7Well, except that we don't have a phone. But I'm glad for the help, anyway.\x7I think this'll help you out with those Cogs. Good luck!"
+        "Great! Now I'll just tighten this up.\x07It seems to be working now. Back in business!\x07Well, except that we don't have a phone. But I'm glad for the help, anyway.\x07I think this'll help you out with those Cogs. Good luck!"
     },
     6221: {
         QUEST:
@@ -2480,15 +2480,15 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Yo! Youse came to da right place. I ain't too happy.\x7Yeah, I was lookin for some help wid dose Cogs. Dey always come and boss me around.\x7If you can retire some of dem Bossbots, I'll make it worth your while.",
+        "Yo! Youse came to da right place. I ain't too happy.\x07Yeah, I was lookin for some help wid dose Cogs. Dey always come and boss me around.\x07If you can retire some of dem Bossbots, I'll make it worth your while.",
         INCOMPLETE_PROGRESS:
-        "Hey, _avName_, what's up wid youse?\x7You gotta keep after dem Bossbots. We got a deal, remember?\x7Rocco always keeps his word.",
+        "Hey, _avName_, what's up wid youse?\x07You gotta keep after dem Bossbots. We got a deal, remember?\x07Rocco always keeps his word.",
         COMPLETE:
-        "Yo, _avName_! Youse ok in my book.\x7Dem Bossbots ain't so bossy now, is they?\x7Here ya go! A nice big boost. Now, you stay outta trouble, ya hear!"
+        "Yo, _avName_! Youse ok in my book.\x07Dem Bossbots ain't so bossy now, is they?\x07Here ya go! A nice big boost. Now, you stay outta trouble, ya hear!"
     },
     6231: {
         QUEST:
-        'Nat over on Pajama Place heard rumors about a Cashbot Headquarters.\x7Head over there and see if you can help him out._where_'
+        'Nat over on Pajama Place heard rumors about a Cashbot Headquarters.\x07Head over there and see if you can help him out._where_'
     },
     6232: {
         GREETING:
@@ -2496,9 +2496,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "I got a nibble about some strange goings on.\x7Well, maybe it's the fleas but something is going on anyway.\x7All these Cashbots!\x7I think they've opened another headquarters right off Pajama Place.\x7P.J. knows his way around.\x7Go see _toNpcName_ _where_ Ask him if he's heard anything.",
+        "I got a nibble about some strange goings on.\x07Well, maybe it's the fleas but something is going on anyway.\x07All these Cashbots!\x07I think they've opened another headquarters right off Pajama Place.\x07P.J. knows his way around.\x07Go see _toNpcName_ _where_ Ask him if he's heard anything.",
         INCOMPLETE_PROGRESS:
-        "You haven't seen P.J. yet? What's keeping you?\x7Oh, these darn fleas!"
+        "You haven't seen P.J. yet? What's keeping you?\x07Oh, these darn fleas!"
     },
     6233: {
         GREETING:
@@ -2506,7 +2506,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Hey there _avName_, where are you headed?\x7Cashbot Headquarters?? I haven't seen anything.\x7Could you go to the end of Pajama Place and see if it's true?\x7Find some Cashbot Cogs in their headquarters, defeat a few of them, and come tell me about it.",
+        "Hey there _avName_, where are you headed?\x07Cashbot Headquarters?? I haven't seen anything.\x07Could you go to the end of Pajama Place and see if it's true?\x07Find some Cashbot Cogs in their headquarters, defeat a few of them, and come tell me about it.",
         INCOMPLETE_PROGRESS:
         "Found the HQ yet? You'll need to defeat some Cashbots there to scope it out."
     },
@@ -2514,7 +2514,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "What?! There really IS a Cashbot HQ?\x7You better go tell Nat right away!\x7Who would have guessed there'd be a Cog HQ right down the street from him?",
+        "What?! There really IS a Cashbot HQ?\x07You better go tell Nat right away!\x07Who would have guessed there'd be a Cog HQ right down the street from him?",
         INCOMPLETE_PROGRESS:
         "What did Nat have to say? You haven't seen him yet?"
     },
@@ -2524,11 +2524,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "So, I'm itching to hear what P.J. had to say.\x7Hmm...we need more information about this Cog business but I've got to get rid of these fleas!\x7I know! YOU can go find out more!\x7Go defeat Cashbots at the HQ until you find some plans then come right back!",
+        "So, I'm itching to hear what P.J. had to say.\x07Hmm...we need more information about this Cog business but I've got to get rid of these fleas!\x07I know! YOU can go find out more!\x07Go defeat Cashbots at the HQ until you find some plans then come right back!",
         INCOMPLETE_PROGRESS:
-        "No plans yet? Keep searching those Cogs!\x7They're bound to have some plans!",
+        "No plans yet? Keep searching those Cogs!\x07They're bound to have some plans!",
         COMPLETE:
-        "You got the plans?\x7Great! Let's see what they say.\x7I see... the Cashbots built a Mint to make Cogbucks.\x7It must be FULL of Cashbots. We should find out more about this.\x7Maybe if you had a disguise. Hmmm...wait! I think I've got part of a Cog suit here somewhere....\x7Here it is! Why don't you take this for your trouble? Thanks again for your help!"
+        "You got the plans?\x07Great! Let's see what they say.\x07I see... the Cashbots built a Mint to make Cogbucks.\x07It must be FULL of Cashbots. We should find out more about this.\x07Maybe if you had a disguise. Hmmm...wait! I think I've got part of a Cog suit here somewhere....\x07Here it is! Why don't you take this for your trouble? Thanks again for your help!"
     },
     6241: {
         QUEST:
@@ -2540,11 +2540,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "_avName_, I'm counting on you to help me!\x7You see, these Cogs are making so much noise that I simply can't concentrate.\x7I keep losing count of my sheep!\x7If you'll cut down on the noise, I'll help you out too! You can count on it!\x7Now, where was I? Right, one hundred thirty-six, one hundred thirty-seven....",
+        "_avName_, I'm counting on you to help me!\x07You see, these Cogs are making so much noise that I simply can't concentrate.\x07I keep losing count of my sheep!\x07If you'll cut down on the noise, I'll help you out too! You can count on it!\x07Now, where was I? Right, one hundred thirty-six, one hundred thirty-seven....",
         INCOMPLETE_PROGRESS:
-        "Four hundred forty-two...four hundred forty-three...\x7What? You're back already? But it's still so noisy!\x7Oh no, I've lost count again.\x7 One...two...three....",
+        "Four hundred forty-two...four hundred forty-three...\x07What? You're back already? But it's still so noisy!\x07Oh no, I've lost count again.\x07 One...two...three....",
         COMPLETE:
-        "Five hundred ninety-three...five hundred ninety-four...\x7Hello? Oh, I knew I could count on you! It's much quieter now.\x7Here you go, for all those Number Crunchers.\x7Number? Now I need to start counting all over again! One...two...."
+        "Five hundred ninety-three...five hundred ninety-four...\x07Hello? Oh, I knew I could count on you! It's much quieter now.\x07Here you go, for all those Number Crunchers.\x07Number? Now I need to start counting all over again! One...two...."
     },
     6251: {
         QUEST:
@@ -2556,7 +2556,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Oh, hi _avName_. You're here to help with my deliveries?\x7That's terrific! This broken zipper makes it tough to zip around.\x7Let me see...ok, this should be easy. Cowboy George ordered a zither last week.\x7Could you please bring it over to him? _where_",
+        "Oh, hi _avName_. You're here to help with my deliveries?\x07That's terrific! This broken zipper makes it tough to zip around.\x07Let me see...ok, this should be easy. Cowboy George ordered a zither last week.\x07Could you please bring it over to him? _where_",
         INCOMPLETE_PROGRESS:
         'Oh, hi! Did you forget something? Cowboy George is waiting for that zither.'
     },
@@ -2566,7 +2566,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "My zither! At last! Gosh, I can't wait to play it.\x7Go tell Zari that I said thanks, would you?",
+        "My zither! At last! Gosh, I can't wait to play it.\x07Go tell Zari that I said thanks, would you?",
         INCOMPLETE_PROGRESS:
         "Thanks again for the zither. Doesn't Zari have more deliveries for you to do?"
     },
@@ -2574,7 +2574,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "That was fast. What's next on my list?\x7Right. Master Mike ordered a Zamboni. That zany guy.\x7Could you bring this to him, please?_where_",
+        "That was fast. What's next on my list?\x07Right. Master Mike ordered a Zamboni. That zany guy.\x07Could you bring this to him, please?_where_",
         INCOMPLETE_PROGRESS: 'That Zamboni needs to go to Master Mike._where_'
     },
     6255: {
@@ -2583,7 +2583,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "All-right! The Zamboni I ordered!\x7Now, if only there weren't so many Cogs around, I might have some time to use it.\x7Be a sport and take care of a few of those Cashbots for me, would you?",
+        "All-right! The Zamboni I ordered!\x07Now, if only there weren't so many Cogs around, I might have some time to use it.\x07Be a sport and take care of a few of those Cashbots for me, would you?",
         INCOMPLETE_PROGRESS:
         'Those Cashbots are tough, hunh? They make it hard to test my Zamboni.'
     },
@@ -2593,7 +2593,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Excellent! Now I can go try out my Zamboni.\x7Tell Zari that I'll be in next week to place my next order, please.",
+        "Excellent! Now I can go try out my Zamboni.\x07Tell Zari that I'll be in next week to place my next order, please.",
         INCOMPLETE_PROGRESS:
         "That's all I need for now. Isn't Zari waiting for you?"
     },
@@ -2601,14 +2601,14 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "So, Master Mike was happy with his Zamboni? Great.\x7Who's next? Oh, Zen Glen ordered a zebra-striped zabuton.\x7Here it is! Could you zoom over to his place, please?_where_",
+        "So, Master Mike was happy with his Zamboni? Great.\x07Who's next? Oh, Zen Glen ordered a zebra-striped zabuton.\x07Here it is! Could you zoom over to his place, please?_where_",
         INCOMPLETE_PROGRESS: 'I think Zen Glen needs that zabuton to meditate.'
     },
     6258: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Ah, my zabuton at last. Now I can meditate.\x7Who could focus with that racket going on? All those Cogs!\x7Since you're already here, maybe you could take care of some of these Cogs?\x7Then I could use my zabuton in peace.",
+        "Ah, my zabuton at last. Now I can meditate.\x07Who could focus with that racket going on? All those Cogs!\x07Since you're already here, maybe you could take care of some of these Cogs?\x07Then I could use my zabuton in peace.",
         INCOMPLETE_PROGRESS: 'Still so noisy with those Cogs! Who could focus?'
     },
     6259: {
@@ -2617,7 +2617,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Peace and quiet at last. Thanks, _avName_.\x7Please tell Zari how happy I am. OM....',
+        'Peace and quiet at last. Thanks, _avName_.\x07Please tell Zari how happy I am. OM....',
         INCOMPLETE_PROGRESS:
         'Zari called looking for you. You should go see what she needs.'
     },
@@ -2627,7 +2627,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "I'm glad to hear that Zen Glen is happy with his zebra zabuton.\x7Oh, these zinnias just came in for Rose Petals.\x7Since you seem to have some zeal for deliveries, perhaps you could take them over to her?_where_",
+        "I'm glad to hear that Zen Glen is happy with his zebra zabuton.\x07Oh, these zinnias just came in for Rose Petals.\x07Since you seem to have some zeal for deliveries, perhaps you could take them over to her?_where_",
         INCOMPLETE_PROGRESS:
         "Those zinnias will wilt if you don't deliver them soon."
     },
@@ -2635,7 +2635,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'What lovely zinnias! Zari sure does deliver.\x7Oh, well, I guess YOU deliver, _avName_. Please thank Zari for me!',
+        'What lovely zinnias! Zari sure does deliver.\x07Oh, well, I guess YOU deliver, _avName_. Please thank Zari for me!',
         INCOMPLETE_PROGRESS: "Don't forget to thank Zari for the zinnias!"
     },
     6262: {
@@ -2644,7 +2644,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Welcome back, _avName_. You're pretty zippy.\x7Let's see...what's next on my list to deliver? Zydeco records for Wyda Wake._where_",
+        "Welcome back, _avName_. You're pretty zippy.\x07Let's see...what's next on my list to deliver? Zydeco records for Wyda Wake._where_",
         INCOMPLETE_PROGRESS:
         "I'm sure Wyda Wake is waiting for those Zydeco records."
     },
@@ -2652,7 +2652,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Zydeco records? I don't remember asking for Zydeco records.\x7Oh, I bet Lullaby Lou ordered them._where_",
+        "Zydeco records? I don't remember asking for Zydeco records.\x07Oh, I bet Lullaby Lou ordered them._where_",
         INCOMPLETE_PROGRESS:
         'No, those Zydeco records are for Lullaby Lou._where_'
     },
@@ -2662,7 +2662,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "At last, my Zydeco records! I thought Zari had forgotten.\x7Could you please bring this zucchini to her? She'll find someone who wants one. Thanks!",
+        "At last, my Zydeco records! I thought Zari had forgotten.\x07Could you please bring this zucchini to her? She'll find someone who wants one. Thanks!",
         INCOMPLETE_PROGRESS:
         "Oh, I've got plenty of zucchini already. Take that one to Zari."
     },
@@ -2672,9 +2672,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Zucchini? Hmm. Well, someone will want it, I'm sure.\x7Ok, we're nearly done with my list. One more delivery to make.\x7Babyface MacDougal ordered a zoot suit._where_",
+        "Zucchini? Hmm. Well, someone will want it, I'm sure.\x07Ok, we're nearly done with my list. One more delivery to make.\x07Babyface MacDougal ordered a zoot suit._where_",
         INCOMPLETE_PROGRESS:
-        "If you don't deliver that zoot suit to Babyface MacDougal,\x7 it'll get all wrinkled."
+        "If you don't deliver that zoot suit to Babyface MacDougal,\x07 it'll get all wrinkled."
     },
     6266: {
         GREETING:
@@ -2682,11 +2682,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Once upon a time...oh! You're not here for a story, are you?\x7You're delivering my zoot suit? Great! Wow, that's something.\x7Hey, could you give Zari a message for me? I'll be needing zircon cufflinks to go with the suit. Thanks!",
+        "Once upon a time...oh! You're not here for a story, are you?\x07You're delivering my zoot suit? Great! Wow, that's something.\x07Hey, could you give Zari a message for me? I'll be needing zircon cufflinks to go with the suit. Thanks!",
         INCOMPLETE_PROGRESS:
         'Did you give Zari my message?',
         COMPLETE:
-        "Zircon cufflinks, hunh? Well, I'll see what I can do for him.\x7Anyway, you've been the very zenith of helpfulness and I can't let you leave with zilch.\x7Here's a BIG boost to help you zap those Cogs!"
+        "Zircon cufflinks, hunh? Well, I'll see what I can do for him.\x07Anyway, you've been the very zenith of helpfulness and I can't let you leave with zilch.\x07Here's a BIG boost to help you zap those Cogs!"
     },
     6271: {
         QUEST:
@@ -2698,11 +2698,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "What? Huh? Oh, I must've fallen asleep.\x7You know, those Cogs buildings are full of machinery that makes me really sleepy.\x7I listen to them humming all day and...\x7Huh? Oh, yeah, right. If you could get rid of some of those Cog buildings, I could stay awake.",
+        "What? Huh? Oh, I must've fallen asleep.\x07You know, those Cogs buildings are full of machinery that makes me really sleepy.\x07I listen to them humming all day and...\x07Huh? Oh, yeah, right. If you could get rid of some of those Cog buildings, I could stay awake.",
         INCOMPLETE_PROGRESS:
-        "Zzzzz...huh? Oh, it's you, _avName_.\x7Back already? I was just taking a little nap.\x7Come back when you're done with those buildings.",
+        "Zzzzz...huh? Oh, it's you, _avName_.\x07Back already? I was just taking a little nap.\x07Come back when you're done with those buildings.",
         COMPLETE:
-        "What? I dropped off to sleep for a minute there.\x7Now that those Cog buildings are gone I can finally relax.\x7Thanks for your help, _avName_.\x7See you later! I think maybe I'll take a little nap."
+        "What? I dropped off to sleep for a minute there.\x07Now that those Cog buildings are gone I can finally relax.\x07Thanks for your help, _avName_.\x07See you later! I think maybe I'll take a little nap."
     },
     6281: {
         QUEST:
@@ -2714,11 +2714,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "What did you say? No, I don't have a fob for you.\x7Oh, a job! Why didn't you say so? You'll need to speak up.\x7Those Cogs make it hard to hibernate. If you'll help make Dreamland quieter,\x7I'll give you a little something.",
+        "What did you say? No, I don't have a fob for you.\x07Oh, a job! Why didn't you say so? You'll need to speak up.\x07Those Cogs make it hard to hibernate. If you'll help make Dreamland quieter,\x07I'll give you a little something.",
         INCOMPLETE_PROGRESS:
-        "You beat the bogs? What bogs?\x7Oh, the Cogs! Why didn't you say so?\x7Hmm, it's still pretty loud. How 'bout you defeat a few more?",
+        "You beat the bogs? What bogs?\x07Oh, the Cogs! Why didn't you say so?\x07Hmm, it's still pretty loud. How 'bout you defeat a few more?",
         COMPLETE:
-        "You had fun? Huh? Oh!\x7You're done! Great. Really nice of you to help out this way.\x7I found this in the back room but I don't have any use for it.\x7Maybe you'll find something to do with it. So long, _avName_!"
+        "You had fun? Huh? Oh!\x07You're done! Great. Really nice of you to help out this way.\x07I found this in the back room but I don't have any use for it.\x07Maybe you'll find something to do with it. So long, _avName_!"
     },
     6291: {
         QUEST:
@@ -2726,11 +2726,11 @@ QuestDialogDict = {
     },
     6292: {
         QUEST:
-        'Oh those darn Cashbot Cogs! They stole my reading lamps!\x7I need them back right away. Can you go look for them?\x7If you can get my reading lamps, I might be able to help you get into see the C.F.O.\x7Hurry!',
+        'Oh those darn Cashbot Cogs! They stole my reading lamps!\x07I need them back right away. Can you go look for them?\x07If you can get my reading lamps, I might be able to help you get into see the C.F.O.\x07Hurry!',
         INCOMPLETE_PROGRESS:
         'I need those lamps back. Keep looking for them!',
         COMPLETE:
-        "You're back! And you got my lamps!\x7I can't thank you enough but I can give you this."
+        "You're back! And you got my lamps!\x07I can't thank you enough but I can give you this."
     },
     7201: {
         QUEST:
@@ -2740,7 +2740,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Oh! I'm so glad to see you, _avName_. I could use some help!\x7Those darn Cogs have kept the delivery folks away and I have no beds in stock.\x7Could you go see Hardy O'Toole and bring me back a bed?_where_ ",
+        "Oh! I'm so glad to see you, _avName_. I could use some help!\x07Those darn Cogs have kept the delivery folks away and I have no beds in stock.\x07Could you go see Hardy O'Toole and bring me back a bed?_where_ ",
         INCOMPLETE_PROGRESS:
         "Did Hardy have any beds? I was sure he'd have one.",
         COMPLETE: ''
@@ -2749,7 +2749,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'A bed? Sure, here\'s one all ready to go.\x7Just bring it over to her for me, would you? Get it?\x7"WOOD" you? Hee-hee!\x7Pretty funny. No? Well, take it over there anyway, please?',
+        'A bed? Sure, here\'s one all ready to go.\x07Just bring it over to her for me, would you? Get it?\x07"WOOD" you? Hee-hee!\x07Pretty funny. No? Well, take it over there anyway, please?',
         INCOMPLETE_PROGRESS: 'Did Nina like the bed?',
         COMPLETE: ''
     },
@@ -2757,7 +2757,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "This bed isn't right. It's much too plain.\x7Go see if he has anything fancier, would you?\x7I'm sure it won't take but a minute.",
+        "This bed isn't right. It's much too plain.\x07Go see if he has anything fancier, would you?\x07I'm sure it won't take but a minute.",
         INCOMPLETE_PROGRESS: "I'm certain that Hardy has a fancier bed.",
         COMPLETE: ''
     },
@@ -2765,9 +2765,9 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Didn't hit the nail on the head with that bed, huh? I've got one here that will do the job.\x7One small problem though - it needs to be assembled first.\x7While I hammer out this problem, could you get rid of some of those Cogs that are outside?\x7Those awful Cogs throw a wrench in the works.\x7Come back when you're done and the bed will be ready.",
+        "Didn't hit the nail on the head with that bed, huh? I've got one here that will do the job.\x07One small problem though - it needs to be assembled first.\x07While I hammer out this problem, could you get rid of some of those Cogs that are outside?\x07Those awful Cogs throw a wrench in the works.\x07Come back when you're done and the bed will be ready.",
         INCOMPLETE_PROGRESS:
-        "Not quite done with assembling the bed.\x7When you're done with the Cogs, it'll be ready.",
+        "Not quite done with assembling the bed.\x07When you're done with the Cogs, it'll be ready.",
         COMPLETE: ''
     },
     7206: {
@@ -2776,11 +2776,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Hey there _avName_!\x7You did a bang-up job on those Cogs.\x7The bed is all ready. Could you please deliver it for me?\x7Now that those Cogs are gone, business will be brisk!',
+        'Hey there _avName_!\x07You did a bang-up job on those Cogs.\x07The bed is all ready. Could you please deliver it for me?\x07Now that those Cogs are gone, business will be brisk!',
         INCOMPLETE_PROGRESS:
         "I think Nina's waiting for that bed delivery.",
         COMPLETE:
-        'What a lovely bed!\x7Now my customers will be happy. Thanks, _avName_.\x7Say, you might be able to use this. Someone left it here.'
+        'What a lovely bed!\x07Now my customers will be happy. Thanks, _avName_.\x07Say, you might be able to use this. Someone left it here.'
     },
     7209: {
         QUEST: 'Go see Honey Moon. She needs some help._where_'
@@ -2789,7 +2789,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Oh! I'm so glad to see you, _avName_. I really need some help!\x7I haven't been able to get my beauty sleep for ages. You see, those Cogs stole my bedspread.\x7Say, could you please run over and see if Ed's got anything in blue?_where_",
+        "Oh! I'm so glad to see you, _avName_. I really need some help!\x07I haven't been able to get my beauty sleep for ages. You see, those Cogs stole my bedspread.\x07Say, could you please run over and see if Ed's got anything in blue?_where_",
         INCOMPLETE_PROGRESS: 'What did Ed have to say about a blue bedspread?',
         COMPLETE: ''
     },
@@ -2797,7 +2797,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "So, Honey wants a bedspread, huh?\x7What color? BLUE?!\x7Well, I'd have to make that for her special. Everything I've got is red.\x7Tell ya what...if you'll go deal with some of those Cogs out there, I'll make a special blue bedspread just for her.\x7Blue bedspreads...what'll it be next?",
+        "So, Honey wants a bedspread, huh?\x07What color? BLUE?!\x07Well, I'd have to make that for her special. Everything I've got is red.\x07Tell ya what...if you'll go deal with some of those Cogs out there, I'll make a special blue bedspread just for her.\x07Blue bedspreads...what'll it be next?",
         INCOMPLETE_PROGRESS:
         'Still working on this blue bedspread, _avName_. Keep at those Cogs!',
         COMPLETE: ''
@@ -2806,7 +2806,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Nice to see you again. I've got something for you!\x7Here's the bedspread and it's blue. She'll love it.",
+        "Nice to see you again. I've got something for you!\x07Here's the bedspread and it's blue. She'll love it.",
         INCOMPLETE_PROGRESS: 'Did Honey like the bedspread?',
         COMPLETE: ''
     },
@@ -2814,7 +2814,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "My bedspread? No, that's not right.\x7It's PLAID! How can anyone sleep with such a LOUD pattern?\x7You'll just have to take it back and get a different one.\x7I'm sure he'll have others.",
+        "My bedspread? No, that's not right.\x07It's PLAID! How can anyone sleep with such a LOUD pattern?\x07You'll just have to take it back and get a different one.\x07I'm sure he'll have others.",
         INCOMPLETE_PROGRESS:
         'I simply will not accept a plaid bedspread. See what Ed can do about it.',
         COMPLETE: ''
@@ -2823,7 +2823,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "What? She doesn't like PLAID?\x7Hmm...let me see what we've got here.\x7This will take a while. Why don't you go take care of a few Cogs while I try to find something else?\x7I'll have something by the time you get back here.",
+        "What? She doesn't like PLAID?\x07Hmm...let me see what we've got here.\x07This will take a while. Why don't you go take care of a few Cogs while I try to find something else?\x07I'll have something by the time you get back here.",
         INCOMPLETE_PROGRESS:
         "I'm still looking for another bedspread. How's it going with the Cogs?",
         COMPLETE: ''
@@ -2834,11 +2834,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Hey, good job on those Cogs!\x7Here you go, it's blue and it's not plaid.\x7Sure hope she likes paisley.\x7Bring the bedspread back to Honey.",
+        "Hey, good job on those Cogs!\x07Here you go, it's blue and it's not plaid.\x07Sure hope she likes paisley.\x07Bring the bedspread back to Honey.",
         INCOMPLETE_PROGRESS:
-        "That's all I've got for you right now.\x7Please bring that bedspread to Honey.",
+        "That's all I've got for you right now.\x07Please bring that bedspread to Honey.",
         COMPLETE:
-        "Oh! That's lovely! Paisley suits me quite well.\x7Time for my beauty sleep, then! So long, _avName_.\x7What? You're still here? Can't you see I'm trying to sleep?\x7Here, take this and let me rest. I must look a fright!"
+        "Oh! That's lovely! Paisley suits me quite well.\x07Time for my beauty sleep, then! So long, _avName_.\x07What? You're still here? Can't you see I'm trying to sleep?\x07Here, take this and let me rest. I must look a fright!"
     },
     7218: {
         QUEST: 'Dreamy Daphne could use a hand._where_'
@@ -2847,7 +2847,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Oh, _avName_, I'm glad to see you! Those Cogs took my pillows.\x7Could you go see if Tex has some pillows?_where_\x7I'm sure he can help.",
+        "Oh, _avName_, I'm glad to see you! Those Cogs took my pillows.\x07Could you go see if Tex has some pillows?_where_\x07I'm sure he can help.",
         INCOMPLETE_PROGRESS: 'Does Tex have any pillows for me? ',
         COMPLETE: ''
     },
@@ -2855,7 +2855,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Howdy! Daphne needs some pillows, huh? Well, you came to the right place, pardner!\x7More pillows in here than there's spines on a cactus.\x7Here you go, _avName_. Take these back over to Daphne with my compliments.\x7Always glad to help a gal out.",
+        "Howdy! Daphne needs some pillows, huh? Well, you came to the right place, pardner!\x07More pillows in here than there's spines on a cactus.\x07Here you go, _avName_. Take these back over to Daphne with my compliments.\x07Always glad to help a gal out.",
         INCOMPLETE_PROGRESS:
         'Were those pillows soft enough for the little lady?',
         COMPLETE: ''
@@ -2864,7 +2864,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "You got the pillows! Great!\x7Hey, wait a second! These pillows are awfully soft.\x7Much too soft for me. I need harder pillows.\x7Take these back to Tex and see what else he's got. Thanks.",
+        "You got the pillows! Great!\x07Hey, wait a second! These pillows are awfully soft.\x07Much too soft for me. I need harder pillows.\x07Take these back to Tex and see what else he's got. Thanks.",
         INCOMPLETE_PROGRESS: 'Nope! Too soft. Ask Tex for different pillows.',
         COMPLETE: ''
     },
@@ -2872,9 +2872,9 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Too soft, huh? Well, let me see what I've got....\x7Hmm...seems I had me a whole passel of hard pillows. Where'd they get to?\x7Oh! I remember. I was fixing to send them back so they're in storage.\x7How 'bout you clean up some of those Cog buildings out there while I get 'em out of storage, pardner?",
+        "Too soft, huh? Well, let me see what I've got....\x07Hmm...seems I had me a whole passel of hard pillows. Where'd they get to?\x07Oh! I remember. I was fixing to send them back so they're in storage.\x07How 'bout you clean up some of those Cog buildings out there while I get 'em out of storage, pardner?",
         INCOMPLETE_PROGRESS:
-        "Cog buildings are hard. But these pillows aren't.\x7I'll keep looking.",
+        "Cog buildings are hard. But these pillows aren't.\x07I'll keep looking.",
         COMPLETE: ''
     },
     7223: {
@@ -2883,11 +2883,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Back already? Well, that's jess fine. See, I found those pillows Daphne wanted.\x7Now, you jess take these over to her. They're hard enough to break a tooth on!",
+        "Back already? Well, that's jess fine. See, I found those pillows Daphne wanted.\x07Now, you jess take these over to her. They're hard enough to break a tooth on!",
         INCOMPLETE_PROGRESS:
         "Yeah, those pillows are mighty hard. I hope Daphne fancies 'em.",
         COMPLETE:
-        'I knew Tex would have some harder pillows.\x7Oh yes, those are perfect. Nice and hard.\x7Would you have a use for this piece of a Cog suit? Might as well take it with you.'
+        'I knew Tex would have some harder pillows.\x07Oh yes, those are perfect. Nice and hard.\x07Would you have a use for this piece of a Cog suit? Might as well take it with you.'
     },
     7226: {
         QUEST: "Drop by to see Sandy Sandman. She's lost her pajamas._where_"
@@ -2896,7 +2896,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "I have no pajamas! They're missing!\x7What will I do? Oh! I know!\x7Go see Big Mama. She'll have pajamas for me._where_",
+        "I have no pajamas! They're missing!\x07What will I do? Oh! I know!\x07Go see Big Mama. She'll have pajamas for me._where_",
         INCOMPLETE_PROGRESS: 'Does Big Mama have pajamas for me?',
         COMPLETE: ''
     },
@@ -2904,7 +2904,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Hey there, little toon! Big Mama's got the best pajamas from the Bahamas.\x7Oh, something for Sandy Sandman, huh? Well, let me see what I've got.\x7Here's a little something. Now she can sleep in style!\x7Would you run these back over to her for me? I can't leave the shop just now.\x7Thanks, _avName_. See you around!",
+        "Hey there, little toon! Big Mama's got the best pajamas from the Bahamas.\x07Oh, something for Sandy Sandman, huh? Well, let me see what I've got.\x07Here's a little something. Now she can sleep in style!\x07Would you run these back over to her for me? I can't leave the shop just now.\x07Thanks, _avName_. See you around!",
         INCOMPLETE_PROGRESS: 'You need to take those pajamas to Sandy._where_',
         COMPLETE: ''
     },
@@ -2912,7 +2912,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Big Mama sent these for me? Oh...\x7Doesn't she have any pajamas with feet on them?\x7I always wear pajamas with feet. Doesn't everybody?\x7Take these back and ask her to find some with feet.",
+        "Big Mama sent these for me? Oh...\x07Doesn't she have any pajamas with feet on them?\x07I always wear pajamas with feet. Doesn't everybody?\x07Take these back and ask her to find some with feet.",
         INCOMPLETE_PROGRESS:
         'My pajamas must have feet. See what Big Mama can do.',
         COMPLETE: ''
@@ -2921,7 +2921,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Feet? Let me think....\x7Wait! I've got just the thing!\x7Ta-dah! Pajamas with feet. Nice blue pajamas with feet. Best ones on any island.\x7Please take them back to her, would you? Thanks!",
+        "Feet? Let me think....\x07Wait! I've got just the thing!\x07Ta-dah! Pajamas with feet. Nice blue pajamas with feet. Best ones on any island.\x07Please take them back to her, would you? Thanks!",
         INCOMPLETE_PROGRESS: 'Did Sandy like the blue footie pajamas?',
         COMPLETE: ''
     },
@@ -2929,7 +2929,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Well, these DO have feet, but I can't wear blue pajamas!\x7Ask Big Mama if she has a different color.",
+        "Well, these DO have feet, but I can't wear blue pajamas!\x07Ask Big Mama if she has a different color.",
         INCOMPLETE_PROGRESS:
         "I'm sure Big Mama has footie pajamas in a different color.",
         COMPLETE: ''
@@ -2938,7 +2938,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "That's too bad. These are the only pajamas with feet I have.\x7Oh, I've got an idea. Go ask Cat. She may have some pajamas with feet._where_",
+        "That's too bad. These are the only pajamas with feet I have.\x07Oh, I've got an idea. Go ask Cat. She may have some pajamas with feet._where_",
         INCOMPLETE_PROGRESS:
         "Nope, those are all the pajamas I've got. Go see what Cat has._where_",
         COMPLETE: ''
@@ -2947,16 +2947,16 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Pajamas with feet? Sure thing.\x7What do you mean, these are blue? She doesn't want blue?\x7Oh, that's a little trickier. Here, try these.\x7They're not blue and they DO have feet.",
+        "Pajamas with feet? Sure thing.\x07What do you mean, these are blue? She doesn't want blue?\x07Oh, that's a little trickier. Here, try these.\x07They're not blue and they DO have feet.",
         INCOMPLETE_PROGRESS:
-        "I just love puce, don't you?\x7I hope Sandy likes them....",
+        "I just love puce, don't you?\x07I hope Sandy likes them....",
         COMPLETE: ''
     },
     7234: {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "No, these aren't blue but no one with my complexion could possibly wear puce.\x7Absolutely not. Back they go and you with them! See what else Cat has.",
+        "No, these aren't blue but no one with my complexion could possibly wear puce.\x07Absolutely not. Back they go and you with them! See what else Cat has.",
         INCOMPLETE_PROGRESS: 'Cat must have more pajamas. No puce for me!',
         COMPLETE: ''
     },
@@ -2964,7 +2964,7 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        "Not puce either. Hmm....\x7By my whiskers, I know I have some other ones.\x7They'll take a little while to find. Let's make a deal.\x7I'll find the other pajamas if you'll get rid of some of these Cog buildings. They're very unsettling.\x7I'll have the pajamas ready when you get back, _avName_.",
+        "Not puce either. Hmm....\x07By my whiskers, I know I have some other ones.\x07They'll take a little while to find. Let's make a deal.\x07I'll find the other pajamas if you'll get rid of some of these Cog buildings. They're very unsettling.\x07I'll have the pajamas ready when you get back, _avName_.",
         INCOMPLETE_PROGRESS:
         'You need to clear out a few more Cog buildings while I look for other pajamas.',
         COMPLETE: ''
@@ -2975,11 +2975,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'You did a great job on those Cogs! Thanks!\x7I found those pajamas for Sandy; hope she likes them.\x7Bring them over to her. Thank you.',
+        'You did a great job on those Cogs! Thanks!\x07I found those pajamas for Sandy; hope she likes them.\x07Bring them over to her. Thank you.',
         INCOMPLETE_PROGRESS:
         "Sandy's waiting for those pajamas, _avName_.",
         COMPLETE:
-        "Fuchsia pajamas with feet! Purr-fect!\x7Ah, now I'm all set. Let's see....\x7Oh, I suppose I should give you something for helping me out.\x7Maybe you can use this. Someone left it here."
+        "Fuchsia pajamas with feet! Purr-fect!\x07Ah, now I'm all set. Let's see....\x07Oh, I suppose I should give you something for helping me out.\x07Maybe you can use this. Someone left it here."
     },
     7239: {
         QUEST:
@@ -2991,9 +2991,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Those darn Cogs took my wrinkle cream!\x7My customers simply MUST have wrinkle cream while I work on them.\x7Go see Rip and see if he has my special formula in stock._where_',
+        'Those darn Cogs took my wrinkle cream!\x07My customers simply MUST have wrinkle cream while I work on them.\x07Go see Rip and see if he has my special formula in stock._where_',
         INCOMPLETE_PROGRESS:
-        'I refuse to work on anyone without wrinkle cream.\x7See what Rip has for me.'
+        'I refuse to work on anyone without wrinkle cream.\x07See what Rip has for me.'
     },
     7241: {
         GREETING:
@@ -3001,7 +3001,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Oh, that Smudgy's a picky character. She won't settle for my usual formula.\x7That means I'll need some cauliflower coral, my super-secret special ingredient. But I haven't any in stock.\x7Could you go fish some out of the pond for me? As soon as you get the coral, I'll whip up a batch for Smudgy.",
+        "Oh, that Smudgy's a picky character. She won't settle for my usual formula.\x07That means I'll need some cauliflower coral, my super-secret special ingredient. But I haven't any in stock.\x07Could you go fish some out of the pond for me? As soon as you get the coral, I'll whip up a batch for Smudgy.",
         INCOMPLETE_PROGRESS:
         "I'll need that cauliflower coral to make a batch of wrinkle cream."
     },
@@ -3011,9 +3011,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Wow, that's a nice cauliflower coral!\x7Ok, let's see...a little of this and a splash of that...now, just a dollop of kelp.\x7Huh, where's the kelp? Looks like I'm out of kelp, too.\x7Could you pop down to the pond and fish me out some nice, slimy kelp?",
+        "Wow, that's a nice cauliflower coral!\x07Ok, let's see...a little of this and a splash of that...now, just a dollop of kelp.\x07Huh, where's the kelp? Looks like I'm out of kelp, too.\x07Could you pop down to the pond and fish me out some nice, slimy kelp?",
         INCOMPLETE_PROGRESS:
-        "Not a strip of slimy kelp in the shop.\x7Can't make the cream without it."
+        "Not a strip of slimy kelp in the shop.\x07Can't make the cream without it."
     },
     7243: {
         GREETING:
@@ -3021,9 +3021,9 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Oooh! Very slimy kelp you've got there, _avName_.\x7Now, I just crush some pearls with the mortar and pestle.\x7Um, where's my pestle? What good is a mortar without a pestle?\x7I bet that darn Loan Shark took it when he came in here!\x7You need to help me find it! He was headed for Cashbot HQ!",
+        "Oooh! Very slimy kelp you've got there, _avName_.\x07Now, I just crush some pearls with the mortar and pestle.\x07Um, where's my pestle? What good is a mortar without a pestle?\x07I bet that darn Loan Shark took it when he came in here!\x07You need to help me find it! He was headed for Cashbot HQ!",
         INCOMPLETE_PROGRESS:
-        'I simply cannot crush the pearls without a pestle.\x7Darn those Loan Sharks!'
+        'I simply cannot crush the pearls without a pestle.\x07Darn those Loan Sharks!'
     },
     7244: {
         GREETING:
@@ -3031,11 +3031,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Alright! You got my pestle!\x7Now we're in business. Crush that...stir this up and...\x7There ya go! Tell Smudgy's it's good and fresh.",
+        "Alright! You got my pestle!\x07Now we're in business. Crush that...stir this up and...\x07There ya go! Tell Smudgy's it's good and fresh.",
         INCOMPLETE_PROGRESS:
-        "You should bring this over to Smudgy while it's fresh.\x7She's very picky.",
+        "You should bring this over to Smudgy while it's fresh.\x07She's very picky.",
         COMPLETE:
-        "Didn't Rip have a bigger jar of wrinkle cream than this? No?\x7Well, I guess I'll just order more when I run out.\x7So long, _avName_.\x7What? You're still here? Can't you see I'm trying to work?\x7Here, take this."
+        "Didn't Rip have a bigger jar of wrinkle cream than this? No?\x07Well, I guess I'll just order more when I run out.\x07So long, _avName_.\x07What? You're still here? Can't you see I'm trying to work?\x07Here, take this."
     },
     11000: {
         GREETING:
@@ -3043,7 +3043,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'If you are interested in Lawbot disguise parts you should visit _toNpcName_.\x7I hear he could use some help with his weather research._where_'
+        'If you are interested in Lawbot disguise parts you should visit _toNpcName_.\x07I hear he could use some help with his weather research._where_'
     },
     11001: {
         GREETING:
@@ -3051,12 +3051,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Yes, yes. I have Lawbot disguise parts.\x7But they are of no interest to me.\x7The focus of my research is fluctuations in the ambient temperature of Toontown.\x7I will gladly trade you disguise parts for cog temperature sensors.\x7You can start on %s.'
+        'Yes, yes. I have Lawbot disguise parts.\x07But they are of no interest to me.\x07The focus of my research is fluctuations in the ambient temperature of Toontown.\x07I will gladly trade you disguise parts for cog temperature sensors.\x07You can start on %s.'
         % GlobalStreetNames[2100][-1],
         INCOMPLETE_PROGRESS:
         'Have you tried looking on %s?' % GlobalStreetNames[2100][-1],
         COMPLETE:
-        'Ah, excellent!\x7Just as I feared...\x7Oh, yes! Here is your disguise part.'
+        'Ah, excellent!\x07Just as I feared...\x07Oh, yes! Here is your disguise part.'
     },
     11002: {
         GREETING:
@@ -3064,7 +3064,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'For more Lawbot disguise parts you should visit _toNpcName_ again.\x7I hear he needs more research assistants._where_'
+        'For more Lawbot disguise parts you should visit _toNpcName_ again.\x07I hear he needs more research assistants._where_'
     },
     11003: {
         GREETING:
@@ -3072,12 +3072,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'More Lawbot disguise parts?\x7Well, if you insist...\x7but I will require another cog temperature sensor.\x7This time look on %s.'
+        'More Lawbot disguise parts?\x07Well, if you insist...\x07but I will require another cog temperature sensor.\x07This time look on %s.'
         % GlobalStreetNames[2200][-1],
         INCOMPLETE_PROGRESS:
         'You are looking on %s, right?' % GlobalStreetNames[2200][-1],
         COMPLETE:
-        'Thank you!\x7And here is your disguise part.'
+        'Thank you!\x07And here is your disguise part.'
     },
     11004: {
         GREETING:
@@ -3085,7 +3085,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'If you need more Lawbot disguise parts you should return to _toNpcName_.\x7I hear he still needs help with his weather reasearch._where_'
+        'If you need more Lawbot disguise parts you should return to _toNpcName_.\x07I hear he still needs help with his weather reasearch._where_'
     },
     11005: {
         GREETING:
@@ -3093,12 +3093,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "You're proving yourself quite useful!\x7Can you take a look on %s?" %
+        "You're proving yourself quite useful!\x07Can you take a look on %s?" %
         GlobalStreetNames[2300][-1],
         INCOMPLETE_PROGRESS:
         "Are you sure you're looking on %s?" % GlobalStreetNames[2300][-1],
         COMPLETE:
-        "Hmmm, I don't like the looks of this...\x7but here is your disguise part..."
+        "Hmmm, I don't like the looks of this...\x07but here is your disguise part..."
     },
     11006: {
         GREETING:
@@ -3106,7 +3106,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'You-know-who needs more temperature readings.\x7Stop by if you would like another disguise part._where_'
+        'You-know-who needs more temperature readings.\x07Stop by if you would like another disguise part._where_'
     },
     11007: {
         GREETING:
@@ -3114,12 +3114,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Back again?\x7You are very dedicated...\x7The next stop is %s.' %
+        'Back again?\x07You are very dedicated...\x07The next stop is %s.' %
         GlobalStreetNames[1100][-1],
         INCOMPLETE_PROGRESS:
         'Have you tried looking on %s?' % GlobalStreetNames[1100][-1],
         COMPLETE:
-        'Good! You seem to be getting the hang of this!\x7Your disguise part...'
+        'Good! You seem to be getting the hang of this!\x07Your disguise part...'
     },
     11008: {
         GREETING: '',
@@ -3132,12 +3132,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Fancy seeing you here!\x7Now I need readings on %s.' %
+        'Fancy seeing you here!\x07Now I need readings on %s.' %
         GlobalStreetNames[1200][-1],
         INCOMPLETE_PROGRESS:
         'You are looking on %s, right?' % GlobalStreetNames[1200][-1],
         COMPLETE:
-        'Thank you very much.\x7Your disguise must be getting close...'
+        'Thank you very much.\x07Your disguise must be getting close...'
     },
     11010: {
         GREETING: '',
@@ -3150,12 +3150,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Good to see you again, _avName_!\x7Can you get a reading on %s, please?'
+        'Good to see you again, _avName_!\x07Can you get a reading on %s, please?'
         % GlobalStreetNames[1300][-1],
         INCOMPLETE_PROGRESS:
         'Have you tried looking on %s?' % GlobalStreetNames[1300][-1],
         COMPLETE:
-        "Great work!\x7Here's your well earned reward!"
+        "Great work!\x07Here's your well earned reward!"
     },
     11012: {
         GREETING: '',
@@ -3168,12 +3168,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        '_avName_, my dear friend!\x7Can you go to %s and find another temperature sensor?'
+        '_avName_, my dear friend!\x07Can you go to %s and find another temperature sensor?'
         % GlobalStreetNames[5100][-1],
         INCOMPLETE_PROGRESS:
         "Are you sure you're looking on %s?" % GlobalStreetNames[5100][-1],
         COMPLETE:
-        "Excellent!\x7With your help my research is coming quickly!\x7Here's your reward."
+        "Excellent!\x07With your help my research is coming quickly!\x07Here's your reward."
     },
     11014: {
         GREETING:
@@ -3181,7 +3181,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "_toNpcName_ was asking for you by name.\x7It appears you've made quite an impression!_where_"
+        "_toNpcName_ was asking for you by name.\x07It appears you've made quite an impression!_where_"
     },
     11015: {
         GREETING:
@@ -3189,12 +3189,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Welcome back!\x7I've been waiting for you.\x7The next reading I need is on %s."
+        "Welcome back!\x07I've been waiting for you.\x07The next reading I need is on %s."
         % GlobalStreetNames[5200][-1],
         INCOMPLETE_PROGRESS:
         'You are looking on %s, right?' % GlobalStreetNames[5200][-1],
         COMPLETE:
-        "Thanks!\x7Here's your reward."
+        "Thanks!\x07Here's your reward."
     },
     11016: {
         GREETING:
@@ -3202,7 +3202,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'If you need to finish your Lawbot disguise...\x7_toNpcName_ can help you out._where_'
+        'If you need to finish your Lawbot disguise...\x07_toNpcName_ can help you out._where_'
     },
     11017: {
         GREETING:
@@ -3210,12 +3210,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Hello, Junior Research Scientist!\x7We still need readings from %s.' %
+        'Hello, Junior Research Scientist!\x07We still need readings from %s.' %
         GlobalStreetNames[5300][-1],
         INCOMPLETE_PROGRESS:
         'Have you tried looking on %s?' % GlobalStreetNames[5300][-1],
         COMPLETE:
-        'Excellent job!\x7Here is your Lawbot thingy...'
+        'Excellent job!\x07Here is your Lawbot thingy...'
     },
     11018: {
         GREETING:
@@ -3223,7 +3223,7 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "_toNpcName_ has another job for you.\x7If you're not sick of him yet..._where_"
+        "_toNpcName_ has another job for you.\x07If you're not sick of him yet..._where_"
     },
     11019: {
         GREETING:
@@ -3231,12 +3231,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Well, then.\x7Are you ready for another recovery?\x7This time try %s.'
+        'Well, then.\x07Are you ready for another recovery?\x07This time try %s.'
         % GlobalStreetNames[4100][-1],
         INCOMPLETE_PROGRESS:
         "Are you sure you're looking on %s?" % GlobalStreetNames[4100][-1],
         COMPLETE:
-        'Another one!\x7My you are the picture of efficiency!'
+        'Another one!\x07My you are the picture of efficiency!'
     },
     11020: {
         GREETING: '',
@@ -3249,12 +3249,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'You could probably guess by now...\x7but I need readings from %s.' %
+        'You could probably guess by now...\x07but I need readings from %s.' %
         GlobalStreetNames[4200][-1],
         INCOMPLETE_PROGRESS:
         'You are looking on %s, right?' % GlobalStreetNames[4200][-1],
         COMPLETE:
-        'Almost there!\x7Here you go...'
+        'Almost there!\x07Here you go...'
     },
     11022: {
         GREETING: '',
@@ -3291,7 +3291,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         "Are you sure you're looking on %s?" % GlobalStreetNames[9100][-1],
         COMPLETE:
-        'Good work!\x7I think we are getting very close...'
+        'Good work!\x07I think we are getting very close...'
     },
     11026: {
         GREETING: '',
@@ -3304,12 +3304,12 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'Back so soon?\x7The final reading is on %s.' %
+        'Back so soon?\x07The final reading is on %s.' %
         GlobalStreetNames[9200][-1],
         INCOMPLETE_PROGRESS:
         'You are looking on %s, right?' % GlobalStreetNames[9200][-1],
         COMPLETE:
-        "You're all done!\x7Now you are ready to infiltrate the District Attorney's Office and collect Jury Notices.\x7Good luck and thanks for all your help!"
+        "You're all done!\x07Now you are ready to infiltrate the District Attorney's Office and collect Jury Notices.\x07Good luck and thanks for all your help!"
     },
     12000: {
         GREETING:
@@ -3325,11 +3325,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "Yes, I can get you Bossbot parts.\x7But I'll need you to help me complete my Bossbot collection.\x7Go out there and defeat a Flunky.",
+        "Yes, I can get you Bossbot parts.\x07But I'll need you to help me complete my Bossbot collection.\x07Go out there and defeat a Flunky.",
         INCOMPLETE_PROGRESS:
         "You can't find a Flunky? For shame...",
         COMPLETE:
-        "You didn't flunk that, now did you?\x7Here's your first disguise part."
+        "You didn't flunk that, now did you?\x07Here's your first disguise part."
     },
     12002: {
         GREETING: '',
@@ -3340,9 +3340,9 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'Another disguise part?\x7Certainly...\x7but only if you defeat a Pencil Pusher.',
+        'Another disguise part?\x07Certainly...\x07but only if you defeat a Pencil Pusher.',
         INCOMPLETE_PROGRESS: 'Pencil Pushers can be found in the streets.',
-        COMPLETE: "He was a real pushover!\x7Here's your second disguise part."
+        COMPLETE: "He was a real pushover!\x07Here's your second disguise part."
     },
     12004: {
         GREETING: '',
@@ -3354,7 +3354,7 @@ QuestDialogDict = {
         LEAVING: '',
         QUEST: 'Now I need a Yesman...',
         INCOMPLETE_PROGRESS: 'Yesmen can be found in the streets.',
-        COMPLETE: "Yes! Man, you are good.\x7Here's your third disguise part."
+        COMPLETE: "Yes! Man, you are good.\x07Here's your third disguise part."
     },
     12006: {
         GREETING: '',
@@ -3371,7 +3371,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Try looking on %s' % GlobalStreetNames[1100][-1],
         COMPLETE:
-        "You managed that quite well!\x7Here's your fourth disguise part."
+        "You managed that quite well!\x07Here's your fourth disguise part."
     },
     12008: {
         GREETING: '',
@@ -3388,7 +3388,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Having trouble? Try looking on %s' % GlobalStreetNames[3100][-1],
         COMPLETE:
-        "He went down hard!\x7Here's your fifth disguise part."
+        "He went down hard!\x07Here's your fifth disguise part."
     },
     12010: {
         GREETING: '',
@@ -3405,7 +3405,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'You might have better luck looking buildings.',
         COMPLETE:
-        "I see you had no problem hunting one down.\x7Here's your sixth disguise part."
+        "I see you had no problem hunting one down.\x07Here's your sixth disguise part."
     },
     12012: {
         GREETING: '',
@@ -3422,7 +3422,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'You might have better luck looking buildings.',
         COMPLETE:
-        "You're quite the little raider yourself!\x7Here's your seventh disguise part."
+        "You're quite the little raider yourself!\x07Here's your seventh disguise part."
     },
     12014: {
         GREETING: '',
@@ -3439,7 +3439,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
         COMPLETE:
-        "I knew I could count on you to cut...\x7Ah, never mind.\x7Here's your next disguise part."
+        "I knew I could count on you to cut...\x07Ah, never mind.\x07Here's your next disguise part."
     },
     12016: {
         GREETING: '',
@@ -3456,7 +3456,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
         COMPLETE:
-        'They are tougher than they look, huh?\x7I guess I owe you a disguise part.'
+        'They are tougher than they look, huh?\x07I guess I owe you a disguise part.'
     },
     12018: {
         GREETING: '',
@@ -3467,10 +3467,10 @@ QuestDialogDict = {
         GREETING: '',
         LEAVING: '',
         QUEST:
-        'These Version 2.0 Cogs are very interesting.\x7Please go defeat another one.',
+        'These Version 2.0 Cogs are very interesting.\x07Please go defeat another one.',
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
-        COMPLETE: 'Thanks!\x7Another disguise part coming right up.'
+        COMPLETE: 'Thanks!\x07Another disguise part coming right up.'
     },
     12020: {
         GREETING: '',
@@ -3483,7 +3483,7 @@ QuestDialogDict = {
         QUEST: 'I wonder if they can keep regenerating...',
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
-        COMPLETE: "I guess not.\x7Here's your part..."
+        COMPLETE: "I guess not.\x07Here's your part..."
     },
     12022: {
         GREETING: '',
@@ -3500,7 +3500,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
         COMPLETE:
-        'Hmmm, I guess they are Bossbots after all.\x7Help yourself to another part.'
+        'Hmmm, I guess they are Bossbots after all.\x07Help yourself to another part.'
     },
     12024: {
         GREETING: '',
@@ -3513,7 +3513,7 @@ QuestDialogDict = {
         QUEST: 'Perhaps they are related to the Skelecogs somehow...',
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
-        COMPLETE: "That was inconclusive...\x7Here's your disguise part."
+        COMPLETE: "That was inconclusive...\x07Here's your disguise part."
     },
     12026: {
         GREETING: '',
@@ -3526,7 +3526,7 @@ QuestDialogDict = {
         QUEST: "I'm still not convinced they aren't some type of Skelecog...",
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
-        COMPLETE: "Well, maybe not.\x7Here's your next part."
+        COMPLETE: "Well, maybe not.\x07Here's your next part."
     },
     12028: {
         GREETING: '',
@@ -3539,11 +3539,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        'I am still quite baffled by these new cogs.\x7Could you go defeat another, please?',
+        'I am still quite baffled by these new cogs.\x07Could you go defeat another, please?',
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
         COMPLETE:
-        'Fascinating. Simply fascinating.\x7A disguise part for your troubles.'
+        'Fascinating. Simply fascinating.\x07A disguise part for your troubles.'
     },
     12030: {
         GREETING: '',
@@ -3556,11 +3556,11 @@ QuestDialogDict = {
         LEAVING:
         '',
         QUEST:
-        "I've almost determined what these new Cogs are.\x7Just one more...",
+        "I've almost determined what these new Cogs are.\x07Just one more...",
         INCOMPLETE_PROGRESS:
         'Try looking in %s' % GlobalStreetNames[10000][-1],
         COMPLETE:
-        "Yes, I think I'm onto something.\x7Oh, yes.\x7This is for you..."
+        "Yes, I think I'm onto something.\x07Oh, yes.\x07This is for you..."
     },
     12032: {
         GREETING:
@@ -3572,7 +3572,7 @@ QuestDialogDict = {
         INCOMPLETE_PROGRESS:
         'Flippy can be found in Toon Hall',
         COMPLETE:
-        'A new type of Cog!\x7Good work!\x7Here is your final disguise part.'
+        'A new type of Cog!\x07Good work!\x07Here is your final disguise part.'
     }
 }
 ChatGarblerDog = ['woof', 'arf', 'rruff']
@@ -4215,13 +4215,13 @@ CheesyEffectExceptIn = ', except in %s'
 SuitFlunky = 'Flunky'
 SuitPencilPusher = 'Pencil Pusher'
 SuitYesman = 'Yesman'
-SuitMicromanager = 'Micro\x3manager'
+SuitMicromanager = 'Micro\x03manager'
 SuitDownsizer = 'Downsizer'
 SuitHeadHunter = 'Head Hunter'
 SuitCorporateRaider = 'Corporate Raider'
 SuitTheBigCheese = 'The Big Cheese'
 SuitColdCaller = 'Cold Caller'
-SuitTelemarketer = 'Tele\x3marketer'
+SuitTelemarketer = 'Tele\x03marketer'
 SuitNameDropper = 'Name Dropper'
 SuitGladHander = 'Glad Hander'
 SuitMoverShaker = 'Mover & Shaker'
@@ -4237,7 +4237,7 @@ SuitMoneyBags = 'Money Bags'
 SuitLoanShark = 'Loan Shark'
 SuitRobberBaron = 'Robber Baron'
 SuitBottomFeeder = 'Bottom Feeder'
-SuitBloodsucker = 'Blood\x3sucker'
+SuitBloodsucker = 'Blood\x03sucker'
 SuitDoubleTalker = 'Double Talker'
 SuitAmbulanceChaser = 'Ambulance Chaser'
 SuitBackStabber = 'Back Stabber'
@@ -6022,7 +6022,7 @@ toontownDialogues = {
         (1, 2020): [
             'The Silly Meter has hit the top!',
             'Doodles are talking, Estates are bouncy!',
-            "There's only one thing to say\xe2\x80\xa6", 'HAPPY APRIL TOONS!'
+            "There's only one thing to say\x0e2\x080\x0a6", 'HAPPY APRIL TOONS!'
         ]
     },
     AprilToonsExtPhaseTopTopic: {
@@ -6034,7 +6034,7 @@ toontownDialogues = {
     AprilToonsPhasePostTopTopic: {
         (1, 2020): [
             'April Toons is over!', "It's time for us to return to our lab.",
-            'But when things get REALLY crazy again\xe2\x80\xa6',
+            'But when things get REALLY crazy again\x0e2\x080\x0a6',
             'The Silly Meter will return!'
         ]
     },
@@ -7641,11 +7641,11 @@ SuitInvasionBulletin2 = lToonHQ + ': %s have taken over Toontown!!!'
 LeaderboardTitle = 'Toon Platoon'
 QuestScriptTutorialMickey_1 = 'Toontown has a new citizen! Do you have some extra gags?'
 QuestScriptTutorialMickey_2 = 'Sure, %s!'
-QuestScriptTutorialMickey_3 = 'Tutorial Tom will tell you all about the Cogs.\x7Gotta go!'
+QuestScriptTutorialMickey_3 = 'Tutorial Tom will tell you all about the Cogs.\x07Gotta go!'
 QuestScriptTutorialMickey_4 = 'Come here! Use the arrow keys to move.'
 QuestScriptTutorialMinnie_1 = 'Toontown has a new citizen! Do you have some extra gags?'
 QuestScriptTutorialMinnie_2 = 'Sure, %s!'
-QuestScriptTutorialMinnie_3 = 'Tutorial Tom will tell you all about the Cogs.\x7Gotta go!'
+QuestScriptTutorialMinnie_3 = 'Tutorial Tom will tell you all about the Cogs.\x07Gotta go!'
 QuestScript101_1 = 'These are Cogs. They are robots that are trying to take over Toontown.'
 QuestScript101_2 = 'There are many different kinds of Cogs and...'
 QuestScript101_3 = '...they turn happy Toon buildings...'
@@ -7675,7 +7675,7 @@ QuestScriptTutorialBlocker_1 = 'Why, hello there!'
 QuestScriptTutorialBlocker_2 = 'Hello?'
 QuestScriptTutorialBlocker_3 = "Oh! You don't know how to use SpeedChat!"
 QuestScriptTutorialBlocker_4 = 'Click on the button to say something.'
-QuestScriptTutorialBlocker_5 = 'Very good!\x7Where you are going there are many Toons to talk to.'
+QuestScriptTutorialBlocker_5 = 'Very good!\x07Where you are going there are many Toons to talk to.'
 QuestScriptTutorialBlocker_6 = "If you want to chat with other Toons using the keyboard, there's another button you can use."
 QuestScriptTutorialBlocker_7 = "It's called the Chat button. You need to turn on Speedchat Plus in your Account Manager on the Toontown Web site to use it."
 QuestScriptTutorialBlocker_8 = 'Good luck! See you later!'
@@ -7687,16 +7687,16 @@ QuestScriptGagShop_5 = "Here's a peek at the advanced throw and squirt gags..."
 QuestScriptGagShop_6 = "When you're done buying gags, click this button to return to the Playground."
 QuestScriptGagShop_7 = 'Normally you can use this button to play another Trolley Game...'
 QuestScriptGagShop_8 = "...but there's no time for another game right now. You're needed in Toon HQ!"
-QuestScript120_1 = "Good job finding the trolley!\x7By the way, have you met Banker Bob?\x7He has quite a sweet tooth.\x7Why don't you introduce yourself by taking him this candy bar as a gift."
+QuestScript120_1 = "Good job finding the trolley!\x07By the way, have you met Banker Bob?\x07He has quite a sweet tooth.\x07Why don't you introduce yourself by taking him this candy bar as a gift."
 QuestScript120_2 = 'Banker Bob is over in the Toontown Bank.'
-QuestScript121_1 = "Yum, thank you for the Candy Bar.\x7Say, if you can help me, I'll give you a reward.\x7Those Cogs stole the keys to my safe. Defeat Cogs to find a stolen key.\x7When you find a key, bring it back to me."
-QuestScript130_1 = 'Good job finding the trolley!\x7By the way, I received a package for Professor Pete today.\x7It must be his new chalk he ordered.\x7Can you please take it to him?\x7He is over in the school house.'
-QuestScript131_1 = 'Oh, thanks for the chalk.\x7What?!?\x7Those Cogs stole my blackboard. Defeat Cogs to find my stolen blackboard.\x7When you find it, bring it back to me.'
-QuestScript140_1 = 'Good job finding the trolley!\x7By the way, I have this friend, Librarian Larry, who is quite a book worm.\x7I picked this book up for him last time I was over in ' + lDonaldsDock + '.\x7Could you take it over to him, he is usually in the Library.'
-QuestScript141_1 = 'Oh, yes, this book almost completes my collection.\x7Let me see...\x7Uh oh...\x7Now where did I put my glasses?\x7I had them just before those Cogs took over my building.\x7Defeat Cogs to find my stolen glasses.\x7When you find them, bring them back to me for a reward.'
-QuestScript145_1 = 'I see you had no problem with the trolley!\x7Listen, the Cogs have stolen our blackboard eraser.\x7Go into the streets and fight Cogs until you recover the eraser.\x7To reach the streets go through one of the tunnels like this:'
-QuestScript145_2 = "When you find our eraser, bring it back here.\x7Don't forget, if you need gags, ride the trolley.\x7Also, if you need to recover Laff points, collect ice cream cones in the Playground."
-QuestScript150_1 = 'Great work!\x7Toontown is more fun when you have friends!'
+QuestScript121_1 = "Yum, thank you for the Candy Bar.\x07Say, if you can help me, I'll give you a reward.\x07Those Cogs stole the keys to my safe. Defeat Cogs to find a stolen key.\x07When you find a key, bring it back to me."
+QuestScript130_1 = 'Good job finding the trolley!\x07By the way, I received a package for Professor Pete today.\x07It must be his new chalk he ordered.\x07Can you please take it to him?\x07He is over in the school house.'
+QuestScript131_1 = 'Oh, thanks for the chalk.\x07What?!?\x07Those Cogs stole my blackboard. Defeat Cogs to find my stolen blackboard.\x07When you find it, bring it back to me.'
+QuestScript140_1 = 'Good job finding the trolley!\x07By the way, I have this friend, Librarian Larry, who is quite a book worm.\x07I picked this book up for him last time I was over in ' + lDonaldsDock + '.\x07Could you take it over to him, he is usually in the Library.'
+QuestScript141_1 = 'Oh, yes, this book almost completes my collection.\x07Let me see...\x07Uh oh...\x07Now where did I put my glasses?\x07I had them just before those Cogs took over my building.\x07Defeat Cogs to find my stolen glasses.\x07When you find them, bring them back to me for a reward.'
+QuestScript145_1 = 'I see you had no problem with the trolley!\x07Listen, the Cogs have stolen our blackboard eraser.\x07Go into the streets and fight Cogs until you recover the eraser.\x07To reach the streets go through one of the tunnels like this:'
+QuestScript145_2 = "When you find our eraser, bring it back here.\x07Don't forget, if you need gags, ride the trolley.\x07Also, if you need to recover Laff points, collect ice cream cones in the Playground."
+QuestScript150_1 = 'Great work!\x07Toontown is more fun when you have friends!'
 QuestScript150_2 = 'To make friends, find another player, and use the New Friend button.'
 QuestScript150_3 = 'Once you have made a friend, come back here.'
 QuestScript150_4 = 'Some tasks are too difficult to do alone!'
@@ -7718,17 +7718,17 @@ CagedToonDrop = [
     "Keep after him!  He's on the run!", 'You guys are doing great!',
     "Fantastic!  You've almost got him now!"
 ]
-CagedToonPrepareBattleTwo = "Look out, he's trying to get away!\x7Help me, everyone--get up here and stop him!"
-CagedToonPrepareBattleThree = "Hooray, I'm almost free!\x7Now you need to attack the V.P. Cog directly.\x7I've got a whole bunch of pies you can use!\x7Jump up and touch the bottom of my cage and I'll give you some pies.\x7Press the Delete key to throw pies once you've got them!"
+CagedToonPrepareBattleTwo = "Look out, he's trying to get away!\x07Help me, everyone--get up here and stop him!"
+CagedToonPrepareBattleThree = "Hooray, I'm almost free!\x07Now you need to attack the V.P. Cog directly.\x07I've got a whole bunch of pies you can use!\x07Jump up and touch the bottom of my cage and I'll give you some pies.\x07Press the Delete key to throw pies once you've got them!"
 BossBattleNeedMorePies = 'You need to get more pies!'
 BossBattleHowToGetPies = 'Jump up to touch the cage to get pies.'
 BossBattleHowToThrowPies = 'Press the Delete key to throw pies!'
 CagedToonYippee = 'Yippee!'
-CagedToonThankYou = "It's great to be free!\x7Thanks for all your help!\x7I am in your debt.\x7Here's my card. If you ever need a hand in battle, give a shout!\x7Just click on your SOS button."
-CagedToonPromotion = "\x7Say--that V.P. Cog left behind your promotion papers.\x7I'll file them for you on the way out, so you'll get your promotion!"
-CagedToonLastPromotion = "\x7Wow, you've reached level %s on your Cog suit!\x7Cogs don't get promoted higher than that.\x7You can't upgrade your Cog suit anymore, but you can certainly keep rescuing Toons!"
-CagedToonHPBoost = "\x7You've rescued a lot of Toons from this HQ.\x7The Toon Council has decided to give you another Laff point. Congratulations!"
-CagedToonMaxed = '\x7I see that you have a level %s Cog suit. Very impressive!\x7On behalf of the Toon Council, thank you for coming back to rescue more Toons!'
+CagedToonThankYou = "It's great to be free!\x07Thanks for all your help!\x07I am in your debt.\x07Here's my card. If you ever need a hand in battle, give a shout!\x07Just click on your SOS button."
+CagedToonPromotion = "\x07Say--that V.P. Cog left behind your promotion papers.\x07I'll file them for you on the way out, so you'll get your promotion!"
+CagedToonLastPromotion = "\x07Wow, you've reached level %s on your Cog suit!\x07Cogs don't get promoted higher than that.\x07You can't upgrade your Cog suit anymore, but you can certainly keep rescuing Toons!"
+CagedToonHPBoost = "\x07You've rescued a lot of Toons from this HQ.\x07The Toon Council has decided to give you another Laff point. Congratulations!"
+CagedToonMaxed = '\x07I see that you have a level %s Cog suit. Very impressive!\x07On behalf of the Toon Council, thank you for coming back to rescue more Toons!'
 CagedToonGoodbye = 'See ya!'
 CagedToonBattleThree = {
     10: 'Nice jump, %(toon)s.  Here are some pies!',
@@ -7751,16 +7751,16 @@ CagedToonBattleThreeMaxAdvice = 106
 CashbotBossHadEnough = "That's it.  I've had enough of these pesky Toons!"
 CashbotBossOuttaHere = "I've got a train to catch!"
 ResistanceToonName = 'Mata Hairy'
-ResistanceToonCongratulations = "You did it!  Congratulations!\x7You're an asset to the Resistance!\x7Here's a special phrase you can use in a tight spot:\x7%s\x7When you say it, %s.\x7But you can only use it once, so choose that time well!"
+ResistanceToonCongratulations = "You did it!  Congratulations!\x07You're an asset to the Resistance!\x07Here's a special phrase you can use in a tight spot:\x07%s\x07When you say it, %s.\x07But you can only use it once, so choose that time well!"
 ResistanceToonToonupInstructions = 'all the Toons near you will gain %s Laff points'
 ResistanceToonToonupAllInstructions = 'all the Toons near you will gain full Laff points'
 ResistanceToonMoneyInstructions = 'all the Toons near you will gain %s jellybeans'
 ResistanceToonMoneyAllInstructions = 'all the Toons near you will fill their jellybean jars'
 ResistanceToonRestockInstructions = 'all the Toons near you will restock their "%s" gags'
 ResistanceToonRestockAllInstructions = 'all the Toons near you will restock all their gags'
-ResistanceToonLastPromotion = "\x7Wow, you've reached level %s on your Cog suit!\x7Cogs don't get promoted higher than that.\x7You can't upgrade your Cog suit anymore, but you can certainly keep working for the Resistance!"
-ResistanceToonHPBoost = "\x7You've done a lot of work for the Resistance.\x7The Toon Council has decided to give you another Laff point. Congratulations!"
-ResistanceToonMaxed = '\x7I see that you have a level %s Cog suit. Very impressive!\x7On behalf of the Toon Council, thank you for coming back to rescue more Toons!'
+ResistanceToonLastPromotion = "\x07Wow, you've reached level %s on your Cog suit!\x07Cogs don't get promoted higher than that.\x07You can't upgrade your Cog suit anymore, but you can certainly keep working for the Resistance!"
+ResistanceToonHPBoost = "\x07You've done a lot of work for the Resistance.\x07The Toon Council has decided to give you another Laff point. Congratulations!"
+ResistanceToonMaxed = '\x07I see that you have a level %s Cog suit. Very impressive!\x07On behalf of the Toon Council, thank you for coming back to rescue more Toons!'
 CashbotBossCogAttack = 'Get them!!!'
 ResistanceToonWelcome = 'Hey, you made it!  Follow me to the main vault before the C.F.O. finds us!'
 ResistanceToonTooLate = "Blast it!  We're too late!"
@@ -8943,7 +8943,7 @@ CatalogPurchaseGiftItemOnOrder = 'Excellent! Your gift to %s will be delivered t
 CatalogAnythingElse = 'Anything else I can get you today?'
 CatalogPurchaseClosetFull = 'Your closet is full.  You may purchase this item anyway, but if you do you will need to delete something from your closet to make room for it when it arrives.\n\nDo you still want to purchase this item?'
 CatalogPurchaseNoTrunk = 'In order to wear this item, you need to buy a trunk.\n\nDo you still want to purchase this item?'
-CatalogPurchaseTrunkFull = 'Your trunk is full. If you purchase this item, you\xe2\x80\x99ll need to delete another item from your trunk to make more room.\n\nDo you still want to purchase this item?'
+CatalogPurchaseTrunkFull = 'Your trunk is full. If you purchase this item, you\x0e2\x080\x099ll need to delete another item from your trunk to make more room.\n\nDo you still want to purchase this item?'
 CatalogAcceptClosetFull = 'Your closet is full.  You must go inside and delete something from your closet to make room for this item before you can take it out of your mailbox.'
 CatalogAcceptNoTrunk = "You don't have a trunk. You must buy a trunk before you can take this item out of your mailbox."
 CatalogAcceptTrunkFull = 'Your trunk is full.  You must delete something from your trunk before you can take this item out of your mailbox.'
@@ -9999,10 +9999,10 @@ zone2TitleDict = {
     4854: ("Wagner's Vocational Violin Videos", ''),
     4855: ('The Teli-Caster Network', ''),
     4856: ('', ''),
-    4862: ("Quentin's Quintessen\x3tial Quadrilles", ''),
+    4862: ("Quentin's Quintessen\x03tial Quadrilles", ''),
     4867: ("Mr. Costello's Yellow Cellos", ''),
     4868: ('', ''),
-    4870: ("Ziggy's Zoo of Zigeuner\x3musik", ''),
+    4870: ("Ziggy's Zoo of Zigeuner\x03musik", ''),
     4871: ("Harry's House of Harmonious Humbuckers", ''),
     4872: ("Fast Freddie's Fretless Fingerboards", ''),
     4873: ('', ''),
@@ -10053,7 +10053,7 @@ zone2TitleDict = {
     5716: ('Take It or Leaf It Pawn Shop', ''),
     5717: ('The Squirting Flower', ''),
     5718: ('The Dandy Lion Exotic Pets', ''),
-    5719: ('Trellis the Truth! Private Investi\x3gators', ''),
+    5719: ('Trellis the Truth! Private Investi\x03gators', ''),
     5720: ('Vine and Dandy Menswear', ''),
     5721: ('Root 66 Diner', ''),
     5725: ('Barley, Hops, and Malt Shop', ''),
@@ -11025,16 +11025,16 @@ LawbotBossTaunts = [
 ]
 LawbotBossAreaAttackTaunt = "You're all in contempt of court!"
 WitnessToonName = 'Bumpy Bumblebehr'
-WitnessToonPrepareBattleTwo = "Oh no! They're putting only Cogs on the jury!\x7Quick, use the cannons and shoot some Toon jurors into the jury chairs.\x7We need %d to get a balanced scale."
+WitnessToonPrepareBattleTwo = "Oh no! They're putting only Cogs on the jury!\x07Quick, use the cannons and shoot some Toon jurors into the jury chairs.\x07We need %d to get a balanced scale."
 WitnessToonNoJuror = 'Oh oh, no Toon jurors. This will be a tough trial.'
 WitnessToonOneJuror = 'Cool! There is 1 Toon in the jury!'
 WitnessToonSomeJurors = 'Cool! There are %d Toons in the jury!'
 WitnessToonAllJurors = 'Awesome! All the jurors are Toons!'
-WitnessToonPrepareBattleThree = 'Hurry, touch the witness stand to get evidence.\x7Press the Delete key to throw the evidence at the lawyers, or at the defense pan.'
-WitnessToonCongratulations = "You did it!  Thank you for a spectacular defense!\x7Here, take these papers the Chief Justice left behind.\x7With it you'll be able to summon Cogs from your Cog Gallery page."
-WitnessToonLastPromotion = "\x7Wow, you've reached level %s on your Cog Suit!\x7Cogs don't get promoted higher than that.\x7You can't upgrade your Cog Suit anymore, but you can certainly keep working for the Resistance!"
-WitnessToonHPBoost = "\x7You've done a lot of work for the Resistance.\x7The Toon Council has decided to give you another Laff point. Congratulations!"
-WitnessToonMaxed = '\x7I see that you have a level %s Cog Suit. Very impressive!\x7On behalf of the Toon Council, thank you for coming back to defend more Toons!'
+WitnessToonPrepareBattleThree = 'Hurry, touch the witness stand to get evidence.\x07Press the Delete key to throw the evidence at the lawyers, or at the defense pan.'
+WitnessToonCongratulations = "You did it!  Thank you for a spectacular defense!\x07Here, take these papers the Chief Justice left behind.\x07With it you'll be able to summon Cogs from your Cog Gallery page."
+WitnessToonLastPromotion = "\x07Wow, you've reached level %s on your Cog Suit!\x07Cogs don't get promoted higher than that.\x07You can't upgrade your Cog Suit anymore, but you can certainly keep working for the Resistance!"
+WitnessToonHPBoost = "\x07You've done a lot of work for the Resistance.\x07The Toon Council has decided to give you another Laff point. Congratulations!"
+WitnessToonMaxed = '\x07I see that you have a level %s Cog Suit. Very impressive!\x07On behalf of the Toon Council, thank you for coming back to defend more Toons!'
 WitnessToonBonus = 'Wonderful! All the lawyers are stunned. Your evidence weight is %s times heavier for %s seconds'
 WitnessToonJuryWeightBonusSingular = {
     6:
@@ -11201,8 +11201,6 @@ def getRecipeBeanText(beanTuple):
             if not beanTuple[index] == beanTuple[index + 1]:
                 allTheSame = False
                 break
-
-        beanTuple[index] == beanTuple[index + 1]
 
     if allTheSame:
         if len(beanTuple) > 1:
@@ -11618,10 +11616,10 @@ BossbotGolfSpotLeaving = 'Leaving Golf Ball'
 BossbotGolfSpotAdvice = 'Use the left and right keys to rotate.\nCtrl to fire.'
 BossbotRewardSpeech1 = "No! The Chairman won't like this."
 BossbotRewardSpeech2 = 'Arrrggghhh!!!!'
-BossbotRTCongratulations = "You did it!  You've demoted the C.E.O.!\x7Here, take these pink slips the C.E.O. left behind.\x7With it you'll be able to fire Cogs in a battle."
-BossbotRTLastPromotion = "\x7Wow, you've reached level %s on your Cog Suit!\x7Cogs don't get promoted higher than that.\x7You can't upgrade your Cog Suit anymore, but you can certainly keep working for the Resistance!"
-BossbotRTHPBoost = "\x7You've done a lot of work for the Resistance.\x7The Toon Council has decided to give you another Laff point. Congratulations!"
-BossbotRTMaxed = '\x7I see that you have a level %s Cog Suit. Very impressive!\x7On behalf of the Toon Council, thank you for coming back to defend more Toons!'
+BossbotRTCongratulations = "You did it!  You've demoted the C.E.O.!\x07Here, take these pink slips the C.E.O. left behind.\x07With it you'll be able to fire Cogs in a battle."
+BossbotRTLastPromotion = "\x07Wow, you've reached level %s on your Cog Suit!\x07Cogs don't get promoted higher than that.\x07You can't upgrade your Cog Suit anymore, but you can certainly keep working for the Resistance!"
+BossbotRTHPBoost = "\x07You've done a lot of work for the Resistance.\x07The Toon Council has decided to give you another Laff point. Congratulations!"
+BossbotRTMaxed = '\x07I see that you have a level %s Cog Suit. Very impressive!\x07On behalf of the Toon Council, thank you for coming back to defend more Toons!'
 GolfAreaAttackTaunt = 'Fore!'
 OvertimeAttackTaunts = ["It's time to reorganize.", "Now let's downsize."]
 ElevatorBossBotBoss = 'C.E.O Battle'

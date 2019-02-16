@@ -1,4 +1,8 @@
-from pandac.PandaModules import listProcessModules
+## MODULE DISABLED
+## This has been disabled due to missing listProcessModules
+## in this panda version, reenable when finding such module.
+
+#from pandac.PandaModules import listProcessModules
 from direct.task import Task
 from toontown.hood import ZoneUtil
 from toontown.toonbase import ToontownGlobals
@@ -9,6 +13,7 @@ class ToontownAccess:
         self.startupModules = []
 
     def initModuleInfo(self):
+        return # Remove to reenable
         self.startupModules = self.getModuleList()
         taskMgr.doMethodLater(300, self.checkModuleInfo, 'moduleListTask')
 

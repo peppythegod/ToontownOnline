@@ -80,7 +80,6 @@ class DistributedStage(DistributedObject.DistributedObject):
 
     def setRoomDoIds(self, roomDoIds):
         self.roomDoIds = roomDoIds
-        continue
         self.roomWatcher = [](_[1], [
             DistributedStageRoom.getStageRoomReadyPostName(doId)
             for doId in self.roomDoIds

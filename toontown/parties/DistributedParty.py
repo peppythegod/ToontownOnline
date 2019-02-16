@@ -48,7 +48,6 @@ class DistributedParty(DistributedObject.DistributedObject):
     def setPartyInfoTuple(self, partyInfoTuple):
         self.partyInfo = PartyInfo(*partyInfoTuple)
         self.loadDecorations()
-        continue
         allActIds = [x.activityId for x in self.partyInfo.activityList]
         if PartyGlobals.ActivityIds.PartyJukebox not in allActIds:
             pass

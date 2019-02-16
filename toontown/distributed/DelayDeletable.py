@@ -1,6 +1,4 @@
-from direct.distributed.DistributedObject import ESNum2Str
-ESGenerating = ESGenerating
-ESGenerated = ESGenerated
+from direct.distributed.DistributedObject import ESNum2Str, ESGenerating, ESGenerated
 
 
 class DelayDeletable:

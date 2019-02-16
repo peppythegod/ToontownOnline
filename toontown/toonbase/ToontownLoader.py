@@ -71,12 +71,12 @@ class ToontownLoader(Loader.Loader):
                     pass
 
     def loadModel(self, *args, **kw):
-        ret = Loader.Loader.loadModel(self, *args, **args)
+        ret = Loader.Loader.loadModel(self, *args, **kw)
         self.tick()
         return ret
 
     def loadFont(self, *args, **kw):
-        ret = Loader.Loader.loadFont(self, *args, **args)
+        ret = Loader.Loader.loadFont(self, *args, **kw)
         self.tick()
         return ret
 

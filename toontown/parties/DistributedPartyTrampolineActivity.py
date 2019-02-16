@@ -98,7 +98,6 @@ class DistributedPartyTrampolineActivity(DistributedPartyActivity):
         ]
         delta = (self.jellyBeanStopHeight - self.jellyBeanStartHeight) / (
             self.numJellyBeans - 1)
-        continue
         self.jellyBeanPositions = [
             self.jellyBeanStartHeight + n * delta
             for n in range(self.numJellyBeans)
@@ -136,7 +135,6 @@ class DistributedPartyTrampolineActivity(DistributedPartyActivity):
         self.trampActor.controlJoint(self.surface, 'modelRoot',
                                      'trampoline_joint1')
         self.sign.setPos(PartyGlobals.TrampolineSignOffset)
-        continue
         self.beans = [
             loader.loadModelCopy('phase_4/models/props/jellybean4')
             for i in range(self.numJellyBeans)
@@ -180,7 +178,6 @@ class DistributedPartyTrampolineActivity(DistributedPartyActivity):
         jumpLineLocator = self.gui.find('**/jumpLine_locator')
         guiBean = self.gui.find('**/trampolineGUI_GreenJellyBean')
         self.gui.find('**/trampolineGUI_GreenJellyBean').stash()
-        continue
         self.guiBeans = [
             guiBean.instanceUnderNode(jumpLineLocator,
                                       self.uniqueName('guiBean%d' % i))

@@ -114,7 +114,7 @@ TextPropertiesManager.getGlobalPtr().setProperties('black', black)
 grey = TextProperties()
 grey.setTextColor(0.5, 0.5, 0.5, 1)
 TextPropertiesManager.getGlobalPtr().setProperties('grey', grey)
-ActivateChat = "True Friends allows one member to chat with another member only by means of a True Friend Code that must be communicated outside of the game. True Friends is not moderated or supervised.\n\nPlease choose one of Toontown's True Friends options:\n\n      \x1shadow\x1No True Friends\x2 - Ability to make True Friends is disabled.\n      This offers the highest level of control.\n\n      \x1shadow\x1Restricted True Friends\x2 - Requires the Parent Account Password to make\n      each new True Friend.\n\n      \x1shadow\x1Unrestricted True Friends\x2 - Once enabled with the Parent Account Password,\n      it is not required to supply the Parent Account Password to make each new\n      True Friend. \x1red\x1This option is not recommended for children under 13.\x2\n\n\n\n\n\n\nBy enabling the True Friends feature, you acknowledge that there are some risks inherent in the True Friends feature and that you have been informed of, and agree to accept, any such risks."
+ActivateChat = "True Friends allows one member to chat with another member only by means of a True Friend Code that must be communicated outside of the game. True Friends is not moderated or supervised.\n\nPlease choose one of Toontown's True Friends options:\n\n      \x01shadow\x01No True Friends\x02 - Ability to make True Friends is disabled.\n      This offers the highest level of control.\n\n      \x01shadow\x01Restricted True Friends\x02 - Requires the Parent Account Password to make\n      each new True Friend.\n\n      \x01shadow\x01Unrestricted True Friends\x02 - Once enabled with the Parent Account Password,\n      it is not required to supply the Parent Account Password to make each new\n      True Friend. \x01red\x01This option is not recommended for children under 13.\x02\n\n\n\n\n\n\nBy enabling the True Friends feature, you acknowledge that there are some risks inherent in the True Friends feature and that you have been informed of, and agree to accept, any such risks."
 ActivateChatYes = 'Update'
 ActivateChatNo = lCancel
 ActivateChatMoreInfo = 'More Info'
@@ -786,7 +786,7 @@ SuitFaceoffTaunts = {
     'dt': [
         "I'm gonna give you double the trouble.",
         'See if you can stop my double cross.',
-        'I serve a mean double-\x4DECKER.',
+        'I serve a mean double-\x04DECKER.',
         "It's time to do some double-dealing.",
         'I plan to do some double DIPPING.',
         "You're not going to like my double play.",

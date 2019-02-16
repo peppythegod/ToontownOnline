@@ -2,7 +2,6 @@ import math
 from pandac.PandaModules import *
 from direct.distributed.ClockDelta import *
 from direct.interval.IntervalGlobal import *
-from direct.showbase.PythonUtil import quantizeVec
 from direct.task.Task import Task
 from toontown.toontowngui import TTDialog
 from toontown.toonbase.ToonBaseGlobal import *
@@ -26,6 +25,13 @@ GROUND_PLANE_MIN = -15
 SHADOW_Z_OFFSET = 0.5
 INITIAL_VELOCITY = 90.0
 WHISTLE_SPEED = INITIAL_VELOCITY * 0.34999999999999998
+
+
+def quantizeVec(vec, divisor):
+    quantize = lambda value, divisor: float(int(value * int(divisor))) / int(divisor)
+    vec[0] = quantize(vec[0], divisor)
+    vec[1] = quantize(vec[1], divisor)
+    vec[2] = quantize(vec[2], divisor)
 
 
 class DistributedPartyCannonActivity(DistributedPartyActivity):

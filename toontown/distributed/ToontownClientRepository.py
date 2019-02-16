@@ -90,7 +90,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         if self.http.getVerifySsl() != HTTPClient.VSNoVerify:
             self.http.setVerifySsl(HTTPClient.VSNoDateCheck)
 
-        prepareAvatar(self.http)
+        #prepareAvatar(self.http) #?
         self._ToontownClientRepository__forbidCheesyEffects = 0
         self.friendManager = None
         self.speedchatRelay = None

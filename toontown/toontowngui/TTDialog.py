@@ -18,5 +18,5 @@ class TTGlobalDialog(GlobalDialog):
                  **kw):
         self.path = 'phase_3/models/gui/dialog_box_buttons_gui'
         GlobalDialog.__init__(self, message, doneEvent, style, okButtonText,
-                              cancelButtonText, **None)
+                              cancelButtonText, **kw)
         self.initialiseoptions(TTGlobalDialog)

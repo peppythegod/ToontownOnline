@@ -33,15 +33,15 @@ class PickANamePattern:
 
     def _genWordListSplitPermutations(self, words):
         if not len(words):
-            return None
+            return
 
         if len(words) == 1:
             yield words
-            return None
+            return
 
         for permutation in self._genWordListSplitPermutations(words[1:]):
             yield [words[0]] + permutation
-            yield [words[0] + ' ' + permutation[0]] + permutation[1:]
+            yield [(words[0] + ' ')+permutation[0]]+permutation[1:]
 
     def _genNameSplitPermutations(self, name):
         for splitName in self._genWordListSplitPermutations(name.split()):

@@ -1,6 +1,4 @@
 from otp.distributed.OtpDoGlobals import *
-from otp.friends import FriendManager
-from toontown.distributed import ToontownClientRepository
 from direct.showbase.MessengerGlobal import *
 from ToonBaseGlobal import *
 from direct.gui.DirectGui import *
@@ -25,12 +23,9 @@ class game:
 
 __builtin__.game = game()
 
-try:
-    pass
-except BaseException:
-    from toontown.launcher.ToontownDummyLauncher import ToontownDummyLauncher
-    launcher = ToontownDummyLauncher()
-    __builtin__.launcher = launcher
+from toontown.launcher.ToontownDummyLauncher import ToontownDummyLauncher
+launcher = ToontownDummyLauncher()
+__builtin__.launcher = launcher
 
 launcher.setRegistry('EXIT_PAGE', 'normal')
 pollingDelay = 0.5
@@ -53,6 +48,10 @@ ToonBase.ToonBase()
 if base.win is None:
     print 'Unable to open window; aborting.'
     sys.exit()
+    
+# Moved some imports here since some instances are only defined after ToonBase
+from otp.friends import FriendManager
+from toontown.distributed import ToontownClientRepository
 
 launcher.setPandaErrorCode(0)
 launcher.setPandaWindowOpen()
@@ -117,13 +116,11 @@ base.loader = base.loader
 __builtin__.loader = base.loader
 autoRun = ConfigVariableBool('toontown-auto-run', 1)
 if autoRun and launcher.isDummy():
-    if not Thread.isTrueThreads() or __name__ == '__main__':
-
-        try:
-            run()
-        except SystemExit:
-            raise
-        except BaseException:
-            from direct.showbase import PythonUtil
-            print PythonUtil.describeException()
-            raise
+    try:
+        run()
+    except SystemExit:
+        raise
+    except BaseException:
+        from direct.showbase import PythonUtil
+        print PythonUtil.describeException()
+        raise

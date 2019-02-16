@@ -1230,8 +1230,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 self.notify.info('opening %s' % textUrl)
                 textFile = urllib.urlopen(textUrl)
                 data = textFile.read()
-                data = data.replace('\\1', '\x1')
-                data = data.replace('\\2', '\x2')
+                data = data.replace('\\1', '\x01')
+                data = data.replace('\\2', '\x02')
                 data = data.replace('\r', ' ')
                 self.articleText[index] = data
                 textFile.close()
@@ -1448,8 +1448,8 @@ class EventsPage(ShtikerPage.ShtikerPage):
                 textData = data.getData()
             else:
                 textData = data
-            textData = textData.replace('\\1', '\x1')
-            textData = textData.replace('\\2', '\x2')
+            textData = textData.replace('\\1', '\x01')
+            textData = textData.replace('\\2', '\x02')
             textData = textData.replace('\r', ' ')
             self.articleText[self.curArticleIndex] = textData
             self.articleIndexList.addItem('')

@@ -1550,7 +1550,7 @@ class DeliverGagQuest(Quest):
 
     def getDefaultQuestDialog(self):
         return TTLocalizer.QuestsDeliverGagQuestStringLong % self.getObjectiveStrings(
-        )[0] + '\x7' + TTLocalizer.QuestsDeliverGagQuestInstructions
+        )[0] + '\x07' + TTLocalizer.QuestsDeliverGagQuestInstructions
 
     def getSCStrings(self, toNpcId, progress):
         if progress >= self.getNumGags():
@@ -3846,7 +3846,6 @@ def filterQuests(entireQuestPool, currentNpc, av):
     if notify.getDebug():
         notify.debug('filterQuests: entireQuestPool: %s' % entireQuestPool)
 
-    continue
     validQuestPool = _[1]([(questId, 1) for questId in entireQuestPool])
     if isLoopingFinalTier(av.getRewardTier()):
         history = map(lambda questDesc: questDesc[0], av.quests)
@@ -3904,8 +3903,6 @@ def filterQuests(entireQuestPool, currentNpc, av):
                         questId)
 
                 break
-                continue
-            []
 
     finalQuestPool = filter(lambda key: validQuestPool[key],
                             validQuestPool.keys())
