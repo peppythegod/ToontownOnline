@@ -105,6 +105,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.inGameNewsMgr = None
         self.whitelistMgr = None
         self.toontownTimeManager = ToontownTimeManager.ToontownTimeManager()
+        """ #!
         self.avatarFriendsManager = self.generateGlobalObject(
             OtpDoGlobals.OTP_DO_ID_AVATAR_FRIENDS_MANAGER,
             'AvatarFriendsManager')
@@ -121,6 +122,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
             self.codeRedemptionManager = self.generateGlobalObject(
                 OtpDoGlobals.OTP_DO_ID_TOONTOWN_CODE_REDEMPTION_MANAGER,
                 'TTCodeRedemptionMgr')
+        """
 
         self.streetSign = None
         self.furnitureManager = None

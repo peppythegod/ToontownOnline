@@ -407,7 +407,7 @@ class ToonBase(OTPBase.OTPBase):
         serverList = []
         for name in gameServer.split(';'):
             url = URLSpec(name, 1)
-            url.setScheme('s')
+            #url.setScheme('s') #!
             if not url.hasPort():
                 url.setPort(serverPort)
 

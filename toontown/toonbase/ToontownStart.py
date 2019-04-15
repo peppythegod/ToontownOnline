@@ -100,7 +100,7 @@ del music
 base.initNametagGlobals()
 base.cr = cr
 loader.endBulkLoad('init')
-cr.generateGlobalObject(OTP_DO_ID_FRIEND_MANAGER, 'FriendManager')
+#cr.generateGlobalObject(OTP_DO_ID_FRIEND_MANAGER, 'FriendManager') #!
 if not launcher.isDummy():
     base.startShow(cr, launcher.getGameServer())
 else:

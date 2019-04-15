@@ -383,8 +383,8 @@ class OTPClientRepository(ClientRepositoryBase):
         self.wantSwitchboard = config.GetBool('want-switchboard', 0)
         self.wantSwitchboardHacks = base.config.GetBool(
             'want-switchboard-hacks', 0)
-        self.centralLogger = self.generateGlobalObject(
-            OtpDoGlobals.OTP_DO_ID_CENTRAL_LOGGER, 'CentralLogger')
+        #self.centralLogger = self.generateGlobalObject(
+        #    OtpDoGlobals.OTP_DO_ID_CENTRAL_LOGGER, 'CentralLogger') #!
 
     def startLeakDetector(self):
         if hasattr(self, 'leakDetector'):
@@ -499,6 +499,7 @@ class OTPClientRepository(ClientRepositoryBase):
 
     def gotoFirstScreen(self):
 
+        """ # kept for study
         try:
             self.accountServerConstants = AccountServerConstants.AccountServerConstants(
                 self)
@@ -507,6 +508,7 @@ class OTPClientRepository(ClientRepositoryBase):
             self.notify.debug(str(e))
             self.loginFSM.request('failedToGetServerConstants', [e])
             return None
+        """
 
         self.startReaderPollTask()
         self.startHeartbeat()
@@ -519,12 +521,21 @@ class OTPClientRepository(ClientRepositoryBase):
 
     def enterLogin(self):
         self.sendSetAvatarIdMsg(0)
-        self.loginDoneEvent = 'loginDone'
+        """
         self.loginScreen = LoginScreen.LoginScreen(self, self.loginDoneEvent)
         self.accept(self.loginDoneEvent,
                     self._OTPClientRepository__handleLoginDone)
         self.loginScreen.load()
         self.loginScreen.enter()
+        """
+        #! Temporary login
+        datagram = PyDatagram()
+        datagram.addUint16(CLIENT_LOGIN_2)
+        datagram.addString(sys.argv[1]) # Play token
+        datagram.addString(self.serverVersion)
+        datagram.addUint32(0) #! Temporary hash val
+        datagram.addInt32(CLIENT_LOGIN_2_BLUE)
+        self.send(datagram)
 
     enterLogin = report(
         types=['args', 'deltaStamp'], dConfigParam='teleport')(enterLogin)
@@ -564,8 +575,8 @@ class OTPClientRepository(ClientRepositoryBase):
             self.loginScreen = None
             self.renderFrame()
 
-        self.ignore(self.loginDoneEvent)
-        del self.loginDoneEvent
+        #self.ignore(self.loginDoneEvent)
+        #del self.loginDoneEvent
         self.handler = None
 
     exitLogin = report(
@@ -594,7 +605,8 @@ class OTPClientRepository(ClientRepositoryBase):
         mode = doneStatus['mode']
         if mode == 'success':
             self.setIsNotNewInstallation()
-            self.loginFSM.request('waitForGameList')
+            #self.loginFSM.request('waitForGameList')
+            self.loginFSM.request('waitForShardList')
         elif mode == 'reject':
             self.loginFSM.request('reject')
         elif mode == 'cancel':
@@ -764,6 +776,8 @@ class OTPClientRepository(ClientRepositoryBase):
         types=['args', 'deltaStamp'], dConfigParam='teleport')(exitShutdown)
 
     def enterWaitForGameList(self):
+        self.loginFSM.request('waitForShardList')
+        """
         self.gameDoDirectory = self.addTaggedInterest(
             self.GameGlobalsId,
             OTP_ZONE_ID_MANAGEMENT,
@@ -771,6 +785,7 @@ class OTPClientRepository(ClientRepositoryBase):
             'game directory',
             event='GameList_Complete')
         self.acceptOnce('GameList_Complete', self.waitForGetGameListResponse)
+        """
 
     enterWaitForGameList = report(
         types=['args', 'deltaStamp'],
@@ -861,6 +876,7 @@ class OTPClientRepository(ClientRepositoryBase):
         dConfigParam='teleport')(enterWaitForShardList)
 
     def _wantShardListComplete(self):
+        print "yerah"
         if self._shardsAreReady():
             self.loginFSM.request('waitForAvatarList')
         else:
@@ -2323,7 +2339,11 @@ class OTPClientRepository(ClientRepositoryBase):
             self.gotObjectLocationMessage(di)
         elif msgType == CLIENT_SET_WISHNAME_RESP:
             self.gotWishnameResponse(di)
+        elif msgType == CLIENT_LOGIN_2_RESP:
+            # We don't need all that fuzzy information anymore so just continue instead
+            self.__handleLoginDone({"mode":"success"})
         else:
+            print "UNKNOWN MSG IS %d" %msgType
             currentLoginState = self.loginFSM.getCurrentState()
             if currentLoginState:
                 currentLoginStateName = currentLoginState.getName()
