@@ -34,3 +34,15 @@ To do that, if you wish, create a BAT file to automate the running process.
 path\to\>>>>>GAME<<<<<\panda\python\ppython main.py your_username
 pause
 ```
+´
+### Workflow
+***Have your OTP server folder one directory up the game folder, and always leave the name of the folder as ToontownOnline, as illustrated.***
+```
+anywhere\
+    OTP-Reboot\
+        ...
+    ToontownOnline\
+        ...
+```
+
+This way the DC file is manageable by both projects without the needing of copy-pasting every change.
