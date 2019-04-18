@@ -46,6 +46,7 @@ from otp.distributed import OtpDoGlobals
 from otp.distributed.TelemetryLimiter import TelemetryLimiter
 from otp.ai.GarbageLeakServerEventAggregator import GarbageLeakServerEventAggregator
 from PotentialAvatar import PotentialAvatar
+from DistrictHandle import *
 
 
 class OTPClientRepository(ClientRepositoryBase):
@@ -383,8 +384,8 @@ class OTPClientRepository(ClientRepositoryBase):
         self.wantSwitchboard = config.GetBool('want-switchboard', 0)
         self.wantSwitchboardHacks = base.config.GetBool(
             'want-switchboard-hacks', 0)
-        #self.centralLogger = self.generateGlobalObject(
-        #    OtpDoGlobals.OTP_DO_ID_CENTRAL_LOGGER, 'CentralLogger') #!
+        self.centralLogger = self.generateGlobalObject(
+            OtpDoGlobals.OTP_DO_ID_CENTRAL_LOGGER, 'CentralLogger') 
 
     def startLeakDetector(self):
         if hasattr(self, 'leakDetector'):
@@ -860,6 +861,9 @@ class OTPClientRepository(ClientRepositoryBase):
         dConfigParam='teleport')(exitMissingGameRootObject)
 
     def enterWaitForShardList(self):
+        self.noInterestShardList()
+        return
+        
         if not self.isValidInterestHandle(self.shardListHandle):
             self.shardListHandle = self.addTaggedInterest(
                 self.GameGlobalsId,
@@ -874,9 +878,30 @@ class OTPClientRepository(ClientRepositoryBase):
     enterWaitForShardList = report(
         types=['args', 'deltaStamp'],
         dConfigParam='teleport')(enterWaitForShardList)
+        
+    def noInterestShardList(self):
+        datagram = PyDatagram()
+        datagram.addUint16(8)
+        self.send(datagram)
+        
+    def __handleShardList(self, di):
+        numDistricts = di.getUint16()
+        for i in range(numDistricts):
+            channel = di.getUint32()
+            name = di.getString()
+            pop = di.getUint32()
+            self.activeDistrictMap[channel] = DistrictHandle(channel, name, pop)
+            
+        if self.loginFSM.getCurrentState().getName() == "waitForShardList":
+            self.wuantShardListComplete()
+            
+    def wuantShardListComplete(self):
+        if self._shardsAreReady():
+            self.loginFSM.request('waitForAvatarList')
+        else:
+            self.loginFSM.request('noShards')     
 
     def _wantShardListComplete(self):
-        print "yerah"
         if self._shardsAreReady():
             self.loginFSM.request('waitForAvatarList')
         else:
@@ -2341,7 +2366,34 @@ class OTPClientRepository(ClientRepositoryBase):
             self.gotWishnameResponse(di)
         elif msgType == CLIENT_LOGIN_2_RESP:
             # We don't need all that fuzzy information anymore so just continue instead
+            now = time.time()
+            returnCode = di.getUint8()
+            errorString = di.getString()
+            playtoken = di.getString()
+            
+            canChat = di.getUint8()
+            self.secretChatAllowed = canChat
+            if base.logPrivateInfo:
+                self.notify.info('Chat from game server login: %s' % canChat)
+
+            sec = di.getUint32()
+            usec = di.getUint32()
+            serverTime = sec + usec / 1000000.0
+            self.serverTimeUponLogin = serverTime
+            self.clientTimeUponLogin = now
+            self.globalClockRealTimeUponLogin = globalClock.getRealTime()
+            if hasattr(self, 'toontownTimeManager'):
+                self.toontownTimeManager.updateLoginTimes(
+                    serverTime, now, self.globalClockRealTimeUponLogin)
+
+            serverDelta = serverTime - now
+            self.setServerDelta(serverDelta)
+            self.notify.setServerDelta(serverDelta, 28800)
+            self.setIsPaid(di.getUint8())
             self.__handleLoginDone({"mode":"success"})
+            
+        elif msgType == 9:
+            self.__handleShardList(di)
         else:
             print "UNKNOWN MSG IS %d" %msgType
             currentLoginState = self.loginFSM.getCurrentState()

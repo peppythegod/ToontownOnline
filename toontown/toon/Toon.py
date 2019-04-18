@@ -450,12 +450,7 @@ class Toon(Avatar.Avatar, ToonHead):
     afkTimeout = base.config.GetInt('afk-timeout', 600)
 
     def __init__(self):
-
-        try:
-            return None
-        except:
-            self.Toon_initialized = 1
-
+        self.Toon_initialized = 1
         Avatar.Avatar.__init__(self)
         ToonHead.__init__(self)
         self.forwardSpeed = 0.0
@@ -589,34 +584,30 @@ class Toon(Avatar.Avatar, ToonHead):
         self.cleanupPieModel()
 
     def delete(self):
+        self.Toon_deleted = 1
+        self.stopAnimations()
+        self.rightHands = None
+        self.rightHand = None
+        self.leftHands = None
+        self.leftHand = None
+        self.headParts = None
+        self.torsoParts = None
+        self.hipsParts = None
+        self.legsParts = None
+        del self.animFSM
+        for bookActor in self._Toon__bookActors:
+            bookActor.cleanup()
 
-        try:
-            pass
-        except:
-            self.Toon_deleted = 1
-            self.stopAnimations()
-            self.rightHands = None
-            self.rightHand = None
-            self.leftHands = None
-            self.leftHand = None
-            self.headParts = None
-            self.torsoParts = None
-            self.hipsParts = None
-            self.legsParts = None
-            del self.animFSM
-            for bookActor in self._Toon__bookActors:
-                bookActor.cleanup()
+        del self._Toon__bookActors
+        for holeActor in self._Toon__holeActors:
+            holeActor.cleanup()
 
-            del self._Toon__bookActors
-            for holeActor in self._Toon__holeActors:
-                holeActor.cleanup()
-
-            del self._Toon__holeActors
-            self.soundTeleport = None
-            self.motion.delete()
-            self.motion = None
-            Avatar.Avatar.delete(self)
-            ToonHead.delete(self)
+        del self._Toon__holeActors
+        self.soundTeleport = None
+        self.motion.delete()
+        self.motion = None
+        Avatar.Avatar.delete(self)
+        ToonHead.delete(self)
 
     def updateToonDNA(self, newDNA, fForce=0):
         self.style.gender = newDNA.getGender()

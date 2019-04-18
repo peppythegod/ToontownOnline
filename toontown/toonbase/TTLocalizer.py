@@ -1,5 +1,6 @@
 from toontown.toonbase.TTLocalizerEnglish import *
-from pandac.libpandaexpressModules import *
+#from pandac.libpandaexpressModules import *
+from pandac.PandaModules import *
 import string
 import types
 

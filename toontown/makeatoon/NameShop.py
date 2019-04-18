@@ -40,7 +40,7 @@ class NameShop(StateData.StateData):
         self.avList = avList
         self.index = index
         self.shopsVisited = []
-        self.avId = -1
+        self.avId = 0
         self.avExists = 0
         self.names = ['', '', '', '']
         self.toon = None

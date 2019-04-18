@@ -398,7 +398,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.send(dg)
 
     def handleCreateAvatar(self, msgType, di):
-        if msgType == CLIENT_CREATE_AVATAR_RESP and msgType == CLIENT_SET_NAME_PATTERN_ANSWER or msgType == CLIENT_SET_WISHNAME_RESP:
+        if msgType == CLIENT_CREATE_AVATAR_RESP or msgType == CLIENT_SET_NAME_PATTERN_ANSWER or msgType == CLIENT_SET_WISHNAME_RESP:
             self.avCreate.ns.nameShopHandler(msgType, di)
         else:
             self.handleMessageType(msgType, di)

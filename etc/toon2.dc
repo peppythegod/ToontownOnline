@@ -1,0 +1,276 @@
+from direct.distributed import DistributedObject/AI/UD
+from direct.distributed import DistributedNode/AI/UD
+from direct.distributed import DistributedSmoothNode/AI
+from direct.distributed import DistributedCartesianGrid/AI
+from direct.distributed import DistributedCamera/AI/OV
+
+from otp.distributed import DistributedDistrict/AI/UD
+from otp.ai import TimeManager/AI
+from otp.distributed import Account/AI/UD
+from otp.distributed import CentralLogger/AI/UD
+
+from toontown.distributed import ToontownDistrict/AI
+from toontown.toon import DistributedToon/AI/UD
+
+keyword required;
+keyword broadcast;
+keyword ram;
+keyword db;
+keyword p2p;
+keyword clsend;
+keyword ownsend;
+keyword airecv;
+
+// The most fundamental class
+dclass DistributedObject {
+  setBarrierData(BarrierData []) broadcast ram;
+  setBarrierReady(uint16) airecv clsend;
+  execCommand(string, uint32, uint32, uint32);
+  broadcastMessage() broadcast;
+};
+
+dclass CentralLogger : DistributedObject {
+  sendMessage(string(0-256), string(0-1024), uint32, uint32) clsend;
+  logAIGarbage() airecv;
+};
+
+// The TimeManager should be created before all other objects, because
+// network timestamps can't be accurately decoded until the
+// TimeManager has been created.
+dclass TimeManager : DistributedObject {
+  requestServerTime(uint8 context) airecv clsend;
+  serverTime(uint8 context, int16 timestamp, uint32 timeOfDay);
+
+  // This message is sent from the client to the AI when it disconnects
+  // cleanly.  It is a bit of a hack to put it here in the TimeManager
+  // (because what does the TimeManager have to do with that?) but we
+  // can't put it on the toon because it is a message to the AI, and
+  // this is a convenient place to put it instead.
+  setDisconnectReason(uint8 disconnectCode) airecv clsend;
+};
+
+dclass DistributedDistrict : DistributedObject {
+  setName(string) required broadcast ram;
+  setAvailable(uint8) required broadcast ram;
+};
+
+dclass ToontownDistrict : DistributedDistrict {
+  setParentingRules(string, string) broadcast ram;
+  allowAHNNLog(uint8) broadcast required ram;
+};
+
+dclass DistributedNode : DistributedObject {
+  setParent(uint8 token) broadcast ram ownsend;
+
+  setX(int16 / 10) broadcast ram ownsend;
+  setY(int16 / 10) broadcast ram ownsend;
+  // We need more resolution in Z so the shadow does not appear
+  // below the ground due to roundoff error. We are sacrificing
+  // range for accuracy
+  setZ(int16 / 100) broadcast ram ownsend;
+  setH(int16 / 10) broadcast ram ownsend;
+  setP(int16 / 10) broadcast ram ownsend;
+  setR(int16 / 10) broadcast ram ownsend;
+
+  setPos : setX, setY, setZ;
+  setHpr : setH, setP, setR;
+  setPosHpr : setX, setY, setZ, setH, setP, setR;
+  setXY : setX, setY;
+  setXZ : setX, setZ;
+  setXYH : setX, setY, setH;
+  setXYZH : setX, setY, setZ, setH;
+};
+
+dclass DistributedSmoothNode : DistributedNode {
+  // Component set pos and hpr functions.
+  setComponentX(int16 / 10) broadcast ram ownsend;
+  setComponentY(int16 / 10) broadcast ram ownsend;
+  setComponentZ(int16 / 100) broadcast ram ownsend;
+  setComponentH(int16 / 10) broadcast ram ownsend;
+  setComponentP(int16 / 10) broadcast ram ownsend;
+  setComponentR(int16 / 10) broadcast ram ownsend;
+  setComponentT(int16 timestamp) broadcast ram ownsend;
+
+  // Composite set pos and hpr functions.  These map to combinations
+  // of one or more of the above components.  They all include
+  // setComponentT(), which must be called last.
+  setSmStop : setComponentT;
+  setSmH : setComponentH, setComponentT;
+  setSmXY : setComponentX, setComponentY, setComponentT;
+  setSmXZ : setComponentX, setComponentZ, setComponentT;
+  setSmPos : setComponentX, setComponentY, setComponentZ, setComponentT;
+  setSmHpr : setComponentH, setComponentP, setComponentR, setComponentT;
+  setSmXYH : setComponentX, setComponentY, setComponentH, setComponentT;
+  setSmXYZH : setComponentX, setComponentY, setComponentZ, setComponentH, setComponentT;
+  setSmPosHpr : setComponentX, setComponentY, setComponentZ, setComponentH, setComponentP, setComponentR, setComponentT;
+
+  // I don't need any parameters, but for some reason leaving the
+  // parameter list empty on this one causes a server crash.
+  clearSmoothing(int8 bogus) broadcast ownsend;
+};
+
+dclass DistributedToon : DistributedSmoothNode {
+  setName(string) required broadcast ram db;
+  setDNAString(blob) required broadcast ram db;
+  setMaxBankMoney(int16 = 1000) required broadcast ram db;
+  setBankMoney(int16 = 0) required broadcast ram db;
+  setMaxMoney(int16 = 40) required broadcast ram db;
+  setMoney(int16 = 0) required broadcast ram db;
+  setMaxHp(int16 = 15) required broadcast db;
+  setHp(int16 = 15) required broadcast db;
+  setExperience(blob = { 0 * 14 }) required p2p db;
+  setMaxCarry(uint8 = 20) required p2p db;
+  // all I need is a single bit for each track, but uint8array is the
+  // smallest and it crashes
+  setTrackAccess(uint16array = {0,0,0,0,1,1,0}) required broadcast db;
+  // Progress training a track. -1 trackId means no track, progress is a bit array
+  setTrackProgress(int8 trackId = -1, uint32 progress = 0) required p2p db;
+  // a 42 byte string of uint8s. We give some props for starters.
+  setInventory(blob = { 0 * 6,       // Heal
+                        0 * 6,       // Trap
+                        0 * 6,       // Lure
+                        0 * 6,       // Sound
+                        1, 0 * 5,    // Throw
+                        1, 0 * 5,    // Squirt
+                        0 * 6        // Drop
+                        }) required p2p db;
+
+  setFriendsList(uint32uint8array = {}) required p2p db;
+
+  setDefaultShard(uint32 = 200000000) required p2p db;
+  setDefaultZone(uint16 = 2000) required p2p db;
+  setShtickerBook(blob = {}) required p2p db;
+  setZonesVisited(uint16array = { 2000 }) required p2p db;
+  setHoodsVisited(uint16array = { 2000 }) required p2p db;
+  setInterface(blob = {}) required p2p db;
+  setAccountName(string = "unknown") required p2p db;
+  setLastHood(uint16 = 2000) required p2p db;
+  setTutorialAck(uint8 = 0) required p2p db;
+
+  setMaxClothes(uint32 = 10) required p2p db;
+  setClothesTopsList(uint8array clothesTopsList = {}) required p2p db;
+  setClothesBottomsList(uint8array clothesBottomsList = {}) required p2p db;
+
+  // The AI uses this to tell the toon how much earned experience he
+  // has accumulated so far within a particular battle.  This is
+  // important to allow the client to gray out gag buttons when the
+  // toon exceeds his experience cap for the battle.
+  setEarnedExperience(uint16array earnedExp) p2p;
+
+  // toon final X position wrt tunnel, tunnel pos/heading
+  setTunnelIn(int16 timestamp,
+              int16/10 endX,
+              int16/10 x, int16/10 y, int16/100 z,
+              int32/100 h) ownsend broadcast;
+  // toon starting position wrt tunnel, tunnel pos/heading
+  setTunnelOut(int16 timestamp,
+               int16/10 startX, int16/10 startY,
+               int16/10 x, int16/10 y, int16/100 z,
+               int32/100 h) ownsend broadcast;
+
+  setAnimState(blob, int16 / 1000, int16 timestamp) broadcast ram ownsend;
+
+  setChat(string chat, uint8 chatFlags) broadcast ownsend;
+
+  setEmoteState(uint32, int16 / 1000, int16 timestamp) broadcast ram ownsend;
+  setEmoteAccess(uint8array bits = {1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) required p2p db;
+
+  // placehoder int16 parameter to avoid server crash
+  playSplashEffect(int16/10 x, int16/10 y, int16/10 z) broadcast ownsend;
+
+  // These whisper messages are sent from another client.  For now, we
+  // have to put the fromId in the message, but eventually we need to
+  // have a way to validate these.
+  setWhisperFrom(uint32 fromId, string) p2p clsend;
+  setWhisperQTFrom(uint32 fromId, uint8array) p2p clsend;
+  setWhisperQTQuestFrom(uint32 fromId, uint32array) p2p clsend;
+  setWhisperQTCustomFrom(uint32 fromId, uint16 messageIndex) airecv clsend;
+  setWhisperIgnored(uint32 fromId) p2p clsend;
+
+  // This is an onscreen message sent by the system.
+  setSystemMessage(uint32 aboutId, string) p2p;
+
+  setQT(uint8array) broadcast ownsend;
+  setQTQuest(uint32array) broadcast ownsend;
+  setQTCustom(uint16 messageIndex) broadcast ownsend;
+  setCommonChatFlags(uint8) broadcast p2p ram;
+
+  // The trophy score is not a permanent property of the toon, so it
+  // does not get saved in the database.  It is instead set by the AI,
+  // and it varies from shard to shard.
+  setTrophyScore(uint16 score) broadcast p2p ram;
+
+  // This message is sent by the AI to notify the client when friends
+  // are added or removed without the client's participation, if the
+  // client happens to be logged in.  It also might be sent directly
+  // from the friend (or former friend).
+  // TODO: this is still clsend but should not be to be secure
+  friendsNotify(int32 avId, int8 status) p2p clsend;
+
+  // List of safe zones you can teleport to
+  setTeleportAccess(uint32array = {}) required p2p db;
+
+  // TODO: check these clsends closely for security later
+  battleSOS(uint32 requesterID) p2p clsend;
+  teleportQuery(uint32 requesterId) p2p clsend;
+  teleportResponse(uint32 avId, int8 available, uint32 shardId,
+                   uint16 hoodId, uint16 zoneId) p2p clsend;
+  teleportGiveup(uint32 avId) p2p clsend;
+  teleportGreeting(uint32 avId) broadcast ownsend;
+
+  setCogStatus(uint32array = {1 * 32}) required p2p db;
+  setCogCount(uint32array = {0 * 32}) required p2p db;
+
+  setCogRadar(uint8array = {0 * 4}) required p2p db;
+  setBuildingRadar(uint8array = {0 * 4}) required p2p db;
+
+  setFishes(uint32array = {}) required p2p db;
+  setHouseId(uint32 id = 0) required p2p db;
+  setQuests(uint32array = {}) required broadcast db;
+  setQuestHistory(uint16array = {}) required p2p db;
+  setRewardHistory(uint8 tier = 0, uint16array = {}) required p2p db;
+  setQuestCarryLimit(uint8 = 1) required p2p db;
+
+  setCheesyEffect(int16 effect = 0, uint16 hoodId = 0, uint32 expireTime = 0) required broadcast db;
+  setPosIndex(uint8 index = 0) required p2p db;
+  suggestResync(uint32 avId) p2p clsend;
+
+  // these fields are for the Servers .. client should never see these ??
+  // the index
+  OwningAccount(uint32 avId = 0);
+  // the string the person want to be there av's name
+  WishName(string = "");
+  // CLOSED,OPEN,USED,.. The state of the name review process
+  WishNameState(string = "");
+};
+
+dclass Account {
+// RHH
+// This is for internal server usa only...
+
+  // the 6 avatars a person has
+  ACCOUNT_AV_SET( uint32array );
+  // some old records have this no longer tracked
+  BIRTH_DATE( string );
+  // this is the swid... or external name..
+  BLAST_NAME( string="" );
+  // date of creation in local machine time
+  CREATED(string="" );
+  // the name for the account  ( no longer tracked )
+  FIRST_NAME(string="" );
+  // the last time this person account connected to game
+  LAST_LOGIN(string="" );
+  // No Longer Tracked
+  LAST_NAME( string="" );
+  // total time this account has been loged in ..
+  PLAYED_MINUTES( string="" );
+  // total time this account has been loged in this period
+  PLAYED_MINUTES_PERIOD( string="" );
+  //PASSWD( string );
+  // the 6 houses a person has
+  HOUSE_ID_SET( uint32array );
+  ESTATE_ID( uint32 );
+};
+
+
+

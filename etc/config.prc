@@ -1,6 +1,6 @@
 default-model-extension .bam
 
-dc-file toon.dc
+dc-file etc/toon2.dc
 #dc-file phase_3/etc/toon.dc
 #dc-file phase_3/etc/otp.dc
 

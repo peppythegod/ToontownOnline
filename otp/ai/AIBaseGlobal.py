@@ -1,5 +1,5 @@
-from direct.showbase import Loader
 from AIBase import *
+from direct.showbase import Loader
 __builtins__['simbase'] = AIBase()
 __builtins__['ostream'] = Notify.out()
 __builtins__['run'] = simbase.run

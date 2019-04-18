@@ -28,12 +28,7 @@ class Avatar(Actor, ShadowCaster):
 
     def __init__(self, other=None):
         self.name = ''
-
-        try:
-            return None
-        except BaseException:
-            self.Avatar_initialized = 1
-
+        self.Avatar_initialized = 1
         Actor.__init__(self, None, None, other, flattenable=0, setFinal=1)
         ShadowCaster.__init__(self)
         self._Avatar__font = OTPGlobals.getInterfaceFont()

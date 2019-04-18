@@ -118,86 +118,78 @@ class ToonHead(Actor.Actor):
         0.0)
 
     def __init__(self):
-
-        try:
-            pass
-        except:
-            self.ToonHead_initialized = 1
-            Actor.Actor.__init__(self)
-            self.toonName = 'ToonHead-' + str(self.this)
-            self._ToonHead__blinkName = 'blink-' + self.toonName
-            self._ToonHead__stareAtName = 'stareAt-' + self.toonName
-            self._ToonHead__lookName = 'look-' + self.toonName
-            self.lookAtTrack = None
-            self._ToonHead__eyes = None
-            self._ToonHead__eyelashOpen = None
-            self._ToonHead__eyelashClosed = None
-            self._ToonHead__lod500Eyes = None
-            self._ToonHead__lod250Eyes = None
-            self._ToonHead__lpupil = None
-            self._ToonHead__lod500lPupil = None
-            self._ToonHead__lod250lPupil = None
-            self._ToonHead__rpupil = None
-            self._ToonHead__lod500rPupil = None
-            self._ToonHead__lod250rPupil = None
-            self._ToonHead__muzzle = None
-            self._ToonHead__eyesOpen = ToonHead.EyesOpen
-            self._ToonHead__eyesClosed = ToonHead.EyesClosed
-            self._ToonHead__height = 0.0
-            self._ToonHead__eyelashesHiddenByGlasses = False
-            self.randGen = random.Random()
-            self.randGen.seed(random.random())
-            self.eyelids = ClassicFSM('eyelids', [
-                State('off', self.enterEyelidsOff, self.exitEyelidsOff,
-                      ['open', 'closed', 'surprised']),
-                State('open', self.enterEyelidsOpen, self.exitEyelidsOpen,
-                      ['closed', 'surprised', 'off']),
-                State('surprised', self.enterEyelidsSurprised,
-                      self.exitEyelidsSurprised, ['open', 'closed', 'off']),
-                State('closed', self.enterEyelidsClosed,
-                      self.exitEyelidsClosed, ['open', 'surprised', 'off'])
-            ], 'off', 'off')
-            self.eyelids.enterInitialState()
-            self.emote = None
-            self._ToonHead__stareAtNode = NodePath()
-            self._ToonHead__defaultStarePoint = Point3(0, 0, 0)
-            self._ToonHead__stareAtPoint = self._ToonHead__defaultStarePoint
-            self._ToonHead__stareAtTime = 0
-            self.lookAtPositionCallbackArgs = None
+        self.ToonHead_initialized = 1
+        Actor.Actor.__init__(self)
+        self.toonName = 'ToonHead-' + str(self.this)
+        self._ToonHead__blinkName = 'blink-' + self.toonName
+        self._ToonHead__stareAtName = 'stareAt-' + self.toonName
+        self._ToonHead__lookName = 'look-' + self.toonName
+        self.lookAtTrack = None
+        self._ToonHead__eyes = None
+        self._ToonHead__eyelashOpen = None
+        self._ToonHead__eyelashClosed = None
+        self._ToonHead__lod500Eyes = None
+        self._ToonHead__lod250Eyes = None
+        self._ToonHead__lpupil = None
+        self._ToonHead__lod500lPupil = None
+        self._ToonHead__lod250lPupil = None
+        self._ToonHead__rpupil = None
+        self._ToonHead__lod500rPupil = None
+        self._ToonHead__lod250rPupil = None
+        self._ToonHead__muzzle = None
+        self._ToonHead__eyesOpen = ToonHead.EyesOpen
+        self._ToonHead__eyesClosed = ToonHead.EyesClosed
+        self._ToonHead__height = 0.0
+        self._ToonHead__eyelashesHiddenByGlasses = False
+        self.randGen = random.Random()
+        self.randGen.seed(random.random())
+        self.eyelids = ClassicFSM('eyelids', [
+            State('off', self.enterEyelidsOff, self.exitEyelidsOff,
+                  ['open', 'closed', 'surprised']),
+            State('open', self.enterEyelidsOpen, self.exitEyelidsOpen,
+                  ['closed', 'surprised', 'off']),
+            State('surprised', self.enterEyelidsSurprised,
+                  self.exitEyelidsSurprised, ['open', 'closed', 'off']),
+            State('closed', self.enterEyelidsClosed,
+                  self.exitEyelidsClosed, ['open', 'surprised', 'off'])
+        ], 'off', 'off')
+        self.eyelids.enterInitialState()
+        self.emote = None
+        self._ToonHead__stareAtNode = NodePath()
+        self._ToonHead__defaultStarePoint = Point3(0, 0, 0)
+        self._ToonHead__stareAtPoint = self._ToonHead__defaultStarePoint
+        self._ToonHead__stareAtTime = 0
+        self.lookAtPositionCallbackArgs = None
 
     def delete(self):
+        self.ToonHead_deleted = 1
+        taskMgr.remove(self._ToonHead__blinkName)
+        taskMgr.remove(self._ToonHead__lookName)
+        taskMgr.remove(self._ToonHead__stareAtName)
+        if self.lookAtTrack:
+            self.lookAtTrack.finish()
+            self.lookAtTrack = None
 
-        try:
-            pass
-        except:
-            self.ToonHead_deleted = 1
-            taskMgr.remove(self._ToonHead__blinkName)
-            taskMgr.remove(self._ToonHead__lookName)
-            taskMgr.remove(self._ToonHead__stareAtName)
-            if self.lookAtTrack:
-                self.lookAtTrack.finish()
-                self.lookAtTrack = None
+        del self.eyelids
+        del self._ToonHead__stareAtNode
+        del self._ToonHead__stareAtPoint
+        if self._ToonHead__eyes:
+            del self._ToonHead__eyes
 
-            del self.eyelids
-            del self._ToonHead__stareAtNode
-            del self._ToonHead__stareAtPoint
-            if self._ToonHead__eyes:
-                del self._ToonHead__eyes
+        if self._ToonHead__lpupil:
+            del self._ToonHead__lpupil
 
-            if self._ToonHead__lpupil:
-                del self._ToonHead__lpupil
+        if self._ToonHead__rpupil:
+            del self._ToonHead__rpupil
 
-            if self._ToonHead__rpupil:
-                del self._ToonHead__rpupil
+        if self._ToonHead__eyelashOpen:
+            del self._ToonHead__eyelashOpen
 
-            if self._ToonHead__eyelashOpen:
-                del self._ToonHead__eyelashOpen
+        if self._ToonHead__eyelashClosed:
+            del self._ToonHead__eyelashClosed
 
-            if self._ToonHead__eyelashClosed:
-                del self._ToonHead__eyelashClosed
-
-            self.lookAtPositionCallbackArgs = None
-            Actor.Actor.delete(self)
+        self.lookAtPositionCallbackArgs = None
+        Actor.Actor.delete(self)
 
     def setupHead(self, dna, forGui=0):
         self._ToonHead__height = self.generateToonHead(1, dna, ('1000', ),
@@ -461,11 +453,12 @@ class ToonHead(Actor.Actor):
                     else:
                         pmodel = loader.loadModel(ppath + 'tall')
                     ptype = 'tall'
-                elif copy:
-                    pmodel = loader.loadModel(ppath + 'short')
                 else:
-                    pmodel = loader.loadModel(ppath + 'short')
-                ptype = 'short'
+                    if copy:
+                        pmodel = loader.loadModel(ppath + 'short')
+                    else:
+                        pmodel = loader.loadModel(ppath + 'short')
+                    ptype = 'short'
                 if pmodel:
                     p = pmodel.find('**/pumpkin_' + ptype + '*')
                     p.setScale(0.5)
@@ -621,7 +614,7 @@ class ToonHead(Actor.Actor):
         parts = self.findAllMatches('**/head*')
         parts.setColor(style.getHeadColor())
         animalType = style.getAnimal()
-        if animalType == 'cat' and animalType == 'rabbit' and animalType == 'bear' and animalType == 'mouse' or animalType == 'pig':
+        if animalType == 'cat' or animalType == 'rabbit' or animalType == 'bear' or animalType == 'mouse' or animalType == 'pig':
             parts = self.findAllMatches('**/ear?-*')
             parts.setColor(style.getHeadColor())
 
@@ -846,30 +839,31 @@ class ToonHead(Actor.Actor):
                 self._ToonHead__eyelashClosed.removeNode()
                 self._ToonHead__eyelashClosed = None
 
-        elif self._ToonHead__eyelashOpen:
-            self._ToonHead__eyelashOpen.removeNode()
-
-        if self._ToonHead__eyelashClosed:
-            self._ToonHead__eyelashClosed.removeNode()
-
-        animal = style.head[0]
-        model = loader.loadModel('phase_3' + EyelashDict[animal])
-        if self.hasLOD():
-            head = self.getPart('head', '1000')
         else:
-            head = self.getPart('head', 'lodRoot')
-        length = style.head[1]
-        if length == 'l':
-            openString = 'open-long'
-            closedString = 'closed-long'
-        else:
-            openString = 'open-short'
-            closedString = 'closed-short'
-        self._ToonHead__eyelashOpen = model.find('**/' +
-                                                 openString).copyTo(head)
-        self._ToonHead__eyelashClosed = model.find('**/' +
-                                                   closedString).copyTo(head)
-        model.removeNode()
+            if self._ToonHead__eyelashOpen:
+                self._ToonHead__eyelashOpen.removeNode()
+
+            if self._ToonHead__eyelashClosed:
+                self._ToonHead__eyelashClosed.removeNode()
+
+            animal = style.head[0]
+            model = loader.loadModel('phase_3' + EyelashDict[animal])
+            if self.hasLOD():
+                head = self.getPart('head', '1000')
+            else:
+                head = self.getPart('head', 'lodRoot')
+            length = style.head[1]
+            if length == 'l':
+                openString = 'open-long'
+                closedString = 'closed-long'
+            else:
+                openString = 'open-short'
+                closedString = 'closed-short'
+            self._ToonHead__eyelashOpen = model.find('**/' +
+                                                     openString).copyTo(head)
+            self._ToonHead__eyelashClosed = model.find('**/' +
+                                                       closedString).copyTo(head)
+            model.removeNode()
 
     def _ToonHead__fixHeadLongLong(self, style, lodName=None, copy=1):
         if lodName == None:

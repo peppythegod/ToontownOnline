@@ -8,7 +8,6 @@ import os
 from direct.showbase import AppRunnerGlobal
 from direct.directnotify import DirectNotifyGlobal
 
-
 class NameGenerator:
     text = TextNode('text')
     text.setFont(ToontownGlobals.getInterfaceFont())
@@ -56,43 +55,58 @@ class NameGenerator:
             self.notify.error(
                 "NameGenerator: Error opening name list text file '%s.'" %
                 TTLocalizer.NameShopNameMaster)
-
         input = StreamReader(vfs.openReadFile(filename, 1), 1)
-        currentLine = input.readline()
+        currentLine = input.readline().strip()
         while currentLine:
             if currentLine.lstrip()[0:1] != '#':
                 a1 = currentLine.find('*')
                 a2 = currentLine.find('*', a1 + 1)
-                self.nameDictionary[int(currentLine[0:a1])] = (
-                    int(currentLine[a1 + 1:a2]),
-                    currentLine[a2 + 1:len(currentLine) - 1])
+                self.nameDictionary[int(currentLine[0:a1])] = (int(currentLine[a1 + 1:a2]), currentLine[a2 + 1:len(currentLine)])
+            currentLine = input.readline().strip()
 
-            currentLine = input.readline()
-        masterList = [
-            self.boyTitles, self.girlTitles, self.neutralTitles,
-            self.boyFirsts, self.girlFirsts, self.neutralFirsts,
-            self.capPrefixes, self.lastPrefixes, self.lastSuffixes
-        ]
+        masterList = [self.boyTitles,
+         self.girlTitles,
+         self.neutralTitles,
+         self.boyFirsts,
+         self.girlFirsts,
+         self.neutralFirsts,
+         self.capPrefixes,
+         self.lastPrefixes,
+         self.lastSuffixes]
         for tu in self.nameDictionary.values():
             masterList[tu[0]].append(tu[1])
 
         return 1
 
     def _getNameParts(self, cat2part):
-        nameParts = [{}, {}, {}, {}]
-        for (id, tpl) in self.nameDictionary.iteritems():
-            (cat, str) = tpl
+        nameParts = [{},
+         {},
+         {},
+         {}]
+        for id, tpl in self.nameDictionary.iteritems():
+            cat, str = tpl
             if cat in cat2part:
                 nameParts[cat2part[cat]][str] = id
-                continue
 
         return nameParts
 
     def getMaleNameParts(self):
-        return self._getNameParts({0: 0, 2: 0, 3: 1, 5: 1, 6: 2, 7: 2, 8: 3})
+        return self._getNameParts({0: 0,
+         2: 0,
+         3: 1,
+         5: 1,
+         6: 2,
+         7: 2,
+         8: 3})
 
     def getFemaleNameParts(self):
-        return self._getNameParts({1: 0, 2: 0, 4: 1, 5: 1, 6: 2, 7: 2, 8: 3})
+        return self._getNameParts({1: 0,
+         2: 0,
+         4: 1,
+         5: 1,
+         6: 2,
+         7: 2,
+         8: 3})
 
     def getLastNamePrefixesCapped(self):
         return self.capPrefixes
@@ -116,7 +130,6 @@ class NameGenerator:
             for g in newtu:
                 if tu[1] == g:
                     return tu[0]
-                    continue
 
         return -1
 
@@ -128,56 +141,39 @@ class NameGenerator:
             if width > maxWidth:
                 maxWidth = text.calcWidth(name)
                 maxName = name
-                continue
 
         print maxName + ' ' + str(maxWidth)
         return maxName
 
     def findWidestName(self):
-        longestBoyTitle = self.findWidestInList(
-            self.text, self.boyTitles + self.neutralTitles)
-        longestGirlTitle = self.findWidestInList(
-            self.text, self.girlTitles + self.neutralTitles)
-        longestBoyFirst = self.findWidestInList(
-            self.text, self.boyFirsts + self.neutralFirsts)
-        longestGirlFirst = self.findWidestInList(
-            self.text, self.girlFirsts + self.neutralFirsts)
+        longestBoyTitle = self.findWidestInList(self.text, self.boyTitles + self.neutralTitles)
+        longestGirlTitle = self.findWidestInList(self.text, self.girlTitles + self.neutralTitles)
+        longestBoyFirst = self.findWidestInList(self.text, self.boyFirsts + self.neutralFirsts)
+        longestGirlFirst = self.findWidestInList(self.text, self.girlFirsts + self.neutralFirsts)
         longestLastPrefix = self.findWidestInList(self.text, self.lastPrefixes)
         longestLastSuffix = self.findWidestInList(self.text, self.lastSuffixes)
-        longestBoyFront = self.findWidestInList(
-            self.text, [longestBoyTitle, longestBoyFirst])
-        longestGirlFront = self.findWidestInList(
-            self.text, [longestGirlTitle, longestGirlFirst])
-        longestBoyName = longestBoyTitle + ' ' + longestBoyFirst + \
-            ' ' + longestLastPrefix + longestLastSuffix
-        longestGirlName = longestGirlTitle + ' ' + longestGirlFirst + \
-            ' ' + longestLastPrefix + longestLastSuffix
-        longestName = self.findWidestInList(self.text,
-                                            [longestBoyName, longestGirlName])
+        longestBoyFront = self.findWidestInList(self.text, [longestBoyTitle, longestBoyFirst])
+        longestGirlFront = self.findWidestInList(self.text, [longestGirlTitle, longestGirlFirst])
+        longestBoyName = longestBoyTitle + ' ' + longestBoyFirst + ' ' + longestLastPrefix + longestLastSuffix
+        longestGirlName = longestGirlTitle + ' ' + longestGirlFirst + ' ' + longestLastPrefix + longestLastSuffix
+        longestName = self.findWidestInList(self.text, [longestBoyName, longestGirlName])
         return longestName
 
     def findWidestTitleFirst(self):
-        longestBoyTitle = self.findWidestInList(
-            self.text, self.boyTitles + self.neutralTitles)
-        longestGirlTitle = self.findWidestInList(
-            self.text, self.girlTitles + self.neutralTitles)
-        longestBoyFirst = self.findWidestInList(
-            self.text, self.boyFirsts + self.neutralFirsts)
-        longestGirlFirst = self.findWidestInList(
-            self.text, self.girlFirsts + self.neutralFirsts)
+        longestBoyTitle = self.findWidestInList(self.text, self.boyTitles + self.neutralTitles)
+        longestGirlTitle = self.findWidestInList(self.text, self.girlTitles + self.neutralTitles)
+        longestBoyFirst = self.findWidestInList(self.text, self.boyFirsts + self.neutralFirsts)
+        longestGirlFirst = self.findWidestInList(self.text, self.girlFirsts + self.neutralFirsts)
         longestBoyName = longestBoyTitle + ' ' + longestBoyFirst
         longestGirlName = longestGirlTitle + ' ' + longestGirlFirst
-        longestName = self.findWidestInList(self.text,
-                                            [longestBoyName, longestGirlName])
+        longestName = self.findWidestInList(self.text, [longestBoyName, longestGirlName])
 
     def findWidestTitle(self):
-        widestTitle = self.findWidestInList(
-            self.text, self.neutralTitles + self.boyTitles + self.girlTitles)
+        widestTitle = self.findWidestInList(self.text, self.neutralTitles + self.boyTitles + self.girlTitles)
         return widestTitle
 
     def findWidestFirstName(self):
-        widestFirst = self.findWidestInList(
-            self.text, self.neutralFirsts + self.boyFirsts + self.girlFirsts)
+        widestFirst = self.findWidestInList(self.text, self.neutralFirsts + self.boyFirsts + self.girlFirsts)
         return widestFirst
 
     def findWidestLastName(self):
@@ -187,11 +183,7 @@ class NameGenerator:
         return longestLastName
 
     def findWidestNameWord(self):
-        widestWord = self.findWidestInList(self.text, [
-            self.findWidestTitle(),
-            self.findWidestFirstName(),
-            self.findWidestLastName()
-        ])
+        widestWord = self.findWidestInList(self.text, [self.findWidestTitle(), self.findWidestFirstName(), self.findWidestLastName()])
         return widestWord
 
     def findWidestNameWidth(self):
@@ -210,30 +202,27 @@ class NameGenerator:
         widthStr = str(width)
         print 'The widest last name is: ' + name + ' (' + widthStr + ' units)'
 
-    def randomName(self, boy=0, girl=0):
+    def randomName(self, boy = 0, girl = 0):
         if boy and girl:
             self.error("A name can't be both boy and girl!")
-
         if not boy and not girl:
             boy = random.choice([0, 1])
             girl = not boy
-
-        uberFlag = random.choice([
-            'title-first', 'title-last', 'first', 'last', 'first-last',
-            'title-first-last'
-        ])
+        uberFlag = random.choice(['title-first',
+         'title-last',
+         'first',
+         'last',
+         'first-last',
+         'title-first-last'])
         titleFlag = 0
-        if uberFlag == 'title-first' and uberFlag == 'title-last' or uberFlag == 'title-first-last':
+        if uberFlag == 'title-first' or uberFlag == 'title-last' or uberFlag == 'title-first-last':
             titleFlag = 1
-
         firstFlag = 0
-        if uberFlag == 'title-first' and uberFlag == 'first' and uberFlag == 'first-last' or uberFlag == 'title-first-last':
+        if uberFlag == 'title-first' or uberFlag == 'first' or uberFlag == 'first-last' or uberFlag == 'title-first-last':
             firstFlag = 1
-
         lastFlag = 0
-        if uberFlag == 'title-last' and uberFlag == 'last' and uberFlag == 'first-last' or uberFlag == 'title-first-last':
+        if uberFlag == 'title-last' or uberFlag == 'last' or uberFlag == 'first-last' or uberFlag == 'title-first-last':
             lastFlag = 1
-
         retString = ''
         if titleFlag:
             titleList = self.neutralTitles[:]
@@ -244,7 +233,6 @@ class NameGenerator:
             else:
                 self.error('Must be boy or girl.')
             retString += random.choice(titleList) + ' '
-
         if firstFlag:
             firstList = self.neutralFirsts[:]
             if boy:
@@ -256,43 +244,43 @@ class NameGenerator:
             retString += random.choice(firstList)
             if lastFlag:
                 retString += ' '
-
         if lastFlag:
             lastPrefix = random.choice(self.lastPrefixes)
             lastSuffix = random.choice(self.lastSuffixes)
             if lastPrefix in self.capPrefixes:
                 lastSuffix = lastSuffix.capitalize()
-
             retString += lastPrefix + lastSuffix
-
         return retString
 
-    def randomNameMoreinfo(self, boy=0, girl=0):
+    def randomNameMoreinfo(self, boy = 0, girl = 0):
         if boy and girl:
             self.error("A name can't be both boy and girl!")
-
         if not boy and not girl:
             boy = random.choice([0, 1])
             girl = not boy
-
-        uberFlag = random.choice([
-            'title-first', 'title-last', 'first', 'last', 'first-last',
-            'title-first-last'
-        ])
+        uberFlag = random.choice(['title-first',
+         'title-last',
+         'first',
+         'last',
+         'first-last',
+         'title-first-last'])
         titleFlag = 0
-        if uberFlag == 'title-first' and uberFlag == 'title-last' or uberFlag == 'title-first-last':
+        if uberFlag == 'title-first' or uberFlag == 'title-last' or uberFlag == 'title-first-last':
             titleFlag = 1
-
         firstFlag = 0
-        if uberFlag == 'title-first' and uberFlag == 'first' and uberFlag == 'first-last' or uberFlag == 'title-first-last':
+        if uberFlag == 'title-first' or uberFlag == 'first' or uberFlag == 'first-last' or uberFlag == 'title-first-last':
             firstFlag = 1
-
         lastFlag = 0
-        if uberFlag == 'title-last' and uberFlag == 'last' and uberFlag == 'first-last' or uberFlag == 'title-first-last':
+        if uberFlag == 'title-last' or uberFlag == 'last' or uberFlag == 'first-last' or uberFlag == 'title-first-last':
             lastFlag = 1
-
         retString = ''
-        uberReturn = [0, 0, 0, '', '', '', '']
+        uberReturn = [0,
+         0,
+         0,
+         '',
+         '',
+         '',
+         '']
         uberReturn[0] = titleFlag
         uberReturn[1] = firstFlag
         uberReturn[2] = lastFlag
@@ -316,24 +304,20 @@ class NameGenerator:
         lastSuffix = random.choice(self.lastSuffixes)
         if lastPrefix in self.capPrefixes:
             lastSuffix = lastSuffix.capitalize()
-
         uberReturn[5] = lastPrefix
         uberReturn[6] = lastSuffix
         if titleFlag:
             retString += uberReturn[3] + ' '
-
         if firstFlag:
             retString += uberReturn[4]
             if lastFlag:
                 retString += ' '
-
         if lastFlag:
             retString += uberReturn[5] + uberReturn[6]
-
         uberReturn.append(retString)
         return uberReturn
 
-    def printRandomNames(self, boy=0, girl=0, total=1):
+    def printRandomNames(self, boy = 0, girl = 0, total = 1):
         i = 0
         origBoy = boy
         origGirl = girl
@@ -341,19 +325,16 @@ class NameGenerator:
             if not origBoy and not origGirl:
                 boy = random.choice([0, 1])
                 girl = not boy
-
             name = self.randomName(boy, girl)
             width = self.text.calcWidth(name)
             widthStr = str(width)
             if boy:
                 print 'Boy: ' + name + ' (' + widthStr + ' units)'
-
             if girl:
                 print 'Girl: ' + name + ' (' + widthStr + ' units)'
-
             i += 1
 
-    def percentOver(self, limit=9.0, samples=1000):
+    def percentOver(self, limit = 9.0, samples = 1000):
         i = 0
         over = 0
         while i < samples:
@@ -361,24 +342,19 @@ class NameGenerator:
             width = self.text.calcWidth(name)
             if width > limit:
                 over += 1
-
             i += 1
-        percent = (float(over) / float(samples)) * 100
-        print 'Samples: ' + str(samples) + ' Over: ' + str(
-            over) + ' Percent: ' + str(percent)
+
+        percent = float(over) / float(samples) * 100
+        print 'Samples: ' + str(samples) + ' Over: ' + str(over) + ' Percent: ' + str(percent)
 
     def totalNames(self):
-        firsts = len(self.boyFirsts) + len(self.girlFirsts) + \
-            len(self.neutralFirsts)
+        firsts = len(self.boyFirsts) + len(self.girlFirsts) + len(self.neutralFirsts)
         print 'Total firsts: ' + str(firsts)
         lasts = len(self.lastPrefixes) * len(self.lastSuffixes)
         print 'Total lasts: ' + str(lasts)
         neutralTitleFirsts = len(self.neutralTitles) * len(self.neutralFirsts)
-        boyTitleFirsts = len(self.boyTitles) * (len(self.neutralFirsts) + \
-                             len(self.boyFirsts)) + len(self.neutralTitles) * len(self.boyFirsts)
-        girlTitleFirsts = len(self.girlTitles) * (
-            len(self.neutralFirsts) + len(self.girlFirsts)) + len(
-                self.neutralTitles) * len(self.girlFirsts)
+        boyTitleFirsts = len(self.boyTitles) * (len(self.neutralFirsts) + len(self.boyFirsts)) + len(self.neutralTitles) * len(self.boyFirsts)
+        girlTitleFirsts = len(self.girlTitles) * (len(self.neutralFirsts) + len(self.girlFirsts)) + len(self.neutralTitles) * len(self.girlFirsts)
         totalTitleFirsts = neutralTitleFirsts + boyTitleFirsts + girlTitleFirsts
         print 'Total title firsts: ' + str(totalTitleFirsts)
         neutralTitleLasts = len(self.neutralTitles) * lasts
@@ -394,9 +370,7 @@ class NameGenerator:
         neutralTitleFirstLasts = neutralTitleFirsts * lasts
         boyTitleFirstLasts = boyTitleFirsts * lasts
         girlTitleFirstLasts = girlTitleFirsts * lasts
-        totalTitleFirstLasts = neutralTitleFirstLasts + \
-            boyTitleFirstLasts + girlTitleFirstLasts
+        totalTitleFirstLasts = neutralTitleFirstLasts + boyTitleFirstLasts + girlTitleFirstLasts
         print 'Total title first lasts: ' + str(totalTitleFirstLasts)
-        totalNames = firsts + lasts + totalTitleFirsts + \
-            totalTitleLasts + totalFirstLasts + totalTitleFirstLasts
+        totalNames = firsts + lasts + totalTitleFirsts + totalTitleLasts + totalFirstLasts + totalTitleFirstLasts
         print 'Total Names: ' + str(totalNames)

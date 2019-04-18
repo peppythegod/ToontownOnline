@@ -4,7 +4,7 @@ from otp.otpgui.OTPDialog import *
 class TTDialog(OTPDialog):
     def __init__(self, parent=None, style=NoButtons, **kw):
         self.path = 'phase_3/models/gui/dialog_box_buttons_gui'
-        OTPDialog.__init__(self, parent, style, **None)
+        OTPDialog.__init__(self, parent, style, **kw)
         self.initialiseoptions(TTDialog)
 
 

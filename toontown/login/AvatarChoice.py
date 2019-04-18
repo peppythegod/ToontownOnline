@@ -31,6 +31,8 @@ class AvatarChoice(DirectButton):
             text='',
             text_font=ToontownGlobals.getSignFont())
         self.initialiseoptions(AvatarChoice)
+        self.headModel = None
+        self.head = None
         self.hasPaid = paid
         self.mode = None
         if base.restrictTrialers and okToLockout:
@@ -228,21 +230,22 @@ class AvatarChoice(DirectButton):
         del self.dna
         if self.mode in (AvatarChoice.MODE_CREATE, AvatarChoice.MODE_LOCKED):
             pass
-        1
-        self.headModel.stopBlink()
-        self.headModel.stopLookAroundNow()
-        self.headModel.delete()
-        self.head.removeNode()
-        del self.head
-        del self.headModel
-        del self.nameText
-        del self.statusText
-        self.deleteButton.destroy()
-        del self.deleteButton
-        self.nameYourToonButton.destroy()
-        del self.nameYourToonButton
-        loader.unloadModel('phase_3/models/gui/trashcan_gui')
-        loader.unloadModel('phase_3/models/gui/quit_button')
+
+        if self.headModel:
+            self.headModel.stopBlink()
+            self.headModel.stopLookAroundNow()
+            self.headModel.delete()
+            del self.headModel
+            self.head.removeNode()
+            del self.head
+            del self.nameText
+            del self.statusText
+            self.deleteButton.destroy()
+            del self.deleteButton
+            self.nameYourToonButton.destroy()
+            del self.nameYourToonButton
+            loader.unloadModel('phase_3/models/gui/trashcan_gui')
+            loader.unloadModel('phase_3/models/gui/quit_button')
         DirectFrame.destroy(self)
         if self.deleteWithPasswordFrame:
             self.deleteWithPasswordFrame.destroy()
