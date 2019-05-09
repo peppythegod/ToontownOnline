@@ -59,8 +59,7 @@ class TreasurePlannerAI(DirectObject.DirectObject):
         for treasure in self.treasures:
             if treasure is None:
                 pass
-            1
-            if treasureId == treasure.getDoId():
+            elif treasureId == treasure.getDoId():
                 return counter
 
             counter += 1

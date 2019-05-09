@@ -61,17 +61,19 @@ class DistributedGridAI(DistributedEntityAI.DistributedEntityAI):
             while row >= 0 and row < self.numRow:
                 if self.addObjectByRowCol(objId, row, col):
                     return 1
-                    continue
-                row += 2
-            row = 0
-            col += 2
-        self.notify.debug(
-            'requestObjPos: row/col out of range %s/%s' % (row, col))
-        row = min(row, self.numRow)
-        row = max(0, row)
-        col = min(col, self.numRow)
-        col = max(0, col)
-        return self.addObjectByRowCol(objId, row, col)
+                else:
+                    row += 2
+            else:
+                row = 0
+                col += 2
+
+        else:
+            self.notify.debug('requestObjPos: row/col out of range %s/%s' % (row, col))
+            row = min(row, self.numRow)
+            row = max(0, row)
+            col = min(col, self.numRow)
+            col = max(0, col)
+            return self.addObjectByRowCol(objId, row, col)
 
     def addObjectByRowCol(self, objId, row, col):
         if row >= 0 and row < self.numRow - 1 and col >= 0 and col < self.numCol - 1:
@@ -224,47 +226,40 @@ class DistributedGridAI(DistributedEntityAI.DistributedEntityAI):
                                                   offList=[],
                                                   objId=None):
         for cell in self.activeCellList:
-            self.notify.debug('onList = %s, offList = %s, cell = %s' %
-                              (onList, offList, cell.getRowCol()))
+            self.notify.debug('onList = %s, offList = %s, cell = %s' % (onList, offList, cell.getRowCol()))
             if cell.getRowCol() in onList:
                 cell.b_setState(1, objId)
-                continue
-            if cell.getRowCol() in offList:
+            elif cell.getRowCol() in offList:
                 cell.b_setState(0, objId)
-                continue
 
     def _DistributedGridAI__isEmpty(self, row, col):
-        if row < 0 and row >= self.numRow and col < 0 or col >= self.numCol:
+        if row < 0 or row >= self.numRow or col < 0 or col >= self.numCol:
             return 0
-
         if len(self.gridCells[row][col]) > 0:
             return 0
-
         return 1
 
     def printGrid(self):
         if not __debug__:
-            return None
-
-        for i in range(len(self.gridCells)):
+            return
+        for i in xrange(len(self.gridCells)):
             str = ''
-            for j in range(len(self.gridCells[i])):
+            for j in xrange(len(self.gridCells[i])):
                 col = self.gridCells[i][j]
                 active = 0
                 for cell in self.activeCellList:
                     if cell.getRowCol() == [i, j]:
                         active = 1
-                        continue
 
                 if len(col) > 0:
                     if active:
                         str += '[X]'
                     else:
                         str += ' X '
-                if active:
+                elif active:
                     str += '[.]'
-                    continue
-                str += ' . '
+                else:
+                    str += ' . '
 
             print str + '  : %d' % i
 

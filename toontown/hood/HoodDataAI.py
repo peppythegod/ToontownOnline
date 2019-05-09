@@ -23,12 +23,13 @@ class HoodDataAI:
         self.redirectingToMe = []
         self.hoodPopulation = 0
         self.pgPopulation = 0
+        self.air.hoods.append(self)
 
     def startup(self):
-        self.createFishingPonds()
-        self.createPartyPeople()
+        #self.createFishingPonds()
+        #self.createPartyPeople()
         self.createBuildingManagers()
-        self.createSuitPlanners()
+        #self.createSuitPlanners()
 
     def shutdown(self):
         self.setRedirect(None)

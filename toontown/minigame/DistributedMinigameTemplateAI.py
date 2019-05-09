@@ -5,22 +5,18 @@ from direct.fsm import State
 
 class DistributedMinigameTemplateAI(DistributedMinigameAI):
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedMinigameTemplateAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM(
-                'DistributedMinigameTemplateAI', [
-                    State.State('inactive', self.enterInactive,
-                                self.exitInactive, ['play']),
-                    State.State('play', self.enterPlay, self.exitPlay,
-                                ['cleanup']),
-                    State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                                ['inactive'])
-                ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
+        self.DistributedMinigameTemplateAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM(
+            'DistributedMinigameTemplateAI', [
+                State.State('inactive', self.enterInactive,
+                            self.exitInactive, ['play']),
+                State.State('play', self.enterPlay, self.exitPlay,
+                            ['cleanup']),
+                State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                            ['inactive'])
+            ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
 
     def generate(self):
         self.notify.debug('generate')

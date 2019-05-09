@@ -9,24 +9,20 @@ import types
 
 class DistributedRingGameAI(DistributedMinigameAI):
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedRingGameAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedRingGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['swimming']),
-                State.State('swimming', self.enterSwimming, self.exitSwimming,
-                            ['cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self._DistributedRingGameAI__timeBase = globalClockDelta.localToNetworkTime(
-                globalClock.getRealTime())
-            self.selectColorIndices()
+        self.DistributedRingGameAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedRingGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['swimming']),
+            State.State('swimming', self.enterSwimming, self.exitSwimming,
+                        ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self._DistributedRingGameAI__timeBase = globalClockDelta.localToNetworkTime(
+            globalClock.getRealTime())
+        self.selectColorIndices()
 
     def delete(self):
         self.notify.debug('delete')

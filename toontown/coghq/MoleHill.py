@@ -1,4 +1,4 @@
-from pandac.PandaModules import NodePath, Point3, CollisionSphere, CollisionNode, Vec4
+from pandac.PandaModules import NodePath, Point3, CollisionSphere, CollisionTube, CollisionNode, Vec4
 from direct.interval.IntervalGlobal import Sequence, LerpPosInterval, Parallel, LerpScaleInterval, Track, ParticleInterval, Wait, Func
 from toontown.toonbase import ToontownGlobals
 from toontown.coghq import MoleFieldBase
@@ -36,7 +36,9 @@ class MoleHill(NodePath):
         self.moleHead = loader.loadModel('phase_12/models/bossbotHQ/mole_norm')
         self.moleHead.reparentTo(self.mole)
         moleColName = 'moleCol-%d-%s' % (self.moleField.doId, self.index)
-        moleSphere = CollisionSphere(0, 0, 0, 1.0)
+        #moleSphere = CollisionSphere(0, 0, 0, 1.0)
+        # Sphere doesn't work too well in this situation with our panda, making the toon get blocked by the sphere.
+        moleSphere = CollisionTube(0, 0, 0, 0, 0, 1, 1)
         collNode = CollisionNode(moleColName)
         collNode.setIntoCollideMask(ToontownGlobals.WallBitmask)
         collNode.addSolid(moleSphere)

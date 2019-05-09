@@ -11,31 +11,27 @@ class DistributedTwoDGameAI(DistributedMinigameAI):
         'DistributedTwoDGameAI')
 
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedTwoDGame_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedTwoDGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['play']),
-                State.State('play', self.enterPlay, self.exitPlay,
-                            ['cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self.finishedBonusDict = {}
-            self.finishedTimeLeftDict = {}
-            self.numFallDownDict = {}
-            self.numHitByEnemyDict = {}
-            self.numSquishDict = {}
-            self.treasuresCollectedDict = {}
-            self.sectionsSelected = []
-            self.enemyHealthTable = []
-            self.treasureTakenTable = []
-            self.sectionIndexList = []
+        self.DistributedTwoDGame_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedTwoDGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['play']),
+            State.State('play', self.enterPlay, self.exitPlay,
+                        ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self.finishedBonusDict = {}
+        self.finishedTimeLeftDict = {}
+        self.numFallDownDict = {}
+        self.numHitByEnemyDict = {}
+        self.numSquishDict = {}
+        self.treasuresCollectedDict = {}
+        self.sectionsSelected = []
+        self.enemyHealthTable = []
+        self.treasureTakenTable = []
+        self.sectionIndexList = []
 
     def generate(self):
         self.notify.debug('generate')

@@ -27,9 +27,10 @@ class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
 
     def setHolidayModelPath(self):
         self.defaultModelPath = self.modelPath
-        holidayIds = base.cr.newsManager.getHolidayIdList()
-        if ToontownGlobals.VALENTINES_DAY in holidayIds:
-            self.modelPath = 'phase_4/models/props/tt_m_ara_ext_heart'
+        if base.cr.newsManager:
+            holidayIds = base.cr.newsManager.getHolidayIdList()
+            if ToontownGlobals.VALENTINES_DAY in holidayIds:
+                self.modelPath = 'phase_4/models/props/tt_m_ara_ext_heart'
 
     def loadModel(self, modelPath, modelFindString=None):
         self.setHolidayModelPath()
@@ -85,26 +86,27 @@ class DistributedSZTreasure(DistributedTreasure.DistributedTreasure):
         self.fadeTrack.start()
 
     def startAnimation(self):
-        holidayIds = base.cr.newsManager.getHolidayIdList()
-        if ToontownGlobals.VALENTINES_DAY in holidayIds:
-            originalScale = self.nodePath.getScale()
-            throbScale = VBase3(0.84999999999999998, 0.84999999999999998,
-                                0.84999999999999998)
-            throbInIval = LerpScaleInterval(
-                self.nodePath,
-                0.29999999999999999,
-                scale=throbScale,
-                startScale=originalScale,
-                blendType='easeIn')
-            throbOutIval = LerpScaleInterval(
-                self.nodePath,
-                0.29999999999999999,
-                scale=originalScale,
-                startScale=throbScale,
-                blendType='easeOut')
-            self.heartThrobIval = Sequence(throbInIval, throbOutIval,
-                                           Wait(0.75))
-            self.heartThrobIval.loop()
+        if base.cr.newsManager:
+            holidayIds = base.cr.newsManager.getHolidayIdList()
+            if ToontownGlobals.VALENTINES_DAY in holidayIds:
+                originalScale = self.nodePath.getScale()
+                throbScale = VBase3(0.84999999999999998, 0.84999999999999998,
+                                    0.84999999999999998)
+                throbInIval = LerpScaleInterval(
+                    self.nodePath,
+                    0.29999999999999999,
+                    scale=throbScale,
+                    startScale=originalScale,
+                    blendType='easeIn')
+                throbOutIval = LerpScaleInterval(
+                    self.nodePath,
+                    0.29999999999999999,
+                    scale=originalScale,
+                    startScale=throbScale,
+                    blendType='easeOut')
+                self.heartThrobIval = Sequence(throbInIval, throbOutIval,
+                                               Wait(0.75))
+                self.heartThrobIval.loop()
 
     def stopAnimation(self):
         if self.heartThrobIval:

@@ -340,6 +340,7 @@ class AvatarChooser(StateData.StateData):
         if doneStatus['mode'] == 'complete':
             base.transitions.fadeOut(
                 finishIval=EventInterval(self.doneEvent, [self.doneStatus]))
+            messenger.send(self.doneEvent, [self.doneStatus])
         else:
             self.fsm.request('Choose')
 

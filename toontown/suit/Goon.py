@@ -21,20 +21,16 @@ ModelDict = {
 
 class Goon(Avatar.Avatar):
     def __init__(self, dnaName=None):
-
-        try:
-            pass
-        except BaseException:
-            self.Goon_initialized = 1
-            Avatar.Avatar.__init__(self)
-            self.ignore('nametagAmbientLightChanged')
-            self.hFov = 70
-            self.attackRadius = 15
-            self.strength = 15
-            self.velocity = 4
-            self.scale = 1.0
-            if dnaName is not None:
-                self.initGoon(dnaName)
+        self.Goon_initialized = 1
+        Avatar.Avatar.__init__(self)
+        self.ignore('nametagAmbientLightChanged')
+        self.hFov = 70
+        self.attackRadius = 15
+        self.strength = 15
+        self.velocity = 4
+        self.scale = 1.0
+        if dnaName is not None:
+            self.initGoon(dnaName)
 
     def initGoon(self, dnaName):
         dna = SuitDNA.SuitDNA()
@@ -51,18 +47,14 @@ class Goon(Avatar.Avatar):
                                          | ToontownGlobals.PieBitmask)
 
     def delete(self):
+        self.Goon_deleted = 1
+        filePrefix = ModelDict[self.style.name]
+        loader.unloadModel(filePrefix + '-zero')
+        animList = AnimDict[self.style.name]
+        for anim in animList:
+            loader.unloadModel(filePrefix + anim[1])
 
-        try:
-            pass
-        except BaseException:
-            self.Goon_deleted = 1
-            filePrefix = ModelDict[self.style.name]
-            loader.unloadModel(filePrefix + '-zero')
-            animList = AnimDict[self.style.name]
-            for anim in animList:
-                loader.unloadModel(filePrefix + anim[1])
-
-            Avatar.Avatar.delete(self)
+        Avatar.Avatar.delete(self)
 
     def setDNAString(self, dnaString):
         self.dna = SuitDNA.SuitDNA()
@@ -72,7 +64,7 @@ class Goon(Avatar.Avatar):
     def setDNA(self, dna):
         if self.style:
             pass
-        1
+        
         self.style = dna
         self.generateGoon()
         self.initializeDropShadow()

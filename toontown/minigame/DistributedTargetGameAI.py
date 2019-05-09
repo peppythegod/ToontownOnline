@@ -23,28 +23,24 @@ def checkPlace(placeX, placeY, fillSize, placeList):
 
 class DistributedTargetGameAI(DistributedMinigameAI):
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedTargetGameAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedTargetGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['fly']),
-                State.State('fly', self.enterFly, self.exitFly,
-                            ['cleanup', 'resetRound']),
-                State.State('resetRound', self.enterResetRound,
-                            self.exitResetRound, ['cleanup', 'fly']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self._DistributedTargetGameAI__timeBase = globalClockDelta.localToNetworkTime(
-                globalClock.getRealTime())
-            self.round = 2
-            self.barrierScore = None
-            self.scoreTrack = []
+        self.DistributedTargetGameAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedTargetGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['fly']),
+            State.State('fly', self.enterFly, self.exitFly,
+                        ['cleanup', 'resetRound']),
+            State.State('resetRound', self.enterResetRound,
+                        self.exitResetRound, ['cleanup', 'fly']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self._DistributedTargetGameAI__timeBase = globalClockDelta.localToNetworkTime(
+            globalClock.getRealTime())
+        self.round = 2
+        self.barrierScore = None
+        self.scoreTrack = []
 
     def delete(self):
         self.notify.debug('delete')

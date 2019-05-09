@@ -33,11 +33,7 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
     ENABLE_EXPANDED_NAME = 0
 
     def __init__(self, cr):
-
-        try:
-            return None
-        except BaseException:
-            self.DistributedSuit_initialized = 1
+        self.DistributedSuit_initialized = 1
 
         DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
         self.spDoId = None
@@ -127,14 +123,10 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
         DistributedSuitBase.DistributedSuitBase.disable(self)
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuit_deleted = 1
-            self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
-            del self.fsm
-            DistributedSuitBase.DistributedSuitBase.delete(self)
+        self.DistributedSuit_deleted = 1
+        self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
+        del self.fsm
+        DistributedSuitBase.DistributedSuitBase.delete(self)
 
     def setPathEndpoints(self, start, end, minPathLen, maxPathLen):
         if self.pathEndpointStart == start and self.pathEndpointEnd == end and self.minPathLen == minPathLen and self.maxPathLen == maxPathLen and self.path is not None:

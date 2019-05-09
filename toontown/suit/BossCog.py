@@ -574,10 +574,10 @@ class BossCog(Avatar.Avatar):
     def getAngryActorInterval(self, animName, **kw):
         if self.happy:
             ival = Sequence(
-                Func(self.reverseHead), ActorInterval(self, animName, **None),
+                Func(self.reverseHead), ActorInterval(self, animName, **kw),
                 Func(self.forwardHead))
         else:
-            ival = ActorInterval(self, animName, **None)
+            ival = ActorInterval(self, animName, **kw)
         return ival
 
     def getAnim(self, anim):

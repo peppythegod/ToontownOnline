@@ -21,8 +21,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('ToonAvatarPanel')
 
     def __init__(self, avatar, playerId=None):
-        FriendsListPanel = FriendsListPanel
-        import toontown.friends
+        from toontown.friends import FriendsListPanel
         if base.cr.doId2do.get(avatar.getDoId()):
             avatar = base.cr.doId2do.get(avatar.getDoId())
 
@@ -115,7 +114,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
                 self.avId) and not base.cr.doId2do.has_key(self.avId):
             self.friendButton['state'] = DGG.DISABLED
 
-        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+        if base.cr.avatarFriendsManager and base.cr.avatarFriendsManager and base.cr.avatarFriendsManager.checkIgnored(self.avId):
             self.friendButton['state'] = DGG.DISABLED
 
         self.goToButton = DirectButton(
@@ -135,7 +134,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_pos=(0.059999999999999998, -0.014999999999999999),
             text_align=TextNode.ALeft,
             command=self._ToonAvatarPanel__handleGoto)
-        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+        if base.cr.avatarFriendsManager and base.cr.avatarFriendsManager.checkIgnored(self.avId):
             self.goToButton['state'] = DGG.DISABLED
 
         self.whisperButton = DirectButton(
@@ -157,7 +156,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_pos=(0.059999999999999998, -0.012500000000000001),
             text_align=TextNode.ALeft,
             command=self._ToonAvatarPanel__handleWhisper)
-        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+        if base.cr.avatarFriendsManager and base.cr.avatarFriendsManager.checkIgnored(self.avId):
             self.whisperButton['state'] = DGG.DISABLED
 
         self.secretsButton = DirectButton(
@@ -177,7 +176,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             text_pos=(0.055, -0.01),
             text_align=TextNode.ALeft,
             command=self._ToonAvatarPanel__handleSecrets)
-        if base.cr.avatarFriendsManager.checkIgnored(self.avId):
+        if base.cr.avatarFriendsManager and base.cr.avatarFriendsManager.checkIgnored(self.avId):
             self.secretsButton['state'] = DGG.DISABLED
 
         CogHQBossBattle = CogHQBossBattle

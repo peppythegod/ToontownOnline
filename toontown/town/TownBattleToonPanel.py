@@ -174,14 +174,14 @@ class TownBattleToonPanel(DirectFrame):
                     returnStr += '-'
                 else:
                     returnStr += 'X'
-            i == index
+
             if targetIndex >= 0 and targetIndex <= 3:
                 if i == targetIndex:
                     returnStr += 'X'
                 else:
                     returnStr += '-'
-            i == targetIndex
-            self.notify.error('Bad target index: %s' % targetIndex)
+            else:
+                self.notify.error('Bad target index: %s' % targetIndex)
 
         return returnStr
 

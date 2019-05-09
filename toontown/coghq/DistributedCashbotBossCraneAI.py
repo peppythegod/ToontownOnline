@@ -4,9 +4,8 @@ from toontown.toonbase import ToontownGlobals
 from otp.otpbase import OTPGlobals
 from direct.fsm import FSM
 
+class DistributedCashbotBossCraneAI(DistributedObjectAI.DistributedObjectAI, FSM.FSM):
 
-class DistributedCashbotBossCraneAI(DistributedObjectAI.DistributedObjectAI,
-                                    FSM.FSM):
     def __init__(self, air, boss, index):
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         FSM.FSM.__init__(self, 'DistributedCashbotBossCraneAI')
@@ -16,8 +15,7 @@ class DistributedCashbotBossCraneAI(DistributedObjectAI.DistributedObjectAI,
         cs = CollisionSphere(0, -6, 0, 6)
         cn.addSolid(cs)
         self.goonShield = NodePath(cn)
-        self.goonShield.setPosHpr(
-            *ToontownGlobals.CashbotBossCranePosHprs[self.index])
+        self.goonShield.setPosHpr(*ToontownGlobals.CashbotBossCranePosHprs[self.index])
         self.avId = 0
         self.objectId = 0
 
@@ -33,7 +31,7 @@ class DistributedCashbotBossCraneAI(DistributedObjectAI.DistributedObjectAI,
     def requestControl(self):
         avId = self.air.getAvatarIdFromSender()
         if avId in self.boss.involvedToons and self.avId == 0:
-            craneId = self._DistributedCashbotBossCraneAI__getCraneId(avId)
+            craneId = self.__getCraneId(avId)
             if craneId == 0:
                 self.request('Controlled', avId)
 
@@ -46,12 +44,11 @@ class DistributedCashbotBossCraneAI(DistributedObjectAI.DistributedObjectAI,
         if avId == self.avId:
             self.request('Free')
 
-    def _DistributedCashbotBossCraneAI__getCraneId(self, avId):
-        if self.boss and self.boss.cranes is not None:
+    def __getCraneId(self, avId):
+        if self.boss and self.boss.cranes != None:
             for crane in self.boss.cranes:
                 if crane.avId == avId:
                     return crane.doId
-                    continue
 
         return 0
 

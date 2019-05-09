@@ -17,36 +17,32 @@ class DistributedFactorySuit(DistributedSuitBase.DistributedSuitBase,
         'DistributedFactorySuit')
 
     def __init__(self, cr):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuit_initialized = 1
-            DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
-            self.fsm = ClassicFSM.ClassicFSM('DistributedSuit', [
-                State.State('Off', self.enterOff, self.exitOff,
-                            ['Walk', 'Battle']),
-                State.State('Walk', self.enterWalk, self.exitWalk,
-                            ['WaitForBattle', 'Battle', 'Chase']),
-                State.State('Chase', self.enterChase, self.exitChase,
-                            ['WaitForBattle', 'Battle', 'Return']),
-                State.State('Return', self.enterReturn, self.exitReturn,
-                            ['WaitForBattle', 'Battle', 'Walk']),
-                State.State('Battle', self.enterBattle, self.exitBattle,
-                            ['Walk', 'Chase', 'Return']),
-                State.State('WaitForBattle', self.enterWaitForBattle,
-                            self.exitWaitForBattle, ['Battle'])
-            ], 'Off', 'Off')
-            self.path = None
-            self.walkTrack = None
-            self.chaseTrack = None
-            self.returnTrack = None
-            self.fsm.enterInitialState()
-            self.chasing = 0
-            self.paused = 0
-            self.pauseTime = 0
-            self.velocity = 3
-            self.factoryRequest = None
+        self.DistributedSuit_initialized = 1
+        DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
+        self.fsm = ClassicFSM.ClassicFSM('DistributedSuit', [
+            State.State('Off', self.enterOff, self.exitOff,
+                        ['Walk', 'Battle']),
+            State.State('Walk', self.enterWalk, self.exitWalk,
+                        ['WaitForBattle', 'Battle', 'Chase']),
+            State.State('Chase', self.enterChase, self.exitChase,
+                        ['WaitForBattle', 'Battle', 'Return']),
+            State.State('Return', self.enterReturn, self.exitReturn,
+                        ['WaitForBattle', 'Battle', 'Walk']),
+            State.State('Battle', self.enterBattle, self.exitBattle,
+                        ['Walk', 'Chase', 'Return']),
+            State.State('WaitForBattle', self.enterWaitForBattle,
+                        self.exitWaitForBattle, ['Battle'])
+        ], 'Off', 'Off')
+        self.path = None
+        self.walkTrack = None
+        self.chaseTrack = None
+        self.returnTrack = None
+        self.fsm.enterInitialState()
+        self.chasing = 0
+        self.paused = 0
+        self.pauseTime = 0
+        self.velocity = 3
+        self.factoryRequest = None
 
     def generate(self):
         DistributedSuitBase.DistributedSuitBase.generate(self)
@@ -142,14 +138,10 @@ class DistributedFactorySuit(DistributedSuitBase.DistributedSuitBase,
         taskMgr.remove(self.taskName('chaseTask'))
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuit_deleted = 1
-            self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
-            del self.fsm
-            DistributedSuitBase.DistributedSuitBase.delete(self)
+        self.DistributedSuit_deleted = 1
+        self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
+        del self.fsm
+        DistributedSuitBase.DistributedSuitBase.delete(self)
 
     def d_requestBattle(self, pos, hpr):
         self.cr.playGame.getPlace().setState('WaitForBattle')

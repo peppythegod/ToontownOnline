@@ -9,33 +9,29 @@ class DistributedTravelGameAI(DistributedMinigameAI):
     notify = directNotify.newCategory('DistributedTravelGameAI')
 
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedTravelGameAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedTravelGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['waitClientsChoices']),
-                State.State('waitClientsChoices', self.enterWaitClientsChoices,
-                            self.exitWaitClientsChoices,
-                            ['processChoices', 'cleanup']),
-                State.State('processChoices', self.enterProcessChoices,
-                            self.exitProcessChoices,
-                            ['waitClientsChoices', 'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self.currentVotes = {}
-            self.avatarChoices = {}
-            self.currentSwitch = 0
-            self.destSwitch = 0
-            self.gotBonus = {}
-            self.desiredNextGame = -1
-            self.boardIndex = random.choice(
-                range(len(TravelGameGlobals.BoardLayouts)))
+        self.DistributedTravelGameAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedTravelGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['waitClientsChoices']),
+            State.State('waitClientsChoices', self.enterWaitClientsChoices,
+                        self.exitWaitClientsChoices,
+                        ['processChoices', 'cleanup']),
+            State.State('processChoices', self.enterProcessChoices,
+                        self.exitProcessChoices,
+                        ['waitClientsChoices', 'cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self.currentVotes = {}
+        self.avatarChoices = {}
+        self.currentSwitch = 0
+        self.destSwitch = 0
+        self.gotBonus = {}
+        self.desiredNextGame = -1
+        self.boardIndex = random.choice(
+            range(len(TravelGameGlobals.BoardLayouts)))
 
     def generate(self):
         self.notify.debug('generate')

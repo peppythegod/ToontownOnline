@@ -9,9 +9,7 @@ def isGoofySpeedwayZone(zoneId):
 
 
 def isCogHQZone(zoneId):
-    if zoneId >= 10000:
-        pass
-    return zoneId < 15000
+    return zoneId >= 10000 and zoneId < 15000
 
 
 def isMintInteriorZone(zoneId):
@@ -19,12 +17,11 @@ def isMintInteriorZone(zoneId):
 
 
 def isDynamicZone(zoneId):
-    if zoneId >= DynamicZonesBegin:
-        pass
-    return zoneId < DynamicZonesEnd
+    return zoneId >= DynamicZonesBegin and zoneId < DynamicZonesEnd
 
 
 def getStreetName(branchId):
+    global tutorialDict
     if tutorialDict:
         return StreetNames[20000][-1]
     else:
@@ -32,6 +29,7 @@ def getStreetName(branchId):
 
 
 def getLoaderName(zoneId):
+    global tutorialDict
     if tutorialDict:
         if zoneId == ToontownCentral:
             loaderName = 'safeZoneLoader'
@@ -69,9 +67,8 @@ def isPlayground(zoneId):
     whereName = getWhereName(zoneId, False)
     if whereName == 'cogHQExterior':
         return True
-    elif zoneId % 1000 == 0:
-        pass
-    return zoneId < DynamicZonesBegin
+    else:
+        return zoneId % 1000 == 0 and zoneId < DynamicZonesBegin
 
 
 def isPetshop(zoneId):
@@ -82,6 +79,7 @@ def isPetshop(zoneId):
 
 
 def getWhereName(zoneId, isToon):
+    global tutorialDict
     if tutorialDict:
         if zoneId in tutorialDict['interiors']:
             where = 'toonInterior'
@@ -129,6 +127,7 @@ def getWhereName(zoneId, isToon):
 
 
 def getBranchZone(zoneId):
+    global tutorialDict
     if tutorialDict:
         branchId = tutorialDict['branch']
     else:
@@ -145,10 +144,7 @@ def getCanonicalBranchZone(zoneId):
 
 
 def isWelcomeValley(zoneId):
-    if zoneId == WelcomeValleyToken and zoneId >= WelcomeValleyBegin:
-        pass
-    return zoneId < WelcomeValleyEnd
-
+    return zoneId == WelcomeValleyToken or zoneId >= WelcomeValleyBegin and zoneId < WelcomeValleyEnd
 
 def getCanonicalZoneId(zoneId):
     if zoneId == WelcomeValleyToken:
@@ -179,6 +175,7 @@ def getTrueZoneId(zoneId, currentZoneId):
 
 
 def getHoodId(zoneId):
+    global tutorialDict
     if tutorialDict:
         hoodId = Tutorial
     else:

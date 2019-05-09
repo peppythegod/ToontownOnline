@@ -6,9 +6,9 @@ import DistributedNPCToonBase
 class DistributedNPCScientist(DistributedNPCToonBase.DistributedNPCToonBase):
     def __init__(self, cr):
         DistributedNPCToonBase.DistributedNPCToonBase.__init__(self, cr)
-        if base.cr.newsManager.isHolidayRunning(
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_HOLIDAY
-        ) or base.cr.newsManager.isHolidayRunning(
+        ) or base.cr.newsManager and base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_EXT_HOLIDAY):
             self.show()
         else:
@@ -42,9 +42,9 @@ class DistributedNPCScientist(DistributedNPCToonBase.DistributedNPCToonBase):
 
     def announceGenerate(self):
         DistributedNPCToonBase.DistributedNPCToonBase.announceGenerate(self)
-        if base.cr.newsManager.isHolidayRunning(
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_HOLIDAY
-        ) or base.cr.newsManager.isHolidayRunning(
+        ) or base.cr.newsManager and base.cr.newsManager.isHolidayRunning(
                 ToontownGlobals.SILLYMETER_EXT_HOLIDAY):
             self.show()
         else:

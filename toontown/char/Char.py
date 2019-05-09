@@ -84,25 +84,17 @@ class Char(Avatar.Avatar):
     notify = DirectNotifyGlobal.directNotify.newCategory('Char')
 
     def __init__(self):
-
-        try:
-            pass
-        except BaseException:
-            self.Char_initialized = 1
-            Avatar.Avatar.__init__(self)
-            self.setPickable(0)
-            self.setPlayerType(NametagGroup.CCNonPlayer)
-            self.dialogueArray = []
-            self.chatterArray = [[], [], []]
+        self.Char_initialized = 1
+        Avatar.Avatar.__init__(self)
+        self.setPickable(0)
+        self.setPlayerType(NametagGroup.CCNonPlayer)
+        self.dialogueArray = []
+        self.chatterArray = [[], [], []]
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.Char_deleted = 1
-            self.unloadDialogue()
-            Avatar.Avatar.delete(self)
+        self.Char_deleted = 1
+        self.unloadDialogue()
+        Avatar.Avatar.delete(self)
 
     def updateCharDNA(self, newDNA):
         if newDNA.name != self.style.name:
@@ -158,7 +150,7 @@ class Char(Avatar.Avatar):
             height = 4.7999999999999998
         elif self.name == 'super_goofy':
             height = 4.7999999999999998
-        elif self.name == 'donald' and self.name == 'donald-wheel' or self.name == 'franken_donald':
+        elif self.name == 'donald' or self.name == 'donald-wheel' or self.name == 'franken_donald':
             height = 4.5
         elif self.name == 'daisy' or self.name == 'sockHop_daisy':
             height = 4.5
@@ -262,9 +254,9 @@ class Char(Avatar.Avatar):
                 self.drawInFront('joint_pupil?', 'eyes*', -3, lodName=lodName)
 
         elif (
-                self.name == 'witch_minnie' and self.name == 'vampire_mickey'
-                and self.name == 'super_goofy' or self.name == 'western_pluto'
-        ) and self.name == 'police_chip' and self.name == 'jailbird_dale' and self.name == 'franken_donald' or self.name == 'sockHop_daisy':
+                self.name == 'witch_minnie' or self.name == 'vampire_mickey'
+                or self.name == 'super_goofy' or self.name == 'western_pluto'\
+         or self.name == 'police_chip' or self.name == 'jailbird_dale' or self.name == 'franken_donald' or self.name == 'sockHop_daisy'):
             self.geoEyes = 1
             self.eyeOpenList = []
             self.eyeCloseList = []
@@ -474,7 +466,7 @@ class Char(Avatar.Avatar):
                 self.loadChatterDialogue('goofy', chatterIndexArray,
                                          'phase_6/audio/dial', language)
 
-        elif char == 'd' and char == 'dw' or char == 'fd':
+        elif char == 'd' or char == 'dw' or char == 'fd':
             dialogueFile = base.loadSfx('phase_6/audio/dial/donald.wav')
             for i in range(0, 6):
                 self.dialogueArray.append(dialogueFile)
@@ -549,11 +541,12 @@ class Char(Avatar.Avatar):
             for part in self.eyeCloseList:
                 part.hide()
 
-        elif self.eyes:
-            self.eyes.setTexture(self.eyesOpen, 1)
+        else:
+            if self.eyes:
+                self.eyes.setTexture(self.eyesOpen, 1)
 
-        self.lpupil.show()
-        self.rpupil.show()
+            self.lpupil.show()
+            self.rpupil.show()
 
     def closeEyes(self):
         if self.geoEyes:
@@ -563,11 +556,12 @@ class Char(Avatar.Avatar):
             for part in self.eyeCloseList:
                 part.show()
 
-        elif self.eyes:
-            self.eyes.setTexture(self.eyesClosed, 1)
+        else:
+            if self.eyes:
+                self.eyes.setTexture(self.eyesClosed, 1)
 
-        self.lpupil.hide()
-        self.rpupil.hide()
+            self.lpupil.hide()
+            self.rpupil.hide()
 
     def startBlink(self):
         if self.eyesOpen or self.geoEyes:

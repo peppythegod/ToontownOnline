@@ -27,14 +27,14 @@ class BoardingGroupInviterPanels:
         self.destroyInvitationRejectedPanel()
         self.notify.debug('Creating Inviting Panel.')
         self._BoardingGroupInviterPanels__invitingPanel = BoardingGroupInvitingPanel(
-            boardingParty, inviteeId, **None)
+            boardingParty, inviteeId, **kw)
 
     def createInvitationRejectedPanel(self, boardingParty, inviteeId, **kw):
         self.destroyInvitingPanel()
         self.destroyInvitationRejectedPanel()
         self.notify.debug('Creating Invititation Rejected Panel.')
         self._BoardingGroupInviterPanels__invitationRejectedPanel = BoardingGroupInvitationRejectedPanel(
-            boardingParty, inviteeId, **None)
+            boardingParty, inviteeId, **kw)
 
     def destroyInvitingPanel(self):
         if self.isInvitingPanelUp():
@@ -145,7 +145,7 @@ class BoardingGroupInvitingPanel(BoardingGroupInviterPanelBase):
 
     def __init__(self, boardingParty, inviteeId, **kw):
         BoardingGroupInviterPanelBase.__init__(self, boardingParty, inviteeId,
-                                               **None)
+                                               **kw)
         self.initialiseoptions(BoardingGroupInvitingPanel)
         self.setupUnexpectedExitHooks()
 
@@ -176,7 +176,7 @@ class BoardingGroupInvitationRejectedPanel(BoardingGroupInviterPanelBase):
 
     def __init__(self, boardingParty, inviteeId, **kw):
         BoardingGroupInviterPanelBase.__init__(self, boardingParty, inviteeId,
-                                               **None)
+                                               **kw)
         self.initialiseoptions(BoardingGroupInvitationRejectedPanel)
 
     def defineParams(self):

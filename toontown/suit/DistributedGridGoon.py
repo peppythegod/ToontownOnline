@@ -11,12 +11,8 @@ class DistributedGridGoon(DistributedGoon.DistributedGoon):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedGoon')
 
     def __init__(self, cr, type='sg'):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedGridGoon_initialized = 1
-            DistributedGoon.DistributedGoon.__init__(self, cr, type)
+        self.DistributedGridGoon_initialized = 1
+        DistributedGoon.DistributedGoon.__init__(self, cr, type)
 
     def generate(self):
         DistributedGoon.DistributedGoon.generate(self)

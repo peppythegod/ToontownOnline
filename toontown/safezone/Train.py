@@ -56,6 +56,7 @@ class Train(DirectObject):
     def show(self):
         if self.locomotive:
             self.locomotive.reparentTo(render)
+            self.locomotive.setPos(-1000, -1000, -1000)
 
     def _Train__networkTimeInSeconds(self):
         time = globalClockDelta.getRealNetworkTime(

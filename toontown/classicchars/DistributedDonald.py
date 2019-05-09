@@ -15,20 +15,16 @@ class DistributedDonald(DistributedCCharBase.DistributedCCharBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedDonald')
 
     def __init__(self, cr):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedDonald_initialized = 1
-            DistributedCCharBase.DistributedCCharBase.__init__(
-                self, cr, TTLocalizer.Donald, 'd')
-            self.fsm = ClassicFSM.ClassicFSM(self.getName(), [
-                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral,
-                            ['Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
-            ], 'Off', 'Off')
-            self.fsm.enterInitialState()
+        self.DistributedDonald_initialized = 1
+        DistributedCCharBase.DistributedCCharBase.__init__(
+            self, cr, TTLocalizer.Donald, 'd')
+        self.fsm = ClassicFSM.ClassicFSM(self.getName(), [
+            State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+            State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                        ['Walk']),
+            State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+        ], 'Off', 'Off')
+        self.fsm.enterInitialState()
 
         self.handleHolidays()
 

@@ -138,7 +138,7 @@ def getCloseInterval(distObj,
 
 
 def getRideElevatorInterval(type=ELEVATOR_NORMAL):
-    if type == ELEVATOR_VP and type == ELEVATOR_CFO or type == ELEVATOR_CJ:
+    if type == ELEVATOR_VP or type == ELEVATOR_CFO or type == ELEVATOR_CJ:
         yValue = 30
         zMin = 7.7999999999999998
         zMid = 8

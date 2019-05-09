@@ -1151,8 +1151,6 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
                 if currOther.pathState == 1 and currOther.legType == SuitLeg.TWalk:
                     self.checkForBattle(zoneId, currOther)
 
-            currOther.legType == SuitLeg.TWalk
-
         return 1
 
     def _DistributedSuitPlannerAI__battleFinished(self, zoneId):

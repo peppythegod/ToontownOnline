@@ -9,6 +9,7 @@ from direct.fsm import FSM
 from toontown.toon import DistributedToonAI
 from toontown.pets import PetConstants, PetObserve, PetGoal, PetGoalMgr
 from toontown.pets import PetTricks, PetLookerAI
+from libotp.CPetBrain import CPetBrain
 import random
 import types
 

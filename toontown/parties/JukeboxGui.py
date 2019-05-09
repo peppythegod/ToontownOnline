@@ -105,7 +105,7 @@ class JukeboxGui(DirectObject):
             image=(guiNode.find('**/%s_up' % imagePrefix),
                    guiNode.find('**/%s_down' % imagePrefix),
                    guiNode.find('**/%s_rollover' % imagePrefix)),
-            **None)
+            **kwargs)
 
     def _JukeboxGui__createLabel(self,
                                  guiNode,
@@ -116,7 +116,7 @@ class JukeboxGui(DirectObject):
             parent=parent,
             relief=None,
             pos=guiNode.find('**/%s_text_locator' % locatorPrefix).getPos(),
-            **None)
+            **kwargs)
 
     def _JukeboxGui__createLabeledScrolledList(self,
                                                guiNode,
@@ -150,7 +150,7 @@ class JukeboxGui(DirectObject):
             itemFrame_scale=0.070000000000000007,
             numItemsVisible=TTLocalizer.JGnumItemsVisible,
             items=[],
-            **None),
+            **kwargs),
                 self._JukeboxGui__createLabel(
                     guiNode,
                     namePrefix,

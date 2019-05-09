@@ -155,10 +155,10 @@ class PropPool:
                 animPath = self.getPath(phase, animName)
                 self.propTypes[propName] = 'actor'
                 self.propStrings[propName] = (propPath, animPath)
-                continue
-            propPath = self.getPath(phase, modelName)
-            self.propTypes[propName] = 'model'
-            self.propStrings[propName] = (propPath, )
+            else:
+                propPath = self.getPath(phase, modelName)
+                self.propTypes[propName] = 'model'
+                self.propStrings[propName] = (propPath, )
 
         propName = 'tart'
         self.propStrings[propName] = (self.getPath(3.5, 'tart'), )
@@ -321,12 +321,13 @@ class PropPool:
                     self.makeVariant(name)
 
             return Actor.Actor(other=self.props[name])
-        elif name not in self.props:
-            prop = loader.loadModel(self.propStrings[name][0])
-            prop.setName(name)
-            self.storeProp(name, prop)
-            if name in Variants:
-                self.makeVariant(name)
+        else:
+            if name not in self.props:
+                prop = loader.loadModel(self.propStrings[name][0])
+                prop.setName(name)
+                self.storeProp(name, prop)
+                if name in Variants:
+                    self.makeVariant(name)
 
         return self.props[name].copyTo(hidden)
 

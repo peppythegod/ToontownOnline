@@ -311,11 +311,7 @@ class Suit(Avatar.Avatar):
     }
 
     def __init__(self):
-
-        try:
-            return None
-        except BaseException:
-            self.Suit_initialized = 1
+        self.Suit_initialized = 1
 
         Avatar.Avatar.__init__(self)
         self.setFont(ToontownGlobals.getSuitFont())
@@ -333,33 +329,29 @@ class Suit(Avatar.Avatar):
         self.isRental = 0
 
     def delete(self):
+        self.Suit_deleted = 1
+        if self.leftHand:
+            self.leftHand.removeNode()
+            self.leftHand = None
 
-        try:
-            pass
-        except BaseException:
-            self.Suit_deleted = 1
-            if self.leftHand:
-                self.leftHand.removeNode()
-                self.leftHand = None
+        if self.rightHand:
+            self.rightHand.removeNode()
+            self.rightHand = None
 
-            if self.rightHand:
-                self.rightHand.removeNode()
-                self.rightHand = None
+        if self.shadowJoint:
+            self.shadowJoint.removeNode()
+            self.shadowJoint = None
 
-            if self.shadowJoint:
-                self.shadowJoint.removeNode()
-                self.shadowJoint = None
+        if self.nametagJoint:
+            self.nametagJoint.removeNode()
+            self.nametagJoint = None
 
-            if self.nametagJoint:
-                self.nametagJoint.removeNode()
-                self.nametagJoint = None
+        for part in self.headParts:
+            part.removeNode()
 
-            for part in self.headParts:
-                part.removeNode()
-
-            self.headParts = []
-            self.removeHealthBar()
-            Avatar.Avatar.delete(self)
+        self.headParts = []
+        self.removeHealthBar()
+        Avatar.Avatar.delete(self)
 
     def setHeight(self, height):
         Avatar.Avatar.setHeight(self, height)

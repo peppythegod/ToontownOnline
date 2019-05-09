@@ -61,7 +61,7 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.strafeInterval = None
         self.onscreenMessage = None
         self.toonMopathInterval = []
-        self.nerfed = ToontownGlobals.SELLBOT_NERF_HOLIDAY in base.cr.newsManager.getHolidayIdList(
+        self.nerfed = base.cr.newsManager and ToontownGlobals.SELLBOT_NERF_HOLIDAY in base.cr.newsManager.getHolidayIdList(
         )
         self.localToonPromoted = True
         self.resetMaxDamage()
@@ -565,9 +565,6 @@ class DistributedSellbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         return bossTrack
 
     def _DistributedSellbotBoss__talkAboutPromotion(self, speech):
-        if not self.localToonPromoted:
-            pass
-        1
         if self.prevCogSuitLevel < ToontownGlobals.MaxCogSuitLevel:
             speech += TTLocalizer.CagedToonPromotion
             newCogSuitLevel = localAvatar.getCogLevels()[

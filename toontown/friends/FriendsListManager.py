@@ -29,13 +29,15 @@ class FriendsListManager:
         self.friendsRequestQueue = []
 
     def load(self):
-        base.cr.friendManager.setGameSpecificFunction(
-            self.processQueuedRequests)
+        if base.cr.friendManager:
+            base.cr.friendManager.setGameSpecificFunction(
+                self.processQueuedRequests)
         self.accept(OTPGlobals.AvatarNewFriendAddEvent,
                     self._FriendsListManager__friendAdded)
 
     def unload(self):
-        base.cr.friendManager.setGameSpecificFunction(None)
+        if base.cr.friendManager:
+            base.cr.friendManager.setGameSpecificFunction(None)
         self.exitFLM()
         if self.avatarPanel:
             del self.avatarPanel

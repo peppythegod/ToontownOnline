@@ -121,7 +121,7 @@ class DistributedHQInterior(DistributedObject.DistributedObject):
         return (row, nameText, scoreText, trophyStar)
 
     def setLeaderBoard(self, leaderData):
-        (avIds, names, scores) = cPickle.loads(leaderData)
+        (avIds, names, scores) = ([], [], [])#cPickle.loads(leaderData)
         self.notify.debug('setLeaderBoard: avIds: %s, names: %s, scores: %s' %
                           (avIds, names, scores))
         self.leaderAvIds = avIds

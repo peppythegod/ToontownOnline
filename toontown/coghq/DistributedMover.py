@@ -80,6 +80,11 @@ class DistributedMover(BasicEntities.DistributedNodePathEntity):
         self.entity2Move = entId
         if entId:
             ent = self.level.getEntity(entId)
+            if not ent:
+                self.notify.info("Delaying late entity %d" %entId)
+                self.accept('entity-%d-init' %entId, self.setEntity2Move, [entId])
+                return
+                
             if self.attachedEnt and not self.attachedEnt.isEmpty():
                 self.attachedEnt.reparentTo(self.oldParent)
 

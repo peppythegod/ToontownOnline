@@ -22,11 +22,7 @@ class DistributedAvatar(DistributedActor, Avatar):
     ManagesNametagAmbientLightChanged = True
 
     def __init__(self, cr):
-
-        try:
-            return None
-        except BaseException:
-            self.DistributedAvatar_initialized = 1
+        self.DistributedAvatar_initialized = 1
 
         Avatar.__init__(self)
         DistributedActor.__init__(self, cr)
@@ -35,12 +31,6 @@ class DistributedAvatar(DistributedActor, Avatar):
         self.maxHp = None
 
     def disable(self):
-
-        try:
-            del self.DistributedAvatar_announced
-        except BaseException:
-            return None
-
         self.reparentTo(hidden)
         self.removeActive()
         self.disableBodyCollisions()
@@ -51,13 +41,9 @@ class DistributedAvatar(DistributedActor, Avatar):
         DistributedActor.disable(self)
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedAvatar_deleted = 1
-            Avatar.delete(self)
-            DistributedActor.delete(self)
+        self.DistributedAvatar_deleted = 1
+        Avatar.delete(self)
+        DistributedActor.delete(self)
 
     def generate(self):
         DistributedActor.generate(self)
@@ -73,11 +59,7 @@ class DistributedAvatar(DistributedActor, Avatar):
                     self._DistributedAvatar__nameTagShowName)
 
     def announceGenerate(self):
-
-        try:
-            return None
-        except BaseException:
-            self.DistributedAvatar_announced = 1
+        self.DistributedAvatar_announced = 1
 
         if not self.isLocal():
             self.initializeBodyCollisions('distAvatarCollNode-' +

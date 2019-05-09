@@ -93,12 +93,7 @@ class SCMenu(SCObject, NodePath):
         self.appendFromStructure(structure)
 
     def appendFromStructure(self, structure):
-        SCMenuHolder = SCMenuHolder
-        SCStaticTextTerminal = SCStaticTextTerminal
-        SCGMTextTerminal = SCGMTextTerminal
-        import SpeedChatTypes
-        OTPLocalizer = OTPLocalizer
-        import otp.otpbase
+        from SpeedChatTypes import SCMenuHolder, SCStaticTextTerminal, SCGMTextTerminal
 
         def addChildren(menu, childList):
             for child in childList:
@@ -223,7 +218,7 @@ class SCMenu(SCObject, NodePath):
         if member is self.activeMember:
             return None
 
-        if self.activeMember is None and SCMenu.SpeedChatRolloverTolerance == 0 or member.posInParentMenu < self.activeMember.posInParentMenu:
+        if self.activeMember is None or SCMenu.SpeedChatRolloverTolerance == 0 or member.posInParentMenu < self.activeMember.posInParentMenu:
             self._SCMenu__setActiveMember(member)
         else:
 
@@ -251,7 +246,7 @@ class SCMenu(SCObject, NodePath):
 
         if member is not self.activeMember:
             pass
-        1
+        
         if not member.hasStickyFocus():
             self._SCMenu__setActiveMember(None)
 

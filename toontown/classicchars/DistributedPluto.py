@@ -16,21 +16,17 @@ class DistributedPluto(DistributedCCharBase.DistributedCCharBase):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedPluto')
 
     def __init__(self, cr):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedPluto_initialized = 1
-            DistributedCCharBase.DistributedCCharBase.__init__(
-                self, cr, TTLocalizer.Pluto, 'p')
-            self.fsm = ClassicFSM.ClassicFSM('DistributedPluto', [
-                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral,
-                            ['Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
-            ], 'Off', 'Off')
-            self.fsm.enterInitialState()
-            self.handleHolidays()
+        self.DistributedPluto_initialized = 1
+        DistributedCCharBase.DistributedCCharBase.__init__(
+            self, cr, TTLocalizer.Pluto, 'p')
+        self.fsm = ClassicFSM.ClassicFSM('DistributedPluto', [
+            State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+            State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                        ['Walk']),
+            State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+        ], 'Off', 'Off')
+        self.fsm.enterInitialState()
+        self.handleHolidays()
 
     def disable(self):
         self.fsm.requestFinalState()
@@ -46,13 +42,9 @@ class DistributedPluto(DistributedCCharBase.DistributedCCharBase):
         self.fsm.requestFinalState()
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedPluto_deleted = 1
-            del self.fsm
-            DistributedCCharBase.DistributedCCharBase.delete(self)
+        self.DistributedPluto_deleted = 1
+        del self.fsm
+        DistributedCCharBase.DistributedCCharBase.delete(self)
 
     def generate(self):
         DistributedCCharBase.DistributedCCharBase.generate(self, self.diffPath)

@@ -1,0 +1,3 @@
+
+class CPetBrain:
+    pass

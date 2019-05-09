@@ -247,11 +247,12 @@ class QuietZoneState(StateData.StateData):
 
         if not base.cr.welcomeValleyManager:
             newZoneId = ZoneUtil.getCanonicalZoneId(zoneId)
+            print zoneId, newZoneId
             if newZoneId != zoneId:
                 self.gotZoneRedirect(newZoneId)
                 return None
 
-        if allowRedirect and ZoneUtil.isWelcomeValley(zoneId):
+        if allowRedirect and 0:#ZoneUtil.isWelcomeValley(zoneId):
             self.notify.info('Requesting AI redirect from zone %s.' % zoneId)
             if base.slowQuietZone:
 

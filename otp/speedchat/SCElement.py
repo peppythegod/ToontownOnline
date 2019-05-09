@@ -163,7 +163,7 @@ class SCElement(SCObject, NodePath):
         del args['rolloverColor']
         del args['pressedColor']
         btn = DirectButton(
-            parent=self, frameSize=(0, self.width, -(self.height), 0), **None)
+            parent=self, frameSize=(0, self.width, -(self.height), 0), **args)
         btn.frameStyle[DGG.BUTTON_ROLLOVER_STATE].setColor(*rolloverColor)
         btn.frameStyle[DGG.BUTTON_DEPRESSED_STATE].setColor(*pressedColor)
         btn.updateFrameStyle()

@@ -53,8 +53,8 @@ class LaserGameDrag(LaserGameBase.LaserGameBase):
                 if self.checkFor3(symbol):
                     self.clearIndex(symbol)
                     finished = 0
-                    continue
-                finished = 1
+                else:
+                    finished = 1
 
     def hit(self, hitX, hitY, oldx=-1, oldy=-1):
         if self.finshed:
@@ -78,31 +78,26 @@ class LaserGameDrag(LaserGameBase.LaserGameBase):
 
     def checkFor3(self, index):
         numInARow = 0
-        for posX in range(0, self.gridNumX):
-            for posY in range(0, self.gridNumY):
+        for posX in xrange(0, self.gridNumX):
+            for posY in xrange(0, self.gridNumY):
                 if self.gridData[posX][posY] == index:
                     numInARow += 1
                     if numInARow >= 3:
                         return 1
-
-                numInARow >= 3
-                numInARow = 0
-
+                else:
+                    numInARow = 0
             numInARow = 0
 
         numInARow = 0
-        for posY in range(0, self.gridNumY):
-            for posX in range(0, self.gridNumX):
+        for posY in xrange(0, self.gridNumY):
+            for posX in xrange(0, self.gridNumX):
                 if self.gridData[posX][posY] == index:
                     numInARow += 1
                     if numInARow >= 3:
                         return 1
-
-                numInARow >= 3
-                numInARow = 0
-
+                else:
+                    numInARow = 0
             numInARow = 0
-
         return 0
 
     def clearIndex(self, index):

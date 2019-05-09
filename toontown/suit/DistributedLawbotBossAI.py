@@ -576,8 +576,6 @@ class DistributedLawbotBossAI(DistributedBossCogAI.DistributedBossCogAI,
                 if toon.cogLevels > highestCogSuitLevel:
                     highestCogSuitLevel = toonLevel
 
-            toon.cogLevels > highestCogSuitLevel
-
         if not totalNumToons:
             totalNumToons = 1.0
 

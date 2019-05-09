@@ -40,6 +40,9 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
                     os.path.expandvars('toontown/src/chat')))
             searchPath.appendDirectory(
                 Filename.fromOsSpecific(os.path.expandvars('toontown/chat')))
+            searchPath.appendDirectory(
+                Filename.fromOsSpecific(os.path.expandvars('whitelist'))
+            )
         found = vfs.resolveFilename(filename, searchPath)
         if not found:
             self.notify.info("Couldn't find whitelist data file!")
@@ -47,7 +50,7 @@ class TTWhiteList(WhiteList, DistributedObject.DistributedObject):
         data = vfs.readFile(filename, 1)
         lines = data.split('\n')
         WhiteList.__init__(self, lines)
-        self.redownloadWhitelist()
+        #self.redownloadWhitelist()
         self.defaultWord = TTLocalizer.ChatGarblerDefault[0]
         self.accept('updateWhitelist', self.handleNewWhitelist)
 

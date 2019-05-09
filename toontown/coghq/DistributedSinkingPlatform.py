@@ -70,11 +70,15 @@ class DistributedSinkingPlatform(BasicEntities.DistributedNodePathEntity):
     def localToonEntered(self):
         ts = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime(), bits=32)
+        if ts < 0:
+            ts *= -1
         self.sendUpdate('setOnOff', [1, ts])
 
     def localToonLeft(self):
         ts = globalClockDelta.localToNetworkTime(
             globalClock.getFrameTime(), bits=32)
+        if ts < 0:
+            ts *= -1
         self.sendUpdate('setOnOff', [0, ts])
 
     def enterOff(self):

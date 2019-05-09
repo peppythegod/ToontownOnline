@@ -16,28 +16,20 @@ import random
 
 class DistributedNPCToonBase(DistributedToon.DistributedToon):
     def __init__(self, cr):
-
-        try:
-            pass
-        except:
-            self.DistributedNPCToon_initialized = 1
-            DistributedToon.DistributedToon.__init__(self, cr)
-            self._DistributedNPCToonBase__initCollisions()
-            self.setPickable(0)
-            self.setPlayerType(NametagGroup.CCNonPlayer)
+        self.DistributedNPCToon_initialized = 1
+        DistributedToon.DistributedToon.__init__(self, cr)
+        self._DistributedNPCToonBase__initCollisions()
+        self.setPickable(0)
+        self.setPlayerType(NametagGroup.CCNonPlayer)
 
     def disable(self):
         self.ignore('enter' + self.cSphereNode.getName())
         DistributedToon.DistributedToon.disable(self)
 
     def delete(self):
-
-        try:
-            pass
-        except:
-            self.DistributedNPCToon_deleted = 1
-            self._DistributedNPCToonBase__deleteCollisions()
-            DistributedToon.DistributedToon.delete(self)
+        self.DistributedNPCToon_deleted = 1
+        self._DistributedNPCToonBase__deleteCollisions()
+        DistributedToon.DistributedToon.delete(self)
 
     def generate(self):
         DistributedToon.DistributedToon.generate(self)
@@ -70,13 +62,16 @@ class DistributedNPCToonBase(DistributedToon.DistributedToon):
 
     def initToonState(self):
         self.setAnimState('neutral', 0.90000000000000002, None, None)
+        self.attachToOrigin()
+        
+    def attachToOrigin(self):
         npcOrigin = render.find('**/npc_origin_' + ` self.posIndex `)
         if not npcOrigin.isEmpty():
             self.reparentTo(npcOrigin)
             self.initPos()
         else:
             self.notify.warning('announceGenerate: Could not find npc_origin_'
-                                + str(self.posIndex))
+                                + str(self.posIndex) + ', deferring.')
 
     def initPos(self):
         self.clearMat()

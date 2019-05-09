@@ -93,11 +93,15 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         #prepareAvatar(self.http) #?
         self._ToontownClientRepository__forbidCheesyEffects = 0
         self.friendManager = None
+        self.avatarFriendsManager = None
+        self.playerFriendsManager = None
         self.speedchatRelay = None
         self.trophyManager = None
         self.bankManager = None
         self.catalogManager = None
         self.welcomeValleyManager = None
+        self.deliveryManager = None
+        self.codeRedemptionManager = None
         self.newsManager = None
         self.streetSign = None
         self.distributedDistrict = None
@@ -522,7 +526,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
 
     def enterPlayingGame(self, *args, **kArgs):
         OTPClientRepository.OTPClientRepository.enterPlayingGame(
-            self, *args, **args)
+            self, *args, **kArgs)
         self.gameFSM.request('waitOnEnterResponses', [
             None, base.localAvatar.defaultZone, base.localAvatar.defaultZone,
             -1
@@ -1150,10 +1154,12 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         return 'leftQuietZone-%s' % (id(self), )
 
     def sendSetZoneMsg(self, zoneId, visibleZoneList=None):
+        print "set zone to %d" %zoneId
         event = self.getNextSetZoneDoneEvent()
         self.setZonesEmulated += 1
         parentId = base.localAvatar.defaultShard
         self.sendSetLocation(base.localAvatar.doId, parentId, zoneId)
+        #base.localAvatar.d_setForcedLocation(zoneId)
         localAvatar.setLocation(parentId, zoneId)
         interestZones = zoneId
         if visibleZoneList is not None:
@@ -1177,7 +1183,23 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.setZoneQueue.push([op, args, event])
         if len(self.setZoneQueue) == 1:
             self._sendNextSetZone()
-
+            
+    def __newSetZone(self):
+        (op, args, event) = self.setZoneQueue.top()
+        if op == ToontownClientRepository.SetInterest:
+            (parentId, interestZones, name) = args
+            if isinstance(interestZones, list):
+                zone = interestZones[0]
+            else:
+                zone = interestZones
+            print "setting zone to %d" %zone
+            dg = PyDatagram()
+            dg.addUint16(29)
+            dg.addUint16(zone)
+            base.cr.send(dg)
+        else:
+            self.notify.warning("setZone op is different: %s" %op)
+            
     def _sendNextSetZone(self):
         (op, args, event) = self.setZoneQueue.top()
         if op == ToontownClientRepository.SetInterest:
@@ -1287,7 +1309,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         elif self.cache.contains(doId):
             self.cache.delete(doId)
         else:
-            ClientRepository.notify.warning(
+            self.notify.warning(
                 'Asked to delete non-existent DistObj ' + str(doId))
 
     def _abandonShard(self):

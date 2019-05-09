@@ -815,8 +815,6 @@ class RewardPanel(DirectFrame):
                     if toonList[j] is not None:
                         activeToonIds.append(toonList[j].getDoId())
 
-                toonList[j] is not None
-
             isSkelecog = flags & ToontownBattleGlobals.DLF_SKELECOG
             isForeman = flags & ToontownBattleGlobals.DLF_FOREMAN
             isVP = flags & ToontownBattleGlobals.DLF_VP
@@ -983,8 +981,6 @@ class RewardPanel(DirectFrame):
                         origExp[trackIndex] >= maxExp:
                     endTracks[trackIndex] = 1
                     trackEnded = 1
-
-            earnedExp[trackIndex] + origExp[trackIndex] >= maxExp
 
         for dept in range(len(SuitDNA.suitDepts)):
             if meritList[dept]:

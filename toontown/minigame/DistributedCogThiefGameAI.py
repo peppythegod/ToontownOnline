@@ -15,25 +15,21 @@ class DistributedCogThiefGameAI(DistributedMinigameAI.DistributedMinigameAI):
     ExplodeWaitTime = 6.0 + CTGG.LyingDownDuration
 
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedCogThiefGameAI_initialized = 1
-            DistributedMinigameAI.DistributedMinigameAI.__init__(
-                self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedCogThiefGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['play']),
-                State.State('play', self.enterPlay, self.exitPlay,
-                            ['cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self.cogInfo = {}
-            self.barrelInfo = {}
-            self.initBarrelInfo()
+        self.DistributedCogThiefGameAI_initialized = 1
+        DistributedMinigameAI.DistributedMinigameAI.__init__(
+            self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedCogThiefGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['play']),
+            State.State('play', self.enterPlay, self.exitPlay,
+                        ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self.cogInfo = {}
+        self.barrelInfo = {}
+        self.initBarrelInfo()
 
     def generate(self):
         self.notify.debug('generate')
@@ -267,8 +263,6 @@ class DistributedCogThiefGameAI(DistributedMinigameAI.DistributedMinigameAI):
                     toonId = self.cogInfo[key]['goalId']
                     if toonId in noOneChasing:
                         noOneChasing.remove(toonId)
-
-                toonId in noOneChasing
 
             chaseToonId = self.avIdList[0]
             if noOneChasing:

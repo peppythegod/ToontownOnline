@@ -33,9 +33,9 @@ class PetshopBuildingAI:
     def setup(self, blockNumber):
         self.interior = DistributedPetshopInteriorAI.DistributedPetshopInteriorAI(
             blockNumber, self.air, self.interiorZone)
-        self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         seeds = self.air.petMgr.getAvailablePets(1, len(self.npcs))
         self.interior.generateWithRequired(self.interiorZone)
+        self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         door = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber,
                                                    DoorTypes.EXT_STANDARD)
         insideDoor = DistributedDoorAI.DistributedDoorAI(

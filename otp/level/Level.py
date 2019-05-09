@@ -136,6 +136,7 @@ class Level:
             entity.setAttribInit(key, value)
 
         self.entities[entId] = entity
+        messenger.send('entity-%d-init' %entId)
 
     def getEntity(self, entId):
         if hasattr(self, 'entities'):

@@ -1,4 +1,3 @@
-#from toontown.toonbase import ToontownStart # makes no sense
 from toontown.toonbase import TTLocalizer
 from pandac.libpandaexpressModules import *
 from otp.otpbase import OTPLauncherGlobals

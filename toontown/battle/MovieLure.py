@@ -255,11 +255,11 @@ def __createMagnetMultiTrack(lure,
                         suitDelay + 0.55000000000000004 + shakeTotalDuration,
                         suitMoveDuration, reachPos, battle, trapProp))
 
-        hp > 0
-        tracks.append(
-            Sequence(
-                Wait(3.7000000000000002), Func(MovieUtil.indicateMissed,
-                                               suit)))
+        else:
+            tracks.append(
+                Sequence(
+                    Wait(3.7000000000000002), Func(MovieUtil.indicateMissed,
+                                                   suit)))
 
     if isSmallMagnet == 1:
         tracks.append(
@@ -337,11 +337,11 @@ def __createHypnoGogglesMultiTrack(lure, npcs=[]):
                     lerpSuit(suit, suitDelay + 1.7, 0.69999999999999996,
                              reachPos, battle, trapProp))
 
-        hp > 0
-        tracks.append(
-            Sequence(
-                Wait(2.2999999999999998),
-                Func(MovieUtil.indicateMissed, suit, 1.1000000000000001)))
+        else:
+            tracks.append(
+                Sequence(
+                    Wait(2.2999999999999998),
+                    Func(MovieUtil.indicateMissed, suit, 1.1000000000000001)))
 
     tracks.append(getSoundTrack('TL_hypnotize.mp3', delay=0.5, node=toon))
     return tracks
@@ -930,11 +930,11 @@ def __createSlideshowMultiTrack(lure, npcs=[]):
                     lerpSuit(suit, suitDelay + 1.7, 0.69999999999999996,
                              reachPos, battle, trapProp))
 
-        hp > 0
-        tracks.append(
-            Sequence(
-                Wait(2.2999999999999998),
-                Func(MovieUtil.indicateMissed, suit, 1.1000000000000001)))
+        else:
+            tracks.append(
+                Sequence(
+                    Wait(2.2999999999999998),
+                    Func(MovieUtil.indicateMissed, suit, 1.1000000000000001)))
 
     tracks.append(
         getSoundTrack(

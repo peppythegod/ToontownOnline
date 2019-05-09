@@ -86,8 +86,6 @@ class Entity(DirectObject):
 
                     setter(value)
 
-            setter is not None
-
     def setAttribInit(self, attrib, value):
         self.__dict__[attrib] = value
 

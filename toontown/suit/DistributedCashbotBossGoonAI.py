@@ -87,7 +87,7 @@ class DistributedCashbotBossGoonAI(
         origH = self.getH()
         h = PythonUtil.fitDestAngle2Src(origH, targetH)
         delta = abs(h - origH)
-        turnTime = delta / self.velocity * 5
+        turnTime = delta / (self.velocity * 5)
         walkTime = dist / self.velocity
         self.setH(targetH)
         self.target = self.boss.scene.getRelativePoint(self, Point3(

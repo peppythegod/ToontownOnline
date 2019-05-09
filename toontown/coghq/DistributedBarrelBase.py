@@ -19,7 +19,7 @@ class DistributedBarrelBase(BasicEntities.DistributedNodePathEntity,
         self.animTrack = None
         self.shadow = 0
         self.barrelScale = 0.5
-        self.sphereRadius = 3.2000000000000002
+        self.sphereRadius = 3.3
         self.playSoundForRemoteToons = 1
         self.gagNode = None
         self.gagModel = None
@@ -46,18 +46,19 @@ class DistributedBarrelBase(BasicEntities.DistributedNodePathEntity,
 
     def announceGenerate(self):
         BasicEntities.DistributedNodePathEntity.announceGenerate(self)
+        barrelSphereName = self.uniqueName('barrelSphere')
         self.setTag('doId', str(self.getDoId()))
         self.loadModel()
-        self.collSphere = CollisionSphere(0, 0, 0, self.sphereRadius)
+        self.collSphere = CollisionSphere(0, 0, 0.5, self.sphereRadius)
         self.collSphere.setTangible(0)
-        self.collNode = CollisionNode(self.uniqueName('barrelSphere'))
+        self.collNode = CollisionNode(barrelSphereName)
         self.collNode.setIntoCollideMask(WallBitmask)
         self.collNode.addSolid(self.collSphere)
         self.collNodePath = self.barrel.attachNewNode(self.collNode)
         self.collNodePath.hide()
         self.applyLabel()
         self.accept(
-            self.uniqueName('enterbarrelSphere'), self.handleEnterSphere)
+            'enter' + barrelSphereName, self.handleEnterSphere)
 
     def loadModel(self):
         self.grabSound = base.loadSfx(self.grabSoundPath)
@@ -74,13 +75,16 @@ class DistributedBarrelBase(BasicEntities.DistributedNodePathEntity,
                                    0.59999999999999998, 1)
 
     def handleEnterSphere(self, collEntry=None):
+        print "enter sphere"
         localAvId = base.localAvatar.getDoId()
         self.d_requestGrab()
 
     def d_requestGrab(self):
+        print "request grab"
         self.sendUpdate('requestGrab', [])
 
     def setGrab(self, avId):
+        print "set grab"
         self.notify.debug('handleGrab %s' % avId)
         self.avId = avId
         if avId == base.localAvatar.doId:
@@ -112,6 +116,7 @@ class DistributedBarrelBase(BasicEntities.DistributedNodePathEntity,
         self.animTrack.start()
 
     def setReject(self):
+        print "reject!"
         self.notify.debug('I was rejected!!!!!')
 
     def resetBarrel(self):

@@ -213,6 +213,7 @@ NPCToonDict = {
     999: (-1, lnames[999], 'r', 'm', 1, NPC_TAILOR),
     1000: (-1, lnames[1000], 'r', 'm', 1, NPC_HQ),
     20001: (-1, lnames[20001], ('dss', 'ms', 'm', 'm', 17, 0, 17, 17, 3, 3, 3, 3, 7, 2), 'm', 1, NPC_BLOCKER),
+    20002: (-1, TTLocalizer.TutorialHQOfficerName, ('dls', 'ms', 'm', 'm', 6, 0, 6, 6, 0, 10, 0, 10, 2, 9), 'm', 1, NPC_SPECIALQUESTGIVER),
     2002: (2514, lnames[2002], ('hss', 'ls', 'l', 'm', 4, 0, 4, 4, 0, 3, 0, 3, 1, 18), 'm', 1, NPC_REGULAR),
     2003: (2516, lnames[2003], ('cll', 'ms', 'l', 'm', 18, 0, 18, 18, 0, 4, 0, 4, 1, 15), 'm', 1, NPC_REGULAR),
     2004: (2521, lnames[2004], ('rll', 'md', 'm', 'f', 15, 0, 5, 7, 3, 5, 3, 5, 0, 3), 'f', 1, NPC_TAILOR),

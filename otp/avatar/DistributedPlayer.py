@@ -26,28 +26,24 @@ class DistributedPlayer(DistributedAvatar.DistributedAvatar,
     chatGarbler = ChatGarbler.ChatGarbler()
 
     def __init__(self, cr):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedPlayer_initialized = 1
-            DistributedAvatar.DistributedAvatar.__init__(self, cr)
-            PlayerBase.PlayerBase.__init__(self)
-            TelemetryLimited.__init__(self)
-            self._DistributedPlayer__teleportAvailable = 0
-            self.inventory = None
-            self.experience = None
-            self.friendsList = []
-            self.oldFriendsList = None
-            self.timeFriendsListChanged = None
-            self.ignoreList = []
-            self.lastFailedTeleportMessage = {}
-            self._districtWeAreGeneratedOn = None
-            self.DISLname = ''
-            self.DISLid = 0
-            self.autoRun = 0
-            self.whiteListEnabled = base.config.GetBool(
-                'whitelist-chat-enabled', 1)
+        self.DistributedPlayer_initialized = 1
+        DistributedAvatar.DistributedAvatar.__init__(self, cr)
+        PlayerBase.PlayerBase.__init__(self)
+        TelemetryLimited.__init__(self)
+        self._DistributedPlayer__teleportAvailable = 0
+        self.inventory = None
+        self.experience = None
+        self.friendsList = []
+        self.oldFriendsList = None
+        self.timeFriendsListChanged = None
+        self.ignoreList = []
+        self.lastFailedTeleportMessage = {}
+        self._districtWeAreGeneratedOn = None
+        self.DISLname = ''
+        self.DISLid = 0
+        self.autoRun = 0
+        self.whiteListEnabled = base.config.GetBool(
+            'whitelist-chat-enabled', 1)
 
     def GetPlayerGenerateEvent():
         return 'DistributedPlayerGenerateEvent'
@@ -73,17 +69,13 @@ class DistributedPlayer(DistributedAvatar.DistributedAvatar,
         messenger.send(self.GetPlayerDeleteEvent(), [self])
 
     def delete(self):
+        self.DistributedPlayer_deleted = 1
+        del self.experience
+        if self.inventory:
+            self.inventory.unload()
 
-        try:
-            pass
-        except BaseException:
-            self.DistributedPlayer_deleted = 1
-            del self.experience
-            if self.inventory:
-                self.inventory.unload()
-
-            del self.inventory
-            DistributedAvatar.DistributedAvatar.delete(self)
+        del self.inventory
+        DistributedAvatar.DistributedAvatar.delete(self)
 
     def generate(self):
         DistributedAvatar.DistributedAvatar.generate(self)
@@ -251,7 +243,6 @@ class DistributedPlayer(DistributedAvatar.DistributedAvatar,
             self, chatString, chatFlags, dialogue, interrupt)
         if not quiet:
             pass
-        1
 
     def b_setChat(self, chatString, chatFlags):
         if self.cr.wantMagicWords and len(
@@ -322,7 +313,7 @@ class DistributedPlayer(DistributedAvatar.DistributedAvatar,
         self.sendUpdate('setSC', [msgIndex])
 
     def setSC(self, msgIndex):
-        if base.cr.avatarFriendsManager.checkIgnored(self.doId):
+        if base.cr.avatarFriendsManager and base.cr.avatarFriendsManager.checkIgnored(self.doId):
             return None
 
         if self.doId in base.localAvatar.ignoreList:

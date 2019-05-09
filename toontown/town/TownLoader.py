@@ -365,7 +365,6 @@ class TownLoader(StateData.StateData):
                         self.notify.error(
                             'already have interactive prop %s in zone %s' %
                             (self.zoneIdToInteractivePropDict, zoneId))
-                zoneId not in self.zoneIdToInteractivePropDict
 
             animatedBuildingNodes = i.findAllMatches(
                 '**/*:animated_building_*;-h')

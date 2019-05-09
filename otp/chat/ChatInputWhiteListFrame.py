@@ -8,85 +8,56 @@ from otp.otpbase import OTPLocalizer
 from direct.task import Task
 from otp.chat.ChatInputTyped import ChatInputTyped
 
-
 class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     notify = DirectNotifyGlobal.directNotify.newCategory('ChatInputWhiteList')
     ExecNamespace = None
 
-    def __init__(self, entryOptions, parent=None, **kw):
+    def __init__(self, entryOptions, parent = None, **kw):
         FSM.FSM.__init__(self, 'ChatInputWhiteListFrame')
         self.okayToSubmit = True
         self.receiverId = None
-        DirectFrame.__init__(
-            self,
-            parent=aspect2dp,
-            pos=(0, 0, 0.29999999999999999),
-            relief=None,
-            image=DGG.getDefaultDialogGeom(),
-            image_scale=(1.6000000000000001, 1, 1.3999999999999999),
-            image_pos=(0, 0, -0.050000000000000003),
-            image_color=OTPGlobals.GlobalDialogColor,
-            borderWidth=(0.01, 0.01))
-        optiondefs = {
-            'parent':
-            self,
-            'relief':
-            DGG.SUNKEN,
-            'scale':
-            0.050000000000000003,
-            'frameSize': (-0.20000000000000001, 25.300000000000001, -0.5, 1.2),
-            'borderWidth': (0.10000000000000001, 0.10000000000000001),
-            'frameColor': (0.90000000000000002, 0.90000000000000002,
-                           0.84999999999999998, 0.80000000000000004),
-            'pos': (-0.20000000000000001, 0, 0.11),
-            'entryFont':
-            OTPGlobals.getInterfaceFont(),
-            'width':
-            8.5999999999999996,
-            'numLines':
-            3,
-            'cursorKeys':
-            1,
-            'backgroundFocus':
-            0,
-            'suppressKeys':
-            1,
-            'suppressMouse':
-            1,
-            'command':
-            self.sendChat,
-            'failedCommand':
-            self.sendFailed,
-            'focus':
-            0,
-            'text':
-            '',
-            'sortOrder':
-            DGG.FOREGROUND_SORT_INDEX
-        }
+        DirectFrame.__init__(self, parent=aspect2dp, pos=(0, 0, 0.3), relief=None, image=DGG.getDefaultDialogGeom(), image_scale=(1.6, 1, 1.4), image_pos=(0, 0, -0.05), image_color=OTPGlobals.GlobalDialogColor, borderWidth=(0.01, 0.01))
+        optiondefs = {'parent': self,
+         'relief': DGG.SUNKEN,
+         'scale': 0.05,
+         'frameSize': (-0.2,
+                       25.3,
+                       -0.5,
+                       1.2),
+         'borderWidth': (0.1, 0.1),
+         'frameColor': (0.9, 0.9, 0.85, 0.8),
+         'pos': (-0.2, 0, 0.11),
+         'entryFont': OTPGlobals.getInterfaceFont(),
+         'width': 8.6,
+         'numLines': 3,
+         'cursorKeys': 1,
+         'backgroundFocus': 0,
+         'suppressKeys': 1,
+         'suppressMouse': 1,
+         'command': self.sendChat,
+         'failedCommand': self.sendFailed,
+         'focus': 0,
+         'text': '',
+         'sortOrder': DGG.FOREGROUND_SORT_INDEX}
         entryOptions['parent'] = self
-        self.chatEntry = DirectEntry(**None)
+        self.chatEntry = DirectEntry(**entryOptions)
         self.whisperId = None
         self.chatEntry.bind(DGG.OVERFLOW, self.chatOverflow)
         wantHistory = 0
         if __dev__:
             wantHistory = 1
-
-        self.wantHistory = base.config.GetBool('want-chat-history',
-                                               wantHistory)
+        self.wantHistory = config.GetBool('want-chat-history', wantHistory)
         self.history = ['']
-        self.historySize = base.config.GetInt('chat-history-size', 10)
+        self.historySize = config.GetInt('chat-history-size', 10)
         self.historyIndex = 0
         self.promoteWhiteList = 0
-        self.checkBeforeSend = base.config.GetBool(
-            'white-list-check-before-send', 0)
+        self.checkBeforeSend = config.GetBool('white-list-check-before-send', 0)
         self.whiteList = None
         self.active = 0
         self.autoOff = 0
         self.sendBy = 'Mode'
         self.prefilter = 1
-        DirectGuiGlobals = DirectGuiGlobals
-        import direct.gui
+        from direct.gui import DirectGuiGlobals
         self.chatEntry.bind(DirectGuiGlobals.TYPE, self.applyFilter)
         self.chatEntry.bind(DirectGuiGlobals.ERASE, self.applyFilter)
         tpMgr = TextPropertiesManager.getGlobalPtr()
@@ -95,10 +66,10 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
         tpMgr.setProperties('WLRed', Red)
         del tpMgr
         self.origFrameColor = self.chatEntry['frameColor']
+        return
 
     def destroy(self):
-        DirectGuiGlobals = DirectGuiGlobals
-        import direct.gui
+        from direct.gui import DirectGuiGlobals
         self.chatEntry.unbind(DGG.OVERFLOW)
         self.chatEntry.unbind(DirectGuiGlobals.TYPE)
         self.chatEntry.unbind(DirectGuiGlobals.ERASE)
@@ -118,21 +89,16 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
                 messenger.send('Chat-Failed open typed chat test')
                 self.notify.warning('Chat-Failed open typed chat test')
                 return None
-
         elif request == 'PlayerWhisper':
-            if not base.talkAssistant.checkWhisperTypedChatPlayer(
-                    self.whisperId):
+            if not base.talkAssistant.checkWhisperTypedChatPlayer(self.whisperId):
                 messenger.send('Chat-Failed player typed chat test')
                 self.notify.warning('Chat-Failed player typed chat test')
                 return None
-
         elif request == 'AvatarWhisper':
-            if not base.talkAssistant.checkWhisperTypedChatAvatar(
-                    self.whisperId):
+            if not base.talkAssistant.checkWhisperTypedChatAvatar(self.whisperId):
                 messenger.send('Chat-Failed avatar typed chat test')
                 self.notify.warning('Chat-Failed avatar typed chat test')
                 return None
-
         return FSM.FSM.defaultFilter(self, request, *args)
 
     def enterOff(self):
@@ -170,6 +136,7 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def exitPlayerWhisper(self):
         self.chatEntry.set(self.tempText)
         self.whisperId = None
+        return
 
     def enterAvatarWhisper(self):
         self.tempText = self.chatEntry.get()
@@ -178,20 +145,20 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def exitAvatarWhisper(self):
         self.chatEntry.set(self.tempText)
         self.whisperId = None
+        return
 
-    def activateByData(self, receiverId=None, toPlayer=0):
+    def activateByData(self, receiverId = None, toPlayer = 0):
         self.receiverId = receiverId
         self.toPlayer = toPlayer
         result = None
         if not self.receiverId:
             result = self.requestMode('AllChat')
-        elif self.receiverId and not (self.toPlayer):
+        elif self.receiverId and not self.toPlayer:
             self.whisperId = receiverId
             result = self.requestMode('AvatarWhisper')
         elif self.receiverId and self.toPlayer:
             self.whisperId = receiverId
             result = self.requestMode('PlayerWhisper')
-
         return result
 
     def activate(self):
@@ -209,17 +176,16 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def isActive(self):
         return self.active
 
-    def sendChat(self, text, overflow=False):
-        if not len(text) > 0 and text[0] in ['~', '>']:
+    def sendChat(self, text, overflow = False):
+        if not (len(text) > 0 and text[0] in ['~', '>']):
             if self.prefilter:
                 words = text.split(' ')
                 newwords = []
                 for word in words:
-                    if word == '' and self.whiteList.isWord(
-                            word) or self.promoteWhiteList:
+                    if word == '' or self.whiteList.isWord(word) or self.promoteWhiteList:
                         newwords.append(word)
-                        continue
-                    newwords.append(base.whiteList.defaultWord)
+                    else:
+                        newwords.append(base.whiteList.defaultWord)
 
                 text = ' '.join(newwords)
             else:
@@ -227,17 +193,17 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
 
         if text:
             self.chatEntry.set('')
-            if base.config.GetBool('exec-chat', 0) and text[0] == '>':
-                text = self._ChatInputWhiteListFrame__execMessage(text[1:])
+            if config.GetBool('exec-chat', 0) and text[0] == '>':
+                text = self.__execMessage(text[1:])
                 base.localAvatar.setChatAbsolute(text, CFSpeech | CFTimeout)
-                return None
+                return
             else:
                 self.sendChatBySwitch(text)
             if self.wantHistory:
                 self.addToHistory(text)
-
         else:
             localAvatar.chatMgr.deactivateChat()
+
         if not overflow:
             self.hide()
             if self.autoOff:
@@ -258,7 +224,7 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def sendChatByData(self, text):
         if not self.receiverId:
             base.talkAssistant.sendOpenTalk(text)
-        elif self.receiverId and not (self.toPlayer):
+        elif self.receiverId and not self.toPlayer:
             base.talkAssistant.sendWhisperTalk(text, self.receiverId)
         elif self.receiverId and self.toPlayer:
             base.talkAssistant.sendAccountTalk(text, self.receiverId)
@@ -282,20 +248,18 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def sendFailed(self, text):
         if not self.checkBeforeSend:
             self.sendChat(text)
-            return None
+            return
+        self.chatEntry['frameColor'] = (0.9, 0.0, 0.0, 0.8)
 
-        self.chatEntry['frameColor'] = (0.90000000000000002, 0.0, 0.0,
-                                        0.80000000000000004)
-
-        def resetFrameColor(task=None):
+        def resetFrameColor(task = None):
             self.chatEntry['frameColor'] = self.origFrameColor
             return Task.done
 
-        taskMgr.doMethodLater(0.10000000000000001, resetFrameColor,
-                              'resetFrameColor')
+        taskMgr.doMethodLater(0.1, resetFrameColor, 'resetFrameColor')
         self.applyFilter(keyArgs=None, strict=True)
         self.okayToSubmit = True
         self.chatEntry.guiItem.setAcceptEnabled(True)
+        return
 
     def chatOverflow(self, overflowText):
         self.notify.debug('chatOverflow')
@@ -318,26 +282,15 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
     def importExecNamespace(self):
         pass
 
-    def _ChatInputWhiteListFrame__execMessage(self, message):
+    def __execMessage(self, message):
         if not ChatInputTyped.ExecNamespace:
             ChatInputTyped.ExecNamespace = {}
-            exec 'from pandac.PandaModules import *' in globals(
-            ), self.ExecNamespace
+            exec 'from pandac.PandaModules import *' in globals(), self.ExecNamespace
             self.importExecNamespace()
-
         try:
-            if not isClient():
-                print 'EXECWARNING ChatInputWhiteListFrame eval: %s' % message
-                printStack()
-
             return str(eval(message, globals(), ChatInputTyped.ExecNamespace))
         except SyntaxError:
-
             try:
-                if not isClient():
-                    print 'EXECWARNING ChatInputWhiteListFrame exec: %s' % message
-                    printStack()
-
                 exec message in globals(), ChatInputTyped.ExecNamespace
                 return 'ok'
             except:
@@ -356,7 +309,7 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
             else:
                 return str(exception)
 
-    def applyFilter(self, keyArgs, strict=False):
+    def applyFilter(self, keyArgs, strict = False):
         text = self.chatEntry.get(plain=True)
         if len(text) > 0 and text[0] in ['~', '>']:
             self.okayToSubmit = True
@@ -368,12 +321,12 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
             for word in words:
                 if word == '' or self.whiteList.isWord(word):
                     newwords.append(word)
-                    continue
-                if self.checkBeforeSend:
-                    self.okayToSubmit = False
                 else:
-                    self.okayToSubmit = True
-                newwords.append('\x01WLEnter\x01' + word + '\x02')
+                    if self.checkBeforeSend:
+                        self.okayToSubmit = False
+                    else:
+                        self.okayToSubmit = True
+                    newwords.append('\x01WLEnter\x01' + word + '\x02')
 
             if not strict:
                 lastword = words[-1]
@@ -381,7 +334,6 @@ class ChatInputWhiteListFrame(FSM.FSM, DirectFrame):
                     newwords[-1] = lastword
                 else:
                     newwords[-1] = '\x01WLEnter\x01' + lastword + '\x02'
-
             newtext = ' '.join(newwords)
             self.chatEntry.set(newtext)
         self.chatEntry.guiItem.setAcceptEnabled(self.okayToSubmit)

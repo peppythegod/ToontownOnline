@@ -14,6 +14,9 @@ class GameSettings:
     sfx_vol = 100
     res = 1 # PS: 0 to 4 -- see ToonBase for reference
     embedded = 0
+    
+    acceptingNewFriends = 1
+    acceptingNonFriendWhispers = 1
 
     def __init__(self):
         self.settingsFile = "etc/settings.user"
@@ -82,3 +85,15 @@ class GameSettings:
         
     def getEmbeddedMode(self):
         return self.embedded
+        
+    def setAcceptingNewFriends(self, boolean):
+        self.acceptingNewFriends = boolean
+        
+    def getAcceptingNewFriends(self):
+        return self.acceptingNewFriends
+        
+    def setAcceptingNonFriendWhispers(self, boolean):
+        self.acceptingNonFriendWhispers = boolean
+        
+    def getAcceptingNonFriendWhispers(self):
+        return self.acceptingNonFriendWhispers

@@ -162,14 +162,10 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
         self.ignoreAll()
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedBossCog_deleted = 1
-            self.ignoreAll()
-            DistributedAvatar.DistributedAvatar.delete(self)
-            BossCog.BossCog.delete(self)
+        self.DistributedBossCog_deleted = 1
+        self.ignoreAll()
+        DistributedAvatar.DistributedAvatar.delete(self)
+        BossCog.BossCog.delete(self)
 
     def setDNAString(self, dnaString):
         BossCog.BossCog.setDNAString(self, dnaString)
@@ -242,9 +238,7 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
 
     def hasLocalToon(self):
         doId = localAvatar.doId
-        if doId not in self.toonsA:
-            pass
-        return doId in self.toonsB
+        return doId in self.toonsA or doId in self.toonsB
 
     def setBattleExperience(
             self, id0, origExp0, earnedExp0, origQuests0, items0, missedItems0,
@@ -462,19 +456,17 @@ class DistributedBossCog(DistributedAvatar.DistributedAvatar, BossCog.BossCog):
                 solid = entry.getFrom()
                 if solid == self.ray1:
                     self.e1 = entry
-                    continue
-                if solid == self.ray2:
+                elif solid == self.ray2:
                     self.e2 = entry
-                    continue
-                if solid == self.ray3:
+                elif solid == self.ray3:
                     self.e3 = entry
-                    continue
-                self.notify.warning('Unexpected ray in __liftBoss')
-                return None
+                else:
+                    self.notify.warning('Unexpected ray in __liftBoss')
+                    return
 
             self.cqueue.clearEntries()
 
-        if not self.e1 and self.e2 and self.e3:
+        if not (self.e1 and self.e2 and self.e3):
             self.notify.debug('Some points missed in __liftBoss')
             return None
 

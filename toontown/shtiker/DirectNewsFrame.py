@@ -45,8 +45,8 @@ class DirectNewsFrame(DirectObject.DirectObject):
         self.numIssuesExpected = 0
         self.needsParseNews = True
         self.newsIndexEntries = []
-        if self.NewsOverHttp:
-            self.redownloadNews()
+        #if self.NewsOverHttp:
+        #    self.redownloadNews()
 
         self.accept('newIssueOut', self.handleNewIssueOut)
         self.accept('clientCleanup', self.handleClientCleanup)

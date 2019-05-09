@@ -30,8 +30,8 @@ class GagshopBuildingAI:
     def setup(self, blockNumber):
         self.interior = DistributedGagshopInteriorAI.DistributedGagshopInteriorAI(
             blockNumber, self.air, self.interiorZone)
-        self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         self.interior.generateWithRequired(self.interiorZone)
+        self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         door = DistributedDoorAI.DistributedDoorAI(self.air, blockNumber,
                                                    DoorTypes.EXT_STANDARD)
         insideDoor = DistributedDoorAI.DistributedDoorAI(

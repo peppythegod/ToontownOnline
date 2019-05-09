@@ -101,7 +101,7 @@ class DistributedCashbotBossGoon(
                 origH = self.getH()
                 h = PythonUtil.fitDestAngle2Src(origH, self.targetH)
                 delta = abs(h - origH)
-                turnTime = delta / self.velocity * 5
+                turnTime = delta / (self.velocity * 5)
                 dist = Vec3(self.target - self.getPos()).length()
                 walkTime = dist / self.velocity
                 denom = turnTime + walkTime

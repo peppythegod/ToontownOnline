@@ -70,12 +70,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
     gmNameTag = None
 
     def __init__(self, cr, bFake=False):
-
-        try:
-            return None
-        except:
-            self.DistributedToon_initialized = 1
-
+        self.DistributedToon_initialized = 1
         DistributedPlayer.DistributedPlayer.__init__(self, cr)
         Toon.Toon.__init__(self)
         DistributedSmoothNode.DistributedSmoothNode.__init__(self, cr)
@@ -237,15 +232,11 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
         DistributedPlayer.DistributedPlayer.disable(self)
 
     def delete(self):
-
-        try:
-            pass
-        except:
-            self.DistributedToon_deleted = 1
-            del self.safeZonesVisited
-            DistributedPlayer.DistributedPlayer.delete(self)
-            Toon.Toon.delete(self)
-            DistributedSmoothNode.DistributedSmoothNode.delete(self)
+        self.DistributedToon_deleted = 1
+        del self.safeZonesVisited
+        DistributedPlayer.DistributedPlayer.delete(self)
+        Toon.Toon.delete(self)
+        DistributedSmoothNode.DistributedSmoothNode.delete(self)
 
     def generate(self):
         DistributedPlayer.DistributedPlayer.generate(self)
@@ -365,6 +356,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
         self.sendUpdate('setSCSinging', [msgIndex])
 
     def sendLogSuspiciousEvent(self, msg):
+        return
         localAvatar.sendUpdate('logSuspiciousEvent',
                                ['%s for %s' % (msg, self.doId)])
 
@@ -933,7 +925,7 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
             self.tunnelTrack.start(tOffset)
 
     def enterTeleportOut(self, *args, **kw):
-        Toon.Toon.enterTeleportOut(self, *args, **args)
+        Toon.Toon.enterTeleportOut(self, *args, **kw)
         if self.track:
             self.track.delayDelete = DelayDelete.DelayDelete(
                 self, 'enterTeleportOut')
@@ -2995,3 +2987,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon,
             module += chr(ic)
 
         self.sendUpdate('pingresp', [module])
+        
+    def d_setForcedLocation(self, newLocation):
+        self.sendUpdate('setForcedLocation', [newLocation])

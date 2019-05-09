@@ -55,6 +55,9 @@ class DistributedCashbotBossSafe(
         self.boss.safes[self.index] = self
         self.setupPhysics('safe')
         self.resetToInitialPosition()
+        
+        if self.boss.battleThreeObjectsReady():
+            messenger.send('battleThreeObjectsReady')
 
     def disable(self):
         del self.boss.safes[self.index]
@@ -106,3 +109,4 @@ class DistributedCashbotBossSafe(
     def exitInitial(self):
         if self.index == 0:
             self.unstash()
+            

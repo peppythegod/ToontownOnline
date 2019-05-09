@@ -29,51 +29,47 @@ class DistributedMinigameAI(DistributedObjectAI.DistributedObjectAI):
     notify = directNotify.newCategory('DistributedMinigameAI')
 
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedMinigameAI_initialized = 1
-            DistributedObjectAI.DistributedObjectAI.__init__(self, air)
-            self.minigameId = minigameId
-            self.frameworkFSM = ClassicFSM.ClassicFSM(
-                'DistributedMinigameAI', [
-                    State.State('frameworkOff', self.enterFrameworkOff,
-                                self.exitFrameworkOff,
-                                ['frameworkWaitClientsJoin']),
-                    State.State(
-                        'frameworkWaitClientsJoin',
-                        self.enterFrameworkWaitClientsJoin,
-                        self.exitFrameworkWaitClientsJoin, [
-                            'frameworkWaitClientsReady',
-                            'frameworkWaitClientsExit', 'frameworkCleanup'
-                        ]),
-                    State.State(
+        self.DistributedMinigameAI_initialized = 1
+        DistributedObjectAI.DistributedObjectAI.__init__(self, air)
+        self.minigameId = minigameId
+        self.frameworkFSM = ClassicFSM.ClassicFSM(
+            'DistributedMinigameAI', [
+                State.State('frameworkOff', self.enterFrameworkOff,
+                            self.exitFrameworkOff,
+                            ['frameworkWaitClientsJoin']),
+                State.State(
+                    'frameworkWaitClientsJoin',
+                    self.enterFrameworkWaitClientsJoin,
+                    self.exitFrameworkWaitClientsJoin, [
                         'frameworkWaitClientsReady',
-                        self.enterFrameworkWaitClientsReady,
-                        self.exitFrameworkWaitClientsReady, [
-                            'frameworkGame', 'frameworkWaitClientsExit',
-                            'frameworkCleanup'
-                        ]),
-                    State.State(
-                        'frameworkGame', self.enterFrameworkGame,
-                        self.exitFrameworkGame,
-                        ['frameworkWaitClientsExit', 'frameworkCleanup']),
-                    State.State('frameworkWaitClientsExit',
-                                self.enterFrameworkWaitClientsExit,
-                                self.exitFrameworkWaitClientsExit,
-                                ['frameworkCleanup']),
-                    State.State('frameworkCleanup', self.enterFrameworkCleanup,
-                                self.exitFrameworkCleanup, ['frameworkOff'])
-                ], 'frameworkOff', 'frameworkOff')
-            self.frameworkFSM.enterInitialState()
-            self.avIdList = []
-            self.stateDict = {}
-            self.scoreDict = {}
-            self.difficultyOverride = None
-            self.trolleyZoneOverride = None
-            self.metagameRound = -1
-            self.startingVotes = {}
+                        'frameworkWaitClientsExit', 'frameworkCleanup'
+                    ]),
+                State.State(
+                    'frameworkWaitClientsReady',
+                    self.enterFrameworkWaitClientsReady,
+                    self.exitFrameworkWaitClientsReady, [
+                        'frameworkGame', 'frameworkWaitClientsExit',
+                        'frameworkCleanup'
+                    ]),
+                State.State(
+                    'frameworkGame', self.enterFrameworkGame,
+                    self.exitFrameworkGame,
+                    ['frameworkWaitClientsExit', 'frameworkCleanup']),
+                State.State('frameworkWaitClientsExit',
+                            self.enterFrameworkWaitClientsExit,
+                            self.exitFrameworkWaitClientsExit,
+                            ['frameworkCleanup']),
+                State.State('frameworkCleanup', self.enterFrameworkCleanup,
+                            self.exitFrameworkCleanup, ['frameworkOff'])
+            ], 'frameworkOff', 'frameworkOff')
+        self.frameworkFSM.enterInitialState()
+        self.avIdList = []
+        self.stateDict = {}
+        self.scoreDict = {}
+        self.difficultyOverride = None
+        self.trolleyZoneOverride = None
+        self.metagameRound = -1
+        self.startingVotes = {}
 
     def addChildGameFSM(self, gameFSM):
         self.frameworkFSM.getStateNamed('frameworkGame').addChild(gameFSM)
@@ -376,7 +372,7 @@ class DistributedMinigameAI(DistributedObjectAI.DistributedObjectAI):
                 score = int(self.scoreDict[avId] + 0.5)
             else:
                 score = randReward
-            if ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY in simbase.air.holidayManager.currentHolidays or ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH in simbase.air.holidayManager.currentHolidays:
+            if simbase.air.holidayManager and ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY in simbase.air.holidayManager.currentHolidays or simbase.air.holidayManager and ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH in simbase.air.holidayManager.currentHolidays:
                 score *= MinigameGlobals.JellybeanTrolleyHolidayScoreMultiplier
 
             logEvent = False
@@ -455,7 +451,7 @@ class DistributedMinigameAI(DistributedObjectAI.DistributedObjectAI):
                 pm.generateWithRequired(self.zoneId)
         else:
             self.notify.debug('last minigame, handling newbies')
-            if ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY in simbase.air.holidayManager.currentHolidays or ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH in simbase.air.holidayManager.currentHolidays:
+            if simbase.air.holidayManager and ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY in simbase.air.holidayManager.currentHolidays or simbase.air.holidayManager and ToontownGlobals.JELLYBEAN_TROLLEY_HOLIDAY_MONTH in simbase.air.holidayManager.currentHolidays:
                 votesArray = map(
                     lambda x: MinigameGlobals.
                     JellybeanTrolleyHolidayScoreMultiplier * x, votesArray)

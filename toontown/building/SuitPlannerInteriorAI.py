@@ -81,7 +81,7 @@ class SuitPlannerInteriorAI:
             numReserve = len(lvls) - numActive
             joinChances = self._SuitPlannerInteriorAI__genJoinChances(
                 numReserve)
-            for currReserve in range(numReserve):
+            for currReserve in range(1):#(numReserve):
                 level = lvls[currReserve + numActive]
                 type = self._SuitPlannerInteriorAI__genNormalSuitType(level)
                 reserveDict = {}

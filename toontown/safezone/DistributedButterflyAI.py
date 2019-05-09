@@ -29,18 +29,14 @@ class DistributedButterflyAI(DistributedObjectAI.DistributedObjectAI):
              self.playground, self.area, self.ownerId)
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.butterfly_deleted = 1
-            ButterflyGlobals.recycleIndex(self.curIndex, self.playground,
-                                          self.area, self.ownerId)
-            ButterflyGlobals.recycleIndex(self.destIndex, self.playground,
-                                          self.area, self.ownerId)
-            self.fsm.request('off')
-            del self.fsm
-            DistributedObjectAI.DistributedObjectAI.delete(self)
+        self.butterfly_deleted = 1
+        ButterflyGlobals.recycleIndex(self.curIndex, self.playground,
+                                      self.area, self.ownerId)
+        ButterflyGlobals.recycleIndex(self.destIndex, self.playground,
+                                      self.area, self.ownerId)
+        self.fsm.request('off')
+        del self.fsm
+        DistributedObjectAI.DistributedObjectAI.delete(self)
 
     def d_setState(self, stateIndex, curIndex, destIndex, time):
         self.sendUpdate('setState', [

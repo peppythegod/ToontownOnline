@@ -22,15 +22,11 @@ class DistributedGoon(DistributedCrushableEntity.DistributedCrushableEntity,
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedGoon')
 
     def __init__(self, cr):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedGoon_initialized = 1
-            DistributedCrushableEntity.DistributedCrushableEntity.__init__(
-                self, cr)
-            Goon.Goon.__init__(self)
-            FSM.FSM.__init__(self, 'DistributedGoon')
+        self.DistributedGoon_initialized = 1
+        DistributedCrushableEntity.DistributedCrushableEntity.__init__(
+            self, cr)
+        Goon.Goon.__init__(self)
+        FSM.FSM.__init__(self, 'DistributedGoon')
 
         self.setCacheable(0)
         self.rayNode = None
@@ -69,7 +65,7 @@ class DistributedGoon(DistributedCrushableEntity.DistributedCrushableEntity,
             taskMgr.doMethodLater(0.10000000000000001, self.makeCollidable,
                                   self.taskName('makeCollidable'))
         self.setGoonScale(self.scale)
-        self.animMultiplier = self.velocity / ANIM_WALK_RATE * self.scale
+        self.animMultiplier = self.velocity / (ANIM_WALK_RATE * self.scale)
         self.setPlayRate(self.animMultiplier, 'walk')
 
     def initPath(self):
@@ -198,21 +194,17 @@ class DistributedGoon(DistributedCrushableEntity.DistributedCrushableEntity,
         DistributedCrushableEntity.DistributedCrushableEntity.disable(self)
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuit_deleted = 1
-            self.notify.debug('DistributedGoon %d: deleting' % self.getDoId())
-            taskMgr.remove(self.taskName('makeCollidable'))
-            self.deleteCollisions()
-            self.head.removeNode()
-            del self.head
-            del self.attackSound
-            del self.collapseSound
-            del self.recoverSound
-            DistributedCrushableEntity.DistributedCrushableEntity.delete(self)
-            Goon.Goon.delete(self)
+        self.DistributedSuit_deleted = 1
+        self.notify.debug('DistributedGoon %d: deleting' % self.getDoId())
+        taskMgr.remove(self.taskName('makeCollidable'))
+        self.deleteCollisions()
+        self.head.removeNode()
+        del self.head
+        del self.attackSound
+        del self.collapseSound
+        del self.recoverSound
+        DistributedCrushableEntity.DistributedCrushableEntity.delete(self)
+        Goon.Goon.delete(self)
 
     def enterOff(self, *args):
         self.hideNametag3d()
@@ -488,11 +480,12 @@ class DistributedGoon(DistributedCrushableEntity.DistributedCrushableEntity,
             if self.state == 'Off' or self.state == 'Walk':
                 self.request('Walk', avId, pauseTime + ts)
 
-        elif self.walkTrack:
-            self.walkTrack.pause()
-            self.walkTrack = None
+        else:
+            if self.walkTrack:
+                self.walkTrack.pause()
+                self.walkTrack = None
 
-        self.request('Walk', avId, pauseTime + ts)
+            self.request('Walk', avId, pauseTime + ts)
 
     def stunToon(self, avId):
         self.notify.debug('stunToon(%s)' % avId)
@@ -522,7 +515,7 @@ class DistributedGoon(DistributedCrushableEntity.DistributedCrushableEntity,
 
     def setVelocity(self, velocity):
         self.velocity = velocity
-        self.animMultiplier = velocity / ANIM_WALK_RATE * self.scale
+        self.animMultiplier = velocity / (ANIM_WALK_RATE * self.scale)
         self.setPlayRate(self.animMultiplier, 'walk')
 
     def dead(self):

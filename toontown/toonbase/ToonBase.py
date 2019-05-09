@@ -187,6 +187,7 @@ class ToonBase(OTPBase.OTPBase):
         self.aspectRatio = float(self.oldX) / self.oldY
 
     def windowEvent(self, win):
+        #return
         OTPBase.OTPBase.windowEvent(self, win)
         if not config.GetInt('keep-aspect-ratio', 0):
             return None

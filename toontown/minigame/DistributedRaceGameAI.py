@@ -10,29 +10,25 @@ import RaceGameGlobals
 
 class DistributedRaceGameAI(DistributedMinigameAI):
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedRaceGameAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedRaceGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['waitClientsChoices']),
-                State.State('waitClientsChoices', self.enterWaitClientsChoices,
-                            self.exitWaitClientsChoices,
-                            ['processChoices', 'cleanup']),
-                State.State('processChoices', self.enterProcessChoices,
-                            self.exitProcessChoices,
-                            ['waitClientsChoices', 'cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self.avatarChoices = {}
-            self.avatarPositions = {}
-            self.chancePositions = {}
-            self.rewardDict = {}
+        self.DistributedRaceGameAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedRaceGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['waitClientsChoices']),
+            State.State('waitClientsChoices', self.enterWaitClientsChoices,
+                        self.exitWaitClientsChoices,
+                        ['processChoices', 'cleanup']),
+            State.State('processChoices', self.enterProcessChoices,
+                        self.exitProcessChoices,
+                        ['waitClientsChoices', 'cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self.avatarChoices = {}
+        self.avatarPositions = {}
+        self.chancePositions = {}
+        self.rewardDict = {}
 
     def delete(self):
         self.notify.debug('delete')

@@ -9,7 +9,6 @@ from direct.distributed import ClockDelta
 from otp.avatar.ShadowCaster import ShadowCaster
 import random
 from otp.otpbase import OTPRender
-from direct.showbase.PythonUtil import recordCreationStack
 teleportNotify = DirectNotifyGlobal.directNotify.newCategory('Teleport')
 teleportNotify.showTime = True
 if config.GetBool('want-teleport-debug', 1):
@@ -168,7 +167,7 @@ class Avatar(Actor, ShadowCaster):
         elif base.cr.getFriendFlags(self.doId) & OTPGlobals.FriendChat:
             self.understandable = 1
             self.setPlayerType(NametagGroup.CCFreeChat)
-        elif base.cr.playerFriendsManager.findPlayerIdFromAvId(
+        elif base.cr.playerFriendsManager and base.cr.playerFriendsManager.findPlayerIdFromAvId(
                 self.doId) is not None:
             playerInfo = base.cr.playerFriendsManager.findPlayerInfoFromAvId(
                 self.doId)

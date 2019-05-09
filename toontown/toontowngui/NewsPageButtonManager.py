@@ -189,7 +189,7 @@ class NewsPageButtonManager(FSM.FSM):
         self._NewsPageButtonManager__blinkIval.pause()
 
     def isNewIssueButtonShown(self):
-        if localAvatar.getLastTimeReadNews(
+        if base.cr.inGameNewsMgr and localAvatar.getLastTimeReadNews(
         ) < base.cr.inGameNewsMgr.getLatestIssue():
             return True
 
@@ -205,7 +205,7 @@ class NewsPageButtonManager(FSM.FSM):
         if not self.buttonsLoaded:
             return None
 
-        if localAvatar.getLastTimeReadNews(
+        if base.cr.inGameNewsMgr and localAvatar.getLastTimeReadNews(
         ) < base.cr.inGameNewsMgr.getLatestIssue():
             self._NewsPageButtonManager__showNewIssueButton()
             self._NewsPageButtonManager__blinkIval.resume()
@@ -250,8 +250,7 @@ class NewsPageButtonManager(FSM.FSM):
 
     def showAppropriateButton(self):
         self.notify.debugStateCall(self)
-        LocalToon = LocalToon
-        import toontown.toon
+        from toontown.toon import LocalToon
         if not LocalToon.WantNewsPage:
             return None
 
@@ -328,7 +327,7 @@ class NewsPageButtonManager(FSM.FSM):
     def handleNewIssueOut(self):
         if localAvatar.isReadingNews():
             pass
-        1
+        
         self.showAppropriateButton()
 
     def acceptEscapeKeyPress(self):

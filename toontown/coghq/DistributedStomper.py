@@ -10,7 +10,6 @@ from direct.directnotify import DirectNotifyGlobal
 from direct.task import Task
 from toontown.toonbase import ToontownGlobals
 
-
 class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedStomper')
     stomperSounds = [
@@ -72,12 +71,14 @@ class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
             self.smokeTrack = None
 
         DistributedCrusherEntity.DistributedCrusherEntity.disable(self)
+        print "disabling stomper"
 
     def delete(self):
         self.notify.debug('delete')
         self.unloadModel()
         taskMgr.remove(self.taskName('smokeTask'))
         DistributedCrusherEntity.DistributedCrusherEntity.delete(self)
+        print "deleting stomper"
 
     def loadModel(self):
         self.loaded = 1
@@ -350,6 +351,7 @@ class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
 
         (motionIval, wantSound) = self.getMotionIval(mode)
         if motionIval is None:
+            print "STOMPER HAS NO MOTION IVAL"
             return None
 
         self.ival = Parallel(
@@ -382,8 +384,8 @@ class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
 
         if mode == STOMPER_START:
             self.ival.loop()
-            self.ival.setT((globalClock.getFrameTime() - self.level.startTime
-                            ) + self.period * self.phaseShift)
+            self.ival.setT(globalClock.getFrameTime() - self.level.startTime
+                             + self.period * self.phaseShift)
         else:
             self.ival.start(startTime)
 
@@ -400,7 +402,7 @@ class DistributedStomper(DistributedCrusherEntity.DistributedCrusherEntity):
         self.notify.debug('setMovie %d' % mode)
         timestamp = ClockDelta.globalClockDelta.networkToLocalTime(timestamp)
         now = globalClock.getFrameTime()
-        if mode == STOMPER_START and mode == STOMPER_RISE or mode == STOMPER_STOMP:
+        if mode == STOMPER_START or mode == STOMPER_RISE or mode == STOMPER_STOMP:
             self.crushedList = crushedList
             self.startStomper(timestamp, mode)
 

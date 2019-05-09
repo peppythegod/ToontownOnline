@@ -72,141 +72,137 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
     piePowerExponent = base.config.GetDouble('pie-power-exponent', 0.75)
 
     def __init__(self, cr):
+        self.LocalToon_initialized = 1
+        self.numFlowers = 0
+        self.maxFlowerBasket = 0
+        DistributedToon.DistributedToon.__init__(self, cr)
+        chatMgr = ToontownChatManager.ToontownChatManager(cr, self)
+        talkAssistant = TTTalkAssistant.TTTalkAssistant()
+        LocalAvatar.LocalAvatar.__init__(
+            self, cr, chatMgr, talkAssistant, passMessagesThrough=True)
+        self.soundRun = base.loadSfx(
+            'phase_3.5/audio/sfx/AV_footstep_runloop.wav')
+        self.soundWalk = base.loadSfx(
+            'phase_3.5/audio/sfx/AV_footstep_walkloop.wav')
+        self.soundWhisper = base.loadSfx(
+            'phase_3.5/audio/sfx/GUI_whisper_3.mp3')
+        self.soundPhoneRing = base.loadSfx(
+            'phase_3.5/audio/sfx/telephone_ring.mp3')
+        self.soundSystemMessage = base.loadSfx(
+            'phase_3/audio/sfx/clock03.mp3')
+        self.positionExaminer = PositionExaminer.PositionExaminer()
+        friendsGui = loader.loadModel(
+            'phase_3.5/models/gui/friendslist_gui')
+        friendsButtonNormal = friendsGui.find('**/FriendsBox_Closed')
+        friendsButtonPressed = friendsGui.find('**/FriendsBox_Rollover')
+        friendsButtonRollover = friendsGui.find('**/FriendsBox_Rollover')
+        newScale = 0.80000000000000004
+        oldScale = 0.80000000000000004
+        if WantNewsPage:
+            newScale = oldScale * ToontownGlobals.NewsPageScaleAdjust
 
-        try:
+        self.bFriendsList = DirectButton(
+            image=(friendsButtonNormal, friendsButtonPressed,
+                   friendsButtonRollover),
+            relief=None,
+            pos=(1.1919999999999999, 0, 0.875),
+            scale=newScale,
+            text=('', TTLocalizer.FriendsListLabel,
+                  TTLocalizer.FriendsListLabel),
+            text_scale=0.089999999999999997,
+            text_fg=Vec4(1, 1, 1, 1),
+            text_shadow=Vec4(0, 0, 0, 1),
+            text_pos=(0, -0.17999999999999999),
+            text_font=ToontownGlobals.getInterfaceFont(),
+            command=self.sendFriendsListEvent)
+        self.bFriendsList.hide()
+        self.friendsListButtonActive = 0
+        self.friendsListButtonObscured = 0
+        self.moveFurnitureButtonObscured = 0
+        self.clarabelleButtonObscured = 0
+        friendsGui.removeNode()
+        self._LocalToon__furnitureGui = None
+        self._LocalToon__clarabelleButton = None
+        self._LocalToon__clarabelleFlash = None
+        self.furnitureManager = None
+        self.furnitureDirector = None
+        self.gotCatalogNotify = 0
+        self._LocalToon__catalogNotifyDialog = None
+        self.accept('phaseComplete-5.5', self.loadPhase55Stuff)
+        Toon.loadDialog()
+        self.isIt = 0
+        self.cantLeaveGame = 0
+        self.tunnelX = 0.0
+        self.estate = None
+        self._LocalToon__pieBubble = None
+        self.allowPies = 0
+        self._LocalToon__pieButton = None
+        self._LocalToon__piePowerMeter = None
+        self._LocalToon__piePowerMeterSequence = None
+        self._LocalToon__pieButtonType = None
+        self._LocalToon__pieButtonCount = None
+        self.tossPieStart = None
+        self._LocalToon__presentingPie = 0
+        self._LocalToon__pieSequence = 0
+        self.wantBattles = base.config.GetBool('want-battles', 1)
+        self.seeGhosts = base.config.GetBool('see-ghosts', 0)
+        wantNameTagAvIds = base.config.GetBool('want-nametag-avids', 0)
+        if wantNameTagAvIds:
+            messenger.send('nameTagShowAvId', [])
+            base.idTags = 1
+
+        self.glitchX = 0
+        self.glitchY = 0
+        self.glitchZ = 0
+        self.glitchCount = 0
+        self.ticker = 0
+        self.glitchOkay = 1
+        self.tempGreySpacing = 0
+        self.wantStatePrint = base.config.GetBool('want-statePrint', 0)
+        self._LocalToon__gardeningGui = None
+        self._LocalToon__gardeningGuiFake = None
+        self._LocalToon__shovelButton = None
+        self.shovelRelatedDoId = 0
+        self.shovelAbility = ''
+        self.plantToWater = 0
+        self.shovelButtonActiveCount = 0
+        self.wateringCanButtonActiveCount = 0
+        self.showingWateringCan = 0
+        self.showingShovel = 0
+        self.touchingPlantList = []
+        self.inGardenAction = None
+        self.guiConflict = 0
+        self.lastElevatorLeft = 0
+        self.elevatorNotifier = ElevatorNotifier.ElevatorNotifier()
+        self.accept(OTPGlobals.AvatarFriendAddEvent, self.sbFriendAdd)
+        self.accept(OTPGlobals.AvatarFriendUpdateEvent,
+                    self.sbFriendUpdate)
+        self.accept(OTPGlobals.AvatarFriendRemoveEvent,
+                    self.sbFriendRemove)
+        self._zoneId = None
+        self.accept('system message aknowledge', self.systemWarning)
+        self.systemMsgAckGuiDoneEvent = 'systemMsgAckGuiDoneEvent'
+        self.accept(self.systemMsgAckGuiDoneEvent,
+                    self.hideSystemMsgAckGui)
+        self.systemMsgAckGui = None
+        self.createSystemMsgAckGui()
+        if not hasattr(base.cr, 'lastLoggedIn'):
+            base.cr.lastLoggedIn = self.cr.toontownTimeManager.convertStrToToontownTime(
+                '')
+
+        self.setLastTimeReadNews(base.cr.lastLoggedIn)
+        if Settings.getAcceptingNewFriends():
             pass
-        except:
-            self.LocalToon_initialized = 1
-            self.numFlowers = 0
-            self.maxFlowerBasket = 0
-            DistributedToon.DistributedToon.__init__(self, cr)
-            chatMgr = ToontownChatManager.ToontownChatManager(cr, self)
-            talkAssistant = TTTalkAssistant.TTTalkAssistant()
-            LocalAvatar.LocalAvatar.__init__(
-                self, cr, chatMgr, talkAssistant, passMessagesThrough=True)
-            self.soundRun = base.loadSfx(
-                'phase_3.5/audio/sfx/AV_footstep_runloop.wav')
-            self.soundWalk = base.loadSfx(
-                'phase_3.5/audio/sfx/AV_footstep_walkloop.wav')
-            self.soundWhisper = base.loadSfx(
-                'phase_3.5/audio/sfx/GUI_whisper_3.mp3')
-            self.soundPhoneRing = base.loadSfx(
-                'phase_3.5/audio/sfx/telephone_ring.mp3')
-            self.soundSystemMessage = base.loadSfx(
-                'phase_3/audio/sfx/clock03.mp3')
-            self.positionExaminer = PositionExaminer.PositionExaminer()
-            friendsGui = loader.loadModel(
-                'phase_3.5/models/gui/friendslist_gui')
-            friendsButtonNormal = friendsGui.find('**/FriendsBox_Closed')
-            friendsButtonPressed = friendsGui.find('**/FriendsBox_Rollover')
-            friendsButtonRollover = friendsGui.find('**/FriendsBox_Rollover')
-            newScale = 0.80000000000000004
-            oldScale = 0.80000000000000004
-            if WantNewsPage:
-                newScale = oldScale * ToontownGlobals.NewsPageScaleAdjust
-
-            self.bFriendsList = DirectButton(
-                image=(friendsButtonNormal, friendsButtonPressed,
-                       friendsButtonRollover),
-                relief=None,
-                pos=(1.1919999999999999, 0, 0.875),
-                scale=newScale,
-                text=('', TTLocalizer.FriendsListLabel,
-                      TTLocalizer.FriendsListLabel),
-                text_scale=0.089999999999999997,
-                text_fg=Vec4(1, 1, 1, 1),
-                text_shadow=Vec4(0, 0, 0, 1),
-                text_pos=(0, -0.17999999999999999),
-                text_font=ToontownGlobals.getInterfaceFont(),
-                command=self.sendFriendsListEvent)
-            self.bFriendsList.hide()
-            self.friendsListButtonActive = 0
-            self.friendsListButtonObscured = 0
-            self.moveFurnitureButtonObscured = 0
-            self.clarabelleButtonObscured = 0
-            friendsGui.removeNode()
-            self._LocalToon__furnitureGui = None
-            self._LocalToon__clarabelleButton = None
-            self._LocalToon__clarabelleFlash = None
-            self.furnitureManager = None
-            self.furnitureDirector = None
-            self.gotCatalogNotify = 0
-            self._LocalToon__catalogNotifyDialog = None
-            self.accept('phaseComplete-5.5', self.loadPhase55Stuff)
-            Toon.loadDialog()
-            self.isIt = 0
-            self.cantLeaveGame = 0
-            self.tunnelX = 0.0
-            self.estate = None
-            self._LocalToon__pieBubble = None
-            self.allowPies = 0
-            self._LocalToon__pieButton = None
-            self._LocalToon__piePowerMeter = None
-            self._LocalToon__piePowerMeterSequence = None
-            self._LocalToon__pieButtonType = None
-            self._LocalToon__pieButtonCount = None
-            self.tossPieStart = None
-            self._LocalToon__presentingPie = 0
-            self._LocalToon__pieSequence = 0
-            self.wantBattles = base.config.GetBool('want-battles', 1)
-            self.seeGhosts = base.config.GetBool('see-ghosts', 0)
-            wantNameTagAvIds = base.config.GetBool('want-nametag-avids', 0)
-            if wantNameTagAvIds:
-                messenger.send('nameTagShowAvId', [])
-                base.idTags = 1
-
-            self.glitchX = 0
-            self.glitchY = 0
-            self.glitchZ = 0
-            self.glitchCount = 0
-            self.ticker = 0
-            self.glitchOkay = 1
-            self.tempGreySpacing = 0
-            self.wantStatePrint = base.config.GetBool('want-statePrint', 0)
-            self._LocalToon__gardeningGui = None
-            self._LocalToon__gardeningGuiFake = None
-            self._LocalToon__shovelButton = None
-            self.shovelRelatedDoId = 0
-            self.shovelAbility = ''
-            self.plantToWater = 0
-            self.shovelButtonActiveCount = 0
-            self.wateringCanButtonActiveCount = 0
-            self.showingWateringCan = 0
-            self.showingShovel = 0
-            self.touchingPlantList = []
-            self.inGardenAction = None
-            self.guiConflict = 0
-            self.lastElevatorLeft = 0
-            self.elevatorNotifier = ElevatorNotifier.ElevatorNotifier()
-            self.accept(OTPGlobals.AvatarFriendAddEvent, self.sbFriendAdd)
-            self.accept(OTPGlobals.AvatarFriendUpdateEvent,
-                        self.sbFriendUpdate)
-            self.accept(OTPGlobals.AvatarFriendRemoveEvent,
-                        self.sbFriendRemove)
-            self._zoneId = None
-            self.accept('system message aknowledge', self.systemWarning)
-            self.systemMsgAckGuiDoneEvent = 'systemMsgAckGuiDoneEvent'
-            self.accept(self.systemMsgAckGuiDoneEvent,
-                        self.hideSystemMsgAckGui)
-            self.systemMsgAckGui = None
-            self.createSystemMsgAckGui()
-            if not hasattr(base.cr, 'lastLoggedIn'):
-                base.cr.lastLoggedIn = self.cr.toontownTimeManager.convertStrToToontownTime(
-                    '')
-
-            self.setLastTimeReadNews(base.cr.lastLoggedIn)
-            if Settings.getAcceptingNewFriends():
-                pass
-            self.acceptingNewFriends = base.config.GetBool(
-                'accepting-new-friends-default', True)
-            if Settings.getAcceptingNonFriendWhispers():
-                pass
-            self.acceptingNonFriendWhispers = base.config.GetBool(
-                'accepting-non-friend-whispers-default', True)
-            self.physControls.event.addAgainPattern('again%in')
-            self.oldPos = None
-            self.questMap = None
-            self.prevToonIdx = 0
+        self.acceptingNewFriends = base.config.GetBool(
+            'accepting-new-friends-default', True)
+        if Settings.getAcceptingNonFriendWhispers():
+            pass
+        self.acceptingNonFriendWhispers = base.config.GetBool(
+            'accepting-non-friend-whispers-default', True)
+        self.physControls.event.addAgainPattern('again%in')
+        self.oldPos = None
+        self.questMap = None
+        self.prevToonIdx = 0
 
     def wantLegacyLifter(self):
         return True
@@ -287,8 +283,6 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
 
         self.startHackObservation()
         DistributedToon.DistributedToon.announceGenerate(self)
-        FriendInfo = FriendInfo
-        import otp.friends
 
     def toonPosCheck(self, task=None):
         toon = random.choice(self.cr.toons.values())
@@ -507,7 +501,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             except:
                 pass
 
-        if config.GetBool('detect-suspicious-nodename', True):
+        if config.GetBool('detect-suspicious-nodename', False):
             PandaNode.setDetectCallback(
                 PythonCallbackObject(hacker_detect_immediate))
 
@@ -660,7 +654,6 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             import toontown.testenv
             safezoneAutoVisit.setupKeys()
             watchDistObj = watchDistObj
-            import toontown.testenv
             watchDistObj.watchObj.setupKeys()
 
     def stopHackObservation(self):
@@ -707,51 +700,47 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         pass
 
     def delete(self):
+        self.LocalToon_deleted = 1
+        Toon.unloadDialog()
+        QuestParser.clear()
+        DistributedToon.DistributedToon.delete(self)
+        LocalAvatar.LocalAvatar.delete(self)
+        self.bFriendsList.destroy()
+        del self.bFriendsList
+        if self._LocalToon__pieButton:
+            self._LocalToon__pieButton.destroy()
+            self._LocalToon__pieButton = None
 
-        try:
-            pass
-        except:
-            self.LocalToon_deleted = 1
-            Toon.unloadDialog()
-            QuestParser.clear()
-            DistributedToon.DistributedToon.delete(self)
-            LocalAvatar.LocalAvatar.delete(self)
-            self.bFriendsList.destroy()
-            del self.bFriendsList
-            if self._LocalToon__pieButton:
-                self._LocalToon__pieButton.destroy()
-                self._LocalToon__pieButton = None
+        if self._LocalToon__piePowerMeter:
+            self._LocalToon__piePowerMeter.destroy()
+            self._LocalToon__piePowerMeter = None
 
-            if self._LocalToon__piePowerMeter:
-                self._LocalToon__piePowerMeter.destroy()
-                self._LocalToon__piePowerMeter = None
+        taskMgr.remove('unlockGardenButtons')
+        taskMgr.remove('lerpFurnitureButton')
+        if self._LocalToon__furnitureGui:
+            self._LocalToon__furnitureGui.destroy()
 
-            taskMgr.remove('unlockGardenButtons')
-            taskMgr.remove('lerpFurnitureButton')
-            if self._LocalToon__furnitureGui:
-                self._LocalToon__furnitureGui.destroy()
+        del self._LocalToon__furnitureGui
+        if self._LocalToon__gardeningGui:
+            self._LocalToon__gardeningGui.destroy()
 
-            del self._LocalToon__furnitureGui
-            if self._LocalToon__gardeningGui:
-                self._LocalToon__gardeningGui.destroy()
+        del self._LocalToon__gardeningGui
+        if self._LocalToon__gardeningGuiFake:
+            self._LocalToon__gardeningGuiFake.destroy()
 
-            del self._LocalToon__gardeningGui
-            if self._LocalToon__gardeningGuiFake:
-                self._LocalToon__gardeningGuiFake.destroy()
+        del self._LocalToon__gardeningGuiFake
+        if self._LocalToon__clarabelleButton:
+            self._LocalToon__clarabelleButton.destroy()
 
-            del self._LocalToon__gardeningGuiFake
-            if self._LocalToon__clarabelleButton:
-                self._LocalToon__clarabelleButton.destroy()
+        del self._LocalToon__clarabelleButton
+        if self._LocalToon__clarabelleFlash:
+            self._LocalToon__clarabelleFlash.finish()
 
-            del self._LocalToon__clarabelleButton
-            if self._LocalToon__clarabelleFlash:
-                self._LocalToon__clarabelleFlash.finish()
+        del self._LocalToon__clarabelleFlash
+        if self._LocalToon__catalogNotifyDialog:
+            self._LocalToon__catalogNotifyDialog.cleanup()
 
-            del self._LocalToon__clarabelleFlash
-            if self._LocalToon__catalogNotifyDialog:
-                self._LocalToon__catalogNotifyDialog.cleanup()
-
-            del self._LocalToon__catalogNotifyDialog
+        del self._LocalToon__catalogNotifyDialog
 
     def initInterface(self):
         self.newsButtonMgr = NewsPageButtonManager.NewsPageButtonManager()
@@ -1169,9 +1158,8 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         self.localTossPie(power)
 
     def localPresentPie(self, time):
-        import TTEmote as TTEmote
-        Emote = Emote
-        import otp.avatar
+        import TTEmote
+        from otp.avatar import Emote
         self._LocalToon__stopPresentPie()
         if self.tossTrack:
             tossTrack = self.tossTrack
@@ -1203,9 +1191,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
 
     def _LocalToon__stopPresentPie(self):
         if self._LocalToon__presentingPie:
-            import TTEmote
-            Emote = Emote
-            import otp.avatar
+            from otp.avatar import Emote
             Emote.globalEmote.releaseBody(self)
             messenger.send('end-pie')
             self._LocalToon__presentingPie = 0
@@ -1243,10 +1229,8 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             pie.pause()
 
     def _LocalToon__pieInHand(self):
-        pie = self.pieTracks.get(self._LocalToon__pieSequence)
-        if pie:
-            pass
-        return pie.getT() < 15.0 / 24.0
+        pie = self.pieTracks.get(self.__pieSequence)
+        return pie and pie.getT() < 15.0 / 24.0
 
     def _LocalToon__toonMoved(self, isSet):
         if isSet:
@@ -1367,9 +1351,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         self.updatePieButton()
 
     def makePiePowerMeter(self):
-        DirectWaitBar = DirectWaitBar
-        DGG = DGG
-        import direct.gui.DirectGui
+        from direct.gui.DirectGui import DirectWaitBar, DGG
         if self._LocalToon__piePowerMeter == None:
             self._LocalToon__piePowerMeter = DirectWaitBar(
                 frameSize=(-0.20000000000000001, 0.20000000000000001,
@@ -1381,11 +1363,8 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self._LocalToon__piePowerMeter.hide()
 
     def updatePieButton(self):
-        ToontownBattleGlobals = ToontownBattleGlobals
-        import toontown.toonbase
-        DirectButton = DirectButton
-        DGG = DGG
-        import direct.gui.DirectGui
+        from toontown.toonbase import ToontownBattleGlobals
+        from direct.gui.DirectGui import DirectButton, DGG
         wantButton = 0
         if self.allowPies and self.numPies > 0:
             wantButton = 1

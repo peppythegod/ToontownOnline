@@ -161,7 +161,7 @@ class DistributedMickeyAI(DistributedCCharBaseAI.DistributedCCharBaseAI):
 
     def handleHolidays(self):
         DistributedCCharBaseAI.DistributedCCharBaseAI.handleHolidays(self)
-        if hasattr(simbase.air, 'holidayManager'):
+        if hasattr(simbase.air, 'holidayManager') and simbase.air.holidayManager:
             if ToontownGlobals.APRIL_FOOLS_COSTUMES in simbase.air.holidayManager.currentHolidays and simbase.air.holidayManager.currentHolidays[
                     ToontownGlobals.
                     APRIL_FOOLS_COSTUMES] is not None and simbase.air.holidayManager.currentHolidays[

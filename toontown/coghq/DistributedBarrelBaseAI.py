@@ -21,12 +21,15 @@ class DistributedBarrelBaseAI(DistributedEntityAI.DistributedEntityAI,
         DistributedEntityAI.DistributedEntityAI.delete(self)
 
     def requestGrab(self):
+        print "request grab ai"
         avId = self.air.getAvatarIdFromSender()
         self.notify.debug('requestGrab %s' % avId)
         if avId not in self.usedAvIds:
+            print "grab accept"
             self.usedAvIds.append(avId)
             self.d_setGrab(avId)
         else:
+            print "grab reject"
             self.sendUpdate('setReject')
 
     def d_setGrab(self, avId):

@@ -868,7 +868,7 @@ class DistributedLawbotCannon(DistributedObject.DistributedObject):
         return angle * 2.0 * math.pi / 360.0
 
     def _DistributedLawbotCannon__toDegrees(self, angle):
-        return angle * 360.0 / 2.0 * math.pi
+        return angle * 360.0 / (2.0 * math.pi)
 
     def _DistributedLawbotCannon__calcFlightResults(self, avId, launchTime):
         head = self.toonHead

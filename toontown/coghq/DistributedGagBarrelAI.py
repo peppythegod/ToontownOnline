@@ -15,6 +15,7 @@ class DistributedGagBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI):
             self, level, entId)
 
     def d_setGrab(self, avId):
+        print "set grab ai gag"
         self.notify.debug('d_setGrab %s' % avId)
         self.sendUpdate('setGrab', [avId])
         av = self.air.doId2do.get(avId)
@@ -32,6 +33,6 @@ class DistributedGagBarrelAI(DistributedBarrelBaseAI.DistributedBarrelBaseAI):
                 result = av.inventory.addItem(track, level)
                 if result <= 0:
                     level -= 1
-                    continue
-                numReward -= 1
+                else:
+                    numReward -= 1
             av.d_setInventory(av.inventory.makeNetString())

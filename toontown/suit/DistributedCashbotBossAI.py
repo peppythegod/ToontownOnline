@@ -98,6 +98,7 @@ class DistributedCashbotBossAI(DistributedBossCogAI.DistributedBossCogAI,
                 crane = DistributedCashbotBossCraneAI.DistributedCashbotBossCraneAI(
                     self.air, self, index)
                 crane.generateWithRequired(self.zoneId)
+                print "crane id %d" %crane.doId
                 self.cranes.append(crane)
 
         if self.safes is None:

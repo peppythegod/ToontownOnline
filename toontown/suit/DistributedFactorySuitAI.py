@@ -61,13 +61,13 @@ class DistributedFactorySuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
                     'Suit %d requesting battle in zone %d with toon %d' %
                     (self.getDoId(), self.zoneId, toonId))
 
-        elif self.notify.getDebug():
-            self.notify.debug(
-                'requestBattle from suit %d, toon %d- denied by battle manager'
-                % (toonId, self.getDoId()))
-
-        self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
-        self.d_denyBattle(toonId)
+        else:
+            if self.notify.getDebug():
+                self.notify.debug(
+                    'requestBattle from suit %d, toon %d- denied by battle manager'
+                    % (toonId, self.getDoId()))
+            self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
+            self.d_denyBattle(toonId)
 
     def getConfrontPosHpr(self):
         return (self.confrontPos, self.confrontHpr)

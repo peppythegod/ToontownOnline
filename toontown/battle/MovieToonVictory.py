@@ -7,24 +7,27 @@ from direct.directnotify import DirectNotifyGlobal
 import types
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieToonVictory')
 
-
 def __findToonReward(rewards, toon):
     for r in rewards:
         if r['toon'] == toon:
             return r
-            continue
+
+    return None
 
 
 class ToonVictorySkipper(DirectObject):
+
     def __init__(self, numToons, noSkip):
         self._numToons = numToons
         self._noSkip = noSkip
         self._startTimes = {}
         self._ivals = []
         self._battle = None
+        return
 
     def destroy(self):
         self._ivals = None
+        return
 
     def getSetupFunc(self, index):
         return Func(self._setupSkipListen, index)
@@ -38,7 +41,7 @@ class ToonVictorySkipper(DirectObject):
     def setStartTime(self, index, startT):
         self._startTimes[index] = startT
 
-    def setIvals(self, ivals, timeOffset=0.0):
+    def setIvals(self, ivals, timeOffset = 0.0):
         for index in self._startTimes:
             self._startTimes[index] += timeOffset
 
@@ -63,27 +66,16 @@ class ToonVictorySkipper(DirectObject):
 
             if self._battle:
                 self._battle.setSkippingRewardMovie()
-
         elif nextIndex in self._startTimes:
             for ival in self._ivals:
                 ival.setT(self._startTimes[nextIndex])
 
 
-def doToonVictory(localToonActive,
-                  toons,
-                  rewardToonIds,
-                  rewardDicts,
-                  deathList,
-                  rpanel,
-                  allowGroupShot=1,
-                  uberList=[],
-                  helpfulToonsList=[],
-                  noSkip=False):
+def doToonVictory(localToonActive, toons, rewardToonIds, rewardDicts, deathList, rpanel, allowGroupShot = 1, uberList = [], helpfulToonsList = [], noSkip = False):
     track = Sequence()
     if localToonActive == 1:
         track.append(Func(rpanel.show))
         track.append(Func(NametagGlobals.setOnscreenChatForced, 1))
-
     camTrack = Sequence()
     endTrack = Sequence()
     danceSound = globalBattleSoundCache.getSound('ENC_Win.mp3')
@@ -93,11 +85,9 @@ def doToonVictory(localToonActive,
     for t in toons:
         if isinstance(t, types.IntType):
             t = base.cr.doId2do.get(t)
-
         if t:
             toonList.append(t)
             uberListNew.append(uberList[countToons])
-
         countToons += 1
 
     toonId2toon = {}
@@ -111,25 +101,11 @@ def doToonVictory(localToonActive,
     skipper = ToonVictorySkipper(len(toonList), noSkip)
     lastListenIndex = 0
     track.append(skipper.getSetupFunc(lastListenIndex))
-    for tIndex in range(len(toonList)):
+    for tIndex in xrange(len(toonList)):
         t = toonList[tIndex]
         rdict = __findToonReward(rewardDicts, t)
-        if rdict is not None:
-            expTrack = rpanel.getExpTrack(
-                t,
-                rdict['origExp'],
-                rdict['earnedExp'],
-                deathList,
-                rdict['origQuests'],
-                rdict['items'],
-                rdict['missedItems'],
-                rdict['origMerits'],
-                rdict['merits'],
-                rdict['parts'],
-                rewardToonList,
-                uberListNew[tIndex],
-                helpfulToonsList,
-                noSkip=noSkip)
+        if rdict != None:
+            expTrack = rpanel.getExpTrack(t, rdict['origExp'], rdict['earnedExp'], deathList, rdict['origQuests'], rdict['items'], rdict['missedItems'], rdict['origMerits'], rdict['merits'], rdict['parts'], rewardToonList, uberListNew[tIndex], helpfulToonsList, noSkip=noSkip)
             if expTrack:
                 skipper.setStartTime(tIndex, track.getDuration())
                 track.append(skipper.getTeardownFunc(lastListenIndex))
@@ -138,16 +114,13 @@ def doToonVictory(localToonActive,
                 track.append(expTrack)
                 camDuration = expTrack.getDuration()
                 camExpTrack = MovieCamera.chooseRewardShot(t, camDuration)
-                camTrack.append(
-                    MovieCamera.chooseRewardShot(
-                        t, camDuration, allowGroupShot=allowGroupShot))
+                camTrack.append(MovieCamera.chooseRewardShot(t, camDuration, allowGroupShot=allowGroupShot))
 
     track.append(skipper.getTeardownFunc(lastListenIndex))
     track.append(Func(skipper.destroy))
     if localToonActive == 1:
         track.append(Func(rpanel.hide))
         track.append(Func(NametagGlobals.setOnscreenChatForced, 0))
-
     track.append(endTrack)
     trackdur = track.getDuration()
     soundTrack = SoundInterval(danceSound, duration=trackdur, loop=1)

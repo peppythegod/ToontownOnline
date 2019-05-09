@@ -52,7 +52,7 @@ class TTChatInputWhiteList(ChatInputWhiteListFrame):
             'sortOrder':
             DGG.FOREGROUND_SORT_INDEX
         }
-        ChatInputWhiteListFrame.__init__(self, entryOptions, parent, **None)
+        ChatInputWhiteListFrame.__init__(self, entryOptions, parent, **kw)
         self.whiteList = TTWhiteList()
         base.whiteList = self.whiteList
         base.ttwl = self

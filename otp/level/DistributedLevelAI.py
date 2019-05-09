@@ -150,8 +150,7 @@ class DistributedLevelAI(DistributedObjectAI.DistributedObjectAI, Level.Level):
             spec = None
             useDisk = 0
         specStr = repr(spec)
-        DistributedLargeBlobSenderAI = DistributedLargeBlobSenderAI
-        import direct.directutil
+        from direct.directutil import DistributedLargeBlobSenderAI
         largeBlob = DistributedLargeBlobSenderAI.DistributedLargeBlobSenderAI(
             self.air, self.zoneId, senderId, specStr, useDisk=useDisk)
         self.sendUpdateToAvatarId(senderId, 'setSpecSenderDoId',

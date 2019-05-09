@@ -99,8 +99,7 @@ class DistributedStageRoom(DistributedLevel.DistributedLevel,
 
     def setDefeated(self):
         self.notify.info('setDefeated')
-        DistributedStage = DistributedStage
-        import toontown.coghq
+        from toontown.coghq import DistributedStage
         messenger.send(DistributedStage.DistributedStage.WinEvent)
 
     def initVisibility(self, *args, **kw):

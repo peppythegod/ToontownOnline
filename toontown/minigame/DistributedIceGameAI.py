@@ -12,49 +12,45 @@ class DistributedIceGameAI(DistributedMinigameAI.DistributedMinigameAI):
     notify = directNotify.newCategory('DistributedIceGameAI')
 
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedIceGameAI_initialized = 1
-            DistributedMinigameAI.DistributedMinigameAI.__init__(
-                self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedIceGameAI', [
-                State.State('off', self.enterOff, self.exitOff,
-                            ['waitClientsChoices']),
-                State.State('waitClientsChoices', self.enterWaitClientsChoices,
-                            self.exitWaitClientsChoices,
-                            ['cleanup', 'processChoices']),
-                State.State('processChoices', self.enterProcessChoices,
-                            self.exitProcessChoices,
-                            ['waitEndingPositions', 'cleanup']),
-                State.State('waitEndingPositions',
-                            self.enterWaitEndingPositions,
-                            self.exitWaitEndingPositions,
-                            ['processEndingPositions', 'cleanup']),
-                State.State('processEndingPositions',
-                            self.enterProcessEndingPositions,
-                            self.exitProcessEndingPositions,
-                            ['waitClientsChoices', 'scoreMatch', 'cleanup']),
-                State.State('scoreMatch', self.enterScoreMatch,
-                            self.exitScoreMatch,
-                            ['waitClientsChoices', 'finalResults', 'cleanup']),
-                State.State('finalResults', self.enterFinalResults,
-                            self.exitFinalResults, ['cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['off'])
-            ], 'off', 'off')
-            self.addChildGameFSM(self.gameFSM)
-            self.avatarChoices = {}
-            self.avatarEndingPositions = {}
-            self.curRound = 0
-            self.curMatch = 0
-            self.finalEndingPositions = [
-                Point3(IceGameGlobals.StartingPositions[0]),
-                Point3(IceGameGlobals.StartingPositions[1]),
-                Point3(IceGameGlobals.StartingPositions[2]),
-                Point3(IceGameGlobals.StartingPositions[3])
-            ]
+        self.DistributedIceGameAI_initialized = 1
+        DistributedMinigameAI.DistributedMinigameAI.__init__(
+            self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedIceGameAI', [
+            State.State('off', self.enterOff, self.exitOff,
+                        ['waitClientsChoices']),
+            State.State('waitClientsChoices', self.enterWaitClientsChoices,
+                        self.exitWaitClientsChoices,
+                        ['cleanup', 'processChoices']),
+            State.State('processChoices', self.enterProcessChoices,
+                        self.exitProcessChoices,
+                        ['waitEndingPositions', 'cleanup']),
+            State.State('waitEndingPositions',
+                        self.enterWaitEndingPositions,
+                        self.exitWaitEndingPositions,
+                        ['processEndingPositions', 'cleanup']),
+            State.State('processEndingPositions',
+                        self.enterProcessEndingPositions,
+                        self.exitProcessEndingPositions,
+                        ['waitClientsChoices', 'scoreMatch', 'cleanup']),
+            State.State('scoreMatch', self.enterScoreMatch,
+                        self.exitScoreMatch,
+                        ['waitClientsChoices', 'finalResults', 'cleanup']),
+            State.State('finalResults', self.enterFinalResults,
+                        self.exitFinalResults, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['off'])
+        ], 'off', 'off')
+        self.addChildGameFSM(self.gameFSM)
+        self.avatarChoices = {}
+        self.avatarEndingPositions = {}
+        self.curRound = 0
+        self.curMatch = 0
+        self.finalEndingPositions = [
+            Point3(IceGameGlobals.StartingPositions[0]),
+            Point3(IceGameGlobals.StartingPositions[1]),
+            Point3(IceGameGlobals.StartingPositions[2]),
+            Point3(IceGameGlobals.StartingPositions[3])
+        ]
 
     def generate(self):
         self.notify.debug('generate')

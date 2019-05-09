@@ -724,8 +724,6 @@ class NPCMoviePlayer(DirectObject.DirectObject):
                     extraChatFlags = eval(arg)
                 else:
                     dialogueList.append(self.getVar(arg))
-            arg[:2] == 'CF'
-            notify.error('invalid argument type')
 
         return (quitButton, extraChatFlags, dialogueList)
 

@@ -155,6 +155,7 @@ class PlayGame(StateData.StateData):
 
     def loadDnaStoreTutorial(self):
         self.dnaStore = DNAStorage()
+        print "dna store definedAAAAAAAAAAAA"
         loader.loadDNAFile(self.dnaStore, 'phase_3.5/dna/storage_tutorial.dna')
         loader.loadDNAFile(self.dnaStore, 'phase_3.5/dna/storage_interior.dna')
 
@@ -170,6 +171,7 @@ class PlayGame(StateData.StateData):
                                'phase_3.5/dna/storage_interior.dna')
 
     def unloadDnaStore(self):
+        print "dna store undefinedAAAAAAAAAAAAAAAAAAAAAA"
         if hasattr(self, 'dnaStore'):
             self.dnaStore.resetNodes()
             self.dnaStore.resetTextures()

@@ -103,8 +103,7 @@ class DistributedCountryClubRoom(DistributedLevel.DistributedLevel,
 
     def setDefeated(self):
         self.notify.info('setDefeated')
-        DistributedCountryClub = DistributedCountryClub
-        import toontown.coghq
+        from toontown.coghq import DistributedCountryClub
         messenger.send(DistributedCountryClub.DistributedCountryClub.WinEvent)
 
     def initVisibility(self, *args, **kw):

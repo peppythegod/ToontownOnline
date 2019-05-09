@@ -52,6 +52,7 @@ from DistrictHandle import *
 class OTPClientRepository(ClientRepositoryBase):
     notify = directNotify.newCategory('OTPClientRepository')
     avatarLimit = 6
+    whiteListChatEnabled = 1
     WishNameResult = Enum(
         ['Failure', 'PendingApproval', 'Approved', 'Rejected'])
 
@@ -861,9 +862,8 @@ class OTPClientRepository(ClientRepositoryBase):
         dConfigParam='teleport')(exitMissingGameRootObject)
 
     def enterWaitForShardList(self):
-        self.noInterestShardList()
-        return
-        
+        #self.noInterestShardList()
+        #return
         if not self.isValidInterestHandle(self.shardListHandle):
             self.shardListHandle = self.addTaggedInterest(
                 self.GameGlobalsId,
@@ -1411,6 +1411,7 @@ class OTPClientRepository(ClientRepositoryBase):
                 self.stopPeriodTimer()
             else:
                 self.startPeriodTimer()
+            print "sent"
 
     sendSetAvatarIdMsg = report(
         types=['args', 'deltaStamp'],
@@ -1691,7 +1692,51 @@ class OTPClientRepository(ClientRepositoryBase):
         localAvatar.setLocation(shardId, zoneId)
         base.localAvatar.defaultShard = shardId
         self.waitForDatabaseTimeout(requestName='WaitOnEnterResponses')
+        
+        dg = PyDatagram()
+        dg.addUint16(31)
+        dg.addUint32(shardId)
+        self.send(dg)
+        
         self.handleSetShardComplete()
+    
+    """
+    def __setShardStraight(self, shardId, hoodId, zoneId, avId):
+        self.waitOnEnterInfo = (shardId, hoodId, zoneId, avId)
+        self.handler = self.__handleSetShardResp
+        dg = PyDatagram()
+        dg.addUint16(31)
+        dg.addUint32(shardId)
+        self.send(dg)
+        
+    def __handleSetShardResp(self, msgType, di):
+        if msgType == 47:
+            self.__goToQuietZone()
+        else:
+            self.handleMessageType(msgType, di)
+            
+    def __goToQuietZone(self):
+        self.handler = self.__handleQuietZone
+        dg = PyDatagram()
+        dg.addUint16(29)
+        dg.addUint16(OTPGlobals.QuietZone)
+        self.send(dg)
+        
+    def __handleQuietZone(self, msgType, di):
+        if msgType == 48:
+            shardId, hoodId, zoneId, avId = self.waitOnEnterInfo
+            del self.waitOnEnterInfo
+            self.__doneSetShardStraight(shardId, hoodId, zoneId, avId)
+        else:
+            self.handleMessageType(msgType, di)
+        
+    def __doneSetShardStraight(self, shardId, hoodId, zoneId, avId):
+        self.handler = self.handleWaitOnEnterResponses
+        localAvatar.setLocation(shardId, zoneId)
+        base.localAvatar.defaultShard = shardId
+        self.waitForDatabaseTimeout(requestName='WaitOnEnterResponses')
+        self.handleSetShardComplete()
+    """
 
     enterWaitOnEnterResponses = report(
         types=['args', 'deltaStamp'],
@@ -1725,6 +1770,29 @@ class OTPClientRepository(ClientRepositoryBase):
         self.acceptOnce('uberZoneInterestComplete',
                         self.uberZoneInterestComplete)
         self.waitForDatabaseTimeout(20, requestName='waitingForUberZone')
+        
+    """
+    def __straightUberzone(self, hoodId, zoneId, avId):
+        self.handler = self.__handleUberZone
+        dg = PyDatagram()
+        dg.addUint16(29)
+        dg.addUint16(OTPGlobals.UberZone)
+        self.send(dg)
+        self.waitForDatabaseTimeout(20, requestName='waitingForUberZone')
+        
+    def __handleUberZone(self, msgType, di):
+        if msgType == 48:
+            self.uberZoneInterestComplete()
+        else:
+            self.handleMessageType(msgType, di)
+        
+    def __oldSetShardComplete(self):
+        self.uberZoneInterest = self.addInterest(
+            base.localAvatar.defaultShard, OTPGlobals.UberZone, 'uberZone',
+            'uberZoneInterestComplete')
+        self.acceptOnce('uberZoneInterestComplete',
+                        self.uberZoneInterestComplete)
+    """
 
     handleSetShardComplete = report(
         types=['args', 'deltaStamp'],
@@ -1734,7 +1802,7 @@ class OTPClientRepository(ClientRepositoryBase):
         self._OTPClientRepository__gotTimeSync = 0
         self.cleanupWaitingForDatabase()
         if self.timeManager is None:
-            self.notify.info('TimeManager is not present.')
+            self.notify.warning('TimeManager is not present.')
             DistributedSmoothNode.globalActivateSmoothing(0, 0)
             self.gotTimeSync()
         else:
@@ -2037,6 +2105,9 @@ class OTPClientRepository(ClientRepositoryBase):
             return 1
         else:
             return 0
+    
+    #def _handleEmuSetZoneDone(self):
+    #    self.notify.warning("Should not be here")
 
     def freeTimeLeft(self):
         if self.freeTimeExpiresAt == -1 or self.freeTimeExpiresAt == 0:
@@ -2144,8 +2215,6 @@ class OTPClientRepository(ClientRepositoryBase):
                           ) and s.name > district.name:
                         district = s
 
-                s.name > district.name
-
         if district is None:
             self.notify.debug(
                 'all shards over cutoff, picking lowest-population shard')
@@ -2154,8 +2223,6 @@ class OTPClientRepository(ClientRepositoryBase):
                     self.notify.debug('%s: pop %s' % (s.name, s.avatarCount))
                     if district is None or s.avatarCount < district.avatarCount:
                         district = s
-
-                s.avatarCount < district.avatarCount
 
         if district is not None:
             self.notify.debug(
@@ -2207,6 +2274,7 @@ class OTPClientRepository(ClientRepositoryBase):
         self.loginFSM.request('noConnection')
 
     def waitForDatabaseTimeout(self, extraTimeout=0, requestName='unknown'):
+        print requestName
         OTPClientRepository.notify.debug(
             'waiting for database timeout %s at %s' %
             (requestName, globalClock.getFrameTime()))
@@ -2369,7 +2437,7 @@ class OTPClientRepository(ClientRepositoryBase):
             now = time.time()
             returnCode = di.getUint8()
             errorString = di.getString()
-            playtoken = di.getString()
+            playtoken = self.userName = di.getString()
             
             canChat = di.getUint8()
             self.secretChatAllowed = canChat
@@ -2391,9 +2459,6 @@ class OTPClientRepository(ClientRepositoryBase):
             self.notify.setServerDelta(serverDelta, 28800)
             self.setIsPaid(di.getUint8())
             self.__handleLoginDone({"mode":"success"})
-            
-        elif msgType == 9:
-            self.__handleShardList(di)
         else:
             print "UNKNOWN MSG IS %d" %msgType
             currentLoginState = self.loginFSM.getCurrentState()

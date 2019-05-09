@@ -45,12 +45,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar,
                  chatMgr,
                  talkAssistant=None,
                  passMessagesThrough=False):
-        try:
-            self.LocalAvatar_initialized
-            return
-        except BaseException:
-            pass
-
+                 
         self.LocalAvatar_initialized = 1
         DistributedAvatar.DistributedAvatar.__init__(self, cr)
         DistributedSmoothNode.DistributedSmoothNode.__init__(self, cr)
@@ -136,12 +131,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar,
         messenger.send('openFriendsList')
 
     def delete(self):
-        try:
-            self.LocalAvatar_deleted
-            return
-        except BaseException:
-            self.LocalAvatar_deleted = 1
-
+        self.LocalAvatar_deleted = 1
         self.ignoreAll()
         self.stopJumpLandTask()
         taskMgr.remove('shadowReach')
@@ -189,6 +179,17 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar,
         walkControls.initializeCollisions(self.cTrav, self, avatarRadius,
                                           floorOffset, reach)
         walkControls.setAirborneHeightFunc(self.getAirborneHeight)
+        
+        # Function needed to be hacked since nametags come first and caused a crash
+        def setCollisionRayHeightHack(height):
+            oldNode = walkControls.avatarNodePath.getNode(0)
+            cRayNode = oldNode.getChild(4)
+            cRayNode.removeSolid(0)
+            cRay = CollisionRay(0.0, 0.0, height, 0.0, 0.0, -1.0)
+            cRayNode.addSolid(cRay)    
+            
+        walkControls.setCollisionRayHeight = setCollisionRayHeightHack
+        
         self.controlManager.add(walkControls, 'walk')
         self.physControls = walkControls
         twoDControls = TwoDWalker()
@@ -441,6 +442,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar,
         self.ignore('page_down-up')
 
     def enableAvatarControls(self):
+        print "controls enabled"
         if self.avatarControlsEnabled:
             return
         self.avatarControlsEnabled = 1
@@ -448,6 +450,7 @@ class LocalAvatar(DistributedAvatar.DistributedAvatar,
         self.controlManager.enable()
 
     def disableAvatarControls(self):
+        print "controls disabled"
         if not self.avatarControlsEnabled:
             return
         self.avatarControlsEnabled = 0

@@ -103,10 +103,9 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
 
     def setRoomDoIds(self, roomDoIds):
         self.roomDoIds = roomDoIds
-        self.roomWatcher = [](_[1], [
-            DistributedCountryClubRoom.getCountryClubRoomReadyPostName(doId)
-            for doId in self.roomDoIds
-        ], self.gotAllRooms)
+        self.roomWatcher = BulletinBoardWatcher.BulletinBoardWatcher('roomWatcher-%s' % self.doId, [
+            DistributedCountryClubRoom.getCountryClubRoomReadyPostName(doId) for doId in self.roomDoIds],
+                                                                     self.gotAllRooms)
 
     def gotAllRooms(self):
         self.notify.debug('countryClub %s: got all rooms' % self.doId)
@@ -223,6 +222,20 @@ class DistributedCountryClub(DistributedObject.DistributedObject):
             minVis = roomNum - 1
             maxVis = roomNum + 1
         for (i, room) in enumerate(self.allRooms):
+            # Fixs graying
+            #if i < minVis or i > maxVis:
+            #    room.getGeom().stash()
+            #else:
+            #    room.getGeom().unstash()
+            print roomNum
+            if i == roomNum or i == roomNum + 1 or i == roomNum - 1 or i == 0:
+                room.getGeom().unstash()
+            else:
+                room.getGeom().stash()
+                
+            continue
+            
+            # Doesn't work
             if i < minVis or i > maxVis:
                 if not room.getGeom().isEmpty():
                     room.getGeom().stash()

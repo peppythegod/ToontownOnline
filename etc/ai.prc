@@ -23,3 +23,13 @@ want-christmas 0
 want-yin-yang 0
 want-live-updates 0
 want-track-clsends 0
+
+notify-level-DistributedBattleAI debug
+notify-level-DistributedBattleBldgAI debug
+notify-level-DistributedLevelBattleAI debug
+notify-level-DistributedBattleFactoryAI debug
+notify-level-DistributedBattleBaseAI debug
+notify-level-DistributedFactorySuitAI debug
+notify-level-DistributedSuitAI debug
+notify-level-DistributedSuitBaseAI debug
+notify-level-BattleCalculatorAI debug

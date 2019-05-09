@@ -77,6 +77,7 @@ class DisplayOptions:
         self.settingsWidth = res[0]
         self.settingsHeight = res[1]
         self.settingsEmbedded = embed
+        
         self.notify.debug(
             'settings embedded mode=%s' % str(self.settingsEmbedded))
         self.notify.info(

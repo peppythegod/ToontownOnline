@@ -1,7 +1,7 @@
 from panda3d.core import *
 
 from direct.showbase.ShowBase import *
-from direct.showbase import PythonUtil
+from toontown.distributed import PythonUtil
 import __builtin__
 
 class Game:

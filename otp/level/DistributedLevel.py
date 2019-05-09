@@ -77,13 +77,20 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
         return self.entranceId
 
     def setZoneIds(self, zoneIds):
-        DistributedLevel.notify.debug('setZoneIds: %s' % zoneIds)
+        DistributedLevel.notify.warning('setZoneIds: %s' % zoneIds)
         self.zoneIds = zoneIds
+        messenger.send("levelGotZoneIds")
 
     def setStartTimestamp(self, timestamp):
         DistributedLevel.notify.debug('setStartTimestamp: %s' % timestamp)
         self.startTime = globalClockDelta.networkToLocalTime(
             timestamp, bits=32)
+        
+        # TODO! This is currently a hack, must find whatever is causing the network to local time being greater than the local time
+        frameTime = globalClock.getFrameTime()
+        if self.startTime > frameTime:
+            self.startTime = frameTime
+        
         self.privGotAllRequired()
 
     def privGotAllRequired(self):
@@ -100,7 +107,10 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                 [levelSpec.stringHash(),
                  levelSpec.entTypeReg.getHashStr()])
         else:
-            self.privGotSpec(levelSpec)
+            if hasattr(self, "zoneIds"):
+                self.privGotSpec(levelSpec)
+            else:
+                self.acceptOnce("levelGotZoneIds", self.privGotSpec, [levelSpec])
 
     if __dev__:
 
@@ -118,8 +128,6 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
 
             def setSpecBlob(specBlob, blobSender=blobSender, self=self):
                 blobSender.sendAck()
-                LevelSpec = LevelSpec
-                import LevelSpec
                 spec = eval(specBlob)
                 if spec is None:
                     spec = self.candidateSpec
@@ -301,7 +309,6 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
                             (child, parent))
                         if wrt:
                             child.wrtReparentTo(parent.getNodePath())
-                            continue
                         child.reparentTo(parent.getNodePath())
 
                     del self.parent2pendingChildren[parentId]
@@ -470,8 +477,8 @@ class DistributedLevel(DistributedObject.DistributedObject, Level.Level):
 
             if new:
                 addedZoneNums.append(vz)
-                continue
-            removedZoneNums.append(vz)
+            else:
+                removedZoneNums.append(vz)
 
         if not addedZoneNums and not removedZoneNums:
             DistributedLevel.notify.debug('visible zone list has not changed')

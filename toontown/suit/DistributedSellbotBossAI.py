@@ -231,8 +231,8 @@ class DistributedSellbotBossAI(DistributedBossCogAI.DistributedBossCogAI,
         self.b_setBossDamage(0, 0, 0)
 
     def enterIntroduction(self):
-        DistributedBossCogAI.DistributedBossCogAI.enterIntroduction(self)
         self._DistributedSellbotBossAI__makeDoobers()
+        DistributedBossCogAI.DistributedBossCogAI.enterIntroduction(self)
         self.b_setBossDamage(0, 0, 0)
 
     def exitIntroduction(self):

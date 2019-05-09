@@ -29,11 +29,7 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit,
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedSuitBase')
 
     def __init__(self, cr):
-
-        try:
-            return None
-        except BaseException:
-            self.DistributedSuitBase_initialized = 1
+        self.DistributedSuitBase_initialized = 1
 
         DistributedAvatar.DistributedAvatar.__init__(self, cr)
         Suit.Suit.__init__(self)
@@ -111,17 +107,13 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit,
         DistributedAvatar.DistributedAvatar.disable(self)
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuitBase_deleted = 1
-            self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
-            del self.dna
-            del self.sp
-            DistributedAvatar.DistributedAvatar.delete(self)
-            Suit.Suit.delete(self)
-            SuitBase.SuitBase.delete(self)
+        self.DistributedSuitBase_deleted = 1
+        self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
+        del self.dna
+        del self.sp
+        DistributedAvatar.DistributedAvatar.delete(self)
+        Suit.Suit.delete(self)
+        SuitBase.SuitBase.delete(self)
 
     def setDNAString(self, dnaString):
         Suit.Suit.setDNAString(self, dnaString)
@@ -481,7 +473,7 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit,
                 self.HpTextGenerator.setFont(OTPGlobals.getSignFont())
                 if number < 0:
                     self.HpTextGenerator.setText(str(number))
-                    if base.cr.newsManager.isHolidayRunning(
+                    if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(
                             ToontownGlobals.SILLY_SURGE_HOLIDAY):
                         self.sillySurgeText = True
                         absNum = abs(number)

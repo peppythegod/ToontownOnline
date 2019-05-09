@@ -65,9 +65,8 @@ class QuestBookPoster(QuestPoster):
         self.laffMeter = None
 
     def reverseBG(self, reverse=0):
-
         try:
-            pass
+            self.initImageScale
         except AttributeError:
             self.initImageScale = self['image_scale']
             if reverse:

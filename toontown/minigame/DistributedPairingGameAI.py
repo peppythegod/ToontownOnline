@@ -15,31 +15,27 @@ class DistributedPairingGameAI(DistributedMinigameAI):
     TurnDownTwoAtATime = True
 
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedPairingGameAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedPairingGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['play']),
-                State.State('play', self.enterPlay, self.exitPlay,
-                            ['cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
-            self.gameFSM.enterInitialState()
-            self.deckSeed = random.randint(0, 4000000)
-            self.faceUpDict = {}
-            self.inactiveList = []
-            self.maxOpenCards = 2
-            self.points = 0
-            self.flips = 0
-            self.matches = 0
-            self.cards = []
-            self.gameDuration = 90
+        self.DistributedPairingGameAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedPairingGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['play']),
+            State.State('play', self.enterPlay, self.exitPlay,
+                        ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
+        self.gameFSM.enterInitialState()
+        self.deckSeed = random.randint(0, 4000000)
+        self.faceUpDict = {}
+        self.inactiveList = []
+        self.maxOpenCards = 2
+        self.points = 0
+        self.flips = 0
+        self.matches = 0
+        self.cards = []
+        self.gameDuration = 90
 
     def generate(self):
         self.notify.debug('generate')

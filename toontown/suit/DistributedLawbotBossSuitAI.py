@@ -97,28 +97,29 @@ class DistributedLawbotBossSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
         action = random.randrange(1, 101)
         if action > chanceToDoAttack:
             self.doProsecute()
-        elif not lawbotBoss.involvedToons:
-            return None
+        else:
+            if not lawbotBoss.involvedToons:
+                return None
 
-        toonToAttackId = random.choice(lawbotBoss.involvedToons)
-        toon = self.air.doId2do.get(toonToAttackId)
-        if not toon:
-            self.doProsecute()
-            return None
+            toonToAttackId = random.choice(lawbotBoss.involvedToons)
+            toon = self.air.doId2do.get(toonToAttackId)
+            if not toon:
+                self.doProsecute()
+                return None
 
-        toonPos = toon.getPos()
-        z2 = toonPos[2] + 1.3
-        toonPos = Point3(toonPos.getX(), toonPos.getY(), 0)
-        lawyerPos = self.getPos()
-        lawyerPos = Point3(self.getPos().getX(), self.getPos().getY(), 0)
-        dirVector = toonPos - lawyerPos
-        dirVector.normalize()
-        dirVector *= 200
-        destPos = Point3(lawyerPos[0] + dirVector[0],
-                         lawyerPos[1] + dirVector[1],
-                         lawyerPos[2] + dirVector[2] + 1.3)
-        self.d_doAttack(lawyerPos[0], lawyerPos[1], lawyerPos[2], destPos[0],
-                        destPos[1], destPos[2])
+            toonPos = toon.getPos()
+            z2 = toonPos[2] + 1.3
+            toonPos = Point3(toonPos.getX(), toonPos.getY(), 0)
+            lawyerPos = self.getPos()
+            lawyerPos = Point3(self.getPos().getX(), self.getPos().getY(), 0)
+            dirVector = toonPos - lawyerPos
+            dirVector.normalize()
+            dirVector *= 200
+            destPos = Point3(lawyerPos[0] + dirVector[0],
+                             lawyerPos[1] + dirVector[1],
+                             lawyerPos[2] + dirVector[2] + 1.3)
+            self.d_doAttack(lawyerPos[0], lawyerPos[1], lawyerPos[2], destPos[0],
+                            destPos[1], destPos[2])
 
     def doProsecute(self):
         self.notify.debug('doProsecute')

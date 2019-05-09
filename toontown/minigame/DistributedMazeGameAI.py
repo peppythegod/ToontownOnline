@@ -9,23 +9,19 @@ import MazeData
 
 class DistributedMazeGameAI(DistributedMinigameAI):
     def __init__(self, air, minigameId):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedMinigameTemplateAI_initialized = 1
-            DistributedMinigameAI.__init__(self, air, minigameId)
-            self.gameFSM = ClassicFSM.ClassicFSM('DistributedMazeGameAI', [
-                State.State('inactive', self.enterInactive, self.exitInactive,
-                            ['play']),
-                State.State('play', self.enterPlay, self.exitPlay,
-                            ['waitShowScores', 'cleanup']),
-                State.State('waitShowScores', self.enterWaitShowScores,
-                            self.exitWaitShowScores, ['cleanup']),
-                State.State('cleanup', self.enterCleanup, self.exitCleanup,
-                            ['inactive'])
-            ], 'inactive', 'inactive')
-            self.addChildGameFSM(self.gameFSM)
+        self.DistributedMinigameTemplateAI_initialized = 1
+        DistributedMinigameAI.__init__(self, air, minigameId)
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedMazeGameAI', [
+            State.State('inactive', self.enterInactive, self.exitInactive,
+                        ['play']),
+            State.State('play', self.enterPlay, self.exitPlay,
+                        ['waitShowScores', 'cleanup']),
+            State.State('waitShowScores', self.enterWaitShowScores,
+                        self.exitWaitShowScores, ['cleanup']),
+            State.State('cleanup', self.enterCleanup, self.exitCleanup,
+                        ['inactive'])
+        ], 'inactive', 'inactive')
+        self.addChildGameFSM(self.gameFSM)
 
     def delete(self):
         self.notify.debug('delete')

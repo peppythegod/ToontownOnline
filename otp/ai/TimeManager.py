@@ -138,7 +138,7 @@ class TimeManager(DistributedObject.DistributedObject):
         elapsed = end - self.start
         self.attemptCount += 1
         self.notify.info(
-            'Clock sync roundtrip took %0.3f ms' % elapsed * 1000.0)
+            'Clock sync roundtrip took %0.3f ms' % (elapsed * 1000.0))
         self.notify.info('AI time delta is %s from server delta' %
                          PythonUtil.formatElapsedSeconds(aiTimeSkew))
         average = (self.start + end) / 2.0 - self.extraSkew
@@ -237,8 +237,7 @@ class TimeManager(DistributedObject.DistributedObject):
                               'frameRateMonitor')
 
     def frameRateMonitor(self, task):
-        Avatar = Avatar
-        import otp.avatar.Avatar
+        from otp.avatar.Avatar import Avatar
         vendorId = 0
         deviceId = 0
         processMemory = 0

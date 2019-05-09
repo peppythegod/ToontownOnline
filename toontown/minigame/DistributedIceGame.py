@@ -12,9 +12,7 @@ from toontown.minigame import IceGameGlobals
 from toontown.minigame import MinigameAvatarScorePanel
 from toontown.minigame import IceTreasure
 
-
-class DistributedIceGame(DistributedMinigame.DistributedMinigame,
-                         DistributedIceWorld.DistributedIceWorld):
+class DistributedIceGame(DistributedMinigame.DistributedMinigame, DistributedIceWorld.DistributedIceWorld):
     notify = directNotify.newCategory('DistributedIceGame')
     MaxLocalForce = 100
     MaxPhysicsForce = 25000
@@ -22,25 +20,19 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
     def __init__(self, cr):
         DistributedMinigame.DistributedMinigame.__init__(self, cr)
         DistributedIceWorld.DistributedIceWorld.__init__(self, cr)
-        self.gameFSM = ClassicFSM.ClassicFSM('DistributedIceGame', [
-            State.State('off', self.enterOff, self.exitOff, ['inputChoice']),
-            State.State(
-                'inputChoice', self.enterInputChoice, self.exitInputChoice,
-                ['waitServerChoices', 'moveTires', 'displayVotes', 'cleanup']),
-            State.State('waitServerChoices', self.enterWaitServerChoices,
-                        self.exitWaitServerChoices, ['moveTires', 'cleanup']),
-            State.State('moveTires', self.enterMoveTires, self.exitMoveTires,
-                        ['synch', 'cleanup']),
-            State.State('synch', self.enterSynch, self.exitSynch,
-                        ['inputChoice', 'scoring', 'cleanup']),
-            State.State('scoring', self.enterScoring, self.exitScoring,
-                        ['cleanup', 'finalResults', 'inputChoice']),
-            State.State('finalResults', self.enterFinalResults,
-                        self.exitFinalResults, ['cleanup']),
-            State.State('cleanup', self.enterCleanup, self.exitCleanup, [])
-        ], 'off', 'cleanup')
+        self.gameFSM = ClassicFSM.ClassicFSM('DistributedIceGame', [State.State('off', self.enterOff, self.exitOff, ['inputChoice']),
+         State.State('inputChoice', self.enterInputChoice, self.exitInputChoice, ['waitServerChoices',
+          'moveTires',
+          'displayVotes',
+          'cleanup']),
+         State.State('waitServerChoices', self.enterWaitServerChoices, self.exitWaitServerChoices, ['moveTires', 'cleanup']),
+         State.State('moveTires', self.enterMoveTires, self.exitMoveTires, ['synch', 'cleanup']),
+         State.State('synch', self.enterSynch, self.exitSynch, ['inputChoice', 'scoring', 'cleanup']),
+         State.State('scoring', self.enterScoring, self.exitScoring, ['cleanup', 'finalResults', 'inputChoice']),
+         State.State('finalResults', self.enterFinalResults, self.exitFinalResults, ['cleanup']),
+         State.State('cleanup', self.enterCleanup, self.exitCleanup, [])], 'off', 'cleanup')
         self.addChildGameFSM(self.gameFSM)
-        self.cameraThreeQuarterView = (0, -22, 45, 0, -62.890000000000001, 0)
+        self.cameraThreeQuarterView = (0, -22, 45, 0, -62.89, 0)
         self.tireDict = {}
         self.forceArrowDict = {}
         self.canDrive = False
@@ -53,33 +45,13 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         self.allTireInputs = None
         self.curRound = 0
         self.curMatch = 0
-        self.controlKeyWarningLabel = DirectLabel(
-            text=TTLocalizer.IceGameControlKeyWarning,
-            text_fg=VBase4(1, 0, 0, 1),
-            relief=None,
-            pos=(0.0, 0, 0),
-            scale=0.14999999999999999)
+        self.controlKeyWarningLabel = DirectLabel(text=TTLocalizer.IceGameControlKeyWarning, text_fg=VBase4(1, 0, 0, 1), relief=None, pos=(0.0, 0, 0), scale=0.15)
         self.controlKeyWarningLabel.hide()
-        self.waitingMoveLabel = DirectLabel(
-            text=TTLocalizer.IceGameWaitingForPlayersToFinishMove,
-            text_fg=VBase4(1, 1, 1, 1),
-            relief=None,
-            pos=(-0.59999999999999998, 0, -0.75),
-            scale=0.074999999999999997)
+        self.waitingMoveLabel = DirectLabel(text=TTLocalizer.IceGameWaitingForPlayersToFinishMove, text_fg=VBase4(1, 1, 1, 1), relief=None, pos=(-0.6, 0, -0.75), scale=0.075)
         self.waitingMoveLabel.hide()
-        self.waitingSyncLabel = DirectLabel(
-            text=TTLocalizer.IceGameWaitingForAISync,
-            text_fg=VBase4(1, 1, 1, 1),
-            relief=None,
-            pos=(-0.59999999999999998, 0, -0.75),
-            scale=0.074999999999999997)
+        self.waitingSyncLabel = DirectLabel(text=TTLocalizer.IceGameWaitingForAISync, text_fg=VBase4(1, 1, 1, 1), relief=None, pos=(-0.6, 0, -0.75), scale=0.075)
         self.waitingSyncLabel.hide()
-        self.infoLabel = DirectLabel(
-            text='',
-            text_fg=VBase4(0, 0, 0, 1),
-            relief=None,
-            pos=(0.0, 0, 0.69999999999999996),
-            scale=0.074999999999999997)
+        self.infoLabel = DirectLabel(text='', text_fg=VBase4(0, 0, 0, 1), relief=None, pos=(0.0, 0, 0.7), scale=0.075)
         self.updateInfoLabel()
         self.lastForceArrowUpdateTime = 0
         self.sendForceArrowUpdateAsap = False
@@ -88,6 +60,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         self.obstacles = []
         self.controlKeyPressed = False
         self.controlKeyWarningIval = None
+        return
 
     def delete(self):
         DistributedIceWorld.DistributedIceWorld.delete(self)
@@ -95,7 +68,6 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         if self.controlKeyWarningIval:
             self.controlKeyWarningIval.finish()
             self.controlKeyWarningIval = None
-
         self.controlKeyWarningLabel.destroy()
         del self.controlKeyWarningLabel
         self.waitingMoveLabel.destroy()
@@ -117,6 +89,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
 
         del self.obstacles
         del self.gameFSM
+        return
 
     def announceGenerate(self):
         DistributedMinigame.DistributedMinigame.announceGenerate(self)
@@ -132,7 +105,6 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         result = TTLocalizer.IceGameInstructions
         if numPenalties == 0:
             result = TTLocalizer.IceGameInstructionsNoTnt
-
         return result
 
     def getMaxDuration(self):
@@ -142,8 +114,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         self.notify.debug('load')
         DistributedMinigame.DistributedMinigame.load(self)
         self.music = base.loadMusic('phase_4/audio/bgm/MG_IceGame.mid')
-        self.gameBoard = loader.loadModel(
-            'phase_4/models/minigames/ice_game_icerink')
+        self.gameBoard = loader.loadModel('phase_4/models/minigames/ice_game_icerink')
         background = loader.loadModel('phase_4/models/minigames/ice_game_2d')
         background.reparentTo(self.gameBoard)
         self.gameBoard.setPosHpr(0, 0, 0, 0, 0, 0)
@@ -163,36 +134,29 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         self.westWallModel = NodePath()
         if not self.westWallModel.isEmpty():
             self.westWallModel.reparentTo(self.gameBoard)
-            self.westWallModel.setPos(IceGameGlobals.MinWall[0],
-                                      IceGameGlobals.MinWall[1], 0)
+            self.westWallModel.setPos(IceGameGlobals.MinWall[0], IceGameGlobals.MinWall[1], 0)
             self.westWallModel.setScale(4)
-
         self.eastWallModel = NodePath()
         if not self.eastWallModel.isEmpty():
             self.eastWallModel.reparentTo(self.gameBoard)
-            self.eastWallModel.setPos(IceGameGlobals.MaxWall[0],
-                                      IceGameGlobals.MaxWall[1], 0)
+            self.eastWallModel.setPos(IceGameGlobals.MaxWall[0], IceGameGlobals.MaxWall[1], 0)
             self.eastWallModel.setScale(4)
             self.eastWallModel.setH(180)
-
         self.arrowKeys = ArrowKeys.ArrowKeys()
         self.target = loader.loadModel('phase_3/models/misc/sphere')
         self.target.setScale(0.01)
         self.target.reparentTo(self.gameBoard)
         self.target.setPos(0, 0, 0)
-        self.scoreCircle = loader.loadModel(
-            'phase_4/models/minigames/ice_game_score_circle')
+        self.scoreCircle = loader.loadModel('phase_4/models/minigames/ice_game_score_circle')
         self.scoreCircle.setScale(0.01)
         self.scoreCircle.reparentTo(self.gameBoard)
         self.scoreCircle.setZ(IceGameGlobals.TireRadius / 2.0)
         self.scoreCircle.setAlphaScale(0.5)
         self.scoreCircle.setTransparency(1)
         self.scoreCircle.hide()
-        self.treasureModel = loader.loadModel(
-            'phase_4/models/minigames/ice_game_barrel')
-        self.penaltyModel = loader.loadModel(
-            'phase_4/models/minigames/ice_game_tnt2')
-        self.penaltyModel.setScale(0.75, 0.75, 0.69999999999999996)
+        self.treasureModel = loader.loadModel('phase_4/models/minigames/ice_game_barrel')
+        self.penaltyModel = loader.loadModel('phase_4/models/minigames/ice_game_tnt2')
+        self.penaltyModel.setScale(0.75, 0.75, 0.7)
         szId = self.getSafezoneId()
         obstacles = IceGameGlobals.Obstacles[szId]
         index = 0
@@ -203,33 +167,22 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             self.obstacles.append(newObstacle)
             index += 1
 
-        self.countSound = loader.loadSfx(
-            'phase_3.5/audio/sfx/tick_counter.mp3')
-        self.treasureGrabSound = loader.loadSfx(
-            'phase_4/audio/sfx/MG_sfx_vine_game_bananas.mp3')
-        self.penaltyGrabSound = loader.loadSfx(
-            'phase_4/audio/sfx/MG_cannon_fire_alt.mp3')
+        self.countSound = loader.loadSfx('phase_3.5/audio/sfx/tick_counter.mp3')
+        self.treasureGrabSound = loader.loadSfx('phase_4/audio/sfx/MG_sfx_vine_game_bananas.mp3')
+        self.penaltyGrabSound = loader.loadSfx('phase_4/audio/sfx/MG_cannon_fire_alt.mp3')
         self.tireSounds = []
         for tireIndex in xrange(4):
-            tireHit = loader.loadSfx(
-                'phase_4/audio/sfx/Golf_Hit_Barrier_1.mp3')
+            tireHit = loader.loadSfx('phase_4/audio/sfx/Golf_Hit_Barrier_1.mp3')
             wallHit = loader.loadSfx('phase_4/audio/sfx/MG_maze_pickup.mp3')
-            obstacleHit = loader.loadSfx(
-                'phase_4/audio/sfx/Golf_Hit_Barrier_2.mp3')
-            self.tireSounds.append({
-                'tireHit': tireHit,
-                'wallHit': wallHit,
-                'obstacleHit': obstacleHit
-            })
+            obstacleHit = loader.loadSfx('phase_4/audio/sfx/Golf_Hit_Barrier_2.mp3')
+            self.tireSounds.append({'tireHit': tireHit,
+             'wallHit': wallHit,
+             'obstacleHit': obstacleHit})
 
-        self.arrowRotateSound = loader.loadSfx(
-            'phase_4/audio/sfx/MG_sfx_ice_force_rotate.wav')
-        self.arrowUpSound = loader.loadSfx(
-            'phase_4/audio/sfx/MG_sfx_ice_force_increase_3sec.mp3')
-        self.arrowDownSound = loader.loadSfx(
-            'phase_4/audio/sfx/MG_sfx_ice_force_decrease_3sec.mp3')
-        self.scoreCircleSound = loader.loadSfx(
-            'phase_4/audio/sfx/MG_sfx_ice_scoring_1.mp3')
+        self.arrowRotateSound = loader.loadSfx('phase_4/audio/sfx/MG_sfx_ice_force_rotate.mp3')
+        self.arrowUpSound = loader.loadSfx('phase_4/audio/sfx/MG_sfx_ice_force_increase_3sec.mp3')
+        self.arrowDownSound = loader.loadSfx('phase_4/audio/sfx/MG_sfx_ice_force_decrease_3sec.mp3')
+        self.scoreCircleSound = loader.loadSfx('phase_4/audio/sfx/MG_sfx_ice_scoring_1.mp3')
 
     def unload(self):
         self.notify.debug('unload')
@@ -249,10 +202,10 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         self.notify.debug('onstage')
         DistributedMinigame.DistributedMinigame.onstage(self)
         self.gameBoard.reparentTo(render)
-        self._DistributedIceGame__placeToon(self.localAvId)
+        self.__placeToon(self.localAvId)
         self.moveCameraToTop()
         self.scorePanels = []
-        base.playMusic(self.music, looping=1, volume=0.80000000000000004)
+        base.playMusic(self.music, looping=1, volume=0.8)
 
     def offstage(self):
         self.notify.debug('offstage')
@@ -280,7 +233,6 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             if av:
                 av.dropShadow.show()
                 av.resetLOD()
-                continue
 
         taskMgr.remove(self.uniqueName('aimtask'))
         self.arrowKeys.destroy()
@@ -290,23 +242,20 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
     def handleDisabledAvatar(self, avId):
         self.notify.debug('handleDisabledAvatar')
         self.notify.debug('avatar ' + str(avId) + ' disabled')
-        DistributedMinigame.DistributedMinigame.handleDisabledAvatar(
-            self, avId)
+        DistributedMinigame.DistributedMinigame.handleDisabledAvatar(self, avId)
 
     def setGameReady(self):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.notify.debug('setGameReady')
         if DistributedMinigame.DistributedMinigame.setGameReady(self):
-            return None
-
+            return
         for index in xrange(self.numPlayers):
             avId = self.avIdList[index]
             toon = self.getAvatar(avId)
             if toon:
                 toon.reparentTo(render)
-                self._DistributedIceGame__placeToon(avId)
+                self.__placeToon(avId)
                 toon.forwardSpeed = 0
                 toon.rotateSpeed = False
                 toon.dropShadow.hide()
@@ -316,50 +265,41 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
                     toon.reparentTo(tireNp)
                     toon.setY(1.0)
                     toon.setZ(-3)
-
                 toon.startLookAround()
-                continue
 
     def setGameStart(self, timestamp):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.notify.debug('setGameStart')
         DistributedMinigame.DistributedMinigame.setGameStart(self, timestamp)
         for avId in self.remoteAvIdList:
             toon = self.getAvatar(avId)
             if toon:
                 toon.stopLookAround()
-                continue
 
         self.scores = [0] * self.numPlayers
-        spacing = 0.40000000000000002
+        spacing = 0.4
         for i in xrange(self.numPlayers):
             avId = self.avIdList[i]
             avName = self.getAvatarName(avId)
-            scorePanel = MinigameAvatarScorePanel.MinigameAvatarScorePanel(
-                avId, avName)
-            scorePanel.setScale(0.90000000000000002)
-            scorePanel.setPos(0.75 - spacing * (self.numPlayers - 1 - i), 0.0,
-                              0.875)
+            scorePanel = MinigameAvatarScorePanel.MinigameAvatarScorePanel(avId, avName)
+            scorePanel.setScale(0.9)
+            scorePanel.setPos(-0.583 - spacing * (self.numPlayers - 1 - i), 0.0, -0.15)
+            scorePanel.reparentTo(base.a2dTopRight)
             scorePanel.makeTransparent(0.75)
             self.scorePanels.append(scorePanel)
 
-        self.arrowKeys.setPressHandlers([
-            self._DistributedIceGame__upArrowPressed,
-            self._DistributedIceGame__downArrowPressed,
-            self._DistributedIceGame__leftArrowPressed,
-            self._DistributedIceGame__rightArrowPressed,
-            self._DistributedIceGame__controlPressed
-        ])
+        self.arrowKeys.setPressHandlers([self.__upArrowPressed,
+         self.__downArrowPressed,
+         self.__leftArrowPressed,
+         self.__rightArrowPressed,
+         self.__controlPressed])
 
     def isInPlayState(self):
         if not self.gameFSM.getCurrentState():
             return False
-
         if not self.gameFSM.getCurrentState().getName() == 'play':
             return False
-
         return True
 
     def enterOff(self):
@@ -378,16 +318,14 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             self.notify.debug('self.curRound = %s' % self.curRound)
         self.timer = ToontownTimer.ToontownTimer()
         self.timer.hide()
-        if self.timerStartTime is not None:
+        if self.timerStartTime != None:
             self.startTimer()
-
         self.showForceArrows(realPlayersOnly=True)
         self.localForceArrow().setPosHpr(0, 0, -1.0, 0, 0, 0)
         self.localForceArrow().reparentTo(self.localTireNp())
         self.localForceArrow().setY(IceGameGlobals.TireRadius)
         self.localTireNp().headsUp(self.target)
-        self.notify.debug('self.localForceArrow() heading = %s' %
-                          self.localForceArrow().getH())
+        self.notify.debug('self.localForceArrow() heading = %s' % self.localForceArrow().getH())
         self.curHeading = self.localTireNp().getH()
         self.curForce = 25
         self.updateLocalForceArrow()
@@ -400,37 +338,29 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             tireNp.headsUp(self.target)
             self.updateForceArrow(avId, tireNp.getH(), 25)
 
-        taskMgr.add(self._DistributedIceGame__aimTask,
-                    self.uniqueName('aimtask'))
+        taskMgr.add(self.__aimTask, self.uniqueName('aimtask'))
         if base.localAvatar.laffMeter:
             base.localAvatar.laffMeter.stop()
-
         self.sendForceArrowUpdateAsap = False
+        return
 
     def exitInputChoice(self):
         if not self.controlKeyPressed:
             if self.controlKeyWarningIval:
                 self.controlKeyWarningIval.finish()
                 self.controlKeyWarningIval = None
-
-            self.controlKeyWarningIval = Sequence(
-                Func(self.controlKeyWarningLabel.show),
-                self.controlKeyWarningLabel.colorScaleInterval(
-                    10, VBase4(1, 1, 1, 0), startColorScale=VBase4(1, 1, 1,
-                                                                   1)),
-                Func(self.controlKeyWarningLabel.hide))
+            self.controlKeyWarningIval = Sequence(Func(self.controlKeyWarningLabel.show), self.controlKeyWarningLabel.colorScaleInterval(10, VBase4(1, 1, 1, 0), startColorScale=VBase4(1, 1, 1, 1)), Func(self.controlKeyWarningLabel.hide))
             self.controlKeyWarningIval.start()
-
-        if self.timer is not None:
+        if self.timer != None:
             self.timer.destroy()
             self.timer = None
-
         self.timerStartTime = None
         self.hideForceArrows()
         self.arrowRotateSound.stop()
         self.arrowUpSound.stop()
         self.arrowDownSound.stop()
         taskMgr.remove(self.uniqueName('aimtask'))
+        return
 
     def enterWaitServerChoices(self):
         self.waitingMoveLabel.show()
@@ -468,8 +398,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         self.enableAllTireBodies()
         self.totalPhysicsSteps = 0
         self.startSim()
-        taskMgr.add(self._DistributedIceGame__moveTiresTask,
-                    self.uniqueName('moveTiresTtask'))
+        taskMgr.add(self.__moveTiresTask, self.uniqueName('moveTiresTtask'))
 
     def exitMoveTires(self):
         self.forceLocalToonToTire()
@@ -515,98 +444,60 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             time = (distance - curScale) / IceGameGlobals.ExpandFeetPerSec
             if time < 0:
                 time = 0.01
-
             scaleXY = distance + IceGameGlobals.TireRadius
             self.notify.debug('circleStartTime = %s' % circleStartTime)
-            self.scoreMovie.append(
-                Parallel(
-                    LerpScaleInterval(self.scoreCircle, time,
-                                      Point3(scaleXY, scaleXY, 1.0)),
-                    SoundInterval(
-                        self.scoreCircleSound,
-                        duration=time,
-                        startTime=circleStartTime)))
+            self.scoreMovie.append(Parallel(LerpScaleInterval(self.scoreCircle, time, Point3(scaleXY, scaleXY, 1.0)), SoundInterval(self.scoreCircleSound, duration=time, startTime=circleStartTime)))
             circleStartTime += time
             startScore = self.scorePanels[scorePanelIndex].getScore()
             destScore = self.newScores[scorePanelIndex]
-            self.notify.debug('for avId %d, startScore=%d, newScores=%d' %
-                              (avId, startScore, destScore))
+            self.notify.debug('for avId %d, startScore=%d, newScores=%d' % (avId, startScore, destScore))
 
-            def increaseScores(t,
-                               scorePanelIndex=scorePanelIndex,
-                               startScore=startScore,
-                               destScore=destScore):
+            def increaseScores(t, scorePanelIndex = scorePanelIndex, startScore = startScore, destScore = destScore):
                 oldScore = self.scorePanels[scorePanelIndex].getScore()
                 diff = destScore - startScore
                 newScore = int(startScore + diff * t)
                 if newScore > oldScore:
                     base.playSfx(self.countSound)
-
                 self.scorePanels[scorePanelIndex].setScore(newScore)
                 self.scores[scorePanelIndex] = newScore
 
-            duration = (destScore - startScore) * \
-                IceGameGlobals.ScoreCountUpRate
+            duration = (destScore - startScore) * IceGameGlobals.ScoreCountUpRate
             tireNp = self.tireDict[avId]['tireNodePath']
-            self.scoreMovie.append(
-                Parallel(
-                    LerpFunctionInterval(increaseScores, duration),
-                    Sequence(
-                        LerpColorScaleInterval(tireNp, duration / 6.0,
-                                               VBase4(1, 0, 0, 1)),
-                        LerpColorScaleInterval(tireNp, duration / 6.0,
-                                               VBase4(1, 1, 1, 1)),
-                        LerpColorScaleInterval(tireNp, duration / 6.0,
-                                               VBase4(1, 0, 0, 1)),
-                        LerpColorScaleInterval(tireNp, duration / 6.0,
-                                               VBase4(1, 1, 1, 1)),
-                        LerpColorScaleInterval(tireNp, duration / 6.0,
-                                               VBase4(1, 0, 0, 1)),
-                        LerpColorScaleInterval(tireNp, duration / 6.0,
-                                               VBase4(1, 1, 1, 1)))))
+            self.scoreMovie.append(Parallel(LerpFunctionInterval(increaseScores, duration), Sequence(LerpColorScaleInterval(tireNp, duration / 6.0, VBase4(1, 0, 0, 1)), LerpColorScaleInterval(tireNp, duration / 6.0, VBase4(1, 1, 1, 1)), LerpColorScaleInterval(tireNp, duration / 6.0, VBase4(1, 0, 0, 1)), LerpColorScaleInterval(tireNp, duration / 6.0, VBase4(1, 1, 1, 1)), LerpColorScaleInterval(tireNp, duration / 6.0, VBase4(1, 0, 0, 1)), LerpColorScaleInterval(tireNp, duration / 6.0, VBase4(1, 1, 1, 1)))))
             curScale += distance
 
-        self.scoreMovie.append(
-            Func(self.sendUpdate, 'reportScoringMovieDone', []))
+        self.scoreMovie.append(Func(self.sendUpdate, 'reportScoringMovieDone', []))
         self.scoreMovie.start()
 
     def exitScoring(self):
         self.scoreMovie.finish()
         self.scoreMovie = None
         self.scoreCircle.hide()
+        return
 
     def enterFinalResults(self):
         lerpTrack = Parallel()
         lerpDur = 0.5
-        tY = 0.59999999999999998
-        bY = -0.050000000000000003
-        lX = -0.5
+        tY = 0.6
+        bY = -.05
+        lX = -.5
         cX = 0
         rX = 0.5
-        scorePanelLocs = (((cX, bY), ), ((lX, bY), (rX, bY)),
-                          ((cX, tY), (lX, bY), (rX, bY)), ((lX, tY), (rX, tY),
-                                                           (lX, bY), (rX, bY)))
+        scorePanelLocs = (((cX, bY),),
+         ((lX, bY), (rX, bY)),
+         ((cX, tY), (lX, bY), (rX, bY)),
+         ((lX, tY),
+          (rX, tY),
+          (lX, bY),
+          (rX, bY)))
         scorePanelLocs = scorePanelLocs[self.numPlayers - 1]
         for i in xrange(self.numPlayers):
             panel = self.scorePanels[i]
             pos = scorePanelLocs[i]
-            lerpTrack.append(
-                Parallel(
-                    LerpPosInterval(
-                        panel,
-                        lerpDur,
-                        Point3(pos[0], 0, pos[1]),
-                        blendType='easeInOut'),
-                    LerpScaleInterval(
-                        panel,
-                        lerpDur,
-                        Vec3(panel.getScale()) * 2.0,
-                        blendType='easeInOut')))
+            panel.wrtReparentTo(aspect2d)
+            lerpTrack.append(Parallel(LerpPosInterval(panel, lerpDur, Point3(pos[0], 0, pos[1]), blendType='easeInOut'), LerpScaleInterval(panel, lerpDur, Vec3(panel.getScale()) * 2.0, blendType='easeInOut')))
 
-        self.showScoreTrack = Parallel(
-            lerpTrack,
-            Sequence(
-                Wait(IceGameGlobals.ShowScoresDuration), Func(self.gameOver)))
+        self.showScoreTrack = Parallel(lerpTrack, Sequence(Wait(IceGameGlobals.ShowScoresDuration), Func(self.gameOver)))
         self.showScoreTrack.start()
 
     def exitFinalResults(self):
@@ -621,7 +512,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
     def exitCleanup(self):
         pass
 
-    def _DistributedIceGame__placeToon(self, avId):
+    def __placeToon(self, avId):
         toon = self.getAvatar(avId)
         if toon:
             toon.setPos(0, 0, 0)
@@ -633,33 +524,26 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         camera.setPosHpr(p[0], p[1], p[2], p[3], p[4], p[5])
 
     def setupTire(self, avId, index):
-        (tireNp, tireBody, tireOdeGeom) = self.createTire(index)
-        self.tireDict[avId] = {
-            'tireNodePath': tireNp,
-            'tireBody': tireBody,
-            'tireOdeGeom': tireOdeGeom
-        }
+        tireNp, tireBody, tireOdeGeom = self.createTire(index)
+        self.tireDict[avId] = {'tireNodePath': tireNp,
+         'tireBody': tireBody,
+         'tireOdeGeom': tireOdeGeom}
         if avId <= 0:
             tireBlocker = tireNp.find('**/tireblockermesh')
             if not tireBlocker.isEmpty():
                 tireBlocker.hide()
-
         if avId == self.localAvId:
             tireNp = self.tireDict[avId]['tireNodePath']
             self.treasureSphereName = 'treasureCollider'
-            self.treasureCollSphere = CollisionSphere(
-                0, 0, 0, IceGameGlobals.TireRadius)
+            self.treasureCollSphere = CollisionSphere(0, 0, 0, IceGameGlobals.TireRadius)
             self.treasureCollSphere.setTangible(0)
             self.treasureCollNode = CollisionNode(self.treasureSphereName)
-            self.treasureCollNode.setFromCollideMask(
-                ToontownGlobals.PieBitmask)
+            self.treasureCollNode.setFromCollideMask(ToontownGlobals.PieBitmask)
             self.treasureCollNode.addSolid(self.treasureCollSphere)
-            self.treasureCollNodePath = tireNp.attachNewNode(
-                self.treasureCollNode)
+            self.treasureCollNodePath = tireNp.attachNewNode(self.treasureCollNode)
             self.treasureHandler = CollisionHandlerEvent()
             self.treasureHandler.addInPattern('%fn-intoTreasure')
-            base.cTrav.addCollider(self.treasureCollNodePath,
-                                   self.treasureHandler)
+            base.cTrav.addCollider(self.treasureCollNodePath, self.treasureHandler)
             eventName = '%s-intoTreasure' % self.treasureCollNodePath.getName()
             self.notify.debug('eventName = %s' % eventName)
             self.accept(eventName, self.toonHitSomething)
@@ -673,28 +557,28 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             priority = self.avIdList.index(avId)
             if avId == self.localAvId:
                 priority = 10
-
         self.forceArrowDict[avId] = arrow
 
     def hideForceArrows(self):
         for forceArrow in self.forceArrowDict.values():
             forceArrow.hide()
 
-    def showForceArrows(self, realPlayersOnly=True):
+    def showForceArrows(self, realPlayersOnly = True):
         for avId in self.forceArrowDict:
             if realPlayersOnly:
                 if avId > 0:
                     self.forceArrowDict[avId].show()
                 else:
                     self.forceArrowDict[avId].hide()
-            avId > 0
-            self.forceArrowDict[avId].show()
+            else:
+                self.forceArrowDict[avId].show()
 
     def localForceArrow(self):
         if self.localAvId in self.forceArrowDict:
             return self.forceArrowDict[self.localAvId]
         else:
             return None
+        return None
 
     def setChoices(self, input0, input1, input2, input3):
         pass
@@ -716,46 +600,41 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
                 y = 1
                 tireBody.enable()
                 tireBody.addForce(Vec3(x * forceMoveDt, y * forceMoveDt, 0))
-
             if self.arrowKeys.downPressed() and not tireBody.isEnabled():
                 x = 0
                 y = -1
                 tireBody.enable()
                 tireBody.addForce(Vec3(x * forceMoveDt, y * forceMoveDt, 0))
-
             if self.arrowKeys.leftPressed() and not tireBody.isEnabled():
                 x = -1
                 y = 0
                 tireBody.enable()
                 tireBody.addForce(Vec3(x * forceMoveDt, y * forceMoveDt, 0))
-
             if self.arrowKeys.rightPressed() and not tireBody.isEnabled():
                 x = 1
                 y = 0
                 tireBody.enable()
                 tireBody.addForce(Vec3(x * forceMoveDt, y * forceMoveDt, 0))
-
         return task.cont
 
-    def _DistributedIceGame__upArrowPressed(self):
+    def __upArrowPressed(self):
         pass
 
-    def _DistributedIceGame__downArrowPressed(self):
+    def __downArrowPressed(self):
         pass
 
-    def _DistributedIceGame__leftArrowPressed(self):
+    def __leftArrowPressed(self):
         pass
 
-    def _DistributedIceGame__rightArrowPressed(self):
+    def __rightArrowPressed(self):
         pass
 
-    def _DistributedIceGame__controlPressed(self):
+    def __controlPressed(self):
         if self.gameFSM.getCurrentState().getName() == 'inputChoice':
             self.sendForceArrowUpdateAsap = True
             self.updateLocalForceArrow()
             self.controlKeyPressed = True
-            self.sendUpdate('setAvatarChoice',
-                            [self.curForce, self.curHeading])
+            self.sendUpdate('setAvatarChoice', [self.curForce, self.curHeading])
             self.gameFSM.request('waitServerChoices')
 
     def startTimer(self):
@@ -763,17 +642,16 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         elapsed = now - self.timerStartTime
         self.timer.posInTopRightCorner()
         self.timer.setTime(IceGameGlobals.InputTimeout)
-        self.timer.countdown(IceGameGlobals.InputTimeout - elapsed,
-                             self.handleChoiceTimeout)
+        self.timer.countdown(IceGameGlobals.InputTimeout - elapsed, self.handleChoiceTimeout)
         self.timer.show()
 
     def setTimerStartTime(self, timestamp):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.timerStartTime = globalClockDelta.networkToLocalTime(timestamp)
-        if self.timer is not None:
+        if self.timer != None:
             self.startTimer()
+        return
 
     def handleChoiceTimeout(self):
         self.sendUpdate('setAvatarChoice', [0, 0])
@@ -783,28 +661,24 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         ret = None
         if self.localAvId in self.tireDict:
             ret = self.tireDict[self.localAvId]['tireNodePath']
-
         return ret
 
     def localTireBody(self):
         ret = None
         if self.localAvId in self.tireDict:
             ret = self.tireDict[self.localAvId]['tireBody']
-
         return ret
 
     def getTireBody(self, avId):
         ret = None
         if avId in self.tireDict:
             ret = self.tireDict[avId]['tireBody']
-
         return ret
 
     def getTireNp(self, avId):
         ret = None
         if avId in self.tireDict:
             ret = self.tireDict[avId]['tireNodePath']
-
         return ret
 
     def updateForceArrow(self, avId, curHeading, curForce):
@@ -828,10 +702,9 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         avId = self.localAvId
         self.b_setForceArrowInfo(avId, self.curHeading, self.curForce)
 
-    def _DistributedIceGame__aimTask(self, task):
+    def __aimTask(self, task):
         if not hasattr(self, 'arrowKeys'):
             return task.done
-
         dt = globalClock.getDt()
         headingMomentumChange = dt * 60.0
         forceMomentumChange = dt * 160.0
@@ -843,52 +716,41 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             self.forceMomentum += forceMomentumChange
             if self.forceMomentum < 0:
                 self.forceMomentum = 0
-
             if self.forceMomentum > 50:
                 self.forceMomentum = 50
-
             oldForce = self.curForce
             self.curForce += self.forceMomentum * dt
             arrowUpdate = True
             if oldForce < self.MaxLocalForce:
                 arrowUp = True
-
         elif self.arrowKeys.downPressed() and not self.arrowKeys.upPressed():
             self.forceMomentum += forceMomentumChange
             if self.forceMomentum < 0:
                 self.forceMomentum = 0
-
             if self.forceMomentum > 50:
                 self.forceMomentum = 50
-
             oldForce = self.curForce
             self.curForce -= self.forceMomentum * dt
             arrowUpdate = True
             if oldForce > 0.01:
                 arrowDown = True
-
         else:
             self.forceMomentum = 0
         if self.arrowKeys.leftPressed() and not self.arrowKeys.rightPressed():
             self.headingMomentum += headingMomentumChange
             if self.headingMomentum < 0:
                 self.headingMomentum = 0
-
             if self.headingMomentum > 50:
                 self.headingMomentum = 50
-
             self.curHeading += self.headingMomentum * dt
             arrowUpdate = True
             arrowRotating = True
-        elif self.arrowKeys.rightPressed(
-        ) and not self.arrowKeys.leftPressed():
+        elif self.arrowKeys.rightPressed() and not self.arrowKeys.leftPressed():
             self.headingMomentum += headingMomentumChange
             if self.headingMomentum < 0:
                 self.headingMomentum = 0
-
             if self.headingMomentum > 50:
                 self.headingMomentum = 50
-
             self.curHeading -= self.headingMomentum * dt
             arrowUpdate = True
             arrowRotating = True
@@ -897,24 +759,19 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         if arrowUpdate:
             self.normalizeHeadingAndForce()
             self.updateLocalForceArrow()
-
         if arrowRotating:
-            if not self.arrowRotateSound.status(
-            ) == self.arrowRotateSound.PLAYING:
+            if not self.arrowRotateSound.status() == self.arrowRotateSound.PLAYING:
                 base.playSfx(self.arrowRotateSound, looping=True)
-
         else:
             self.arrowRotateSound.stop()
         if arrowUp:
             if not self.arrowUpSound.status() == self.arrowUpSound.PLAYING:
                 base.playSfx(self.arrowUpSound, looping=False)
-
         else:
             self.arrowUpSound.stop()
         if arrowDown:
             if not self.arrowDownSound.status() == self.arrowDownSound.PLAYING:
                 base.playSfx(self.arrowDownSound, looping=False)
-
         else:
             self.arrowDownSound.stop()
         return task.cont
@@ -922,14 +779,12 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
     def normalizeHeadingAndForce(self):
         if self.curForce > self.MaxLocalForce:
             self.curForce = self.MaxLocalForce
-
         if self.curForce < 0.01:
             self.curForce = 0.01
 
     def setTireInputs(self, tireInputs):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.allTireInputs = tireInputs
         self.gameFSM.request('moveTires')
 
@@ -945,16 +800,14 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         for avId in self.tireDict.keys():
             if self.tireDict[avId]['tireBody'].isEnabled():
                 return False
-                continue
 
         return True
 
-    def _DistributedIceGame__moveTiresTask(self, task):
+    def __moveTiresTask(self, task):
         if self.areAllTiresDisabled():
             self.sendTirePositions()
             self.gameFSM.request('synch')
             return task.done
-
         return task.cont
 
     def sendTirePositions(self):
@@ -975,8 +828,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
 
     def setFinalPositions(self, finalPos):
         if not self.hasLocalToon:
-            return None
-
+            return
         for index in xrange(len(self.avIdList)):
             avId = self.avIdList[index]
             tire = self.getTireBody(avId)
@@ -994,35 +846,29 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             np.setPos(pos[0], pos[1], pos[2])
 
     def updateInfoLabel(self):
-        self.infoLabel['text'] = TTLocalizer.IceGameInfo % {
-            'curMatch': self.curMatch + 1,
-            'numMatch': IceGameGlobals.NumMatches,
-            'curRound': self.curRound + 1,
-            'numRound': IceGameGlobals.NumRounds
-        }
+        self.infoLabel['text'] = TTLocalizer.IceGameInfo % {'curMatch': self.curMatch + 1,
+         'numMatch': IceGameGlobals.NumMatches,
+         'curRound': self.curRound + 1,
+         'numRound': IceGameGlobals.NumRounds}
 
     def setMatchAndRound(self, match, round):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.curMatch = match
         self.curRound = round
         self.updateInfoLabel()
 
     def setScores(self, match, round, scores):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.newMatch = match
         self.newRound = round
         self.newScores = scores
 
     def setNewState(self, state):
         if not self.hasLocalToon:
-            return None
-
-        self.notify.debug(
-            'setNewState gameFSM=%s newState=%s' % (self.gameFSM, state))
+            return
+        self.notify.debug('setNewState gameFSM=%s newState=%s' % (self.gameFSM, state))
         self.gameFSM.request(state)
 
     def putAllTiresInStartingPositions(self):
@@ -1057,9 +903,8 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         curTime = self.getCurrentGameTime()
         if self.sendForceArrowUpdateAsap:
             sendIt = True
-        elif curTime - self.lastForceArrowUpdateTime > 0.20000000000000001:
+        elif curTime - self.lastForceArrowUpdateTime > 0.2:
             sendIt = True
-
         if sendIt:
             self.sendUpdate('setForceArrowInfo', [avId, force, heading])
             self.sendForceArrowUpdateAsap = False
@@ -1067,8 +912,7 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
 
     def setForceArrowInfo(self, avId, force, heading):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.updateForceArrow(avId, force, heading)
 
     def setupStartOfMatch(self):
@@ -1080,83 +924,68 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
                 treasure.destroy()
 
             self.treasures = []
-
         index = 0
         treasureMargin = IceGameGlobals.TireRadius + 1.0
         while len(self.treasures) < self.numTreasures:
-            xPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[0] + 5,
-                                               IceGameGlobals.MaxWall[0] - 5)
-            yPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[1] + 5,
-                                               IceGameGlobals.MaxWall[1] - 5)
+            xPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[0] + 5, IceGameGlobals.MaxWall[0] - 5)
+            yPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[1] + 5, IceGameGlobals.MaxWall[1] - 5)
             self.notify.debug('yPos=%s' % yPos)
             pos = Point3(xPos, yPos, IceGameGlobals.TireRadius)
-            newTreasure = IceTreasure.IceTreasure(
-                self.treasureModel, pos, index, self.doId, penalty=False)
+            newTreasure = IceTreasure.IceTreasure(self.treasureModel, pos, index, self.doId, penalty=False)
             goodSpot = True
             for obstacle in self.obstacles:
                 if newTreasure.nodePath.getDistance(obstacle) < treasureMargin:
                     goodSpot = False
                     break
-                    continue
 
             if goodSpot:
                 for treasure in self.treasures:
-                    if newTreasure.nodePath.getDistance(
-                            treasure.nodePath) < treasureMargin:
+                    if newTreasure.nodePath.getDistance(treasure.nodePath) < treasureMargin:
                         goodSpot = False
                         break
-                        continue
 
             if goodSpot:
                 self.treasures.append(newTreasure)
                 index += 1
-                continue
-            newTreasure.destroy()
+            else:
+                newTreasure.destroy()
+
         self.numPenalties = IceGameGlobals.NumPenalties[szId]
         if self.penalties:
             for penalty in self.penalties:
                 penalty.destroy()
 
             self.penalties = []
-
         index = 0
         while len(self.penalties) < self.numPenalties:
-            xPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[0] + 5,
-                                               IceGameGlobals.MaxWall[0] - 5)
-            yPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[1] + 5,
-                                               IceGameGlobals.MaxWall[1] - 5)
+            xPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[0] + 5, IceGameGlobals.MaxWall[0] - 5)
+            yPos = self.randomNumGen.randrange(IceGameGlobals.MinWall[1] + 5, IceGameGlobals.MaxWall[1] - 5)
             self.notify.debug('yPos=%s' % yPos)
             pos = Point3(xPos, yPos, IceGameGlobals.TireRadius)
-            newPenalty = IceTreasure.IceTreasure(
-                self.penaltyModel, pos, index, self.doId, penalty=True)
+            newPenalty = IceTreasure.IceTreasure(self.penaltyModel, pos, index, self.doId, penalty=True)
             goodSpot = True
             for obstacle in self.obstacles:
                 if newPenalty.nodePath.getDistance(obstacle) < treasureMargin:
                     goodSpot = False
                     break
-                    continue
 
             if goodSpot:
                 for treasure in self.treasures:
-                    if newPenalty.nodePath.getDistance(
-                            treasure.nodePath) < treasureMargin:
+                    if newPenalty.nodePath.getDistance(treasure.nodePath) < treasureMargin:
                         goodSpot = False
                         break
-                        continue
 
             if goodSpot:
                 for penalty in self.penalties:
-                    if newPenalty.nodePath.getDistance(
-                            penalty.nodePath) < treasureMargin:
+                    if newPenalty.nodePath.getDistance(penalty.nodePath) < treasureMargin:
                         goodSpot = False
                         break
-                        continue
 
             if goodSpot:
                 self.penalties.append(newPenalty)
                 index += 1
-                continue
-            newPenalty.destroy()
+            else:
+                newPenalty.destroy()
 
     def toonHitSomething(self, entry):
         self.notify.debug('---- treasure Enter ---- ')
@@ -1165,56 +994,51 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
         parts = name.split('-')
         if len(parts) < 3:
             self.notify.debug('collided with %s, but returning' % name)
-            return None
-
+            return
         if not int(parts[1]) == self.doId:
-            self.notify.debug(
-                "collided with %s, but doId doesn't match" % name)
-            return None
-
+            self.notify.debug("collided with %s, but doId doesn't match" % name)
+            return
         treasureNum = int(parts[2])
         if 'penalty' in parts[0]:
-            self._DistributedIceGame__penaltyGrabbed(treasureNum)
+            self.__penaltyGrabbed(treasureNum)
         else:
-            self._DistributedIceGame__treasureGrabbed(treasureNum)
+            self.__treasureGrabbed(treasureNum)
 
-    def _DistributedIceGame__treasureGrabbed(self, treasureNum):
+    def __treasureGrabbed(self, treasureNum):
         self.treasures[treasureNum].showGrab()
         self.treasureGrabSound.play()
         self.sendUpdate('claimTreasure', [treasureNum])
 
     def setTreasureGrabbed(self, avId, treasureNum):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.notify.debug('treasure %s grabbed by %s' % (treasureNum, avId))
         if avId != self.localAvId:
             self.treasures[treasureNum].showGrab()
-
         i = self.avIdList.index(avId)
         self.scores[i] += 1
         self.scorePanels[i].setScore(self.scores[i])
 
-    def _DistributedIceGame__penaltyGrabbed(self, penaltyNum):
+    def __penaltyGrabbed(self, penaltyNum):
         self.penalties[penaltyNum].showGrab()
         self.sendUpdate('claimPenalty', [penaltyNum])
 
     def setPenaltyGrabbed(self, avId, penaltyNum):
         if not self.hasLocalToon:
-            return None
-
+            return
         self.notify.debug('penalty %s grabbed by %s' % (penaltyNum, avId))
         if avId != self.localAvId:
             self.penalties[penaltyNum].showGrab()
-
         i = self.avIdList.index(avId)
         self.scores[i] -= 1
         self.scorePanels[i].setScore(self.scores[i])
 
     def postStep(self):
         DistributedIceWorld.DistributedIceWorld.postStep(self)
-        for count in range(self.colCount):
-            (c0, c1) = self.getOrderedContacts(count)
+        if not self.colCount:
+            return
+        for count in xrange(self.colCount):
+            c0, c1 = self.getOrderedContacts(count)
             if c1 in self.tireCollideIds:
                 tireIndex = self.tireCollideIds.index(c1)
                 if c0 in self.tireCollideIds:
@@ -1224,8 +1048,6 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
                 elif c0 == self.obstacleCollideId:
                     self.tireSounds[tireIndex]['obstacleHit'].play()
 
-            c0 in self.tireCollideIds
-
     def forceLocalToonToTire(self):
         toon = localAvatar
         if toon and self.localAvId in self.tireDict:
@@ -1233,4 +1055,3 @@ class DistributedIceGame(DistributedMinigame.DistributedMinigame,
             toon.reparentTo(tireNp)
             toon.setPosHpr(0, 0, 0, 0, 0, 0)
             toon.setY(1.0)
-            toon.setZ(-3)

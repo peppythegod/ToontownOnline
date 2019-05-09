@@ -17,40 +17,36 @@ class DistributedLawbotBossSuit(DistributedSuitBase.DistributedSuitBase):
 
     def __init__(self, cr):
         self.flyingEvidenceTrack = None
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuit_initialized = 1
-            DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
-            self.activeIntervals = {}
-            self.boss = None
-            self.fsm = ClassicFSM.ClassicFSM('DistributedLawbotBossSuit', [
-                State.State('Off', self.enterOff, self.exitOff,
-                            ['Walk', 'Battle', 'neutral']),
-                State.State('Walk', self.enterWalk, self.exitWalk,
-                            ['WaitForBattle', 'Battle']),
-                State.State('Battle', self.enterBattle, self.exitBattle, []),
-                State.State(
-                    'neutral', self.enterNeutral, self.exitNeutral,
-                    ['PreThrowProsecute', 'PreThrowAttack', 'Stunned']),
-                State.State('PreThrowProsecute', self.enterPreThrowProsecute,
-                            self.exitPreThrowProsecute,
-                            ['PostThrowProsecute', 'neutral', 'Stunned']),
-                State.State('PostThrowProsecute', self.enterPostThrowProsecute,
-                            self.exitPostThrowProsecute,
-                            ['neutral', 'Stunned']),
-                State.State('PreThrowAttack', self.enterPreThrowAttack,
-                            self.exitPreThrowAttack,
-                            ['PostThrowAttack', 'neutral', 'Stunned']),
-                State.State('PostThrowAttack', self.enterPostThrowAttack,
-                            self.exitPostThrowAttack, ['neutral', 'Stunned']),
-                State.State('Stunned', self.enterStunned, self.exitStunned,
-                            ['neutral']),
-                State.State('WaitForBattle', self.enterWaitForBattle,
-                            self.exitWaitForBattle, ['Battle'])
-            ], 'Off', 'Off')
-            self.fsm.enterInitialState()
+        self.DistributedSuit_initialized = 1
+        DistributedSuitBase.DistributedSuitBase.__init__(self, cr)
+        self.activeIntervals = {}
+        self.boss = None
+        self.fsm = ClassicFSM.ClassicFSM('DistributedLawbotBossSuit', [
+            State.State('Off', self.enterOff, self.exitOff,
+                        ['Walk', 'Battle', 'neutral']),
+            State.State('Walk', self.enterWalk, self.exitWalk,
+                        ['WaitForBattle', 'Battle']),
+            State.State('Battle', self.enterBattle, self.exitBattle, []),
+            State.State(
+                'neutral', self.enterNeutral, self.exitNeutral,
+                ['PreThrowProsecute', 'PreThrowAttack', 'Stunned']),
+            State.State('PreThrowProsecute', self.enterPreThrowProsecute,
+                        self.exitPreThrowProsecute,
+                        ['PostThrowProsecute', 'neutral', 'Stunned']),
+            State.State('PostThrowProsecute', self.enterPostThrowProsecute,
+                        self.exitPostThrowProsecute,
+                        ['neutral', 'Stunned']),
+            State.State('PreThrowAttack', self.enterPreThrowAttack,
+                        self.exitPreThrowAttack,
+                        ['PostThrowAttack', 'neutral', 'Stunned']),
+            State.State('PostThrowAttack', self.enterPostThrowAttack,
+                        self.exitPostThrowAttack, ['neutral', 'Stunned']),
+            State.State('Stunned', self.enterStunned, self.exitStunned,
+                        ['neutral']),
+            State.State('WaitForBattle', self.enterWaitForBattle,
+                        self.exitWaitForBattle, ['Battle'])
+        ], 'Off', 'Off')
+        self.fsm.enterInitialState()
 
     def generate(self):
         self.notify.debug('DLBS.generate:')
@@ -76,14 +72,10 @@ class DistributedLawbotBossSuit(DistributedSuitBase.DistributedSuitBase):
         self.boss = None
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedSuit_deleted = 1
-            self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
-            del self.fsm
-            DistributedSuitBase.DistributedSuitBase.delete(self)
+        self.DistributedSuit_deleted = 1
+        self.notify.debug('DistributedSuit %d: deleting' % self.getDoId())
+        del self.fsm
+        DistributedSuitBase.DistributedSuitBase.delete(self)
 
     def d_requestBattle(self, pos, hpr):
         self.cr.playGame.getPlace().setState('WaitForBattle')

@@ -98,8 +98,7 @@ class DistributedMintRoom(DistributedLevel.DistributedLevel,
 
     def setDefeated(self):
         self.notify.info('setDefeated')
-        DistributedMint = DistributedMint
-        import toontown.coghq
+        from toontown.coghq import DistributedMint
         messenger.send(DistributedMint.DistributedMint.WinEvent)
 
     def initVisibility(self, *args, **kw):

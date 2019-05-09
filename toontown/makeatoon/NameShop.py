@@ -831,7 +831,7 @@ class NameShop(StateData.StateData):
             self._NameShop__typedAName()
             return None
 
-        if (not (self.avExists) or self.avExists) and self.avId == 'deleteMe':
+        if not self.avExists or self.avExists and self.avId == 0: #'deleteMe':
             self.serverCreateAvatar(skipTutorial)
         elif self.names[0] == '':
             self.rejectName(TTLocalizer.EmptyNameError)
@@ -1276,7 +1276,7 @@ class NameShop(StateData.StateData):
             self.requestingSkipTutorial = True
         else:
             self.requestingSkipTutorial = False
-        if (not (self.avExists) or self.avExists) and self.avId == 'deleteMe':
+        if (not (self.avExists) or self.avExists) and self.avId == 0:#'deleteMe':
             messenger.send('nameShopCreateAvatar', [style, '', self.index])
         else:
             self.checkNameTyped()
@@ -1343,7 +1343,7 @@ class NameShop(StateData.StateData):
         base.cr.skipTutorialRequest = self.requestingSkipTutorial
 
     def _NameShop__isFirstTime(self):
-        if not (self.makeAToon.nameList) or self.makeAToon.warp:
+        if (not (self.makeAToon.nameList) or self.makeAToon.warp) and 0: #!
             self._NameShop__createAvatar()
         else:
             self.promptTutorial()

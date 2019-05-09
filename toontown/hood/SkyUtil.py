@@ -20,7 +20,7 @@ def startCloudSky(hood,
                   parent=camera,
                   effects=CompassEffect.PRot | CompassEffect.PZ):
     hood.sky.reparentTo(parent)
-    hood.sky.setDepthTest(0)
+    #hood.sky.setDepthTest(0) #! Depth test makes sky show through objects
     hood.sky.setDepthWrite(0)
     hood.sky.setBin('background', 100)
     hood.sky.find('**/Sky').reparentTo(hood.sky, -1)

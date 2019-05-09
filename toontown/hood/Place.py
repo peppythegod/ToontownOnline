@@ -122,7 +122,7 @@ class Place(StateData.StateData, FriendsListManager.FriendsListManager):
 
     def removeSetZoneCompleteCallback(self, token):
         if token is not None:
-            if token in self._setZoneCompleteLocalCallbacks:
+            if any(token==x[1] for x in self._setZoneCompleteLocalCallbacks._callbacks):
                 self._setZoneCompleteLocalCallbacks.remove(token)
 
             qzsd = self._getQZState()
@@ -621,6 +621,7 @@ class Place(StateData.StateData, FriendsListManager.FriendsListManager):
 
     def enterDoorIn(self, requestStatus):
         NametagGlobals.setMasterArrowsOn(0)
+        print requestStatus['doorDoId']
         door = base.cr.doId2do.get(requestStatus['doorDoId'])
         door.readyToExit()
         base.localAvatar.obscureMoveFurnitureButton(1)

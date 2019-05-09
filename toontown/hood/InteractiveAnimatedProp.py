@@ -218,7 +218,7 @@ class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
         GenericAnimatedProp.GenericAnimatedProp.enter(self)
         if base.config.GetBool('props-buff-battles', True):
             self.notify.debug('props buff battles is true')
-            if base.cr.newsManager.isHolidayRunning(self.holidayId):
+            if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(self.holidayId):
                 self.notify.debug('holiday is running, doing idle interval')
                 self.node.stop()
                 self.node.pose('idle0', 0)
@@ -387,7 +387,7 @@ class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
 
     def gotoFaceoff(self):
         self.notify.debugStateCall(self)
-        if base.cr.newsManager.isHolidayRunning(self.holidayId):
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(self.holidayId):
             self.request('Faceoff')
         else:
             self.notify.debug(
@@ -396,7 +396,7 @@ class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
 
     def gotoBattleCheer(self):
         self.notify.debugStateCall(self)
-        if base.cr.newsManager.isHolidayRunning(self.holidayId):
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(self.holidayId):
             self.request('BattleCheer')
         else:
             self.notify.debug(
@@ -405,7 +405,7 @@ class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
 
     def gotoIdle(self):
         self.notify.debugStateCall(self)
-        if base.cr.newsManager.isHolidayRunning(self.holidayId):
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(self.holidayId):
             self.request('DoIdleAnim')
         else:
             self.notify.debug(
@@ -414,7 +414,7 @@ class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
 
     def gotoVictory(self):
         self.notify.debugStateCall(self)
-        if base.cr.newsManager.isHolidayRunning(self.holidayId):
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(self.holidayId):
             self.request('Victory')
         else:
             self.notify.debug(
@@ -424,7 +424,7 @@ class InteractiveAnimatedProp(GenericAnimatedProp.GenericAnimatedProp,
     def gotoSad(self, buildingDoId):
         self.notify.debugStateCall(self)
         self.buildingsMakingMeSad.add(buildingDoId)
-        if base.cr.newsManager.isHolidayRunning(self.holidayId):
+        if base.cr.newsManager and base.cr.newsManager.isHolidayRunning(self.holidayId):
             self.request('Sad')
         else:
             self.notify.debug(

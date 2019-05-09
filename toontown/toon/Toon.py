@@ -1381,8 +1381,6 @@ class Toon(Avatar.Avatar, ToonHead):
                 if node.getY(self) > 0.0:
                     nodePathList.append((node, offset))
 
-            node.getY(self) > 0.0
-
         if nodePathList:
             nodePathList.sort(lambda x, y: cmp(x[0].getDistance(self), y[0].
                                                getDistance(self)))
@@ -2317,7 +2315,7 @@ class Toon(Avatar.Avatar, ToonHead):
                 callback=None,
                 extraArgs=[]):
         if not self.isLocal():
-            if base.cr.avatarFriendsManager.checkIgnored(self.doId):
+            if base.cr.avatarFriendsManager and base.cr.avatarFriendsManager.checkIgnored(self.doId):
                 return None
 
         duration = 0
@@ -3063,8 +3061,7 @@ class Toon(Avatar.Avatar, ToonHead):
         if launcher and not launcher.getPhaseComplete(5):
             return None
 
-        Suit = Suit
-        import toontown.suit
+        from toontown.suit import Suit
         deptIndex = suitType
         suit = Suit.Suit()
         dna = SuitDNA.SuitDNA()
@@ -3209,10 +3206,8 @@ class Toon(Avatar.Avatar, ToonHead):
         self.suit.makeWaiter(self.suitGeom)
 
     def getPieModel(self):
-        ToontownBattleGlobals = ToontownBattleGlobals
-        import toontown.toonbase
-        BattleProps = BattleProps
-        import toontown.battle
+        from toontown.toonbase import ToontownBattleGlobals
+        from toontown.battle import BattleProps
         if self.pieModel != None and self._Toon__pieModelType != self.pieType:
             self.pieModel.detachNode()
             self.pieModel = None
@@ -3226,12 +3221,9 @@ class Toon(Avatar.Avatar, ToonHead):
         return self.pieModel
 
     def getPresentPieInterval(self, x, y, z, h, p, r):
-        ToontownBattleGlobals = ToontownBattleGlobals
-        import toontown.toonbase
-        BattleProps = BattleProps
-        import toontown.battle
-        MovieUtil = MovieUtil
-        import toontown.battle
+        from toontown.toonbase import ToontownBattleGlobals
+        from toontown.battle import BattleProps
+        from toontown.battle import MovieUtil
         pie = self.getPieModel()
         pieName = ToontownBattleGlobals.pieNames[self.pieType]
         pieType = BattleProps.globalPropPool.getPropType(pieName)
@@ -3263,10 +3255,8 @@ class Toon(Avatar.Avatar, ToonHead):
                            r,
                            power,
                            beginFlyIval=Sequence()):
-        ToontownBattleGlobals = ToontownBattleGlobals
-        import toontown.toonbase
-        BattleProps = BattleProps
-        import toontown.battle
+        from toontown.toonbase import ToontownBattleGlobals
+        from toontown.battle import BattleProps
         pie = self.getPieModel()
         flyPie = pie.copyTo(NodePath('a'))
         pieName = ToontownBattleGlobals.pieNames[self.pieType]
@@ -3313,10 +3303,8 @@ class Toon(Avatar.Avatar, ToonHead):
         return (toss, fly, flyPie)
 
     def getPieSplatInterval(self, x, y, z, pieCode):
-        ToontownBattleGlobals = ToontownBattleGlobals
-        import toontown.toonbase
-        BattleProps = BattleProps
-        import toontown.battle
+        from toontown.toonbase import ToontownBattleGlobals
+        from toontown.battle import BattleProps
         pieName = ToontownBattleGlobals.pieNames[self.pieType]
         splatName = 'splat-%s' % pieName
         if pieName == 'lawbook':

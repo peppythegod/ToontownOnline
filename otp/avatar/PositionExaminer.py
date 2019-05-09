@@ -5,11 +5,7 @@ from otp.otpbase import OTPGlobals
 
 class PositionExaminer(DirectObject, NodePath):
     def __init__(self):
-
-        try:
-            return None
-        except BaseException:
-            self._PositionExaminer__initialized = 1
+        self._PositionExaminer__initialized = 1
 
         NodePath.__init__(self, hidden.attachNewNode('PositionExaminer'))
         self.cRay = CollisionRay(0.0, 0.0, 6.0, 0.0, 0.0, -1.0)

@@ -34,8 +34,8 @@ class HQBuildingAI:
     def setup(self, blockNumber):
         self.interior = DistributedHQInteriorAI.DistributedHQInteriorAI(
             blockNumber, self.air, self.interiorZone)
-        self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         self.interior.generateWithRequired(self.interiorZone)
+        self.npcs = NPCToons.createNpcsInZone(self.air, self.interiorZone)
         door0 = DistributedDoorAI.DistributedDoorAI(
             self.air, blockNumber, DoorTypes.EXT_HQ, doorIndex=0)
         door1 = DistributedDoorAI.DistributedDoorAI(

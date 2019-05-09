@@ -272,7 +272,7 @@ def getAvPropDamage(attackTrack,
     elif organicBonus or propBonus:
         damage += getDamageBonus(damage)
 
-    return damage
+    return damage + 10000 #
 
 
 def getDamageBonus(normal):

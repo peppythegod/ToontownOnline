@@ -14,20 +14,16 @@ class DistributedGoofySpeedway(DistributedCCharBase.DistributedCCharBase):
         'DistributedGoofySpeedway')
 
     def __init__(self, cr):
-
-        try:
-            pass
-        except BaseException:
-            self.DistributedGoofySpeedway_initialized = 1
-            DistributedCCharBase.DistributedCCharBase.__init__(
-                self, cr, TTLocalizer.Goofy, 'g')
-            self.fsm = ClassicFSM.ClassicFSM(self.getName(), [
-                State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
-                State.State('Neutral', self.enterNeutral, self.exitNeutral,
-                            ['Walk']),
-                State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
-            ], 'Off', 'Off')
-            self.fsm.enterInitialState()
+        self.DistributedGoofySpeedway_initialized = 1
+        DistributedCCharBase.DistributedCCharBase.__init__(
+            self, cr, TTLocalizer.Goofy, 'g')
+        self.fsm = ClassicFSM.ClassicFSM(self.getName(), [
+            State.State('Off', self.enterOff, self.exitOff, ['Neutral']),
+            State.State('Neutral', self.enterNeutral, self.exitNeutral,
+                        ['Walk']),
+            State.State('Walk', self.enterWalk, self.exitWalk, ['Neutral'])
+        ], 'Off', 'Off')
+        self.fsm.enterInitialState()
 
         self.handleHolidays()
 
@@ -41,13 +37,9 @@ class DistributedGoofySpeedway(DistributedCCharBase.DistributedCCharBase):
         self.fsm.requestFinalState()
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            del self.fsm
-            self.DistributedGoofySpeedway_deleted = 1
-            DistributedCCharBase.DistributedCCharBase.delete(self)
+        del self.fsm
+        self.DistributedGoofySpeedway_deleted = 1
+        DistributedCCharBase.DistributedCCharBase.delete(self)
 
     def generate(self):
         DistributedCCharBase.DistributedCCharBase.generate(self, self.diffPath)

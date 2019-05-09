@@ -14,10 +14,8 @@ from toontown.coghq import BattleBlocker
 from toontown.toonbase import TTLocalizer
 import random
 
-
 class DistributedLaserField(BattleBlocker.BattleBlocker):
-    notify = DirectNotifyGlobal.directNotify.newCategory(
-        'DistributedLaserField')
+    notify = DirectNotifyGlobal.directNotify.newCategory('DistributedLaserField')
     laserFieldModels = ['phase_9/models/cogHQ/square_stomper']
 
     def __init__(self, cr):
@@ -25,13 +23,10 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         node = hidden.attachNewNode('DistributedNodePathEntity')
         if not hasattr(self, 'radius'):
             self.radius = 5
-
         if not hasattr(self, 'blockerX'):
             self.blockerX = 0.0
-
         if not hasattr(self, 'blockerY'):
             self.blockerY = 0.0
-
         self.blockerZ = -10000
         self.gridWireGN = None
         self.gridBeamGN = None
@@ -40,16 +35,16 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.gridSeed = 0
         self.gridScaleX = 2.0
         self.gridScaleY = 2.0
-        self.zFloat = 0.050000000000000003
+        self.zFloat = 0.05
         self.projector = Point3(0, 0, 25)
         self.tracePath = []
         self.gridData = [[0, 0]] * 2
         self.gridNumX = 2
         self.gridNumY = 2
-        self.tracePath.append((0.51000000000000001, 0.51000000000000001, 1))
-        self.tracePath.append((0.58999999999999997, 0.51000000000000001, 1))
-        self.tracePath.append((0.55000000000000004, 0.58999999999999997, 1))
-        self.tracePath.append((0.51000000000000001, 0.51000000000000001, 1))
+        self.tracePath.append((0.51, 0.51, 1))
+        self.tracePath.append((0.59, 0.51, 1))
+        self.tracePath.append((0.55, 0.59, 1))
+        self.tracePath.append((0.51, 0.51, 1))
         self.gridSymbols = []
         self.makeGridSymbols()
         self.isToonIn = 0
@@ -61,15 +56,11 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.gridGame = 'some game'
         self.gridGameText = ' '
         self.activeLF = 1
-        self.successSound = loader.loadSfx(
-            'phase_11/audio/sfx/LB_capacitor_discharge_3.mp3')
-        self.successTrack = Parallel(
-            SoundInterval(
-                self.successSound, node=self, volume=0.80000000000000004))
+        self.successSound = loader.loadSfx('phase_11/audio/sfx/LB_capacitor_discharge_3.mp3')
+        self.successTrack = Parallel(SoundInterval(self.successSound, node=self, volume=0.8))
         self.failSound = loader.loadSfx('phase_11/audio/sfx/LB_sparks_1.mp3')
-        self.failTrack = Parallel(
-            SoundInterval(
-                self.failSound, node=self, volume=0.80000000000000004))
+        self.failTrack = Parallel(SoundInterval(self.failSound, node=self, volume=0.8))
+        return
 
     def generateInit(self):
         self.notify.debug('generateInit')
@@ -86,8 +77,7 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.gridWireGN = GeomNode('grid wire')
         self.gridWireNode.attachNewNode(self.gridWireGN)
         self.gridWireNode.setRenderModeWireframe()
-        self.gridWireNode.setAttrib(
-            ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
+        self.gridWireNode.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
         self.gridWireNode.setTwoSided(True)
         self.gridWireNode.setBin('fixed', 1)
         self.gridWireNode.setDepthWrite(False)
@@ -95,8 +85,7 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.gridBeamGN = GeomNode('grid beam')
         self.gridBeamNode.attachNewNode(self.gridBeamGN)
         self.gridBeamNode.setTransparency(TransparencyAttrib.MAlpha)
-        self.gridBeamNode.setAttrib(
-            ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
+        self.gridBeamNode.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
         self.gridBeamNode.setTwoSided(True)
         self.gridBeamNode.setBin('fixed', 1)
         self.gridBeamNode.setDepthWrite(False)
@@ -105,8 +94,7 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.traceWireNode.attachNewNode(self.traceWireGN)
         self.traceWireNode.setRenderModeWireframe()
         self.traceWireNode.setTransparency(TransparencyAttrib.MAlpha)
-        self.traceWireNode.setAttrib(
-            ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
+        self.traceWireNode.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
         self.traceWireNode.setTwoSided(True)
         self.traceWireNode.setBin('fixed', 1)
         self.traceWireNode.setDepthWrite(False)
@@ -114,19 +102,13 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.traceBeamGN = GeomNode('trace Beam')
         self.traceBeamNode.attachNewNode(self.traceBeamGN)
         self.traceBeamNode.setTransparency(TransparencyAttrib.MAlpha)
-        self.traceBeamNode.setAttrib(
-            ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
+        self.traceBeamNode.setAttrib(ColorBlendAttrib.make(ColorBlendAttrib.MAdd))
         self.traceBeamNode.setTwoSided(True)
         self.traceBeamNode.setBin('fixed', 1)
         self.traceBeamNode.setDepthWrite(False)
         self.loadModel()
         self.detectName = 'laserField %s' % self.doId
-        taskMgr.doMethodLater(0.10000000000000001,
-                              self._DistributedLaserField__detect,
-                              self.detectName)
-
-    def initCollisionGeom(self):
-        pass
+        taskMgr.doMethodLater(0.1, self.__detect, self.detectName)
 
     def setGridGame(self, gameName):
         self.gridGame = gameName
@@ -142,7 +124,7 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         else:
             self.gridGameText = TTLocalizer.LaserGameDefault
 
-    def setActiveLF(self, active=1):
+    def setActiveLF(self, active = 1):
         if active:
             self.activeLF = 1
         else:
@@ -158,251 +140,194 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
 
     def makeGridSymbols(self):
         symbolBlank = [0, (1.0, 0.0, 0.0), ()]
-        symbolOne = [
-            None, (1.0, 0.0, 0.0),
-            ((0.45000000000000001, 0.80000000000000004),
-             (0.55000000000000004, 0.80000000000000004), (0.55000000000000004,
-                                                          0.20000000000000001),
-             (0.45000000000000001, 0.20000000000000001), (0.45000000000000001,
-                                                          0.80000000000000004))
-        ]
-        symbolTwo = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004),
-             (0.69999999999999996, 0.80000000000000004), (0.69999999999999996,
-                                                          0.45000000000000001),
-             (0.40000000000000002, 0.45000000000000001), (0.40000000000000002,
-                                                          0.29999999999999999),
-             (0.69999999999999996, 0.29999999999999999), (0.69999999999999996,
-                                                          0.20000000000000001),
-             (0.29999999999999999, 0.20000000000000001), (0.29999999999999999,
-                                                          0.55000000000000004),
-             (0.59999999999999998, 0.55000000000000004), (0.59999999999999998,
-                                                          0.69999999999999996),
-             (0.29999999999999999, 0.69999999999999996), (0.29999999999999999,
-                                                          0.80000000000000004))
-        ]
-        symbolThree = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004),
-             (0.69999999999999996, 0.80000000000000004), (0.69999999999999996,
-                                                          0.20000000000000001),
-             (0.29999999999999999, 0.20000000000000001), (0.29999999999999999,
-                                                          0.29999999999999999),
-             (0.59999999999999998, 0.29999999999999999), (0.59999999999999998,
-                                                          0.45000000000000001),
-             (0.40000000000000002, 0.45000000000000001), (0.40000000000000002,
-                                                          0.55000000000000004),
-             (0.59999999999999998, 0.55000000000000004), (0.59999999999999998,
-                                                          0.69999999999999996),
-             (0.29999999999999999, 0.69999999999999996), (0.29999999999999999,
-                                                          0.80000000000000004))
-        ]
-        symbolFour = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.40000000000000002, 0.59999999999999998), (0.59999999999999998,
-                                                          0.59999999999999998),
-             (0.59999999999999998, 0.80000000000000004), (0.69999999999999996,
-                                                          0.80000000000000004),
-             (0.69999999999999996, 0.20000000000000001), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.59999999999999998, 0.5), (0.29999999999999999,
-                                          0.5), (0.29999999999999999,
-                                                 0.80000000000000004))
-        ]
-        symbolFive = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.40000000000000002, 0.59999999999999998), (0.59999999999999998,
-                                                          0.59999999999999998),
-             (0.59999999999999998, 0.80000000000000004), (0.69999999999999996,
-                                                          0.80000000000000004),
-             (0.69999999999999996, 0.20000000000000001), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.59999999999999998, 0.5), (0.29999999999999999,
-                                          0.5), (0.29999999999999999,
-                                                 0.80000000000000004))
-        ]
-        symbolSix = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.40000000000000002, 0.59999999999999998), (0.59999999999999998,
-                                                          0.59999999999999998),
-             (0.59999999999999998, 0.80000000000000004), (0.69999999999999996,
-                                                          0.80000000000000004),
-             (0.69999999999999996, 0.20000000000000001), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.59999999999999998, 0.5), (0.29999999999999999,
-                                          0.5), (0.29999999999999999,
-                                                 0.80000000000000004))
-        ]
-        symbolSeven = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.40000000000000002, 0.59999999999999998), (0.59999999999999998,
-                                                          0.59999999999999998),
-             (0.59999999999999998, 0.80000000000000004), (0.69999999999999996,
-                                                          0.80000000000000004),
-             (0.69999999999999996, 0.20000000000000001), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.59999999999999998, 0.5), (0.29999999999999999,
-                                          0.5), (0.29999999999999999,
-                                                 0.80000000000000004))
-        ]
-        symbolEight = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.40000000000000002, 0.59999999999999998), (0.59999999999999998,
-                                                          0.59999999999999998),
-             (0.59999999999999998, 0.80000000000000004), (0.69999999999999996,
-                                                          0.80000000000000004),
-             (0.69999999999999996, 0.20000000000000001), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.59999999999999998, 0.5), (0.29999999999999999,
-                                          0.5), (0.29999999999999999,
-                                                 0.80000000000000004))
-        ]
-        symbolNine = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.40000000000000002, 0.59999999999999998), (0.59999999999999998,
-                                                          0.59999999999999998),
-             (0.59999999999999998, 0.80000000000000004), (0.69999999999999996,
-                                                          0.80000000000000004),
-             (0.69999999999999996, 0.20000000000000001), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.59999999999999998, 0.5), (0.29999999999999999,
-                                          0.5), (0.29999999999999999,
-                                                 0.80000000000000004))
-        ]
-        symbolSquare = [
-            None, (1.0, 0.0, 0.0),
-            ((0.10000000000000001, 0.90000000000000002),
-             (0.90000000000000002, 0.90000000000000002), (0.90000000000000002,
-                                                          0.10000000000000001),
-             (0.10000000000000001, 0.10000000000000001), (0.10000000000000001,
-                                                          0.90000000000000002))
-        ]
-        symbolTriangle = [
-            None, (0.0, 1.0, 0.0),
-            ((0.10000000000000001, 0.10000000000000001), (0.5,
-                                                          0.90000000000000002),
-             (0.90000000000000002, 0.10000000000000001), (0.10000000000000001,
-                                                          0.10000000000000001))
-        ]
-        symbolBlueSquare = [
-            None, (0.29999999999999999, 0.29999999999999999, 1.0),
-            ((0.10000000000000001, 0.90000000000000002),
-             (0.90000000000000002, 0.90000000000000002), (0.90000000000000002,
-                                                          0.10000000000000001),
-             (0.10000000000000001, 0.10000000000000001), (0.10000000000000001,
-                                                          0.90000000000000002))
-        ]
-        symbolHiddenBomb = [
-            self.sendFail, (1.0, 0.0, 0.0),
-            ((0.10000000000000001, 0.90000000000000002),
-             (0.90000000000000002, 0.90000000000000002), (0.90000000000000002,
-                                                          0.10000000000000001),
-             (0.10000000000000001, 0.10000000000000001), (0.10000000000000001,
-                                                          0.90000000000000002))
-        ]
-        symbolBomb = [
-            self.sendFail, (1.0, 0.0, 0.0),
-            ((0.80000000000000004,
-              1.0), (1.0, 0.80000000000000004), (0.80000000000000004,
-                                                 0.59999999999999998),
-             (0.80000000000000004, 0.40000000000000002), (0.59999999999999998,
-                                                          0.20000000000000001),
-             (0.40000000000000002, 0.20000000000000001), (0.20000000000000001,
-                                                          0.40000000000000002),
-             (0.20000000000000001, 0.59999999999999998), (0.40000000000000002,
-                                                          0.80000000000000004),
-             (0.59999999999999998, 0.80000000000000004), (0.80000000000000004,
-                                                          1.0))
-        ]
-        symbolSkull = [
-            self.sendFail, (1.0, 0.0, 0.0),
-            ((0.5, 0.90000000000000002), (0.69999999999999996,
-                                          0.80000000000000004),
-             (0.69999999999999996,
-              0.59999999999999998), (0.59999999999999998,
-                                     0.5), (0.59999999999999998,
-                                            0.40000000000000002),
-             (0.5, 0.40000000000000002), (0.5, 0.29999999999999999),
-             (0.69999999999999996, 0.40000000000000002), (0.80000000000000004,
-                                                          0.40000000000000002),
-             (0.80000000000000004, 0.29999999999999999), (0.69999999999999996,
-                                                          0.29999999999999999),
-             (0.59999999999999998, 0.25), (0.69999999999999996,
-                                           0.20000000000000001),
-             (0.80000000000000004, 0.20000000000000001), (0.80000000000000004,
-                                                          0.10000000000000001),
-             (0.69999999999999996, 0.10000000000000001), (0.5,
-                                                          0.20000000000000001),
-             (0.29999999999999999, 0.10000000000000001), (0.20000000000000001,
-                                                          0.10000000000000001),
-             (0.20000000000000001, 0.20000000000000001), (0.29999999999999999,
-                                                          0.20000000000000001),
-             (0.40000000000000002,
-              0.25), (0.29999999999999999,
-                      0.29999999999999999), (0.20000000000000001,
-                                             0.29999999999999999),
-             (0.20000000000000001, 0.40000000000000002), (0.29999999999999999,
-                                                          0.40000000000000002),
-             (0.5, 0.29999999999999999), (0.5, 0.40000000000000002),
-             (0.40000000000000002,
-              0.40000000000000002), (0.40000000000000002,
-                                     0.5), (0.29999999999999999,
-                                            0.59999999999999998),
-             (0.29999999999999999, 0.80000000000000004), (0.5,
-                                                          0.90000000000000002))
-        ]
-        symbolDot = [
-            None, (1.0, 0.0, 0.0),
-            ((0.40000000000000002, 0.59999999999999998),
-             (0.59999999999999998, 0.59999999999999998), (0.59999999999999998,
-                                                          0.40000000000000002),
-             (0.40000000000000002, 0.40000000000000002), (0.40000000000000002,
-                                                          0.59999999999999998))
-        ]
-        symbolRedX = [
-            None, (1.0, 0.0, 0.0),
-            ((0.29999999999999999, 0.80000000000000004), (0.5,
-                                                          0.59999999999999998),
-             (0.69999999999999996, 0.80000000000000004), (0.80000000000000004,
-                                                          0.69999999999999996),
-             (0.59999999999999998, 0.5), (0.80000000000000004,
-                                          0.29999999999999999),
-             (0.69999999999999996, 0.20000000000000001), (0.5,
-                                                          0.40000000000000002),
-             (0.29999999999999999, 0.20000000000000001), (0.20000000000000001,
-                                                          0.29999999999999999),
-             (0.40000000000000002,
-              0.5), (0.20000000000000001,
-                     0.69999999999999996), (0.29999999999999999,
-                                            0.80000000000000004))
-        ]
-        self.symbolSelect = [(1.0, 0.0, 0.0),
-                             ((0.050000000000000003, 0.94999999999999996),
-                              (0.94999999999999996,
-                               0.94999999999999996), (0.94999999999999996,
-                                                      0.050000000000000003),
-                              (0.050000000000000003,
-                               0.050000000000000003), (0.050000000000000003,
-                                                       0.94999999999999996))]
-        symbolBlueDot = [
-            None, (0.5, 0.5, 1.0),
-            ((0.5, 0.69999999999999996), (0.69999999999999996, 0.5),
-             (0.5, 0.29999999999999999), (0.29999999999999999,
-                                          0.5), (0.5, 0.69999999999999996))
-        ]
+        symbolOne = [None, (1.0, 0.0, 0.0), ((0.45, 0.8),
+          (0.55, 0.8),
+          (0.55, 0.2),
+          (0.45, 0.2),
+          (0.45, 0.8))]
+        symbolTwo = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.45),
+          (0.4, 0.45),
+          (0.4, 0.3),
+          (0.7, 0.3),
+          (0.7, 0.2),
+          (0.3, 0.2),
+          (0.3, 0.55),
+          (0.6, 0.55),
+          (0.6, 0.7),
+          (0.3, 0.7),
+          (0.3, 0.8))]
+        symbolThree = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.3, 0.2),
+          (0.3, 0.3),
+          (0.6, 0.3),
+          (0.6, 0.45),
+          (0.4, 0.45),
+          (0.4, 0.55),
+          (0.6, 0.55),
+          (0.6, 0.7),
+          (0.3, 0.7),
+          (0.3, 0.8))]
+        symbolFour = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.4, 0.8),
+          (0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.6, 0.2),
+          (0.6, 0.5),
+          (0.3, 0.5),
+          (0.3, 0.8))]
+        symbolFive = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.4, 0.8),
+          (0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.6, 0.2),
+          (0.6, 0.5),
+          (0.3, 0.5),
+          (0.3, 0.8))]
+        symbolSix = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.4, 0.8),
+          (0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.6, 0.2),
+          (0.6, 0.5),
+          (0.3, 0.5),
+          (0.3, 0.8))]
+        symbolSeven = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.4, 0.8),
+          (0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.6, 0.2),
+          (0.6, 0.5),
+          (0.3, 0.5),
+          (0.3, 0.8))]
+        symbolEight = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.4, 0.8),
+          (0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.6, 0.2),
+          (0.6, 0.5),
+          (0.3, 0.5),
+          (0.3, 0.8))]
+        symbolNine = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.4, 0.8),
+          (0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.8),
+          (0.7, 0.8),
+          (0.7, 0.2),
+          (0.6, 0.2),
+          (0.6, 0.5),
+          (0.3, 0.5),
+          (0.3, 0.8))]
+        symbolSquare = [None, (1.0, 0.0, 0.0), ((0.1, 0.9),
+          (0.9, 0.9),
+          (0.9, 0.1),
+          (0.1, 0.1),
+          (0.1, 0.9))]
+        symbolTriangle = [None, (0.0, 1.0, 0.0), ((0.1, 0.1),
+          (0.5, 0.9),
+          (0.9, 0.1),
+          (0.1, 0.1))]
+        symbolBlueSquare = [None, (0.3, 0.3, 1.0), ((0.1, 0.9),
+          (0.9, 0.9),
+          (0.9, 0.1),
+          (0.1, 0.1),
+          (0.1, 0.9))]
+        symbolHiddenBomb = [self.sendFail, (1.0, 0.0, 0.0), ((0.1, 0.9),
+          (0.9, 0.9),
+          (0.9, 0.1),
+          (0.1, 0.1),
+          (0.1, 0.9))]
+        symbolBomb = [self.sendFail, (1.0, 0.0, 0.0), ((0.8, 1.0),
+          (1.0, 0.8),
+          (0.8, 0.6),
+          (0.8, 0.4),
+          (0.6, 0.2),
+          (0.4, 0.2),
+          (0.2, 0.4),
+          (0.2, 0.6),
+          (0.4, 0.8),
+          (0.6, 0.8),
+          (0.8, 1.0))]
+        symbolSkull = [self.sendFail, (1.0, 0.0, 0.0), ((0.5, 0.9),
+          (0.7, 0.8),
+          (0.7, 0.6),
+          (0.6, 0.5),
+          (0.6, 0.4),
+          (0.5, 0.4),
+          (0.5, 0.3),
+          (0.7, 0.4),
+          (0.8, 0.4),
+          (0.8, 0.3),
+          (0.7, 0.3),
+          (0.6, 0.25),
+          (0.7, 0.2),
+          (0.8, 0.2),
+          (0.8, 0.1),
+          (0.7, 0.1),
+          (0.5, 0.2),
+          (0.3, 0.1),
+          (0.2, 0.1),
+          (0.2, 0.2),
+          (0.3, 0.2),
+          (0.4, 0.25),
+          (0.3, 0.3),
+          (0.2, 0.3),
+          (0.2, 0.4),
+          (0.3, 0.4),
+          (0.5, 0.3),
+          (0.5, 0.4),
+          (0.4, 0.4),
+          (0.4, 0.5),
+          (0.3, 0.6),
+          (0.3, 0.8),
+          (0.5, 0.9))]
+        symbolDot = [None, (1.0, 0.0, 0.0), ((0.4, 0.6),
+          (0.6, 0.6),
+          (0.6, 0.4),
+          (0.4, 0.4),
+          (0.4, 0.6))]
+        symbolRedX = [None, (1.0, 0.0, 0.0), ((0.3, 0.8),
+          (0.5, 0.6),
+          (0.7, 0.8),
+          (0.8, 0.7),
+          (0.6, 0.5),
+          (0.8, 0.3),
+          (0.7, 0.2),
+          (0.5, 0.4),
+          (0.3, 0.2),
+          (0.2, 0.3),
+          (0.4, 0.5),
+          (0.2, 0.7),
+          (0.3, 0.8))]
+        self.symbolSelect = [(1.0, 0.0, 0.0), ((0.05, 0.95),
+          (0.95, 0.95),
+          (0.95, 0.05),
+          (0.05, 0.05),
+          (0.05, 0.95))]
+        symbolBlueDot = [None, (0.5, 0.5, 1.0), ((0.5, 0.7),
+          (0.7, 0.5),
+          (0.5, 0.3),
+          (0.3, 0.5),
+          (0.5, 0.7))]
         self.gridSymbols = []
         self.gridSymbols.append(symbolBlank)
         self.gridSymbols.append(symbolOne)
@@ -422,52 +347,43 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.gridSymbols.append(symbolBlueSquare)
         self.gridSymbols.append(symbolRedX)
         self.gridSymbols.append(symbolBlueDot)
+        return None
 
     def sendFail(self):
         self.sendUpdate('trapFire', [])
 
-    def _DistributedLaserField__detect(self, task):
+    def __detect(self, task):
         distance = self.centerNode.getDistance(localAvatar)
         greaterDim = self.gridScaleX
         if self.gridScaleY > self.gridScaleX:
             greaterDim = self.gridScaleY
-
         self.detectCount += 1
         if self.detectCount > 5:
             self.detectCount = 0
-
         if distance < greaterDim * 0.75:
             if not self.isToonInRange:
                 self.doToonInRange()
-
-            if localAvatar.getPos(self)[0] > 0 and localAvatar.getPos(
-                    self)[0] < self.gridScaleX and localAvatar.getPos(
-                        self)[1] > 0 and localAvatar.getPos(
-                            self)[1] < self.gridScaleY:
-                self._DistributedLaserField__toonHit()
-            elif self.isToonIn:
-                self.toonX = -1
-                self.toonY = -1
+            if localAvatar.getPos(self)[0] > 0 and localAvatar.getPos(self)[0] < self.gridScaleX and localAvatar.getPos(self)[1] > 0 and localAvatar.getPos(self)[1] < self.gridScaleY:
+                self.__toonHit()
+            else:
+                if self.isToonIn:
+                    self.toonX = -1
+                    self.toonY = -1
+                    self.isToonIn = 0
+                    self.genGrid()
                 self.isToonIn = 0
-                self.genGrid()
-
-            self.isToonIn = 0
         elif self.isToonInRange:
             self.doToonOutOfRange()
-
-        taskMgr.doMethodLater(0.10000000000000001,
-                              self._DistributedLaserField__detect,
-                              self.detectName)
+        taskMgr.doMethodLater(0.1, self.__detect, self.detectName)
         return Task.done
 
     def doToonInRange(self):
         self.isToonInRange = 1
         if self.activeLF:
             camHeight = base.localAvatar.getClampedAvatarHeight()
-            heightScaleFactor = camHeight * 0.33333333329999998
+            heightScaleFactor = camHeight * 0.3333333333
             defLookAt = Point3(0.0, 1.5, camHeight)
-            cameraPoint = Point3(0.0, -20.0 * heightScaleFactor,
-                                 camHeight + 8.0)
+            cameraPoint = Point3(0.0, -20.0 * heightScaleFactor, camHeight + 8.0)
             base.localAvatar.setIdealCameraPos(cameraPoint)
             self.level.stage.showInfoText(self.gridGameText)
 
@@ -475,15 +391,16 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.isToonInRange = 0
         base.localAvatar.setCameraPositionByIndex(base.localAvatar.cameraIndex)
         self.cameraHold = None
+        return
 
-    def _DistributedLaserField__toonHit(self):
+    def __toonHit(self):
         posX = localAvatar.getPos(self)[0]
         posY = localAvatar.getPos(self)[1]
-        tileX = int(posX / self.gridScaleX / self.gridNumX)
-        tileY = int(posY / self.gridScaleY / self.gridNumY)
+        tileX = int(posX / (self.gridScaleX / self.gridNumX))
+        tileY = int(posY / (self.gridScaleY / self.gridNumY))
         oldX = self.toonX
         oldY = self.toonY
-        if self.toonX != tileX or self.toonY != tileY or not (self.isToonIn):
+        if self.toonX != tileX or self.toonY != tileY or not self.isToonIn:
             self.toonX = tileX
             self.toonY = tileY
             self.isToonIn = 1
@@ -491,32 +408,30 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
                 tileFunction = self.gridSymbols[self.gridData[tileX][tileY]][0]
                 if tileFunction:
                     tileFunction()
-
             self.sendHit(self.toonX, self.toonY, oldX, oldY)
             self.genGrid()
-
         self.isToonIn = 1
 
-    def _DistributedLaserField__testTile(self):
+    def __testTile(self):
         if self.toonX >= 0 and self.toonY >= 0 and self.toonX < self.gridNumX and self.toonY < self.gridNumY:
             if self.gridData[self.toonX][self.toonY] < len(self.gridSymbols):
-                tileFunction = self.gridSymbols[self.gridData[self.toonX][
-                    self.toonY]][0]
+                tileFunction = self.gridSymbols[self.gridData[self.toonX][self.toonY]][0]
                 if tileFunction:
                     tileFunction()
 
     def sendHit(self, newX, newY, oldX, oldY):
         if self.toonX >= 0:
-            self.sendUpdate('hit', [newX, newY, oldX, oldY])
+            self.sendUpdate('hit', [newX,
+             newY,
+             oldX,
+             oldY])
 
     def disable(self):
         self.notify.debug('disable')
         if self.failTrack.isPlaying():
             self.failTrack.finish()
-
         if self.successTrack.isPlaying():
             self.successTrack.finish()
-
         self.ignoreAll()
         taskMgr.remove(self.detectName)
         BattleBlocker.BattleBlocker.disable(self)
@@ -530,56 +445,42 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.rotateNode = self.attachNewNode('rotate')
         self.model = None
         self.centerNode = self.attachNewNode('center')
-        self.centerNode.setPos(self.gridScaleX * 0.5, self.gridScaleY * 0.5,
-                               0.0)
+        self.centerNode.setPos(self.gridScaleX * 0.5, self.gridScaleY * 0.5, 0.0)
         self.genGrid()
+        return
 
     def unloadModel(self):
         if self.model:
             self.model.removeNode()
             del self.model
             self.model = None
+        return
 
     def genTrace(self):
         wireRed = 1.0
         wireGreen = 0.0
         wireBlue = 0.0
         wireAlpha = 0.5
-        beamRed = 0.040000000000000001
+        beamRed = 0.04
         beamGreen = 0.0
         beamBlue = 0.0
-        beamAlpha = 0.10000000000000001
+        beamAlpha = 0.1
         self.gFormat = GeomVertexFormat.getV3cp()
-        self.traceWireVertexData = GeomVertexData('holds my vertices',
-                                                  self.gFormat, Geom.UHDynamic)
-        self.traceWireVertexWriter = GeomVertexWriter(self.traceWireVertexData,
-                                                      'vertex')
-        self.traceWireColorWriter = GeomVertexWriter(self.traceWireVertexData,
-                                                     'color')
-        self.traceBeamVertexData = GeomVertexData('holds my vertices',
-                                                  self.gFormat, Geom.UHDynamic)
-        self.traceBeamVertexWriter = GeomVertexWriter(self.traceBeamVertexData,
-                                                      'vertex')
-        self.traceBeamColorWriter = GeomVertexWriter(self.traceBeamVertexData,
-                                                     'color')
-        self.traceWireVertexWriter.addData3f(
-            self.projector[0], self.projector[1], self.projector[2])
-        self.traceWireColorWriter.addData4f(wireRed, wireGreen, wireBlue,
-                                            wireAlpha)
-        self.traceBeamVertexWriter.addData3f(
-            self.projector[0], self.projector[1], self.projector[2])
+        self.traceWireVertexData = GeomVertexData('holds my vertices', self.gFormat, Geom.UHDynamic)
+        self.traceWireVertexWriter = GeomVertexWriter(self.traceWireVertexData, 'vertex')
+        self.traceWireColorWriter = GeomVertexWriter(self.traceWireVertexData, 'color')
+        self.traceBeamVertexData = GeomVertexData('holds my vertices', self.gFormat, Geom.UHDynamic)
+        self.traceBeamVertexWriter = GeomVertexWriter(self.traceBeamVertexData, 'vertex')
+        self.traceBeamColorWriter = GeomVertexWriter(self.traceBeamVertexData, 'color')
+        self.traceWireVertexWriter.addData3f(self.projector[0], self.projector[1], self.projector[2])
+        self.traceWireColorWriter.addData4f(wireRed, wireGreen, wireBlue, wireAlpha)
+        self.traceBeamVertexWriter.addData3f(self.projector[0], self.projector[1], self.projector[2])
         self.traceBeamColorWriter.addData4f(0.0, 0.0, 0.0, 0.0)
         for vertex in self.tracePath:
-            self.traceWireVertexWriter.addData3f(vertex[0] * self.gridScaleX,
-                                                 vertex[1] * self.gridScaleY,
-                                                 self.zFloat)
-            self.traceWireColorWriter.addData4f(wireRed, wireGreen, wireBlue,
-                                                wireAlpha)
-            self.traceBeamVertexWriter.addData3f(vertex[0] * self.gridScaleX,
-                                                 vertex[1] * self.gridScaleY,
-                                                 self.zFloat)
-            self.traceBeamColorWriter.addData4f(beamRed, beamGreen, beamBlue,
-                                                beamAlpha)
+            self.traceWireVertexWriter.addData3f(vertex[0] * self.gridScaleX, vertex[1] * self.gridScaleY, self.zFloat)
+            self.traceWireColorWriter.addData4f(wireRed, wireGreen, wireBlue, wireAlpha)
+            self.traceBeamVertexWriter.addData3f(vertex[0] * self.gridScaleX, vertex[1] * self.gridScaleY, self.zFloat)
+            self.traceBeamColorWriter.addData4f(beamRed, beamGreen, beamBlue, beamAlpha)
 
         self.traceBeamTris = GeomTriangles(Geom.UHStatic)
         self.traceWireTris = GeomLinestrips(Geom.UHStatic)
@@ -587,11 +488,11 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         sizeTrace = len(self.tracePath)
         chainTrace = sizeTrace - 1
         previousTrace = 1
-        for countVertex in range(0, sizeTrace):
+        for countVertex in xrange(0, sizeTrace):
             self.traceWireTris.addVertex(countVertex + 1)
 
         self.traceWireTris.closePrimitive()
-        for countVertex in range(0, chainTrace):
+        for countVertex in xrange(0, chainTrace):
             self.traceBeamTris.addVertex(0)
             self.traceBeamTris.addVertex(countVertex + 1)
             self.traceBeamTris.addVertex(countVertex + 2)
@@ -611,52 +512,38 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         green = 0.25
         blue = 0.25
         alpha = 0.5
-        beamRed = 0.040000000000000001
-        beamGreen = 0.040000000000000001
-        beamBlue = 0.040000000000000001
-        beamAlpha = 0.10000000000000001
+        beamRed = 0.04
+        beamGreen = 0.04
+        beamBlue = 0.04
+        beamAlpha = 0.1
         self.gFormat = GeomVertexFormat.getV3cp()
-        self.gridVertexData = GeomVertexData('holds my vertices', self.gFormat,
-                                             Geom.UHDynamic)
+        self.gridVertexData = GeomVertexData('holds my vertices', self.gFormat, Geom.UHDynamic)
         self.gridVertexWriter = GeomVertexWriter(self.gridVertexData, 'vertex')
         self.gridColorWriter = GeomVertexWriter(self.gridVertexData, 'color')
-        self.beamVertexData = GeomVertexData('holds my vertices', self.gFormat,
-                                             Geom.UHDynamic)
+        self.beamVertexData = GeomVertexData('holds my vertices', self.gFormat, Geom.UHDynamic)
         self.beamVertexWriter = GeomVertexWriter(self.beamVertexData, 'vertex')
         self.beamColorWriter = GeomVertexWriter(self.beamVertexData, 'color')
-        self.gridVertexWriter.addData3f(self.projector[0], self.projector[1],
-                                        self.projector[2])
+        self.gridVertexWriter.addData3f(self.projector[0], self.projector[1], self.projector[2])
         self.gridColorWriter.addData4f(red, green, blue, 0.0)
-        self.beamVertexWriter.addData3f(self.projector[0], self.projector[1],
-                                        self.projector[2])
+        self.beamVertexWriter.addData3f(self.projector[0], self.projector[1], self.projector[2])
         self.beamColorWriter.addData4f(0.0, 0.0, 0.0, 0.0)
-        border = 0.40000000000000002
-        for column in range(0, self.gridNumX):
+        border = 0.4
+        for column in xrange(0, self.gridNumX):
             columnLeft = 0.0 + gridScaleX * column
             columnRight = columnLeft + gridScaleX
             rowBottom = 0
-            for row in range(0, self.gridNumY):
+            for row in xrange(0, self.gridNumY):
                 rowTop = rowBottom + gridScaleY
-                if self.gridData[column][row] and self.gridData[column][
-                        row] < len(self.gridSymbols):
+                if self.gridData[column][row] and self.gridData[column][row] < len(self.gridSymbols):
                     gridColor = self.gridSymbols[self.gridData[column][row]][1]
-                    gridSymbol = self.gridSymbols[self.gridData[column]
-                                                  [row]][2]
+                    gridSymbol = self.gridSymbols[self.gridData[column][row]][2]
                     sizeSymbol = len(gridSymbol)
-                    for iVertex in range(sizeSymbol):
+                    for iVertex in xrange(sizeSymbol):
                         vertex = gridSymbol[iVertex]
-                        self.gridVertexWriter.addData3f(
-                            columnLeft + vertex[0] * gridScaleX,
-                            rowBottom + vertex[1] * gridScaleY, self.zFloat)
-                        self.gridColorWriter.addData4f(
-                            gridColor[0] * red, gridColor[1] * green,
-                            gridColor[2] * blue, alpha)
-                        self.beamVertexWriter.addData3f(
-                            columnLeft + vertex[0] * gridScaleX,
-                            rowBottom + vertex[1] * gridScaleY, self.zFloat)
-                        self.beamColorWriter.addData4f(
-                            gridColor[0] * beamRed, gridColor[1] * beamGreen,
-                            gridColor[2] * beamBlue, beamAlpha)
+                        self.gridVertexWriter.addData3f(columnLeft + vertex[0] * gridScaleX, rowBottom + vertex[1] * gridScaleY, self.zFloat)
+                        self.gridColorWriter.addData4f(gridColor[0] * red, gridColor[1] * green, gridColor[2] * blue, alpha)
+                        self.beamVertexWriter.addData3f(columnLeft + vertex[0] * gridScaleX, rowBottom + vertex[1] * gridScaleY, self.zFloat)
+                        self.beamColorWriter.addData4f(gridColor[0] * beamRed, gridColor[1] * beamGreen, gridColor[2] * beamBlue, beamAlpha)
 
                 rowBottom = rowTop
 
@@ -664,54 +551,41 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
             gridSymbol = self.symbolSelect[1]
             gridColor = self.symbolSelect[0]
             sizeSymbol = len(gridSymbol)
-            for iVertex in range(sizeSymbol):
+            for iVertex in xrange(sizeSymbol):
                 vertex = gridSymbol[iVertex]
-                self.gridVertexWriter.addData3f(
-                    self.toonX * gridScaleX + vertex[0] * gridScaleX,
-                    self.toonY * gridScaleY + vertex[1] * gridScaleY,
-                    self.zFloat)
-                self.gridColorWriter.addData4f(gridColor[0] * red,
-                                               gridColor[1] * green,
-                                               gridColor[2] * blue, alpha)
-                self.beamVertexWriter.addData3f(
-                    self.toonX * gridScaleX + vertex[0] * gridScaleX,
-                    self.toonY * gridScaleY + vertex[1] * gridScaleY,
-                    self.zFloat)
-                self.beamColorWriter.addData4f(
-                    gridColor[0] * beamRed, gridColor[1] * beamGreen,
-                    gridColor[2] * beamBlue, beamAlpha)
+                self.gridVertexWriter.addData3f(self.toonX * gridScaleX + vertex[0] * gridScaleX, self.toonY * gridScaleY + vertex[1] * gridScaleY, self.zFloat)
+                self.gridColorWriter.addData4f(gridColor[0] * red, gridColor[1] * green, gridColor[2] * blue, alpha)
+                self.beamVertexWriter.addData3f(self.toonX * gridScaleX + vertex[0] * gridScaleX, self.toonY * gridScaleY + vertex[1] * gridScaleY, self.zFloat)
+                self.beamColorWriter.addData4f(gridColor[0] * beamRed, gridColor[1] * beamGreen, gridColor[2] * beamBlue, beamAlpha)
 
         self.gridTris = GeomLinestrips(Geom.UHDynamic)
         self.beamTris = GeomTriangles(Geom.UHDynamic)
         vertexCounter = 1
-        for column in range(0, self.gridNumX):
-            for row in range(0, self.gridNumY):
-                if self.gridData[column][row] and self.gridData[column][
-                        row] < len(self.gridSymbols):
-                    gridSymbol = self.gridSymbols[self.gridData[column]
-                                                  [row]][2]
+        for column in xrange(0, self.gridNumX):
+            for row in xrange(0, self.gridNumY):
+                if self.gridData[column][row] and self.gridData[column][row] < len(self.gridSymbols):
+                    gridSymbol = self.gridSymbols[self.gridData[column][row]][2]
                     sizeSymbol = len(gridSymbol)
-                    for iVertex in range(sizeSymbol):
+                    for iVertex in xrange(sizeSymbol):
                         self.gridTris.addVertex(vertexCounter + iVertex)
 
                     self.gridTris.closePrimitive()
-                    for iVertex in range(sizeSymbol - 1):
+                    for iVertex in xrange(sizeSymbol - 1):
                         self.beamTris.addVertex(0)
                         self.beamTris.addVertex(vertexCounter + iVertex + 0)
                         self.beamTris.addVertex(vertexCounter + iVertex + 1)
                         self.beamTris.closePrimitive()
 
                     vertexCounter += sizeSymbol
-                    continue
 
         if self.isToonIn:
             gridSymbol = self.symbolSelect[1]
             sizeSymbol = len(gridSymbol)
-            for iVertex in range(sizeSymbol):
+            for iVertex in xrange(sizeSymbol):
                 self.gridTris.addVertex(vertexCounter + iVertex)
 
             self.gridTris.closePrimitive()
-            for iVertex in range(sizeSymbol - 1):
+            for iVertex in xrange(sizeSymbol - 1):
                 self.beamTris.addVertex(0)
                 self.beamTris.addVertex(vertexCounter + iVertex + 0)
                 self.beamTris.addVertex(vertexCounter + iVertex + 1)
@@ -728,7 +602,7 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         self.gridNumX = gridNumX
         self.gridNumY = gridNumY
         self.gridData = []
-        for i in range(0, gridNumX):
+        for i in xrange(0, gridNumX):
             self.gridData.append([0] * gridNumY)
 
         self.genGrid()
@@ -738,43 +612,37 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
 
     def setGridScaleX(self, gridScale):
         self.gridScaleX = gridScale
-        self.centerNode.setPos(self.gridScaleX * 0.5, self.gridScaleY * 0.5,
-                               0.0)
+        self.centerNode.setPos(self.gridScaleX * 0.5, self.gridScaleY * 0.5, 0.0)
         self.blockerX = self.gridScaleX * 0.5
-        self.cSphereNodePath.setPos(self.blockerX, self.blockerY,
-                                    self.blockerZ)
+        self.cSphereNodePath.setPos(self.blockerX, self.blockerY, self.blockerZ)
         self.genGrid()
 
     def setGridScaleY(self, gridScale):
         self.gridScaleY = gridScale
-        self.centerNode.setPos(self.gridScaleX * 0.5, self.gridScaleY * 0.5,
-                               0.0)
+        self.centerNode.setPos(self.gridScaleX * 0.5, self.gridScaleY * 0.5, 0.0)
         self.blockerY = self.gridScaleY
-        self.cSphereNodePath.setPos(self.blockerX, self.blockerY,
-                                    self.blockerZ)
+        self.cSphereNodePath.setPos(self.blockerX, self.blockerY, self.blockerZ)
         self.genGrid()
 
     def setField(self, fieldData):
         if fieldData[0] != self.gridNumX or fieldData[1] != self.gridNumY:
             self.setGrid(fieldData[0], fieldData[1])
-
         fieldCounter = 2
-        for column in range(0, self.gridNumX):
-            for row in range(0, self.gridNumY):
+        for column in xrange(0, self.gridNumX):
+            for row in xrange(0, self.gridNumY):
                 if len(fieldData) > fieldCounter:
                     self.gridData[column][row] = fieldData[fieldCounter]
                     fieldCounter += 1
-                    continue
 
         self.genGrid()
-        self._DistributedLaserField__testTile()
+        self.__testTile()
 
     def getField(self):
         fieldData.append(self.game.gridNumX)
         fieldData.append(self.game.gridNumY)
         fieldData = []
-        for column in range(0, self.game.gridNumX):
-            for row in range(0, self.game.gridNumY):
+        for column in xrange(0, self.game.gridNumX):
+            for row in xrange(0, self.game.gridNumY):
                 fieldData.append(self.game.gridData[column][row])
 
         return fieldData
@@ -782,8 +650,8 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
     def setSeed(self, seed):
         self.gridSeed = seed
         random.seed(seed)
-        for column in range(0, self.gridNumX):
-            for row in range(0, self.gridNumY):
+        for column in xrange(0, self.gridNumX):
+            for row in xrange(0, self.gridNumY):
                 rint = random.randint(0, 2)
                 self.gridData[column][row] = rint
 
@@ -807,10 +675,8 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
         if self.activeLF:
             if self.gridWireGN:
                 self.gridWireGN.removeAllGeoms()
-
             if self.gridBeamGN:
                 self.gridBeamGN.removeAllGeoms()
-
             if self.gridWireGN and self.gridBeamGN:
                 self.createGrid()
 
@@ -819,7 +685,6 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
             suit = base.cr.doId2do.get(suitId)
             if suit:
                 suit.stash()
-                continue
 
     def showSuit(self, suitIdarray):
         for suitId in suitIdarray:
@@ -827,25 +692,21 @@ class DistributedLaserField(BattleBlocker.BattleBlocker):
             if suit:
                 suit.unstash()
                 suit.setVirtual()
-                continue
 
     def initCollisionGeom(self):
         print 'Laser Field initCollisionGeom'
         self.blockerX = self.gridScaleX * 0.5
         self.blockerY = self.gridScaleY
         self.cSphere = CollisionSphere(0, 0, 0, self.blockerX)
-        self.cSphereNode = CollisionNode(
-            'battleBlocker-%s-%s' % (self.level.getLevelId(), self.entId))
+        self.cSphereNode = CollisionNode('battleBlocker-%s-%s' % (self.level.getLevelId(), self.entId))
         self.cSphereNode.addSolid(self.cSphere)
         self.cSphereNodePath = self.attachNewNode(self.cSphereNode)
-        self.cSphereNodePath.setPos(self.blockerX, self.blockerY,
-                                    self.blockerZ)
+        self.cSphereNodePath.setPos(self.blockerX, self.blockerY, self.blockerZ)
         self.cSphereNode.setCollideMask(ToontownGlobals.WallBitmask)
         self.cSphere.setTangible(0)
         self.enterEvent = 'enter' + self.cSphereNode.getName()
-        self.accept(self.enterEvent,
-                    self._DistributedLaserField__handleToonEnter)
+        self.accept(self.enterEvent, self.__handleToonEnter)
 
-    def _DistributedLaserField__handleToonEnter(self, collEntry):
+    def __handleToonEnter(self, collEntry):
         self.notify.debug('__handleToonEnter, %s' % self.entId)
         self.sendFail()

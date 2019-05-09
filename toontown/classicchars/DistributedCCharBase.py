@@ -22,11 +22,7 @@ class DistributedCCharBase(DistributedChar.DistributedChar):
         'DistributedCCharBase')
 
     def __init__(self, cr, name, dnaName):
-
-        try:
-            return None
-        except BaseException:
-            self.DistributedCCharBase_initialized = 1
+        self.DistributedCCharBase_initialized = 1
 
         DistributedChar.DistributedChar.__init__(self, cr)
         dna = CharDNA.CharDNA()
@@ -94,14 +90,10 @@ class DistributedCCharBase(DistributedChar.DistributedChar):
         self.stopEarTask()
 
     def delete(self):
-
-        try:
-            pass
-        except BaseException:
-            self.setParent(NodePath('Temp'))
-            self.DistributedCCharBase_deleted = 1
-            self._DistributedCCharBase__deleteCollisions()
-            DistributedChar.DistributedChar.delete(self)
+        self.setParent(NodePath('Temp'))
+        self.DistributedCCharBase_deleted = 1
+        self._DistributedCCharBase__deleteCollisions()
+        DistributedChar.DistributedChar.delete(self)
 
     def generate(self, diffPath=None):
         DistributedChar.DistributedChar.generate(self)

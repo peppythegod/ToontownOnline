@@ -1,8 +1,11 @@
-from direct.interval.IntervalGlobal import *
-import MovieCamera
 from direct.directnotify import DirectNotifyGlobal
-from toontown.toonbase import TTLocalizer
+from direct.interval.IntervalGlobal import *
 from pandac.PandaModules import *
+
+import MovieCamera
+from toontown.toonbase import TTLocalizer
+
+
 notify = DirectNotifyGlobal.directNotify.newCategory('MovieSOS')
 
 
@@ -11,17 +14,14 @@ def doSOSs(calls):
         return (None, None)
 
     def callerFunc(toon, handle):
-        toon.setChatAbsolute(TTLocalizer.MovieSOSCallHelp % handle.getName(),
-                             CFSpeech | CFTimeout)
-        handle.d_battleSOS(base.localAvatar.doId)
+        toon.setChatAbsolute(TTLocalizer.MovieSOSCallHelp % handle.getName(), CFSpeech | CFTimeout)
+        handle.d_battleSOS(handle.doId)
 
     def calleeFunc(toon, handle):
-        toon.setChatAbsolute(TTLocalizer.MovieSOSCallHelp % handle.getName(),
-                             CFSpeech | CFTimeout)
+        toon.setChatAbsolute(TTLocalizer.MovieSOSCallHelp % handle.getName(), CFSpeech | CFTimeout)
 
     def observerFunc(toon):
-        toon.setChatAbsolute(TTLocalizer.MovieSOSObserverHelp,
-                             CFSpeech | CFTimeout)
+        toon.setChatAbsolute(TTLocalizer.MovieSOSObserverHelp, CFSpeech | CFTimeout)
 
     mtrack = Sequence()
     for c in calls:

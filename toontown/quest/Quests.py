@@ -3846,7 +3846,7 @@ def filterQuests(entireQuestPool, currentNpc, av):
     if notify.getDebug():
         notify.debug('filterQuests: entireQuestPool: %s' % entireQuestPool)
 
-    validQuestPool = _[1]([(questId, 1) for questId in entireQuestPool])
+    validQuestPool = dict([(questId, 1) for questId in entireQuestPool])
     if isLoopingFinalTier(av.getRewardTier()):
         history = map(lambda questDesc: questDesc[0], av.quests)
     else:
@@ -4780,7 +4780,6 @@ def getNextRewards(numChoices, tier, av):
                 notify.debug(
                     'getNextRewards: keeping quest for cog part: %s dept: %s' %
                     (cogPart, dept))
-        av.hasCogPart(cogPart, dept)
 
     for rewardId in rewardHistory:
         if rewardId in rewardTier:
@@ -4794,14 +4793,11 @@ def getNextRewards(numChoices, tier, av):
             if genericRewardId in rewardTier:
                 rewardTier.remove(genericRewardId)
 
-        genericRewardId in rewardTier
         if rewardId > 1000 and rewardId < 1699:
             index = rewardId % 100
             genericRewardId = 800 + index
             if genericRewardId in rewardTier:
                 rewardTier.remove(genericRewardId)
-
-        genericRewardId in rewardTier
 
     if numChoices == 0:
         if len(rewardTier) == 0:
@@ -5260,9 +5256,7 @@ OptionalRewardTrackDict = {
 
 
 def isRewardOptional(tier, rewardId):
-    if OptionalRewardTrackDict.has_key(tier):
-        pass
-    return rewardId in OptionalRewardTrackDict[tier]
+    return tier in OptionalRewardTrackDict and rewardId in OptionalRewardTrackDict[tier]
 
 
 def getItemName(itemId):
@@ -5274,9 +5268,7 @@ def getPluralItemName(itemId):
 
 
 def avatarHasTrolleyQuest(av):
-    if len(av.quests) == 1:
-        pass
-    return av.quests[0][0] == TROLLEY_QUEST_ID
+    return len(av.quests) == 1 and av.quests[0][0] == TROLLEY_QUEST_ID
 
 
 def avatarHasCompletedTrolleyQuest(av):
@@ -5284,9 +5276,7 @@ def avatarHasCompletedTrolleyQuest(av):
 
 
 def avatarHasFirstCogQuest(av):
-    if len(av.quests) == 1:
-        pass
-    return av.quests[0][0] == FIRST_COG_QUEST_ID
+    return len(av.quests) == 1 and av.quests[0][0] == FIRST_COG_QUEST_ID
 
 
 def avatarHasCompletedFirstCogQuest(av):
@@ -5294,9 +5284,7 @@ def avatarHasCompletedFirstCogQuest(av):
 
 
 def avatarHasFriendQuest(av):
-    if len(av.quests) == 1:
-        pass
-    return av.quests[0][0] == FRIEND_QUEST_ID
+    return len(av.quests) == 1 and av.quests[0][0] == FRIEND_QUEST_ID
 
 
 def avatarHasCompletedFriendQuest(av):
@@ -5304,13 +5292,13 @@ def avatarHasCompletedFriendQuest(av):
 
 
 def avatarHasPhoneQuest(av):
-    if len(av.quests) == 1:
-        pass
-    return av.quests[0][0] == PHONE_QUEST_ID
+    return len(av.quests) == 1 and av.quests[0][0] == PHONE_QUEST_ID
 
 
 def avatarHasCompletedPhoneQuest(av):
+    print av.quests
     return av.quests[0][4] > 0
+
 
 
 def avatarWorkingOnRequiredRewards(av):

@@ -150,7 +150,7 @@ class DistributedCCharBaseAI(DistributedAvatarAI.DistributedAvatarAI):
 
     def handleHolidays(self):
         self.CCChatter = 0
-        if hasattr(simbase.air, 'holidayManager'):
+        if hasattr(simbase.air, 'holidayManager') and simbase.air.holidayManager:
             if ToontownGlobals.CRASHED_LEADERBOARD in simbase.air.holidayManager.currentHolidays:
                 self.CCChatter = ToontownGlobals.CRASHED_LEADERBOARD
             elif ToontownGlobals.CIRCUIT_RACING_EVENT in simbase.air.holidayManager.currentHolidays:

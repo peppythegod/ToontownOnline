@@ -120,6 +120,7 @@ class MintInterior(BattlePlace.BattlePlace):
         del self.mintReadyWatcher
 
     def enterWalk(self, teleportIn=0):
+        print "enter walk"
         BattlePlace.BattlePlace.enterWalk(self, teleportIn)
         self.ignore('teleportQuery')
         base.localAvatar.setTeleportAvailable(0)

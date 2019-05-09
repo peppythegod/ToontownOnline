@@ -218,8 +218,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         self.notify.debug('suit.battleTrapProp = trap %s' % trap)
         if trap.getName() == 'traintrack':
             pass
-        1
-        trap.wrtReparentTo(suit)
+        else:
+            trap.wrtReparentTo(suit)
         distance = MovieUtil.SUIT_TRAP_DISTANCE
         if trapName == 'rake':
             distance = MovieUtil.SUIT_TRAP_RAKE_DISTANCE
@@ -330,16 +330,17 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 return (Point3(point[0]), VBase3(point[1], 0.0, 0.0))
             else:
                 self.notify.warning('getActorPosHpr() - suit not active')
-        elif actorList == []:
-            actorList = self.activeToons
-
-        if actorList.count(actor) != 0:
-            numToons = len(actorList) - 1
-            index = actorList.index(actor)
-            point = self.toonPoints[numToons][index]
-            return (Point3(point[0]), VBase3(point[1], 0.0, 0.0))
         else:
-            self.notify.warning('getActorPosHpr() - toon not active')
+            if actorList == []:
+                actorList = self.activeToons
+
+            if actorList.count(actor) != 0:
+                numToons = len(actorList) - 1
+                index = actorList.index(actor)
+                point = self.toonPoints[numToons][index]
+                return (Point3(point[0]), VBase3(point[1], 0.0, 0.0))
+            else:
+                self.notify.warning('getActorPosHpr() - toon not active')
 
     def setLevelDoId(self, levelDoId):
         pass
@@ -403,16 +404,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     suit.battleTrapProp = None
                     self.notify.debug('496 suit.battleTrapProp = None')
                     suit.battleTrapIsFresh = 0
-
-                suit.battleTrap = NO_TRAP
-                suit.battleTrapProp = None
-                self.notify.debug('496 suit.battleTrapProp = None')
-                suit.battleTrapIsFresh = 0
-
-                continue
-            self.notify.warning('setMembers() - no suit in repository: %d' % s)
-            self.suits.append(None)
-            suitGone = 1
+            else:
+                self.notify.warning('setMembers() - no suit in repository: %d' % s)
+                self.suits.append(None)
+                suitGone = 1
 
         numSuitsThatDied = 0
         for s in oldsuits:
@@ -457,7 +452,6 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 if oldLuredSuits.count(suit) == 0:
                     self.needAdjustTownBattle = 1
 
-            oldLuredSuits.count(suit) == 0
 
         if self.needAdjustTownBattle == 0:
             for s in oldLuredSuits:
@@ -486,14 +480,13 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     if self.fsm.getCurrentState().getName() != 'PlayMovie':
                         self.loadTrap(suit, trapid)
 
-            suit.battleTrapProp is None
 
         if len(oldSuitTraps) != len(self.suitTraps):
             self.needAdjustTownBattle = 1
         else:
             for i in range(len(oldSuitTraps)):
-                if (oldSuitTraps[i] == '9' or self.suitTraps[i] != '9' or
-                        oldSuitTraps[i] != '9') and self.suitTraps[i] == '9':
+                if oldSuitTraps[i] == '9' and self.suitTraps[i] != '9' or\
+                        oldSuitTraps[i] != '9' and self.suitTraps[i] == '9':
                     self.needAdjustTownBattle = 1
                     break
                     continue
@@ -533,8 +526,6 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     self.notify.debug('setMembers() - local toon left battle')
                     return []
 
-            self._DistributedBattleBase__removeToon(t) == 1
-
         for t in toonsJoining:
             if int(t) < len(self.toons):
                 toon = self.toons[int(t)]
@@ -542,10 +533,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                     self._DistributedBattleBase__makeToonJoin(
                         toon, toonsPending, ts)
 
-            self.joiningToons.count(toon) == 0
-            self.notify.warning(
-                'setMembers toonsJoining t=%s not in self.toons %s' %
-                (t, self.toons))
+            else:
+                self.notify.warning(
+                    'setMembers toonsJoining t=%s not in self.toons %s' %
+                    (t, self.toons))
 
         for t in toonsPending:
             if int(t) < len(self.toons):
@@ -553,10 +544,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
                 if toon is not None and self.pendingToons.count(toon) == 0:
                     self._DistributedBattleBase__makeToonPending(toon, ts)
 
-            self.pendingToons.count(toon) == 0
-            self.notify.warning(
-                'setMembers toonsPending t=%s not in self.toons %s' %
-                (t, self.toons))
+            else:
+                self.notify.warning(
+                    'setMembers toonsPending t=%s not in self.toons %s' %
+                    (t, self.toons))
 
         for t in toonsRunning:
             toon = self.toons[int(t)]
@@ -599,13 +590,14 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             if currStateName != 'HasLocalToon':
                 self.localToonFsm.request('HasLocalToon')
 
-        elif oldtoons.count(base.localAvatar):
-            self.notify.debug('setMembers() - local toon just ran')
-            if self.levelBattle:
-                self.unlockLevelViz()
+        else:
+            if oldtoons.count(base.localAvatar):
+                self.notify.debug('setMembers() - local toon just ran')
+                if self.levelBattle:
+                    self.unlockLevelViz()
 
-        if currStateName != 'NoLocalToon':
-            self.localToonFsm.request('NoLocalToon')
+            if currStateName != 'NoLocalToon':
+                self.localToonFsm.request('NoLocalToon')
 
         return oldtoons
 
@@ -1087,8 +1079,9 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
             if self.activeToons.count(toon) == 0:
                 self.activeToons.append(toon)
                 continue
-            self.notify.warning(
-                'makeAvsActive() - toon: %d is active!' % toon.doId)
+            else:
+                self.notify.warning(
+                    'makeAvsActive() - toon: %d is active!' % toon.doId)
 
         if len(self.activeToons) >= 1:
             for toon in self.activeToons:
@@ -1406,17 +1399,13 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         return self.toons.count(base.localAvatar) > 0
 
     def localToonPendingOrActive(self):
-        if not self.pendingToons.count(base.localAvatar) > 0:
-            pass
-        return self.activeToons.count(base.localAvatar) > 0
+        return self.pendingToons.count(base.localAvatar) > 0 or self.activeToons.count(base.localAvatar) > 0
 
     def localToonActive(self):
         return self.activeToons.count(base.localAvatar) > 0
 
     def localToonActiveOrRunning(self):
-        if not self.activeToons.count(base.localAvatar) > 0:
-            pass
-        return self.runningToons.count(base.localAvatar) > 0
+        return self.activeToons.count(base.localAvatar) > 0 or self.runningToons.count(base.localAvatar) > 0
 
     def localToonRunning(self):
         return self.runningToons.count(base.localAvatar) > 0
@@ -1636,8 +1625,8 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
     def visualize(self):
 
         try:
-            pass
-        except BaseException:
+            self.isVisualized
+        except:
             self.isVisualized = 0
 
         if self.isVisualized:
@@ -1672,6 +1661,10 @@ class DistributedBattleBase(DistributedNode.DistributedNode, BattleBase):
         del self.lockoutNodePath
 
     def enableCollision(self):
+        for toon in self.toons:
+            if toon.doId == base.localAvatar.doId:
+                return 
+                
         self.lockoutNodePath.reparentTo(self)
         if len(self.toons) < 4:
             self.accept(self.getCollisionName(),

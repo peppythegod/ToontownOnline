@@ -396,7 +396,7 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
                 rToon.hprInterval(1, VBase3(180, 0, 0)),
                 Parallel(
                     Sequence(
-                        rToon.posInterval1(.5, VBase3(109, -294, 0)),
+                        rToon.posInterval(1.5, VBase3(109, -294, 0)),
                         Parallel(Func(rToon.animFSM.request, 'jump')),
                         rToon.posInterval(
                             1.5, VBase3(93.935000000000002, -341.065, 2))),
@@ -845,8 +845,19 @@ class DistributedCashbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
 
     def exitBattleOne(self):
         DistributedBossCog.DistributedBossCog.exitBattleOne(self)
+        
+    def battleThreeObjectsReady(self):
+        return len(self.cranes) == len(ToontownGlobals.CashbotBossCranePosHprs) and len(self.safes) == len(ToontownGlobals.CashbotBossSafePosHprs)
 
     def enterPrepareBattleThree(self):
+        if not self.battleThreeObjectsReady():
+            self.accept('battleThreeObjectsReady', self.__doPrepareBattleThree)
+            return
+            
+        self.__doPrepareBattleThree()
+            
+    def __doPrepareBattleThree(self):
+        self.ignore('battleThreeObjectsReady')
         self.controlToons()
         NametagGlobals.setMasterArrowsOn(0)
         intervalName = 'PrepareBattleThreeMovie'

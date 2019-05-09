@@ -309,6 +309,8 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM,
         serviceLoc = self.serviceLocs[chairIndex]
 
         def foodAttach(self=self, diner=diner):
+            if self.serviceLocs[chairIndex].getNumChildren() < 1:
+                return
             foodModel = self.serviceLocs[chairIndex].getChild(0)
             (foodModel.reparentTo(diner.getRightHand()), )
             (foodModel.setHpr(Point3(0, -94, 0)), )
@@ -328,6 +330,8 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM,
             foodModel.setScale(newScale)
 
         def foodDetach(self=self, diner=diner):
+            if diner.getRightHand().getNumChildren() < 1:
+                return
             foodModel = diner.getRightHand().getChild(0)
             (foodModel.reparentTo(serviceLoc), )
             (foodModel.setPosHpr(0, 0, 0, 0, 0, 0), )
@@ -615,36 +619,34 @@ class DistributedBanquetTable(DistributedObject.DistributedObject, FSM.FSM,
         if self.grabTrack:
             self.grabTrack.finish()
             self.grabTrack = None
-
         nextState = self.getCurrentOrNextState()
         self.notify.debug('nextState=%s' % nextState)
         if nextState == 'Flat':
             place = base.cr.playGame.getPlace()
             self.notify.debug('%s' % place.fsm)
             if self.avId == localAvatar.doId:
-                self._DistributedBanquetTable__disableControlInterface()
-
-        elif self.toon and not self.toon.isDisabled():
-            self.toon.loop('neutral')
-            self.toon.startSmooth()
-
-        self.releaseTrack = self.makeToonReleaseInterval(self.toon)
-        self.stopPosHprBroadcast()
-        self.stopSmooth()
-        if self.avId == localAvatar.doId:
-            localAvatar.wrtReparentTo(render)
-            self._DistributedBanquetTable__disableControlInterface()
-            camera.reparentTo(base.localAvatar)
-            camera.setPos(base.localAvatar.cameraPositions[0][0])
-            camera.setHpr(0, 0, 0)
-            self.goToFinalBattle()
-            self.safeBossToFinalBattleMode()
+                self.__disableControlInterface()
         else:
-            toon = base.cr.doId2do.get(self.avId)
-            if toon:
-                toon.wrtReparentTo(render)
-
-        self.releaseTrack.start()
+            if self.toon and not self.toon.isDisabled():
+                self.toon.loop('neutral')
+                self.toon.startSmooth()
+            self.releaseTrack = self.makeToonReleaseInterval(self.toon)
+            self.stopPosHprBroadcast()
+            self.stopSmooth()
+            if self.avId == localAvatar.doId:
+                localAvatar.wrtReparentTo(render)
+                self.__disableControlInterface()
+                base.camera.reparentTo(base.localAvatar)
+                base.camera.setPos(base.localAvatar.cameraPositions[0][0])
+                base.camera.setHpr(0, 0, 0)
+                self.goToFinalBattle()
+                self.safeBossToFinalBattleMode()
+            else:
+                toon = base.cr.doId2do.get(self.avId)
+                if toon:
+                    toon.wrtReparentTo(render)
+            self.releaseTrack.start()
+        return
 
     def safeBossToFinalBattleMode(self):
         if self.boss:

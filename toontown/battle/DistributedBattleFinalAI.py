@@ -103,14 +103,15 @@ class DistributedBattleFinalAI(
             self.d_setMembers()
             self.d_setBattleExperience()
             self.b_setState('Reward')
-        elif self.resumeNeedUpdate == 1:
-            self.d_setMembers()
-            if len(self.resumeDeadSuits
-                   ) > 0 or self.resumeLastActiveSuitDied == 0 or len(
-                       self.resumeDeadToons) > 0:
-                self.needAdjust = 1
+        else:
+            if self.resumeNeedUpdate == 1:
+                self.d_setMembers()
+                if len(self.resumeDeadSuits
+                       ) > 0 or self.resumeLastActiveSuitDied == 0 or len(
+                           self.resumeDeadToons) > 0:
+                    self.needAdjust = 1
 
-        self.setState('WaitForJoin')
+            self.setState('WaitForJoin')
         self.resumeNeedUpdate = 0
         self.resumeDeadToons = []
         self.resumeDeadSuits = []

@@ -9,6 +9,7 @@ import ToonBase
 import ToontownGlobals
 from direct.gui import DirectGuiGlobals
 from pandac.PandaModules import *
+from pandac.libpandaexpressModules import *
 import random
 import sys
 import os
@@ -34,10 +35,6 @@ while not launcher.getGame2Done():
     time.sleep(pollingDelay)
 print 'ToontownStart: Game2 is finished.'
 print 'ToontownStart: Starting the game.'
-if launcher.isDummy():
-    http = HTTPClient()
-else:
-    http = launcher.http
 tempLoader = PandaLoader()
 backgroundNode = tempLoader.loadSync(
     Filename('phase_3/models/gui/loading-background'))
@@ -114,9 +111,17 @@ version.cleanup()
 del version
 base.loader = base.loader
 __builtin__.loader = base.loader
+
+#wp = WindowProperties()
+#wp.setSize(1920, 1080)
+#base.win.requestProperties(wp)
+#aspect2d.setScale(1.43, 0, 1.11)
+#base.cam.node().getLens().setFilmSize(800, 600)
+
 autoRun = ConfigVariableBool('toontown-auto-run', 1)
 if autoRun and launcher.isDummy():
     try:
+        globalClock
         run()
     except SystemExit:
         raise

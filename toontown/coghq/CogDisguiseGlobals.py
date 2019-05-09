@@ -206,8 +206,7 @@ def isPaidSuitComplete(av, parts, dept):
 
 
 def getTotalMerits(toon, index):
-    SuitBattleGlobals = SuitBattleGlobals
-    import toontown.battle
+    from toontown.battle import SuitBattleGlobals
     cogIndex = toon.cogTypes[index] + SuitDNA.suitsPerDept * index
     cogTypeStr = SuitDNA.suitHeadTypes[cogIndex]
     cogBaseLevel = SuitBattleGlobals.SuitAttributes[cogTypeStr]['level']

@@ -199,6 +199,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
         self.partyReplyInfoBases = []
         self.modulelist = ModuleListAI.ModuleList()
         self._dbCheckDoLater = None
+        self.gameAccess = OTPGlobals.AccessFull
 
     def generate(self):
         DistributedPlayerAI.DistributedPlayerAI.generate(self)
@@ -208,7 +209,6 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
         DistributedPlayerAI.DistributedPlayerAI.announceGenerate(self)
         DistributedSmoothNodeAI.DistributedSmoothNodeAI.announceGenerate(self)
         if self.isPlayerControlled():
-            self._doDbCheck()
             if self.WantOldGMNameBan:
                 self._checkOldGMName()
 
@@ -244,6 +244,21 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
                 self.b_setShoes(0, 0, 0)
 
         self.startPing()
+        
+    def setLocation(self, parentId, zoneId):
+        DistributedPlayerAI.DistributedPlayerAI.setLocation(self, parentId, zoneId)
+
+        from toontown.toon.DistributedNPCToonBaseAI import DistributedNPCToonBaseAI
+        if not isinstance(self, DistributedNPCToonBaseAI):
+            if 100 <= zoneId < ToontownGlobals.DynamicZonesBegin:
+                hood = ZoneUtil.getHoodId(zoneId)
+                self.b_setLastHood(hood)
+                self.b_setDefaultZone(hood)
+
+                hoodsVisited = list(self.getHoodsVisited())
+                if hood not in hoodsVisited:
+                    hoodsVisited.append(hood)
+                    self.b_setHoodsVisited(hoodsVisited)
 
     def _doDbCheck(self, task=None):
         self._dbCheckDoLater = None
@@ -717,6 +732,14 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
     def setDefaultZone(self, zone):
         self.defaultZone = zone
         self.notify.debug('setting default zone to %s' % zone)
+        
+    def d_setDefaultZone(self, zone):
+        self.sendUpdate('setDefaultZone', [zone])
+
+    def b_setDefaultZone(self, zone):
+        if zone != self.defaultZone:
+            self.setDefaultZone(zone)
+            self.d_setDefaultZone(zone)
 
     def getDefaultZone(self):
         return self.defaultZone
@@ -1337,6 +1360,14 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
 
     def setLastHood(self, hood):
         self.lastHood = hood
+        
+    def d_setLastHood(self, hood):
+        self.sendUpdate('setLastHood', [hood])
+
+    def b_setLastHood(self, hood):
+        if hood != self.lastHood:
+            self.setLastHood(hood)
+            self.d_setLastHood(hood)
 
     def getLastHood(self):
         return self.lastHood
@@ -4884,8 +4915,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
     def requestPing(self, avId):
         av = self.air.doId2do.get(avId)
         if av:
-            DistributedNPCToonBaseAI = DistributedNPCToonBaseAI
-            import toontown.toon.DistributedNPCToonBaseAI
+            from toontown.toon.DistributedNPCToonBaseAI import DistributedNPCToonBaseAI
             if isinstance(av, DistributedNPCToonBaseAI):
                 return None
 
@@ -4959,8 +4989,7 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
             del DistributedToonAI.pingedAvs[self.doId]
 
     def startPing(self):
-        DistributedNPCToonBaseAI = DistributedNPCToonBaseAI
-        import toontown.toon.DistributedNPCToonBaseAI
+        from toontown.toon.DistributedNPCToonBaseAI import DistributedNPCToonBaseAI
         if isinstance(self, DistributedNPCToonBaseAI):
             return None
 
@@ -4973,3 +5002,8 @@ class DistributedToonAI(DistributedPlayerAI.DistributedPlayerAI,
 
     def stopPing(self):
         taskMgr.remove('requestping-' + str(self.doId))
+        
+    def setForcedLocation(self, zoneId):
+        print "hooked location"
+        self.b_setLocation(self.parentId, zoneId)
+        print self.zoneId

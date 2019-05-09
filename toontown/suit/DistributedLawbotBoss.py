@@ -1949,7 +1949,7 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         return bossTrack
 
     def _DistributedLawbotBoss__makeWitnessToon(self):
-        dnaNetString = 't\x01b\x00\x01\x01\x00\x03\x00\x03\x01\x010\x013\x00\x013\x013'
+        dnaNetString = 't\x1b\x00\x01\x01\x00\x03\x00\x03\x01\x10\x13\x00\x13\x13'
         npc = Toon.Toon()
         npc.setDNAString(dnaNetString)
         npc.setName(TTLocalizer.WitnessToonName)
@@ -2116,10 +2116,10 @@ class DistributedLawbotBoss(DistributedBossCog.DistributedBossCog, FSM.FSM):
         self.numToonJurorsSeated = 0
         for key in self.chairs.keys():
             chair = self.chairs[key]
-            if (chair.state == 'ToonJuror'
-                    or chair.state is None) and chair.newState == 'ToonJuror':
+            if chair.state == 'ToonJuror' or chair.state == None and chair.newState == 'ToonJuror':
                 self.numToonJurorsSeated += 1
                 continue
+        self.numToonJurorsSeated = 8 #!
 
         self.notify.debug(
             'self.numToonJurorsSeated = %d' % self.numToonJurorsSeated)

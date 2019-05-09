@@ -464,8 +464,6 @@ class CogThief(DirectObject):
                         self.nearestFlockmate = cogIndex
                         self.distToNearestFlockmate = dist
 
-            dist != self.Infinity
-
         return self.numFlockmatesSeen
 
     def clearVisibleList(self):

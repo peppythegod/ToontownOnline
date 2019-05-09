@@ -33,7 +33,7 @@ class TTHoodDataAI(HoodDataAI.HoodDataAI):
         self.classicChar.start()
         self.addDistObj(self.classicChar)
         self.createButterflies(ButterflyGlobals.TTC)
-        if simbase.blinkTrolley:
+        if 0:#simbase.blinkTrolley:
             taskMgr.doMethodLater(0.5, self._deleteTrolley, 'deleteTrolley')
 
         messenger.send('TTHoodSpawned', [self])

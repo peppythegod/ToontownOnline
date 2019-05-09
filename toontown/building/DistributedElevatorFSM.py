@@ -100,8 +100,6 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
                     track.pause()
                     track = None
 
-            track.isPlaying()
-
         if self.bldgRequest:
             self.cr.relatedObjectMgr.abortRequest(self.bldgRequest)
             self.bldgRequest = None
@@ -125,8 +123,6 @@ class DistributedElevatorFSM(DistributedObject.DistributedObject, FSM):
                 if track.isPlaying():
                     track.pause()
                     track = None
-
-            track.isPlaying()
 
         self.ignoreAll()
         if self.isSetup:
