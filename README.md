@@ -15,6 +15,8 @@ path\to\panda\python\ppython.exe setup.py install
 
 ### AI/District Dependencies
 ***ATTENTION!*** If you already downloaded the Panda3D version for OTP server on the OTP repository skip this step.
+
+
 In order to run the AI *(and the server)* you need a special Panda3D version which can be obtained [here](https://www.dropbox.com/s/0i7puwbqz9b4wt9/Panda3D-1.10.0-x64.exe?dl=1) ***(Alternatively, you can build it yourself [here](https://github.com/Astron/panda3d))***
 
 ### Running the AI/District
