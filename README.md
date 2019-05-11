@@ -13,23 +13,30 @@ To install **setuptools** and **pytz** (in that order!) simply execute
 path\to\panda\python\ppython.exe setup.py install
 ```
 
-### AI/District Dependencies
+### UD/AI Dependencies
 ***ATTENTION!*** If you already downloaded the Panda3D version for OTP server on the OTP repository skip this step.
+In order to run the AI, UD *(and the server)* you need a special Panda3D version which can be obtained [here](https://www.dropbox.com/s/0i7puwbqz9b4wt9/Panda3D-1.10.0-x64.exe?dl=1) ***(Alternatively, you can build it yourself [here](https://github.com/Astron/panda3d))***
 
+### Running the UD
+Once you've obtained the correct Panda for the UD, if you wish, create a BAT file to automate the running process.
+```sh
+@echo off
+path\to\>>>>>>UD<<<<<<\panda\python\ppython main_ud.py
+pause
+```
+***Make sure you have the server up and running before running the UD!***
 
-In order to run the AI *(and the server)* you need a special Panda3D version which can be obtained [here](https://www.dropbox.com/s/0i7puwbqz9b4wt9/Panda3D-1.10.0-x64.exe?dl=1) ***(Alternatively, you can build it yourself [here](https://github.com/Astron/panda3d))***
-
-### Running the AI/District
+### Running the AI
 Once you've obtained the correct Panda for the AI, if you wish, create a BAT file to automate the running process.
 ```sh
 @echo off
 path\to\>>>>>>AI<<<<<<\panda\python\ppython main_ai.py
 pause
 ```
-***Make sure you have the server up and running before running the AI!***
+***Make sure you have the server up and running and also the uberdog before running the AI!***
 
 ### Running the game
-Once you have the server and the AI running, it's time to launch the game.
+Once you have the server, UD, and the AI running, it's time to launch the game.
 To do that, if you wish, create a BAT file to automate the running process.
 ```sh
 @echo off

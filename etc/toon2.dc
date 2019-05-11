@@ -4,6 +4,7 @@ from direct.distributed import DistributedSmoothNode/AI
 from direct.distributed import DistributedCartesianGrid/AI
 from direct.distributed import DistributedCamera/AI/OV
 
+from otp.distributed import DistributedDirectory/AI
 from otp.distributed import DistributedDistrict/AI/UD
 from otp.ai import TimeManager/AI
 from otp.distributed import Account/AI/UD
@@ -1905,4 +1906,8 @@ dclass DistributedTwoDGame : DistributedMinigame {
   setEnemyShot(uint32, uint8, uint8, uint32) broadcast;
   addVictoryScore(uint32, uint8) broadcast;
   setEveryoneDone() broadcast;
+};
+
+dclass DistributedDirectory : DistributedObject {
+  setParentingRules(string, string) broadcast ram;
 };

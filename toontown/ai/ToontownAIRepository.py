@@ -190,7 +190,6 @@ class ToontownAIRepository(ToontownInternalRepository):
     def handleConnected(self):
         self.districtId = self.allocateChannel()
 
-
         # register the AI on the state server...
         dg = PyDatagram()
         dg.addServerHeader(self.serverId, self.ourChannel, STATESERVER_ADD_SHARD)
@@ -203,22 +202,16 @@ class ToontownAIRepository(ToontownInternalRepository):
         # when we disconnect from the message director...
         dg = PyDatagram()
         dg.addServerHeader(self.serverId, self.ourChannel, STATESERVER_REMOVE_SHARD)
-        self.addPostRemove(dg)
-
-        self.udObj = DistributedObjectAI(self)
-        self.udObj.generateWithRequiredAndId(self.getGameDoId(), 0, 3)                 
+        self.addPostRemove(dg)               
                  
         self.distributedDistrict = ToontownDistrictAI(self)
         self.distributedDistrict.setName(self.districtName)
         self.distributedDistrict.generateWithRequiredAndId(self.districtId, self.getGameDoId(), 3)
-                                                           
-        #dg = PyDatagram()
-        #dg.addServerHeader(self.districtId, self.ourChannel, STATESERVER_OBJECT_SET_AI)
-        #dg.addChannel(self.ourChannel)
-        #self.send(dg)
         
-        #self.rootObj = DistributedObjectAI(self)
-        #self.rootObj.generateWithRequiredAndId(self.districtId, 0, 0)
+        datagram = PyDatagram()
+        datagram.addServerHeader(self.districtId, self.ourChannel, STATESERVER_OBJECT_SET_AI)
+        datagram.addChannel(self.ourChannel)
+        self.send(datagram)
         
         self.createZones()
 

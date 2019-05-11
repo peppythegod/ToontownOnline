@@ -9,14 +9,13 @@ class Game:
 
 __builtin__.game = Game()
 __builtin__.simbase = ShowBase()
-__builtin__.process = 'ai'
+__builtin__.process = 'ud'
 __builtin__.isClient = lambda: False
 
-from toontown.ai.ToontownAIRepository import ToontownAIRepository
+from toontown.uberdog.ToontownUDRepository import ToontownUDRepository
 
-simbase.air = ToontownAIRepository(config.GetInt('air-base-channel', 401000000),
-                                   config.GetInt('air-stateserver', 1001),
-                                   config.GetString('district-name', 'Genesis'))
+simbase.air = ToontownUDRepository(config.GetInt('air-base-channel', 400000000),
+                                   config.GetInt('air-stateserver', 1001))
                                    
 host = config.GetString('air-connect', '127.0.0.1')
 port = 7100
