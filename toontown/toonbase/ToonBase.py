@@ -185,10 +185,49 @@ class ToonBase(OTPBase.OTPBase):
         self.oldX = max(1, base.win.getXSize())
         self.oldY = max(1, base.win.getYSize())
         self.aspectRatio = float(self.oldX) / self.oldY
+        
+    def aspectRatioWidescreenPatch(self, win):
+        # Hijacked from Showbase.py
+        if win == self.win:
+            properties = win.getProperties()
+            self.notify.info("Got window event: %s" % (repr(properties)))
+            if not properties.getOpen():
+                # If the user closes the main window, we should exit.
+                self.notify.info("User closed main window.")
+                if __dev__ and config.GetBool('auto-garbage-logging', 0):
+                    GarbageReport.b_checkForGarbageLeaks()
+                self.userExit()
+
+            if properties.getForeground() and not self.mainWinForeground:
+                self.mainWinForeground = 1
+            elif not properties.getForeground() and self.mainWinForeground:
+                self.mainWinForeground = 0
+                if __dev__ and config.GetBool('auto-garbage-logging', 0):
+                    GarbageReport.b_checkForGarbageLeaks()
+
+            if properties.getMinimized() and not self.mainWinMinimized:
+                # If the main window is minimized, throw an event to
+                # stop the music.
+                self.mainWinMinimized = 1
+                messenger.send('PandaPaused')
+            elif not properties.getMinimized() and self.mainWinMinimized:
+                # If the main window is restored, throw an event to
+                # restart the music.
+                self.mainWinMinimized = 0
+                messenger.send('PandaRestarted')
+                
+        # Patch
+        wp = WindowProperties()
+        wp.setSize(win.getXSize(), win.getYSize())
+        win.requestProperties(wp)
 
     def windowEvent(self, win):
-        #return
-        OTPBase.OTPBase.windowEvent(self, win)
+        #OTPBase.OTPBase.windowEvent(self, win)
+        
+        # This whole method originally works fullscreen, but doesn't scale windowed in widescreen
+        # As a solution comes this patch
+        self.aspectRatioWidescreenPatch(win)
+        
         if not config.GetInt('keep-aspect-ratio', 0):
             return None
 

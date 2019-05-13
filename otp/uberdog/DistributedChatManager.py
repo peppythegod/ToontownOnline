@@ -17,6 +17,10 @@ class DistributedChatManager(DistributedObjectGlobal):
 
     def online(self):
         pass
+        
+    def sendChatString(self, message):
+        print self.doId
+        self.sendUpdate('chatString', [message])
 
     def adminChat(self, aboutId, message):
         self.notify.warning('Admin Chat(%s): %s' % (aboutId, message))

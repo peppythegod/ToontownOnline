@@ -4,6 +4,9 @@ from direct.distributed.DistributedObjectUD import DistributedObjectUD
 
 class DistributedAvatarUD(DistributedObjectUD):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedAvatarUD")
+    
+    def __init__(self, air):
+        DistributedObjectUD.__init__
 
     def setName(self, todo0):
         pass

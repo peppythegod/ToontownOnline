@@ -838,7 +838,8 @@ class TalkAssistant(DirectObject.DirectObject):
             if self.isThought(message):
                 chatFlags = CFThought
 
-            base.localAvatar.sendUpdate('setTalk', [0, 0, '', message, [], 0])
+            #base.localAvatar.sendUpdate('setTalk', [0, 0, '', message, [], 0])
+            base.cr.chatManager.sendChatString(message)
             messenger.send('chatUpdate', [message, chatFlags])
         return error
 

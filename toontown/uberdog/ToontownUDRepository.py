@@ -6,6 +6,7 @@ from toontown.distributed.ToontownInternalRepository import ToontownInternalRepo
 from toontown.toonbase import ToontownGlobals
 
 from otp.distributed.DistributedDirectoryAI import DistributedDirectoryAI
+from otp.uberdog import DistributedChatManagerUD
 
 
 class ToontownUDRepository(ToontownInternalRepository):
@@ -17,7 +18,8 @@ class ToontownUDRepository(ToontownInternalRepository):
         self.notify.setInfo(True)
         
     def createGlobals(self):
-        pass
+        self.chatManager = DistributedChatManagerUD.DistributedChatManagerUD(self)
+        self.chatManager.generateWithRequiredAndId(OTP_DO_ID_CHAT_MANAGER, 0, 0)
 
     def handleConnected(self):
         rootObj = DistributedDirectoryAI(self)

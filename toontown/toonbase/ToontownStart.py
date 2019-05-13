@@ -112,12 +112,6 @@ del version
 base.loader = base.loader
 __builtin__.loader = base.loader
 
-#wp = WindowProperties()
-#wp.setSize(1920, 1080)
-#base.win.requestProperties(wp)
-#aspect2d.setScale(1.43, 0, 1.11)
-#base.cam.node().getLens().setFilmSize(800, 600)
-
 autoRun = ConfigVariableBool('toontown-auto-run', 1)
 if autoRun and launcher.isDummy():
     try:

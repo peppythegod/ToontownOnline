@@ -109,6 +109,10 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.inGameNewsMgr = None
         self.whitelistMgr = None
         self.toontownTimeManager = ToontownTimeManager.ToontownTimeManager()
+        self.chatManager = self.generateGlobalObject(
+            OtpDoGlobals.OTP_DO_ID_CHAT_MANAGER,
+            'DistributedChatManager')
+            
         """ #!
         self.avatarFriendsManager = self.generateGlobalObject(
             OtpDoGlobals.OTP_DO_ID_AVATAR_FRIENDS_MANAGER,
