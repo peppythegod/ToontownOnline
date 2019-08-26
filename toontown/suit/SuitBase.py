@@ -85,7 +85,7 @@ class SuitBase:
 
     def makeLegList(self):
         self.legList = SuitLegList(
-            self.path, self.sp.dnaStore, self.sp.suitWalkSpeed,
-            SuitTimings.fromSky, SuitTimings.toSky,
-            SuitTimings.fromSuitBuilding, SuitTimings.toSuitBuilding,
-            SuitTimings.toToonBuilding)
+            self.path, self.sp.dnaStore)#, self.sp.suitWalkSpeed
+            #SuitTimings.fromSky, SuitTimings.toSky,
+            #SuitTimings.fromSuitBuilding, SuitTimings.toSuitBuilding,
+            #SuitTimings.toToonBuilding)

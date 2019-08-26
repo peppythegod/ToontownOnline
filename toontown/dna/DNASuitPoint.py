@@ -1,10 +1,10 @@
 class DNASuitPoint:
     COMPONENT_CODE = 20
-    STREET_POINT = 0
-    FRONT_DOOR_POINT = 1
-    SIDE_DOOR_POINT = 2
-    COGHQ_IN_POINT = 3
-    COGHQ_OUT_POINT = 4
+    STREET_POINT = STREEPOINT = 0
+    FRONT_DOOR_POINT = FRONTDOORPOINT = 1
+    SIDE_DOOR_POINT = SIDEDOORPOINT = 2
+    COGHQ_IN_POINT = COGHQINPOINT = 3
+    COGHQ_OUT_POINT = COGHQOUTPOINT = 4
 
     def __init__(self, index, pointType, pos, landmarkBuildingIndex=-1):
         self.index = index

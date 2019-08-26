@@ -58,8 +58,8 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
         then = globalClock.getFrameTime() + elapsedTime
         elapsed = then - self.pathStartTime
         if not self.sp:
-            pass
-        1
+            return
+        
         return self.legList.isPointInRange(
             point, elapsed - self.sp.PATH_COLLISION_BUFFER,
             elapsed + self.sp.PATH_COLLISION_BUFFER)
@@ -237,6 +237,9 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
             self.pathStartTime + self.legList.getStartTime(self.currentLeg))
 
     def moveToNextLeg(self, task):
+        if self.isDeleted():
+            return Task.done
+            
         now = globalClock.getFrameTime()
         elapsed = now - self.pathStartTime
         nextLeg = self.legList.getLegIndexAtTime(elapsed, self.currentLeg)
@@ -299,9 +302,9 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
             self.openToonDoor()
         elif legType == SuitLeg.TToSuitBuilding:
             self.openSuitDoor()
-        elif legType == SuitLeg.TToCoghq:
+        elif legType == SuitLeg.TToCogHQ:
             self.openCogHQDoor(1)
-        elif legType == SuitLeg.TFromCoghq:
+        elif legType == SuitLeg.TFromCogHQ:
             self.openCogHQDoor(0)
 
     def resume(self):

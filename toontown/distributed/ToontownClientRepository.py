@@ -184,6 +184,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
 
         self.filterManager = None
         self.lastShader = None
+        self.currentAvSelection = None
 
     def congratulations(self, avatarChoice):
         self.acceptedScreen = loader.loadModel(

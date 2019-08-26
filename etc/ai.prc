@@ -30,6 +30,6 @@ notify-level-DistributedLevelBattleAI debug
 notify-level-DistributedBattleFactoryAI debug
 notify-level-DistributedBattleBaseAI debug
 notify-level-DistributedFactorySuitAI debug
-notify-level-DistributedSuitAI debug
-notify-level-DistributedSuitBaseAI debug
+#notify-level-DistributedSuitAI debug
+#notify-level-DistributedSuitBaseAI debug
 notify-level-BattleCalculatorAI debug

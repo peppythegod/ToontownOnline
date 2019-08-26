@@ -174,7 +174,12 @@ class SuitPlannerBase:
         self.setupDNA()
 
     def extractGroupName(self, groupFullName):
-        return string.split(groupFullName, ':', 1)[0]
+        try:
+            a = string.split(groupFullName, ':', 1)[0]
+        except:
+            a = groupFullName
+        
+        return a
 
     def initDNAInfo(self):
         numGraphs = self.dnaStore.discoverContinuity()
@@ -220,8 +225,6 @@ class SuitPlannerBase:
                                         propType]
                                     self.cellToGagBonusDict[
                                         zoneId] = trackBonus
-
-                    battleCellId == -1
 
         self.dnaStore.resetDNAGroups()
         self.dnaStore.resetDNAVisGroups()

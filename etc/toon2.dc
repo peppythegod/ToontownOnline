@@ -193,6 +193,8 @@ from toontown.coghq import DistributedFoodBelt/AI
 from toontown.coghq import DistributedBanquetTable/AI
 from toontown.battle import DistributedBattleDiners/AI
 from toontown.coghq import DistributedGolfSpot/AI
+from toontown.ai import NewMagicWordManager/AI
+from toontown.suit import DistributedSuitPlanner/AI
 
 
 keyword required;
@@ -1965,4 +1967,16 @@ dclass DistributedChatManager : DistributedObject {
   whisperSCEmoteTo(uint32, uint16) airecv clsend;
   whisperSCEmoteFrom(uint32, uint16);
   whisperIgnored(uint32);
+};
+
+dclass NewMagicWordManager : DistributedObject {
+  setMagicWord(string, uint32) airecv clsend;
+}
+
+dclass DistributedSuitPlanner : DistributedObject {
+  setZoneId(uint32) required broadcast ram;
+  suitListQuery() airecv clsend;
+  suitListResponse(uint8array);
+  buildingListQuery() airecv clsend;
+  buildingListResponse(uint8array);
 };

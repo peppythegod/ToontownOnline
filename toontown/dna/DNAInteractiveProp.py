@@ -12,7 +12,7 @@ class DNAInteractiveProp(DNAAnimProp.DNAAnimProp):
         self.cellId = id
 
     def getCellId(self):
-        return cellId
+        return self.cellId
 
     def makeFromDGI(self, dgi):
         DNAAnimProp.DNAAnimProp.makeFromDGI(self, dgi)

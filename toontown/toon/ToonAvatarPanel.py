@@ -28,6 +28,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
         AvatarPanelBase.AvatarPanelBase.__init__(
             self, avatar, FriendsListPanel=FriendsListPanel)
         self.notify.debug('Opening toon panel, avId=%d' % self.avId)
+        base.cr.currentAvSelection = self.avId
         self.playerId = playerId
         if not self.playerId:
             av = base.cr.doId2do.get(self.avId)
@@ -330,6 +331,7 @@ class ToonAvatarPanel(AvatarPanelBase.AvatarPanelBase):
             self.avatar.delete()
 
         base.setCellsAvailable([base.rightCells[0]], 1)
+        base.cr.currentAvSelection = None
         AvatarPanelBase.AvatarPanelBase.cleanup(self)
 
     def _ToonAvatarPanel__handleGoto(self):

@@ -136,6 +136,9 @@ class ToontownAIRepository(ToontownInternalRepository):
         
         return s
         
+    def loadDNAFileAI(self, a, b):
+        return loadDNAFileAI(a, b)
+        
     def genDNAFileName(self, zoneId):
         zoneId = ZoneUtil.getCanonicalZoneId(zoneId)
         hoodId = ZoneUtil.getCanonicalHoodId(zoneId)
@@ -186,6 +189,9 @@ class ToontownAIRepository(ToontownInternalRepository):
         
         bb_hq = BossbotHQDataAI.BossbotHQDataAI(self)
         bb_hq.startup()
+        
+    def sendSetZone(self, obj, zoneId):
+        obj.b_setLocation(obj.parentId, zoneId)
 
     def handleConnected(self):
         self.districtId = self.allocateChannel()

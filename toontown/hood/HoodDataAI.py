@@ -29,7 +29,7 @@ class HoodDataAI:
         #self.createFishingPonds()
         #self.createPartyPeople()
         self.createBuildingManagers()
-        #self.createSuitPlanners()
+        self.createSuitPlanners()
 
     def shutdown(self):
         self.setRedirect(None)
