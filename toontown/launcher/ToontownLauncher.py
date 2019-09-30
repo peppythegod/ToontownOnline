@@ -1,5 +1,5 @@
 from toontown.toonbase import TTLocalizer
-from pandac.libpandaexpressModules import *
+#from pandac.libpandaexpressModules import *
 from otp.otpbase import OTPLauncherGlobals
 from otp.launcher.LauncherBase import LauncherBase
 import os

@@ -337,7 +337,7 @@ def loadPhaseAnims(phaseStr='phase_3', loadFlag=1):
             base.localAvatar.style.torso == key
 
     for key in HeadDict.keys():
-        if string.find(key, 'd') >= 0:
+        if key.find('d') >= 0:
             for anim in animList:
                 if loadFlag:
                     continue
@@ -373,7 +373,7 @@ def compileGlobalAnimList():
                 TorsoAnimDict[key][anim[0]] = file
 
         for key in HeadDict.keys():
-            if string.find(key, 'd') >= 0:
+            if key.find('d') >= 0:
                 HeadAnimDict.setdefault(key, {})
                 for anim in animList:
                     file = phaseStr + HeadDict[key] + anim[1]

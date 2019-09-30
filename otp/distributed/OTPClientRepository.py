@@ -47,6 +47,7 @@ from otp.distributed.TelemetryLimiter import TelemetryLimiter
 from otp.ai.GarbageLeakServerEventAggregator import GarbageLeakServerEventAggregator
 from PotentialAvatar import PotentialAvatar
 from DistrictHandle import *
+from OrgMsgTypes import *
 
 
 class OTPClientRepository(ClientRepositoryBase):
@@ -65,6 +66,7 @@ class OTPClientRepository(ClientRepositoryBase):
         self.productName = config.GetString('product-name', 'DisneyOnline-US')
         self.createAvatarClass = None
         self.systemMessageSfx = None
+        self.userName = ''
         reg_deployment = ''
         if self.productName == 'DisneyOnline-US':
             if self.launcher:
@@ -532,11 +534,11 @@ class OTPClientRepository(ClientRepositoryBase):
         """
         #! Temporary login
         datagram = PyDatagram()
-        datagram.addUint16(CLIENT_LOGIN_2)
+        datagram.addUint16(16)
         datagram.addString(sys.argv[1]) # Play token
         datagram.addString(self.serverVersion)
         datagram.addUint32(0) #! Temporary hash val
-        datagram.addInt32(CLIENT_LOGIN_2_BLUE)
+        datagram.addInt32(3)
         self.send(datagram)
 
     enterLogin = report(
@@ -2432,7 +2434,7 @@ class OTPClientRepository(ClientRepositoryBase):
             self.gotObjectLocationMessage(di)
         elif msgType == CLIENT_SET_WISHNAME_RESP:
             self.gotWishnameResponse(di)
-        elif msgType == CLIENT_LOGIN_2_RESP:
+        elif msgType == 17:
             # We don't need all that fuzzy information anymore so just continue instead
             now = time.time()
             returnCode = di.getUint8()

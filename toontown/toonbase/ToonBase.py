@@ -56,14 +56,6 @@ class ToonBase(OTPBase.OTPBase):
                             'toon-chat-sounds %s' % toonChatSounds)
 
         OTPBase.OTPBase.__init__(self)
-        if not self.isMainWindowOpen():
-
-            try:
-                launcher.setPandaErrorCode(7)
-            except BaseException:
-                pass
-
-            sys.exit(1)
 
         self.disableShowbaseMouse()
         base.debugRunningMultiplier /= OTPGlobals.ToonSpeedFactor
@@ -273,11 +265,8 @@ class ToonBase(OTPBase.OTPBase):
     def disableShowbaseMouse(self):
         self.useDrive()
         self.disableMouse()
-        if self.mouseInterface:
-            self.mouseInterface.reparentTo(self.dataUnused)
-
-        if base.mouse2cam:
-            self.mouse2cam.reparentTo(self.dataUnused)
+        if self.mouseInterface: self.mouseInterface.detachNode()
+        if self.mouse2cam: self.mouse2cam.detachNode()
 
     def _ToonBase__walking(self, pressed):
         self.walking = pressed

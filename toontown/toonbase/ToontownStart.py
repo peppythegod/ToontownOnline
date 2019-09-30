@@ -9,7 +9,6 @@ import ToonBase
 import ToontownGlobals
 from direct.gui import DirectGuiGlobals
 from pandac.PandaModules import *
-from pandac.libpandaexpressModules import *
 import random
 import sys
 import os
@@ -35,7 +34,7 @@ while not launcher.getGame2Done():
     time.sleep(pollingDelay)
 print 'ToontownStart: Game2 is finished.'
 print 'ToontownStart: Starting the game.'
-tempLoader = PandaLoader()
+tempLoader = Loader()
 backgroundNode = tempLoader.loadSync(
     Filename('phase_3/models/gui/loading-background'))
 print 'ToontownStart: setting default font'

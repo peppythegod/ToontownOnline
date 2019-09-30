@@ -57,6 +57,7 @@ from toontown.makeatoon import TTPickANamePattern
 from toontown.parties import ToontownTimeManager
 from toontown.toon import Toon, DistributedToon
 from ToontownMsgTypes import *
+from otp.distributed.OrgMsgTypes import *
 import HoodMgr
 import PlayGame
 from toontown.toontowngui import ToontownLoadingBlocker

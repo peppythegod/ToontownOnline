@@ -127,11 +127,11 @@ class FireworkShowMixin:
                 if not self._FireworkShowMixin__checkStreetValidity():
                     return None
                 else:
-                    place.halloweenLights = base.cr.playGame.getPlace(
-                    ).loader.geom.findAllMatches('**/*light*').asList()
+                    place.halloweenLights = list(base.cr.playGame.getPlace(
+                    ).loader.geom.findAllMatches('**/*light*'))
                     place.halloweenLights.extend(
-                        base.cr.playGame.getPlace().loader.geom.findAllMatches(
-                            '**/*lamp*').asList())
+                        list(base.cr.playGame.getPlace().loader.geom.findAllMatches(
+                            '**/*lamp*')))
                     for light in place.halloweenLights:
                         light.setColorScaleOff(0)
 

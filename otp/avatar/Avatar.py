@@ -77,7 +77,7 @@ class Avatar(Actor, ShadowCaster):
     def delete(self):
 
         try:
-            pass
+            self.Avatar_deleted
         except BaseException:
             self.deleteNametag3d()
             Actor.cleanup(self)

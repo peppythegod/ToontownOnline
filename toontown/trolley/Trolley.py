@@ -168,16 +168,7 @@ class Trolley(StateData.StateData):
         pass
 
     def enterTrolleyLeaving(self):
-        camera.lerpPosHprXYZHPR(
-            0,
-            18.550000000000001,
-            3.75,
-            -180,
-            0,
-            0,
-            3,
-            blendType='easeInOut',
-            task='leavingCamera')
+        camera.posHprInterval(3, (0, 18.55, 3.75), (-180, 0, 0), blendType='easeInOut').start()
         self.acceptOnce('playMinigame', self.handlePlayMinigame)
 
     def handlePlayMinigame(self, zoneId, minigameId):

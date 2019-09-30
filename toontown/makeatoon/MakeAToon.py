@@ -321,7 +321,7 @@ class MakeAToon(StateData.StateData):
         smokeSeqNode = SequenceNode('smoke')
         smokeModel = loader.loadModel(
             'phase_3/models/makeatoon/tt_m_ara_mat_smoke')
-        smokeFrameList = smokeModel.findAllMatches('**/smoke_*').asList()
+        smokeFrameList = list(smokeModel.findAllMatches('**/smoke_*'))
         smokeFrameList.reverse()
         for smokeFrame in smokeFrameList:
             smokeSeqNode.addChild(smokeFrame.node())

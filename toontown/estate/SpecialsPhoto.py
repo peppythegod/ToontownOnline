@@ -28,7 +28,7 @@ class DirectRegion(NodePath):
         pass
 
     def hide(self):
-        NodePath.NodePath.hide(self)
+        NodePath.hide(self)
 
     def load(self):
         if not hasattr(self, 'cRender'):
