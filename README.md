@@ -4,7 +4,7 @@ The python source code for Disney's now discontinued MMO, Toontown Online. All c
 
 ### Game Dependencies
 
-- Download and install [Panda3D-1.7.2](https://www.panda3d.org/download/sdk-1-7-2/)
+- Download and install [Panda3D-1.8.0](https://www.panda3d.org/download/sdk-1-8-0/)
 - Download and install [setuptools](https://files.pythonhosted.org/packages/b8/04/be569e393006fa9a2c10ef72ea33133c2902baa115dd1d4279dae55c3b3b/setuptools-36.8.0.zip)
 - Download and install [pytz (TAR file)](https://pypi.org/project/pytz/#files)
 
