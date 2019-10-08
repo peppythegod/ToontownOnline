@@ -27,6 +27,9 @@ from toontown.ai import CogPageManagerAI
 from toontown.coghq import MintManagerAI
 from toontown.coghq import StageManagerAI
 from toontown.coghq import CountryClubManagerAI
+from toontown.ai.FishManagerAI import FishManagerAI
+from toontown.fishing.DistributedFishingPondAI import DistributedFishingPondAI
+from toontown.safezone.DistributedFishingSpotAI import DistributedFishingSpotAI
 
 
 class ToontownAIRepository(ToontownInternalRepository):
@@ -92,6 +95,8 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.lawMgr = StageManagerAI.StageManagerAI(self)
         self.countryClubMgr = CountryClubManagerAI.CountryClubManagerAI(self)
         
+        self.fishManager = FishManagerAI()
+
         self.magicWordManager = None
         self.newsManager = None
         self.friendManager = None
@@ -131,13 +136,13 @@ class ToontownAIRepository(ToontownInternalRepository):
         s = self.dnaStoreMap.get(zone)
         if not s:
             s = DNAStorage()
-            loadDNAFileAI(s, self.genDNAFileName(zone))
+            loadDNAFileAI(s, self.genDNAFileName(zone), CSDefault)
             self.dnaStoreMap[zone] = s
         
         return s
         
     def loadDNAFileAI(self, a, b):
-        return loadDNAFileAI(a, b)
+        return loadDNAFileAI(a, b, CSDefault)
         
     def genDNAFileName(self, zoneId):
         zoneId = ZoneUtil.getCanonicalZoneId(zoneId)
@@ -149,47 +154,45 @@ class ToontownAIRepository(ToontownInternalRepository):
         else:
             phase = ToontownGlobals.streetPhaseMap[hoodId]
 
-        return 'phase_%s/dna/%s_%s.pdna' % (phase, hood, zoneId)
+        return 'phase_%s/dna/%s_%s.dna' % (phase, hood, zoneId)
         
+    def createHood(self, hoodCtr, zoneId):
+        if zoneId != ToontownGlobals.BossbotHQ:
+            self.dnaStoreMap[zoneId] = DNAStorage()
+            self.dnaDataMap[zoneId] = self.loadDNAFileAI(self.dnaStoreMap[zoneId], self.genDNAFileName(zoneId))
+            if zoneId in ToontownGlobals.HoodHierarchy:
+                for streetId in ToontownGlobals.HoodHierarchy[zoneId]:
+                    self.dnaStoreMap[streetId] = DNAStorage()
+                    self.dnaDataMap[streetId] = self.loadDNAFileAI(self.dnaStoreMap[streetId], self.genDNAFileName(streetId))
+
+        hood = hoodCtr(self, zoneId)
+        hood.startup()
+        self.hoods.append(hood)
+
     def createSafeZones(self):
         NPCToons.generateZone2NpcDict()
-        tt_hood = TTHoodDataAI.TTHoodDataAI(self)
-        tt_hood.startup()
-        
-        dd_hood = DDHoodDataAI.DDHoodDataAI(self)
-        dd_hood.startup()
-        
-        oz_hood = OZHoodDataAI.OZHoodDataAI(self)
-        oz_hood.startup()
-        
-        gz_hood = GZHoodDataAI.GZHoodDataAI(self)
-        gz_hood.startup()
-        
-        dg_hood = DGHoodDataAI.DGHoodDataAI(self)
-        dg_hood.startup()
-        
-        mm_hood = MMHoodDataAI.MMHoodDataAI(self)
-        mm_hood.startup()
-        
-        br_hood = BRHoodDataAI.BRHoodDataAI(self)
-        br_hood.startup()
-        
-        dl_hood = DLHoodDataAI.DLHoodDataAI(self)
-        dl_hood.startup()
-        
+
+        self.createHood(TTHoodDataAI.TTHoodDataAI, ToontownGlobals.ToontownCentral)
+
+        self.createHood(DDHoodDataAI.DDHoodDataAI, ToontownGlobals.DonaldsDock)
+
+        self.createHood(DGHoodDataAI.DGHoodDataAI, ToontownGlobals.DaisyGardens)
+
+        self.createHood(MMHoodDataAI.MMHoodDataAI, ToontownGlobals.MinniesMelodyland)
+
+        self.createHood(BRHoodDataAI.BRHoodDataAI, ToontownGlobals.TheBrrrgh)
+
+        self.createHood(DLHoodDataAI.DLHoodDataAI, ToontownGlobals.DonaldsDreamland)
+
     def createCogHeadquarters(self):
-        sb_hq = CSHoodDataAI.CSHoodDataAI(self)
-        sb_hq.startup()
-        
-        cb_hq = CashbotHQDataAI.CashbotHQDataAI(self)
-        cb_hq.startup()
-        
-        lb_hq = LawbotHQDataAI.LawbotHQDataAI(self)
-        lb_hq.startup()
-        
-        bb_hq = BossbotHQDataAI.BossbotHQDataAI(self)
-        bb_hq.startup()
-        
+        self.createHood(CSHoodDataAI.CSHoodDataAI, ToontownGlobals.SellbotHQ)
+
+        self.createHood(CashbotHQDataAI.CashbotHQDataAI, ToontownGlobals.CashbotHQ)
+
+        self.createHood(LawbotHQDataAI.LawbotHQDataAI, ToontownGlobals.LawbotHQ)
+
+        self.createHood(BossbotHQDataAI.BossbotHQDataAI, ToontownGlobals.BossbotHQ)
+
     def sendSetZone(self, obj, zoneId):
         obj.b_setLocation(obj.parentId, zoneId)
 
@@ -268,3 +271,101 @@ class ToontownAIRepository(ToontownInternalRepository):
 
     def trueUniqueName(self, name):
         return self.uniqueName(name)
+
+    def findFishingPonds(self, dnaData, zoneId, area):
+        fishingPonds = []
+        fishingPondGroups = []
+        if isinstance(dnaData, DNAGroup) and 'fishing_pond' in dnaData.getName():
+            fishingPondGroups.append(dnaData)
+            fishingPond = DistributedFishingPondAI(simbase.air)
+            fishingPond.setArea(area)
+            fishingPond.generateWithRequired(zoneId)
+            fishingPonds.append(fishingPond)
+        else:
+            if isinstance(dnaData, DNAVisGroup):
+                zoneId = ZoneUtil.getTrueZoneId(int(dnaData.getName().split(':')[0]), zoneId)
+        for i in xrange(dnaData.getNumChildren()):
+            foundFishingPonds, foundFishingPondGroups = self.findFishingPonds(dnaData.at(i), zoneId, area)
+            fishingPonds.extend(foundFishingPonds)
+            fishingPondGroups.extend(foundFishingPondGroups)
+
+        return (fishingPonds, fishingPondGroups)
+
+    def findFishingSpots(self, dnaData, fishingPond):
+        fishingSpots = []
+        if isinstance(dnaData, DNAGroup) and dnaData.getName()[:13] == 'fishing_spot_':
+            zoneId = fishingPond.zoneId
+            doId = fishingPond.doId
+            fishingSpot = DistributedFishingSpotAI(simbase.air)
+            fishingSpot.setPondDoId(doId)
+            x, y, z = dnaData.getPos()
+            h, p, r = dnaData.getHpr()
+            fishingSpot.setPosHpr(x, y, z, h, p, r)
+            fishingSpot.generateWithRequired(zoneId)
+            fishingSpots.append(fishingSpot)
+        for i in xrange(dnaData.getNumChildren()):
+            foundFishingSpots = self.findFishingSpots(dnaData.at(i), fishingPond)
+            fishingSpots.extend(foundFishingSpots)
+
+        return fishingSpots
+
+    def findRacingPads(self, dnaData, zoneId, area, type = 'racing_pad', overrideDNAZone = False):
+        racingPads, racingPadGroups = [], []
+        if type in dnaData.getName():
+            if type == 'racing_pad':
+                nameSplit = dnaData.getName().split('_')
+                racePad = DistributedRacePadAI(self)
+                racePad.setArea(area)
+                racePad.index = int(nameSplit[2])
+                racePad.genre = nameSplit[3]
+                trackInfo = RaceGlobals.getNextRaceInfo(-1, racePad.genre, racePad.index)
+                racePad.setTrackInfo([trackInfo[0], trackInfo[1]])
+                racePad.laps = trackInfo[2]
+                racePad.generateWithRequired(zoneId)
+                racingPads.append(racePad)
+                racingPadGroups.append(dnaData)
+            elif type == 'viewing_pad':
+                viewPad = DistributedViewPadAI(self)
+                viewPad.setArea(area)
+                viewPad.generateWithRequired(zoneId)
+                racingPads.append(viewPad)
+                racingPadGroups.append(dnaData)
+        for i in xrange(dnaData.getNumChildren()):
+            foundRacingPads, foundRacingPadGroups = self.findRacingPads(dnaData.at(i), zoneId, area, type, overrideDNAZone)
+            racingPads.extend(foundRacingPads)
+            racingPadGroups.extend(foundRacingPadGroups)
+
+        return (racingPads, racingPadGroups)
+
+    def findStartingBlocks(self, dnaData, pad):
+        startingBlocks = []
+        for i in xrange(dnaData.getNumChildren()):
+            groupName = dnaData.getName()
+            blockName = dnaData.at(i).getName()
+            if 'starting_block' in blockName:
+                cls = DistributedStartingBlockAI if 'racing_pad' in groupName else DistributedViewingBlockAI
+                x, y, z = dnaData.at(i).getPos()
+                h, p, r = dnaData.at(i).getHpr()
+                padLocationId = int(dnaData.at(i).getName()[(-1)])
+                startingBlock = cls(self, pad, x, y, z, h, p, r, padLocationId)
+                startingBlock.generateWithRequired(pad.zoneId)
+                startingBlocks.append(startingBlock)
+
+        return startingBlocks
+
+    def findLeaderBoards(self, dnaData, zoneId):
+        leaderboards = []
+        if 'leaderBoard' in dnaData.getName():
+            x, y, z = dnaData.getPos()
+            h, p, r = dnaData.getHpr()
+            leaderboard = DistributedLeaderBoardAI(self, dnaData.getName(), x, y, z, h, p, r)
+            leaderboard.generateWithRequired(zoneId)
+            leaderboards.append(leaderboard)
+        for i in xrange(dnaData.getNumChildren()):
+            foundLeaderBoards = self.findLeaderBoards(dnaData.at(i), zoneId)
+            leaderboards.extend(foundLeaderBoards)
+
+        return leaderboards
+
+    def findPartyHats(self, dnaData, zoneId):
+        return []

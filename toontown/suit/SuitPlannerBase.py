@@ -7,6 +7,7 @@ from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import ToontownBattleGlobals
 from toontown.hood import HoodUtil
 from toontown.building import SuitBuildingGlobals
+from toontown.dna.DNAParser import DNAStorage, loadDNAFileAI, DNAInteractiveProp, DNASuitPoint
 
 
 class SuitPlannerBase:

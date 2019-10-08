@@ -101,25 +101,11 @@ class ToontownLoader(Loader.Loader):
         return ret
 
     def loadDNAFileAI(self, dnaStore, dnaFile):
-        ret = loadDNAFileAI(dnaStore, dnaFile)#, CSDefault)
+        ret = loadDNAFileAI(dnaStore, dnaFile, CSDefault)
         self.tick()
         return ret
 
     def loadDNAFile(self, dnaStore, dnaFile):
-        ret = loadDNAFile(dnaStore, dnaFile)#, CSDefault, 0)
+        ret = loadDNAFile(dnaStore, dnaFile, CSDefault, 0)
         self.tick()
         return ret
-
-    def pdnaModel(self, *args, **kw):
-        ret = Loader.Loader.loadModel(self, *args, **kw)
-        if ret:
-            gsg = base.win.getGsg()
-            if gsg:
-                ret.prepareScene(gsg)
-        return ret
-
-    def pdnaFont(self, *args, **kw):
-        return Loader.Loader.loadFont(self, *args, **kw)
-
-    def pdnaTexture(self, texturePath, alphaPath = None, okMissing = False):
-        return Loader.Loader.loadTexture(self, texturePath, alphaPath, okMissing=okMissing)

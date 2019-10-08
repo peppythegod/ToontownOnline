@@ -6,6 +6,7 @@ from toontown.safezone import ButterflyGlobals
 from toontown.safezone import DistributedButterflyAI
 from pandac.PandaModules import *
 from toontown.toon import NPCToons
+from toontown.dna.DNAParser import DNAData
 
 
 class HoodDataAI:
@@ -26,8 +27,8 @@ class HoodDataAI:
         self.air.hoods.append(self)
 
     def startup(self):
-        #self.createFishingPonds()
-        #self.createPartyPeople()
+        self.createFishingPonds()
+        self.createPartyPeople()
         self.createBuildingManagers()
         self.createSuitPlanners()
 

@@ -195,6 +195,10 @@ from toontown.battle import DistributedBattleDiners/AI
 from toontown.coghq import DistributedGolfSpot/AI
 from toontown.ai import NewMagicWordManager/AI
 from toontown.suit import DistributedSuitPlanner/AI
+from toontown.fishing import DistributedFishingPond/AI
+from toontown.fishing import DistributedFishingTarget/AI
+from toontown.fishing import DistributedPondBingoManager/AI
+from toontown.safezone import DistributedFishingSpot/AI
 
 
 keyword required;
@@ -1979,4 +1983,38 @@ dclass DistributedSuitPlanner : DistributedObject {
   suitListResponse(uint8array);
   buildingListQuery() airecv clsend;
   buildingListResponse(uint8array);
+};
+
+dclass DistributedFishingPond : DistributedObject {
+  hitTarget(uint32) airecv clsend;
+  setArea(uint32) required broadcast ram;
+};
+
+dclass DistributedFishingTarget : DistributedNode {
+  setPondDoId(uint32) required broadcast ram;
+  setState(uint8, int16/10, uint16/100, uint16/10, int16) required broadcast ram;
+};
+
+dclass DistributedPondBingoManager : DistributedObject {
+  setPondDoId(uint32) required broadcast ram;
+  updateGameState(uint32, uint8);
+  setCardState(uint16, uint8, uint16, uint32);
+  setState(string, int16);
+  cardUpdate(uint16, uint8, uint8, uint8) airecv clsend;
+  enableBingo();
+  handleBingoCall(uint16) airecv clsend;
+  setJackpot(uint16);
+};
+
+dclass DistributedFishingSpot : DistributedObject {
+  setPondDoId(uint32) required broadcast ram;
+  setPosHpr(int16/10, int16/10, int16/10, int16/10, int16/10, int16/10) required broadcast ram;
+  requestEnter() airecv clsend;
+  rejectEnter();
+  requestExit() airecv clsend;
+  setOccupied(uint32) broadcast ram;
+  doCast(uint8/255, int16/100) airecv clsend;
+  sellFish() airecv clsend;
+  sellFishComplete(uint8, uint16);
+  setMovie(uint8, uint8, uint16, uint16, uint16, uint8/100, int16/100) broadcast ram;
 };

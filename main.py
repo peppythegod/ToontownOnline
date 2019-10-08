@@ -10,8 +10,8 @@ __builtin__.Settings = GameSettings.GameSettings()
 __builtin__.isClient = lambda: True
 
 # Stuff that needs to be at hand
-from toontown.dna.DNAStorage import DNAStorage
-from toontown.dna.DNADoor import DNADoor
+from toontown.dna.DNAParser import DNAStorage
+from toontown.dna.DNAParser import DNADoor
 __builtin__.DNAStorage = DNAStorage
 __builtin__.DNADoor = DNADoor
 
