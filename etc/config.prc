@@ -1,3 +1,8 @@
+window-title Toontown
+
+icon-filename phase_3/models/gui/toontown.ico
+cursor-filename phase_3/models/gui/toonmono.cur
+
 default-model-extension .bam
 
 audio-library-name p3fmod_audio
