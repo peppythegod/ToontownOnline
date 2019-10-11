@@ -6,8 +6,9 @@ loadPrcFile("etc/config.prc")
 
 # Required stuff
 from otp.otpbase import GameSettings
+from toontown.distributed import PythonUtil
 __builtin__.Settings = GameSettings.GameSettings()
-__builtin__.isClient = lambda: True
+__builtin__.isClient = lambda: PythonUtil.isClient()
 
 # Stuff that needs to be at hand
 from toontown.dna.DNAParser import DNAStorage

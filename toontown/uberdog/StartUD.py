@@ -10,7 +10,7 @@ class Game:
 __builtin__.game = Game()
 __builtin__.simbase = ShowBase()
 __builtin__.process = 'ud'
-__builtin__.isClient = lambda: False
+__builtin__.isClient = lambda: PythonUtil.isClient()
 
 from toontown.uberdog.ToontownUDRepository import ToontownUDRepository
 

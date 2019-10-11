@@ -97,5 +97,10 @@ def describeException(backTrace = 4):
     description += "%s: %s" % (exceptionName, extraInfo)
     return description
 
+def isClient():
+    if hasattr(__builtin__, 'simbase') and not hasattr(__builtin__, 'base'):
+        return False
+    return True
+
 import __builtin__
 __builtin__.describeException = describeException
