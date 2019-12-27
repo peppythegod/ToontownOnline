@@ -6,6 +6,7 @@ from toontown.racing import DistributedStartingBlockAI
 from pandac.PandaModules import *
 from toontown.racing.RaceGlobals import *
 from toontown.classicchars import DistributedGoofySpeedwayAI
+from toontown.dna.DNAParser import DNAData
 if __debug__:
     import pdb
 
@@ -22,10 +23,10 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
 
     def startup(self):
         HoodDataAI.HoodDataAI.startup(self)
-        self.createStartingBlocks()
+        #self.createStartingBlocks()
         self.cycleDuration = 10
-        self.createLeaderBoards()
-        self._GSHoodDataAI__cycleLeaderBoards()
+        #self.createLeaderBoards()
+        #self._GSHoodDataAI__cycleLeaderBoards()
         self.classicChar = DistributedGoofySpeedwayAI.DistributedGoofySpeedwayAI(
             self.air)
         self.classicChar.generateWithRequired(self.zoneId)
@@ -50,9 +51,10 @@ class GSHoodDataAI(HoodDataAI.HoodDataAI):
         self.leaderBoards = []
         dnaStore = DNAStorage()
         dnaData = simbase.air.loadDNAFileAI(
-            dnaStore, simbase.air.lookupDNAFileName('goofy_speedway_sz.dna'))
+            dnaStore, simbase.air.genDNAFileName(self.zoneId))
         if isinstance(dnaData, DNAData):
-            self.leaderBoards = self.air.findLeaderBoards(dnaData, self.zoneId)
+            pass #TODO
+            #self.leaderBoards = self.air.findLeaderBoards(dnaData, self.zoneId)
 
         for distObj in self.leaderBoards:
             if distObj:

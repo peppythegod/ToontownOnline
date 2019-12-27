@@ -635,7 +635,6 @@ class OTPInternalRepository(ConnectionRepository):
         parentId,
         zoneId,
         ):
-        print "sendin set loc of doId %d to zone %d" %(do.doId, zoneId)
         dg = PyDatagram()
         dg.addServerHeader(do.doId, self.ourChannel,
                            STATESERVER_OBJECT_SET_LOCATION)

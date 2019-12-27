@@ -5,38 +5,84 @@ from direct.distributed.DistributedObjectAI import DistributedObjectAI
 class DistributedRaceAI(DistributedObjectAI):
     notify = DirectNotifyGlobal.directNotify.newCategory("DistributedRaceAI")
 
-    def setZoneId(self, todo0):
-        pass
+    def __init__(self, air):
+        DistributedObjectAI.__init__(self, air)
+        self.zoneId = 0
+        self.trackId = 0
+        self.raceType = 0
+        self.circuitLoop = []
+        self.avatars = []
+        self.startingPlaces = []
+        self.lapCount = 0
+        self.avatarKarts = []
 
-    def setTrackId(self, todo0):
-        pass
+    def setZoneId(self, zoneId):
+        self.zoneId = zoneId
+        
+    def getZoneId(self):
+        return self.zoneId
 
-    def setRaceType(self, todo0):
-        pass
+    def setTrackId(self, trackId):
+        self.trackId = trackId
+        
+    def getTrackId(self):
+        return self.trackId
 
-    def setCircuitLoop(self, todo0):
-        pass
+    def setRaceType(self, raceType):
+        self.raceType = raceType
+        
+    def getRaceType(self):
+        return self.raceType
 
-    def setAvatars(self, todo0):
-        pass
+    def setCircuitLoop(self, circuitLoop):
+        self.circuitLoop = circuitLoop
+        
+    def getCircuitLoop(self):
+        return self.circuitLoop
 
-    def setStartingPlaces(self, todo0):
-        pass
+    def setAvatars(self, avatars):
+        self.avatars = avatars
+        
+    def getAvatars(self):
+        return self.avatars
 
-    def setLapCount(self, todo0):
-        pass
+    def setStartingPlaces(self, startingPlaces):
+        self.startingPlaces = startingPlaces
+        
+    def getStartingPlaces(self):
+        return self.startingPlaces
+
+    def setLapCount(self, lapCount):
+        self.lapCount = lapCount
+        
+    def getLapCount(self):
+        return self.lapCount
 
     def waitingForJoin(self):
-        pass
-
-    def setEnteredRacers(self, todo0):
-        pass
-
+        self.beginBarrier('waitingForJoin', self.avatars, 60, self.b_prepForRace)
+        
     def prepForRace(self):
         pass
+        
+    def d_prepForRace(self):
+        self.sendUpdate('prepForRace', [])
+
+    def b_prepForRace(self, avatars):
+        self.prepForRace()
+        self.d_prepForRace()
+
+    def d_setEnteredRacers(self, racers):
+        self.sendUpdate('setEnteredRacers', [racers])
 
     def startTutorial(self):
-        pass
+        self.beginBarrier('readRules', self.avatars, 60, self.raceStart)
+
+    def d_startTutorial(self):
+        self.sendUpdate('startTutorial', [])
+
+    def b_startTutorial(self, avatars):
+        self.startTutorial()
+        self.d_startTutorial()
 
     def startRace(self, todo0):
         pass

@@ -134,17 +134,8 @@ class DistributedNPCTailor(DistributedNPCToonBase):
             self.setupAvatars(self.av)
             if self.isLocalToon:
                 camera.wrtReparentTo(render)
-                camera.lerpPosHpr(
-                    -5,
-                    9,
-                    self.getHeight() - 0.5,
-                    -150,
-                    -2,
-                    0,
-                    1,
-                    other=self,
-                    blendType='easeOut',
-                    task=self.uniqueName('lerpCamera'))
+                self.cameraWork = camera.posHprInterval(2, Point3(-5, 9, self.getHeight() - 0.5), Point3(-150, -2, 0), blendType='easeOut')
+                self.cameraWork.start()
 
             if self.browsing == 0:
                 if self.roomAvailable == 0:

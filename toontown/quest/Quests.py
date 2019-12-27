@@ -110,10 +110,7 @@ def getCompleteStatusWithNpc(questComplete, toNpcId, npc):
 
 
 def npcMatches(toNpcId, npc):
-    if not toNpcId == npc.getNpcId() and toNpcId == Any:
-        if (toNpcId == ToonHQ or npc.getHq()) and toNpcId == ToonTailor:
-            pass
-    return npc.getTailor()
+    return toNpcId == npc.getNpcId() or toNpcId == Any or toNpcId == ToonHQ and npc.getHq() or toNpcId == ToonTailor and npc.getTailor()
 
 
 def calcRecoverChance(numberNotDone, baseChance, cap=1):
@@ -214,9 +211,7 @@ class Quest:
         self.check(track in self._cogTracks, 'invalid cog track: %s' % track)
 
     def checkCogLevel(self, level):
-        if level >= 1:
-            pass
-        self.check(level <= 12, 'invalid cog level: %s' % level)
+        self.check(level >= 1 and level <= 12, 'invalid cog level: %s' % level)
 
     def checkNumSkelecogs(self, num):
         self.check(1, 'invalid number of cogs: %s' % num)
@@ -225,9 +220,7 @@ class Quest:
         self.check(track in self._cogTracks, 'invalid cog track: %s' % track)
 
     def checkSkelecogLevel(self, level):
-        if level >= 1:
-            pass
-        self.check(level <= 12, 'invalid cog level: %s' % level)
+        self.check(level >= 1 and level <= 12, 'invalid cog level: %s' % level)
 
     def checkNumSkeleRevives(self, num):
         self.check(1, 'invalid number of cogs: %s' % num)
@@ -252,9 +245,7 @@ class Quest:
                    'invalid building track: %s' % track)
 
     def checkBuildingFloors(self, floors):
-        if floors >= 1:
-            pass
-        self.check(floors <= 5, 'invalid num floors: %s' % floors)
+        self.check(floors >= 1 and floors <= 5, 'invalid num floors: %s' % floors)
 
     def checkNumFactories(self, num):
         self.check(1, 'invalid num factories: %s' % num)
@@ -273,15 +264,11 @@ class Quest:
         self.check(1, 'invalid num gags: %s' % num)
 
     def checkGagTrack(self, track):
-        if track >= ToontownBattleGlobals.MIN_TRACK_INDEX:
-            pass
-        self.check(track <= ToontownBattleGlobals.MAX_TRACK_INDEX,
+        self.check(track >= ToontownBattleGlobals.MIN_TRACK_INDEX and track <= ToontownBattleGlobals.MAX_TRACK_INDEX,
                    'invalid gag track: %s' % track)
 
     def checkGagItem(self, item):
-        if item >= ToontownBattleGlobals.MIN_LEVEL_INDEX:
-            pass
-        self.check(item <= ToontownBattleGlobals.MAX_LEVEL_INDEX,
+        self.check(item >= ToontownBattleGlobals.MIN_LEVEL_INDEX and item <= ToontownBattleGlobals.MAX_LEVEL_INDEX,
                    'invalid gag item: %s' % item)
 
     def checkDeliveryItem(self, item):
@@ -294,9 +281,7 @@ class Quest:
         self.check(ItemDict.has_key(item), 'invalid recovery item: %s' % item)
 
     def checkPercentChance(self, chance):
-        if chance > 0:
-            pass
-        self.check(chance <= 100, 'invalid percent chance: %s' % chance)
+        self.check(chance > 0 and chance <= 100, 'invalid percent chance: %s' % chance)
 
     def checkRecoveryItemHolderAndType(self, holder, holderType='type'):
         holderTypes = ['type', 'level', 'track']
@@ -317,9 +302,7 @@ class Quest:
                 (holder, holderType))
 
     def checkTrackChoice(self, option):
-        if option >= ToontownBattleGlobals.MIN_TRACK_INDEX:
-            pass
-        self.check(option <= ToontownBattleGlobals.MAX_TRACK_INDEX,
+        self.check(option >= ToontownBattleGlobals.MIN_TRACK_INDEX and option <= ToontownBattleGlobals.MAX_TRACK_INDEX,
                    'invalid track option: %s' % option)
 
     def checkNumFriends(self, num):
@@ -582,10 +565,8 @@ class CogQuest(LocationBasedQuest):
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
         questCogType = self.getCogType()
-        if (questCogType is Any or questCogType is cogDict['type']
-            ) and avId in cogDict['activeToons']:
-            pass
-        return self.isLocationMatch(zoneId)
+        return (questCogType == Any or questCogType == cogDict['type']) and \
+               (avId in avList) and self.isLocationMatch(zoneId)
 
 
 class CogNewbieQuest(CogQuest, NewbieQuest):
@@ -676,9 +657,7 @@ class CogTrackQuest(CogQuest):
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
         questCogTrack = self.getCogTrack()
-        if questCogTrack == cogDict['track'] and avId in cogDict['activeToons']:
-            pass
-        return self.isLocationMatch(zoneId)
+        return (questCogTrack == cogDict['track']) and (avId in avList) and self.isLocationMatch(zoneId)
 
 
 class CogLevelQuest(CogQuest):
@@ -741,9 +720,7 @@ class CogLevelQuest(CogQuest):
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
         questCogLevel = self.getCogLevel()
-        if questCogLevel <= cogDict['level'] and avId in cogDict['activeToons']:
-            pass
-        return self.isLocationMatch(zoneId)
+        return (questCogLevel <= cogDict['level']) and (avId in avList) and self.isLocationMatch(zoneId)
 
 
 class SkelecogQBase:
@@ -755,9 +732,7 @@ class SkelecogQBase:
             return TTLocalizer.SkeletonP
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
-        if cogDict['isSkelecog'] and avId in cogDict['activeToons']:
-            pass
-        return self.isLocationMatch(zoneId)
+        return cogDict['isSkelecog'] and (avId in avList) and self.isLocationMatch(zoneId)
 
 
 class SkelecogQuest(CogQuest, SkelecogQBase):
@@ -812,9 +787,7 @@ class SkelecogTrackQuest(CogTrackQuest, SkelecogQBase):
         return SkelecogQBase.getCogNameString(self)
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
-        if SkelecogQBase.doesCogCount(self, avId, cogDict, zoneId, avList):
-            pass
-        return self.getCogTrack() == cogDict['track']
+        return SkelecogQBase.doesCogCount(self, avId, cogDict, zoneId, avList) and self.getCogTrack() == cogDict['track']
 
 
 class SkelecogLevelQuest(CogLevelQuest, SkelecogQBase):
@@ -830,9 +803,7 @@ class SkelecogLevelQuest(CogLevelQuest, SkelecogQBase):
         return SkelecogQBase.getCogNameString(self)
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
-        if SkelecogQBase.doesCogCount(self, avId, cogDict, zoneId, avList):
-            pass
-        return self.getCogLevel() <= cogDict['level']
+        return SkelecogQBase.doesCogCount(self, avId, cogDict, zoneId, avList) and self.getCogLevel() <= cogDict['level']
 
 
 class SkeleReviveQBase:
@@ -844,9 +815,7 @@ class SkeleReviveQBase:
             return TTLocalizer.v2CogP
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
-        if cogDict['hasRevives'] and avId in cogDict['activeToons']:
-            pass
-        return self.isLocationMatch(zoneId)
+        return cogDict['hasRevives'] and avId in avList and self.isLocationMatch(zoneId)
 
 
 class SkeleReviveQuest(CogQuest, SkeleReviveQBase):
@@ -881,9 +850,7 @@ class ForemanQuest(CogQuest):
             return TTLocalizer.ForemanP
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
-        if CogQuest.doesCogCount(self, avId, cogDict, zoneId, avList):
-            pass
-        return bool(cogDict['isForeman'])
+        return bool(CogQuest.doesCogCount(self, avId, cogDict, zoneId, avList) and cogDict['isForeman'])
 
 
 class ForemanNewbieQuest(ForemanQuest, NewbieQuest):
@@ -960,9 +927,7 @@ class SupervisorQuest(CogQuest):
             return TTLocalizer.SupervisorP
 
     def doesCogCount(self, avId, cogDict, zoneId, avList):
-        if CogQuest.doesCogCount(self, avId, cogDict, zoneId, avList):
-            pass
-        return bool(cogDict['isSupervisor'])
+        return bool(CogQuest.doesCogCount(self, avId, cogDict, zoneId, avList) and cogDict['isSupervisor'])
 
 
 class SupervisorNewbieQuest(SupervisorQuest, NewbieQuest):
@@ -1506,14 +1471,12 @@ class DeliverGagQuest(Quest):
         return self.quest[0]
 
     def getCompletionStatus(self, av, questDesc, npc=None):
-        (questId, fromNpcId, toNpcId, rewardId, toonProgress) = questDesc
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
         gag = self.getGagType()
         num = self.getNumGags()
         track = gag[0]
         level = gag[1]
-        if npc and av.inventory:
-            pass
-        questComplete = av.inventory.numItem(track, level) >= num
+        questComplete = npc and av.inventory and av.inventory.numItem(track, level) >= num
         return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
 
     def getProgressString(self, avatar, questDesc):
@@ -1938,11 +1901,9 @@ class FriendQuest(Quest):
     def __init__(self, id, quest):
         Quest.__init__(self, id, quest)
 
-    def getCompletionStatus(self, av, questDesc, npc=None):
-        (questId, fromNpcId, toNpcId, rewardId, toonProgress) = questDesc
-        if not toonProgress >= 1:
-            pass
-        questComplete = len(av.getFriendsList()) > 0
+    def getCompletionStatus(self, av, questDesc, npc = None):
+        questId, fromNpcId, toNpcId, rewardId, toonProgress = questDesc
+        questComplete = toonProgress >= 1 or len(av.getFriendsList()) > 0
         return getCompleteStatusWithNpc(questComplete, toNpcId, npc)
 
     def getProgressString(self, avatar, questDesc):
@@ -5402,26 +5363,26 @@ def nextQuestList(nextQuest):
         return (nextQuest, )
 
 
-def checkReward(questId, forked=0):
+def checkReward(questId, forked = 0):
     quest = QuestDict[questId]
     reward = quest[5]
     nextQuests = nextQuestList(quest[6])
     if nextQuests is None:
-        validRewards = RewardDict.keys() + [
-            Any, AnyCashbotSuitPart, AnyLawbotSuitPart, OBSOLETE
-        ]
+        validRewards = RewardDict.keys() + [Any,
+         AnyCashbotSuitPart,
+         AnyLawbotSuitPart,
+         OBSOLETE]
         if reward is OBSOLETE:
             print 'warning: quest %s is obsolete' % questId
-
         return reward
-    elif not forked:
-        pass
-    forked = len(nextQuests) > 1
-    firstReward = checkReward(nextQuests[0], forked)
-    for qId in nextQuests[1:]:
-        thisReward = checkReward(qId, forked)
+    else:
+        forked = forked or len(nextQuests) > 1
+        firstReward = checkReward(nextQuests[0], forked)
+        for qId in nextQuests[1:]:
+            thisReward = checkReward(qId, forked)
 
-    return firstReward
+        return firstReward
+    return
 
 
 def assertAllQuestsValid():

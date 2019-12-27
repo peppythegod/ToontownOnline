@@ -121,6 +121,8 @@ class HoodDataAI:
                 zoneId = ZoneUtil.getTrueZoneId(zone[0], self.zoneId)
                 sp = DistributedSuitPlannerAI.DistributedSuitPlannerAI(
                     self.air, zoneId)
+                print "sp zone"
+                print zoneId
                 sp.generateWithRequired(zoneId)
                 sp.d_setZoneId(zoneId)
                 sp.initTasks()

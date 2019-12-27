@@ -47,6 +47,7 @@ from toontown.classicchars import DistributedFrankenDonald/AI
 from toontown.classicchars import DistributedDonaldDock/AI
 from toontown.classicchars import DistributedPluto/AI
 from toontown.classicchars import DistributedWesternPluto/AI
+from toontown.classicchars import DistributedGoofySpeedway/AI
 from toontown.tutorial import TutorialManager/AI
 from toontown.building import DistributedDoor/AI
 from toontown.building import DistributedTutorialInterior/AI
@@ -199,6 +200,18 @@ from toontown.fishing import DistributedFishingPond/AI
 from toontown.fishing import DistributedFishingTarget/AI
 from toontown.fishing import DistributedPondBingoManager/AI
 from toontown.safezone import DistributedFishingSpot/AI
+from toontown.uberdog.DistributedPartyManager/AI/UD import DistributedPartyManager/AI/UD
+//from toontown.racing import DistributedVehicle/AI
+//from toontown.racing import DistributedStartingBlock/AI
+//from toontown.racing import DistributedRace/AI
+//from toontown.racing import DistributedKartPad/AI
+//from toontown.racing import DistributedRacePad/AI
+//from toontown.racing import DistributedViewPad/AI
+//from toontown.racing import DistributedStartingBlock/AI
+//from toontown.racing import DistributedLeaderBoard/AI
+//from toontown.racing import DistributedGag/AI
+//from toontown.racing import DistributedProjectile/AI
+//from toontown.racing.DistributedStartingBlock/AI import DistributedViewingBlock/AI
 
 
 keyword required;
@@ -531,6 +544,27 @@ dclass DistributedToon : DistributedPlayer {
   setResistanceMessages(pair16 [] = []) required ownrecv db;
   reqSCResistance(uint16, uint32 []) ownsend airecv;
   setSCResistance(uint16, uint32 []) broadcast ownrecv;
+  
+  setKartBodyType(int8 = -1) required broadcast ownrecv db;
+  setKartBodyColor(int8 = -1) required broadcast ownrecv db;
+  setKartAccessoryColor(int8 = -1) required broadcast ownrecv db;
+  setKartEngineBlockType(int8 = -1) required broadcast ownrecv db;
+  setKartSpoilerType(int8 = -1) required broadcast ownrecv db;
+  setKartFrontWheelWellType(int8 = -1) required broadcast ownrecv db;
+  setKartBackWheelWellType(int8 = -1) required broadcast ownrecv db;
+  setKartRimType(int8 = -1) required broadcast ownrecv db;
+  setKartDecalType(int8 = -1) required broadcast ownrecv db;
+  updateKartDNAField(int8, int8) ownsend airecv;
+  addOwnedAccessory(int8) ownsend airecv;
+  removeOwnedAccessory(int8) ownsend airecv;
+  setTickets(uint32 = 200) required broadcast ownrecv db;
+  setKartingHistory(uint8 [16] = [0*16]) required ownrecv db;
+  setKartingTrophies(uint8 [33] = [0*33]) required ownrecv db;
+  setKartingPersonalBest(uint32/1000 [6] = [0*6]) required ownrecv db;
+  setKartingPersonalBest2(uint32/1000 [12] = [0*12]) required ownrecv db;
+  setKartAccessoriesOwned(int8 [16] = [-1*16]) required broadcast ownrecv db;
+  setCurrentKart(uint32) broadcast ownrecv ram;
+  squish(uint8) ownsend airecv;
 
   // these fields are for the Servers .. client should never see these ??
   // the index
@@ -638,7 +672,7 @@ dclass PurchaseManager : DistributedObject {
   setPlayerIds(uint32, uint32, uint32, uint32) required broadcast ram;
   setNewbieIds(uint32array) required broadcast ram;
   setMinigamePoints(uint8, uint8, uint8, uint8) required broadcast ram;
-  setPlayerMoney(uint8, uint8, uint8, uint8) required broadcast ram;
+  setPlayerMoney(uint16, uint8, uint8, uint8) required broadcast ram;
   setPlayerStates(uint8, uint8, uint8, uint8) required broadcast ram;
   setCountdown(int16) required broadcast ram;
   setMetagameRound(int8) required broadcast ram;
@@ -2017,4 +2051,159 @@ dclass DistributedFishingSpot : DistributedObject {
   sellFish() airecv clsend;
   sellFishComplete(uint8, uint16);
   setMovie(uint8, uint8, uint16, uint16, uint16, uint8/100, int16/100) broadcast ram;
+};
+
+dclass DistributedPartyManager : DistributedObject {
+  addParty(uint32, uint32, string, string, int8, int8, activity [], decoration [], uint32[], uint16);
+  addPartyRequest(uint32, char [0-256], char [0-256], int8, int8, activity [], decoration [], uint32[]) airecv clsend;
+  addPartyResponse(uint32, int8);
+  addPartyResponseUdToAi(uint64, int8, party) airecv;
+
+  markInviteAsReadButNotReplied(uint32, uint64);
+  respondToInvite(uint32, uint32, uint16, uint64, uint8);
+  respondToInviteResponse(uint32, uint16, uint64, int8, uint8) airecv;
+
+  changePrivateRequest(uint64, int8) airecv clsend;
+  changePrivateRequestAiToUd(uint32, uint64, int8);
+  changePrivateResponseUdToAi(uint32, uint64, int8, int8) airecv;
+  changePrivateResponse(uint64, int8, int8);
+
+  changePartyStatusRequest(uint64, int8) airecv clsend;
+  changePartyStatusRequestAiToUd(uint32, uint64, int8);
+  changePartyStatusResponseUdToAi(uint32, uint64, int8, int8) airecv;
+  changePartyStatusResponse(uint64, int8, int8, uint16);
+
+  partyInfoOfHostRequestAiToUd(uint32, uint32);
+  partyInfoOfHostFailedResponseUdToAi(uint32) airecv;
+  partyInfoOfHostResponseUdToAi(party, uint32[]) airecv;
+
+  givePartyRefundResponse(uint32, uint64, int8, uint16, uint32);
+  getPartyZone(uint32, uint32, uint8) clsend airecv;
+  receivePartyZone(uint32, uint64, uint32);
+  freeZoneIdFromPlannedParty(uint32, uint32) clsend airecv;
+
+  sendAvToPlayground(uint32, uint8);
+  exitParty(uint32) clsend airecv;
+  removeGuest(uint32, uint32) airecv clsend;
+  partyManagerAIStartingUp(uint32, uint32);
+  partyManagerAIGoingDown(uint32, uint32);
+  partyHasStartedAiToUd(uint64 partyId, uint32 shardId, uint32 zoneId, string hostName);
+  toonHasEnteredPartyAiToUd(uint32);
+  toonHasExitedPartyAiToUd(uint32);
+  partyHasFinishedUdToAllAi(uint64 partyId) airecv;
+  updateToPublicPartyInfoUdToAllAi(uint32 shardId, uint32 zoneId, uint64 partyId, uint32 hostId, uint8 numGuests, uint8 maxGuests, string hostName, uint8 activities[], uint8 minLeft) airecv;
+  updateToPublicPartyCountUdToAllAi(uint32 partyCount, uint64 partyId) airecv;
+  requestShardIdZoneIdForHostId(uint32) clsend airecv;
+  sendShardIdZoneIdToAvatar(uint32, uint32);
+  partyManagerUdStartingUp() airecv;
+  partyManagerUdLost() airecv;
+  updateAllPartyInfoToUd(uint32, uint64, uint32, uint32, uint8, uint8, string, uint8 [], uint64);
+  forceCheckStart();
+  requestMw(uint32, string, uint32, uint32);
+  mwResponseUdToAllAi(uint32, string, uint32, uint32) airecv;
+  receiveId(uint64 ids[]) airecv;
+};
+
+dclass DistributedVehicle : DistributedSmoothNode {
+  setOwner(uint32) required broadcast ram;
+  setState(char, uint32) broadcast ram;
+  setBodyType(int8) required broadcast ram;
+  setBodyColor(int8) required broadcast ram;
+  setAccessoryColor(int8) required broadcast ram;
+  setEngineBlockType(int8) required broadcast ram;
+  setSpoilerType(int8) required broadcast ram;
+  setFrontWheelWellType(int8) required broadcast ram;
+  setBackWheelWellType(int8) required broadcast ram;
+  setRimType(int8) required broadcast ram;
+  setDecalType(int8) required broadcast ram;
+  requestControl() airecv clsend;
+  requestParked() airecv clsend;
+  setInput(int8) broadcast ram;
+};
+
+struct avatarAndKart {
+  uint32 avId;
+  uint32 kartId;
+};
+
+dclass DistributedRace : DistributedObject {
+  setZoneId(uint32) required broadcast ram;
+  setTrackId(uint16) required broadcast ram;
+  setRaceType(uint16) required broadcast ram;
+  setCircuitLoop(uint16[]) required broadcast ram;
+  setAvatars(uint32[]) required broadcast ram;
+  setStartingPlaces(uint8[]) required broadcast ram;
+  setLapCount(uint8) broadcast required ram;
+  waitingForJoin() broadcast ram;
+  setEnteredRacers(avatarAndKart []) broadcast ram;
+  prepForRace() broadcast ram;
+  startTutorial() broadcast ram;
+  startRace(int16) broadcast ram;
+  goToSpeedway(uint32[], uint8) broadcast ram;
+  genGag(uint8, uint16, uint8) broadcast ram;
+  dropAnvilOn(uint32, uint32, int16) broadcast ram;
+  shootPiejectile(uint32, uint32, uint8) broadcast ram;
+  racerDisconnected(uint32) broadcast ram;
+  setPlace(uint32, uint32/1000, uint8, uint32, uint8, uint32, uint32, uint32[], uint16[], uint32/1000) broadcast ram;
+  setCircuitPlace(uint32, uint8, uint32, uint32, uint32, uint32[]) broadcast ram;
+  endCircuitRace() broadcast ram;
+  setRaceZone(uint32, uint32);
+  hasGag(uint8, uint8, uint8) broadcast airecv clsend;
+  racerLeft(uint32) clsend airecv broadcast ram;
+  heresMyT(uint32, int8, uint16/65535, int16) clsend airecv broadcast;
+  requestThrow(int32/1000, int32/1000, int32/1000) clsend airecv;
+  requestKart() clsend airecv;
+};
+
+dclass DistributedGag : DistributedObject {
+  setInitTime(int16) required broadcast ram;
+  setActivateTime(int16) required broadcast ram;
+  setPos(int32/1000, int32/1000, int32/1000) required broadcast ram;
+  setRace(uint32) required broadcast ram;
+  setOwnerId(uint32) required broadcast ram;
+  setType(uint8) required broadcast ram;
+  hitSomebody(uint32, int16) broadcast clsend airecv;
+};
+
+dclass DistributedProjectile : DistributedObject {
+  setInitTime(int16) required broadcast ram;
+  setPos(int32/1000, int32/1000, int32/1000) required broadcast ram;
+  setRace(uint32) required broadcast ram;
+  setOwnerId(uint32) required broadcast ram;
+  setType(uint8) required broadcast ram;
+  hitSomebody(uint32, int16) broadcast clsend airecv;
+};
+
+dclass DistributedKartPad : DistributedObject {
+  setArea(uint32) required broadcast ram;
+};
+
+dclass DistributedRacePad : DistributedKartPad {
+  setState(string, int16) required broadcast ram;
+  setRaceZone(uint32);
+  setTrackInfo(uint16[]) required broadcast ram;
+};
+
+dclass DistributedViewPad : DistributedKartPad {
+  setLastEntered(int16) required broadcast ram;
+};
+
+dclass DistributedStartingBlock : DistributedObject {
+  setPadDoId(uint32) required broadcast ram;
+  setPosHpr(int16/10, int16/10, int16/10, int16/10, int16/10, int16/10) required broadcast ram;
+  setPadLocationId(uint8) required broadcast ram;
+  requestEnter(uint8) airecv clsend;
+  rejectEnter(uint8);
+  requestExit() airecv clsend;
+  setOccupied(uint32) broadcast ram;
+  setMovie(uint8) broadcast ram;
+  movieFinished() airecv clsend;
+};
+
+dclass DistributedViewingBlock : DistributedStartingBlock {
+};
+
+dclass DistributedLeaderBoard : DistributedObject {
+  setPosHpr(int16/10, int16/10, int16/10, int16/10, int16/10, int16/10) required broadcast ram;
+  setDisplay(blob) broadcast ram;
 };

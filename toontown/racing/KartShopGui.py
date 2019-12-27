@@ -704,76 +704,60 @@ class KartShopGuiMgr(object, DirectObject.DirectObject):
                 relief=None,
                 scale=self.modelScale,
                 text='',
-                text_pos=(0, -0.33000000000000002),
+                text_pos=(0, -.33),
                 text_scale=KS_TEXT_SIZE_SMALL,
                 pressEffect=False,
                 text_wordwrap=TTLocalizer.KSGaccDescriptionWordwrap,
                 textMayChange=True)
             self.buyAccessoryButton.configure(text_fg=(0, 0, 0.0, 1.0))
-            self.buyAccessoryButton.configure(
-                text=TTLocalizer.KartShop_BuyAccessory)
+            self.buyAccessoryButton.configure(text=TTLocalizer.KartShop_BuyAccessory)
             self.buyAccessoryButton.configure(text_scale=KS_TEXT_SIZE_SMALL)
             self.buyAccessoryButton['state'] = DGG.NORMAL
             if len(self.unownedAccDict[self.curAccType]) < 1:
                 self.kartView.setDNA(None)
                 self.kartView.hide()
-                self.accDescription.configure(
-                    text=TTLocalizer.KartShop_NoAvailableAcc)
+                self.accDescription.configure(text=TTLocalizer.KartShop_NoAvailableAcc)
                 self.buyAccessoryButton['state'] = DGG.DISABLED
-            elif self.curAccIndex[self.curAccType] + 1 < len(
-                    self.unownedAccDict[self.curAccType]):
-                self.arrowRightButton['state'] = DGG.NORMAL
+            else:
+                if self.curAccIndex[self.curAccType] + 1 < len(self.unownedAccDict[self.curAccType]):
+                    self.arrowRightButton['state'] = DGG.NORMAL
+                if self.curAccIndex[self.curAccType] > 0:
+                    self.arrowLeftButton['state'] = DGG.NORMAL
+                curDNA = None
+                curDNA = list(base.localAvatar.getKartDNA())
+                for d in xrange(len(curDNA)):
+                    if d == KartDNA.bodyType or d == KartDNA.accColor or d == KartDNA.bodyColor:
+                        continue
+                    else:
+                        curDNA[d] = -1
 
-            if self.curAccIndex[self.curAccType] > 0:
-                self.arrowLeftButton['state'] = DGG.NORMAL
-
-            curDNA = None
-            curDNA = list(base.localAvatar.getKartDNA())
-            for d in range(len(curDNA)):
-                if d == KartDNA.bodyType and d == KartDNA.accColor or d == KartDNA.bodyColor:
-                    continue
-                    continue
-                curDNA[d] = -1
-
-            curAcc = self.unownedAccDict[self.curAccType][self.curAccIndex[
-                self.curAccType]]
-            curDNA[self.curAccType] = curAcc
-            self.kartView.refresh(curDNA)
-            self.accDescription.configure(
-                text=AccessoryDict[curAcc][KartInfo.name])
-            cost = TTLocalizer.KartShop_Cost % AccessoryDict[curAcc][
-                KartInfo.cost]
-            self.accCost = DirectButton(
-                parent=self,
-                relief=None,
-                scale=self.modelScale,
-                text=cost,
-                text_pos=(0, -0.40000000000000002),
-                text_scale=KS_TEXT_SIZE_SMALL,
-                text_fg=(0, 0, 0.0, 1.0),
-                pressEffect=False,
-                textMayChange=True)
-            if AccessoryDict[curAcc][
-                    KartInfo.cost] > base.localAvatar.getTickets():
+                curAcc = self.unownedAccDict[self.curAccType][self.curAccIndex[self.curAccType]]
+                curDNA[self.curAccType] = curAcc
+                self.kartView.refresh(curDNA)
+                self.accDescription.configure(text=AccessoryDict[curAcc][KartInfo.name])
+                cost = TTLocalizer.KartShop_Cost % AccessoryDict[curAcc][KartInfo.cost]
+                self.accCost = DirectButton(
+                    parent=self,
+                    relief=None,
+                    scale=self.modelScale,
+                    text=cost,
+                    text_pos=(0, -.4),
+                    text_scale=KS_TEXT_SIZE_SMALL,
+                    text_fg=(0, 0, 0.0, 1.0),
+                    pressEffect=False,
+                    textMayChange=True)
+                if AccessoryDict[curAcc][KartInfo.cost] > base.localAvatar.getTickets():
+                    self.buyAccessoryButton['state'] = DGG.DISABLED
+                    self.buyAccessoryButton.configure(text_scale=KS_TEXT_SIZE_SMALL * 0.75)
+                    self.buyAccessoryButton.configure(text=TTLocalizer.KartShop_NotEnoughTickets)
+                    self.accCost.configure(text_fg=(0.95, 0, 0.0, 1.0))
+            if len(base.localAvatar.getKartAccessoriesOwned()) >= KartShopGlobals.MAX_KART_ACC:
                 self.buyAccessoryButton['state'] = DGG.DISABLED
-                self.buyAccessoryButton.configure(
-                    text_scale=KS_TEXT_SIZE_SMALL * 0.75)
-                self.buyAccessoryButton.configure(
-                    text=TTLocalizer.KartShop_NotEnoughTickets)
-                self.accCost.configure(
-                    text_fg=(0.94999999999999996, 0, 0.0, 1.0))
-
-            if len(base.localAvatar.getKartAccessoriesOwned()
-                   ) >= KartShopGlobals.MAX_KART_ACC:
-                self.buyAccessoryButton['state'] = DGG.DISABLED
-                self.buyAccessoryButton.configure(
-                    text_fg=(0.94999999999999996, 0, 0.0, 1.0))
-                self.buyAccessoryButton.configure(
-                    text_scale=KS_TEXT_SIZE_SMALL * 0.80000000000000004)
-                self.buyAccessoryButton.configure(
-                    text=TTLocalizer.KartShop_FullTrunk)
-
+                self.buyAccessoryButton.configure(text_fg=(0.95, 0, 0.0, 1.0))
+                self.buyAccessoryButton.configure(text_scale=KS_TEXT_SIZE_SMALL * 0.8)
+                self.buyAccessoryButton.configure(text=TTLocalizer.KartShop_FullTrunk)
             self.kartView.show()
+            return
 
         def destroy(self):
             if self.initialize:

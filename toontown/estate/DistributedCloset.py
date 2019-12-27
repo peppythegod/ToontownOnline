@@ -164,17 +164,7 @@ class DistributedCloset(DistributedFurnitureItem.DistributedFurnitureItem):
             self._openDoors()
             if self.customerId == base.localAvatar.doId:
                 camera.wrtReparentTo(self)
-                camera.lerpPosHpr(
-                    -7.5800000000000001,
-                    -6.0199999999999996,
-                    6.9000000000000004,
-                    286.30000000000001,
-                    336.80000000000001,
-                    0,
-                    1,
-                    other=self,
-                    blendType='easeOut',
-                    task=self.uniqueName('lerpCamera'))
+                camera.posQuatInterval(1, (-7.58, -6.02, 6.9), (286.3, 336.8, 0), other=self, blendType='easeOut').start()
                 camera.setPosHpr(self, -7.5800000000000001,
                                  -6.0199999999999996, 6.9000000000000004,
                                  286.30000000000001, 336.80000000000001, 0)

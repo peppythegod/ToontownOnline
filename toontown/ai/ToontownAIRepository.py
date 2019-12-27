@@ -14,7 +14,7 @@ from toontown.ai.QuestManagerAI import QuestManagerAI
 from toontown.safezone.SafeZoneManagerAI import SafeZoneManagerAI
 from toontown.toon import NPCToons
 from toontown.hood import TTHoodDataAI, DDHoodDataAI, OZHoodDataAI, GZHoodDataAI, DGHoodDataAI,\
-    MMHoodDataAI, BRHoodDataAI, DLHoodDataAI, CSHoodDataAI, CashbotHQDataAI, LawbotHQDataAI, BossbotHQDataAI
+    MMHoodDataAI, BRHoodDataAI, DLHoodDataAI, CSHoodDataAI, CashbotHQDataAI, LawbotHQDataAI, BossbotHQDataAI, GSHoodDataAI
 from toontown.hood import ZoneUtil
 from toontown.dna.DNAParser import *
 from toontown.building.DistributedTrophyMgrAI import DistributedTrophyMgrAI
@@ -30,6 +30,12 @@ from toontown.coghq import CountryClubManagerAI
 from toontown.ai.FishManagerAI import FishManagerAI
 from toontown.fishing.DistributedFishingPondAI import DistributedFishingPondAI
 from toontown.safezone.DistributedFishingSpotAI import DistributedFishingSpotAI
+from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
+from toontown.racing.DistributedRacePadAI import DistributedRacePadAI
+from toontown.racing.DistributedViewPadAI import DistributedViewPadAI
+from toontown.racing.DistributedStartingBlockAI import DistributedStartingBlockAI, DistributedViewingBlockAI
+from toontown.racing.DistributedLeaderBoardAI import DistributedLeaderBoardAI
+from toontown.racing import RaceGlobals
 
 
 class ToontownAIRepository(ToontownInternalRepository):
@@ -63,7 +69,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.doLiveUpdates = self.config.GetBool('want-live-updates', False)
         self.wantTrackClsends = self.config.GetBool('want-track-clsends', False)
         self.wantAchievements = self.config.GetBool('want-achievements', True)
-        self.wantYinYang = self.config.GetBool('want-yin-yang', False)
         self.baseXpMultiplier = self.config.GetFloat('base-xp-multiplier', 1.0)
         self.wantHalloween = self.config.GetBool('want-halloween', False)
         self.wantChristmas = self.config.GetBool('want-christmas', False)
@@ -173,6 +178,8 @@ class ToontownAIRepository(ToontownInternalRepository):
         NPCToons.generateZone2NpcDict()
 
         self.createHood(TTHoodDataAI.TTHoodDataAI, ToontownGlobals.ToontownCentral)
+        
+        self.createHood(GSHoodDataAI.GSHoodDataAI, ToontownGlobals.GoofySpeedway)
 
         self.createHood(DDHoodDataAI.DDHoodDataAI, ToontownGlobals.DonaldsDock)
 

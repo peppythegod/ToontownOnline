@@ -1,20 +1,21 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectUD import DistributedObjectUD
 
-
 class DistributedPartyManagerUD(DistributedObjectUD):
-    notify = DirectNotifyGlobal.directNotify.newCategory(
-        "DistributedPartyManagerUD")
+    notify = DirectNotifyGlobal.directNotify.newCategory("DistributedPartyManagerUD")
 
-    def addParty(self, todo0, todo1, todo2, todo3, todo4, todo5, todo6, todo7,
-                 todo8, todo9):
+    def announceGenerate(self):
+        DistributedObjectUD.announceGenerate(self)
+
+        self.sendUpdate('partyManagerUdStartingUp') # Shouldn't have to send to anyone special, as the field is airecv
+
+    def addParty(self, todo0, todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8, todo9):
         pass
 
-    def addPartyRequest(self, todo0, todo1, todo2, todo3, todo4, todo5, todo6,
-                        todo7):
+    def addPartyRequest(self, hostId, startTime, endTime, isPrivate, inviteTheme, activities, decorations, inviteeIds):
         pass
 
-    def addPartyResponse(self, todo0, todo1):
+    def addPartyResponse(self, hostId, errorCode):
         pass
 
     def addPartyResponseUdToAi(self, todo0, todo1, todo2):
@@ -41,7 +42,7 @@ class DistributedPartyManagerUD(DistributedObjectUD):
     def changePrivateResponse(self, todo0, todo1, todo2):
         pass
 
-    def changePartyStatusRequest(self, todo0, todo1):
+    def changePartyStatusRequest(self, partyId, newPartyStatus):
         pass
 
     def changePartyStatusRequestAiToUd(self, todo0, todo1, todo2):
@@ -65,22 +66,22 @@ class DistributedPartyManagerUD(DistributedObjectUD):
     def givePartyRefundResponse(self, todo0, todo1, todo2, todo3, todo4):
         pass
 
-    def getPartyZone(self, todo0, todo1, todo2):
+    def getPartyZone(self, avId, zoneId, isAvAboutToPlanParty):
         pass
 
     def receivePartyZone(self, todo0, todo1, todo2):
         pass
 
-    def freeZoneIdFromPlannedParty(self, todo0, todo1):
+    def freeZoneIdFromPlannedParty(self, avId, zoneId):
         pass
 
     def sendAvToPlayground(self, todo0, todo1):
         pass
 
-    def exitParty(self, todo0):
+    def exitParty(self, zoneIdOfAv):
         pass
 
-    def removeGuest(self, todo0, todo1):
+    def removeGuest(self, ownerId, avId):
         pass
 
     def partyManagerAIStartingUp(self, todo0, todo1):
@@ -101,24 +102,22 @@ class DistributedPartyManagerUD(DistributedObjectUD):
     def partyHasFinishedUdToAllAi(self, todo0):
         pass
 
-    def updateToPublicPartyInfoUdToAllAi(self, todo0, todo1, todo2, todo3,
-                                         todo4, todo5, todo6, todo7, todo8):
+    def updateToPublicPartyInfoUdToAllAi(self, todo0, todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8):
         pass
 
     def updateToPublicPartyCountUdToAllAi(self, todo0, todo1):
         pass
 
-    def requestShardIdZoneIdForHostId(self, todo0):
+    def requestShardIdZoneIdForHostId(self, hostId):
         pass
 
-    def sendShardIdZoneIdToAvatar(self, todo0, todo1):
+    def sendShardIdZoneIdToAvatar(self, shardId, zoneId):
         pass
 
     def partyManagerUdStartingUp(self):
         pass
 
-    def updateAllPartyInfoToUd(self, todo0, todo1, todo2, todo3, todo4, todo5,
-                               todo6, todo7, todo8):
+    def updateAllPartyInfoToUd(self, todo0, todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8):
         pass
 
     def forceCheckStart(self):
@@ -129,3 +128,4 @@ class DistributedPartyManagerUD(DistributedObjectUD):
 
     def mwResponseUdToAllAi(self, todo0, todo1, todo2, todo3):
         pass
+
