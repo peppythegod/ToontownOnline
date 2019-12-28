@@ -54,59 +54,42 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
     def pointInMyPath(self, point, elapsedTime):
         if self.pathState != 1:
             return 0
-
         then = globalClock.getFrameTime() + elapsedTime
         elapsed = then - self.pathStartTime
         if not self.sp:
-            return
-        
-        return self.legList.isPointInRange(
-            point, elapsed - self.sp.PATH_COLLISION_BUFFER,
-            elapsed + self.sp.PATH_COLLISION_BUFFER)
+            pass
+        return self.legList.isPointInRange(point, elapsed - self.sp.PATH_COLLISION_BUFFER, elapsed + self.sp.PATH_COLLISION_BUFFER)
 
     def requestBattle(self, x, y, z, h, p, r):
         toonId = self.air.getAvatarIdFromSender()
-        if self.air.doId2do.get(toonId) is None:
-            return None
-
+        if self.air.doId2do.get(toonId) == None:
+            return
         if self.pathState == 3:
             pass
-        1
-        if self.pathState != 1:
+        elif self.pathState != 1:
             if self.notify.getDebug():
-                self.notify.debug(
-                    'requestBattle() - suit %d not on path' % self.getDoId())
-
+                self.notify.debug('requestBattle() - suit %s not on path' % self.getDoId())
             if self.pathState == 2 or self.pathState == 4:
-                self.b_setBrushOff(
-                    SuitDialog.getBrushOffIndex(self.getStyleName()))
-
+                self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
             self.d_denyBattle(toonId)
-            return None
+            return
         elif self.legType != SuitLeg.TWalk:
             if self.notify.getDebug():
-                self.notify.debug('requestBattle() - suit %d not in Bellicose'
-                                  % self.getDoId())
-
-            self.b_setBrushOff(
-                SuitDialog.getBrushOffIndex(self.getStyleName()))
+                self.notify.debug('requestBattle() - suit %s not in Bellicose' % self.getDoId())
+            self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
             self.d_denyBattle(toonId)
-            return None
-
+            return
         self.confrontPos = Point3(x, y, z)
         self.confrontHpr = Vec3(h, p, r)
         if self.sp.requestBattle(self.zoneId, self, toonId):
             if self.notify.getDebug():
-                self.notify.debug('Suit %d requesting battle in zone %d' %
-                                  (self.getDoId(), self.zoneId))
-
-        elif self.notify.getDebug():
-            self.notify.debug(
-                'requestBattle from suit %d - denied by battle manager' %
-                self.getDoId())
-
-        self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
-        self.d_denyBattle(toonId)
+                self.notify.debug('Suit %s requesting battle in zone %s' % (self.getDoId(), self.zoneId))
+        else:
+            if self.notify.getDebug():
+                self.notify.debug('requestBattle from suit %s - denied by battle manager' % self.getDoId())
+            self.b_setBrushOff(SuitDialog.getBrushOffIndex(self.getStyleName()))
+            self.d_denyBattle(toonId)
+        return
 
     def getConfrontPosHpr(self):
         return (self.confrontPos, self.confrontHpr)
@@ -237,50 +220,42 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
             self.pathStartTime + self.legList.getStartTime(self.currentLeg))
 
     def moveToNextLeg(self, task):
-        if self.isDeleted():
-            return Task.done
-            
         now = globalClock.getFrameTime()
         elapsed = now - self.pathStartTime
         nextLeg = self.legList.getLegIndexAtTime(elapsed, self.currentLeg)
         numLegs = self.legList.getNumLegs()
         if self.currentLeg != nextLeg:
             self.currentLeg = nextLeg
-            self._DistributedSuitAI__beginLegType(
-                self.legList.getType(nextLeg))
+            self.__beginLegType(self.legList.getType(nextLeg))
             zoneId = self.legList.getZoneId(nextLeg)
             zoneId = ZoneUtil.getTrueZoneId(zoneId, self.branchId)
-            self._DistributedSuitAI__enterZone(zoneId)
-            self.notify.debug(
-                'Suit %d reached leg %d of %d in zone %d.' %
-                (self.getDoId(), nextLeg, numLegs - 1, self.zoneId))
+            if zoneId:
+                self.__enterZone(zoneId)
+            self.notify.debug('Suit %s reached leg %s of %s in zone %s.' % (self.getDoId(),
+             nextLeg,
+             numLegs - 1,
+             self.zoneId))
             if self.DEBUG_SUIT_POSITIONS:
                 leg = self.legList.getLeg(nextLeg)
                 pos = leg.getPosAtTime(elapsed - leg.getStartTime())
                 self.d_debugSuitPosition(elapsed, nextLeg, pos[0], pos[1], now)
-
         if now - self.pathPositionTimestamp > self.UPDATE_TIMESTAMP_INTERVAL:
             self.resync()
-
         if self.pathState != 1:
             return Task.done
-
         nextLeg += 1
-        while nextLeg + 1 < numLegs and self.legList.getZoneId(
-                nextLeg) == ZoneUtil.getCanonicalZoneId(
-                    self.zoneId) and self.legList.getType(
-                        nextLeg) == self.legType:
+        while nextLeg + 1 < numLegs and self.legList.getZoneId(nextLeg) == ZoneUtil.getCanonicalZoneId(self.zoneId) and self.legList.getType(nextLeg) == self.legType:
             nextLeg += 1
+
         if nextLeg < numLegs:
             nextTime = self.legList.getStartTime(nextLeg)
             delay = nextTime - elapsed
             taskMgr.remove(self.taskName('move'))
-            taskMgr.doMethodLater(delay, self.moveToNextLeg,
-                                  self.taskName('move'))
-        elif self.attemptingTakeover:
-            self.startTakeOver()
-
-        self.requestRemoval()
+            taskMgr.doMethodLater(delay, self.moveToNextLeg, self.taskName('move'))
+        else:
+            if simbase.config.GetBool('want-cogbuildings', True):
+                self.startTakeOver()
+            self.requestRemoval()
         return Task.done
 
     def stopPathNow(self):
@@ -289,7 +264,7 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
     def _DistributedSuitAI__enterZone(self, zoneId):
         if zoneId != self.zoneId:
             self.sp.zoneChange(self, self.zoneId, zoneId)
-            self.air.sendSetZone(self, zoneId)
+            self.b_setLocation(simbase.air.districtId, zoneId)
             self.zoneId = zoneId
             if self.pathState == 1:
                 self.sp.checkForBattle(zoneId, self)

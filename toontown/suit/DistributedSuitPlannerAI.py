@@ -264,6 +264,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
 
     def initBuildingsAndPoints(self):
         if not self.buildingMgr:
+            print "No building mgr?"
             return None
 
         if self.notify.getDebug():
@@ -273,9 +274,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
         self.buildingSideDoors = {}
         for p in self.frontdoorPointList:
             blockNumber = p.getLandmarkBuildingIndex()
-            if p < 0:
-                self.notify.warning('No landmark building for (%s) in zone %d'
-                                    % (repr(p), self.zoneId))
+            if blockNumber < 0:
+                self.notify.debug('No landmark building for (%s) in zone %s' % (str(p), self.zoneId))
                 continue
             if blockNumber in self.buildingFrontDoors:
                 self.notify.warning(
@@ -286,9 +286,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
 
         for p in self.sidedoorPointList:
             blockNumber = p.getLandmarkBuildingIndex()
-            if p < 0:
-                self.notify.warning('No landmark building for (%s) in zone %d'
-                                    % (repr(p), self.zoneId))
+            if blockNumber < 0:
+                self.notify.debug('No landmark building for (%s) in zone %s' % (str(p), self.zoneId))
                 continue
             if blockNumber in self.buildingSideDoors:
                 self.buildingSideDoors[blockNumber].append(p)
@@ -317,25 +316,25 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
             count[suit.track] = 1
 
     def countNumBuildingsPerTrack(self, count):
-        if self.buildingMgr:
-            for building in self.buildingMgr.getBuildings():
-                if building.isSuitBuilding():
-                    if building.track in count:
-                        count[building.track] += 1
-                    else:
-                        count[building.track] = 1
-                building.track in count
+        if not self.buildingMgr:
+            return
+        for building in self.buildingMgr.getBuildings():
+            if building.isSuitBuilding():
+                if building.track in count:
+                    count[building.track] += 1
+                else:
+                    count[building.track] = 1
 
     def countNumBuildingsPerHeight(self, count):
-        if self.buildingMgr:
-            for building in self.buildingMgr.getBuildings():
-                if building.isSuitBuilding():
-                    height = building.numFloors - 1
-                    if height in count:
-                        count[height] += 1
-                    else:
-                        count[height] = 1
-                height in count
+        if not self.buildingMgr:
+            return
+        for building in self.buildingMgr.getBuildings():
+            if building.isSuitBuilding():
+                height = building.numFloors - 1
+                if height in count:
+                    count[height] += 1
+                else:
+                    count[height] = 1
 
     def formatNumSuitsPerTrack(self, count):
         result = ' '
@@ -375,6 +374,7 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
                 zoneName = self.dnaStore.getSuitEdgeZone(
                     point.getIndex(), p.getIndex())
                 zoneId = int(self.extractGroupName(zoneName))
+                print "getZoneIdToPointMap ", zoneName, zoneId
                 if zoneId in self.zoneIdToPointMap:
                     self.zoneIdToPointMap[zoneId].append(point)
                     continue
@@ -577,15 +577,10 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
         elif suit.attemptingTakeover:
             for blockNumber in self.buildingMgr.getToonBlocks():
                 building = self.buildingMgr.getBuilding(blockNumber)
-                (extZoneId,
-                 intZoneId) = building.getExteriorAndInteriorZoneId()
+                (extZoneId, intZoneId) = building.getExteriorAndInteriorZoneId()
                 if not NPCToons.isZoneProtected(intZoneId):
                     if blockNumber in self.buildingFrontDoors:
-                        possibles.append(
-                            (blockNumber,
-                             self.buildingFrontDoors[blockNumber]))
-
-                blockNumber in self.buildingFrontDoors
+                        possibles.append((blockNumber, self.buildingFrontDoors[blockNumber]))
 
         elif self.buildingMgr:
             for blockNumber in self.buildingMgr.getSuitBlocks():
@@ -900,17 +895,15 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
         while numToAssign > 0:
             smallestCount = None
             smallestTracks = []
-            for trackIndex in range(4):
+            for trackIndex in xrange(4):
                 if totalWeightPerTrack[trackIndex]:
                     track = SuitDNA.suitDepts[trackIndex]
                     count = numPerTrack[track]
-                    if smallestCount is None or count < smallestCount:
+                    if (smallestCount is None) or (count < smallestCount):
                         smallestTracks = [track]
                         smallestCount = count
                     elif count == smallestCount:
                         smallestTracks.append(track)
-
-                count < smallestCount
 
             if not smallestTracks:
                 self.notify.info(
@@ -922,17 +915,14 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
             buildingTrackIndex = SuitDNA.suitDepts.index(buildingTrack)
             smallestCount = None
             smallestHeights = []
-            for height in range(5):
+            for height in xrange(5):
                 if totalWeightPerHeight[height]:
-                    count = float(numPerHeight[height]) / float(
-                        self.BUILDING_HEIGHT_DISTRIBUTION[height])
-                    if smallestCount is None or count < smallestCount:
+                    count = float(numPerHeight[height]) / float(self.BUILDING_HEIGHT_DISTRIBUTION[height])
+                    if (smallestCount is None) or (count < smallestCount):
                         smallestHeights = [height]
                         smallestCount = count
                     elif count == smallestCount:
                         smallestHeights.append(height)
-
-                count < smallestCount
 
             if not smallestHeights:
                 self.notify.info(
