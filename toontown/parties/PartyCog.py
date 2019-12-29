@@ -13,6 +13,7 @@ from pandac.PandaModules import Point3, Vec4, NodePath, TextNode, Mat4
 from toontown.toonbase import ToontownGlobals
 from toontown.battle.BattleProps import globalPropPool
 from toontown.battle.BattleSounds import globalBattleSoundCache
+from direct.interval.IntervalGlobal import *
 import PartyGlobals
 
 
@@ -440,17 +441,8 @@ class PartyCog(FSM):
         self.hpText.setBillboardPointEye()
         self.hpText.setBin('fixed', 100)
         self.hpText.setPos(self.root, 0, 0, self.height / 2)
-        seq = Task.sequence(
-            self.hpText.lerpPos(
-                Point3(
-                    self.root.getX(render), self.root.getY(render),
-                    self.root.getZ(render) + self.height + 1.0),
-                0.25,
-                blendType='easeOut'), Task.pause(0.25),
-            self.hpText.lerpColor(
-                Vec4(r, g, b, a), Vec4(r, g, b, 0), 0.10000000000000001),
-            Task.Task(self._PartyCog__hideHitScoreTask))
-        taskMgr.add(seq, 'PartyCogHpText' + str(self.id))
+        seq = Sequence(self.hpText.posInterval(0.25, Point3(self.root.getX(render), self.root.getY(render), self.root.getZ(render) + self.height + 1.0), blendType='easeOut'), Wait(0.25), self.hpText.colorInterval(0.1, Vec4(r, g, b, 0)), Func(self.__hideHitScore))
+        seq.start()
 
     def _PartyCog__hideHitScoreTask(self, task):
         self.hideHitScore()

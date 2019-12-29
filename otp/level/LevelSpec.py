@@ -429,9 +429,9 @@ class LevelSpec:
                     attribDescs = typeDesc.getAttribDescDict()
                     for attrib in spec.keys():
                         if attrib not in attribNames:
-                            LevelSpec.notify.warning(
-                                "entId %s (%s): unknown attrib '%s', omitting"
-                                % (entId, spec['type'], attrib))
+                            #LevelSpec.notify.warning(
+                            #    "entId %s (%s): unknown attrib '%s', omitting"
+                            #    % (entId, spec['type'], attrib))
                             del spec[attrib]
                             continue
 

@@ -332,8 +332,8 @@ class TwoDGameToonSD(StateData.StateData):
                     Point3(0, 0, self.toon.height + 2),
                     0.5,
                     blendType='easeOut'),
-                self.scoreText.lerpColor(
-                    Vec4(r, g, b, a), Vec4(r, g, b, 0), 0.25),
+                self.scoreText.colorInterval(0.25,
+                    Vec4(r, g, b, 0)),
                 Task(self.hideScoreTextTask))
             taskMgr.add(seq, self.game.uniqueName('scoreText'))
 

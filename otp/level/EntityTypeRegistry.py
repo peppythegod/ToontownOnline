@@ -41,8 +41,6 @@ class EntityTypeRegistry:
                 if issubclass(value, EntityTypeDesc.EntityTypeDesc):
                     classes.append(value)
 
-            issubclass(value, EntityTypeDesc.EntityTypeDesc)
-
         self.entTypeName2typeDesc = {}
         mostDerivedLast(classes)
         for c in classes:

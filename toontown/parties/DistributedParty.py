@@ -12,6 +12,7 @@ from toontown.toonbase import TTLocalizer
 from toontown.toon import Toon
 from toontown.parties import PartyGlobals
 from toontown.parties.Decoration import Decoration
+from direct.interval.IntervalGlobal import *
 import PartyUtils
 
 
@@ -462,12 +463,8 @@ class DistributedParty(DistributedObject.DistributedObject):
         self.titleText.setColor(Vec4(*self.titleColor))
         self.titleText.clearColorScale()
         self.titleText.setFg(self.titleColor)
-        seq = Task.sequence(
-            Task.pause(0.10000000000000001), Task.pause(6.0),
-            self.titleText.lerpColorScale(
-                Vec4(1.0, 1.0, 1.0, 1.0), Vec4(1.0, 1.0, 1.0, 0.0), 0.5),
-            Task(self.hideTitleTextTask))
-        taskMgr.add(seq, 'titleText')
+        seq = Sequence(Wait(0.1), Wait(6.0), self.titleText.colorScaleInterval(0.5, Vec4(1.0, 1.0, 1.0, 0.0)), Task(self.hideTitleText))
+        seq.start()
 
     def hideTitleTextTask(self, task):
         self.titleText.hide()

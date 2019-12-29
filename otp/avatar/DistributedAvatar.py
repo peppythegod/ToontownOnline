@@ -202,9 +202,7 @@ class DistributedAvatar(DistributedActor, Avatar):
                         Point3(0, 0, self.height + 1.5),
                         1.0,
                         blendType='easeOut'), Task.pause(0.84999999999999998),
-                    self.hpText.lerpColor(
-                        Vec4(r, g, b, a), Vec4(r, g, b, 0),
-                        0.10000000000000001), Task.Task(self.hideHpTextTask))
+                    self.hpText.colorInterval(0.1, Vec4(r, g, b, 0)), Task.Task(self.hideHpTextTask))
                 taskMgr.add(seq, self.uniqueName('hpText'))
 
     def showHpString(self,

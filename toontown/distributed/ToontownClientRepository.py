@@ -1170,6 +1170,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         interestZones = zoneId
         if visibleZoneList is not None:
             interestZones = visibleZoneList
+            print "IZONES", interestZones
 
         self._addInterestOpToQueue(
             ToontownClientRepository.SetInterest,
