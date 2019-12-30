@@ -121,6 +121,10 @@ class TutorialManagerAI(DistributedObjectAI):
         self.avId2zones = {}
 
     def requestTutorial(self):
+        #! Skip by default for now.
+        self.requestSkipTutorial()
+        return
+        
         avId = self.air.getAvatarIdFromSender()
 
         zones = TZoneStruct()

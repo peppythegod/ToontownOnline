@@ -717,6 +717,8 @@ class DistributedSuitPlannerAI(DistributedObjectAI.DistributedObjectAI,
                              self.TOTAL_MAX_SUITS - self.numBuildingSuits)
         streetPoints = self.streetPointList[:]
         flyInDeficit = ((targetFlyInNum - self.numFlyInSuits) + 3) / 4
+        #print "%d: %d deficit, %d targetFly, %d self.numFlyInSuits" %(self.zoneId, flyInDeficit, targetFlyInNum, self.numFlyInSuits)
+        print "%d has now %d suits" %(self.zoneId, self.numFlyInSuits + self.numBuildingSuits)
         while flyInDeficit > 0:
             if not self.createNewSuit([], streetPoints):
                 break

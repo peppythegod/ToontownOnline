@@ -430,8 +430,6 @@ class DNASuitPoint:
     STREETPOINT = 0
     FRONTDOORPOINT = 1
     SIDEDOORPOINT = 2
-    COGHQINPOINT = 3
-    COGHQOUTPOINT = 4
 
     def __init__(self, index, pointType, pos, landmarkBuildingIndex = -1):
         self.index = index
@@ -448,10 +446,6 @@ class DNASuitPoint:
             pointTypeStr = 'FRONT_DOOR_POINT'
         elif pointType == DNASuitPoint.SIDE_DOOR_POINT:
             pointTypeStr = 'SIDE_DOOR_POINT'
-        elif pointType == DNASuitPoint.COGHQ_IN_POINT:
-            pointTypeStr = 'COGHQ_IN_POINT'
-        elif pointType == DNASuitPoint.COGHQ_OUT_POINT:
-            pointTypeStr = 'COGHQ_OUT_POINT'
         else:
             pointTypeStr = '**invalid**'
         return 'DNASuitPoint index: {0}, pointType: {1}, pos: {2}'.format(
@@ -489,10 +483,6 @@ class DNASuitPoint:
                 self.pointType = DNASuitPoint.FRONT_DOOR_POINT
             elif pointType == DNASuitPoint.SIDE_DOOR_POINT:
                 self.pointType = DNASuitPoint.SIDE_DOOR_POINT
-            elif pointType == DNASuitPoint.COGHQ_IN_POINT:
-                self.pointType = DNASuitPoint.COGHQ_IN_POINT
-            elif pointType == DNASuitPoint.COGHQ_OUT_POINT:
-                self.pointType = DNASuitPoint.COGHQ_OUT_POINT
             else:
                 raise TypeError('%i is not a valid DNASuitPointType' % pointType)
         elif isinstance(pointType, str):

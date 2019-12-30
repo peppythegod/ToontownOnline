@@ -3,6 +3,7 @@ from pandac.PandaModules import *
 from toontown.ai.MessageTypes import *
 from otp.ai.AIZoneData import AIZoneDataStore
 from otp.ai.TimeManagerAI import TimeManagerAI
+from NewsManagerAI import *
 from otp.distributed.OtpDoGlobals import *
 from toontown.tutorial.TutorialManagerAI import TutorialManagerAI
 from direct.distributed.DistributedObjectAI import DistributedObjectAI
@@ -36,6 +37,7 @@ from toontown.racing.DistributedViewPadAI import DistributedViewPadAI
 from toontown.racing.DistributedStartingBlockAI import DistributedStartingBlockAI, DistributedViewingBlockAI
 from toontown.racing.DistributedLeaderBoardAI import DistributedLeaderBoardAI
 from toontown.racing import RaceGlobals
+from toontown.uberdog.DistributedInGameNewsMgrAI import DistributedInGameNewsMgrAI
 
 
 class ToontownAIRepository(ToontownInternalRepository):
@@ -79,6 +81,12 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.timeManager = TimeManagerAI(self)
         self.timeManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
         
+        self.newsManager = NewsManagerAI(self)
+        self.newsManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
+        
+        self.ign = DistributedInGameNewsMgrAI(self)
+        self.ign.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
+        
         self.tutorialManager = TutorialManagerAI(self)
         self.tutorialManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
         
@@ -103,7 +111,6 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.fishManager = FishManagerAI()
 
         self.magicWordManager = None
-        self.newsManager = None
         self.friendManager = None
         self.banManager = None
         self.achievementsManager = None

@@ -39,7 +39,7 @@ class DistributedHQInteriorAI(DistributedObjectAI.DistributedObjectAI):
                 [cPickle.dumps(self.air.trophyMgr.getLeaderInfo(), 1)])
 
     def getLeaderBoard(self):
-        return cPickle.dumps([]) #(self.air.trophyMgr.getLeaderInfo(), 1)
+        return cPickle.dumps([[], [], []], 1) #(self.air.trophyMgr.getLeaderInfo(), 1)
 
     def getTutorial(self):
         return self.tutorial

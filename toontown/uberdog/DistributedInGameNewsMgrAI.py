@@ -8,6 +8,9 @@ class DistributedInGameNewsMgrAI(DistributedObjectGlobalAI):
 
     def setLatestIssueStr(self, todo0):
         pass
+        
+    def getLatestIssueStr(self):
+        return ""
 
     def inGameNewsMgrAIStartingUp(self, todo0, todo1):
         pass

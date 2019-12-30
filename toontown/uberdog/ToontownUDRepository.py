@@ -7,6 +7,11 @@ from toontown.toonbase import ToontownGlobals
 
 from otp.distributed.DistributedDirectoryAI import DistributedDirectoryAI
 from otp.uberdog import DistributedChatManagerUD
+from otp.friends import AvatarFriendsManagerUD
+from toontown.friends import TTPlayerFriendsManagerUD
+from toontown.uberdog import TTSpeedchatRelayUD
+from toontown.uberdog import DistributedDeliveryManagerUD
+from toontown.coderedemption import TTCodeRedemptionMgrUD
 
 
 class ToontownUDRepository(ToontownInternalRepository):
@@ -20,6 +25,16 @@ class ToontownUDRepository(ToontownInternalRepository):
     def createGlobals(self):
         self.chatManager = DistributedChatManagerUD.DistributedChatManagerUD(self)
         self.chatManager.generateWithRequiredAndId(OTP_DO_ID_CHAT_MANAGER, 0, 0)
+        self.avatarFriendsManager = AvatarFriendsManagerUD.AvatarFriendsManagerUD(self) # TODO
+        self.avatarFriendsManager.generateWithRequiredAndId(OTP_DO_ID_AVATAR_FRIENDS_MANAGER, 0, 0)
+        self.playerFriendsManager = TTPlayerFriendsManagerUD.TTPlayerFriendsManagerUD(self) # TODO
+        self.playerFriendsManager.generateWithRequiredAndId(OTP_DO_ID_PLAYER_FRIENDS_MANAGER, 0, 0)
+        self.speedchatRelay = TTSpeedchatRelayUD.TTSpeedchatRelayUD(self) # TODO
+        self.speedchatRelay.generateWithRequiredAndId(OTP_DO_ID_TOONTOWN_SPEEDCHAT_RELAY, 0, 0)
+        self.deliveryManager = DistributedDeliveryManagerUD.DistributedDeliveryManagerUD(self) # TODO
+        self.deliveryManager.generateWithRequiredAndId(OTP_DO_ID_TOONTOWN_DELIVERY_MANAGER, 0, 0)
+        self.codeRedemptionManager = TTCodeRedemptionMgrUD.TTCodeRedemptionMgrUD(self) #TODO
+        self.codeRedemptionManager.generateWithRequiredAndId(OTP_DO_ID_TOONTOWN_CODE_REDEMPTION_MANAGER, 0, 0)
 
     def handleConnected(self):
         rootObj = DistributedDirectoryAI(self)

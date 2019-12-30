@@ -7,7 +7,8 @@ default-model-extension .bam
 
 audio-library-name p3fmod_audio
 
-dc-file etc/toon2.dc
+dc-file etc/toon.dc
+dc-file etc/otp.dc
 #dc-file phase_3/etc/toon.dc
 #dc-file phase_3/etc/otp.dc
 

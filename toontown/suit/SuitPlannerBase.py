@@ -233,7 +233,6 @@ class SuitPlannerBase:
         self.streetPointList = []
         self.frontdoorPointList = []
         self.sidedoorPointList = []
-        self.cogHQDoorPointList = []
         numPoints = self.dnaStore.getNumSuitPoints()
         for i in range(numPoints):
             point = self.dnaStore.getSuitPointAtIndex(i)
@@ -241,10 +240,6 @@ class SuitPlannerBase:
                 self.frontdoorPointList.append(point)
             elif point.getPointType() == DNASuitPoint.SIDEDOORPOINT:
                 self.sidedoorPointList.append(point)
-            elif point.getPointType(
-            ) == DNASuitPoint.COGHQINPOINT or point.getPointType(
-            ) == DNASuitPoint.COGHQOUTPOINT:
-                self.cogHQDoorPointList.append(point)
             else:
                 self.streetPointList.append(point)
             self.pointIndexes[point.getIndex()] = point

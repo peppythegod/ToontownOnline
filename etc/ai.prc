@@ -1,7 +1,8 @@
 default-model-extension .bam
 window-type none
 
-dc-file etc/toon2.dc
+dc-file etc/toon.dc
+dc-file etc/otp.dc
 
 server-version no_version_set
 
