@@ -16,7 +16,7 @@ from toontown.dna.DNAParser import DNADoor
 __builtin__.DNAStorage = DNAStorage
 __builtin__.DNADoor = DNADoor
 
-from libotp import NametagGlobals, NametagGroup, NametagFloat2d, Nametag, SuitLegList
+from libotp import NametagGlobals, NametagGroup, NametagFloat2d, Nametag
 from libotp._constants import *
 __builtin__.NametagGlobals = NametagGlobals
 __builtin__.NametagGroup = NametagGroup
@@ -31,6 +31,8 @@ __builtin__.CFQuitButton = CFQuitButton
 __builtin__.CFReversed = CFReversed
 __builtin__.CFSndOpenchat = CFSndOpenchat
 __builtin__.CFNoQuitButton = CFNoQuitButton
+
+from toontown.suit import SuitLegList
 __builtin__.SuitLegList = SuitLegList.SuitLegList
 __builtin__.SuitLeg = SuitLegList.SuitLeg
 

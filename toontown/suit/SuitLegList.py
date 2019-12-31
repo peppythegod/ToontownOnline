@@ -12,8 +12,8 @@ class SuitLeg:
     TFromSuitBuilding = 5
     TToSuitBuilding = 6
     TToToonBuilding = 7
-    TFromCogHQ = 8
-    TToCogHQ = 9
+    TFromCogHQ = TFromCoghq = 8
+    TToCogHQ = TToCoghq = 9
     TOff = 10
     TypeToName = {
         TWalkFromStreet: 'WalkFromStreet',

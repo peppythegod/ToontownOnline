@@ -8,7 +8,7 @@ loadPrcFileData("base channel env", "air-base-channel %s" %os.getenv('BASE_CHANN
 loadPrcFileData("district name env", "district-name %s" %os.getenv('DISTRICT_NAME', "Genesis"))
 
 # Stuff that needs to be at hand
-from libotp import SuitLegList
+from toontown.suit import SuitLegList
 __builtin__.SuitLegList = SuitLegList.SuitLegList
 __builtin__.SuitLeg = SuitLegList.SuitLeg
 
