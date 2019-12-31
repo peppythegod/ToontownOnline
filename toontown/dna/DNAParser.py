@@ -2456,7 +2456,7 @@ def p_error(p):
         raise DNAError('Syntax error unexpected EOF')
     raise DNAError('Syntax error at line ' + str(p.lexer.lineno) + ' token=' + str(p))
 
-def loadDNAFile(dnaStore, filename, cs, editing):
+def loadDNAFile(dnaStore, filename, cs = None, editing = None):
     print 'Reading DNA file...', filename
     dnaloader = DNALoader()
     dnaloader.getData().setDnaStorage(dnaStore)
@@ -2466,7 +2466,7 @@ def loadDNAFile(dnaStore, filename, cs, editing):
         return graph.getNode(0)
     return None
 
-def loadDNAFileAI(dnaStore, filename, cs):
+def loadDNAFileAI(dnaStore, filename, cs = None):
     dnaloader = DNALoader()
     dnaloader.getData().setDnaStorage(dnaStore)
     dnaloader.getData().read(open(filename, 'r'))
