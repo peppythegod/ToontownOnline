@@ -54,6 +54,7 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit,
         self.maxSkeleRevives = 0
         self.sillySurgeText = False
         self.interactivePropTrackBonus = -1
+        self.test = 0
 
     def setVirtual(self, virtual):
         pass
@@ -95,6 +96,9 @@ class DistributedSuitBase(DistributedAvatar.DistributedAvatar, Suit.Suit,
         return self.maxSkeleRevives
 
     def generate(self):
+        if self.test > 0:
+            print "I got generated again! %dx" %self.test
+        self.test += 1
         DistributedAvatar.DistributedAvatar.generate(self)
 
     def disable(self):

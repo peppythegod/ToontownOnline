@@ -259,20 +259,16 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
                 self.notify.error('No such state as: ' + str(state))
 
     def moveToNextLeg(self, task):
-        if self.legList is None:
-            self.notify.warning(
-                'Suit %d does not have a path!' % self.getDoId())
+        if self.legList == None:
+            self.notify.warning('Suit %d does not have a path!' % self.getDoId())
             return Task.done
-
         now = globalClock.getFrameTime()
         elapsed = now - self.pathStartTime
         nextLeg = self.legList.getLegIndexAtTime(elapsed, self.currentLeg)
         numLegs = self.legList.getNumLegs()
         if self.currentLeg != nextLeg:
             self.currentLeg = nextLeg
-            self.doPathLeg(self.legList[nextLeg],
-                           elapsed - self.legList.getStartTime(nextLeg))
-
+            self.doPathLeg(self.legList.getLeg(nextLeg), elapsed - self.legList.getStartTime(nextLeg))
         nextLeg += 1
         if nextLeg < numLegs:
             nextTime = self.legList.getStartTime(nextLeg)
@@ -280,11 +276,10 @@ class DistributedSuit(DistributedSuitBase.DistributedSuitBase, DelayDeletable):
             name = self.taskName('move')
             taskMgr.remove(name)
             taskMgr.doMethodLater(delay, self.moveToNextLeg, name)
-
         return Task.done
 
     def doPathLeg(self, leg, time):
-        self.fsm.request(SuitLeg.getTypeName(leg.getType()), [leg, time])
+        self.fsm.request(leg.getTypeName(), [leg, time])
         return 0
 
     def stopPathNow(self):
