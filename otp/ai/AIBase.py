@@ -5,12 +5,11 @@ from direct.showbase.BulletinBoardGlobal import *
 from direct.task.TaskManagerGlobal import *
 from direct.showbase.JobManagerGlobal import *
 from direct.showbase.EventManagerGlobal import *
-from direct.showbase.PythonUtil import *
-from direct.showbase import PythonUtil
 from direct.interval.IntervalManager import ivalMgr
 from direct.task import Task
 from direct.showbase import EventManager
 from direct.showbase import ExceptionVarDump
+from otp.otpbase import BackupManager
 import math
 import sys
 import time
@@ -108,6 +107,9 @@ class AIBase:
         self.GEMdemoWhisperRecipientDoid = self.config.GetBool(
             'gem-demo-whisper-recipient-doid', 0)
         self.sqlAvailable = self.config.GetBool('sql-available', 1)
+        self.backups = BackupManager.BackupManager(
+            filepath=self.config.GetString('backups-filepath', 'backups/'),
+            extension=self.config.GetString('backups-extension', '.json'))
         self.createStats()
         self.restart()
 

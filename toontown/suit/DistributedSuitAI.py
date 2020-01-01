@@ -45,6 +45,14 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
         self.attemptingTakeover = 0
         self.buildingDestination = None
         self.buildingDestinationIsCogdo = False
+        
+    def delete(self):
+        del self.bldgTrack
+        del self.branchId
+        del self.buildingDestination
+        del self.buildingDestinationIsCogdo
+
+        DistributedSuitBaseAI.DistributedSuitBaseAI.delete(self)
 
     def stopTasks(self):
         taskMgr.remove(self.taskName('flyAwayNow'))
@@ -355,7 +363,7 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
             return None
 
         blockNumber = self.buildingDestination
-        if not self.sp.buildingMgr.isSuitBlock(blockNumber):
+        if blockNumber is not None and not self.sp.buildingMgr.isSuitBlock(blockNumber):
             self.notify.debug('Suit %d taking over building %d in %d' %
                               (self.getDoId(), blockNumber, self.zoneId))
             difficulty = self.getActualLevel() - 1
@@ -366,3 +374,5 @@ class DistributedSuitAI(DistributedSuitBaseAI.DistributedSuitBaseAI):
                 dept = SuitDNA.getSuitDept(self.dna.name)
                 self.sp.suitTakeOver(blockNumber, dept, difficulty,
                                      self.buildingHeight)
+        else:
+            self.notify.warning('Suit %d taking over invalid building.')

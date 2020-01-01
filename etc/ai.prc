@@ -7,13 +7,12 @@ dc-file etc/otp.dc
 server-version no_version_set
 
 # AI Toggles
-want-fishing 0
+want-fishing 1
 want-housing 0
 want-pets 0
 want-parties 0
-want-cogbuildings 0
+want-cogbuildings 1
 want-cogdominiums 0
-want-achievements 0
 
 # Battles
 base-xp-multiplier 1.0

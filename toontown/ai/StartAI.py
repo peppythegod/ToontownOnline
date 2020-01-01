@@ -8,7 +8,9 @@ class Game:
     name = "toontown"
 
 __builtin__.game = Game()
-__builtin__.simbase = ShowBase()
+
+from otp.ai.AIBaseGlobal import *
+
 __builtin__.process = 'ai'
 __builtin__.isClient = lambda: PythonUtil.isClient()
 
