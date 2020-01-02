@@ -199,21 +199,14 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
 
     def isSuitBuilding(self):
         state = self.fsm.getCurrentState().getName()
-        if not state == 'suit' and state == 'becomingSuit':
-            pass
-        return state == 'clearOutToonInterior'
+        return state in ('suit', 'becomingSuit', 'clearOutToonInterior')
 
     def isCogdo(self):
         state = self.fsm.getCurrentState().getName()
-        if not state == 'cogdo' and state == 'becomingCogdo':
-            pass
-        return state == 'clearOutToonInteriorForCogdo'
+        return state in ('cogdo', 'becomingCogdo', 'clearOutToonInteriorForCogdo')
 
     def isSuitBlock(self):
-        state = self.fsm.getCurrentState().getName()
-        if not self.isSuitBuilding():
-            pass
-        return self.isCogdo()
+        return self.isSuitBuilding() or self.isCogdo()
 
     def isEstablishedSuitBlock(self):
         state = self.fsm.getCurrentState().getName()
@@ -228,7 +221,7 @@ class DistributedBuildingAI(DistributedObjectAI.DistributedObjectAI):
         dnaStore = self.air.dnaStoreMap[self.canonicalZoneId]
         zoneId = dnaStore.getZoneFromBlockNumber(blockNumber)
         zoneId = ZoneUtil.getTrueZoneId(zoneId, self.zoneId)
-        interiorZoneId = (zoneId - zoneId % 100) + 500 + blockNumber
+        interiorZoneId = (zoneId - (zoneId%100)) + 500 + blockNumber
         return (zoneId, interiorZoneId)
 
     def d_setState(self, state):

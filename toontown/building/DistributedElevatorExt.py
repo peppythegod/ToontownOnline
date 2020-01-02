@@ -75,7 +75,7 @@ class DistributedElevatorExt(DistributedElevator.DistributedElevator):
         else:
             self.notify.warning(
                 'setBldgDoId: elevator %d cannot find suitDoorOrigin for bldg %d!'
-                % (self.doId, bldgDoId))
+                % (self.doId, self.bldgDoId))
 
     def setFloor(self, floorNumber):
         if self.currentFloor >= 0:

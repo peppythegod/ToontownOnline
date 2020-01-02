@@ -169,9 +169,8 @@ class DistributedSuitInteriorAI(DistributedObjectAI.DistributedObjectAI):
         for toonId in self.toonIds:
             if toonId is None:
                 sendIds.append(0)
-                continue
-            sendIds.append(toonId)
-
+            else:
+                sendIds.append(toonId)
         return [sendIds, 0]
 
     def d_setSuits(self):
